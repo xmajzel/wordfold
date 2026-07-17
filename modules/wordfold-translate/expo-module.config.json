@@ -1,0 +1,9 @@
+{
+  "platforms": ["android", "apple"],
+  "apple": {
+    "modules": ["WordfoldTranslateModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.wordfoldtranslate.WordfoldTranslateModule"]
+  }
+}
