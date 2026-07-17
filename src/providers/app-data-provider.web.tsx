@@ -1,17 +1,17 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 
-import type { CatalogSense, Collection, ContentSource, DashboardStats, LearningFilter, LearningRating, ReminderSettings, Word } from '@/domain/types';
+import type { CatalogSense, Collection, DashboardStats, LearningFilter, LearningPreferences, LearningRating, ReminderSettings, Word } from '@/domain/types';
 import type { NewWordInput } from '@/data/repository';
 import { createId } from '@/data/repository';
 import { isLearningFilter } from '@/data/cefr-levels';
 import { normalizeTerm } from '@/features/import/parser';
 import { applyRating } from '@/features/learning/algorithm';
-import personalVocabulary from '../../assets/seed/personal-vocabulary.json';
+import { buildRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
 
 interface AppDataValue {
   words: Word[]; collections: Collection[]; stats: DashboardStats | null;
   reminderSettings: ReminderSettings | null;
-  contentPacks: { id: ContentSource; name: string; enabled: boolean }[];
+  learningPreferences: LearningPreferences;
   learningFilter: LearningFilter;
   onboardingComplete: boolean | null;
   refresh(): Promise<void>; findSenses(term: string): Promise<CatalogSense[]>;
@@ -21,42 +21,18 @@ interface AppDataValue {
   rateWord(word: Word, rating: LearningRating): Promise<void>; markViewed(id: string): Promise<void>;
   updateReminderSettings(settings: ReminderSettings): Promise<number>;
   updateLearningFilter(filter: LearningFilter): Promise<void>;
-  toggleContentPack(id: ContentSource, enabled: boolean): Promise<void>;
-  finishOnboarding(): Promise<void>; noteNotificationOpen(wordId: string | null): Promise<void>;
+  saveLearningPreferences(preferences: LearningPreferences): Promise<void>;
+  completePersonalizedOnboarding(preferences: LearningPreferences): Promise<number>;
+  addRecommendedWords(limit?: number): Promise<number>;
+  noteNotificationOpen(wordId: string | null): Promise<void>;
 }
 
 const Context = createContext<AppDataValue | null>(null);
 const initialDate = new Date().toISOString();
-const seedCollectionColors: Record<string, string> = {
-  'ux-ui': '#EE6FA8',
-  'project-management': '#6C63E8',
-  'headway-upper-intermediate': '#27A8A2',
-};
 const initialCollections: Collection[] = [
   { id: 'my-words', name: 'My words', color: '#6657D9', createdAt: initialDate, updatedAt: initialDate },
-  ...personalVocabulary.collections.map((collection) => ({
-    ...collection,
-    color: seedCollectionColors[collection.id] ?? '#6657D9',
-    createdAt: initialDate,
-    updatedAt: initialDate,
-  })),
 ];
-const initialWords: Word[] = personalVocabulary.words.map((word) => ({
-  ...word,
-  sourceLanguageCode: 'en',
-  targetLanguageCode: 'sk',
-  cefrLevel: null,
-  source: 'manual',
-  state: 'new',
-  understoodStreak: 0,
-  lapseCount: 0,
-  viewCount: 0,
-  lastViewedAt: null,
-  lastRatedAt: null,
-  nextReviewAt: null,
-  createdAt: initialDate,
-  updatedAt: initialDate,
-}));
+const initialWords: Word[] = [];
 const previewSenses: Record<string, CatalogSense> = {
   scope: { id: 'preview-scope', term: 'scope', partOfSpeech: 'noun', definition: 'The extent of the area or subject matter that something deals with.', example: 'We agreed on the scope before planning the project.', rank: 0 },
   stakeholder: { id: 'preview-stakeholder', term: 'stakeholder', partOfSpeech: 'noun', definition: 'A person or group affected by a project or decision.', example: 'The team invited every key stakeholder to the review.', rank: 0 },
@@ -72,15 +48,19 @@ function toWord(input: NewWordInput, id = createId('web-word')): Word {
     nextReviewAt: null, createdAt: now, updatedAt: now };
 }
 
+function recommendationsToWords(recommendations: Recommendation[]) {
+  return recommendations.map(({ entry, topic }) => toWord({
+    collectionId: 'my-words', term: entry.term, normalizedTerm: entry.normalizedTerm,
+    definition: entry.definition, example: entry.example, partOfSpeech: entry.partOfSpeech,
+    catalogSenseId: entry.catalogSenseId, cefrLevel: entry.level, source: topic ?? 'manual',
+  }));
+}
+
 export function AppDataProvider({ children }: PropsWithChildren) {
   const [words, setWords] = useState<Word[]>(initialWords);
   const [collections, setCollections] = useState(initialCollections);
   const [reminderSettings, setReminderSettings] = useState<ReminderSettings>({ enabled: false, countPerDay: 1, windowStartMinutes: 600, windowEndMinutes: 1200, timeZoneId: 'local' });
-  const [contentPacks, setContentPacks] = useState<AppDataValue['contentPacks']>([
-    { id: 'spoken', name: 'Everyday spoken English', enabled: false },
-    { id: 'business', name: 'Business English', enabled: false },
-    { id: 'academic', name: 'Academic English', enabled: false },
-  ]);
+  const [learningPreferences, setLearningPreferences] = useState<LearningPreferences>({ levels: [], topics: [] });
   const [learningFilter, setLearningFilter] = useState<LearningFilter>('all');
   const [onboardingComplete, setOnboardingComplete] = useState(false);
 
@@ -111,7 +91,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
   }, [words]);
 
   const value = useMemo<AppDataValue>(() => ({
-    words, collections, stats, reminderSettings, contentPacks, learningFilter, onboardingComplete,
+    words, collections, stats, reminderSettings, learningPreferences, learningFilter, onboardingComplete,
     refresh: async () => undefined,
     findSenses: async (term) => { const sense = previewSenses[normalizeTerm(term)]; return sense ? [sense] : []; },
     createWord: async (input) => { const word = toWord(input); setWords((current) => [word, ...current]); return word.id; },
@@ -127,9 +107,22 @@ export function AppDataProvider({ children }: PropsWithChildren) {
       if (typeof window !== 'undefined') window.localStorage.setItem('wordfold.learningFilter', filter);
       setLearningFilter(filter);
     },
-    toggleContentPack: async (id, enabled) => setContentPacks((current) => current.map((pack) => pack.id === id ? { ...pack, enabled } : pack)),
-    finishOnboarding: async () => setOnboardingComplete(true), noteNotificationOpen: async () => undefined,
-  }), [collections, contentPacks, learningFilter, onboardingComplete, reminderSettings, stats, words]);
+    saveLearningPreferences: async (preferences) => setLearningPreferences(normalizeLearningPreferences(preferences)),
+    completePersonalizedOnboarding: async (preferences) => {
+      const normalized = normalizeLearningPreferences(preferences);
+      const recommendations = buildRecommendations(normalized, words.map((word) => word.normalizedTerm), 10);
+      setLearningPreferences(normalized);
+      setWords((current) => [...recommendationsToWords(recommendations), ...current]);
+      setOnboardingComplete(true);
+      return recommendations.length;
+    },
+    addRecommendedWords: async (limit = 10) => {
+      const recommendations = buildRecommendations(learningPreferences, words.map((word) => word.normalizedTerm), limit);
+      setWords((current) => [...recommendationsToWords(recommendations), ...current]);
+      return recommendations.length;
+    },
+    noteNotificationOpen: async () => undefined,
+  }), [collections, learningFilter, learningPreferences, onboardingComplete, reminderSettings, stats, words]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 

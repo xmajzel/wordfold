@@ -1,8 +1,9 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
-import type { CefrLevel, Collection, ContentSource, DashboardStats, LearningFilter, ReminderSettings, Word } from '@/domain/types';
+import type { CefrLevel, Collection, ContentPackId, ContentSource, DashboardStats, LearningFilter, LearningPreferences, ReminderSettings, Word } from '@/domain/types';
 import { getCefrLevelForCatalogSense } from '@/data/cefr-level-lookup';
-import { isLearningFilter } from '@/data/cefr-levels';
+import { isCefrLevel, isLearningFilter } from '@/data/cefr-levels';
+import { normalizeLearningPreferences } from '@/features/recommendations/selector';
 import type { RatingUpdate } from '@/features/learning/algorithm';
 
 interface WordRow {
@@ -211,13 +212,52 @@ export async function saveReminderSettings(database: SQLiteDatabase, settings: R
 }
 
 export async function getContentPacks(database: SQLiteDatabase) {
-  return database.getAllAsync<{ id: ContentSource; name: string; enabled: number }>(
+  return database.getAllAsync<{ id: ContentPackId; name: string; enabled: number }>(
     'SELECT id, name, enabled FROM content_packs ORDER BY rowid',
   );
 }
 
-export async function setContentPackEnabled(database: SQLiteDatabase, id: ContentSource, enabled: boolean) {
-  await database.runAsync('UPDATE content_packs SET enabled = ? WHERE id = ?', enabled ? 1 : 0, id);
+function parsePreferredLevels(value: string | undefined): CefrLevel[] {
+  if (!value) return [];
+  try {
+    const parsed: unknown = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed.filter((item): item is CefrLevel => typeof item === 'string' && isCefrLevel(item)) : [];
+  } catch {
+    return [];
+  }
+}
+
+export async function getLearningPreferences(database: SQLiteDatabase): Promise<LearningPreferences> {
+  const [levelRow, packs] = await Promise.all([
+    database.getFirstAsync<{ value: string }>(
+      "SELECT value FROM app_metadata WHERE key = 'preferred_cefr_levels'",
+    ),
+    getContentPacks(database),
+  ]);
+  return normalizeLearningPreferences({
+    levels: parsePreferredLevels(levelRow?.value),
+    topics: packs.filter((pack) => Boolean(pack.enabled)).map((pack) => pack.id),
+  });
+}
+
+async function writeLearningPreferences(database: SQLiteDatabase, rawPreferences: LearningPreferences) {
+  const preferences = normalizeLearningPreferences(rawPreferences);
+  await database.runAsync(
+    `INSERT INTO app_metadata (key, value) VALUES ('preferred_cefr_levels', ?)
+     ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
+    JSON.stringify(preferences.levels),
+  );
+  for (const pack of await getContentPacks(database)) {
+    await database.runAsync(
+      'UPDATE content_packs SET enabled = ? WHERE id = ?',
+      preferences.topics.includes(pack.id) ? 1 : 0,
+      pack.id,
+    );
+  }
+}
+
+export async function saveLearningPreferences(database: SQLiteDatabase, preferences: LearningPreferences) {
+  await database.withExclusiveTransactionAsync((transaction) => writeLearningPreferences(transaction, preferences));
 }
 
 export async function isOnboardingComplete(database: SQLiteDatabase) {
@@ -229,6 +269,20 @@ export async function isOnboardingComplete(database: SQLiteDatabase) {
 
 export async function completeOnboarding(database: SQLiteDatabase) {
   await database.runAsync("UPDATE app_metadata SET value = 'true' WHERE key = 'onboarding_complete'");
+}
+
+export async function completeOnboardingSetup(
+  database: SQLiteDatabase,
+  preferences: LearningPreferences,
+  starterWords: NewWordInput[],
+) {
+  const ids: string[] = [];
+  await database.withExclusiveTransactionAsync(async (transaction) => {
+    await writeLearningPreferences(transaction, preferences);
+    for (const input of starterWords) ids.push(await addWord(transaction, input));
+    await completeOnboarding(transaction);
+  });
+  return ids;
 }
 
 export async function getLearningFilter(database: SQLiteDatabase): Promise<LearningFilter> {

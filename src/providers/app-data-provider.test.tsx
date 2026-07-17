@@ -34,7 +34,7 @@ jest.mock('@/data/repository', () => ({
     windowEndMinutes: 1200,
     timeZoneId: Intl.DateTimeFormat().resolvedOptions().timeZone || 'local',
   })),
-  getContentPacks: jest.fn(async () => []),
+  getLearningPreferences: jest.fn(async () => ({ levels: [], topics: [] })),
   isOnboardingComplete: jest.fn(async () => false),
   getLearningFilter: jest.fn(async () => 'all'),
 }));

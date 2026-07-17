@@ -8,6 +8,7 @@ import { AppSwitch } from '@/components/app-switch';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import type { ReminderSettings } from '@/domain/types';
+import { topicOptions } from '@/features/recommendations/selector';
 import { requestReminderPermission } from '@/features/reminders/scheduler';
 import { formatMinutes, REMINDER_PRESETS } from '@/features/reminders/slots';
 import { useAppTheme } from '@/hooks/use-app-theme';
@@ -16,7 +17,7 @@ import { radii, spacing } from '@/theme/tokens';
 
 export default function SettingsScreen() {
   const theme = useAppTheme();
-  const { reminderSettings, updateReminderSettings } = useAppData();
+  const { reminderSettings, learningPreferences, updateReminderSettings } = useAppData();
   const [draft, setDraft] = useState<ReminderSettings>(() => reminderSettings ?? ({ enabled: false, countPerDay: 1, windowStartMinutes: 600, windowEndMinutes: 1200, timeZoneId: 'local' }));
   const [saving, setSaving] = useState(false);
   const [scheduledCount, setScheduledCount] = useState<number | null>(null);
@@ -46,6 +47,20 @@ export default function SettingsScreen() {
   return (
     <Screen scroll>
       <View style={styles.header}><Pressable accessibilityRole="button" accessibilityLabel="Close" onPress={() => router.back()} style={[styles.close, { backgroundColor: theme.surface }]}><Ionicons name="close" color={theme.text} size={22}/></Pressable><AppText variant="title">Settings</AppText><View style={styles.close}/></View>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Edit learning preferences"
+        onPress={() => router.push('/preferences' as never)}
+        style={({ pressed }) => [styles.preferenceCard, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.76 : 1 }]}>
+        <View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="options-outline" color={theme.primary} size={24}/></View>
+        <View style={styles.flex}>
+          <AppText variant="heading">Learning preferences</AppText>
+          <AppText variant="caption" style={{ color: theme.muted }}>{learningPreferences.levels.length > 0
+            ? `${learningPreferences.levels.join(', ')} · ${topicOptions.filter((topic) => learningPreferences.topics.includes(topic.id)).map((topic) => topic.title).join(', ') || 'Choose interests'}`
+            : 'Choose levels and interests for recommendations'}</AppText>
+        </View>
+        <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
+      </Pressable>
       <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={styles.switchRow}><View style={styles.flex}><AppText variant="heading">Word reminders</AppText><AppText style={{ color: theme.muted }}>Fresh words at preferred times.</AppText></View><AppSwitch accessibilityLabel="Enable word reminders" value={draft.enabled} onValueChange={(value) => void toggleEnabled(value)}/></View></View>
       <View><AppText variant="heading">How often?</AppText><AppText style={{ color: theme.muted }}>One to three gentle presets, or your own rhythm up to six.</AppText></View>
       <View style={styles.countGrid}>{[1, 2, 3, 4, 5, 6].map((count) => { const preset = REMINDER_PRESETS.find((item) => item.count === count); const selected = draft.countPerDay === count; return <Pressable key={count} onPress={() => setDraft({ ...draft, countPerDay: count })} style={[styles.countCard, { backgroundColor: selected ? theme.primarySoft : theme.surface, borderColor: selected ? theme.primary : theme.border }]}><AppText variant="heading" style={{ color: selected ? theme.primary : theme.text }}>{count}</AppText><AppText variant="caption" numberOfLines={1} style={{ color: theme.muted }}>{preset?.label ?? 'My rhythm'}</AppText></Pressable>; })}</View>
@@ -68,6 +83,7 @@ function InfoRow({ icon, title, body }: { icon: keyof typeof Ionicons.glyphMap; 
 
 const styles = StyleSheet.create({
   header: { minHeight: 68, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }, close: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' }, panel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.lg }, switchRow: { flexDirection: 'row', alignItems: 'center' }, flex: { flex: 1 },
+  preferenceCard: { minHeight: 96, borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, flexDirection: 'row', alignItems: 'center', gap: spacing.md }, preferenceIcon: { width: 48, height: 48, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
   countGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, countCard: { width: '31%', minHeight: 76, borderWidth: 1, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center', padding: spacing.sm },
   timeControl: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, flexDirection: 'row', alignItems: 'center', gap: spacing.sm }, adjust: { width: 48, height: 48, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' }, notice: { borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', gap: spacing.sm }, center: { textAlign: 'center' }, divider: { height: 1, marginVertical: spacing.sm }, infoRow: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.md },
 });

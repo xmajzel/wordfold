@@ -4,13 +4,13 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 
 import { AppText } from '@/components/app-text';
-import { AppSwitch } from '@/components/app-switch';
 import { EmptyState } from '@/components/empty-state';
 import { FormField } from '@/components/form-field';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import { WordCard } from '@/components/word-card';
 import { getCefrLevelSummaries } from '@/data/cefr-levels';
+import { buildRecommendations, topicOptions } from '@/features/recommendations/selector';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
@@ -19,13 +19,19 @@ const cefrLevelSummaries = getCefrLevelSummaries();
 
 export default function LibraryScreen() {
   const theme = useAppTheme();
-  const { words, collections, contentPacks, createCollection, toggleContentPack } = useAppData();
+  const { words, collections, learningPreferences, createCollection, addRecommendedWords } = useAppData();
   const [selectedCollection, setSelectedCollection] = useState('all');
   const [showCollectionForm, setShowCollectionForm] = useState(false);
   const [collectionName, setCollectionName] = useState('');
-  const [busyPack, setBusyPack] = useState<string | null>(null);
+  const [recommendationsBusy, setRecommendationsBusy] = useState(false);
   const filteredWords = useMemo(() => selectedCollection === 'all' ? words : words.filter((word) => word.collectionId === selectedCollection), [selectedCollection, words]);
   const collectionNames = useMemo(() => Object.fromEntries(collections.map((item) => [item.id, item.name])), [collections]);
+  const recommendationPreview = useMemo(() => buildRecommendations(
+    learningPreferences,
+    words.map((word) => word.normalizedTerm),
+    10,
+  ), [learningPreferences, words]);
+  const hasPreferences = learningPreferences.levels.length > 0 && learningPreferences.topics.length > 0;
 
   const addCollection = async () => {
     if (!collectionName.trim()) return;
@@ -33,12 +39,14 @@ export default function LibraryScreen() {
     setCollectionName(''); setShowCollectionForm(false);
   };
 
-  const togglePack = async (id: typeof contentPacks[number]['id'], enabled: boolean) => {
-    setBusyPack(id);
+  const addRecommendations = async () => {
+    setRecommendationsBusy(true);
     try {
-      await toggleContentPack(id, enabled);
-      if (enabled) Alert.alert('Pack added', 'Twelve useful starter words were added. More pack words can follow in future sessions.');
-    } finally { setBusyPack(null); }
+      const count = await addRecommendedWords(10);
+      Alert.alert(count > 0 ? 'Recommendations added' : 'You are caught up', count > 0
+        ? `${count} ${count === 1 ? 'word is' : 'words are'} ready to practice.`
+        : 'There are no unused recommendations for these preferences right now.');
+    } finally { setRecommendationsBusy(false); }
   };
 
   return (
@@ -76,13 +84,15 @@ export default function LibraryScreen() {
             </Pressable>)}
           </View>
         </View>}
-        ListEmptyComponent={<View style={styles.empty}><EmptyState title="No words here yet" message="Add a word or switch on a discovery pack below."/></View>}
+        ListEmptyComponent={<View style={styles.empty}><EmptyState title="No words here yet" message="Add a word or choose learning preferences for recommendations below."/></View>}
         renderItem={({ item }) => <Pressable onPress={() => router.push(`/word/${item.id}`)}><WordCard word={item} collectionName={collectionNames[item.collectionId]} compact/></Pressable>}
         ListFooterComponent={<View style={styles.footer}>
-          <View style={styles.sectionHeader}><View><AppText variant="heading">Discover useful words</AppText><AppText variant="caption" style={{ color: theme.muted }}>Optional, curated, and never rare just for show.</AppText></View></View>
-          <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-            {contentPacks.map((pack, index) => <View key={pack.id} style={[styles.packRow, index > 0 && { borderTopColor: theme.border, borderTopWidth: 1 }]}><View style={styles.packText}><AppText variant="label">{pack.name}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{pack.id === 'spoken' ? 'Practical conversation' : pack.id === 'business' ? 'Work and project language' : 'Research and study language'}</AppText></View><AppSwitch accessibilityLabel={`Enable ${pack.name}`} value={pack.enabled} disabled={busyPack !== null} onValueChange={(enabled) => void togglePack(pack.id, enabled)}/></View>)}
-          </View>
+          <View style={styles.sectionHeader}><View><AppText variant="heading">Recommended for you</AppText><AppText variant="caption" style={{ color: theme.muted }}>Small batches shaped by your level and interests.</AppText></View></View>
+          {hasPreferences ? <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+            <View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="sparkles-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">{learningPreferences.levels.join(', ')} English</AppText><AppText variant="caption" style={{ color: theme.muted }}>{topicOptions.filter((topic) => learningPreferences.topics.includes(topic.id)).map((topic) => topic.title).join(' · ')}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Edit learning preferences" onPress={() => router.push('/preferences' as never)} style={styles.editPreferences}><AppText variant="label" style={{ color: theme.primary }}>Edit</AppText></Pressable></View>
+            {recommendationPreview.length > 0 ? <View style={styles.recommendationWords}>{recommendationPreview.slice(0, 3).map(({ entry }) => <View key={entry.id} style={[styles.recommendationWord, { backgroundColor: theme.primarySoft }]}><AppText variant="label" style={{ color: theme.primary }}>{entry.term}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{entry.level}</AppText></View>)}</View> : <AppText style={{ color: theme.muted }}>You have already added every available recommendation for these choices.</AppText>}
+            <PrimaryButton label={recommendationPreview.length > 0 ? `Add ${Math.min(10, recommendationPreview.length)} recommended words` : 'No new recommendations'} loading={recommendationsBusy} disabled={recommendationPreview.length === 0} onPress={() => void addRecommendations()} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/>
+          </View> : <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="options-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">Make recommendations personal</AppText><AppText variant="caption" style={{ color: theme.muted }}>Choose at least one level and interest.</AppText></View></View><PrimaryButton label="Choose learning preferences" variant="secondary" onPress={() => router.push('/preferences' as never)}/></View>}
         </View>}
       />
     </Screen>
@@ -100,7 +110,7 @@ const styles = StyleSheet.create({
   actionRow: { flexDirection: 'row', gap: spacing.sm }, action: { flex: 1 }, sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: spacing.sm },
   chips: { gap: spacing.sm }, chip: { minHeight: 40, paddingHorizontal: spacing.md, borderRadius: radii.pill, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   panel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.lg }, empty: { minHeight: 220 },
-  packRow: { minHeight: 68, flexDirection: 'row', alignItems: 'center', paddingVertical: spacing.sm }, packText: { flex: 1, gap: 2 },
+  packText: { flex: 1, gap: 2 }, recommendationHeading: { flexDirection: 'row', alignItems: 'center', gap: spacing.md }, recommendationIcon: { width: 44, height: 44, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' }, editPreferences: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }, recommendationWords: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, recommendationWord: { minHeight: 48, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderRadius: radii.control, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   levelGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, levelCard: { width: '48.5%', minHeight: 132, borderWidth: 1, borderRadius: radii.card, padding: spacing.md, gap: spacing.sm },
   levelBadge: { width: 52, height: 52, borderRadius: 18, alignItems: 'center', justifyContent: 'center' }, levelText: { flex: 1, gap: 2 },
 });

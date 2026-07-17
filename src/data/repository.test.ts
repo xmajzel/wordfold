@@ -1,6 +1,6 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
-import { addWord, addWords, getLearningFilter, getStats, resetWord, saveLearningFilter, type NewWordInput } from './repository';
+import { addWord, addWords, completeOnboardingSetup, getLearningFilter, getLearningPreferences, getStats, resetWord, saveLearningFilter, type NewWordInput } from './repository';
 
 function createDatabase() {
   const database = {
@@ -89,5 +89,40 @@ describe('word repository', () => {
     await saveLearningFilter(database, 'B2');
 
     expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining("'learning_filter'"), 'B2');
+  });
+
+  it('validates stored learning preferences', async () => {
+    const database = createDatabase();
+    database.getFirstAsync = jest.fn(async () => ({ value: '["C2","invalid","A1"]' }));
+    database.getAllAsync = jest.fn(async () => [
+      { id: 'spoken', name: 'Everyday conversations', enabled: 1 },
+      { id: 'business', name: 'Work and business', enabled: 0 },
+      { id: 'academic', name: 'Study and research', enabled: 1 },
+    ]);
+
+    await expect(getLearningPreferences(database)).resolves.toEqual({
+      levels: ['A1', 'C2'],
+      topics: ['spoken', 'academic'],
+    });
+  });
+
+  it('saves preferences, starter words, and completion atomically', async () => {
+    const database = createDatabase();
+    database.getAllAsync = jest.fn(async () => [
+      { id: 'spoken', name: 'Everyday conversations', enabled: 0 },
+      { id: 'business', name: 'Work and business', enabled: 0 },
+      { id: 'academic', name: 'Study and research', enabled: 0 },
+    ]);
+
+    const ids = await completeOnboardingSetup(
+      database,
+      { levels: ['A2'], topics: ['business'] },
+      [words[0]],
+    );
+
+    expect(ids).toHaveLength(1);
+    expect(database.withExclusiveTransactionAsync).toHaveBeenCalledTimes(1);
+    expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining('preferred_cefr_levels'), '["A2"]');
+    expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining('onboarding_complete'));
   });
 });

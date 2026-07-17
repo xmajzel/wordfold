@@ -1,4 +1,5 @@
 import type { LearningFilter, LearningRating, Word } from '@/domain/types';
+import { cefrLevels } from '@/data/cefr-levels';
 
 const UNDERSTOOD_INTERVAL_DAYS = [3, 7, 14, 30] as const;
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -66,6 +67,15 @@ export function filterWordsByLearningCategory(words: Word[], filter: LearningFil
   if (filter === 'all') return words;
   if (filter === 'personal') return words.filter((word) => word.cefrLevel === null);
   return words.filter((word) => word.cefrLevel === filter);
+}
+
+export function getAvailableLearningFilters(words: Word[]): LearningFilter[] {
+  const filters: LearningFilter[] = ['all'];
+  if (words.some((word) => word.cefrLevel === null)) filters.push('personal');
+  for (const level of cefrLevels) {
+    if (words.some((word) => word.cefrLevel === level)) filters.push(level);
+  }
+  return filters;
 }
 
 export function buildLearningFeed(words: Word[], now = new Date(), filter: LearningFilter = 'all'): Word[] {

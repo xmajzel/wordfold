@@ -32,32 +32,18 @@ describe('migrateDatabase', () => {
       expect.any(String),
       expect.any(String),
     );
-    expect(database.withExclusiveTransactionAsync).toHaveBeenCalledTimes(1);
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 3');
+    expect(database.withExclusiveTransactionAsync).not.toHaveBeenCalled();
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 4');
   });
 
-  it('adds the personal vocabulary to an existing version-one database', async () => {
+  it('preserves an existing version-one database without adding personal seed data', async () => {
     const database = createDatabase(1);
 
     await migrateDatabase(database);
 
-    expect(database.execAsync).toHaveBeenCalledTimes(3);
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 3');
-    expect(database.withExclusiveTransactionAsync).toHaveBeenCalledTimes(1);
-    expect(database.runAsync).toHaveBeenCalledWith(
-      expect.stringContaining('INSERT OR IGNORE INTO words'),
-      expect.any(String),
-      expect.any(String),
-      expect.any(String),
-      expect.any(String),
-      expect.any(String),
-      expect.any(String),
-      expect.any(String),
-      expect.any(String),
-      expect.anything(),
-      expect.any(String),
-      expect.any(String),
-    );
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 4');
+    expect(database.withExclusiveTransactionAsync).not.toHaveBeenCalled();
+    expect(database.runAsync).not.toHaveBeenCalledWith(expect.stringContaining('INSERT OR IGNORE INTO words'));
   });
 
   it('adds and backfills CEFR levels when upgrading a version-two database', async () => {
@@ -73,11 +59,11 @@ describe('migrateDatabase', () => {
     expect(database.getAllAsync).toHaveBeenCalledWith('SELECT id, catalog_sense_id FROM words WHERE catalog_sense_id IS NOT NULL');
     expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining("'learning_filter', 'all'"));
     expect(database.runAsync).toHaveBeenCalledWith('UPDATE words SET cefr_level = ? WHERE id = ?', 'A1', 'word-1');
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 3');
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 4');
   });
 
   it('does not reapply an up-to-date migration', async () => {
-    const database = createDatabase(3);
+    const database = createDatabase(4);
 
     await migrateDatabase(database);
 

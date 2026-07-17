@@ -2,13 +2,20 @@ export type LearningState = 'new' | 'cannot_remember' | 'understood' | 'learned'
 
 export type LearningRating = 'again' | 'understood' | 'learned';
 
-export type ContentSource = 'manual' | 'spoken' | 'business' | 'academic';
+export type ContentPackId = 'spoken' | 'business' | 'academic';
+
+export type ContentSource = 'manual' | ContentPackId;
 
 export type CefrLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
 
 export type LearningFilter = 'all' | 'personal' | CefrLevel;
 
 export type CefrCatalogSource = 'cefr-j' | 'octanove';
+
+export interface LearningPreferences {
+  levels: CefrLevel[];
+  topics: ContentPackId[];
+}
 
 export interface CefrCatalogEntry {
   id: string;

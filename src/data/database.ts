@@ -1,9 +1,8 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
 import { getCefrLevelForCatalogSense } from './cefr-level-lookup';
-import { seedPersonalVocabulary } from './prefill';
 
-const DATABASE_VERSION = 3;
+const DATABASE_VERSION = 4;
 
 export async function migrateDatabase(database: SQLiteDatabase) {
   await database.execAsync('PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL;');
@@ -98,15 +97,11 @@ export async function migrateDatabase(database: SQLiteDatabase) {
     );
     await database.runAsync(
       `INSERT INTO content_packs (id, name, enabled) VALUES
-        ('spoken', 'Everyday spoken English', 0),
-        ('business', 'Business English', 0),
-        ('academic', 'Academic English', 0)`,
+        ('spoken', 'Everyday conversations', 0),
+        ('business', 'Work and business', 0),
+        ('academic', 'Study and research', 0)`,
     );
     await database.runAsync("INSERT INTO app_metadata (key, value) VALUES ('onboarding_complete', 'false')");
-  }
-
-  if (currentVersion < 2) {
-    await seedPersonalVocabulary(database);
   }
 
   if (currentVersion < 3) {
@@ -132,6 +127,17 @@ export async function migrateDatabase(database: SQLiteDatabase) {
         }
       });
     }
+  }
+
+  if (currentVersion < 4) {
+    await database.runAsync(
+      "INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('preferred_cefr_levels', '[]')",
+    );
+    await database.execAsync(`
+      UPDATE content_packs SET name = 'Everyday conversations' WHERE id = 'spoken';
+      UPDATE content_packs SET name = 'Work and business' WHERE id = 'business';
+      UPDATE content_packs SET name = 'Study and research' WHERE id = 'academic';
+    `);
   }
 
   await database.execAsync(`PRAGMA user_version = ${DATABASE_VERSION}`);

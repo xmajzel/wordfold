@@ -1,6 +1,6 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
-import type { CatalogSense, ContentSource } from '@/domain/types';
+import type { CatalogSense, ContentPackId } from '@/domain/types';
 import { normalizeTerm } from '@/features/import/parser';
 import packsJson from '../../assets/catalog/packs.json';
 
@@ -37,9 +37,9 @@ export async function lookupSenses(database: SQLiteDatabase, term: string): Prom
   }));
 }
 
-type Pack = { id: ContentSource; name: string; terms: string[] };
+type Pack = { id: ContentPackId; name: string; terms: string[] };
 const packs = packsJson as Pack[];
 
-export function getPackTerms(packId: ContentSource) {
+export function getPackTerms(packId: ContentPackId) {
   return packs.find((pack) => pack.id === packId)?.terms ?? [];
 }

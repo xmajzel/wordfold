@@ -57,6 +57,8 @@ function Navigation() {
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colorScheme === 'dark' ? palette.dark.canvas : palette.light.canvas } }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="onboarding" options={{ gestureEnabled: false }} />
+        <Stack.Screen name="onboarding-ready" options={{ gestureEnabled: false }} />
+        <Stack.Screen name="preferences" options={{ presentation: 'modal' }} />
         <Stack.Screen name="settings" options={{ presentation: 'modal' }} />
         <Stack.Screen name="import" options={{ presentation: 'modal' }} />
         <Stack.Screen name="word/new" options={{ presentation: 'modal' }} />

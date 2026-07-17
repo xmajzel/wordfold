@@ -2,23 +2,21 @@ import { createContext, PropsWithChildren, Suspense, useCallback, useContext, us
 import { AppState, StyleSheet, View } from 'react-native';
 import { SQLiteProvider, useSQLiteContext, type SQLiteDatabase } from 'expo-sqlite';
 
-import type { CatalogSense, Collection, ContentSource, DashboardStats, LearningFilter, LearningRating, LearningState, ReminderSettings, Word } from '@/domain/types';
-import { lookupSenses, getPackTerms } from '@/data/catalog';
+import type { CatalogSense, Collection, DashboardStats, LearningFilter, LearningPreferences, LearningRating, LearningState, ReminderSettings, Word } from '@/domain/types';
+import { lookupSenses } from '@/data/catalog';
 import { migrateDatabase } from '@/data/database';
 import * as repository from '@/data/repository';
-import { normalizeTerm } from '@/features/import/parser';
 import { applyRating } from '@/features/learning/algorithm';
+import { buildRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
 import { rebuildReminderSchedule } from '@/features/reminders/scheduler';
 import { LaunchScreen } from '@/components/launch-screen';
-
-interface ContentPackState { id: ContentSource; name: string; enabled: boolean }
 
 interface AppDataValue {
   words: Word[];
   collections: Collection[];
   stats: DashboardStats | null;
   reminderSettings: ReminderSettings | null;
-  contentPacks: ContentPackState[];
+  learningPreferences: LearningPreferences;
   learningFilter: LearningFilter;
   onboardingComplete: boolean | null;
   refresh(): Promise<void>;
@@ -33,18 +31,13 @@ interface AppDataValue {
   markViewed(id: string): Promise<void>;
   updateReminderSettings(settings: ReminderSettings): Promise<number>;
   updateLearningFilter(filter: LearningFilter): Promise<void>;
-  toggleContentPack(id: ContentSource, enabled: boolean): Promise<void>;
-  finishOnboarding(): Promise<void>;
+  saveLearningPreferences(preferences: LearningPreferences): Promise<void>;
+  completePersonalizedOnboarding(preferences: LearningPreferences): Promise<number>;
+  addRecommendedWords(limit?: number): Promise<number>;
   noteNotificationOpen(wordId: string | null): Promise<void>;
 }
 
 const AppDataContext = createContext<AppDataValue | null>(null);
-
-const priorityTerms: Partial<Record<ContentSource, string[]>> = {
-  spoken: ['agree', 'available', 'benefit', 'choice', 'conversation', 'explain', 'focus', 'quality', 'reason', 'support', 'understand', 'wonder'],
-  business: ['stakeholder', 'deliverable', 'milestone', 'governance', 'dependency', 'alignment', 'benchmark', 'collaboration', 'constraint', 'forecast', 'portfolio', 'strategy'],
-  academic: ['methodology', 'empirical', 'inference', 'validity', 'synthesis', 'hypothesis', 'variable', 'qualitative', 'quantitative', 'framework', 'correlation', 'parameter'],
-};
 
 const stateStatKeys: Record<LearningState, keyof Pick<DashboardStats,
   'newWords' | 'difficultWords' | 'understoodWords' | 'learnedWords'>> = {
@@ -65,6 +58,20 @@ function localDateKey(date: Date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 }
 
+function recommendationsToInputs(recommendations: Recommendation[]): repository.NewWordInput[] {
+  return recommendations.map(({ entry, topic }) => ({
+    collectionId: 'my-words',
+    term: entry.term,
+    normalizedTerm: entry.normalizedTerm,
+    definition: entry.definition,
+    example: entry.example,
+    partOfSpeech: entry.partOfSpeech,
+    catalogSenseId: entry.catalogSenseId,
+    cefrLevel: entry.level,
+    source: topic ?? 'manual',
+  }));
+}
+
 function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsWithChildren<{
   appDatabase: SQLiteDatabase;
   catalogDatabase: SQLiteDatabase;
@@ -73,22 +80,22 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const [collections, setCollections] = useState<Collection[]>([]);
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [reminderSettings, setReminderSettings] = useState<ReminderSettings | null>(null);
-  const [contentPacks, setContentPacks] = useState<ContentPackState[]>([]);
+  const [learningPreferences, setLearningPreferences] = useState<LearningPreferences>({ levels: [], topics: [] });
   const [learningFilter, setLearningFilter] = useState<LearningFilter>('all');
   const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
   const lastScheduleDay = useRef<string | null>(null);
 
   const refresh = useCallback(async () => {
-    const [nextWords, nextCollections, nextStats, nextSettings, nextPacks, nextOnboarding, nextLearningFilter] = await Promise.all([
+    const [nextWords, nextCollections, nextStats, nextSettings, nextPreferences, nextOnboarding, nextLearningFilter] = await Promise.all([
       repository.listWords(appDatabase), repository.listCollections(appDatabase), repository.getStats(appDatabase),
-      repository.getReminderSettings(appDatabase), repository.getContentPacks(appDatabase),
+      repository.getReminderSettings(appDatabase), repository.getLearningPreferences(appDatabase),
       repository.isOnboardingComplete(appDatabase), repository.getLearningFilter(appDatabase),
     ]);
     setWords(nextWords);
     setCollections(nextCollections);
     setStats(nextStats);
     setReminderSettings(nextSettings);
-    setContentPacks(nextPacks.map((pack) => ({ ...pack, enabled: Boolean(pack.enabled) })));
+    setLearningPreferences(nextPreferences);
     setOnboardingComplete(nextOnboarding);
     setLearningFilter(nextLearningFilter);
   }, [appDatabase]);
@@ -132,7 +139,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   }, [refreshReminderSchedule]);
 
   const value = useMemo<AppDataValue>(() => ({
-    words, collections, stats, reminderSettings, contentPacks, learningFilter, onboardingComplete, refresh,
+    words, collections, stats, reminderSettings, learningPreferences, learningFilter, onboardingComplete, refresh,
     findSenses: (term) => lookupSenses(catalogDatabase, term),
     createWord: async (input) => {
       const id = await repository.addWord(appDatabase, input);
@@ -185,34 +192,31 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     updateLearningFilter: async (filter) => {
       await repository.saveLearningFilter(appDatabase, filter); setLearningFilter(filter);
     },
-    toggleContentPack: async (id, enabled) => {
-      await repository.setContentPackEnabled(appDatabase, id, enabled);
-      if (enabled) {
-        const existing = new Set((await repository.listWords(appDatabase)).map((word) => word.normalizedTerm));
-        const candidates = [...(priorityTerms[id] ?? []), ...getPackTerms(id)];
-        let added = 0;
-        for (const term of candidates) {
-          const normalizedTerm = normalizeTerm(term);
-          if (existing.has(normalizedTerm)) continue;
-          const sense = (await lookupSenses(catalogDatabase, term))[0];
-          if (!sense) continue;
-          await repository.addWord(appDatabase, {
-            collectionId: 'my-words', term, normalizedTerm, definition: sense.definition,
-            example: sense.example, partOfSpeech: sense.partOfSpeech, catalogSenseId: sense.id, source: id,
-          });
-          existing.add(normalizedTerm);
-          added += 1;
-          if (added >= 12) break;
-        }
-      }
-      await refresh(); await reschedule();
+    saveLearningPreferences: async (preferences) => {
+      const normalized = normalizeLearningPreferences(preferences);
+      await repository.saveLearningPreferences(appDatabase, normalized);
+      setLearningPreferences(normalized);
     },
-    finishOnboarding: async () => { await repository.completeOnboarding(appDatabase); setOnboardingComplete(true); },
+    completePersonalizedOnboarding: async (preferences) => {
+      const existing = await repository.listWords(appDatabase);
+      const recommendations = buildRecommendations(preferences, existing.map((word) => word.normalizedTerm), 10);
+      await repository.completeOnboardingSetup(appDatabase, preferences, recommendationsToInputs(recommendations));
+      await refresh(); await reschedule();
+      return recommendations.length;
+    },
+    addRecommendedWords: async (limit = 10) => {
+      const existing = await repository.listWords(appDatabase);
+      const recommendations = buildRecommendations(learningPreferences, existing.map((word) => word.normalizedTerm), limit);
+      if (recommendations.length === 0) return 0;
+      await repository.addWords(appDatabase, recommendationsToInputs(recommendations));
+      await refresh(); await reschedule();
+      return recommendations.length;
+    },
     noteNotificationOpen: async (wordId) => {
       await repository.recordNotificationOpen(appDatabase, wordId);
       setStats((current) => current ? { ...current, notificationOpens: current.notificationOpens + 1 } : current);
     },
-  }), [appDatabase, catalogDatabase, collections, contentPacks, learningFilter, onboardingComplete, refresh, reminderSettings, reschedule, stats, words]);
+  }), [appDatabase, catalogDatabase, collections, learningFilter, learningPreferences, onboardingComplete, refresh, reminderSettings, reschedule, stats, words]);
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>;
 }

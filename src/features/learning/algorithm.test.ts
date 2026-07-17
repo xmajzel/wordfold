@@ -1,6 +1,6 @@
 import type { Word } from '@/domain/types';
 
-import { applyRating, buildLearningFeed } from './algorithm';
+import { applyRating, buildLearningFeed, getAvailableLearningFilters } from './algorithm';
 
 const baseWord = (overrides: Partial<Word>): Word => ({
   id: 'word', collectionId: 'collection', term: 'scope', normalizedTerm: 'scope',
@@ -80,5 +80,16 @@ describe('learning algorithm', () => {
     expect(buildLearningFeed(words, now, 'A1').map((word) => word.id)).toEqual(['a1']);
     expect(buildLearningFeed(words, now, 'personal').map((word) => word.id)).toEqual(['personal']);
     expect(buildLearningFeed(words, now, 'all')).toHaveLength(3);
+  });
+
+  it('offers only learning filters that have words', () => {
+    const words = [
+      baseWord({ id: 'c1', cefrLevel: 'C1' }),
+      baseWord({ id: 'personal', cefrLevel: null }),
+    ];
+
+    expect(getAvailableLearningFilters(words)).toEqual(['all', 'personal', 'C1']);
+    expect(getAvailableLearningFilters([words[0]])).toEqual(['all', 'C1']);
+    expect(getAvailableLearningFilters([])).toEqual(['all']);
   });
 });

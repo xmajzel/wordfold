@@ -8,7 +8,7 @@ import { EmptyState } from '@/components/empty-state';
 import { Screen } from '@/components/screen';
 import { WordCard } from '@/components/word-card';
 import type { LearningFilter, LearningRating, Word } from '@/domain/types';
-import { buildLearningFeed, filterWordsByLearningCategory, insertSessionRetry } from '@/features/learning/algorithm';
+import { buildLearningFeed, filterWordsByLearningCategory, getAvailableLearningFilters, insertSessionRetry } from '@/features/learning/algorithm';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { spacing } from '@/theme/tokens';
@@ -25,16 +25,24 @@ const filterOptions: { id: LearningFilter; label: string }[] = [
 ];
 
 export default function LearnScreen() {
-  const { words, learningFilter } = useAppData();
-  const sessionKey = `${learningFilter}:${words.map((word) => word.id).sort().join(':')}`;
-  return <LearningSession key={sessionKey} />;
+  const { words, learningFilter, updateLearningFilter } = useAppData();
+  const availableFilters = useMemo(() => getAvailableLearningFilters(words), [words]);
+  const activeFilter = availableFilters.includes(learningFilter) ? learningFilter : 'all';
+  const sessionKey = `${activeFilter}:${words.map((word) => word.id).sort().join(':')}`;
+
+  useEffect(() => {
+    if (activeFilter === learningFilter) return;
+    void updateLearningFilter(activeFilter);
+  }, [activeFilter, learningFilter, updateLearningFilter]);
+
+  return <LearningSession key={sessionKey} filter={activeFilter} availableFilters={availableFilters}/>;
 }
 
-function LearningSession() {
+function LearningSession({ filter, availableFilters }: { filter: LearningFilter; availableFilters: LearningFilter[] }) {
   const theme = useAppTheme();
   const { height } = useWindowDimensions();
-  const { words, collections, learningFilter, updateLearningFilter, rateWord, markViewed } = useAppData();
-  const [sessionFeed, setSessionFeed] = useState<Word[]>(() => buildLearningFeed(words, new Date(), learningFilter));
+  const { words, collections, updateLearningFilter, rateWord, markViewed } = useAppData();
+  const [sessionFeed, setSessionFeed] = useState<Word[]>(() => buildLearningFeed(words, new Date(), filter));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [ratingWordId, setRatingWordId] = useState<string | null>(null);
   const [sessionComplete, setSessionComplete] = useState(false);
@@ -42,7 +50,7 @@ function LearningSession() {
   const viewedIds = useRef(new Set<string>());
   const retriedIds = useRef(new Set<string>());
   const cardHeight = Math.max(540, height - 150);
-  const categoryWords = useMemo(() => filterWordsByLearningCategory(words, learningFilter), [learningFilter, words]);
+  const categoryWords = useMemo(() => filterWordsByLearningCategory(words, filter), [filter, words]);
 
   useEffect(() => {
     const word = sessionFeed[currentIndex];
@@ -88,17 +96,17 @@ function LearningSession() {
   };
 
   if (sessionComplete) {
-    return <Screen><Header filter={learningFilter} onSelectFilter={updateLearningFilter}/><EmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(learningFilter, true)} due in this session.`} actionLabel="Browse library" onAction={() => router.push('/(tabs)/library')}/></Screen>;
+    return <Screen><Header filter={filter} availableFilters={availableFilters} onSelectFilter={updateLearningFilter}/><EmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} actionLabel="Browse library" onAction={() => router.push('/(tabs)/library')}/></Screen>;
   }
 
   if (sessionFeed.length === 0) {
     const hasCategoryWords = categoryWords.length > 0;
-    return <Screen><Header filter={learningFilter} onSelectFilter={updateLearningFilter}/><EmptyState title={hasCategoryWords ? 'You are caught up' : `No ${categoryWordLabel(learningFilter)} yet`} message={hasCategoryWords ? `No ${categoryWordLabel(learningFilter)} are due right now.` : 'Add words from the library or choose another category.'} actionLabel="Browse library" onAction={() => router.push('/(tabs)/library')}/></Screen>;
+    return <Screen><Header filter={filter} availableFilters={availableFilters} onSelectFilter={updateLearningFilter}/><EmptyState title={hasCategoryWords ? 'You are caught up' : `No ${categoryWordLabel(filter)} yet`} message={hasCategoryWords ? `No ${categoryWordLabel(filter)} are due right now.` : 'Add words from the library or choose another category.'} actionLabel="Browse library" onAction={() => router.push('/(tabs)/library')}/></Screen>;
   }
 
   return (
     <Screen style={styles.screen}>
-      <Header filter={learningFilter} onSelectFilter={updateLearningFilter}/>
+      <Header filter={filter} availableFilters={availableFilters} onSelectFilter={updateLearningFilter}/>
       <FlatList
         ref={listRef}
         data={sessionFeed}
@@ -115,12 +123,12 @@ function LearningSession() {
   );
 }
 
-function Header({ filter, onSelectFilter }: { filter: LearningFilter; onSelectFilter(filter: LearningFilter): Promise<void> }) {
+function Header({ filter, availableFilters, onSelectFilter }: { filter: LearningFilter; availableFilters: LearningFilter[]; onSelectFilter(filter: LearningFilter): Promise<void> }) {
   const theme = useAppTheme();
   return <View style={styles.headerBlock}>
     <View style={styles.header}><View><AppText variant="title">Today’s words</AppText><AppText variant="caption" style={{ color: theme.muted }}>Showing {filter === 'all' ? 'all words' : categoryWordLabel(filter)}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Open settings" onPress={() => router.push('/settings')} style={({ pressed }) => [styles.settings, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.7 : 1 }]}><Ionicons name="options-outline" color={theme.primary} size={22}/></Pressable></View>
     <ScrollView horizontal accessibilityRole="tablist" showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filters}>
-      {filterOptions.map((option) => <Pressable key={option.id} accessibilityRole="tab" accessibilityLabel={`Show ${option.label} words`} accessibilityState={{ selected: filter === option.id }} aria-selected={filter === option.id} onPress={() => void onSelectFilter(option.id)} style={[styles.filter, { backgroundColor: filter === option.id ? theme.primary : theme.surface, borderColor: filter === option.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: filter === option.id ? '#FFFFFF' : theme.text }}>{option.label}</AppText></Pressable>)}
+      {filterOptions.filter((option) => availableFilters.includes(option.id)).map((option) => <Pressable key={option.id} accessibilityRole="tab" accessibilityLabel={`Show ${option.label} words`} accessibilityState={{ selected: filter === option.id }} aria-selected={filter === option.id} onPress={() => void onSelectFilter(option.id)} style={[styles.filter, { backgroundColor: filter === option.id ? theme.primary : theme.surface, borderColor: filter === option.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: filter === option.id ? '#FFFFFF' : theme.text }}>{option.label}</AppText></Pressable>)}
     </ScrollView>
   </View>;
 }
@@ -135,5 +143,5 @@ function categoryWordLabel(filter: LearningFilter, singular = false) {
 const styles = StyleSheet.create({
   screen: { paddingHorizontal: spacing.lg }, headerBlock: { gap: spacing.sm, paddingBottom: spacing.sm }, header: { minHeight: 76, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   settings: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 22, borderWidth: 1 }, filters: { gap: spacing.sm },
-  filter: { minHeight: 44, paddingHorizontal: spacing.md, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' }, position: { textAlign: 'center', paddingVertical: spacing.xs },
+  filter: { minWidth: 44, minHeight: 44, paddingHorizontal: spacing.md, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' }, position: { textAlign: 'center', paddingVertical: spacing.xs },
 });
