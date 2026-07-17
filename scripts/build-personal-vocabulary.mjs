@@ -3,9 +3,9 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
 const sourcePath = resolve(process.argv[2] ?? '/Users/jozefmajzel/Desktop/Anglické slovíčka - Hárok1.tsv');
-const outputPath = resolve(process.argv[3] ?? 'assets/seed/personal-vocabulary.json');
+const outputPath = resolve(process.argv[3] ?? 'docs/personal-vocabulary-archive/personal-vocabulary.json');
 const catalogPath = resolve(process.argv[4] ?? 'assets/catalog/wordnet.sqlite');
-const overridePath = resolve('assets/seed/personal-vocabulary-overrides.json');
+const overridePath = resolve('docs/personal-vocabulary-archive/personal-vocabulary-overrides.json');
 
 const groups = [
   { id: 'ux-ui', name: 'UX/UI', termColumn: 4, translationColumn: 5, priority: 0 },
