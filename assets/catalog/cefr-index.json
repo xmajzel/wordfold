@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "title": "CEFR-aligned English vocabulary",
+  "levels": [
+    "A1",
+    "A2",
+    "B1",
+    "B2",
+    "C1",
+    "C2"
+  ],
+  "counts": {
+    "A1": 937,
+    "A2": 1212,
+    "B1": 2116,
+    "B2": 2424,
+    "C1": 831,
+    "C2": 780
+  }
+}
