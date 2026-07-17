@@ -23,11 +23,16 @@ export default function SettingsScreen() {
   const [scheduledCount, setScheduledCount] = useState<number | null>(null);
   const toggleEnabled = async (enabled: boolean) => {
     if (!enabled) { setDraft({ ...draft, enabled: false }); return; }
-    const allowed = await requestReminderPermission();
-    if (!allowed) {
-      Alert.alert('Notifications are disabled', 'Enable Wordfold notifications in system settings to use reminders.', [{ text: 'Not now' }, { text: 'Open settings', onPress: () => void Linking.openSettings() }]);
+    const permission = await requestReminderPermission();
+    if (!permission.granted) {
+      const actions = permission.canAskAgain
+        ? [{ text: 'Not now' }]
+        : [{ text: 'Not now' }, { text: 'Open settings', onPress: () => void Linking.openSettings() }];
+      Alert.alert('Notifications are disabled', permission.canAskAgain
+        ? 'Wordfold needs notification permission before reminders can be enabled.'
+        : 'Enable Wordfold notifications in system settings to use reminders.', actions);
     }
-    setDraft({ ...draft, enabled: allowed });
+    setDraft({ ...draft, enabled: permission.granted });
   };
 
   const adjustTime = (field: 'windowStartMinutes' | 'windowEndMinutes', amount: number) => {

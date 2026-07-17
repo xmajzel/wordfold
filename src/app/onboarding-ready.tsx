@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Linking, Platform, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Redirect, router, useLocalSearchParams } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -24,11 +24,21 @@ const confetti = [
   { x: 176, y: 110, color: 'accent', rotation: '-12deg', delay: 340 },
 ] as const;
 
+type ReminderSetupState =
+  | { status: 'idle' }
+  | { status: 'enabled'; scheduledCount: number }
+  | { status: 'denied'; canAskAgain: boolean }
+  | { status: 'error' }
+  | { status: 'unsupported' };
+
 export default function OnboardingReadyScreen() {
   const theme = useAppTheme();
   const { count } = useLocalSearchParams<{ count?: string }>();
   const { onboardingComplete, updateReminderSettings } = useAppData();
   const [busy, setBusy] = useState(false);
+  const [reminderState, setReminderState] = useState<ReminderSetupState>(() => Platform.OS === 'web'
+    ? { status: 'unsupported' }
+    : { status: 'idle' });
   const wordCount = Number.isFinite(Number(count)) ? Number(count) : 0;
   if (onboardingComplete === false) return <Redirect href="/onboarding" />;
 
@@ -36,26 +46,62 @@ export default function OnboardingReadyScreen() {
   const enableReminders = async () => {
     setBusy(true);
     try {
-      const allowed = Platform.OS === 'web' ? false : await requestReminderPermission();
-      if (!allowed) {
-        Alert.alert('Reminders are off', Platform.OS === 'web'
-          ? 'Reminders can be enabled from the mobile app later.'
-          : 'You can enable notifications later in Settings.');
-        finish();
+      const permission = await requestReminderPermission();
+      if (!permission.granted) {
+        setReminderState({ status: 'denied', canAskAgain: permission.canAskAgain });
         return;
       }
-      await updateReminderSettings({
+      const scheduledCount = await updateReminderSettings({
         enabled: true,
         countPerDay: 2,
         windowStartMinutes: 600,
         windowEndMinutes: 1200,
         timeZoneId: Intl.DateTimeFormat().resolvedOptions().timeZone || 'local',
       });
-      finish();
+      setReminderState({ status: 'enabled', scheduledCount });
+    } catch {
+      setReminderState({ status: 'error' });
     } finally {
       setBusy(false);
     }
   };
+
+  const reminderPresentation = reminderState.status === 'enabled'
+    ? {
+      icon: 'checkmark-circle-outline' as const,
+      iconColor: theme.success,
+      title: 'Reminders are on.',
+      body: `Two words a day between 10:00 and 20:00. ${reminderState.scheduledCount} ${reminderState.scheduledCount === 1 ? 'reminder is' : 'reminders are'} scheduled ahead.`,
+    }
+    : reminderState.status === 'denied'
+      ? {
+        icon: 'notifications-off-outline' as const,
+        iconColor: theme.danger,
+        title: 'Reminders are off.',
+        body: reminderState.canAskAgain
+          ? 'Wordfold needs notification permission before it can schedule gentle reminders.'
+          : 'Notifications are blocked for Wordfold. You can allow them in your device settings.',
+      }
+      : reminderState.status === 'error'
+        ? {
+          icon: 'alert-circle-outline' as const,
+          iconColor: theme.danger,
+          title: 'Reminders could not be scheduled.',
+          body: 'Your words are ready. You can try scheduling again now or continue without reminders.',
+        }
+        : reminderState.status === 'unsupported'
+          ? {
+            icon: 'phone-portrait-outline' as const,
+            iconColor: theme.primary,
+            title: 'Reminders are available in the mobile app.',
+            body: 'Continue to your words here. You can set a reminder rhythm later from Wordfold on your phone.',
+          }
+          : {
+            icon: 'notifications-outline' as const,
+            iconColor: theme.primary,
+            title: 'Would a gentle reminder help?',
+            body: 'Two words between 10:00 and 20:00. You can adjust the rhythm or turn it off whenever you like.',
+          };
 
   return (
     <Screen style={styles.screen}>
@@ -91,16 +137,47 @@ export default function OnboardingReadyScreen() {
           <AppText variant="display" style={styles.center}>Your first words are ready.</AppText>
           <AppText style={[styles.center, { color: theme.muted }]}>{wordCount} carefully selected {wordCount === 1 ? 'word is' : 'words are'} waiting in your library.</AppText>
         </Animated.View>
-        <Animated.View entering={FadeInDown.delay(280).duration(460).reduceMotion(ReduceMotion.System)} style={[styles.reminderCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-          <View style={[styles.icon, { backgroundColor: theme.primarySoft }]}><Ionicons name="notifications-outline" color={theme.primary} size={27}/></View>
-          <AppText variant="heading" style={styles.center}>Would a gentle reminder help?</AppText>
-          <AppText style={[styles.center, { color: theme.muted }]}>Two words between 10:00 and 20:00. You can adjust the rhythm or turn it off whenever you like.</AppText>
-          <View style={styles.fullWidth}><PrimaryButton label="Enable gentle reminders" loading={busy} onPress={() => void enableReminders()} icon={<Ionicons name="notifications" color="#FFFFFF" size={18}/>}/></View>
-          <Pressable accessibilityRole="button" onPress={finish} style={styles.laterButton}><AppText variant="label" style={{ color: theme.primary }}>Maybe later</AppText></Pressable>
+        <Animated.View
+          accessibilityLiveRegion="polite"
+          entering={FadeInDown.delay(280).duration(460).reduceMotion(ReduceMotion.System)}
+          style={[styles.reminderCard, { backgroundColor: theme.surface, borderColor: theme.border }]}
+        >
+          <View style={[styles.icon, { backgroundColor: theme.primarySoft }]}><Ionicons name={reminderPresentation.icon} color={reminderPresentation.iconColor} size={27}/></View>
+          <AppText variant="heading" style={styles.center}>{reminderPresentation.title}</AppText>
+          <AppText style={[styles.center, { color: theme.muted }]}>{reminderPresentation.body}</AppText>
+
+          {reminderState.status === 'idle' ? <>
+            <View style={styles.fullWidth}><PrimaryButton label="Enable gentle reminders" loading={busy} onPress={() => void enableReminders()} icon={<Ionicons name="notifications" color="#FFFFFF" size={18}/>}/></View>
+            <TextAction label="Maybe later" onPress={finish}/>
+          </> : null}
+
+          {reminderState.status === 'enabled' ? <View style={styles.fullWidth}><PrimaryButton label="Start learning" onPress={finish} icon={<Ionicons name="arrow-forward" color="#FFFFFF" size={18}/>}/></View> : null}
+
+          {reminderState.status === 'denied' ? <>
+            <View style={styles.fullWidth}><PrimaryButton
+              label={reminderState.canAskAgain ? 'Try again' : 'Open system settings'}
+              loading={busy}
+              onPress={() => reminderState.canAskAgain ? void enableReminders() : void Linking.openSettings()}
+              icon={<Ionicons name={reminderState.canAskAgain ? 'refresh' : 'settings-outline'} color="#FFFFFF" size={18}/>}
+            /></View>
+            <TextAction label="Continue to my words" onPress={finish}/>
+          </> : null}
+
+          {reminderState.status === 'error' ? <>
+            <View style={styles.fullWidth}><PrimaryButton label="Try again" loading={busy} onPress={() => void enableReminders()} icon={<Ionicons name="refresh" color="#FFFFFF" size={18}/>}/></View>
+            <TextAction label="Continue to my words" onPress={finish}/>
+          </> : null}
+
+          {reminderState.status === 'unsupported' ? <View style={styles.fullWidth}><PrimaryButton label="Continue to my words" onPress={finish} icon={<Ionicons name="arrow-forward" color="#FFFFFF" size={18}/>}/></View> : null}
         </Animated.View>
       </View>
     </Screen>
   );
+}
+
+function TextAction({ label, onPress }: { label: string; onPress(): void }) {
+  const theme = useAppTheme();
+  return <Pressable accessibilityRole="button" onPress={onPress} style={styles.laterButton}><AppText variant="label" style={{ color: theme.primary }}>{label}</AppText></Pressable>;
 }
 
 const styles = StyleSheet.create({

@@ -1,7 +1,7 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
 import type { ReminderSettings, Word } from '@/domain/types';
-import { rebuildReminderSchedule } from './scheduler';
+import { rebuildReminderSchedule, requestReminderPermission } from './scheduler';
 
 interface ScheduledRequest {
   identifier?: string;
@@ -9,7 +9,8 @@ interface ScheduledRequest {
 }
 
 const mockCancelAllScheduledNotificationsAsync = jest.fn(async () => undefined);
-const mockGetPermissionsAsync = jest.fn(async () => ({ granted: true }));
+const mockGetPermissionsAsync = jest.fn(async () => ({ granted: true, canAskAgain: true }));
+const mockRequestPermissionsAsync = jest.fn(async () => ({ granted: true, canAskAgain: true }));
 const mockScheduleNotificationAsync = jest.fn(async (request: ScheduledRequest) => {
   await Promise.resolve();
   return request.identifier ?? 'notification';
@@ -21,6 +22,7 @@ jest.mock('expo-notifications', () => ({
   SchedulableTriggerInputTypes: { DATE: 'date' },
   cancelAllScheduledNotificationsAsync: () => mockCancelAllScheduledNotificationsAsync(),
   getPermissionsAsync: () => mockGetPermissionsAsync(),
+  requestPermissionsAsync: () => mockRequestPermissionsAsync(),
   scheduleNotificationAsync: (...args: unknown[]) => mockScheduleNotificationAsync(...args as [ScheduledRequest]),
   setNotificationChannelAsync: jest.fn(async () => undefined),
 }));
@@ -49,7 +51,23 @@ function database() {
 }
 
 describe('reminder scheduler', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockGetPermissionsAsync.mockResolvedValue({ granted: true, canAskAgain: true });
+    mockRequestPermissionsAsync.mockResolvedValue({ granted: true, canAskAgain: true });
+  });
+
+  it('returns an already-granted permission without prompting again', async () => {
+    await expect(requestReminderPermission()).resolves.toEqual({ granted: true, canAskAgain: true });
+    expect(mockRequestPermissionsAsync).not.toHaveBeenCalled();
+  });
+
+  it('reports when the operating system cannot ask for permission again', async () => {
+    mockGetPermissionsAsync.mockResolvedValue({ granted: false, canAskAgain: false });
+    mockRequestPermissionsAsync.mockResolvedValue({ granted: false, canAskAgain: false });
+
+    await expect(requestReminderPermission()).resolves.toEqual({ granted: false, canAskAgain: false });
+  });
 
   it('serializes concurrent rebuilds and uses deterministic unique requests', async () => {
     let activeSchedules = 0;

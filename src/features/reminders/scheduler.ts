@@ -9,6 +9,16 @@ import { calculateReminderSlots } from './slots';
 const CHANNEL_ID = 'word-reminders';
 let rebuildQueue: Promise<unknown> = Promise.resolve();
 
+export interface ReminderPermissionResult {
+  granted: boolean;
+  canAskAgain: boolean;
+}
+
+function hasReminderPermission(permission: Notifications.NotificationPermissionsStatus) {
+  return permission.granted
+    || permission.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL;
+}
+
 export async function prepareNotificationChannel() {
   if (Platform.OS !== 'android') return;
   await Notifications.setNotificationChannelAsync(CHANNEL_ID, {
@@ -20,14 +30,14 @@ export async function prepareNotificationChannel() {
   });
 }
 
-export async function requestReminderPermission() {
+export async function requestReminderPermission(): Promise<ReminderPermissionResult> {
   await prepareNotificationChannel();
   const existing = await Notifications.getPermissionsAsync();
-  if (existing.granted || existing.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL) {
-    return true;
+  if (hasReminderPermission(existing)) {
+    return { granted: true, canAskAgain: existing.canAskAgain };
   }
   const requested = await Notifications.requestPermissionsAsync();
-  return requested.granted || requested.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL;
+  return { granted: hasReminderPermission(requested), canAskAgain: requested.canAskAgain };
 }
 
 export async function clearScheduledReminders(database: SQLiteDatabase) {
@@ -76,8 +86,7 @@ async function performReminderScheduleRebuild(
   if (!settings.enabled || words.every((word) => word.state === 'learned')) return 0;
 
   const permission = await Notifications.getPermissionsAsync();
-  const allowed = permission.granted
-    || permission.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL;
+  const allowed = hasReminderPermission(permission);
   if (!allowed) return 0;
 
   await prepareNotificationChannel();
