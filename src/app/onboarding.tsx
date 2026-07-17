@@ -3,7 +3,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Redirect, router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import Animated, { FadeInRight, ReduceMotion } from 'react-native-reanimated';
+import Animated, { FadeInLeft, FadeInRight, ReduceMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AppText } from '@/components/app-text';
@@ -18,6 +18,7 @@ import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
 
 const STEP_COUNT = 4;
+const STEP_NAMES = ['Language', 'Levels', 'Interests', 'Review'] as const;
 
 export default function OnboardingScreen() {
   const theme = useAppTheme();
@@ -25,6 +26,8 @@ export default function OnboardingScreen() {
   const { words, onboardingComplete, completePersonalizedOnboarding } = useAppData();
   const [wasCompleteOnEntry] = useState(onboardingComplete === true);
   const [step, setStep] = useState(0);
+  const [furthestStep, setFurthestStep] = useState(0);
+  const [transitionDirection, setTransitionDirection] = useState<'forward' | 'backward'>('forward');
   const [levels, setLevels] = useState<CefrLevel[]>([]);
   const [topics, setTopics] = useState<ContentPackId[]>([]);
   const [busy, setBusy] = useState(false);
@@ -44,10 +47,21 @@ export default function OnboardingScreen() {
     ? current.filter((item) => item !== topic)
     : normalizeLearningPreferences({ levels: [], topics: [...current, topic] }).topics);
   const canContinue = step === 1 ? levels.length > 0 : step === 2 ? topics.length > 0 : step !== 3 || preview.length > 0;
+  const maxValidStep = levels.length === 0 ? 1 : topics.length === 0 || preview.length === 0 ? 2 : 3;
+  const maxNavigableStep = Math.min(furthestStep, maxValidStep);
+
+  const goToStep = (nextStep: number) => {
+    if (nextStep < 0 || nextStep >= STEP_COUNT || nextStep > maxNavigableStep) return;
+    setTransitionDirection(nextStep < step ? 'backward' : 'forward');
+    setStep(nextStep);
+  };
 
   const continueFlow = async () => {
     if (step < STEP_COUNT - 1) {
-      setStep((current) => current + 1);
+      const nextStep = step + 1;
+      setTransitionDirection('forward');
+      setFurthestStep((current) => Math.max(current, nextStep));
+      setStep(nextStep);
       return;
     }
     setBusy(true);
@@ -62,19 +76,42 @@ export default function OnboardingScreen() {
   return (
     <Screen style={styles.screen}>
       <View style={styles.topBar}>
-        <AppText variant="label" style={{ color: theme.primary }}>Wordfold</AppText>
+        <View style={styles.topBarBrand}>
+          {step > 0 ? <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={`Go back to ${STEP_NAMES[step - 1]}`}
+            onPress={() => goToStep(step - 1)}
+            style={({ pressed }) => [styles.headerBackButton, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.72 : 1 }]}
+          >
+            <Ionicons name="arrow-back" color={theme.text} size={20}/>
+          </Pressable> : null}
+          <AppText variant="label" style={{ color: theme.primary }}>Wordfold</AppText>
+        </View>
         <AppText variant="caption" style={{ color: theme.muted }}>Step {step + 1} of {STEP_COUNT}</AppText>
       </View>
-      <View style={styles.progress} accessibilityRole="progressbar" accessibilityValue={{ min: 1, max: STEP_COUNT, now: step + 1 }}>
-        {Array.from({ length: STEP_COUNT }, (_, index) => <View
-          key={index}
-          style={[styles.progressSegment, { backgroundColor: index <= step ? theme.primary : theme.border }]}
-        />)}
+      <View style={styles.progress} accessibilityLabel={`Onboarding progress, step ${step + 1} of ${STEP_COUNT}`}>
+        {STEP_NAMES.map((name, index) => {
+          const unavailable = index > maxNavigableStep;
+          const current = index === step;
+          return <Pressable
+            key={name}
+            accessibilityRole="button"
+            accessibilityLabel={current ? `${name}, current step` : `Go to ${name}`}
+            accessibilityState={{ disabled: unavailable || current }}
+            disabled={unavailable || current}
+            onPress={() => goToStep(index)}
+            style={styles.progressTarget}
+          >
+            <View style={[styles.progressSegment, {
+              backgroundColor: index <= step ? theme.primary : index <= maxNavigableStep ? theme.primarySoft : theme.border,
+            }]}/>
+          </Pressable>;
+        })}
       </View>
 
       <Animated.View
         key={step}
-        entering={FadeInRight.duration(260).reduceMotion(ReduceMotion.System)}
+        entering={(transitionDirection === 'backward' ? FadeInLeft : FadeInRight).duration(260).reduceMotion(ReduceMotion.System)}
         style={styles.step}>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.stepContent}>
           {step === 0 ? <LanguageStep /> : null}
@@ -96,13 +133,6 @@ export default function OnboardingScreen() {
       </Animated.View>
 
       <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, spacing.lg), borderTopColor: theme.border }]}>
-        {step > 0 ? <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Go to previous onboarding step"
-          onPress={() => setStep((current) => current - 1)}
-          style={({ pressed }) => [styles.backButton, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.75 : 1 }]}>
-          <Ionicons name="arrow-back" color={theme.text} size={21}/>
-        </Pressable> : null}
         <View style={styles.continueButton}><PrimaryButton
           label={step === STEP_COUNT - 1 ? 'Create my starter set' : 'Continue'}
           disabled={!canContinue}
@@ -152,9 +182,9 @@ function ReviewStep({ preferences, preview }: { preferences: LearningPreferences
     </View>
     <View>
       <AppText variant="heading">Your first {preview.length} words</AppText>
-      <AppText style={{ color: theme.muted }}>A preview of the vocabulary waiting for you.</AppText>
+      <AppText style={{ color: theme.muted }}>These words will be added to your library.</AppText>
     </View>
-    <View style={styles.previewGrid}>{preview.slice(0, 6).map(({ entry }) => <View key={entry.id} style={[styles.wordChip, { backgroundColor: theme.primarySoft }]}><AppText variant="label" style={{ color: theme.primary }}>{entry.term}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{entry.level}</AppText></View>)}</View>
+    <View style={styles.previewGrid}>{preview.map(({ entry }) => <View key={entry.id} style={[styles.wordChip, { backgroundColor: theme.primarySoft }]}><AppText variant="label" style={{ color: theme.primary }}>{entry.term}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{entry.level}</AppText></View>)}</View>
     <AppText variant="caption" style={{ color: theme.muted }}>Existing words are never removed. Future recommendations will follow the same preferences.</AppText>
   </View>;
 }
@@ -166,8 +196,11 @@ function SummaryRow({ icon, label, value }: { icon: keyof typeof Ionicons.glyphM
 
 const styles = StyleSheet.create({
   screen: { width: '100%', maxWidth: 640, alignSelf: 'center', paddingHorizontal: 0 },
-  topBar: { minHeight: 48, paddingHorizontal: spacing.lg, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  progress: { flexDirection: 'row', gap: spacing.xs, paddingHorizontal: spacing.lg, paddingBottom: spacing.md },
+  topBar: { minHeight: 52, paddingHorizontal: spacing.lg, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  topBarBrand: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  headerBackButton: { width: 44, height: 44, borderWidth: 1, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
+  progress: { flexDirection: 'row', gap: spacing.xs, paddingHorizontal: spacing.lg },
+  progressTarget: { flex: 1, minHeight: 44, justifyContent: 'center' },
   progressSegment: { flex: 1, height: 4, borderRadius: 2 },
   step: { flex: 1 },
   stepContent: { paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.xxl },
@@ -183,9 +216,8 @@ const styles = StyleSheet.create({
   languageIcon: { width: 50, height: 50, borderRadius: 17, alignItems: 'center', justifyContent: 'center' },
   privacyRow: { minHeight: 48, borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   note: { borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', alignItems: 'flex-start', gap: spacing.sm },
-  footer: { borderTopWidth: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md, flexDirection: 'row', gap: spacing.sm },
-  backButton: { width: 52, height: 52, borderWidth: 1, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
-  continueButton: { flex: 1 },
+  footer: { borderTopWidth: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md },
+  continueButton: { width: '100%' },
   summaryCard: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md },
   summaryRow: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.md },
   summaryIcon: { width: 40, height: 40, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
