@@ -36,14 +36,16 @@ export default function OnboardingReadyScreen() {
   const { count } = useLocalSearchParams<{ count?: string }>();
   const { onboardingComplete, updateReminderSettings } = useAppData();
   const [busy, setBusy] = useState(false);
-  const [reminderState, setReminderState] = useState<ReminderSetupState>(() => Platform.OS === 'web'
-    ? { status: 'unsupported' }
-    : { status: 'idle' });
+  const [reminderState, setReminderState] = useState<ReminderSetupState>({ status: 'idle' });
   const wordCount = Number.isFinite(Number(count)) ? Number(count) : 0;
   if (onboardingComplete === false) return <Redirect href="/onboarding" />;
 
   const finish = () => router.replace('/(tabs)');
   const enableReminders = async () => {
+    if (Platform.OS === 'web') {
+      setReminderState({ status: 'unsupported' });
+      return;
+    }
     setBusy(true);
     try {
       const permission = await requestReminderPermission();
@@ -147,8 +149,8 @@ export default function OnboardingReadyScreen() {
           <AppText style={[styles.center, { color: theme.muted }]}>{reminderPresentation.body}</AppText>
 
           {reminderState.status === 'idle' ? <>
-            <View style={styles.fullWidth}><PrimaryButton label="Enable gentle reminders" loading={busy} onPress={() => void enableReminders()} icon={<Ionicons name="notifications" color="#FFFFFF" size={18}/>}/></View>
-            <TextAction label="Maybe later" onPress={finish}/>
+            <View style={styles.fullWidth}><PrimaryButton label="Set reminders" loading={busy} onPress={() => void enableReminders()} icon={<Ionicons name="notifications" color="#FFFFFF" size={18}/>}/></View>
+            <TextAction label="Continue to my words" onPress={finish}/>
           </> : null}
 
           {reminderState.status === 'enabled' ? <View style={styles.fullWidth}><PrimaryButton label="Start learning" onPress={finish} icon={<Ionicons name="arrow-forward" color="#FFFFFF" size={18}/>}/></View> : null}

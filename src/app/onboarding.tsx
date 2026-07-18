@@ -76,18 +76,8 @@ export default function OnboardingScreen() {
   return (
     <Screen style={styles.screen}>
       <View style={styles.topBar}>
-        <View style={styles.topBarBrand}>
-          {step > 0 ? <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={`Go back to ${STEP_NAMES[step - 1]}`}
-            onPress={() => goToStep(step - 1)}
-            style={({ pressed }) => [styles.headerBackButton, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.72 : 1 }]}
-          >
-            <Ionicons name="arrow-back" color={theme.text} size={20}/>
-          </Pressable> : null}
-          <AppText variant="label" style={{ color: theme.primary }}>Wordfold</AppText>
-        </View>
-        <AppText variant="caption" style={{ color: theme.muted }}>Step {step + 1} of {STEP_COUNT}</AppText>
+        <LinearGradient colors={theme.primaryGradient} style={styles.logoMark}><AppText variant="label" style={styles.logoLetter}>W</AppText></LinearGradient>
+        <View pointerEvents="none" style={styles.stepCounter}><AppText variant="caption" style={{ color: theme.muted }}>Step {step + 1} of {STEP_COUNT}</AppText></View>
       </View>
       <View style={styles.progress} accessibilityLabel={`Onboarding progress, step ${step + 1} of ${STEP_COUNT}`}>
         {STEP_NAMES.map((name, index) => {
@@ -133,8 +123,15 @@ export default function OnboardingScreen() {
       </Animated.View>
 
       <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, spacing.lg), borderTopColor: theme.border }]}>
+        <View style={styles.footerButton}><PrimaryButton
+          label="Back"
+          variant="secondary"
+          disabled={step === 0 || busy}
+          onPress={() => goToStep(step - 1)}
+          icon={<Ionicons name="arrow-back" color={theme.primary} size={18}/>}
+        /></View>
         <View style={styles.continueButton}><PrimaryButton
-          label={step === STEP_COUNT - 1 ? 'Create my starter set' : 'Continue'}
+          label={step === STEP_COUNT - 1 ? 'Create my set' : 'Continue'}
           disabled={!canContinue}
           loading={busy}
           onPress={() => void continueFlow()}
@@ -196,12 +193,13 @@ function SummaryRow({ icon, label, value }: { icon: keyof typeof Ionicons.glyphM
 
 const styles = StyleSheet.create({
   screen: { width: '100%', maxWidth: 640, alignSelf: 'center', paddingHorizontal: 0 },
-  topBar: { minHeight: 52, paddingHorizontal: spacing.lg, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  topBarBrand: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
-  headerBackButton: { width: 44, height: 44, borderWidth: 1, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
-  progress: { flexDirection: 'row', gap: spacing.xs, paddingHorizontal: spacing.lg },
-  progressTarget: { flex: 1, minHeight: 44, justifyContent: 'center' },
-  progressSegment: { flex: 1, height: 4, borderRadius: 2 },
+  topBar: { minHeight: 44, paddingHorizontal: spacing.lg, justifyContent: 'center' },
+  logoMark: { width: 30, height: 30, borderRadius: 10, alignItems: 'center', justifyContent: 'center', transform: [{ rotate: '-3deg' }] },
+  logoLetter: { color: '#FFFFFF' },
+  stepCounter: { position: 'absolute', left: 0, right: 0, alignItems: 'center' },
+  progress: { height: 20, flexDirection: 'row', gap: spacing.sm, paddingHorizontal: spacing.lg },
+  progressTarget: { flex: 1, height: 44, marginVertical: -12, justifyContent: 'center' },
+  progressSegment: { height: 3, borderRadius: 2 },
   step: { flex: 1 },
   stepContent: { paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.xxl },
   section: { gap: spacing.lg },
@@ -216,8 +214,9 @@ const styles = StyleSheet.create({
   languageIcon: { width: 50, height: 50, borderRadius: 17, alignItems: 'center', justifyContent: 'center' },
   privacyRow: { minHeight: 48, borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   note: { borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', alignItems: 'flex-start', gap: spacing.sm },
-  footer: { borderTopWidth: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md },
-  continueButton: { width: '100%' },
+  footer: { borderTopWidth: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md, flexDirection: 'row', gap: spacing.sm },
+  footerButton: { flex: 1 },
+  continueButton: { flex: 1 },
   summaryCard: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md },
   summaryRow: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.md },
   summaryIcon: { width: 40, height: 40, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
