@@ -7,6 +7,7 @@ Approved architecture documentation. The Supabase database foundation is deploye
 This document is the canonical design for adding optional accounts, offline synchronization, and multi-device restore to Wordfold. The operational setup and future hosting migration are documented separately:
 
 - [Initial managed setup](SUPABASE_POWERSYNC_INITIAL_SETUP.md)
+- [Phase 3 Supabase authentication specification](SUPABASE_AUTH_PHASE_3_SPECIFICATION.md)
 - [Managed-to-self-hosted migration](SUPABASE_POWERSYNC_SELF_HOSTED_MIGRATION.md)
 
 ## Problem
