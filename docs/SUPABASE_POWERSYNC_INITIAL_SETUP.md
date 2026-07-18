@@ -8,7 +8,10 @@ Implementation status:
 
 - Phase 1 is implemented in `supabase/config.toml`, `supabase/migrations/20260717000000_create_sync_database.sql`, and `supabase/tests/database/sync_database.test.sql`.
 - The migration creates the synchronized schema, RLS policies, transactional functions, tombstone protections, and the publication used by PowerSync.
-- PowerSync credentials/configuration, Supabase cloud deployment, authentication UI, and Expo client integration have not started.
+- The development Supabase schema and the dedicated read-only replication role are deployed through versioned migrations.
+- PowerSync CLI `0.10.0` is pinned, and `powersync/service.yaml` plus `powersync/sync-config.yaml` are the versioned Cloud configuration.
+- The EU PowerSync Cloud development instance is connected with verified TLS, Supabase Auth discovery, edition 3 user-scoped Sync Streams, and healthy initial replication for all three synchronized tables.
+- Authentication UI and Expo client integration have not started.
 
 The first deployment uses:
 

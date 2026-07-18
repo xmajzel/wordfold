@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved architecture documentation. The Phase 1 Supabase database foundation is implemented locally; PowerSync and application integration have not started.
+Approved architecture documentation. The Supabase database foundation is deployed to the development project, and the PowerSync Cloud development instance is connected with validated user-scoped Sync Streams. Authentication and application integration have not started.
 
 This document is the canonical design for adding optional accounts, offline synchronization, and multi-device restore to Wordfold. The operational setup and future hosting migration are documented separately:
 
