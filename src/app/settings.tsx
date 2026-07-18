@@ -13,10 +13,12 @@ import { requestReminderPermission } from '@/features/reminders/scheduler';
 import { formatMinutes, REMINDER_PRESETS } from '@/features/reminders/slots';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
+import { useAuth } from '@/providers/auth-provider';
 import { radii, spacing } from '@/theme/tokens';
 
 export default function SettingsScreen() {
   const theme = useAppTheme();
+  const auth = useAuth();
   const { reminderSettings, learningPreferences, updateReminderSettings } = useAppData();
   const [draft, setDraft] = useState<ReminderSettings>(() => reminderSettings ?? ({ enabled: false, countPerDay: 1, windowStartMinutes: 600, windowEndMinutes: 1200, timeZoneId: 'local' }));
   const [saving, setSaving] = useState(false);
@@ -54,6 +56,24 @@ export default function SettingsScreen() {
       <View style={styles.header}><Pressable accessibilityRole="button" accessibilityLabel="Close" onPress={() => router.back()} style={[styles.close, { backgroundColor: theme.surface }]}><Ionicons name="close" color={theme.text} size={22}/></Pressable><AppText variant="title">Settings</AppText><View style={styles.close}/></View>
       <Pressable
         accessibilityRole="button"
+        accessibilityLabel="Open account"
+        onPress={() => router.push('/account' as never)}
+        style={({ pressed }) => [styles.preferenceCard, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.76 : 1 }]}>
+        <View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name={auth.status === 'signedIn' ? 'person-circle-outline' : 'cloud-outline'} color={theme.primary} size={24}/></View>
+        <View style={styles.flex}>
+          <AppText variant="heading">Account and sync</AppText>
+          <AppText variant="caption" style={{ color: theme.muted }}>{auth.status === 'signedIn'
+            ? `${auth.user?.email ?? 'Signed in'} · data sync is not active yet`
+            : auth.status === 'loading'
+              ? 'Checking account on this device…'
+              : auth.status === 'unavailable'
+                ? 'Account services are not configured for this build'
+                : 'Sign in or create an account · data sync is not active yet'}</AppText>
+        </View>
+        <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
+      </Pressable>
+      <Pressable
+        accessibilityRole="button"
         accessibilityLabel="Edit learning preferences"
         onPress={() => router.push('/preferences' as never)}
         style={({ pressed }) => [styles.preferenceCard, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.76 : 1 }]}>
@@ -77,8 +97,8 @@ export default function SettingsScreen() {
       {scheduledCount !== null ? <AppText variant="label" style={[styles.center, { color: theme.success }]}>{draft.enabled ? `${scheduledCount} word reminders scheduled ahead.` : 'Reminders are off.'}</AppText> : null}
       <View style={styles.divider}/>
       <AppText variant="heading">Content and privacy</AppText>
-      <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><InfoRow icon="phone-portrait-outline" title="Local by default" body="Your words and learning history remain on this device."/><InfoRow icon="book-outline" title="Open English WordNet 2025" body="Definitions under CC BY 4.0."/><InfoRow icon="list-outline" title="NGSL discovery packs" body="Spoken, Business, and Academic lists under CC BY-SA 4.0."/></View>
-      <AppText variant="caption" style={{ color: theme.muted }}>Wordfold is a temporary development name. No account, cloud sync, analytics, or payment system is included.</AppText>
+      <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><InfoRow icon="phone-portrait-outline" title="Local during account setup" body="Your words and learning history remain on this device even when signed in."/><InfoRow icon="book-outline" title="Open English WordNet 2025" body="Definitions under CC BY 4.0."/><InfoRow icon="list-outline" title="NGSL discovery packs" body="Spoken, Business, and Academic lists under CC BY-SA 4.0."/></View>
+      <AppText variant="caption" style={{ color: theme.muted }}>Wordfold is a temporary development name. Optional account access is included; cloud data sync, analytics, and payments are not active.</AppText>
     </Screen>
   );
 }

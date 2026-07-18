@@ -10,6 +10,7 @@ import { Inter_400Regular } from '@expo-google-fonts/inter/400Regular';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
 
 import { AppDataProvider, useAppData } from '@/providers/app-data-provider';
+import { AuthProvider } from '@/providers/auth-provider';
 import { LaunchScreen } from '@/components/launch-screen';
 import { getNotificationWordTarget } from '@/features/reminders/notification-navigation';
 import { palette } from '@/theme/tokens';
@@ -60,6 +61,7 @@ function Navigation() {
         <Stack.Screen name="onboarding-ready" options={{ gestureEnabled: false }} />
         <Stack.Screen name="preferences" options={{ presentation: 'modal' }} />
         <Stack.Screen name="settings" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="account" options={{ presentation: 'modal' }} />
         <Stack.Screen name="import" options={{ presentation: 'modal' }} />
         <Stack.Screen name="word/new" options={{ presentation: 'modal' }} />
         <Stack.Screen name="word/[id]" />
@@ -71,7 +73,7 @@ function Navigation() {
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({ Fraunces_600SemiBold, Inter_400Regular, Inter_600SemiBold });
-  return <AppDataProvider><AppReadyGate fontsLoaded={fontsLoaded}/></AppDataProvider>;
+  return <AuthProvider><AppDataProvider><AppReadyGate fontsLoaded={fontsLoaded}/></AppDataProvider></AuthProvider>;
 }
 
 function AppReadyGate({ fontsLoaded }: { fontsLoaded: boolean }) {
