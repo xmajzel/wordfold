@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed specification — awaiting approval before implementation.
+Implemented locally. Automated tests, type checking, lint, and local Expo export pass. Remote authentication configuration and the native email-confirmation smoke test remain pending because the app does not yet have the development project's publishable key or an approved redirect-setting change.
 
 This phase adds an optional Supabase email/password account to Wordfold. It does not connect the application data repositories to PowerSync yet. Phase 4 will add synchronized application data after authentication is independently working and tested.
 
