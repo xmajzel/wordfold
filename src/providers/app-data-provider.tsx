@@ -169,6 +169,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
         ? { ...item, ...update, updatedAt: update.lastRatedAt }
         : item));
       setStats((current) => updateRatingStats(current, currentWord.state, update.state));
+      if (rating === 'learned') await reschedule();
     },
     markViewed: async (id) => {
       const occurredAt = new Date();

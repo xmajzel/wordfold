@@ -1,10 +1,14 @@
-import { render } from '@testing-library/react-native';
+import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import type { ReactElement, ReactNode } from 'react';
-import { Text } from 'react-native';
+import { Pressable, Text } from 'react-native';
 
-import { AppDataProvider } from './app-data-provider';
+import type { Word } from '@/domain/types';
+import * as repository from '@/data/repository';
+
+import { AppDataProvider, useAppData } from './app-data-provider';
 
 const mockSQLiteProvider = jest.fn(({ children }: { children: ReactNode }) => children);
+const mockRebuildReminderSchedule = jest.fn(async (..._args: unknown[]) => 0);
 
 jest.mock('../../assets/catalog/wordnet.sqlite', () => 1);
 
@@ -37,13 +41,33 @@ jest.mock('@/data/repository', () => ({
   getLearningPreferences: jest.fn(async () => ({ levels: [], topics: [] })),
   isOnboardingComplete: jest.fn(async () => false),
   getLearningFilter: jest.fn(async () => 'all'),
+  getWord: jest.fn(async () => null),
+  saveRating: jest.fn(async () => undefined),
 }));
 
 jest.mock('@/features/reminders/scheduler', () => ({
-  rebuildReminderSchedule: jest.fn(async () => 0),
+  rebuildReminderSchedule: (...args: unknown[]) => mockRebuildReminderSchedule(...args),
 }));
 
+const word: Word = {
+  id: 'word', collectionId: 'collection', term: 'scope', normalizedTerm: 'scope',
+  sourceLanguageCode: 'en', targetLanguageCode: 'sk', partOfSpeech: 'noun',
+  definition: 'The extent of something.', example: null, translation: null,
+  catalogSenseId: null, cefrLevel: null, source: 'manual', state: 'new',
+  understoodStreak: 0, lapseCount: 0, viewCount: 1,
+  lastViewedAt: '2026-07-17T10:00:00.000Z', lastRatedAt: null, nextReviewAt: null,
+  createdAt: '2026-07-01T10:00:00.000Z', updatedAt: '2026-07-17T10:00:00.000Z',
+};
+
+function StopReviewProbe() {
+  const { words, rateWord } = useAppData();
+  if (!words[0]) return <Text>Loading words</Text>;
+  return <Pressable accessibilityRole="button" onPress={() => void rateWord(words[0], 'learned')}><Text>Stop reviews</Text></Pressable>;
+}
+
 describe('AppDataProvider', () => {
+  beforeEach(() => jest.clearAllMocks());
+
   it('uses Suspense for only one SQLite provider', async () => {
     const providerTree = AppDataProvider({ children: <Text>Ready</Text> }) as ReactElement<{
       children: ReactElement<{ databaseName: string; useSuspense?: boolean }>;
@@ -58,5 +82,24 @@ describe('AppDataProvider', () => {
     const catalogProvider = providerCalls.find(({ databaseName }) => databaseName === 'wordnet.sqlite');
 
     expect(catalogProvider?.useSuspense).not.toBe(true);
+  });
+
+  it('rebuilds pending reminders after reviews are stopped', async () => {
+    (repository.listWords as jest.Mock).mockResolvedValue([word]);
+    (repository.getWord as jest.Mock).mockResolvedValue(word);
+    const view = await render(<AppDataProvider><StopReviewProbe/></AppDataProvider>);
+    const stopButton = await waitFor(() => view.getByRole('button', { name: 'Stop reviews' }));
+    await waitFor(() => expect(mockRebuildReminderSchedule).toHaveBeenCalled());
+    mockRebuildReminderSchedule.mockClear();
+
+    await fireEvent.press(stopButton);
+
+    await waitFor(() => expect(repository.saveRating).toHaveBeenCalledWith(
+      expect.anything(),
+      word.id,
+      'learned',
+      expect.objectContaining({ state: 'learned', nextReviewAt: null }),
+    ));
+    await waitFor(() => expect(mockRebuildReminderSchedule).toHaveBeenCalledTimes(1));
   });
 });
