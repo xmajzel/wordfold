@@ -25,7 +25,7 @@ export default function ProgressScreen() {
         <Legend color={stateColors.new} label="New" value={stats?.newWords ?? 0}/>
         <Legend color={stateColors.cannot_remember} label="Needs practice" value={stats?.difficultWords ?? 0}/>
         <Legend color={stateColors.understood} label="Getting there" value={stats?.understoodWords ?? 0}/>
-        <Legend color={stateColors.learned} label="Learned" value={stats?.learnedWords ?? 0}/>
+        <Legend color={stateColors.learned} label="Review stopped" value={stats?.learnedWords ?? 0}/>
       </View>
       <View style={[styles.panel, { backgroundColor: theme.primarySoft, borderColor: theme.primarySoft }]}><AppText variant="heading" style={{ color: theme.primary }}>Reminders that worked</AppText><AppText variant="display" style={{ color: theme.primary }}>{stats?.notificationOpens ?? 0}</AppText><AppText style={{ color: theme.muted }}>notification opens recorded on this device</AppText></View>
       <AppText variant="caption" style={[styles.note, { color: theme.muted }]}>Wordfold avoids streak pressure. Progress comes from encounters, honest recall, and returning when a word needs another look.</AppText>

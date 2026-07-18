@@ -46,11 +46,14 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [ratingWordId, setRatingWordId] = useState<string | null>(null);
   const [sessionComplete, setSessionComplete] = useState(false);
+  const [listHeight, setListHeight] = useState(0);
   const listRef = useRef<FlatList<Word>>(null);
   const viewedIds = useRef(new Set<string>());
   const retriedIds = useRef(new Set<string>());
-  const cardHeight = Math.max(540, height - 150);
+  const cardHeight = listHeight || Math.max(390, height - 241);
+  const denseCards = cardHeight < 500;
   const categoryWords = useMemo(() => filterWordsByLearningCategory(words, filter), [filter, words]);
+  const currentWords = useMemo(() => Object.fromEntries(words.map((word) => [word.id, word])), [words]);
 
   useEffect(() => {
     const word = sessionFeed[currentIndex];
@@ -110,13 +113,18 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
       <FlatList
         ref={listRef}
         data={sessionFeed}
+        extraData={currentWords}
+        onLayout={(event) => setListHeight(Math.round(event.nativeEvent.layout.height))}
         keyExtractor={(item, index) => `${item.id}-${index}`}
         showsVerticalScrollIndicator={false}
         snapToInterval={cardHeight + spacing.md}
         decelerationRate="fast"
         getItemLayout={(_, index) => ({ length: cardHeight + spacing.md, offset: (cardHeight + spacing.md) * index, index })}
         onMomentumScrollEnd={(event) => setCurrentIndex(Math.round(event.nativeEvent.contentOffset.y / (cardHeight + spacing.md)))}
-        renderItem={({ item }) => <View style={{ height: cardHeight, marginBottom: spacing.md }}><WordCard word={item} collectionName={collectionNames[item.collectionId]} actionsDisabled={ratingWordId !== null} onRate={(rating) => void handleRating(item, rating)}/></View>}
+        renderItem={({ item }) => {
+          const currentWord = currentWords[item.id] ?? item;
+          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} actionsDisabled={ratingWordId !== null} onRate={(rating) => void handleRating(currentWord, rating)}/></View>;
+        }}
       />
       <AppText variant="caption" style={[styles.position, { color: theme.muted }]}>{Math.min(currentIndex + 1, sessionFeed.length)} of {sessionFeed.length} due now</AppText>
     </Screen>

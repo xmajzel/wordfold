@@ -1,6 +1,6 @@
 import type { Word } from '@/domain/types';
 
-import { applyRating, buildLearningFeed, getAvailableLearningFilters } from './algorithm';
+import { applyRating, buildLearningFeed, getAvailableLearningFilters, getNextReviewIntervalDays } from './algorithm';
 
 const baseWord = (overrides: Partial<Word>): Word => ({
   id: 'word', collectionId: 'collection', term: 'scope', normalizedTerm: 'scope',
@@ -27,6 +27,14 @@ describe('learning algorithm', () => {
     const fourth = applyRating({ understoodStreak: 3, lapseCount: 0 }, 'understood', now);
     expect(first.nextReviewAt).toBe('2026-06-24T12:00:00.000Z');
     expect(fourth.nextReviewAt).toBe('2026-07-21T12:00:00.000Z');
+  });
+
+  it('previews the same understood interval used by the scheduler', () => {
+    expect(getNextReviewIntervalDays({ understoodStreak: 0 })).toBe(3);
+    expect(getNextReviewIntervalDays({ understoodStreak: 1 })).toBe(7);
+    expect(getNextReviewIntervalDays({ understoodStreak: 2 })).toBe(14);
+    expect(getNextReviewIntervalDays({ understoodStreak: 3 })).toBe(30);
+    expect(getNextReviewIntervalDays({ understoodStreak: 12 })).toBe(30);
   });
 
   it('interleaves two new words with a due review', () => {

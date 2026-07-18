@@ -13,6 +13,12 @@ export interface RatingUpdate {
   nextReviewAt: string | null;
 }
 
+export function getNextReviewIntervalDays(word: Pick<Word, 'understoodStreak'>) {
+  const nextStreak = word.understoodStreak + 1;
+  const intervalIndex = Math.min(nextStreak - 1, UNDERSTOOD_INTERVAL_DAYS.length - 1);
+  return UNDERSTOOD_INTERVAL_DAYS[intervalIndex];
+}
+
 export function applyRating(
   word: Pick<Word, 'understoodStreak' | 'lapseCount'>,
   rating: LearningRating,
@@ -39,8 +45,7 @@ export function applyRating(
   }
 
   const understoodStreak = word.understoodStreak + 1;
-  const intervalIndex = Math.min(understoodStreak - 1, UNDERSTOOD_INTERVAL_DAYS.length - 1);
-  const intervalDays = UNDERSTOOD_INTERVAL_DAYS[intervalIndex];
+  const intervalDays = getNextReviewIntervalDays(word);
   return {
     state: 'understood',
     understoodStreak,

@@ -9,7 +9,7 @@ const labels: Record<LearningState, string> = {
   new: 'New',
   cannot_remember: 'Needs practice',
   understood: 'Getting there',
-  learned: 'Learned',
+  learned: 'Review stopped',
 };
 
 const icons: Record<LearningState, keyof typeof Ionicons.glyphMap> = {
