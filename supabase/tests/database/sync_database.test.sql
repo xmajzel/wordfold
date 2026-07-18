@@ -96,6 +96,57 @@ select ok(
   'the PowerSync publication contains learning_events'
 );
 
+select ok(
+  exists (
+    select 1
+    from pg_roles
+    where rolname = 'powersync_role'
+  ),
+  'the dedicated PowerSync role exists'
+);
+select ok(
+  (
+    select rolcanlogin
+      and rolreplication
+      and rolbypassrls
+      and not rolsuper
+      and not rolcreatedb
+      and not rolcreaterole
+      and not rolinherit
+    from pg_roles
+    where rolname = 'powersync_role'
+  ),
+  'the PowerSync role has only the required role attributes'
+);
+select ok(
+  has_schema_privilege('powersync_role', 'public', 'USAGE'),
+  'the PowerSync role can resolve synchronized tables'
+);
+select ok(
+  has_table_privilege('powersync_role', 'public.collections', 'SELECT')
+    and has_table_privilege('powersync_role', 'public.words', 'SELECT')
+    and has_table_privilege('powersync_role', 'public.learning_events', 'SELECT'),
+  'the PowerSync role can read all synchronized tables'
+);
+select ok(
+  not has_table_privilege(
+    'powersync_role',
+    'public.collections',
+    'INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER'
+  )
+    and not has_table_privilege(
+      'powersync_role',
+      'public.words',
+      'INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER'
+    )
+    and not has_table_privilege(
+      'powersync_role',
+      'public.learning_events',
+      'INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER'
+    ),
+  'the PowerSync role cannot mutate synchronized tables'
+);
+
 insert into auth.users (id, email)
 values
   ('00000000-0000-4000-8000-000000000001', 'sync-user-1@example.test'),
