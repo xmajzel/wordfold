@@ -34,13 +34,13 @@ export const WordCard = memo(function WordCard({ word, collectionName, onRate, o
       <View style={styles.topRow}><StateBadge state={word.state}/><View style={styles.cardMeta}>{collectionName ? <AppText variant="caption" style={{ color: theme.muted }}>{collectionName}</AppText> : null}{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}</View></View>
       <View style={styles.wordSection}><AppText variant="display" style={[styles.word, dense && styles.denseWord]}>{word.term}</AppText>{word.partOfSpeech ? <AppText variant="label" style={{ color: theme.accent }}>{word.partOfSpeech}</AppText> : null}</View>
       <AppText numberOfLines={dense ? 2 : undefined} style={styles.definition}>{word.definition}</AppText>
-      {word.example ? <View style={[styles.example, dense && styles.denseExample, { backgroundColor: theme.raised }]}><Ionicons name="chatbubble-ellipses-outline" size={18} color={theme.primary}/><AppText numberOfLines={dense ? 2 : undefined} style={styles.exampleText}>{word.example}</AppText></View> : null}
+      {word.example ? <View style={[styles.example, dense && styles.denseExample, { backgroundColor: theme.raised }]}><Ionicons name="chatbubble-ellipses-outline" size={18} color={theme.primary}/><AppText accessibilityLabel={word.example} numberOfLines={dense ? 1 : undefined} style={styles.exampleText}>{word.example}</AppText></View> : null}
       {word.translation ? <Pressable accessibilityRole="button" accessibilityLabel={showTranslation ? 'Hide Slovak hint' : 'Need a Slovak hint?'} onPress={() => setShowTranslation((value) => !value)} style={({ pressed }) => [styles.hint, dense && styles.denseHint, { borderColor: theme.border, backgroundColor: theme.glass, transform: [{ scale: pressed ? 0.985 : 1 }] }]}><Ionicons name={showTranslation ? 'eye-off-outline' : 'eye-outline'} color={theme.primary} size={18}/><View style={styles.hintText}>{showTranslation ? <Animated.View entering={FadeIn.duration(180).reduceMotion(ReduceMotion.System)} exiting={FadeOut.duration(120).reduceMotion(ReduceMotion.System)}><AppText variant="label" style={{ color: theme.primary }}>{word.translation}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Tap to hide the translation</AppText></Animated.View> : <AppText variant="label" style={{ color: theme.primary }}>Need a Slovak hint?</AppText>}</View></Pressable> : null}
       {!word.translation && translationStatus === 'loading' ? <View accessibilityRole="progressbar" accessibilityLabel="Preparing Slovak hint" style={[styles.hint, dense && styles.denseHint, { borderColor: theme.border, backgroundColor: theme.glass }]}><ActivityIndicator color={theme.primary} size="small"/><AppText variant="label" style={{ color: theme.muted }}>Preparing Slovak hint…</AppText></View> : null}
       {!word.translation && translationStatus === 'error' ? <Pressable accessibilityRole="button" accessibilityLabel="Retry Slovak hint" onPress={onRetryTranslation} style={({ pressed }) => [styles.hint, dense && styles.denseHint, { borderColor: theme.border, backgroundColor: theme.glass, opacity: pressed ? 0.75 : 1 }]}><Ionicons name="refresh-outline" color={theme.primary} size={18}/><View style={styles.hintText}><AppText variant="label" style={{ color: theme.primary }}>Retry Slovak hint</AppText><AppText variant="caption" style={{ color: theme.muted }}>Translation was not available</AppText></View></Pressable> : null}
       <View style={styles.trail}><AppText variant="caption" style={{ color: theme.muted }}>Seen {word.viewCount}×</AppText><AppText variant="caption" style={{ color: theme.muted }}>Missed {word.lapseCount}×</AppText></View>
       {onRate ? <View style={[styles.ratingBlock, dense && styles.denseRatingBlock]}>
-        <AppText variant="label" style={styles.ratingPrompt}>What should happen next?</AppText>
+        <AppText variant="label" style={styles.ratingPrompt}>Swipe or tap</AppText>
         <View style={styles.actions}>
           <RecallButton dense={dense} disabled={actionsDisabled} icon="calendar-outline" label="Keep learning" detail={`Review in ${nextReviewRange.minDays}–${nextReviewRange.maxDays} days`} color={theme.primary} onPress={() => rate('understood')}/>
           <RecallButton dense={dense} disabled={actionsDisabled} icon="checkmark-circle-outline" label="I know this" detail="Stop reviews" color={theme.success} onPress={() => rate('learned')}/>
@@ -80,20 +80,20 @@ function CefrBadge({ level }: { level: NonNullable<Word['cefrLevel']> }) {
 
 const styles = StyleSheet.create({
   card: { flex: 1, borderRadius: radii.sheet, padding: spacing.xl, gap: spacing.xl, justifyContent: 'center', overflow: 'hidden', shadowOffset: { width: 0, height: 12 }, shadowOpacity: 0.12, shadowRadius: 24, elevation: 4 },
-  denseCard: { padding: spacing.lg, gap: spacing.sm, justifyContent: 'flex-start' },
+  denseCard: { paddingHorizontal: spacing.lg, paddingVertical: spacing.md, gap: spacing.xs, justifyContent: 'flex-start' },
   accentLine: { position: 'absolute', top: 0, left: spacing.xxl, right: spacing.xxl, height: 4, borderBottomLeftRadius: 8, borderBottomRightRadius: 8 },
   topRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   cardMeta: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm }, cefrBadge: { minWidth: 34, minHeight: 28, borderRadius: radii.pill, paddingHorizontal: spacing.sm, alignItems: 'center', justifyContent: 'center' },
   wordSection: { gap: spacing.xs, alignItems: 'center' }, word: { textAlign: 'center' }, denseWord: { fontSize: 34, lineHeight: 40 },
   definition: { fontSize: 18, lineHeight: 28, textAlign: 'center' },
-  example: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.sm, borderRadius: radii.card, padding: spacing.lg }, denseExample: { padding: spacing.md },
+  example: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.sm, borderRadius: radii.card, padding: spacing.lg }, denseExample: { padding: spacing.sm },
   exampleText: { flex: 1, fontStyle: 'italic' },
   hint: { minHeight: 52, flexDirection: 'row', alignItems: 'center', gap: spacing.md, borderWidth: 1, borderRadius: radii.control, paddingHorizontal: spacing.md }, denseHint: { minHeight: 44 },
   hintText: { flex: 1 }, trail: { flexDirection: 'row', justifyContent: 'center', gap: spacing.xl },
   ratingBlock: { gap: spacing.sm }, denseRatingBlock: { gap: spacing.xs }, ratingPrompt: { textAlign: 'center' },
   actions: { flexDirection: 'row', gap: spacing.sm },
   action: { flex: 1, minHeight: 104, borderWidth: 1, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center', gap: 2, padding: spacing.xs },
-  denseAction: { minHeight: 84 },
+  denseAction: { minHeight: 76 },
   actionIcon: { width: 38, height: 38, borderRadius: 19, alignItems: 'center', justifyContent: 'center', marginBottom: 2 },
   denseActionIcon: { width: 32, height: 32, borderRadius: 16, marginBottom: 0 },
   actionLabel: { fontFamily: 'Inter_600SemiBold', textAlign: 'center' },

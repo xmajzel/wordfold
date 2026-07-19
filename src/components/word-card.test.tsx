@@ -44,7 +44,7 @@ describe('WordCard learning actions', () => {
     const onRate = jest.fn();
     const screen = await render(<WordCard word={word} onRate={onRate}/>);
 
-    screen.getByText('What should happen next?');
+    screen.getByText('Swipe or tap');
     expect(screen.queryByText('Again soon')).toBeNull();
     await fireEvent.press(screen.getByRole('button', { name: 'Keep learning. Review in 3–5 days.' }));
     await fireEvent.press(screen.getByRole('button', { name: 'I know this. Stop reviews.' }));

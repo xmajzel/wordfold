@@ -6,6 +6,7 @@ import { router } from 'expo-router';
 import { AppText } from '@/components/app-text';
 import { EmptyState } from '@/components/empty-state';
 import { Screen } from '@/components/screen';
+import { SwipeableWordCard } from '@/components/swipeable-word-card';
 import { WordCard } from '@/components/word-card';
 import type { LearningFilter, LearningRating, Word } from '@/domain/types';
 import { buildLearningFeed, filterWordsByLearningCategory, getAvailableLearningFilters } from '@/features/learning/algorithm';
@@ -145,15 +146,15 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
         decelerationRate="fast"
         getItemLayout={(_, index) => ({ length: cardHeight + spacing.md, offset: (cardHeight + spacing.md) * index, index })}
         onMomentumScrollEnd={(event) => setCurrentIndex(Math.round(event.nativeEvent.contentOffset.y / (cardHeight + spacing.md)))}
-        renderItem={({ item }) => {
+        renderItem={({ item, index }) => {
           const currentWord = currentWords[item.id] ?? item;
           const translationStatus = currentWord.id === activeWord?.id && !currentWord.translation
             ? translationStates[currentWord.id] ?? 'loading'
             : undefined;
-          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} actionsDisabled={ratingWordId !== null} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={(rating) => void handleRating(currentWord, rating)}/></View>;
+          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><SwipeableWordCard word={currentWord} active={index === currentIndex} disabled={ratingWordId !== null} onSwipe={(rating) => void handleRating(currentWord, rating)}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} actionsDisabled={ratingWordId !== null} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={(rating) => void handleRating(currentWord, rating)}/></SwipeableWordCard></View>;
         }}
       />
-      <AppText variant="caption" style={[styles.position, { color: theme.muted }]}>{Math.min(currentIndex + 1, sessionFeed.length)} of {sessionFeed.length} due now</AppText>
+      <AppText variant="caption" style={[styles.position, { color: theme.muted }]}>{Math.min(currentIndex + 1, sessionFeed.length)} of {sessionFeed.length} due now · scroll to skip</AppText>
     </Screen>
   );
 }

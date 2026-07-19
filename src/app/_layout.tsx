@@ -8,6 +8,7 @@ import { useFonts } from 'expo-font';
 import { Fraunces_600SemiBold } from '@expo-google-fonts/fraunces/600SemiBold';
 import { Inter_400Regular } from '@expo-google-fonts/inter/400Regular';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { AppDataProvider, useAppData } from '@/providers/app-data-provider';
 import { AuthProvider } from '@/providers/auth-provider';
@@ -73,7 +74,7 @@ function Navigation() {
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({ Fraunces_600SemiBold, Inter_400Regular, Inter_600SemiBold });
-  return <AuthProvider><AppDataProvider><AppReadyGate fontsLoaded={fontsLoaded}/></AppDataProvider></AuthProvider>;
+  return <GestureHandlerRootView style={styles.root}><AuthProvider><AppDataProvider><AppReadyGate fontsLoaded={fontsLoaded}/></AppDataProvider></AuthProvider></GestureHandlerRootView>;
 }
 
 function AppReadyGate({ fontsLoaded }: { fontsLoaded: boolean }) {

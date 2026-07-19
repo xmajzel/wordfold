@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { render, waitFor } from '@testing-library/react-native';
 
 import LearnScreen from '@/app/(tabs)';
@@ -16,6 +17,16 @@ const word: Word = {
 };
 
 jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
+
+jest.mock('@/components/swipeable-word-card', () => {
+  const React = jest.requireActual('react');
+  const { View } = jest.requireActual('react-native');
+
+  return {
+    SwipeableWordCard: ({ children }: { children: ReactNode }) =>
+      React.createElement(View, null, children),
+  };
+});
 
 jest.mock('expo-haptics', () => ({
   NotificationFeedbackType: { Success: 'success' },
