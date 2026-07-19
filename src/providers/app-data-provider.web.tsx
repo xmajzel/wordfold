@@ -17,6 +17,7 @@ interface AppDataValue {
   refresh(): Promise<void>; findSenses(term: string): Promise<CatalogSense[]>;
   createWord(input: NewWordInput): Promise<string>; createWords(inputs: NewWordInput[]): Promise<string[]>;
   editWord(id: string, input: NewWordInput): Promise<void>; removeWord(id: string): Promise<void>;
+  saveWordTranslation(id: string, translation: string): Promise<void>;
   resetWord(id: string): Promise<void>; createCollection(name: string, color: string): Promise<string>;
   rateWord(word: Word, rating: LearningRating): Promise<void>; markViewed(id: string): Promise<void>;
   updateReminderSettings(settings: ReminderSettings): Promise<number>;
@@ -97,6 +98,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
     createWord: async (input) => { const word = toWord(input); setWords((current) => [word, ...current]); return word.id; },
     createWords: async (inputs) => { const next = inputs.map((input) => toWord(input)); setWords((current) => [...next, ...current]); return next.map((word) => word.id); },
     editWord: async (id, input) => setWords((current) => current.map((word) => word.id === id ? { ...word, ...input, normalizedTerm: input.normalizedTerm, updatedAt: new Date().toISOString() } : word)),
+    saveWordTranslation: async (id, translation) => setWords((current) => current.map((word) => word.id === id ? { ...word, translation: translation.trim(), updatedAt: new Date().toISOString() } : word)),
     removeWord: async (id) => setWords((current) => current.filter((word) => word.id !== id)),
     resetWord: async (id) => setWords((current) => current.map((word) => word.id === id ? { ...word, state: 'new', understoodStreak: 0, nextReviewAt: null } : word)),
     createCollection: async (name, color) => { const now = new Date().toISOString(); const id = createId('web-collection'); setCollections((current) => [...current, { id, name, color, createdAt: now, updatedAt: now }]); return id; },

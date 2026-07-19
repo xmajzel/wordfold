@@ -5,7 +5,7 @@ import { getCefrLevelForCatalogSense } from './cefr-level-lookup';
 const DATABASE_VERSION = 4;
 
 export async function migrateDatabase(database: SQLiteDatabase) {
-  await database.execAsync('PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL;');
+  await database.execAsync('PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;');
   const versionRow = await database.getFirstAsync<{ user_version: number }>('PRAGMA user_version');
   const currentVersion = versionRow?.user_version ?? 0;
   if (currentVersion >= DATABASE_VERSION) return;

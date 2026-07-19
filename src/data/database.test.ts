@@ -19,6 +19,10 @@ describe('migrateDatabase', () => {
 
     await migrateDatabase(database);
 
+    expect(database.execAsync).toHaveBeenNthCalledWith(
+      1,
+      'PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;',
+    );
     const schema = (database.execAsync as jest.Mock).mock.calls[1][0] as string;
     expect(schema).toContain('CREATE TABLE words');
     expect(schema).toContain('cefr_level');

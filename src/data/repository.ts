@@ -103,6 +103,15 @@ export async function updateWord(database: SQLiteDatabase, id: string, input: Ne
   );
 }
 
+export async function updateWordTranslation(database: SQLiteDatabase, id: string, translation: string) {
+  const updatedAt = new Date().toISOString();
+  await database.runAsync(
+    'UPDATE words SET translation = ?, updated_at = ? WHERE id = ?',
+    translation.trim(), updatedAt, id,
+  );
+  return updatedAt;
+}
+
 export async function deleteWord(database: SQLiteDatabase, id: string) {
   await database.runAsync('DELETE FROM words WHERE id = ?', id);
 }

@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import type { ReactElement, ReactNode } from 'react';
 import { Pressable, Text } from 'react-native';
 
@@ -43,6 +43,7 @@ jest.mock('@/data/repository', () => ({
   getLearningFilter: jest.fn(async () => 'all'),
   getWord: jest.fn(async () => null),
   saveRating: jest.fn(async () => undefined),
+  updateWordTranslation: jest.fn(async () => '2026-07-19T10:00:00.000Z'),
 }));
 
 jest.mock('@/features/reminders/scheduler', () => ({
@@ -63,6 +64,11 @@ function StopReviewProbe() {
   const { words, rateWord } = useAppData();
   if (!words[0]) return <Text>Loading words</Text>;
   return <Pressable accessibilityRole="button" onPress={() => void rateWord(words[0], 'learned')}><Text>Stop reviews</Text></Pressable>;
+}
+
+function TranslationProbe() {
+  const { saveWordTranslation } = useAppData();
+  return <Pressable accessibilityRole="button" onPress={() => void saveWordTranslation(word.id, 'rozsah')}><Text>Save translation</Text></Pressable>;
 }
 
 describe('AppDataProvider', () => {
@@ -101,5 +107,25 @@ describe('AppDataProvider', () => {
       expect.objectContaining({ state: 'learned', nextReviewAt: null }),
     ));
     await waitFor(() => expect(mockRebuildReminderSchedule).toHaveBeenCalledTimes(1));
+  });
+
+  it('waits for reminder writes before saving a translation', async () => {
+    let finishReminderWrite!: () => void;
+    mockRebuildReminderSchedule.mockImplementationOnce(() => new Promise<number>((resolve) => {
+      finishReminderWrite = () => resolve(0);
+    }));
+    const view = await render(<AppDataProvider><TranslationProbe/></AppDataProvider>);
+    const saveButton = await waitFor(() => view.getByRole('button', { name: 'Save translation' }));
+    await waitFor(() => expect(mockRebuildReminderSchedule).toHaveBeenCalledTimes(1));
+
+    await fireEvent.press(saveButton);
+    expect(repository.updateWordTranslation).not.toHaveBeenCalled();
+
+    await act(async () => finishReminderWrite());
+    await waitFor(() => expect(repository.updateWordTranslation).toHaveBeenCalledWith(
+      expect.anything(),
+      word.id,
+      'rozsah',
+    ));
   });
 });

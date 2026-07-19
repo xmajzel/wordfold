@@ -12,6 +12,7 @@ import { getCefrEntries } from '@/data/cefr-catalog';
 import { cefrLevelDescriptions, isCefrLevel } from '@/data/cefr-levels';
 import type { CefrCatalogEntry } from '@/domain/types';
 import { normalizeTerm } from '@/features/import/parser';
+import { translateEnglishToSlovak } from '@/features/translation/translator';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
@@ -38,12 +39,24 @@ export default function CefrLevelScreen() {
     }
     setBusyId(entry.id);
     try {
+      let translation: string;
+      try {
+        translation = (await translateEnglishToSlovak(entry.term)).trim();
+        if (!translation) throw new Error('Translation returned no text.');
+      } catch (error) {
+        Alert.alert(
+          'Translation is not available',
+          `${error instanceof Error ? error.message : 'Use a Wordfold development build.'}\n\nThe word was not added. The first use downloads an on-device language model over Wi-Fi.`,
+        );
+        return;
+      }
       await createWord({
         collectionId,
         term: entry.term,
         normalizedTerm: entry.normalizedTerm,
         definition: entry.definition,
         example: entry.example,
+        translation,
         partOfSpeech: entry.partOfSpeech,
         catalogSenseId: entry.catalogSenseId,
         cefrLevel: entry.level,

@@ -1,5 +1,5 @@
 import { memo, useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -12,8 +12,8 @@ import { getNextReviewIntervalDays } from '@/features/learning/algorithm';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { radii, spacing } from '@/theme/tokens';
 
-export const WordCard = memo(function WordCard({ word, collectionName, onRate, compact = false, dense = false, actionsDisabled = false }:
-  { word: Word; collectionName?: string; onRate?(rating: LearningRating): void; compact?: boolean; dense?: boolean; actionsDisabled?: boolean }) {
+export const WordCard = memo(function WordCard({ word, collectionName, onRate, onRetryTranslation, translationStatus, compact = false, dense = false, actionsDisabled = false }:
+  { word: Word; collectionName?: string; onRate?(rating: LearningRating): void; onRetryTranslation?(): void; translationStatus?: 'loading' | 'error'; compact?: boolean; dense?: boolean; actionsDisabled?: boolean }) {
   const theme = useAppTheme();
   const [showTranslation, setShowTranslation] = useState(false);
   const nextReviewDays = getNextReviewIntervalDays(word);
@@ -35,7 +35,9 @@ export const WordCard = memo(function WordCard({ word, collectionName, onRate, c
       <View style={styles.wordSection}><AppText variant="display" style={[styles.word, dense && styles.denseWord]}>{word.term}</AppText>{word.partOfSpeech ? <AppText variant="label" style={{ color: theme.accent }}>{word.partOfSpeech}</AppText> : null}</View>
       <AppText numberOfLines={dense ? 2 : undefined} style={styles.definition}>{word.definition}</AppText>
       {word.example ? <View style={[styles.example, dense && styles.denseExample, { backgroundColor: theme.raised }]}><Ionicons name="chatbubble-ellipses-outline" size={18} color={theme.primary}/><AppText numberOfLines={dense ? 2 : undefined} style={styles.exampleText}>{word.example}</AppText></View> : null}
-      {word.translation ? <Pressable accessibilityRole="button" onPress={() => setShowTranslation((value) => !value)} style={({ pressed }) => [styles.hint, dense && styles.denseHint, { borderColor: theme.border, backgroundColor: theme.glass, transform: [{ scale: pressed ? 0.985 : 1 }] }]}><Ionicons name={showTranslation ? 'eye-off-outline' : 'eye-outline'} color={theme.primary} size={18}/><View style={styles.hintText}>{showTranslation ? <Animated.View entering={FadeIn.duration(180).reduceMotion(ReduceMotion.System)} exiting={FadeOut.duration(120).reduceMotion(ReduceMotion.System)}><AppText variant="label" style={{ color: theme.primary }}>{word.translation}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Tap to hide the translation</AppText></Animated.View> : <AppText variant="label" style={{ color: theme.primary }}>Need a Slovak hint?</AppText>}</View></Pressable> : null}
+      {word.translation ? <Pressable accessibilityRole="button" accessibilityLabel={showTranslation ? 'Hide Slovak hint' : 'Need a Slovak hint?'} onPress={() => setShowTranslation((value) => !value)} style={({ pressed }) => [styles.hint, dense && styles.denseHint, { borderColor: theme.border, backgroundColor: theme.glass, transform: [{ scale: pressed ? 0.985 : 1 }] }]}><Ionicons name={showTranslation ? 'eye-off-outline' : 'eye-outline'} color={theme.primary} size={18}/><View style={styles.hintText}>{showTranslation ? <Animated.View entering={FadeIn.duration(180).reduceMotion(ReduceMotion.System)} exiting={FadeOut.duration(120).reduceMotion(ReduceMotion.System)}><AppText variant="label" style={{ color: theme.primary }}>{word.translation}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Tap to hide the translation</AppText></Animated.View> : <AppText variant="label" style={{ color: theme.primary }}>Need a Slovak hint?</AppText>}</View></Pressable> : null}
+      {!word.translation && translationStatus === 'loading' ? <View accessibilityRole="progressbar" accessibilityLabel="Preparing Slovak hint" style={[styles.hint, dense && styles.denseHint, { borderColor: theme.border, backgroundColor: theme.glass }]}><ActivityIndicator color={theme.primary} size="small"/><AppText variant="label" style={{ color: theme.muted }}>Preparing Slovak hint…</AppText></View> : null}
+      {!word.translation && translationStatus === 'error' ? <Pressable accessibilityRole="button" accessibilityLabel="Retry Slovak hint" onPress={onRetryTranslation} style={({ pressed }) => [styles.hint, dense && styles.denseHint, { borderColor: theme.border, backgroundColor: theme.glass, opacity: pressed ? 0.75 : 1 }]}><Ionicons name="refresh-outline" color={theme.primary} size={18}/><View style={styles.hintText}><AppText variant="label" style={{ color: theme.primary }}>Retry Slovak hint</AppText><AppText variant="caption" style={{ color: theme.muted }}>Translation was not available</AppText></View></Pressable> : null}
       <View style={styles.trail}><AppText variant="caption" style={{ color: theme.muted }}>Seen {word.viewCount}×</AppText><AppText variant="caption" style={{ color: theme.muted }}>Missed {word.lapseCount}×</AppText></View>
       {onRate ? <View style={[styles.ratingBlock, dense && styles.denseRatingBlock]}>
         <AppText variant="label" style={styles.ratingPrompt}>When should this word return?</AppText>

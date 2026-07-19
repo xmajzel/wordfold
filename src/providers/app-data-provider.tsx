@@ -7,6 +7,7 @@ import { lookupSenses } from '@/data/catalog';
 import { migrateDatabase } from '@/data/database';
 import * as repository from '@/data/repository';
 import { applyRating } from '@/features/learning/algorithm';
+import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
 import { buildRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
 import { rebuildReminderSchedule } from '@/features/reminders/scheduler';
 import { LaunchScreen } from '@/components/launch-screen';
@@ -24,6 +25,7 @@ interface AppDataValue {
   createWord(input: repository.NewWordInput): Promise<string>;
   createWords(inputs: repository.NewWordInput[]): Promise<string[]>;
   editWord(id: string, input: repository.NewWordInput): Promise<void>;
+  saveWordTranslation(id: string, translation: string): Promise<void>;
   removeWord(id: string): Promise<void>;
   resetWord(id: string): Promise<void>;
   createCollection(name: string, color: string): Promise<string>;
@@ -83,7 +85,12 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const [learningPreferences, setLearningPreferences] = useState<LearningPreferences>({ levels: [], topics: [] });
   const [learningFilter, setLearningFilter] = useState<LearningFilter>('all');
   const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
+  const [databaseMutationQueue] = useState(createSerialMutationQueue);
   const lastScheduleDay = useRef<string | null>(null);
+
+  const runDatabaseMutation = useCallback(<T,>(mutation: () => Promise<T>) => (
+    databaseMutationQueue.run(mutation)
+  ), [databaseMutationQueue]);
 
   const refresh = useCallback(async () => {
     const [nextWords, nextCollections, nextStats, nextSettings, nextPreferences, nextOnboarding, nextLearningFilter] = await Promise.all([
@@ -103,14 +110,16 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   useEffect(() => {
     // The async refresh resolves after the effect body, so this does not cascade a synchronous render.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    void refresh();
+    void refresh().catch((error) => console.warn('Could not refresh app data.', error));
   }, [refresh]);
 
   const reschedule = useCallback(async (nextWords?: Word[], nextSettings?: ReminderSettings) => {
-    const scheduleWords = nextWords ?? await repository.listWords(appDatabase);
-    const scheduleSettings = nextSettings ?? await repository.getReminderSettings(appDatabase);
-    return rebuildReminderSchedule(appDatabase, scheduleWords, scheduleSettings);
-  }, [appDatabase]);
+    return runDatabaseMutation(async () => {
+      const scheduleWords = nextWords ?? await repository.listWords(appDatabase);
+      const scheduleSettings = nextSettings ?? await repository.getReminderSettings(appDatabase);
+      return rebuildReminderSchedule(appDatabase, scheduleWords, scheduleSettings);
+    });
+  }, [appDatabase, runDatabaseMutation]);
 
   const refreshReminderSchedule = useCallback(async (force = false) => {
     const settings = await repository.getReminderSettings(appDatabase);
@@ -121,19 +130,21 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       ? settings
       : { ...settings, timeZoneId: currentTimeZone };
     if (nextSettings !== settings) {
-      await repository.saveReminderSettings(appDatabase, nextSettings);
+      await runDatabaseMutation(() => repository.saveReminderSettings(appDatabase, nextSettings));
       setReminderSettings(nextSettings);
     }
     await reschedule(undefined, nextSettings);
     lastScheduleDay.current = scheduleDay;
-  }, [appDatabase, reschedule]);
+  }, [appDatabase, reschedule, runDatabaseMutation]);
 
   useEffect(() => {
     // The async database reads complete before any provider state is refreshed.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    void refreshReminderSchedule(true);
+    void refreshReminderSchedule(true).catch((error) => console.warn('Could not refresh reminder schedule.', error));
     const subscription = AppState.addEventListener('change', (state) => {
-      if (state === 'active') void refreshReminderSchedule();
+      if (state === 'active') {
+        void refreshReminderSchedule().catch((error) => console.warn('Could not refresh reminder schedule.', error));
+      }
     });
     return () => subscription.remove();
   }, [refreshReminderSchedule]);
@@ -142,29 +153,37 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     words, collections, stats, reminderSettings, learningPreferences, learningFilter, onboardingComplete, refresh,
     findSenses: (term) => lookupSenses(catalogDatabase, term),
     createWord: async (input) => {
-      const id = await repository.addWord(appDatabase, input);
+      const id = await runDatabaseMutation(() => repository.addWord(appDatabase, input));
       await refresh(); await reschedule(); return id;
     },
     createWords: async (inputs) => {
-      const ids = await repository.addWords(appDatabase, inputs);
+      const ids = await runDatabaseMutation(() => repository.addWords(appDatabase, inputs));
       await refresh(); await reschedule(); return ids;
     },
     editWord: async (id, input) => {
-      await repository.updateWord(appDatabase, id, input); await refresh(); await reschedule();
+      await runDatabaseMutation(() => repository.updateWord(appDatabase, id, input)); await refresh(); await reschedule();
+    },
+    saveWordTranslation: async (id, translation) => {
+      const nextTranslation = translation.trim();
+      if (!nextTranslation) throw new Error('Translation returned no text.');
+      const updatedAt = await runDatabaseMutation(() => repository.updateWordTranslation(appDatabase, id, nextTranslation));
+      setWords((current) => current.map((word) => word.id === id
+        ? { ...word, translation: nextTranslation, updatedAt }
+        : word));
     },
     removeWord: async (id) => {
-      await repository.deleteWord(appDatabase, id); await refresh(); await reschedule();
+      await runDatabaseMutation(() => repository.deleteWord(appDatabase, id)); await refresh(); await reschedule();
     },
     resetWord: async (id) => {
-      await repository.resetWord(appDatabase, id); await refresh(); await reschedule();
+      await runDatabaseMutation(() => repository.resetWord(appDatabase, id)); await refresh(); await reschedule();
     },
     createCollection: async (name, color) => {
-      const id = await repository.addCollection(appDatabase, name, color); await refresh(); return id;
+      const id = await runDatabaseMutation(() => repository.addCollection(appDatabase, name, color)); await refresh(); return id;
     },
     rateWord: async (word, rating) => {
       const currentWord = await repository.getWord(appDatabase, word.id) ?? word;
       const update = applyRating(currentWord, rating);
-      await repository.saveRating(appDatabase, word.id, rating, update);
+      await runDatabaseMutation(() => repository.saveRating(appDatabase, word.id, rating, update));
       setWords((current) => current.map((item) => item.id === word.id
         ? { ...item, ...update, updatedAt: update.lastRatedAt }
         : item));
@@ -173,7 +192,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     },
     markViewed: async (id) => {
       const occurredAt = new Date();
-      await repository.recordView(appDatabase, id, occurredAt.toISOString());
+      await runDatabaseMutation(() => repository.recordView(appDatabase, id, occurredAt.toISOString()));
       setWords((current) => current.map((item) => item.id === id
         ? { ...item, viewCount: item.viewCount + 1, lastViewedAt: occurredAt.toISOString(), updatedAt: occurredAt.toISOString() }
         : item));
@@ -187,21 +206,21 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       } : current);
     },
     updateReminderSettings: async (settings) => {
-      await repository.saveReminderSettings(appDatabase, settings); await refresh();
+      await runDatabaseMutation(() => repository.saveReminderSettings(appDatabase, settings)); await refresh();
       return reschedule(undefined, settings);
     },
     updateLearningFilter: async (filter) => {
-      await repository.saveLearningFilter(appDatabase, filter); setLearningFilter(filter);
+      await runDatabaseMutation(() => repository.saveLearningFilter(appDatabase, filter)); setLearningFilter(filter);
     },
     saveLearningPreferences: async (preferences) => {
       const normalized = normalizeLearningPreferences(preferences);
-      await repository.saveLearningPreferences(appDatabase, normalized);
+      await runDatabaseMutation(() => repository.saveLearningPreferences(appDatabase, normalized));
       setLearningPreferences(normalized);
     },
     completePersonalizedOnboarding: async (preferences) => {
       const existing = await repository.listWords(appDatabase);
       const recommendations = buildRecommendations(preferences, existing.map((word) => word.normalizedTerm), 10);
-      await repository.completeOnboardingSetup(appDatabase, preferences, recommendationsToInputs(recommendations));
+      await runDatabaseMutation(() => repository.completeOnboardingSetup(appDatabase, preferences, recommendationsToInputs(recommendations)));
       await refresh(); await reschedule();
       return recommendations.length;
     },
@@ -209,15 +228,15 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       const existing = await repository.listWords(appDatabase);
       const recommendations = buildRecommendations(learningPreferences, existing.map((word) => word.normalizedTerm), limit);
       if (recommendations.length === 0) return 0;
-      await repository.addWords(appDatabase, recommendationsToInputs(recommendations));
+      await runDatabaseMutation(() => repository.addWords(appDatabase, recommendationsToInputs(recommendations)));
       await refresh(); await reschedule();
       return recommendations.length;
     },
     noteNotificationOpen: async (wordId) => {
-      await repository.recordNotificationOpen(appDatabase, wordId);
+      await runDatabaseMutation(() => repository.recordNotificationOpen(appDatabase, wordId));
       setStats((current) => current ? { ...current, notificationOpens: current.notificationOpens + 1 } : current);
     },
-  }), [appDatabase, catalogDatabase, collections, learningFilter, learningPreferences, onboardingComplete, refresh, reminderSettings, reschedule, stats, words]);
+  }), [appDatabase, catalogDatabase, collections, learningFilter, learningPreferences, onboardingComplete, refresh, reminderSettings, reschedule, runDatabaseMutation, stats, words]);
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>;
 }

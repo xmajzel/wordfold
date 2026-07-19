@@ -51,4 +51,28 @@ describe('WordCard learning actions', () => {
 
     expect(onRate.mock.calls.map(([rating]) => rating)).toEqual(['again', 'understood', 'learned']);
   });
+
+  it('shows translation preparation for an untranslated word', async () => {
+    const preparing = await render(<WordCard word={word} translationStatus="loading"/>);
+
+    preparing.getByLabelText('Preparing Slovak hint');
+  });
+
+  it('allows a failed translation to be retried', async () => {
+    const retryTranslation = jest.fn();
+    const failed = await render(<WordCard word={word} translationStatus="error" onRetryTranslation={retryTranslation}/>);
+    await fireEvent.press(failed.getByLabelText('Retry Slovak hint'));
+
+    expect(retryTranslation).toHaveBeenCalledTimes(1);
+  });
+
+  it('reveals a generated Slovak hint only after it is requested', async () => {
+    const translatedWord = { ...word, translation: 'rozsah' };
+    const screen = await render(<WordCard word={translatedWord}/>);
+
+    expect(screen.queryByText('rozsah')).toBeNull();
+    await fireEvent.press(screen.getByLabelText('Need a Slovak hint?'));
+
+    screen.getByText('rozsah');
+  });
 });

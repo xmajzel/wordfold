@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, FlatList, Pressable, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
@@ -10,6 +10,7 @@ import { WordCard } from '@/components/word-card';
 import type { LearningFilter, LearningRating, Word } from '@/domain/types';
 import { buildLearningFeed, filterWordsByLearningCategory, getAvailableLearningFilters, insertSessionRetry } from '@/features/learning/algorithm';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
+import { translateEnglishToSlovak } from '@/features/translation/translator';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { spacing } from '@/theme/tokens';
@@ -42,20 +43,49 @@ export default function LearnScreen() {
 function LearningSession({ filter, availableFilters }: { filter: LearningFilter; availableFilters: LearningFilter[] }) {
   const theme = useAppTheme();
   const { height } = useWindowDimensions();
-  const { words, collections, updateLearningFilter, rateWord, markViewed } = useAppData();
+  const { words, collections, updateLearningFilter, rateWord, markViewed, saveWordTranslation } = useAppData();
   const [sessionFeed, setSessionFeed] = useState<Word[]>(() => buildLearningFeed(words, new Date(), filter));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [ratingWordId, setRatingWordId] = useState<string | null>(null);
   const [sessionComplete, setSessionComplete] = useState(false);
   const [listHeight, setListHeight] = useState(0);
+  const [translationStates, setTranslationStates] = useState<Record<string, 'loading' | 'error'>>({});
   const listRef = useRef<FlatList<Word>>(null);
   const viewedIds = useRef(new Set<string>());
   const retriedIds = useRef(new Set<string>());
   const [mutationQueue] = useState(createSerialMutationQueue);
+  const translatingIds = useRef(new Set<string>());
   const cardHeight = listHeight || Math.max(390, height - 241);
   const denseCards = cardHeight < 500;
   const categoryWords = useMemo(() => filterWordsByLearningCategory(words, filter), [filter, words]);
   const currentWords = useMemo(() => Object.fromEntries(words.map((word) => [word.id, word])), [words]);
+  const activeWord = currentWords[sessionFeed[currentIndex]?.id] ?? sessionFeed[currentIndex];
+
+  const retryTranslation = useCallback((word: Word) => {
+    setTranslationStates((current) => ({ ...current, [word.id]: 'loading' }));
+  }, []);
+
+  useEffect(() => {
+    if (!activeWord || activeWord.translation || translatingIds.current.has(activeWord.id)
+      || translationStates[activeWord.id] === 'error') return;
+    translatingIds.current.add(activeWord.id);
+    const translationRequest = translateEnglishToSlovak(activeWord.term).then(async (result) => {
+      const translation = result.trim();
+      if (!translation) throw new Error('Translation returned no text.');
+      await saveWordTranslation(activeWord.id, translation);
+    });
+    void translationRequest.then(() => {
+      translatingIds.current.delete(activeWord.id);
+      setTranslationStates((current) => {
+        const next = { ...current };
+        delete next[activeWord.id];
+        return next;
+      });
+    }, () => {
+      translatingIds.current.delete(activeWord.id);
+      setTranslationStates((current) => ({ ...current, [activeWord.id]: 'error' }));
+    });
+  }, [activeWord, saveWordTranslation, translationStates]);
 
   useEffect(() => {
     const word = sessionFeed[currentIndex];
@@ -127,7 +157,10 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
         onMomentumScrollEnd={(event) => setCurrentIndex(Math.round(event.nativeEvent.contentOffset.y / (cardHeight + spacing.md)))}
         renderItem={({ item }) => {
           const currentWord = currentWords[item.id] ?? item;
-          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} actionsDisabled={ratingWordId !== null} onRate={(rating) => void handleRating(currentWord, rating)}/></View>;
+          const translationStatus = currentWord.id === activeWord?.id && !currentWord.translation
+            ? translationStates[currentWord.id] ?? 'loading'
+            : undefined;
+          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} actionsDisabled={ratingWordId !== null} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={(rating) => void handleRating(currentWord, rating)}/></View>;
         }}
       />
       <AppText variant="caption" style={[styles.position, { color: theme.muted }]}>{Math.min(currentIndex + 1, sessionFeed.length)} of {sessionFeed.length} due now</AppText>
