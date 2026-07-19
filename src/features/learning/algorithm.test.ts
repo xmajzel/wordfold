@@ -1,6 +1,6 @@
 import type { Word } from '@/domain/types';
 
-import { applyRating, buildLearningFeed, getAvailableLearningFilters, getNextReviewIntervalDays } from './algorithm';
+import { applyRating, buildLearningFeed, getAvailableLearningFilters, getNextReviewIntervalDays, getNextReviewIntervalRange } from './algorithm';
 
 const baseWord = (overrides: Partial<Word>): Word => ({
   id: 'word', collectionId: 'collection', term: 'scope', normalizedTerm: 'scope',
@@ -22,19 +22,23 @@ describe('learning algorithm', () => {
     );
   });
 
-  it('uses the approved understood intervals', () => {
-    const first = applyRating({ understoodStreak: 0, lapseCount: 0 }, 'understood', now);
-    const fourth = applyRating({ understoodStreak: 3, lapseCount: 0 }, 'understood', now);
-    expect(first.nextReviewAt).toBe('2026-06-24T12:00:00.000Z');
-    expect(fourth.nextReviewAt).toBe('2026-07-21T12:00:00.000Z');
+  it('schedules a uniformly selected whole day within the current review range', () => {
+    const first = applyRating({ understoodStreak: 0, lapseCount: 0 }, 'understood', now, () => 0);
+    const second = applyRating({ understoodStreak: 1, lapseCount: 0 }, 'understood', now, () => 0.999);
+    const later = applyRating({ understoodStreak: 4, lapseCount: 0 }, 'understood', now, () => 0.5);
+
+    expect(first.nextReviewAt).toBe('2026-06-22T12:00:00.000Z');
+    expect(second.nextReviewAt).toBe('2026-06-26T12:00:00.000Z');
+    expect(later.nextReviewAt).toBe('2026-06-27T12:00:00.000Z');
   });
 
-  it('previews the same understood interval used by the scheduler', () => {
-    expect(getNextReviewIntervalDays({ understoodStreak: 0 })).toBe(3);
-    expect(getNextReviewIntervalDays({ understoodStreak: 1 })).toBe(7);
-    expect(getNextReviewIntervalDays({ understoodStreak: 2 })).toBe(14);
-    expect(getNextReviewIntervalDays({ understoodStreak: 3 })).toBe(30);
-    expect(getNextReviewIntervalDays({ understoodStreak: 12 })).toBe(30);
+  it('progresses through the approved review ranges and caps at seven days', () => {
+    expect(getNextReviewIntervalRange({ understoodStreak: 0 })).toEqual({ minDays: 1, maxDays: 3 });
+    expect(getNextReviewIntervalRange({ understoodStreak: 1 })).toEqual({ minDays: 3, maxDays: 5 });
+    expect(getNextReviewIntervalRange({ understoodStreak: 2 })).toEqual({ minDays: 5, maxDays: 7 });
+    expect(getNextReviewIntervalRange({ understoodStreak: 12 })).toEqual({ minDays: 5, maxDays: 7 });
+    expect(getNextReviewIntervalDays({ understoodStreak: 0 }, () => 0)).toBe(1);
+    expect(getNextReviewIntervalDays({ understoodStreak: 0 }, () => 0.999)).toBe(3);
   });
 
   it('interleaves two new words with a due review', () => {

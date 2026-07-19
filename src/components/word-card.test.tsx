@@ -40,16 +40,16 @@ const word: Word = {
 };
 
 describe('WordCard learning actions', () => {
-  it('explains when each action will return the word', async () => {
+  it('offers only keep-learning and stop-review outcomes', async () => {
     const onRate = jest.fn();
     const screen = await render(<WordCard word={word} onRate={onRate}/>);
 
-    screen.getByText('When should this word return?');
-    await fireEvent.press(screen.getByRole('button', { name: 'Again soon. This session.' }));
-    await fireEvent.press(screen.getByRole('button', { name: 'Review later. In 7 days.' }));
-    await fireEvent.press(screen.getByRole('button', { name: 'Stop reviews. No auto return.' }));
+    screen.getByText('What should happen next?');
+    expect(screen.queryByText('Again soon')).toBeNull();
+    await fireEvent.press(screen.getByRole('button', { name: 'Keep learning. Review in 3–5 days.' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'I know this. Stop reviews.' }));
 
-    expect(onRate.mock.calls.map(([rating]) => rating)).toEqual(['again', 'understood', 'learned']);
+    expect(onRate.mock.calls.map(([rating]) => rating)).toEqual(['understood', 'learned']);
   });
 
   it('shows translation preparation for an untranslated word', async () => {

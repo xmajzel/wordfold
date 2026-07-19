@@ -1,7 +1,11 @@
 import type { LearningFilter, LearningRating, Word } from '@/domain/types';
 import { cefrLevels } from '@/data/cefr-levels';
 
-const UNDERSTOOD_INTERVAL_DAYS = [3, 7, 14, 30] as const;
+const REVIEW_INTERVAL_RANGES = [
+  { minDays: 1, maxDays: 3 },
+  { minDays: 3, maxDays: 5 },
+  { minDays: 5, maxDays: 7 },
+] as const;
 const DAY_MS = 24 * 60 * 60 * 1000;
 export const DAILY_NEW_WORD_LIMIT = 12;
 
@@ -13,16 +17,24 @@ export interface RatingUpdate {
   nextReviewAt: string | null;
 }
 
-export function getNextReviewIntervalDays(word: Pick<Word, 'understoodStreak'>) {
-  const nextStreak = word.understoodStreak + 1;
-  const intervalIndex = Math.min(nextStreak - 1, UNDERSTOOD_INTERVAL_DAYS.length - 1);
-  return UNDERSTOOD_INTERVAL_DAYS[intervalIndex];
+export function getNextReviewIntervalRange(word: Pick<Word, 'understoodStreak'>) {
+  const intervalIndex = Math.min(word.understoodStreak, REVIEW_INTERVAL_RANGES.length - 1);
+  return REVIEW_INTERVAL_RANGES[intervalIndex];
+}
+
+export function getNextReviewIntervalDays(
+  word: Pick<Word, 'understoodStreak'>,
+  random = Math.random,
+) {
+  const { minDays, maxDays } = getNextReviewIntervalRange(word);
+  return minDays + Math.floor(random() * (maxDays - minDays + 1));
 }
 
 export function applyRating(
   word: Pick<Word, 'understoodStreak' | 'lapseCount'>,
   rating: LearningRating,
   now = new Date(),
+  random = Math.random,
 ): RatingUpdate {
   if (rating === 'learned') {
     return {
@@ -45,7 +57,7 @@ export function applyRating(
   }
 
   const understoodStreak = word.understoodStreak + 1;
-  const intervalDays = getNextReviewIntervalDays(word);
+  const intervalDays = getNextReviewIntervalDays(word, random);
   return {
     state: 'understood',
     understoodStreak,
@@ -118,11 +130,4 @@ export function buildLearningFeed(words: Word[], now = new Date(), filter: Learn
     }
   }
   return feed;
-}
-
-export function insertSessionRetry(feed: Word[], word: Word, currentIndex: number) {
-  const nextFeed = [...feed];
-  const insertAt = Math.min(currentIndex + 4, nextFeed.length);
-  nextFeed.splice(insertAt, 0, word);
-  return nextFeed;
 }

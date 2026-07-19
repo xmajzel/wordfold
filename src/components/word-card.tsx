@@ -8,7 +8,7 @@ import Animated, { FadeIn, FadeInDown, FadeOut, ReduceMotion } from 'react-nativ
 import { AppText } from '@/components/app-text';
 import { StateBadge } from '@/components/state-badge';
 import type { LearningRating, Word } from '@/domain/types';
-import { getNextReviewIntervalDays } from '@/features/learning/algorithm';
+import { getNextReviewIntervalRange } from '@/features/learning/algorithm';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { radii, spacing } from '@/theme/tokens';
 
@@ -16,7 +16,7 @@ export const WordCard = memo(function WordCard({ word, collectionName, onRate, o
   { word: Word; collectionName?: string; onRate?(rating: LearningRating): void; onRetryTranslation?(): void; translationStatus?: 'loading' | 'error'; compact?: boolean; dense?: boolean; actionsDisabled?: boolean }) {
   const theme = useAppTheme();
   const [showTranslation, setShowTranslation] = useState(false);
-  const nextReviewDays = getNextReviewIntervalDays(word);
+  const nextReviewRange = getNextReviewIntervalRange(word);
 
   if (compact) {
     return <Animated.View entering={FadeInDown.duration(320).reduceMotion(ReduceMotion.System)} style={[styles.compactCard, { backgroundColor: theme.surface, shadowColor: theme.shadow }]}><LinearGradient colors={[`${theme.primary}D9`, `${theme.accent}B8`]} style={styles.compactAccent}/><View style={styles.compactTitle}><AppText variant="heading" style={styles.compactWord}>{word.term}</AppText>{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}<StateBadge state={word.state} /></View><AppText numberOfLines={2} style={{ color: theme.muted }}>{word.definition}</AppText>{collectionName ? <AppText variant="caption" style={{ color: theme.muted }}>{collectionName} · seen {word.viewCount}×</AppText> : null}</Animated.View>;
@@ -40,11 +40,10 @@ export const WordCard = memo(function WordCard({ word, collectionName, onRate, o
       {!word.translation && translationStatus === 'error' ? <Pressable accessibilityRole="button" accessibilityLabel="Retry Slovak hint" onPress={onRetryTranslation} style={({ pressed }) => [styles.hint, dense && styles.denseHint, { borderColor: theme.border, backgroundColor: theme.glass, opacity: pressed ? 0.75 : 1 }]}><Ionicons name="refresh-outline" color={theme.primary} size={18}/><View style={styles.hintText}><AppText variant="label" style={{ color: theme.primary }}>Retry Slovak hint</AppText><AppText variant="caption" style={{ color: theme.muted }}>Translation was not available</AppText></View></Pressable> : null}
       <View style={styles.trail}><AppText variant="caption" style={{ color: theme.muted }}>Seen {word.viewCount}×</AppText><AppText variant="caption" style={{ color: theme.muted }}>Missed {word.lapseCount}×</AppText></View>
       {onRate ? <View style={[styles.ratingBlock, dense && styles.denseRatingBlock]}>
-        <AppText variant="label" style={styles.ratingPrompt}>When should this word return?</AppText>
+        <AppText variant="label" style={styles.ratingPrompt}>What should happen next?</AppText>
         <View style={styles.actions}>
-          <RecallButton dense={dense} disabled={actionsDisabled} icon="refresh-outline" label="Again soon" detail="This session" color={theme.danger} onPress={() => rate('again')}/>
-          <RecallButton dense={dense} disabled={actionsDisabled} icon="calendar-outline" label="Review later" detail={`In ${nextReviewDays} days`} color={theme.primary} onPress={() => rate('understood')}/>
-          <RecallButton dense={dense} disabled={actionsDisabled} icon="checkmark-circle-outline" label="Stop reviews" detail="No auto return" color={theme.success} onPress={() => rate('learned')}/>
+          <RecallButton dense={dense} disabled={actionsDisabled} icon="calendar-outline" label="Keep learning" detail={`Review in ${nextReviewRange.minDays}–${nextReviewRange.maxDays} days`} color={theme.primary} onPress={() => rate('understood')}/>
+          <RecallButton dense={dense} disabled={actionsDisabled} icon="checkmark-circle-outline" label="I know this" detail="Stop reviews" color={theme.success} onPress={() => rate('learned')}/>
         </View>
       </View> : null}
     </Animated.View>

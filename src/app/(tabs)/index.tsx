@@ -8,7 +8,7 @@ import { EmptyState } from '@/components/empty-state';
 import { Screen } from '@/components/screen';
 import { WordCard } from '@/components/word-card';
 import type { LearningFilter, LearningRating, Word } from '@/domain/types';
-import { buildLearningFeed, filterWordsByLearningCategory, getAvailableLearningFilters, insertSessionRetry } from '@/features/learning/algorithm';
+import { buildLearningFeed, filterWordsByLearningCategory, getAvailableLearningFilters } from '@/features/learning/algorithm';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
 import { translateEnglishToSlovak } from '@/features/translation/translator';
 import { useAppTheme } from '@/hooks/use-app-theme';
@@ -44,7 +44,7 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
   const theme = useAppTheme();
   const { height } = useWindowDimensions();
   const { words, collections, updateLearningFilter, rateWord, markViewed, saveWordTranslation } = useAppData();
-  const [sessionFeed, setSessionFeed] = useState<Word[]>(() => buildLearningFeed(words, new Date(), filter));
+  const [sessionFeed] = useState<Word[]>(() => buildLearningFeed(words, new Date(), filter));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [ratingWordId, setRatingWordId] = useState<string | null>(null);
   const [sessionComplete, setSessionComplete] = useState(false);
@@ -52,7 +52,6 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
   const [translationStates, setTranslationStates] = useState<Record<string, 'loading' | 'error'>>({});
   const listRef = useRef<FlatList<Word>>(null);
   const viewedIds = useRef(new Set<string>());
-  const retriedIds = useRef(new Set<string>());
   const [mutationQueue] = useState(createSerialMutationQueue);
   const translatingIds = useRef(new Set<string>());
   const cardHeight = listHeight || Math.max(390, height - 241);
@@ -104,15 +103,8 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
   const handleRating = async (word: Word, rating: LearningRating) => {
     if (ratingWordId) return;
     setRatingWordId(word.id);
-    let nextFeed = sessionFeed;
-    const insertedRetry = rating === 'again' && !retriedIds.current.has(word.id);
-    if (insertedRetry) {
-      retriedIds.current.add(word.id);
-      nextFeed = insertSessionRetry(sessionFeed, word, currentIndex);
-      setSessionFeed(nextFeed);
-    }
     const nextIndex = currentIndex + 1;
-    if (nextIndex < nextFeed.length) {
+    if (nextIndex < sessionFeed.length) {
       setCurrentIndex(nextIndex);
       requestAnimationFrame(() => listRef.current?.scrollToIndex({ index: nextIndex, animated: true }));
     } else {
@@ -121,8 +113,6 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
     try {
       await mutationQueue.run(() => rateWord(word, rating));
     } catch {
-      if (insertedRetry) retriedIds.current.delete(word.id);
-      setSessionFeed(sessionFeed);
       setSessionComplete(false);
       setCurrentIndex(currentIndex);
       requestAnimationFrame(() => listRef.current?.scrollToIndex({ index: currentIndex, animated: true }));
