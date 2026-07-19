@@ -9,6 +9,7 @@ import { Screen } from '@/components/screen';
 import { WordCard } from '@/components/word-card';
 import type { LearningFilter, LearningRating, Word } from '@/domain/types';
 import { buildLearningFeed, filterWordsByLearningCategory, getAvailableLearningFilters, insertSessionRetry } from '@/features/learning/algorithm';
+import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { spacing } from '@/theme/tokens';
@@ -50,6 +51,7 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
   const listRef = useRef<FlatList<Word>>(null);
   const viewedIds = useRef(new Set<string>());
   const retriedIds = useRef(new Set<string>());
+  const [mutationQueue] = useState(createSerialMutationQueue);
   const cardHeight = listHeight || Math.max(390, height - 241);
   const denseCards = cardHeight < 500;
   const categoryWords = useMemo(() => filterWordsByLearningCategory(words, filter), [filter, words]);
@@ -60,10 +62,12 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
     if (!word || viewedIds.current.has(word.id)) return;
     const timer = setTimeout(() => {
       viewedIds.current.add(word.id);
-      void markViewed(word.id);
+      void mutationQueue.run(() => markViewed(word.id)).catch(() => {
+        viewedIds.current.delete(word.id);
+      });
     }, 1000);
     return () => clearTimeout(timer);
-  }, [currentIndex, markViewed, sessionFeed]);
+  }, [currentIndex, markViewed, mutationQueue, sessionFeed]);
 
   const collectionNames = useMemo(() => Object.fromEntries(collections.map((item) => [item.id, item.name])), [collections]);
 
@@ -85,7 +89,7 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
       setSessionComplete(true);
     }
     try {
-      await rateWord(word, rating);
+      await mutationQueue.run(() => rateWord(word, rating));
     } catch {
       if (insertedRetry) retriedIds.current.delete(word.id);
       setSessionFeed(sessionFeed);
