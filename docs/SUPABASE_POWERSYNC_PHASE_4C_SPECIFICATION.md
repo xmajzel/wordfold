@@ -293,10 +293,11 @@ Completed on 2026-07-20:
 - Expo all-platform local export: Android, iOS, and web bundles plus static routes passed.
 - Local Android Gradle `assembleDebug`: passed; no EAS quota was used.
 - Local Supabase schema lint: passed with no schema errors.
+- Local Supabase pgTAP suite: all 53 database, RLS, replication-role, RPC idempotency, tombstone, and tenant-isolation checks passed. Because Docker Desktop did not share the workspace path, the same versioned SQL test was copied into the running local database container and executed there with `ON_ERROR_STOP` enabled.
+- PowerSync Cloud diagnostics: the deployed source is connected, initial replication is complete, replication lag is zero, and `collections`, `words`, and `learning_events` have no reported errors. Full validation passes for the configuration schema, source connection, and Sync Streams.
 - Expo Doctor: 19 of 21 checks passed. The remaining checks report the existing `react` copy under the PowerSync CLI's `@oclif/table` dependency and React Native Directory metadata warnings for Quick SQLite and the local `wordfold-translate` module; the successful native build provides the stronger native compatibility check for this implementation.
 
 Deferred or environment-blocked:
 
-- `supabase test db` could not mount `supabase/tests` because Docker Desktop does not currently share this workspace path. No Phase 4C server migration was added; the existing database test suite was not changed.
-- `powersync validate` requires a renewed PowerSync CLI login or `PS_ADMIN_TOKEN` in this environment.
+- The standard `supabase test db` wrapper cannot mount `supabase/tests` because Docker Desktop does not currently share this workspace path; the pgTAP SQL itself passed through the container execution described above.
 - Authenticated native cutover, airplane-mode mutation/reconnect, rejected-write rollback, force-close, sign-out-with-pending-writes, and second-device recovery still require a physical development-build test device.
