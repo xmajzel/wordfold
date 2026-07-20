@@ -8,7 +8,7 @@ const mockPrepareWordTranslation = jest.fn(() => new Promise<void>(() => undefin
 
 const word: Word = {
   id: 'word', collectionId: 'my-words', term: 'scope', normalizedTerm: 'scope',
-  sourceLanguageCode: 'en', targetLanguageCode: 'sk', partOfSpeech: 'noun',
+  sourceLanguageCode: 'en', targetLanguageCode: 'sk', sourcePronunciationLocale: 'en-US', targetPronunciationLocale: 'sk-SK', partOfSpeech: 'noun',
   definition: 'The extent of something.', example: null, translation: null,
   catalogSenseId: '00023271-n:scope', cefrLevel: 'A1', source: 'manual', state: 'new',
   understoodStreak: 0, lapseCount: 0, viewCount: 0, lastViewedAt: null, lastRatedAt: null,

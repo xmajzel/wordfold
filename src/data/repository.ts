@@ -1,6 +1,7 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
 import type { CefrLevel, Collection, ContentPackId, ContentSource, DashboardStats, LearningFilter, LearningPreferences, ReminderSettings, Word } from '@/domain/types';
+import { isSupportedLanguageCode, isSupportedPronunciationLocale } from '@/domain/languages';
 import { getCefrLevelForCatalogSense } from '@/data/cefr-level-lookup';
 import { isCefrLevel, isLearningFilter } from '@/data/cefr-levels';
 import { normalizeLearningPreferences } from '@/features/recommendations/selector';
@@ -9,6 +10,7 @@ import type { RatingUpdate } from '@/features/learning/algorithm';
 interface WordRow {
   id: string; collection_id: string; term: string; normalized_term: string;
   source_language_code: string; target_language_code: string; part_of_speech: string | null;
+  source_pronunciation_locale: string; target_pronunciation_locale: string;
   definition: string; example: string | null; translation: string | null;
   catalog_sense_id: string | null; cefr_level: CefrLevel | null; source: ContentSource; state: Word['state'];
   understood_streak: number; lapse_count: number; view_count: number;
@@ -20,6 +22,8 @@ function toWord(row: WordRow): Word {
   return {
     id: row.id, collectionId: row.collection_id, term: row.term, normalizedTerm: row.normalized_term,
     sourceLanguageCode: row.source_language_code, targetLanguageCode: row.target_language_code,
+    sourcePronunciationLocale: row.source_pronunciation_locale,
+    targetPronunciationLocale: row.target_pronunciation_locale,
     partOfSpeech: row.part_of_speech, definition: row.definition, example: row.example,
     translation: row.translation, catalogSenseId: row.catalog_sense_id, cefrLevel: row.cefr_level, source: row.source,
     state: row.state, understoodStreak: row.understood_streak, lapseCount: row.lapse_count,
@@ -63,21 +67,38 @@ export async function addCollection(database: SQLiteDatabase, name: string, colo
 
 export interface NewWordInput {
   collectionId: string; term: string; normalizedTerm: string; definition: string;
+  sourceLanguageCode: string; targetLanguageCode: string;
+  sourcePronunciationLocale: string; targetPronunciationLocale: string;
   partOfSpeech?: string | null; example?: string | null; translation?: string | null;
   catalogSenseId?: string | null; cefrLevel?: CefrLevel | null; source?: ContentSource;
 }
 
+export function validateWordLanguages(input: NewWordInput) {
+  if (!isSupportedLanguageCode(input.sourceLanguageCode)
+    || !isSupportedPronunciationLocale(input.sourceLanguageCode, input.sourcePronunciationLocale)) {
+    throw new Error('Choose a supported learning language and pronunciation region.');
+  }
+  if (!isSupportedLanguageCode(input.targetLanguageCode)
+    || !isSupportedPronunciationLocale(input.targetLanguageCode, input.targetPronunciationLocale)) {
+    throw new Error('Choose a supported hint language and pronunciation region.');
+  }
+}
+
 export async function addWord(database: SQLiteDatabase, input: NewWordInput) {
+  validateWordLanguages(input);
   const now = new Date().toISOString();
   const id = createId('word');
   const cefrLevel = input.cefrLevel ?? getCefrLevelForCatalogSense(input.catalogSenseId ?? null);
   await database.runAsync(
     `INSERT INTO words
       (id, collection_id, term, normalized_term, source_language_code, target_language_code,
+       source_pronunciation_locale, target_pronunciation_locale,
        part_of_speech, definition, example, translation, catalog_sense_id, cefr_level, source, state,
        understood_streak, lapse_count, view_count, created_at, updated_at)
-     VALUES (?, ?, ?, ?, 'en', 'sk', ?, ?, ?, ?, ?, ?, ?, 'new', 0, 0, 0, ?, ?)`,
-    id, input.collectionId, input.term.trim(), input.normalizedTerm, input.partOfSpeech ?? null,
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', 0, 0, 0, ?, ?)`,
+    id, input.collectionId, input.term.trim(), input.normalizedTerm,
+    input.sourceLanguageCode, input.targetLanguageCode,
+    input.sourcePronunciationLocale, input.targetPronunciationLocale, input.partOfSpeech ?? null,
     input.definition.trim(), input.example ?? null, input.translation ?? null,
     input.catalogSenseId ?? null, cefrLevel, input.source ?? 'manual', now, now,
   );
@@ -93,11 +114,16 @@ export async function addWords(database: SQLiteDatabase, inputs: NewWordInput[])
 }
 
 export async function updateWord(database: SQLiteDatabase, id: string, input: NewWordInput) {
+  validateWordLanguages(input);
   const cefrLevel = input.cefrLevel ?? getCefrLevelForCatalogSense(input.catalogSenseId ?? null);
   await database.runAsync(
-    `UPDATE words SET collection_id = ?, term = ?, normalized_term = ?, part_of_speech = ?,
+    `UPDATE words SET collection_id = ?, term = ?, normalized_term = ?,
+      source_language_code = ?, target_language_code = ?,
+      source_pronunciation_locale = ?, target_pronunciation_locale = ?, part_of_speech = ?,
       definition = ?, example = ?, translation = ?, catalog_sense_id = ?, cefr_level = ?, updated_at = ? WHERE id = ?`,
-    input.collectionId, input.term.trim(), input.normalizedTerm, input.partOfSpeech ?? null,
+    input.collectionId, input.term.trim(), input.normalizedTerm,
+    input.sourceLanguageCode, input.targetLanguageCode,
+    input.sourcePronunciationLocale, input.targetPronunciationLocale, input.partOfSpeech ?? null,
     input.definition.trim(), input.example ?? null, input.translation ?? null,
     input.catalogSenseId ?? null, cefrLevel, new Date().toISOString(), id,
   );

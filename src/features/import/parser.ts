@@ -1,3 +1,5 @@
+import { normalizeTermForLanguage } from '@/domain/normalize-term';
+
 export interface ParsedImportLine {
   lineNumber: number;
   term: string;
@@ -6,11 +8,11 @@ export interface ParsedImportLine {
   error: string | null;
 }
 
-export function normalizeTerm(term: string) {
-  return term.trim().replace(/\s+/g, ' ').toLocaleLowerCase('en');
+export function normalizeTerm(term: string, languageCode = 'en') {
+  return normalizeTermForLanguage(term, languageCode);
 }
 
-export function parseBulkInput(input: string): ParsedImportLine[] {
+export function parseBulkInput(input: string, sourceLanguageCode = 'en'): ParsedImportLine[] {
   const seen = new Set<string>();
 
   return input.split(/\r?\n/).flatMap((rawLine, index) => {
@@ -20,7 +22,7 @@ export function parseBulkInput(input: string): ParsedImportLine[] {
     const separatorIndex = line.indexOf(' - ');
     const term = (separatorIndex >= 0 ? line.slice(0, separatorIndex) : line).trim();
     const translation = separatorIndex >= 0 ? line.slice(separatorIndex + 3).trim() : '';
-    const normalizedTerm = normalizeTerm(term);
+    const normalizedTerm = normalizeTerm(term, sourceLanguageCode);
     let error: string | null = null;
 
     if (!term) error = 'Word is missing';

@@ -215,29 +215,23 @@ export class SyncCutoverService {
     throwIfAborted(signal);
     const createdAt = this.now().toISOString();
     const existingKeys = new Set(storedMappings.map((mapping) => `${mapping.entityType}:${mapping.localId}`));
-    const remoteByNormalized = new Map(remoteWords.map((word) => [word.normalizedTerm, word]));
     const newMappings: GuestImportMapping[] = [
       ...snapshot.collections.filter((row) => !existingKeys.has(`collection:${row.id}`))
         .map((row) => mappingFor(accountId, 'collection', row.id, this.createUuid(), createdAt, false)),
-      ...snapshot.words.filter((row) => !existingKeys.has(`word:${row.id}`)).map((row) => {
-        const conflict = remoteByNormalized.get(row.normalized_term);
-        return mappingFor(accountId, 'word', row.id, conflict?.id ?? this.createUuid(), createdAt, Boolean(conflict));
-      }),
+      ...snapshot.words.filter((row) => !existingKeys.has(`word:${row.id}`)).map((row) => (
+        mappingFor(accountId, 'word', row.id, this.createUuid(), createdAt, false)
+      )),
       ...snapshot.events.filter((row) => !existingKeys.has(`learning_event:${row.id}`))
         .map((row) => mappingFor(accountId, 'learning_event', String(row.id), this.createUuid(), createdAt, false)),
     ];
     await appendSyncIdMappings(this.database, newMappings);
     let mappings = await listGuestImportMappings(this.database, accountId);
 
+    const remoteById = new Map(remoteWords.map((word) => [word.id, word]));
     for (const mapping of mappings) {
       if (mapping.entityType !== 'word' || mapping.sourceUpdatedAt !== null || !mapping.hasConflict) continue;
-      const localWord = snapshot.words.find((word) => word.id === mapping.localId);
-      if (!localWord) continue;
-      const accountWord = remoteByNormalized.get(localWord.normalized_term);
-      if (!accountWord) {
+      if (!remoteById.has(mapping.remoteId)) {
         await reassignGuestImportWordMapping(this.database, accountId, mapping.localId, this.createUuid(), false);
-      } else if (accountWord.id !== mapping.remoteId) {
-        await reassignGuestImportWordMapping(this.database, accountId, mapping.localId, accountWord.id, true);
       }
     }
     mappings = await listGuestImportMappings(this.database, accountId);
@@ -417,7 +411,7 @@ function planFor(
   const collections = new Map(snapshot.collections.map((row) => [row.id, row]));
   const words = new Map(snapshot.words.map((row) => [row.id, row]));
   const events = new Map(snapshot.events.map((row) => [String(row.id), row]));
-  const remoteByNormalized = new Map(remoteWords.map((word) => [word.normalizedTerm, word]));
+  const remoteById = new Map(remoteWords.map((word) => [word.id, word]));
   const wordMappings = new Map(mappings.filter((mapping) => mapping.entityType === 'word')
     .map((mapping) => [mapping.localId, mapping]));
   const conflicts: SyncCutoverConflict[] = [];
@@ -425,17 +419,11 @@ function planFor(
   for (const mapping of wordMappings.values()) {
     const localWord = words.get(mapping.localId);
     if (!localWord || mapping.conflictResolution === 'keep_account') continue;
-    const accountWord = remoteByNormalized.get(localWord.normalized_term);
+    const accountWord = remoteById.get(mapping.remoteId);
     if (mapping.sourceUpdatedAt === null && mapping.hasConflict && mapping.conflictResolution === null && accountWord) {
       conflicts.push({
         kind: 'new_word', localId: localWord.id, remoteId: accountWord.id, term: localWord.term,
         localDefinition: localWord.definition, accountDefinition: accountWord.definition, resolution: null,
-      });
-    } else if (mapping.sourceUpdatedAt !== null && accountWord && accountWord.id !== mapping.remoteId) {
-      conflicts.push({
-        kind: 'renamed_word', localId: localWord.id, mappedRemoteId: mapping.remoteId,
-        conflictingRemoteId: accountWord.id, term: localWord.term,
-        localDefinition: localWord.definition, accountDefinition: accountWord.definition,
       });
     }
   }

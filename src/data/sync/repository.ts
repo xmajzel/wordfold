@@ -1,7 +1,7 @@
 import * as Crypto from 'expo-crypto';
 
 import type { CefrLevel, Collection, DashboardStats, Word } from '@/domain/types';
-import type { NewWordInput } from '@/data/repository';
+import { validateWordLanguages, type NewWordInput } from '@/data/repository';
 import { getCefrLevelForCatalogSense } from '@/data/cefr-level-lookup';
 import type { RatingUpdate } from '@/features/learning/algorithm';
 
@@ -17,6 +17,7 @@ interface QueryableDatabase extends SyncTransaction {
 interface WordRow {
   id: string; collection_id: string; term: string; normalized_term: string;
   source_language_code: string; target_language_code: string; part_of_speech: string | null;
+  source_pronunciation_locale: string; target_pronunciation_locale: string;
   definition: string; example: string | null; translation: string | null;
   catalog_sense_id: string | null; cefr_level: CefrLevel | null; source: Word['source']; state: Word['state'];
   understood_streak: number; lapse_count: number; view_count: number;
@@ -28,6 +29,8 @@ function toWord(row: WordRow): Word {
   return {
     id: row.id, collectionId: row.collection_id, term: row.term, normalizedTerm: row.normalized_term,
     sourceLanguageCode: row.source_language_code, targetLanguageCode: row.target_language_code,
+    sourcePronunciationLocale: row.source_pronunciation_locale,
+    targetPronunciationLocale: row.target_pronunciation_locale,
     partOfSpeech: row.part_of_speech, definition: row.definition, example: row.example,
     translation: row.translation, catalogSenseId: row.catalog_sense_id, cefrLevel: row.cefr_level,
     source: row.source, state: row.state, understoodStreak: row.understood_streak,
@@ -72,9 +75,12 @@ export async function addSyncCollection(database: QueryableDatabase, userId: str
 }
 
 function wordValues(userId: string, id: string, input: NewWordInput, now: string) {
+  validateWordLanguages(input);
   const cefrLevel = input.cefrLevel ?? getCefrLevelForCatalogSense(input.catalogSenseId ?? null);
   return [
-    id, userId, input.collectionId, input.term.trim(), input.normalizedTerm, 'en', 'sk',
+    id, userId, input.collectionId, input.term.trim(), input.normalizedTerm,
+    input.sourceLanguageCode, input.targetLanguageCode,
+    input.sourcePronunciationLocale, input.targetPronunciationLocale,
     input.partOfSpeech ?? null, input.definition.trim(), input.example ?? null, input.translation ?? null,
     input.catalogSenseId ?? null, cefrLevel, input.source ?? 'manual', 'new', 0, 0, 0,
     null, null, null, now, now,
@@ -83,10 +89,11 @@ function wordValues(userId: string, id: string, input: NewWordInput, now: string
 
 const INSERT_WORD_SQL = `INSERT INTO words
   (id, user_id, collection_id, term, normalized_term, source_language_code, target_language_code,
+   source_pronunciation_locale, target_pronunciation_locale,
    part_of_speech, definition, example, translation, catalog_sense_id, cefr_level, source, state,
    understood_streak, lapse_count, view_count, last_viewed_at, last_rated_at, next_review_at,
    created_at, updated_at, deleted_at)
- VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)`;
+ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)`;
 
 export async function addSyncWord(database: QueryableDatabase, userId: string, input: NewWordInput) {
   const id = Crypto.randomUUID();
@@ -106,12 +113,17 @@ export async function addSyncWords(database: QueryableDatabase, userId: string, 
 }
 
 export async function updateSyncWord(database: QueryableDatabase, id: string, input: NewWordInput) {
+  validateWordLanguages(input);
   const cefrLevel = input.cefrLevel ?? getCefrLevelForCatalogSense(input.catalogSenseId ?? null);
   await database.execute(
-    `UPDATE words SET collection_id = ?, term = ?, normalized_term = ?, part_of_speech = ?,
+    `UPDATE words SET collection_id = ?, term = ?, normalized_term = ?,
+      source_language_code = ?, target_language_code = ?,
+      source_pronunciation_locale = ?, target_pronunciation_locale = ?, part_of_speech = ?,
       definition = ?, example = ?, translation = ?, catalog_sense_id = ?, cefr_level = ?, updated_at = ?
      WHERE id = ? AND deleted_at IS NULL`,
-    [input.collectionId, input.term.trim(), input.normalizedTerm, input.partOfSpeech ?? null,
+    [input.collectionId, input.term.trim(), input.normalizedTerm,
+      input.sourceLanguageCode, input.targetLanguageCode,
+      input.sourcePronunciationLocale, input.targetPronunciationLocale, input.partOfSpeech ?? null,
       input.definition.trim(), input.example ?? null, input.translation ?? null,
       input.catalogSenseId ?? null, cefrLevel, new Date().toISOString(), id],
   );

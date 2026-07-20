@@ -16,6 +16,8 @@ const words = new Table({
   normalized_term: column.text,
   source_language_code: column.text,
   target_language_code: column.text,
+  source_pronunciation_locale: column.text,
+  target_pronunciation_locale: column.text,
   part_of_speech: column.text,
   definition: column.text,
   example: column.text,

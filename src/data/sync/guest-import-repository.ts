@@ -23,6 +23,8 @@ export interface GuestWordRow {
   normalized_term: string;
   source_language_code: string;
   target_language_code: string;
+  source_pronunciation_locale: string;
+  target_pronunciation_locale: string;
   part_of_speech: string | null;
   definition: string;
   example: string | null;

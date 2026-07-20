@@ -11,8 +11,8 @@ function createDatabase() {
 }
 
 const words: NewWordInput[] = [
-  { collectionId: 'my-words', term: 'Scope', normalizedTerm: 'scope', definition: 'The extent of something.' },
-  { collectionId: 'my-words', term: 'Milestone', normalizedTerm: 'milestone', definition: 'A significant stage.' },
+  { collectionId: 'my-words', term: 'Scope', normalizedTerm: 'scope', definition: 'The extent of something.', sourceLanguageCode: 'en', targetLanguageCode: 'sk', sourcePronunciationLocale: 'en-US', targetPronunciationLocale: 'sk-SK' },
+  { collectionId: 'my-words', term: 'Milestone', normalizedTerm: 'milestone', definition: 'A significant stage.', sourceLanguageCode: 'en', targetLanguageCode: 'sk', sourcePronunciationLocale: 'en-US', targetPronunciationLocale: 'sk-SK' },
 ];
 
 describe('word repository', () => {
@@ -63,11 +63,22 @@ describe('word repository', () => {
     await addWord(database, {
       collectionId: 'my-words', term: 'About', normalizedTerm: 'about',
       definition: 'On the subject of something.', catalogSenseId: '00007414-r:about',
+      sourceLanguageCode: 'en', targetLanguageCode: 'sk',
+      sourcePronunciationLocale: 'en-US', targetPronunciationLocale: 'sk-SK',
     });
 
     const [, ...parameters] = (database.runAsync as jest.Mock).mock.calls[0];
-    expect(parameters[8]).toBe('00007414-r:about');
-    expect(parameters[9]).toBe('A1');
+    expect(parameters[12]).toBe('00007414-r:about');
+    expect(parameters[13]).toBe('A1');
+  });
+
+  it('rejects a pronunciation locale that does not match the word language', async () => {
+    const database = createDatabase();
+
+    await expect(addWord(database, {
+      ...words[0], sourceLanguageCode: 'es', sourcePronunciationLocale: 'en-US',
+    })).rejects.toThrow('supported learning language and pronunciation region');
+    expect(database.runAsync).not.toHaveBeenCalled();
   });
 
   it('resets learning state without deleting event history', async () => {

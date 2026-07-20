@@ -63,7 +63,7 @@ jest.mock('react-native-reanimated', () => {
 
 const word: Word = {
   id: 'word', collectionId: 'collection', term: 'scope', normalizedTerm: 'scope',
-  sourceLanguageCode: 'en', targetLanguageCode: 'sk', partOfSpeech: 'noun',
+  sourceLanguageCode: 'en', targetLanguageCode: 'sk', sourcePronunciationLocale: 'en-US', targetPronunciationLocale: 'sk-SK', partOfSpeech: 'noun',
   definition: 'The extent of something.', example: null, translation: null,
   catalogSenseId: null, cefrLevel: null, source: 'manual', state: 'understood',
   understoodStreak: 1, lapseCount: 0, viewCount: 2,

@@ -1,8 +1,10 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
+import { normalizeTermForLanguage } from '@/domain/normalize-term';
+
 import { getCefrLevelForCatalogSense } from './cefr-level-lookup';
 
-const DATABASE_VERSION = 6;
+const DATABASE_VERSION = 7;
 
 export async function migrateDatabase(database: SQLiteDatabase) {
   await database.execAsync('PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;');
@@ -24,9 +26,11 @@ export async function migrateDatabase(database: SQLiteDatabase) {
         id TEXT PRIMARY KEY NOT NULL,
         collection_id TEXT NOT NULL REFERENCES collections(id) ON DELETE RESTRICT,
         term TEXT NOT NULL,
-        normalized_term TEXT NOT NULL UNIQUE,
+        normalized_term TEXT NOT NULL,
         source_language_code TEXT NOT NULL DEFAULT 'en',
         target_language_code TEXT NOT NULL DEFAULT 'sk',
+        source_pronunciation_locale TEXT NOT NULL DEFAULT 'en-US',
+        target_pronunciation_locale TEXT NOT NULL DEFAULT 'sk-SK',
         part_of_speech TEXT,
         definition TEXT NOT NULL,
         example TEXT,
@@ -46,6 +50,7 @@ export async function migrateDatabase(database: SQLiteDatabase) {
       );
       CREATE INDEX words_state_due_idx ON words(state, next_review_at);
       CREATE INDEX words_collection_idx ON words(collection_id);
+      CREATE INDEX words_source_normalized_idx ON words(source_language_code, normalized_term);
 
       CREATE TABLE learning_events (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -203,6 +208,87 @@ export async function migrateDatabase(database: SQLiteDatabase) {
       DROP TABLE scheduled_reminders;
       ALTER TABLE scheduled_reminders_v6 RENAME TO scheduled_reminders;
     `);
+  }
+
+  if (currentVersion > 0 && currentVersion < 7) {
+    await database.execAsync('PRAGMA foreign_keys = OFF');
+    try {
+      await database.withExclusiveTransactionAsync(async (transaction) => {
+        await transaction.execAsync(`
+          CREATE TABLE words_v7 (
+            id TEXT PRIMARY KEY NOT NULL,
+            collection_id TEXT NOT NULL REFERENCES collections(id) ON DELETE RESTRICT,
+            term TEXT NOT NULL,
+            normalized_term TEXT NOT NULL,
+            source_language_code TEXT NOT NULL DEFAULT 'en',
+            target_language_code TEXT NOT NULL DEFAULT 'sk',
+            source_pronunciation_locale TEXT NOT NULL DEFAULT 'en-US',
+            target_pronunciation_locale TEXT NOT NULL DEFAULT 'sk-SK',
+            part_of_speech TEXT,
+            definition TEXT NOT NULL,
+            example TEXT,
+            translation TEXT,
+            catalog_sense_id TEXT,
+            cefr_level TEXT CHECK(cefr_level IN ('A1', 'A2', 'B1', 'B2', 'C1', 'C2')),
+            source TEXT NOT NULL DEFAULT 'manual' CHECK(source IN ('manual', 'spoken', 'business', 'academic')),
+            state TEXT NOT NULL DEFAULT 'new' CHECK(state IN ('new', 'cannot_remember', 'understood', 'learned')),
+            understood_streak INTEGER NOT NULL DEFAULT 0,
+            lapse_count INTEGER NOT NULL DEFAULT 0,
+            view_count INTEGER NOT NULL DEFAULT 0,
+            last_viewed_at TEXT,
+            last_rated_at TEXT,
+            next_review_at TEXT,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL
+          );
+
+          INSERT INTO words_v7 (
+            id, collection_id, term, normalized_term, source_language_code, target_language_code,
+            source_pronunciation_locale, target_pronunciation_locale, part_of_speech, definition,
+            example, translation, catalog_sense_id, cefr_level, source, state, understood_streak,
+            lapse_count, view_count, last_viewed_at, last_rated_at, next_review_at, created_at, updated_at
+          )
+          SELECT
+            id, collection_id, term, normalized_term, source_language_code, target_language_code,
+            CASE source_language_code
+              WHEN 'en' THEN 'en-US' WHEN 'sk' THEN 'sk-SK' WHEN 'es' THEN 'es-ES'
+              WHEN 'de' THEN 'de-DE' WHEN 'el' THEN 'el-GR' ELSE source_language_code
+            END,
+            CASE target_language_code
+              WHEN 'en' THEN 'en-US' WHEN 'sk' THEN 'sk-SK' WHEN 'es' THEN 'es-ES'
+              WHEN 'de' THEN 'de-DE' WHEN 'el' THEN 'el-GR' ELSE target_language_code
+            END,
+            part_of_speech, definition, example, translation, catalog_sense_id, cefr_level, source,
+            state, understood_streak, lapse_count, view_count, last_viewed_at, last_rated_at,
+            next_review_at, created_at, updated_at
+          FROM words;
+
+          DROP TABLE words;
+          ALTER TABLE words_v7 RENAME TO words;
+          CREATE INDEX words_state_due_idx ON words(state, next_review_at);
+          CREATE INDEX words_collection_idx ON words(collection_id);
+          CREATE INDEX words_source_normalized_idx ON words(source_language_code, normalized_term);
+        `);
+
+        const words = await transaction.getAllAsync<{
+          id: string;
+          term: string;
+          source_language_code: string;
+        }>('SELECT id, term, source_language_code FROM words');
+        for (const word of words) {
+          await transaction.runAsync(
+            'UPDATE words SET normalized_term = ? WHERE id = ?',
+            normalizeTermForLanguage(word.term, word.source_language_code),
+            word.id,
+          );
+        }
+
+        const foreignKeyErrors = await transaction.getAllAsync('PRAGMA foreign_key_check');
+        if (foreignKeyErrors.length > 0) throw new Error('Word database migration failed its foreign-key check.');
+      });
+    } finally {
+      await database.execAsync('PRAGMA foreign_keys = ON');
+    }
   }
 
   await database.execAsync(`PRAGMA user_version = ${DATABASE_VERSION}`);

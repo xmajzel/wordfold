@@ -38,7 +38,7 @@ const settings: ReminderSettings = {
 function word(index: number): Word {
   return {
     id: `word-${index}`, collectionId: 'my-words', term: `word ${index}`, normalizedTerm: `word ${index}`,
-    sourceLanguageCode: 'en', targetLanguageCode: 'sk', partOfSpeech: 'noun',
+    sourceLanguageCode: 'en', targetLanguageCode: 'sk', sourcePronunciationLocale: 'en-US', targetPronunciationLocale: 'sk-SK', partOfSpeech: 'noun',
     definition: `Definition ${index}`, example: null, translation: null, catalogSenseId: null, cefrLevel: null,
     source: 'manual', state: 'new', understoodStreak: 0, lapseCount: 0, viewCount: 0,
     lastViewedAt: null, lastRatedAt: null, nextReviewAt: null,

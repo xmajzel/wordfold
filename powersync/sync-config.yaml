@@ -14,6 +14,7 @@ streams:
       - |
         SELECT id, user_id, collection_id, term, normalized_term,
                source_language_code, target_language_code, part_of_speech,
+               source_pronunciation_locale, target_pronunciation_locale,
                definition, example, translation, catalog_sense_id, cefr_level,
                source, state, understood_streak, lapse_count, view_count,
                last_viewed_at, last_rated_at, next_review_at,

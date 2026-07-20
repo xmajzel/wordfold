@@ -24,6 +24,7 @@ const MUTABLE_FIELDS = {
   collections: new Set(['name', 'color', 'updated_at']),
   words: new Set([
     'collection_id', 'term', 'normalized_term', 'source_language_code', 'target_language_code',
+    'source_pronunciation_locale', 'target_pronunciation_locale',
     'part_of_speech', 'definition', 'example', 'translation', 'catalog_sense_id', 'cefr_level',
     'source', 'state', 'understood_streak', 'lapse_count', 'view_count', 'last_viewed_at',
     'last_rated_at', 'next_review_at', 'updated_at',
@@ -176,9 +177,6 @@ function mutableValues(table: 'collections' | 'words', data: MutableRow) {
 }
 
 function knownRejection(error: SupabaseError, entry: CrudEntry) {
-  if (error.code === '23505' && entry.table === 'words') {
-    return 'This account already contains that word. The account copy was kept.';
-  }
   if (error.code === '22000') return 'This change targeted an item that was already removed.';
   if (error.code === '42501' && /not found/i.test(error.message)) {
     return 'This change targeted an item that is no longer available.';

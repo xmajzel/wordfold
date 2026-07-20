@@ -54,7 +54,7 @@ const collection = {
 };
 const word = {
   id: 'word-local', collection_id: 'my-words', term: 'Scope', normalized_term: 'scope',
-  source_language_code: 'en', target_language_code: 'sk', part_of_speech: 'noun',
+  source_language_code: 'en', target_language_code: 'sk', source_pronunciation_locale: 'en-US', target_pronunciation_locale: 'sk-SK', part_of_speech: 'noun',
   definition: 'Device definition', example: null, translation: 'rozsah', catalog_sense_id: null,
   cefr_level: null, source: 'manual', state: 'understood', understood_streak: 2,
   lapse_count: 0, view_count: 3, last_viewed_at: '2026-07-02T00:00:00.000Z',
@@ -103,12 +103,12 @@ describe('GuestImportService', () => {
     mockSnapshot = { collections: [collection], words: [word], events: [event] };
   });
 
-  it('persists a stable plan and requires review for an existing normalized term', async () => {
+  it('persists a stable plan with a distinct id when the account has the same normalized term', async () => {
     const backend = remote();
     backend.value.listActiveWords.mockResolvedValue([{
       id: 'remote-existing', normalizedTerm: 'scope', term: 'Scope', definition: 'Account definition',
     }]);
-    const uuids = ['collection-uuid', 'event-uuid'];
+    const uuids = ['collection-uuid', 'word-uuid', 'event-uuid'];
     const service = new GuestImportService({} as SQLiteDatabase, backend.value, { getAll: jest.fn() }, {
       createUuid: () => uuids.shift()!,
       now: () => new Date('2026-07-20T00:00:00.000Z'),
@@ -116,15 +116,14 @@ describe('GuestImportService', () => {
 
     const view = await service.prepare('user-1');
 
-    expect(view.phase).toBe('needs_conflicts');
-    expect(view.conflicts[0]).toEqual(expect.objectContaining({
-      localId: 'word-local', remoteId: 'remote-existing', resolution: null,
-    }));
+    expect(view.phase).toBe('prepared');
+    expect(view.conflicts).toEqual([]);
     expect(mockMappings).toEqual(expect.arrayContaining([
       expect.objectContaining({ entityType: 'collection', remoteId: 'collection-uuid' }),
-      expect.objectContaining({ entityType: 'word', remoteId: 'remote-existing', hasConflict: true }),
+      expect.objectContaining({ entityType: 'word', remoteId: 'word-uuid', hasConflict: false }),
       expect.objectContaining({ entityType: 'learning_event', remoteId: 'event-uuid' }),
     ]));
+    expect(backend.value.listActiveWords).not.toHaveBeenCalled();
   });
 
   it('uploads collections, words, and events in dependency order before completing', async () => {
@@ -188,7 +187,7 @@ describe('GuestImportService', () => {
     expect(mockRecord?.completedAt).toBeNull();
   });
 
-  it('returns to conflict review when the account changes after preparation', async () => {
+  it('imports a distinct word when the account changes after preparation', async () => {
     mockRecord = record();
     mockMappings = [
       mapping('collection', 'my-words', 'collection-uuid'),
@@ -199,25 +198,26 @@ describe('GuestImportService', () => {
     backend.value.listActiveWords.mockResolvedValue([{
       id: 'new-account-word', normalizedTerm: 'scope', term: 'Scope', definition: 'New account definition',
     }]);
-    const service = new GuestImportService({} as SQLiteDatabase, backend.value, { getAll: jest.fn() });
+    const powerSync = { getAll: jest.fn(async (_sql: string, ids?: unknown[]) => (ids ?? []).map((id) => ({ id }))) };
+    const service = new GuestImportService({} as SQLiteDatabase, backend.value, powerSync as never);
 
     const view = await service.run('user-1');
 
-    expect(view.phase).toBe('needs_conflicts');
-    expect(view.conflicts).toEqual([expect.objectContaining({ remoteId: 'new-account-word', resolution: null })]);
-    expect(backend.value.upsertCollections).not.toHaveBeenCalled();
-    expect(mockReassignWordMapping).toHaveBeenCalledWith(
-      expect.anything(), 'user-1', 'word-local', 'new-account-word', true,
-    );
+    expect(view.phase).toBe('completed');
+    expect(backend.value.upsertWords).toHaveBeenCalledWith([
+      expect.objectContaining({ id: 'word-uuid', normalized_term: 'scope' }),
+    ], expect.any(AbortSignal));
+    expect(backend.value.listActiveWords).not.toHaveBeenCalled();
+    expect(mockReassignWordMapping).not.toHaveBeenCalled();
   });
 
-  it('persists a resumable error when conflict reconciliation cannot reach the account', async () => {
+  it('persists a resumable error when upload cannot reach the account', async () => {
     mockRecord = record();
     mockMappings = [mapping('collection', 'my-words', 'collection-uuid')];
     mockSnapshot = { collections: [collection], words: [], events: [] };
     mockRecord.totals = { collections: 1, words: 0, events: 0 };
     const backend = remote();
-    backend.value.listActiveWords.mockRejectedValue(new TypeError('Network request failed'));
+    backend.value.upsertCollections.mockRejectedValue(new TypeError('Network request failed'));
     const service = new GuestImportService({} as SQLiteDatabase, backend.value, { getAll: jest.fn() });
 
     const view = await service.run('user-1');
@@ -225,6 +225,6 @@ describe('GuestImportService', () => {
     expect(view.phase).toBe('error');
     expect(view.message).toContain('network is unavailable');
     expect(mockRecord).toEqual(expect.objectContaining({ state: 'error', errorCode: 'network_unavailable' }));
-    expect(backend.value.upsertCollections).not.toHaveBeenCalled();
+    expect(backend.value.listActiveWords).not.toHaveBeenCalled();
   });
 });

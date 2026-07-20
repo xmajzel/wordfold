@@ -92,7 +92,7 @@ describe('PowerSyncUploader', () => {
     expect(context.complete).toHaveBeenCalledTimes(1);
   });
 
-  it('journals and acknowledges a duplicate active word rejection', async () => {
+  it('keeps an unexpected word uniqueness failure queued', async () => {
     const remote = {
       upsert: jest.fn(async () => ({ error: { code: '23505', message: 'private database details' } })),
     };
@@ -100,13 +100,10 @@ describe('PowerSyncUploader', () => {
       user_id: 'user-1', term: 'Able', normalized_term: 'able',
     })], remote);
 
-    await context.uploader.uploadNext(context.database);
+    await expect(context.uploader.uploadNext(context.database)).rejects.toThrow('Synchronization upload failed');
 
-    expect(context.execute).toHaveBeenCalledWith(expect.stringContaining('INSERT INTO sync_write_errors'), [
-      'error-id', 'user-1', '8', 'words', 'word-1', 'PUT', '23505',
-      'This account already contains that word. The account copy was kept.', expect.any(String),
-    ]);
-    expect(context.complete).toHaveBeenCalledTimes(1);
+    expect(context.execute).not.toHaveBeenCalled();
+    expect(context.complete).not.toHaveBeenCalled();
   });
 
   it('keeps transient and unexpected failures queued', async () => {

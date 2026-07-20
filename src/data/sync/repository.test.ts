@@ -26,6 +26,8 @@ function database(rows: unknown[] = []) {
 
 const newWord = {
   collectionId: 'collection-1', term: ' Able ', normalizedTerm: 'able', definition: ' capable ',
+  sourceLanguageCode: 'en', targetLanguageCode: 'sk',
+  sourcePronunciationLocale: 'en-US', targetPronunciationLocale: 'sk-SK',
 };
 
 describe('PowerSync vocabulary repository', () => {
@@ -45,6 +47,7 @@ describe('PowerSync vocabulary repository', () => {
     await expect(addSyncWord(context.database, 'user-1', newWord)).resolves.toBe('generated-id');
     expect(context.database.execute).toHaveBeenCalledWith(expect.stringContaining('INSERT INTO words'), expect.arrayContaining([
       'generated-id', 'user-1', 'collection-1', 'Able', 'able', 'en', 'sk',
+      'en-US', 'sk-SK',
     ]));
   });
 

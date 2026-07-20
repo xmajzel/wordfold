@@ -11,12 +11,14 @@ select has_table('public', 'learning_events', 'learning_events table exists');
 select col_is_pk('public', 'collections', 'id', 'collections uses id as its primary key');
 select col_is_pk('public', 'words', 'id', 'words uses id as its primary key');
 select col_is_pk('public', 'learning_events', 'id', 'learning_events uses id as its primary key');
+select has_column('public', 'words', 'source_pronunciation_locale', 'words store the exact source pronunciation locale');
+select has_column('public', 'words', 'target_pronunciation_locale', 'words store the exact target pronunciation locale');
 
 select has_index(
   'public',
   'words',
-  'words_user_normalized_term_active_idx',
-  'active normalized terms have a per-user unique index'
+  'words_user_source_normalized_active_idx',
+  'soft duplicate checks have a per-user language-aware index'
 );
 select has_index(
   'public',
@@ -202,7 +204,7 @@ select is(
   'the owner can read their word'
 );
 
-select throws_ok(
+select lives_ok(
   $$
     insert into public.words (
       id, user_id, collection_id, term, normalized_term, definition
@@ -215,9 +217,13 @@ select throws_ok(
       'Duplicate active word.'
     )
   $$,
-  '23505',
-  null,
-  'active normalized terms are unique for one user'
+  'multiple senses may use the same normalized term for one user'
+);
+
+select is(
+  (select count(*) from public.words where normalized_term = 'scope'),
+  2::bigint,
+  'soft duplicate identity preserves both active word rows'
 );
 
 select is(
@@ -346,11 +352,16 @@ values (
   'A replacement for a tombstoned word.'
 );
 
-select pass('a normalized term can be reused after its previous word is tombstoned');
+select pass('a new sense can be added after another word is tombstoned');
 
 select ok(
   (public.tombstone_word('20000000-0000-4000-8000-000000000003')).deleted_at is not null,
   'the replacement word can be tombstoned'
+);
+
+select ok(
+  (public.tombstone_word('20000000-0000-4000-8000-000000000002')).deleted_at is not null,
+  'the second sense can be tombstoned independently'
 );
 
 select ok(
@@ -435,7 +446,7 @@ values (
   'The same normalized term for another user.'
 );
 
-select pass('normalized-term uniqueness is scoped per user');
+select pass('another user can store the same normalized term independently');
 
 select throws_ok(
   $$

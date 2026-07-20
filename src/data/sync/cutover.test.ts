@@ -60,7 +60,7 @@ const collection = {
 };
 const word = {
   id: 'local-word', collection_id: 'local-collection', term: 'Scope', normalized_term: 'scope',
-  source_language_code: 'en', target_language_code: 'sk', part_of_speech: 'noun',
+  source_language_code: 'en', target_language_code: 'sk', source_pronunciation_locale: 'en-US', target_pronunciation_locale: 'sk-SK', part_of_speech: 'noun',
   definition: 'Device definition', example: null, translation: 'rozsah', catalog_sense_id: null,
   cefr_level: null, source: 'manual', state: 'new', understood_streak: 0, lapse_count: 0,
   view_count: 0, last_viewed_at: null, last_rated_at: null, next_review_at: null,
@@ -155,24 +155,25 @@ describe('SyncCutoverService', () => {
     expect(view.phase).toBe('ready');
   });
 
-  it('requires a choice for a new word that already exists in the account', async () => {
+  it('uploads a new word separately when the same normalized term exists in the account', async () => {
     mockSnapshot.words = [{ ...word, id: 'new-local-word' }];
     mockMappings = [mapping('collection', collection.id, 'remote-collection', collection.updated_at)];
     const backend = remote();
     backend.listActiveWords.mockResolvedValue([{
       id: 'account-word', normalizedTerm: 'scope', term: 'Scope', definition: 'Account definition',
     }]);
-    const service = new SyncCutoverService({} as SQLiteDatabase, backend, { getAll: jest.fn() }, {
+    const powerSync = { getAll: jest.fn(async (_sql: string, ids?: unknown[]) => (ids ?? []).map((id) => ({ id }))) };
+    const service = new SyncCutoverService({} as SQLiteDatabase, backend, powerSync as never, {
       createUuid: () => 'generated-id',
     });
 
     const view = await service.run('user-1');
 
-    expect(view.phase).toBe('needs_conflicts');
-    expect(view.conflicts).toEqual([expect.objectContaining({
-      kind: 'new_word', localId: 'new-local-word', remoteId: 'account-word',
-    })]);
-    expect(backend.upsertWords).not.toHaveBeenCalled();
+    expect(view.phase).toBe('ready');
+    expect(view.conflicts).toEqual([]);
+    expect(backend.upsertWords).toHaveBeenCalledWith([
+      expect.objectContaining({ id: 'generated-id', normalized_term: 'scope' }),
+    ], expect.any(AbortSignal));
   });
 
   it('tombstones a mapped word deleted after the imported snapshot', async () => {

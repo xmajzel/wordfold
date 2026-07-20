@@ -26,6 +26,9 @@ describe('migrateDatabase', () => {
     const schema = (database.execAsync as jest.Mock).mock.calls[1][0] as string;
     expect(schema).toContain('CREATE TABLE words');
     expect(schema).toContain('cefr_level');
+    expect(schema).toContain("source_pronunciation_locale TEXT NOT NULL DEFAULT 'en-US'");
+    expect(schema).toContain('CREATE INDEX words_source_normalized_idx');
+    expect(schema).not.toContain('UNIQUE (source_language_code, normalized_term)');
     expect(schema).toContain('CREATE TABLE learning_events');
     expect(schema).toContain('CREATE TABLE reminder_settings');
     expect(database.runAsync).toHaveBeenCalledWith(
@@ -40,7 +43,7 @@ describe('migrateDatabase', () => {
     expect((database.execAsync as jest.Mock).mock.calls.some(([sql]) => String(sql).includes('CREATE TABLE sync_imports'))).toBe(true);
     expect((database.execAsync as jest.Mock).mock.calls.some(([sql]) => String(sql).includes('CREATE TABLE sync_id_mappings'))).toBe(true);
     expect((database.execAsync as jest.Mock).mock.calls.some(([sql]) => String(sql).includes('CREATE TABLE sync_cutovers'))).toBe(true);
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 6');
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 7');
   });
 
   it('preserves an existing version-one database without adding personal seed data', async () => {
@@ -48,8 +51,8 @@ describe('migrateDatabase', () => {
 
     await migrateDatabase(database);
 
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 6');
-    expect(database.withExclusiveTransactionAsync).not.toHaveBeenCalled();
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 7');
+    expect(database.withExclusiveTransactionAsync).toHaveBeenCalledTimes(1);
     expect(database.runAsync).not.toHaveBeenCalledWith(expect.stringContaining('INSERT OR IGNORE INTO words'));
   });
 
@@ -66,11 +69,11 @@ describe('migrateDatabase', () => {
     expect(database.getAllAsync).toHaveBeenCalledWith('SELECT id, catalog_sense_id FROM words WHERE catalog_sense_id IS NOT NULL');
     expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining("'learning_filter', 'all'"));
     expect(database.runAsync).toHaveBeenCalledWith('UPDATE words SET cefr_level = ? WHERE id = ?', 'A1', 'word-1');
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 6');
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 7');
   });
 
   it('does not reapply an up-to-date migration', async () => {
-    const database = createDatabase(6);
+    const database = createDatabase(7);
 
     await migrateDatabase(database);
 
@@ -90,7 +93,7 @@ describe('migrateDatabase', () => {
     expect(migration).toContain('CREATE TABLE sync_id_mappings');
     expect(migration).toContain('has_conflict INTEGER NOT NULL DEFAULT 0');
     expect(migration).toContain('UNIQUE (account_id, entity_type, remote_id)');
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 6');
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 7');
   });
 
   it('adds cutover state and rebuilds reminder bookkeeping without a guest-word foreign key', async () => {
@@ -105,6 +108,27 @@ describe('migrateDatabase', () => {
     expect(migration).toContain('CREATE TABLE scheduled_reminders_v6');
     expect(migration).toContain('SELECT notification_id, word_id, scheduled_at FROM scheduled_reminders');
     expect(migration).not.toContain('word_id TEXT NOT NULL REFERENCES words');
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 6');
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 7');
+  });
+
+  it('rebuilds version-six words with pronunciation locales and a non-unique identity index', async () => {
+    const database = createDatabase(6);
+    (database.getAllAsync as jest.Mock)
+      .mockResolvedValueOnce([{ id: 'word-1', term: '  Straße  ', source_language_code: 'de' }])
+      .mockResolvedValueOnce([]);
+
+    await migrateDatabase(database);
+
+    const rebuild = (database.execAsync as jest.Mock).mock.calls
+      .map(([sql]) => String(sql))
+      .find((sql) => sql.includes('CREATE TABLE words_v7'));
+    expect(rebuild).toContain("source_pronunciation_locale TEXT NOT NULL DEFAULT 'en-US'");
+    expect(rebuild).toContain('CREATE INDEX words_source_normalized_idx');
+    expect(rebuild).not.toContain('UNIQUE (source_language_code, normalized_term)');
+    expect(database.runAsync).toHaveBeenCalledWith(
+      'UPDATE words SET normalized_term = ? WHERE id = ?', 'straße', 'word-1',
+    );
+    expect(database.execAsync).toHaveBeenCalledWith('PRAGMA foreign_keys = OFF');
+    expect(database.execAsync).toHaveBeenCalledWith('PRAGMA foreign_keys = ON');
   });
 });

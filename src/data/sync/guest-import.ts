@@ -113,22 +113,18 @@ export class GuestImportService {
       };
     }
 
-    const remoteWords = await this.remote.listActiveWords(signal);
     throwIfAborted(signal);
-    const remoteByNormalized = new Map(remoteWords.map((word) => [word.normalizedTerm, word]));
     const createdAt = this.now().toISOString();
     const mappings: GuestImportMapping[] = [
       ...snapshot.collections.map((collection) => mappingFor(accountId, 'collection', collection.id, this.createUuid(), createdAt, false)),
-      ...snapshot.words.map((word) => {
-        const conflict = remoteByNormalized.get(word.normalized_term);
-        return mappingFor(accountId, 'word', word.id, conflict?.id ?? this.createUuid(), createdAt, Boolean(conflict));
-      }),
+      ...snapshot.words.map((word) => (
+        mappingFor(accountId, 'word', word.id, this.createUuid(), createdAt, false)
+      )),
       ...snapshot.events.map((event) => mappingFor(accountId, 'learning_event', String(event.id), this.createUuid(), createdAt, false)),
     ];
-    const hasConflicts = snapshot.words.some((word) => remoteByNormalized.has(word.normalized_term));
     const record: GuestImportRecord = {
       accountId,
-      state: hasConflicts ? 'needs_conflicts' : 'prepared',
+      state: 'prepared',
       totals,
       uploaded: { ...emptyGuestImportCounts },
       errorCode: null,
@@ -375,26 +371,24 @@ export class GuestImportService {
     snapshot: GuestImportSnapshot,
     signal?: AbortSignal,
   ): Promise<GuestImportConflict[]> {
-    const [mappings, remoteWords] = await Promise.all([
-      listGuestImportMappings(this.database, accountId),
-      this.remote.listActiveWords(signal),
-    ]);
+    const mappings = await listGuestImportMappings(this.database, accountId);
+    const legacyConflictMappings = mappings.filter((mapping) => (
+      mapping.entityType === 'word' && mapping.sourceUpdatedAt === null && mapping.hasConflict
+    ));
+    if (legacyConflictMappings.length === 0) return [];
+    const remoteWords = await this.remote.listActiveWords(signal);
     const words = new Map(snapshot.words.map((word) => [word.id, word]));
-    const remoteByNormalized = new Map(remoteWords.map((word) => [word.normalizedTerm, word]));
+    const remoteById = new Map(remoteWords.map((word) => [word.id, word]));
     const conflicts: GuestImportConflict[] = [];
-    for (const storedMapping of mappings) {
-      if (storedMapping.entityType !== 'word' || storedMapping.sourceUpdatedAt !== null) continue;
+    for (const storedMapping of legacyConflictMappings) {
       const localWord = words.get(storedMapping.localId);
       if (!localWord) continue;
-      const accountWord = remoteByNormalized.get(localWord.normalized_term);
+      const accountWord = remoteById.get(storedMapping.remoteId);
       let mapping = storedMapping;
-      if (!accountWord && mapping.hasConflict) {
+      if (!accountWord) {
         const remoteId = this.createUuid();
         await reassignGuestImportWordMapping(this.database, accountId, mapping.localId, remoteId, false);
         mapping = { ...mapping, remoteId, hasConflict: false, conflictResolution: null };
-      } else if (accountWord && accountWord.id !== mapping.remoteId) {
-        await reassignGuestImportWordMapping(this.database, accountId, mapping.localId, accountWord.id, true);
-        mapping = { ...mapping, remoteId: accountWord.id, hasConflict: true, conflictResolution: null };
       }
       if (!accountWord || !mapping.hasConflict) continue;
       conflicts.push({
@@ -496,6 +490,8 @@ function mutableWordPayload(collectionId: string, row: GuestWordRow): RemoteImpo
     normalized_term: row.normalized_term,
     source_language_code: row.source_language_code,
     target_language_code: row.target_language_code,
+    source_pronunciation_locale: row.source_pronunciation_locale,
+    target_pronunciation_locale: row.target_pronunciation_locale,
     part_of_speech: row.part_of_speech,
     definition: row.definition,
     example: row.example,

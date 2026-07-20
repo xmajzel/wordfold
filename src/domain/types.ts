@@ -47,6 +47,8 @@ export interface Word {
   normalizedTerm: string;
   sourceLanguageCode: string;
   targetLanguageCode: string;
+  sourcePronunciationLocale: string;
+  targetPronunciationLocale: string;
   partOfSpeech: string | null;
   definition: string;
   example: string | null;
