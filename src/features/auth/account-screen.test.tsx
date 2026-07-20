@@ -7,7 +7,7 @@ const mockSignUp = jest.fn();
 const mockSignOut = jest.fn();
 const mockClearMessage = jest.fn();
 const mockClearBeforeSignOut = jest.fn();
-const mockPauseGuestImport = jest.fn();
+const mockPrepareForSignOut = jest.fn();
 
 const mockAuth = {
   status: 'signedOut' as const,
@@ -27,7 +27,8 @@ jest.mock('@/providers/app-data-provider', () => ({
       phase: 'ready', totals: { collections: 1, words: 2, events: 3 },
       uploaded: { collections: 0, words: 0, events: 0 }, conflicts: [], message: null,
     },
-    pauseGuestImport: mockPauseGuestImport,
+    dataSource: 'guest',
+    prepareForSignOut: mockPrepareForSignOut,
   }),
 }));
 jest.mock('@/providers/sync-provider', () => ({
@@ -61,7 +62,7 @@ describe('AccountScreen', () => {
     mockSignUp.mockResolvedValue({ ok: true, outcome: 'confirmationRequired' });
     mockSignOut.mockResolvedValue({ ok: true, outcome: 'signedOut' });
     mockClearBeforeSignOut.mockResolvedValue(undefined);
-    mockPauseGuestImport.mockResolvedValue(undefined);
+    mockPrepareForSignOut.mockResolvedValue(undefined);
     Object.assign(mockAuth, { status: 'signedOut', session: null, user: null });
   });
 
@@ -93,7 +94,7 @@ describe('AccountScreen', () => {
   it('clears synchronized data before signing out of Supabase', async () => {
     const events: string[] = [];
     Object.assign(mockAuth, { status: 'signedIn', user: { email: 'reader@example.com' } });
-    mockPauseGuestImport.mockImplementation(async () => { events.push('import paused'); });
+    mockPrepareForSignOut.mockImplementation(async () => { events.push('local data prepared'); });
     mockClearBeforeSignOut.mockImplementation(async () => { events.push('sync cleared'); });
     mockSignOut.mockImplementation(async () => {
       events.push('auth signed out');
@@ -104,7 +105,7 @@ describe('AccountScreen', () => {
     await fireEvent.press(view.getByRole('button', { name: 'Sign out of this device' }));
 
     await waitFor(() => expect(mockSignOut).toHaveBeenCalled());
-    expect(events).toEqual(['import paused', 'sync cleared', 'auth signed out']);
+    expect(events).toEqual(['local data prepared', 'sync cleared', 'auth signed out']);
   });
 
   it('keeps the session when synchronized data cannot be cleared', async () => {

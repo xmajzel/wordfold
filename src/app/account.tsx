@@ -83,7 +83,7 @@ export default function AccountScreen() {
     setFormMessage(null);
     try {
       try {
-        await appData.pauseGuestImport();
+        await appData.prepareForSignOut();
         await sync.clearBeforeSignOut();
       } catch {
         setFormMessage('Sign out could not safely clear synchronized data. Please try again.');
@@ -132,20 +132,34 @@ export default function AccountScreen() {
           </View>
           <View style={[styles.notice, { backgroundColor: theme.primarySoft }]}>
             <Ionicons name={sync.phase === 'connected' ? 'cloud-done-outline' : sync.phase === 'error' || sync.phase === 'unavailable' ? 'cloud-offline-outline' : 'cloud-outline'} color={theme.primary} size={20}/>
-            <AppText style={styles.flex}>{appData.guestImport.phase === 'completed'
-              ? 'The confirmed device snapshot is imported. Continuous synchronization is the next phase.'
-              : sync.message ?? 'Your vocabulary remains stored locally on this device.'}</AppText>
+            <AppText style={styles.flex}>{appData.dataSource === 'synced'
+              ? sync.message ?? 'Your vocabulary is available offline and synchronizes when connected.'
+              : appData.dataSource === 'reconciling'
+                ? 'Preparing this device for continuous synchronization…'
+                : sync.message ?? 'Your vocabulary remains stored locally on this device.'}</AppText>
           </View>
           {appData.guestImport.phase !== 'unavailable' ? (
             <PrimaryButton
-              label={appData.guestImport.phase === 'completed'
-                ? 'View imported device vocabulary'
+              label={appData.dataSource === 'synced'
+                ? 'View synchronization details'
+                : appData.guestImport.phase === 'completed'
+                  ? 'Finish synchronization setup'
                 : appData.guestImport.phase === 'error'
                   ? 'Resume device vocabulary import'
                   : 'Import device vocabulary'}
               variant="secondary"
               onPress={() => router.push('/account-import')}
             />
+          ) : null}
+          {sync.uploadErrorMessage ? <Message text={sync.uploadErrorMessage} color={theme.danger}/> : null}
+          {sync.rejectedWrite ? (
+            <View style={[styles.notice, { backgroundColor: theme.primarySoft }]}>
+              <Ionicons name="alert-circle-outline" color={theme.danger} size={20}/>
+              <View style={styles.flex}>
+                <AppText>{sync.rejectedWrite.safeMessage}</AppText>
+                <PrimaryButton label="Dismiss" variant="secondary" onPress={() => void sync.acknowledgeRejectedWrite()}/>
+              </View>
+            </View>
           ) : null}
           {auth.message || formMessage ? <Message text={formMessage ?? auth.message!} color={formMessage ? theme.danger : theme.success}/> : null}
           <PrimaryButton label="Sign out of this device" variant="secondary" loading={submitting} onPress={() => void signOut()}/>
@@ -214,7 +228,7 @@ export default function AccountScreen() {
           ) : null}
           {auth.message || formMessage ? <Message text={formMessage ?? auth.message!} color={theme.danger}/> : null}
           <PrimaryButton label={mode === 'signIn' ? 'Sign in' : 'Create account'} loading={submitting} onPress={() => void submit()}/>
-          <AppText variant="caption" style={[styles.centerText, { color: theme.muted }]}>Signing in does not upload or change your local vocabulary during this phase.</AppText>
+          <AppText variant="caption" style={[styles.centerText, { color: theme.muted }]}>After you confirm the device import, Wordfold works offline and synchronizes changes when connected.</AppText>
         </View>
       ) : null}
     </Screen>

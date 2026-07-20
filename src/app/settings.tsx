@@ -21,7 +21,7 @@ export default function SettingsScreen() {
   const theme = useAppTheme();
   const auth = useAuth();
   const sync = useSync();
-  const { reminderSettings, learningPreferences, guestImport, updateReminderSettings } = useAppData();
+  const { reminderSettings, learningPreferences, guestImport, dataSource, updateReminderSettings } = useAppData();
   const [draft, setDraft] = useState<ReminderSettings>(() => reminderSettings ?? ({ enabled: false, countPerDay: 1, windowStartMinutes: 600, windowEndMinutes: 1200, timeZoneId: 'local' }));
   const [saving, setSaving] = useState(false);
   const [scheduledCount, setScheduledCount] = useState<number | null>(null);
@@ -65,7 +65,7 @@ export default function SettingsScreen() {
         <View style={styles.flex}>
           <AppText variant="heading">Account and sync</AppText>
           <AppText variant="caption" style={{ color: theme.muted }}>{auth.status === 'signedIn'
-            ? `${auth.user?.email ?? 'Signed in'} · ${syncStatusLabel(sync.phase, guestImport.phase)}`
+            ? `${auth.user?.email ?? 'Signed in'} · ${syncStatusLabel(sync, guestImport.phase, dataSource)}`
             : auth.status === 'loading'
               ? 'Checking account on this device…'
               : auth.status === 'unavailable'
@@ -99,20 +99,25 @@ export default function SettingsScreen() {
       {scheduledCount !== null ? <AppText variant="label" style={[styles.center, { color: theme.success }]}>{draft.enabled ? `${scheduledCount} word reminders scheduled ahead.` : 'Reminders are off.'}</AppText> : null}
       <View style={styles.divider}/>
       <AppText variant="heading">Content and privacy</AppText>
-      <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><InfoRow icon="phone-portrait-outline" title="Local vocabulary during sync setup" body="Your current words and learning history stay in the device database until the import phase."/><InfoRow icon="book-outline" title="Open English WordNet 2025" body="Definitions under CC BY 4.0."/><InfoRow icon="list-outline" title="NGSL discovery packs" body="Spoken, Business, and Academic lists under CC BY-SA 4.0."/></View>
-      <AppText variant="caption" style={{ color: theme.muted }}>Wordfold is a temporary development name. Confirmed device snapshots can be imported; continuous synchronization, analytics, and payments are not active.</AppText>
+      <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><InfoRow icon="phone-portrait-outline" title="Offline-first vocabulary" body={dataSource === 'synced' ? 'Account vocabulary stays on this device and synchronizes when connected.' : 'Device vocabulary stays local until account import and reconciliation finish.'}/><InfoRow icon="book-outline" title="Open English WordNet 2025" body="Definitions under CC BY 4.0."/><InfoRow icon="list-outline" title="NGSL discovery packs" body="Spoken, Business, and Academic lists under CC BY-SA 4.0."/></View>
+      <AppText variant="caption" style={{ color: theme.muted }}>Wordfold is a temporary development name. Reminders and learning preferences remain device-only.</AppText>
     </Screen>
   );
 }
 
 function syncStatusLabel(
-  phase: ReturnType<typeof useSync>['phase'],
+  sync: ReturnType<typeof useSync>,
   importPhase: ReturnType<typeof useAppData>['guestImport']['phase'],
+  dataSource: ReturnType<typeof useAppData>['dataSource'],
 ) {
-  if (phase === 'connected' && importPhase === 'completed') return 'device snapshot imported; continuous sync is next';
-  if (phase === 'connected') return 'PowerSync connected; device import is available';
-  if (phase === 'connecting') return 'connecting to PowerSync';
-  if (phase === 'offline') return 'PowerSync offline; downloaded sync data is available';
+  if (dataSource === 'synced' && sync.phase === 'offline' && sync.pendingUploads > 0) return `${sync.pendingUploads} changes queued offline`;
+  if (dataSource === 'synced' && sync.uploading) return `uploading ${sync.pendingUploads} changes`;
+  if (dataSource === 'synced') return sync.phase === 'offline' ? 'available offline' : 'synchronized';
+  if (dataSource === 'reconciling') return 'preparing synchronized vocabulary';
+  if (sync.phase === 'connected' && importPhase === 'completed') return 'finishing synchronization setup';
+  if (sync.phase === 'connected') return 'PowerSync connected; device import is available';
+  if (sync.phase === 'connecting') return 'connecting to PowerSync';
+  if (sync.phase === 'offline') return 'PowerSync offline; device vocabulary is available';
   return 'PowerSync unavailable; local vocabulary is available';
 }
 

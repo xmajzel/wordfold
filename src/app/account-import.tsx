@@ -17,7 +17,8 @@ export default function AccountImportScreen() {
   const sync = useSync();
   const {
     guestImport, prepareGuestImport, resolveGuestImportConflict,
-    runGuestImport, refreshGuestImport,
+    runGuestImport, refreshGuestImport, cutover, dataSource, runSyncCutover,
+    resolveSyncCutoverConflict, keepAccountRename,
   } = useAppData();
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -54,7 +55,7 @@ export default function AccountImportScreen() {
           <Ionicons name="cloud-upload-outline" color={theme.primary} size={28}/>
         </View>
         <AppText variant="heading">Move this device vocabulary to your account</AppText>
-        <AppText style={{ color: theme.muted }}>Your original on-device database stays available. Continuous synchronization starts in the next phase.</AppText>
+        <AppText style={{ color: theme.muted }}>Your original on-device database stays available. After reconciliation, account vocabulary works offline and synchronizes whenever you reconnect.</AppText>
         <View style={styles.counts}>
           <Count label="Collections" value={guestImport.totals.collections}/>
           <Count label="Words" value={guestImport.totals.words}/>
@@ -68,7 +69,7 @@ export default function AccountImportScreen() {
         <StatusPanel icon="cloud-offline-outline" text={guestImport.message ?? 'Device import is unavailable in this build.'}/>
       ) : null}
 
-      {guestImport.phase === 'ready' ? (
+      {guestImport.phase === 'ready' && dataSource !== 'synced' ? (
         <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
           <AppText variant="heading">Confirm this snapshot</AppText>
           <AppText style={{ color: theme.muted }}>{totalItems === 0
@@ -138,11 +139,51 @@ export default function AccountImportScreen() {
         </View>
       ) : <StatusPanel icon="sync-outline" loading text="Waiting for PowerSync to download and verify the imported records…"/> : null}
 
-      {guestImport.phase === 'completed' ? (
+      {guestImport.phase === 'completed' && cutover.phase === 'needs_conflicts' ? (
+        <View style={styles.group}>
+          <View>
+            <AppText variant="heading">Resolve newer device changes</AppText>
+            <AppText style={{ color: theme.muted }}>These changes happened after the confirmed snapshot.</AppText>
+          </View>
+          {cutover.conflicts.map((conflict) => (
+            <View key={conflict.localId} style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+              <AppText variant="heading">{conflict.term}</AppText>
+              {conflict.kind === 'new_word' ? <>
+                <Choice label="Keep account version" detail={conflict.accountDefinition}
+                  selected={conflict.resolution === 'keep_account'} disabled={busy}
+                  onPress={() => void perform(() => resolveSyncCutoverConflict(conflict.localId, 'keep_account'))}/>
+                <Choice label="Use this device version" detail={conflict.localDefinition}
+                  selected={conflict.resolution === 'use_device'} disabled={busy}
+                  onPress={() => void perform(() => resolveSyncCutoverConflict(conflict.localId, 'use_device'))}/>
+              </> : <>
+                <AppText variant="caption" style={{ color: theme.muted }}>This renamed device word now conflicts with another account word.</AppText>
+                <PrimaryButton label="Keep account versions" variant="secondary" disabled={busy}
+                  onPress={() => void perform(() => keepAccountRename(conflict.localId))}/>
+                <PrimaryButton label="Return and rename device word" variant="secondary" disabled={busy} onPress={() => router.back()}/>
+              </>}
+            </View>
+          ))}
+        </View>
+      ) : null}
+
+      {guestImport.phase === 'completed' && ['checking', 'uploading', 'verifying'].includes(cutover.phase) ? (
+        <StatusPanel icon="sync-outline" loading text={`Preparing continuous synchronization: ${cutover.uploaded.words}/${cutover.totals.words} changed words processed…`}/>
+      ) : null}
+
+      {guestImport.phase === 'completed' && cutover.phase === 'error' ? (
+        <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+          <Ionicons name="alert-circle-outline" color={theme.danger} size={30}/>
+          <AppText variant="heading">Synchronization setup paused</AppText>
+          <AppText style={{ color: theme.muted }}>{cutover.message ?? 'Connect and retry. Accepted changes will not be duplicated.'}</AppText>
+          <PrimaryButton label="Retry synchronization setup" loading={busy} disabled={busy || sync.phase !== 'connected'} onPress={() => void perform(runSyncCutover)}/>
+        </View>
+      ) : null}
+
+      {dataSource === 'synced' ? (
         <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
           <Ionicons name="checkmark-circle" color={theme.success} size={34}/>
-          <AppText variant="heading">Device snapshot imported</AppText>
-          <AppText style={{ color: theme.muted }}>The confirmed vocabulary is present in your account and PowerSync database. New device changes remain local until Phase 4C enables continuous synchronization.</AppText>
+          <AppText variant="heading">Vocabulary synchronized</AppText>
+          <AppText style={{ color: theme.muted }}>This account vocabulary is now stored locally for offline use. Changes synchronize automatically when a connection is available.</AppText>
           <PrimaryButton label="Done" onPress={() => router.back()}/>
         </View>
       ) : null}

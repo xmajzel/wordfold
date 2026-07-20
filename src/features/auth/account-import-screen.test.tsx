@@ -2,12 +2,18 @@ import { fireEvent, render, waitFor } from '@testing-library/react-native';
 
 import AccountImportScreen from '@/app/account-import';
 import type { GuestImportViewModel } from '@/data/sync/guest-import-types';
+import type { SyncCutoverViewModel } from '@/data/sync/cutover-types';
 
 const mockPrepare = jest.fn(async () => undefined);
 const mockResolve = jest.fn(async () => undefined);
 const mockRun = jest.fn(async () => undefined);
 const mockRefresh = jest.fn(async () => undefined);
 let mockGuestImport: GuestImportViewModel;
+let mockCutover: SyncCutoverViewModel;
+let mockDataSource: 'guest' | 'reconciling' | 'synced';
+const mockRunCutover = jest.fn(async () => undefined);
+const mockResolveCutover = jest.fn(async () => undefined);
+const mockKeepAccountRename = jest.fn(async () => undefined);
 
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
@@ -16,6 +22,11 @@ jest.mock('@/providers/app-data-provider', () => ({
     resolveGuestImportConflict: mockResolve,
     runGuestImport: mockRun,
     refreshGuestImport: mockRefresh,
+    cutover: mockCutover,
+    dataSource: mockDataSource,
+    runSyncCutover: mockRunCutover,
+    resolveSyncCutoverConflict: mockResolveCutover,
+    keepAccountRename: mockKeepAccountRename,
   }),
 }));
 jest.mock('@/providers/sync-provider', () => ({
@@ -48,6 +59,11 @@ describe('AccountImportScreen', () => {
       conflicts: [],
       message: null,
     };
+    mockCutover = {
+      phase: 'checking', totals: { collections: 0, words: 0, events: 0 },
+      uploaded: { collections: 0, words: 0, events: 0 }, conflicts: [], message: null,
+    };
+    mockDataSource = 'guest';
   });
 
   it('shows counts and requires explicit confirmation before preparation', async () => {
@@ -75,12 +91,32 @@ describe('AccountImportScreen', () => {
     await waitFor(() => expect(mockResolve).toHaveBeenCalledWith('local-word', 'use_device'));
   });
 
-  it('does not claim that later device changes are synchronized', async () => {
+  it('reports continuous synchronization only after cutover is ready', async () => {
     mockGuestImport = { ...mockGuestImport, phase: 'completed' };
+    mockCutover = { ...mockCutover, phase: 'ready' };
+    mockDataSource = 'synced';
     const view = await render(<AccountImportScreen/>);
 
-    expect(view.getByText('Device snapshot imported')).toBeTruthy();
-    expect(view.getByText(/New device changes remain local until Phase 4C/)).toBeTruthy();
+    expect(view.getByText('Vocabulary synchronized')).toBeTruthy();
+    expect(view.getByText(/synchronize automatically when a connection is available/)).toBeTruthy();
+  });
+
+  it('requires a choice for a post-import conflicting word', async () => {
+    mockGuestImport = { ...mockGuestImport, phase: 'completed' };
+    mockCutover = {
+      ...mockCutover,
+      phase: 'needs_conflicts',
+      conflicts: [{
+        kind: 'new_word', localId: 'new-local', remoteId: 'account-word', term: 'Scope',
+        localDefinition: 'Device definition', accountDefinition: 'Account definition', resolution: null,
+      }],
+    };
+    mockDataSource = 'reconciling';
+    const view = await render(<AccountImportScreen/>);
+
+    await fireEvent.press(view.getByRole('radio', { name: /Keep account version/ }));
+
+    await waitFor(() => expect(mockResolveCutover).toHaveBeenCalledWith('new-local', 'keep_account'));
   });
 
   it('offers a retry when PowerSync verification times out', async () => {
