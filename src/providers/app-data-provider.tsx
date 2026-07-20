@@ -7,12 +7,19 @@ import { lookupSenses } from '@/data/catalog';
 import { getCefrTranslation } from '@/data/cefr-catalog';
 import { migrateDatabase } from '@/data/database';
 import * as repository from '@/data/repository';
+import { GuestImportCancelledError, GuestImportService } from '@/data/sync/guest-import';
+import { SupabaseGuestImportRemote } from '@/data/sync/guest-import-remote';
+import { powerSyncDatabase } from '@/data/sync/database';
+import { emptyGuestImportCounts, type GuestImportConflictResolution, type GuestImportViewModel } from '@/data/sync/guest-import-types';
+import { supabase } from '@/data/supabase/client';
 import { applyRating } from '@/features/learning/algorithm';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
 import { translateEnglishToSlovak } from '@/features/translation/translator';
 import { buildRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
 import { rebuildReminderSchedule } from '@/features/reminders/scheduler';
 import { LaunchScreen } from '@/components/launch-screen';
+import { useAuth } from '@/providers/auth-provider';
+import { useSync } from '@/providers/sync-provider';
 
 interface AppDataValue {
   words: Word[];
@@ -40,6 +47,12 @@ interface AppDataValue {
   completePersonalizedOnboarding(preferences: LearningPreferences): Promise<number>;
   addRecommendedWords(limit?: number): Promise<number>;
   noteNotificationOpen(wordId: string | null): Promise<void>;
+  guestImport: GuestImportViewModel;
+  prepareGuestImport(): Promise<void>;
+  resolveGuestImportConflict(localWordId: string, resolution: GuestImportConflictResolution): Promise<void>;
+  runGuestImport(): Promise<void>;
+  refreshGuestImport(): Promise<void>;
+  pauseGuestImport(): Promise<void>;
 }
 
 const AppDataContext = createContext<AppDataValue | null>(null);
@@ -86,6 +99,12 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   appDatabase: SQLiteDatabase;
   catalogDatabase: SQLiteDatabase;
 }>) {
+  const auth = useAuth();
+  const sync = useSync();
+  const authStatus = auth.status;
+  const authUserId = auth.user?.id;
+  const syncPhase = sync.phase;
+  const syncHasSynced = sync.hasSynced;
   const [words, setWords] = useState<Word[]>([]);
   const [collections, setCollections] = useState<Collection[]>([]);
   const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -93,6 +112,13 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const [learningPreferences, setLearningPreferences] = useState<LearningPreferences>({ levels: [], topics: [] });
   const [learningFilter, setLearningFilter] = useState<LearningFilter>('all');
   const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
+  const [guestImport, setGuestImport] = useState<GuestImportViewModel>({
+    phase: 'loading', totals: emptyGuestImportCounts, uploaded: emptyGuestImportCounts,
+    conflicts: [], message: null,
+  });
+  const [guestImportService] = useState(() => supabase
+    ? new GuestImportService(appDatabase, new SupabaseGuestImportRemote(supabase), powerSyncDatabase)
+    : null);
   const [databaseMutationQueue] = useState(createSerialMutationQueue);
   const [translationQueue] = useState(createSerialMutationQueue);
   const translationTasks = useRef(new Map<string, Promise<void>>());
@@ -102,6 +128,65 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const runDatabaseMutation = useCallback(<T,>(mutation: () => Promise<T>) => (
     databaseMutationQueue.run(mutation)
   ), [databaseMutationQueue]);
+
+  const refreshGuestImport = useCallback(async () => {
+    if (authStatus !== 'signedIn' || !authUserId || !guestImportService) {
+      setGuestImport({
+        phase: 'unavailable', totals: emptyGuestImportCounts, uploaded: emptyGuestImportCounts,
+        conflicts: [], message: null,
+      });
+      return;
+    }
+    try {
+      setGuestImport(await guestImportService.getViewModel(authUserId));
+    } catch {
+      setGuestImport((current) => ({
+        ...current,
+        phase: 'error',
+        message: 'Import status could not be refreshed. Connect to synchronization and try again.',
+      }));
+    }
+  }, [authStatus, authUserId, guestImportService]);
+
+  const requireImportReady = useCallback(() => {
+    if (authStatus !== 'signedIn' || !authUserId || !guestImportService) {
+      throw new Error('Sign in before importing device vocabulary.');
+    }
+    if (syncPhase !== 'connected') {
+      throw new Error('PowerSync must finish connecting before device vocabulary can be imported.');
+    }
+    return { accountId: authUserId, service: guestImportService };
+  }, [authStatus, authUserId, guestImportService, syncPhase]);
+
+  const prepareGuestImport = useCallback(async () => {
+    const { accountId, service } = requireImportReady();
+    const view = await runDatabaseMutation(() => service.prepare(accountId));
+    setGuestImport(view);
+  }, [requireImportReady, runDatabaseMutation]);
+
+  const resolveGuestImportConflict = useCallback(async (
+    localWordId: string,
+    resolution: GuestImportConflictResolution,
+  ) => {
+    const { accountId, service } = requireImportReady();
+    const view = await runDatabaseMutation(() => service.resolveConflict(accountId, localWordId, resolution));
+    setGuestImport(view);
+  }, [requireImportReady, runDatabaseMutation]);
+
+  const runGuestImport = useCallback(async () => {
+    const { accountId, service } = requireImportReady();
+    try {
+      const view = await runDatabaseMutation(() => service.run(accountId, setGuestImport));
+      setGuestImport(view);
+    } catch (error) {
+      if (!(error instanceof GuestImportCancelledError)) throw error;
+      await refreshGuestImport();
+    }
+  }, [refreshGuestImport, requireImportReady, runDatabaseMutation]);
+
+  const pauseGuestImport = useCallback(async () => {
+    await guestImportService?.cancelAndWait();
+  }, [guestImportService]);
 
   const refresh = useCallback(async () => {
     const [loadedWords, nextCollections, nextStats, nextSettings, nextPreferences, nextOnboarding, nextLearningFilter] = await Promise.all([
@@ -178,6 +263,12 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     void refresh().catch((error) => console.warn('Could not refresh app data.', error));
   }, [refresh]);
 
+  useEffect(() => {
+    // The local import journal is restored after auth changes; conflict details require connectivity.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void refreshGuestImport();
+  }, [refreshGuestImport, syncHasSynced, syncPhase]);
+
   const reschedule = useCallback(async (nextWords?: Word[], nextSettings?: ReminderSettings) => {
     return runDatabaseMutation(async () => {
       const scheduleWords = nextWords ?? await repository.listWords(appDatabase);
@@ -216,6 +307,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
 
   const value = useMemo<AppDataValue>(() => ({
     words, collections, stats, reminderSettings, learningPreferences, learningFilter, onboardingComplete, refresh,
+    guestImport, prepareGuestImport, resolveGuestImportConflict, runGuestImport, refreshGuestImport, pauseGuestImport,
     findSenses: (term) => lookupSenses(catalogDatabase, term),
     createWord: async (input) => {
       const id = await runDatabaseMutation(() => repository.addWord(appDatabase, input));
@@ -302,7 +394,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       await runDatabaseMutation(() => repository.recordNotificationOpen(appDatabase, wordId));
       setStats((current) => current ? { ...current, notificationOpens: current.notificationOpens + 1 } : current);
     },
-  }), [appDatabase, catalogDatabase, collections, learningFilter, learningPreferences, onboardingComplete, prepareWordTranslation, refresh, reminderSettings, reschedule, runDatabaseMutation, stats, words]);
+  }), [appDatabase, catalogDatabase, collections, guestImport, learningFilter, learningPreferences, onboardingComplete, pauseGuestImport, prepareGuestImport, prepareWordTranslation, refresh, refreshGuestImport, reminderSettings, reschedule, resolveGuestImportConflict, runDatabaseMutation, runGuestImport, stats, words]);
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>;
 }

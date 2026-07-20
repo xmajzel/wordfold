@@ -9,6 +9,7 @@ import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAuth } from '@/providers/auth-provider';
+import { useAppData } from '@/providers/app-data-provider';
 import { useSync } from '@/providers/sync-provider';
 import { radii, spacing } from '@/theme/tokens';
 
@@ -21,6 +22,7 @@ function validEmail(value: string) {
 export default function AccountScreen() {
   const theme = useAppTheme();
   const auth = useAuth();
+  const appData = useAppData();
   const sync = useSync();
   const [mode, setMode] = useState<FormMode>('signIn');
   const [email, setEmail] = useState('');
@@ -81,6 +83,7 @@ export default function AccountScreen() {
     setFormMessage(null);
     try {
       try {
+        await appData.pauseGuestImport();
         await sync.clearBeforeSignOut();
       } catch {
         setFormMessage('Sign out could not safely clear synchronized data. Please try again.');
@@ -129,8 +132,21 @@ export default function AccountScreen() {
           </View>
           <View style={[styles.notice, { backgroundColor: theme.primarySoft }]}>
             <Ionicons name={sync.phase === 'connected' ? 'cloud-done-outline' : sync.phase === 'error' || sync.phase === 'unavailable' ? 'cloud-offline-outline' : 'cloud-outline'} color={theme.primary} size={20}/>
-            <AppText style={styles.flex}>{sync.message ?? 'Your vocabulary remains stored locally on this device.'}</AppText>
+            <AppText style={styles.flex}>{appData.guestImport.phase === 'completed'
+              ? 'The confirmed device snapshot is imported. Continuous synchronization is the next phase.'
+              : sync.message ?? 'Your vocabulary remains stored locally on this device.'}</AppText>
           </View>
+          {appData.guestImport.phase !== 'unavailable' ? (
+            <PrimaryButton
+              label={appData.guestImport.phase === 'completed'
+                ? 'View imported device vocabulary'
+                : appData.guestImport.phase === 'error'
+                  ? 'Resume device vocabulary import'
+                  : 'Import device vocabulary'}
+              variant="secondary"
+              onPress={() => router.push('/account-import')}
+            />
+          ) : null}
           {auth.message || formMessage ? <Message text={formMessage ?? auth.message!} color={formMessage ? theme.danger : theme.success}/> : null}
           <PrimaryButton label="Sign out of this device" variant="secondary" loading={submitting} onPress={() => void signOut()}/>
         </View>

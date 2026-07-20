@@ -7,6 +7,7 @@ import { isLearningFilter } from '@/data/cefr-levels';
 import { normalizeTerm } from '@/features/import/parser';
 import { applyRating } from '@/features/learning/algorithm';
 import { buildRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
+import { emptyGuestImportCounts, type GuestImportConflictResolution, type GuestImportViewModel } from '@/data/sync/guest-import-types';
 
 interface AppDataValue {
   words: Word[]; collections: Collection[]; stats: DashboardStats | null;
@@ -27,6 +28,12 @@ interface AppDataValue {
   completePersonalizedOnboarding(preferences: LearningPreferences): Promise<number>;
   addRecommendedWords(limit?: number): Promise<number>;
   noteNotificationOpen(wordId: string | null): Promise<void>;
+  guestImport: GuestImportViewModel;
+  prepareGuestImport(): Promise<void>;
+  resolveGuestImportConflict(localWordId: string, resolution: GuestImportConflictResolution): Promise<void>;
+  runGuestImport(): Promise<void>;
+  refreshGuestImport(): Promise<void>;
+  pauseGuestImport(): Promise<void>;
 }
 
 const Context = createContext<AppDataValue | null>(null);
@@ -130,6 +137,15 @@ export function AppDataProvider({ children }: PropsWithChildren) {
       return recommendations.length;
     },
     noteNotificationOpen: async () => undefined,
+    guestImport: {
+      phase: 'unavailable', totals: emptyGuestImportCounts, uploaded: emptyGuestImportCounts,
+      conflicts: [], message: 'Device vocabulary import is available only in the native app.',
+    },
+    prepareGuestImport: async () => undefined,
+    resolveGuestImportConflict: async () => undefined,
+    runGuestImport: async () => undefined,
+    refreshGuestImport: async () => undefined,
+    pauseGuestImport: async () => undefined,
   }), [collections, learningFilter, learningPreferences, onboardingComplete, reminderSettings, stats, words]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }

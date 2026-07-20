@@ -11,6 +11,20 @@ const mockSQLiteProvider = jest.fn(({ children }: { children: ReactNode }) => ch
 const mockRebuildReminderSchedule = jest.fn(async (..._args: unknown[]) => 0);
 const mockTranslateEnglishToSlovak = jest.fn(async (_text: string) => 'osobný preklad');
 
+jest.mock('@/providers/auth-provider', () => ({
+  useAuth: () => ({ status: 'signedOut', user: null }),
+}));
+jest.mock('@/providers/sync-provider', () => ({
+  useSync: () => ({ phase: 'signedOut', hasSynced: false }),
+}));
+jest.mock('@/data/sync/database', () => ({ powerSyncDatabase: {} }));
+jest.mock('@/data/supabase/client', () => ({ supabase: null }));
+jest.mock('@/data/sync/guest-import-remote', () => ({ SupabaseGuestImportRemote: jest.fn() }));
+jest.mock('@/data/sync/guest-import', () => ({
+  GuestImportCancelledError: class GuestImportCancelledError extends Error {},
+  GuestImportService: jest.fn(),
+}));
+
 jest.mock('../../assets/catalog/wordnet.sqlite', () => 1);
 
 jest.mock('expo-sqlite', () => ({

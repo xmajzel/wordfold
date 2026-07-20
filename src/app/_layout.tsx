@@ -64,6 +64,7 @@ function Navigation() {
         <Stack.Screen name="preferences" options={{ presentation: 'modal' }} />
         <Stack.Screen name="settings" options={{ presentation: 'modal' }} />
         <Stack.Screen name="account" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="account-import" options={{ presentation: 'modal' }} />
         <Stack.Screen name="import" options={{ presentation: 'modal' }} />
         <Stack.Screen name="word/new" options={{ presentation: 'modal' }} />
         <Stack.Screen name="word/[id]" />

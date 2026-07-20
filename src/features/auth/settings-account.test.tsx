@@ -13,6 +13,7 @@ jest.mock('@/providers/sync-provider', () => ({
 }));
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
+    guestImport: { phase: 'ready' },
     reminderSettings: { enabled: false, countPerDay: 1, windowStartMinutes: 600, windowEndMinutes: 1200, timeZoneId: 'local' },
     learningPreferences: { levels: [], topics: [] },
     updateReminderSettings: jest.fn(async () => 0),
@@ -43,7 +44,7 @@ describe('Settings account entry', () => {
   it('shows the signed-in PowerSync connection without claiming vocabulary import', async () => {
     const view = await render(<SettingsScreen/>);
 
-    expect(view.getByText('reader@example.com · PowerSync connected; import is next')).toBeTruthy();
+    expect(view.getByText('reader@example.com · PowerSync connected; device import is available')).toBeTruthy();
     await fireEvent.press(view.getByRole('button', { name: 'Open account' }));
     expect(mockPush).toHaveBeenCalledWith('/account');
   });
