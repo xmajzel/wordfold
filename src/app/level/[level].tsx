@@ -28,7 +28,9 @@ export default function CefrLevelScreen() {
   const filteredEntries = useMemo(() => normalizedQuery
     ? entries.filter((entry) => entry.normalizedTerm.includes(normalizedQuery) || normalizeTerm(entry.definition).includes(normalizedQuery))
     : entries, [entries, normalizedQuery]);
-  const addedTerms = useMemo(() => new Set(words.map((word) => word.normalizedTerm)), [words]);
+  const addedTerms = useMemo(() => new Set(words
+    .filter((word) => word.sourceLanguageCode === 'en')
+    .map((word) => word.normalizedTerm)), [words]);
 
   const addWord = async (entry: CefrCatalogEntry) => {
     const collectionId = collections.find((collection) => collection.id === 'my-words')?.id ?? collections[0]?.id;
@@ -49,6 +51,10 @@ export default function CefrLevelScreen() {
         catalogSenseId: entry.catalogSenseId,
         cefrLevel: entry.level,
         source: 'manual',
+        sourceLanguageCode: 'en',
+        targetLanguageCode: 'sk',
+        sourcePronunciationLocale: 'en-US',
+        targetPronunciationLocale: 'sk-SK',
       });
     } catch (error) {
       Alert.alert(

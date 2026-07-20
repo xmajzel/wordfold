@@ -80,7 +80,7 @@ jest.mock('@/features/reminders/scheduler', () => ({
 
 const word: Word = {
   id: 'word', collectionId: 'collection', term: 'scope', normalizedTerm: 'scope',
-  sourceLanguageCode: 'en', targetLanguageCode: 'sk', partOfSpeech: 'noun',
+  sourceLanguageCode: 'en', targetLanguageCode: 'sk', sourcePronunciationLocale: 'en-US', targetPronunciationLocale: 'sk-SK', partOfSpeech: 'noun',
   definition: 'The extent of something.', example: null, translation: 'rozsah',
   catalogSenseId: null, cefrLevel: null, source: 'manual', state: 'new',
   understoodStreak: 0, lapseCount: 0, viewCount: 1,
@@ -183,5 +183,18 @@ describe('AppDataProvider', () => {
       'personal',
       'osobný preklad',
     ));
+  });
+
+  it('does not translate unsupported language pairs in the background', async () => {
+    const spanishWord = {
+      ...word, id: 'spanish', term: 'hola', normalizedTerm: 'hola', translation: null,
+      sourceLanguageCode: 'es', sourcePronunciationLocale: 'es-ES',
+    };
+    (repository.listWords as jest.Mock).mockResolvedValue([spanishWord]);
+
+    await render(<AppDataProvider><Text>Ready</Text></AppDataProvider>);
+
+    await waitFor(() => expect(repository.listWords).toHaveBeenCalled());
+    expect(mockTranslateEnglishToSlovak).not.toHaveBeenCalled();
   });
 });

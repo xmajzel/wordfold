@@ -57,7 +57,9 @@ const previewSenses: Record<string, CatalogSense> = {
 function toWord(input: NewWordInput, id = createId('web-word')): Word {
   const now = new Date().toISOString();
   return { id, collectionId: input.collectionId, term: input.term, normalizedTerm: input.normalizedTerm,
-    sourceLanguageCode: 'en', targetLanguageCode: 'sk', partOfSpeech: input.partOfSpeech ?? null,
+    sourceLanguageCode: input.sourceLanguageCode, targetLanguageCode: input.targetLanguageCode,
+    sourcePronunciationLocale: input.sourcePronunciationLocale, targetPronunciationLocale: input.targetPronunciationLocale,
+    partOfSpeech: input.partOfSpeech ?? null,
     definition: input.definition, example: input.example ?? null, translation: input.translation ?? null,
     catalogSenseId: input.catalogSenseId ?? null, cefrLevel: input.cefrLevel ?? null, source: input.source ?? 'manual', state: 'new',
     understoodStreak: 0, lapseCount: 0, viewCount: 0, lastViewedAt: null, lastRatedAt: null,
@@ -70,6 +72,8 @@ function recommendationsToWords(recommendations: Recommendation[]) {
     definition: entry.definition, example: entry.example, partOfSpeech: entry.partOfSpeech,
     translation: entry.translation,
     catalogSenseId: entry.catalogSenseId, cefrLevel: entry.level, source: topic ?? 'manual',
+    sourceLanguageCode: 'en', targetLanguageCode: 'sk',
+    sourcePronunciationLocale: 'en-US', targetPronunciationLocale: 'sk-SK',
   }));
 }
 
@@ -117,6 +121,9 @@ export function AppDataProvider({ children }: PropsWithChildren) {
     saveWordTranslation: async (id, translation) => setWords((current) => current.map((word) => word.id === id ? { ...word, translation: translation.trim(), updatedAt: new Date().toISOString() } : word)),
     prepareWordTranslation: async (word) => {
       if (word.translation) return;
+      if (word.sourceLanguageCode !== 'en' || word.targetLanguageCode !== 'sk') {
+        throw new Error('Automatic on-device translation currently supports English → Slovak only.');
+      }
       throw new Error('On-device translation needs a Wordfold development build.');
     },
     removeWord: async (id) => setWords((current) => current.filter((word) => word.id !== id)),
@@ -132,14 +139,18 @@ export function AppDataProvider({ children }: PropsWithChildren) {
     saveLearningPreferences: async (preferences) => setLearningPreferences(normalizeLearningPreferences(preferences)),
     completePersonalizedOnboarding: async (preferences) => {
       const normalized = normalizeLearningPreferences(preferences);
-      const recommendations = buildRecommendations(normalized, words.map((word) => word.normalizedTerm), 10);
+      const recommendations = buildRecommendations(normalized, words
+        .filter((word) => word.sourceLanguageCode === 'en')
+        .map((word) => word.normalizedTerm), 10);
       setLearningPreferences(normalized);
       setWords((current) => [...recommendationsToWords(recommendations), ...current]);
       setOnboardingComplete(true);
       return recommendations.length;
     },
     addRecommendedWords: async (limit = 10) => {
-      const recommendations = buildRecommendations(learningPreferences, words.map((word) => word.normalizedTerm), limit);
+      const recommendations = buildRecommendations(learningPreferences, words
+        .filter((word) => word.sourceLanguageCode === 'en')
+        .map((word) => word.normalizedTerm), limit);
       setWords((current) => [...recommendationsToWords(recommendations), ...current]);
       return recommendations.length;
     },

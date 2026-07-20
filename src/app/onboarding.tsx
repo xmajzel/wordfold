@@ -34,7 +34,7 @@ export default function OnboardingScreen() {
   const preferences = useMemo(() => normalizeLearningPreferences({ levels, topics }), [levels, topics]);
   const preview = useMemo(() => buildRecommendations(
     preferences,
-    words.map((word) => word.normalizedTerm),
+    words.filter((word) => word.sourceLanguageCode === 'en').map((word) => word.normalizedTerm),
     10,
   ), [preferences, words]);
 

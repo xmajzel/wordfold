@@ -28,7 +28,7 @@ export default function LibraryScreen() {
   const collectionNames = useMemo(() => Object.fromEntries(collections.map((item) => [item.id, item.name])), [collections]);
   const recommendationPreview = useMemo(() => buildRecommendations(
     learningPreferences,
-    words.map((word) => word.normalizedTerm),
+    words.filter((word) => word.sourceLanguageCode === 'en').map((word) => word.normalizedTerm),
     10,
   ), [learningPreferences, words]);
   const hasPreferences = learningPreferences.levels.length > 0 && learningPreferences.topics.length > 0;

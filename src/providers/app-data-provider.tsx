@@ -86,6 +86,7 @@ function localDateKey(date: Date) {
 }
 
 function getBundledWordTranslation(word: Word) {
+  if (word.sourceLanguageCode !== 'en' || word.targetLanguageCode !== 'sk') return null;
   return getCefrTranslation(word.catalogSenseId, word.cefrLevel ? word.normalizedTerm : null);
 }
 
@@ -101,6 +102,10 @@ function recommendationsToInputs(recommendations: Recommendation[]): repository.
     catalogSenseId: entry.catalogSenseId,
     cefrLevel: entry.level,
     source: topic ?? 'manual',
+    sourceLanguageCode: 'en',
+    targetLanguageCode: 'sk',
+    sourcePronunciationLocale: 'en-US',
+    targetPronunciationLocale: 'sk-SK',
   }));
 }
 
@@ -319,6 +324,9 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
 
   const prepareWordTranslation = useCallback((word: Word) => {
     if (word.translation) return Promise.resolve();
+    if (word.sourceLanguageCode !== 'en' || word.targetLanguageCode !== 'sk') {
+      return Promise.reject(new Error('Automatic on-device translation currently supports English → Slovak only.'));
+    }
     const existingTask = translationTasks.current.get(word.id);
     if (existingTask) return existingTask;
     const task = translationQueue.run(async () => {
@@ -342,7 +350,8 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
 
   useEffect(() => {
     for (const word of words) {
-      if (word.translation || getBundledWordTranslation(word)
+      if (word.translation || word.sourceLanguageCode !== 'en' || word.targetLanguageCode !== 'sk'
+        || getBundledWordTranslation(word)
         || backgroundTranslationAttempts.current.has(word.id)) continue;
       backgroundTranslationAttempts.current.add(word.id);
       void prepareWordTranslation(word).catch((error) => {
@@ -476,7 +485,9 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     },
     completePersonalizedOnboarding: async (preferences) => {
       const existing = await vocabularyStore.listWords();
-      const recommendations = buildRecommendations(preferences, existing.map((word) => word.normalizedTerm), 10);
+      const recommendations = buildRecommendations(preferences, existing
+        .filter((word) => word.sourceLanguageCode === 'en')
+        .map((word) => word.normalizedTerm), 10);
       await runDatabaseMutation(async () => {
         if (dataSource === 'synced') {
           await repository.saveLearningPreferences(appDatabase, preferences);
@@ -491,7 +502,9 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     },
     addRecommendedWords: async (limit = 10) => {
       const existing = await vocabularyStore.listWords();
-      const recommendations = buildRecommendations(learningPreferences, existing.map((word) => word.normalizedTerm), limit);
+      const recommendations = buildRecommendations(learningPreferences, existing
+        .filter((word) => word.sourceLanguageCode === 'en')
+        .map((word) => word.normalizedTerm), limit);
       if (recommendations.length === 0) return 0;
       await runDatabaseMutation(() => vocabularyStore.createWords(recommendationsToInputs(recommendations)));
       await refresh(); await reschedule();

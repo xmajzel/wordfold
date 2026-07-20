@@ -22,7 +22,9 @@ export default function ImportScreen() {
   const [collectionId, setCollectionId] = useState(collections[0]?.id ?? 'my-words');
   const [reviewed, setReviewed] = useState<ReviewedLine[] | null>(null);
   const [busy, setBusy] = useState(false);
-  const existing = useMemo(() => new Set(words.map((word) => word.normalizedTerm)), [words]);
+  const existing = useMemo(() => new Set(words
+    .filter((word) => word.sourceLanguageCode === 'en')
+    .map((word) => word.normalizedTerm)), [words]);
   const importable = reviewed?.filter((line) => !line.error && !line.duplicate && line.sense) ?? [];
 
   const review = async () => {
@@ -48,6 +50,8 @@ export default function ImportScreen() {
         definition: line.sense!.definition, example: line.sense!.example,
         partOfSpeech: line.sense!.partOfSpeech, catalogSenseId: line.sense!.id,
         translation: line.translation,
+        sourceLanguageCode: 'en', targetLanguageCode: 'sk',
+        sourcePronunciationLocale: 'en-US', targetPronunciationLocale: 'sk-SK',
       })));
       Alert.alert('Words imported', `${importable.length} ${importable.length === 1 ? 'word is' : 'words are'} ready to practice.`, [{ text: 'Done', onPress: () => router.back() }]);
     } finally { setBusy(false); }
