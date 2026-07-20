@@ -9,19 +9,23 @@ import { migrateDatabase } from '@/data/database';
 import * as repository from '@/data/repository';
 import { GuestImportCancelledError, GuestImportService } from '@/data/sync/guest-import';
 import { SupabaseGuestImportRemote } from '@/data/sync/guest-import-remote';
+import { SyncCutoverCancelledError, SyncCutoverService } from '@/data/sync/cutover';
+import type { SyncCutoverViewModel } from '@/data/sync/cutover-types';
 import { powerSyncDatabase } from '@/data/sync/database';
 import { emptyGuestImportCounts, type GuestImportConflictResolution, type GuestImportViewModel } from '@/data/sync/guest-import-types';
 import { supabase } from '@/data/supabase/client';
+import { createGuestVocabularyStore, createSyncVocabularyStore } from '@/data/vocabulary-store';
 import { applyRating } from '@/features/learning/algorithm';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
 import { translateEnglishToSlovak } from '@/features/translation/translator';
 import { buildRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
-import { rebuildReminderSchedule } from '@/features/reminders/scheduler';
+import { clearScheduledReminders, rebuildReminderSchedule } from '@/features/reminders/scheduler';
 import { LaunchScreen } from '@/components/launch-screen';
 import { useAuth } from '@/providers/auth-provider';
 import { useSync } from '@/providers/sync-provider';
 
 interface AppDataValue {
+  dataSource: 'loading' | 'guest' | 'reconciling' | 'synced';
   words: Word[];
   collections: Collection[];
   stats: DashboardStats | null;
@@ -53,6 +57,11 @@ interface AppDataValue {
   runGuestImport(): Promise<void>;
   refreshGuestImport(): Promise<void>;
   pauseGuestImport(): Promise<void>;
+  cutover: SyncCutoverViewModel;
+  runSyncCutover(): Promise<void>;
+  resolveSyncCutoverConflict(localWordId: string, resolution: GuestImportConflictResolution): Promise<void>;
+  keepAccountRename(localWordId: string): Promise<void>;
+  prepareForSignOut(): Promise<void>;
 }
 
 const AppDataContext = createContext<AppDataValue | null>(null);
@@ -116,14 +125,27 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     phase: 'loading', totals: emptyGuestImportCounts, uploaded: emptyGuestImportCounts,
     conflicts: [], message: null,
   });
+  const [dataSource, setDataSource] = useState<AppDataValue['dataSource']>('loading');
+  const [cutover, setCutover] = useState<SyncCutoverViewModel>({
+    phase: 'checking', totals: emptyGuestImportCounts, uploaded: emptyGuestImportCounts,
+    conflicts: [], message: null,
+  });
   const [guestImportService] = useState(() => supabase
     ? new GuestImportService(appDatabase, new SupabaseGuestImportRemote(supabase), powerSyncDatabase)
+    : null);
+  const [cutoverService] = useState(() => supabase
+    ? new SyncCutoverService(appDatabase, new SupabaseGuestImportRemote(supabase), powerSyncDatabase)
     : null);
   const [databaseMutationQueue] = useState(createSerialMutationQueue);
   const [translationQueue] = useState(createSerialMutationQueue);
   const translationTasks = useRef(new Map<string, Promise<void>>());
   const backgroundTranslationAttempts = useRef(new Set<string>());
   const lastScheduleDay = useRef<string | null>(null);
+  const automaticCutover = useRef<string | null>(null);
+
+  const vocabularyStore = useMemo(() => dataSource === 'synced' && authUserId
+    ? createSyncVocabularyStore(powerSyncDatabase, authUserId)
+    : createGuestVocabularyStore(appDatabase), [appDatabase, authUserId, dataSource]);
 
   const runDatabaseMutation = useCallback(<T,>(mutation: () => Promise<T>) => (
     databaseMutationQueue.run(mutation)
@@ -188,9 +210,81 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     await guestImportService?.cancelAndWait();
   }, [guestImportService]);
 
+  const requireCutoverReady = useCallback(() => {
+    if (authStatus !== 'signedIn' || !authUserId || !cutoverService) {
+      throw new Error('Sign in before preparing synchronized vocabulary.');
+    }
+    if (syncPhase !== 'connected' || !syncHasSynced) {
+      throw new Error('PowerSync must finish connecting before synchronization can be prepared.');
+    }
+    return { accountId: authUserId, service: cutoverService };
+  }, [authStatus, authUserId, cutoverService, syncHasSynced, syncPhase]);
+
+  const applyCutoverView = useCallback((view: SyncCutoverViewModel) => {
+    setCutover(view);
+    setDataSource(view.phase === 'ready' ? 'synced' : view.phase === 'waiting_import' ? 'guest' : 'reconciling');
+  }, []);
+
+  const runSyncCutover = useCallback(async () => {
+    const { accountId, service } = requireCutoverReady();
+    setDataSource('reconciling');
+    try {
+      let view = await runDatabaseMutation(() => service.run(accountId, setCutover));
+      for (let recheck = 0; view.phase === 'checking' && recheck < 2; recheck += 1) {
+        view = await runDatabaseMutation(() => service.run(accountId, setCutover));
+      }
+      applyCutoverView(view);
+    } catch (error) {
+      if (!(error instanceof SyncCutoverCancelledError)) throw error;
+      applyCutoverView(await service.getViewModel(accountId));
+    }
+  }, [applyCutoverView, requireCutoverReady, runDatabaseMutation]);
+
+  const resolveSyncCutoverConflict = useCallback(async (
+    localWordId: string,
+    resolution: GuestImportConflictResolution,
+  ) => {
+    const { accountId, service } = requireCutoverReady();
+    const view = await runDatabaseMutation(() => service.resolveConflict(accountId, localWordId, resolution));
+    applyCutoverView(view);
+  }, [applyCutoverView, requireCutoverReady, runDatabaseMutation]);
+
+  const keepAccountRename = useCallback(async (localWordId: string) => {
+    const { accountId, service } = requireCutoverReady();
+    const view = await runDatabaseMutation(() => service.keepAccountRename(accountId, localWordId));
+    applyCutoverView(view);
+  }, [applyCutoverView, requireCutoverReady, runDatabaseMutation]);
+
+  useEffect(() => {
+    let active = true;
+    if (authStatus !== 'signedIn' || !authUserId || !cutoverService) {
+      automaticCutover.current = null;
+      void Promise.resolve().then(() => { if (active) setDataSource('guest'); });
+      return () => { active = false; };
+    }
+    void cutoverService.getViewModel(authUserId).then((view) => {
+      if (!active) return;
+      applyCutoverView(view);
+      if (view.phase === 'ready' || syncPhase !== 'connected' || !syncHasSynced) return;
+      const key = `${authUserId}:${guestImport.phase}:${view.phase}`;
+      if (automaticCutover.current === key) return;
+      automaticCutover.current = key;
+      void runSyncCutover().catch((error) => console.warn('Could not prepare synchronized vocabulary.', error));
+    }).catch(() => {
+      if (active) setDataSource('guest');
+    });
+    return () => { active = false; };
+  }, [applyCutoverView, authStatus, authUserId, cutoverService, guestImport.phase, runSyncCutover, syncHasSynced, syncPhase]);
+
+  const prepareForSignOut = useCallback(async () => {
+    await guestImportService?.cancelAndWait();
+    await cutoverService?.cancelAndWait();
+    await clearScheduledReminders(appDatabase);
+  }, [appDatabase, cutoverService, guestImportService]);
+
   const refresh = useCallback(async () => {
     const [loadedWords, nextCollections, nextStats, nextSettings, nextPreferences, nextOnboarding, nextLearningFilter] = await Promise.all([
-      repository.listWords(appDatabase), repository.listCollections(appDatabase), repository.getStats(appDatabase),
+      vocabularyStore.listWords(), vocabularyStore.listCollections(), vocabularyStore.getStats(),
       repository.getReminderSettings(appDatabase), repository.getLearningPreferences(appDatabase),
       repository.isOnboardingComplete(appDatabase), repository.getLearningFilter(appDatabase),
     ]);
@@ -200,7 +294,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       return translation ? [{ id: word.id, translation }] : [];
     });
     const translationBackfill = await runDatabaseMutation(
-      () => repository.updateMissingWordTranslations(appDatabase, translationUpdates),
+      () => vocabularyStore.updateMissingWordTranslations(translationUpdates),
     );
     const updatedIds = new Set(translationBackfill.updatedIds);
     const updatedTranslations = new Map(translationUpdates
@@ -208,7 +302,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       .map((update) => [update.id, update.translation]));
     const synchronizedWords = translationUpdates.length === updatedIds.size
       ? loadedWords
-      : await repository.listWords(appDatabase);
+      : await vocabularyStore.listWords();
     const backfillUpdatedAt = translationBackfill.updatedAt;
     const nextWords = backfillUpdatedAt ? synchronizedWords.map((word) => {
       const translation = updatedTranslations.get(word.id);
@@ -221,20 +315,20 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     setLearningPreferences(nextPreferences);
     setOnboardingComplete(nextOnboarding);
     setLearningFilter(nextLearningFilter);
-  }, [appDatabase, runDatabaseMutation]);
+  }, [appDatabase, runDatabaseMutation, vocabularyStore]);
 
   const prepareWordTranslation = useCallback((word: Word) => {
     if (word.translation) return Promise.resolve();
     const existingTask = translationTasks.current.get(word.id);
     if (existingTask) return existingTask;
     const task = translationQueue.run(async () => {
-      const currentWord = await repository.getWord(appDatabase, word.id) ?? word;
+      const currentWord = await vocabularyStore.getWord(word.id) ?? word;
       if (currentWord.translation) return;
       const bundledTranslation = getBundledWordTranslation(currentWord);
       const translated = bundledTranslation ?? (await translateEnglishToSlovak(currentWord.term)).trim();
       if (!translated) throw new Error('Translation returned no text.');
       const updatedAt = await runDatabaseMutation(
-        () => repository.updateWordTranslation(appDatabase, currentWord.id, translated),
+        () => vocabularyStore.saveWordTranslation(currentWord.id, translated),
       );
       setWords((current) => current.map((item) => item.id === currentWord.id && !item.translation
         ? { ...item, translation: translated, updatedAt }
@@ -244,7 +338,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     });
     translationTasks.current.set(word.id, task);
     return task;
-  }, [appDatabase, runDatabaseMutation, translationQueue]);
+  }, [runDatabaseMutation, translationQueue, vocabularyStore]);
 
   useEffect(() => {
     for (const word of words) {
@@ -263,6 +357,10 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     void refresh().catch((error) => console.warn('Could not refresh app data.', error));
   }, [refresh]);
 
+  useEffect(() => vocabularyStore.subscribe(() => {
+    void refresh().catch((error) => console.warn('Could not refresh synchronized app data.', error));
+  }), [refresh, vocabularyStore]);
+
   useEffect(() => {
     // The local import journal is restored after auth changes; conflict details require connectivity.
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -271,11 +369,11 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
 
   const reschedule = useCallback(async (nextWords?: Word[], nextSettings?: ReminderSettings) => {
     return runDatabaseMutation(async () => {
-      const scheduleWords = nextWords ?? await repository.listWords(appDatabase);
+      const scheduleWords = nextWords ?? await vocabularyStore.listWords();
       const scheduleSettings = nextSettings ?? await repository.getReminderSettings(appDatabase);
       return rebuildReminderSchedule(appDatabase, scheduleWords, scheduleSettings);
     });
-  }, [appDatabase, runDatabaseMutation]);
+  }, [appDatabase, runDatabaseMutation, vocabularyStore]);
 
   const refreshReminderSchedule = useCallback(async (force = false) => {
     const settings = await repository.getReminderSettings(appDatabase);
@@ -306,42 +404,43 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   }, [refreshReminderSchedule]);
 
   const value = useMemo<AppDataValue>(() => ({
-    words, collections, stats, reminderSettings, learningPreferences, learningFilter, onboardingComplete, refresh,
+    dataSource, words, collections, stats, reminderSettings, learningPreferences, learningFilter, onboardingComplete, refresh,
     guestImport, prepareGuestImport, resolveGuestImportConflict, runGuestImport, refreshGuestImport, pauseGuestImport,
+    cutover, runSyncCutover, resolveSyncCutoverConflict, keepAccountRename, prepareForSignOut,
     findSenses: (term) => lookupSenses(catalogDatabase, term),
     createWord: async (input) => {
-      const id = await runDatabaseMutation(() => repository.addWord(appDatabase, input));
+      const id = await runDatabaseMutation(() => vocabularyStore.createWord(input));
       await refresh(); await reschedule(); return id;
     },
     createWords: async (inputs) => {
-      const ids = await runDatabaseMutation(() => repository.addWords(appDatabase, inputs));
+      const ids = await runDatabaseMutation(() => vocabularyStore.createWords(inputs));
       await refresh(); await reschedule(); return ids;
     },
     editWord: async (id, input) => {
-      await runDatabaseMutation(() => repository.updateWord(appDatabase, id, input)); await refresh(); await reschedule();
+      await runDatabaseMutation(() => vocabularyStore.editWord(id, input)); await refresh(); await reschedule();
     },
     saveWordTranslation: async (id, translation) => {
       const nextTranslation = translation.trim();
       if (!nextTranslation) throw new Error('Translation returned no text.');
-      const updatedAt = await runDatabaseMutation(() => repository.updateWordTranslation(appDatabase, id, nextTranslation));
+      const updatedAt = await runDatabaseMutation(() => vocabularyStore.saveWordTranslation(id, nextTranslation));
       setWords((current) => current.map((word) => word.id === id
         ? { ...word, translation: nextTranslation, updatedAt }
         : word));
     },
     prepareWordTranslation,
     removeWord: async (id) => {
-      await runDatabaseMutation(() => repository.deleteWord(appDatabase, id)); await refresh(); await reschedule();
+      await runDatabaseMutation(() => vocabularyStore.removeWord(id)); await refresh(); await reschedule();
     },
     resetWord: async (id) => {
-      await runDatabaseMutation(() => repository.resetWord(appDatabase, id)); await refresh(); await reschedule();
+      await runDatabaseMutation(() => vocabularyStore.resetWord(id)); await refresh(); await reschedule();
     },
     createCollection: async (name, color) => {
-      const id = await runDatabaseMutation(() => repository.addCollection(appDatabase, name, color)); await refresh(); return id;
+      const id = await runDatabaseMutation(() => vocabularyStore.createCollection(name, color)); await refresh(); return id;
     },
     rateWord: async (word, rating) => {
-      const currentWord = await repository.getWord(appDatabase, word.id) ?? word;
+      const currentWord = await vocabularyStore.getWord(word.id) ?? word;
       const update = applyRating(currentWord, rating);
-      await runDatabaseMutation(() => repository.saveRating(appDatabase, word.id, rating, update));
+      await runDatabaseMutation(() => vocabularyStore.saveRating(word.id, rating, update));
       setWords((current) => current.map((item) => item.id === word.id
         ? { ...item, ...update, updatedAt: update.lastRatedAt }
         : item));
@@ -350,7 +449,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     },
     markViewed: async (id) => {
       const occurredAt = new Date();
-      await runDatabaseMutation(() => repository.recordView(appDatabase, id, occurredAt.toISOString()));
+      await runDatabaseMutation(() => vocabularyStore.recordView(id, occurredAt.toISOString()));
       setWords((current) => current.map((item) => item.id === id
         ? { ...item, viewCount: item.viewCount + 1, lastViewedAt: occurredAt.toISOString(), updatedAt: occurredAt.toISOString() }
         : item));
@@ -376,25 +475,33 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       setLearningPreferences(normalized);
     },
     completePersonalizedOnboarding: async (preferences) => {
-      const existing = await repository.listWords(appDatabase);
+      const existing = await vocabularyStore.listWords();
       const recommendations = buildRecommendations(preferences, existing.map((word) => word.normalizedTerm), 10);
-      await runDatabaseMutation(() => repository.completeOnboardingSetup(appDatabase, preferences, recommendationsToInputs(recommendations)));
+      await runDatabaseMutation(async () => {
+        if (dataSource === 'synced') {
+          await repository.saveLearningPreferences(appDatabase, preferences);
+          await vocabularyStore.createWords(recommendationsToInputs(recommendations));
+          await repository.completeOnboarding(appDatabase);
+        } else {
+          await repository.completeOnboardingSetup(appDatabase, preferences, recommendationsToInputs(recommendations));
+        }
+      });
       await refresh(); await reschedule();
       return recommendations.length;
     },
     addRecommendedWords: async (limit = 10) => {
-      const existing = await repository.listWords(appDatabase);
+      const existing = await vocabularyStore.listWords();
       const recommendations = buildRecommendations(learningPreferences, existing.map((word) => word.normalizedTerm), limit);
       if (recommendations.length === 0) return 0;
-      await runDatabaseMutation(() => repository.addWords(appDatabase, recommendationsToInputs(recommendations)));
+      await runDatabaseMutation(() => vocabularyStore.createWords(recommendationsToInputs(recommendations)));
       await refresh(); await reschedule();
       return recommendations.length;
     },
     noteNotificationOpen: async (wordId) => {
-      await runDatabaseMutation(() => repository.recordNotificationOpen(appDatabase, wordId));
+      await runDatabaseMutation(() => vocabularyStore.recordNotificationOpen(wordId));
       setStats((current) => current ? { ...current, notificationOpens: current.notificationOpens + 1 } : current);
     },
-  }), [appDatabase, catalogDatabase, collections, guestImport, learningFilter, learningPreferences, onboardingComplete, pauseGuestImport, prepareGuestImport, prepareWordTranslation, refresh, refreshGuestImport, reminderSettings, reschedule, resolveGuestImportConflict, runDatabaseMutation, runGuestImport, stats, words]);
+  }), [appDatabase, catalogDatabase, collections, cutover, dataSource, guestImport, keepAccountRename, learningFilter, learningPreferences, onboardingComplete, pauseGuestImport, prepareForSignOut, prepareGuestImport, prepareWordTranslation, refresh, refreshGuestImport, reminderSettings, reschedule, resolveGuestImportConflict, resolveSyncCutoverConflict, runDatabaseMutation, runGuestImport, runSyncCutover, stats, vocabularyStore, words]);
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>;
 }

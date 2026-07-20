@@ -12,6 +12,12 @@ export function SyncProvider({ children }: PropsWithChildren) {
     hasSynced: false,
     lastSyncedAt: null,
     message: auth.status === 'signedIn' ? 'Data synchronization is not enabled on web.' : null,
+    uploading: false,
+    pendingUploads: 0,
+    uploadErrorMessage: null,
+    rejectedWrite: null,
+    refreshUploadState: async () => undefined,
+    acknowledgeRejectedWrite: async () => undefined,
     clearBeforeSignOut: async () => undefined,
   }), [auth.status]);
 

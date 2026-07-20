@@ -41,7 +41,7 @@ export async function requestReminderPermission(): Promise<ReminderPermissionRes
 }
 
 export async function clearScheduledReminders(database: SQLiteDatabase) {
-  await Notifications.cancelAllScheduledNotificationsAsync().catch(() => undefined);
+  await Notifications.cancelAllScheduledNotificationsAsync();
   await database.runAsync('DELETE FROM scheduled_reminders');
 }
 

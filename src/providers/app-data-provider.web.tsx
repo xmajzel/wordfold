@@ -8,8 +8,10 @@ import { normalizeTerm } from '@/features/import/parser';
 import { applyRating } from '@/features/learning/algorithm';
 import { buildRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
 import { emptyGuestImportCounts, type GuestImportConflictResolution, type GuestImportViewModel } from '@/data/sync/guest-import-types';
+import type { SyncCutoverViewModel } from '@/data/sync/cutover-types';
 
 interface AppDataValue {
+  dataSource: 'guest';
   words: Word[]; collections: Collection[]; stats: DashboardStats | null;
   reminderSettings: ReminderSettings | null;
   learningPreferences: LearningPreferences;
@@ -34,6 +36,11 @@ interface AppDataValue {
   runGuestImport(): Promise<void>;
   refreshGuestImport(): Promise<void>;
   pauseGuestImport(): Promise<void>;
+  cutover: SyncCutoverViewModel;
+  runSyncCutover(): Promise<void>;
+  resolveSyncCutoverConflict(localWordId: string, resolution: GuestImportConflictResolution): Promise<void>;
+  keepAccountRename(localWordId: string): Promise<void>;
+  prepareForSignOut(): Promise<void>;
 }
 
 const Context = createContext<AppDataValue | null>(null);
@@ -101,7 +108,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
   }, [words]);
 
   const value = useMemo<AppDataValue>(() => ({
-    words, collections, stats, reminderSettings, learningPreferences, learningFilter, onboardingComplete,
+    dataSource: 'guest', words, collections, stats, reminderSettings, learningPreferences, learningFilter, onboardingComplete,
     refresh: async () => undefined,
     findSenses: async (term) => { const sense = previewSenses[normalizeTerm(term)]; return sense ? [sense] : []; },
     createWord: async (input) => { const word = toWord(input); setWords((current) => [word, ...current]); return word.id; },
@@ -146,6 +153,14 @@ export function AppDataProvider({ children }: PropsWithChildren) {
     runGuestImport: async () => undefined,
     refreshGuestImport: async () => undefined,
     pauseGuestImport: async () => undefined,
+    cutover: {
+      phase: 'checking', totals: emptyGuestImportCounts, uploaded: emptyGuestImportCounts,
+      conflicts: [], message: 'Continuous synchronization is available only in the native app.',
+    },
+    runSyncCutover: async () => undefined,
+    resolveSyncCutoverConflict: async () => undefined,
+    keepAccountRename: async () => undefined,
+    prepareForSignOut: async () => undefined,
   }), [collections, learningFilter, learningPreferences, onboardingComplete, reminderSettings, stats, words]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
