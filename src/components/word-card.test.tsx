@@ -40,6 +40,16 @@ const word: Word = {
 };
 
 describe('WordCard learning actions', () => {
+  it('hides learning history while keeping it on compact library cards', async () => {
+    const learningCard = await render(<WordCard word={word}/>);
+
+    expect(learningCard.queryByText('Seen 2×')).toBeNull();
+    expect(learningCard.queryByText('Missed 0×')).toBeNull();
+
+    const libraryCard = await render(<WordCard word={word} collectionName="My words" compact/>);
+    libraryCard.getByText('My words · seen 2×');
+  });
+
   it('offers only keep-learning and stop-review outcomes', async () => {
     const onRate = jest.fn();
     const screen = await render(<WordCard word={word} onRate={onRate}/>);
