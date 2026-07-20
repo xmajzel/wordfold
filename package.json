@@ -71,6 +71,7 @@
     "test": "jest --runInBand",
     "test:watch": "jest --watch",
     "build:cefr": "node scripts/build-cefr-catalog.mjs",
+    "build:cefr-translations": "python3 scripts/build-cefr-translations.py",
     "build:wordnet": "node scripts/build-wordnet.mjs",
     "build:personal-vocabulary": "node scripts/build-personal-vocabulary.mjs"
   },

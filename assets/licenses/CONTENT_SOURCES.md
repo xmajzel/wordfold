@@ -36,6 +36,19 @@ Changes made by Wordfold: duplicate source rows are collapsed, unresolved C1/C2 
 
 The exact source rows are in `assets/catalog/sources/`. `assets/catalog/cefr-catalog-manifest.json` records source versions, entry provenance, conflicts, exclusions, transformations, counts, and validation results.
 
+### Bundled English-to-Slovak hints
+
+Each generated CEFR entry includes an offline Slovak hint produced once from its English headword, part of speech, and Open English WordNet sense definition. Generation uses the pinned int8 CTranslate2 conversion of MADLAD-400-3B-MT. If the generated headword is copied, misspelled, or otherwise unsafe, Wordfold stores the translated sense explanation as the hint instead. Catalog-specific corrections can be recorded in `assets/catalog/cefr-translations-en-sk-overrides.json`.
+
+- Model: `cstr/madlad400-3b-ct2-int8`
+- Pinned revision: `fd0b55729c074372eb84b52b9309a00dc65c40c4`
+- Upstream model: `google/madlad400-3b-mt`
+- Source: https://huggingface.co/cstr/madlad400-3b-ct2-int8
+- License: Apache License 2.0
+- License text: https://www.apache.org/licenses/LICENSE-2.0
+
+The committed translation sidecar records the model revision, generation parameters, content hash, fallback decisions, overrides, and QA totals. These generated hints are learning aids and may still need native-speaker corrections; the overrides file is the durable correction layer.
+
 ## NGSL discovery packs
 
 The optional Spoken, Business, and Academic word lists are adapted from work by Charles Browne, Brent Culligan, and Joseph Phillips through the New General Service List Project.

@@ -71,13 +71,16 @@ The original 402-word personal development dataset is preserved under
 `docs/personal-vocabulary-archive`. It is not bundled or inserted on fresh installations; the
 `build:personal-vocabulary` script only rebuilds that archive for future custom-import work.
 
-The built-in A1–C2 English categories are generated from CEFR-J 1.6 (A1–B2), the Octanove Vocabulary Profile 1.0 (C1–C2), and Open English WordNet definitions:
+The built-in A1–C2 English categories are generated from CEFR-J 1.6 (A1–B2), the Octanove Vocabulary Profile 1.0 (C1–C2), and Open English WordNet definitions. Their committed Slovak hints are generated separately with a pinned Apache-2.0 model and then folded into the catalog:
 
 ```bash
+python3 -m venv .venv-cefr-translations
+.venv-cefr-translations/bin/pip install -r scripts/requirements-cefr-translations.txt
+.venv-cefr-translations/bin/python scripts/build-cefr-translations.py --force
 pnpm build:cefr
 ```
 
-The build produces `assets/catalog/cefr-catalog.json` and a provenance and QA report at `assets/catalog/cefr-catalog-manifest.json`. The app treats these as CEFR-aligned categories rather than an official Council of Europe vocabulary list.
+The translation step downloads about 3 GB of pinned model data into the local Hugging Face cache; the model is not bundled in the app. The catalog build produces `assets/catalog/cefr-catalog.json` and a provenance and QA report at `assets/catalog/cefr-catalog-manifest.json`. The app treats these as CEFR-aligned categories rather than an official Council of Europe vocabulary list.
 
 See [content attribution](assets/licenses/CONTENT_SOURCES.md) for sources, licenses, and modifications.
 

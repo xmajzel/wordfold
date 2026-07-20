@@ -11,7 +11,6 @@ import { WordCard } from '@/components/word-card';
 import type { LearningFilter, LearningRating, Word } from '@/domain/types';
 import { buildLearningFeed, filterWordsByLearningCategory, getAvailableLearningFilters } from '@/features/learning/algorithm';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
-import { translateEnglishToSlovak } from '@/features/translation/translator';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { spacing } from '@/theme/tokens';
@@ -44,7 +43,7 @@ export default function LearnScreen() {
 function LearningSession({ filter, availableFilters }: { filter: LearningFilter; availableFilters: LearningFilter[] }) {
   const theme = useAppTheme();
   const { height } = useWindowDimensions();
-  const { words, collections, updateLearningFilter, rateWord, markViewed, saveWordTranslation } = useAppData();
+  const { words, collections, updateLearningFilter, rateWord, markViewed, prepareWordTranslation } = useAppData();
   const [sessionFeed] = useState<Word[]>(() => buildLearningFeed(words, new Date(), filter));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [ratingWordId, setRatingWordId] = useState<string | null>(null);
@@ -69,11 +68,7 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
     if (!activeWord || activeWord.translation || translatingIds.current.has(activeWord.id)
       || translationStates[activeWord.id] === 'error') return;
     translatingIds.current.add(activeWord.id);
-    const translationRequest = translateEnglishToSlovak(activeWord.term).then(async (result) => {
-      const translation = result.trim();
-      if (!translation) throw new Error('Translation returned no text.');
-      await saveWordTranslation(activeWord.id, translation);
-    });
+    const translationRequest = prepareWordTranslation(activeWord);
     void translationRequest.then(() => {
       translatingIds.current.delete(activeWord.id);
       setTranslationStates((current) => {
@@ -85,7 +80,7 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
       translatingIds.current.delete(activeWord.id);
       setTranslationStates((current) => ({ ...current, [activeWord.id]: 'error' }));
     });
-  }, [activeWord, saveWordTranslation, translationStates]);
+  }, [activeWord, prepareWordTranslation, translationStates]);
 
   useEffect(() => {
     const word = sessionFeed[currentIndex];

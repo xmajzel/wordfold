@@ -9,6 +9,7 @@ import { AppDataProvider, useAppData } from './app-data-provider';
 
 const mockSQLiteProvider = jest.fn(({ children }: { children: ReactNode }) => children);
 const mockRebuildReminderSchedule = jest.fn(async (..._args: unknown[]) => 0);
+const mockTranslateEnglishToSlovak = jest.fn(async (_text: string) => 'osobný preklad');
 
 jest.mock('../../assets/catalog/wordnet.sqlite', () => 1);
 
@@ -44,6 +45,19 @@ jest.mock('@/data/repository', () => ({
   getWord: jest.fn(async () => null),
   saveRating: jest.fn(async () => undefined),
   updateWordTranslation: jest.fn(async () => '2026-07-19T10:00:00.000Z'),
+  updateMissingWordTranslations: jest.fn(async (_database, updates: { id: string }[]) => ({
+    updatedAt: updates.length ? '2026-07-19T09:00:00.000Z' : null,
+    updatedIds: updates.map((update) => update.id),
+  })),
+}));
+
+jest.mock('@/data/cefr-catalog', () => ({
+  getCefrTranslation: (_catalogSenseId: string | null, normalizedTerm: string | null) =>
+    normalizedTerm === 'catalog-word' ? 'katalógový preklad' : null,
+}));
+
+jest.mock('@/features/translation/translator', () => ({
+  translateEnglishToSlovak: (text: string) => mockTranslateEnglishToSlovak(text),
 }));
 
 jest.mock('@/features/reminders/scheduler', () => ({
@@ -53,7 +67,7 @@ jest.mock('@/features/reminders/scheduler', () => ({
 const word: Word = {
   id: 'word', collectionId: 'collection', term: 'scope', normalizedTerm: 'scope',
   sourceLanguageCode: 'en', targetLanguageCode: 'sk', partOfSpeech: 'noun',
-  definition: 'The extent of something.', example: null, translation: null,
+  definition: 'The extent of something.', example: null, translation: 'rozsah',
   catalogSenseId: null, cefrLevel: null, source: 'manual', state: 'new',
   understoodStreak: 0, lapseCount: 0, viewCount: 1,
   lastViewedAt: '2026-07-17T10:00:00.000Z', lastRatedAt: null, nextReviewAt: null,
@@ -126,6 +140,34 @@ describe('AppDataProvider', () => {
       expect.anything(),
       word.id,
       'rozsah',
+    ));
+  });
+
+  it('backfills saved catalog words without invoking on-device translation', async () => {
+    const catalogWord = { ...word, id: 'catalog', normalizedTerm: 'catalog-word', translation: null, cefrLevel: 'A1' as const };
+    (repository.listWords as jest.Mock).mockResolvedValue([catalogWord]);
+
+    await render(<AppDataProvider><Text>Ready</Text></AppDataProvider>);
+
+    await waitFor(() => expect(repository.updateMissingWordTranslations).toHaveBeenCalledWith(
+      expect.anything(),
+      [{ id: 'catalog', translation: 'katalógový preklad' }],
+    ));
+    expect(mockTranslateEnglishToSlovak).not.toHaveBeenCalled();
+  });
+
+  it('queues and persists an on-device hint for a personal word', async () => {
+    const personalWord = { ...word, id: 'personal', term: 'private term', normalizedTerm: 'private-term', translation: null };
+    (repository.listWords as jest.Mock).mockResolvedValue([personalWord]);
+    (repository.getWord as jest.Mock).mockResolvedValue(personalWord);
+
+    await render(<AppDataProvider><Text>Ready</Text></AppDataProvider>);
+
+    await waitFor(() => expect(mockTranslateEnglishToSlovak).toHaveBeenCalledWith('private term'));
+    await waitFor(() => expect(repository.updateWordTranslation).toHaveBeenCalledWith(
+      expect.anything(),
+      'personal',
+      'osobný preklad',
     ));
   });
 });

@@ -1,4 +1,4 @@
-import { getCefrEntries } from './cefr-catalog';
+import { getCefrEntries, getCefrTranslation } from './cefr-catalog';
 import { cefrLevels, getCefrLevelSummaries } from './cefr-levels';
 
 describe('CEFR catalog', () => {
@@ -8,12 +8,20 @@ describe('CEFR catalog', () => {
     const entries = cefrLevels.flatMap(getCefrEntries);
     expect(entries.length).toBeGreaterThan(0);
     expect(new Set(entries.map((entry) => entry.normalizedTerm)).size).toBe(entries.length);
-    expect(entries.every((entry) => entry.term && entry.definition && entry.partOfSpeech && entry.catalogSenseId)).toBe(true);
+    expect(entries.every((entry) => entry.term && entry.definition && entry.translation && entry.partOfSpeech && entry.catalogSenseId)).toBe(true);
   });
 
   it('keeps summary counts aligned with generated entries', () => {
     for (const summary of getCefrLevelSummaries()) {
       expect(summary.count).toBe(getCefrEntries(summary.level).length);
     }
+  });
+
+  it('finds bundled hints by catalog sense or normalized term', () => {
+    const entry = getCefrEntries('A1')[0];
+
+    expect(getCefrTranslation(entry.catalogSenseId)).toBe(entry.translation);
+    expect(getCefrTranslation(null, entry.normalizedTerm)).toBe(entry.translation);
+    expect(getCefrTranslation('missing', 'not-in-the-catalog')).toBeNull();
   });
 });

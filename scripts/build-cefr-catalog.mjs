@@ -14,6 +14,8 @@ const catalogPath = resolve('assets/catalog/cefr-catalog.json');
 const indexPath = resolve('assets/catalog/cefr-index.json');
 const senseLevelsPath = resolve('assets/catalog/cefr-sense-levels.json');
 const manifestPath = resolve('assets/catalog/cefr-catalog-manifest.json');
+const translationsPath = resolve('assets/catalog/cefr-translations-en-sk.json');
+const translationOverridesPath = resolve('assets/catalog/cefr-translations-en-sk-overrides.json');
 
 function parseCsv(text) {
   const rows = [];
@@ -208,6 +210,35 @@ entries.sort((left, right) => {
   const byLevel = LEVEL_INDEX.get(left.level) - LEVEL_INDEX.get(right.level);
   return byLevel || left.term.localeCompare(right.term, 'en', { sensitivity: 'base' });
 });
+const translationPayload = JSON.parse(readFileSync(translationsPath, 'utf8'));
+const translationOverridesPayload = JSON.parse(readFileSync(translationOverridesPath, 'utf8'));
+const translationOverrides = translationOverridesPayload.translations ?? translationOverridesPayload;
+const catalogContent = entries.map(({ id, term, partOfSpeech, definition }) => ({ id, term, partOfSpeech, definition }));
+const catalogContentSha256 = createHash('sha256').update(JSON.stringify(catalogContent)).digest('hex');
+if (translationPayload.catalogContentSha256 !== catalogContentSha256) {
+  throw new Error('The Slovak translation sidecar does not match the generated catalog content. Regenerate translations first.');
+}
+if (translationPayload.qa?.translatedEntries !== entries.length || translationPayload.qa?.emptyTranslations !== 0) {
+  throw new Error('The Slovak translation sidecar is incomplete. Resume translation generation before building the catalog.');
+}
+if (translationPayload.qa?.identicalToEnglish?.length > 0) {
+  throw new Error('The Slovak translation sidecar contains hints identical to English; correct them before building the catalog.');
+}
+if (translationPayload.qa?.englishFragmentIds?.length > 0) {
+  throw new Error('The Slovak translation sidecar contains English fragments; correct them before building the catalog.');
+}
+if (translationPayload.qa?.formatArtifactIds?.length > 0) {
+  throw new Error('The Slovak translation sidecar contains generation formatting artifacts; correct them before building the catalog.');
+}
+const entryIds = new Set(entries.map((entry) => entry.id));
+for (const overrideId of Object.keys(translationOverrides)) {
+  if (!entryIds.has(overrideId)) throw new Error(`Slovak translation override has an unknown catalog id: ${overrideId}`);
+}
+for (const entry of entries) {
+  const translation = (translationOverrides[entry.id] ?? translationPayload.translations?.[entry.id])?.trim();
+  if (!translation) throw new Error(`Generated catalog is missing a Slovak translation: ${entry.id}`);
+  entry.translation = translation;
+}
 const normalizedTerms = new Set(entries.map((entry) => entry.normalizedTerm));
 if (normalizedTerms.size !== entries.length) throw new Error('Generated catalog contains duplicate normalized terms.');
 for (const level of CEFR_LEVELS) {
@@ -221,7 +252,7 @@ for (const entry of entries) {
 
 const counts = Object.fromEntries(CEFR_LEVELS.map((level) => [level, entries.filter((entry) => entry.level === level).length]));
 const catalog = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   title: 'CEFR-aligned English vocabulary',
   levels: CEFR_LEVELS,
   counts,
@@ -229,8 +260,24 @@ const catalog = {
 };
 const serializedCatalog = `${JSON.stringify(catalog, null, 2)}\n`;
 const manifest = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   catalogSha256: createHash('sha256').update(serializedCatalog).digest('hex'),
+  translationSource: {
+    sourceLanguage: translationPayload.sourceLanguage,
+    targetLanguage: translationPayload.targetLanguage,
+    model: translationPayload.generator,
+    sidecarSha256: createHash('sha256').update(readFileSync(translationsPath)).digest('hex'),
+    overridesSha256: createHash('sha256').update(readFileSync(translationOverridesPath)).digest('hex'),
+    qa: {
+      translatedEntries: translationPayload.qa.translatedEntries,
+      emptyTranslations: translationPayload.qa.emptyTranslations,
+      identicalToEnglish: translationPayload.qa.identicalToEnglish.length,
+      englishFragments: translationPayload.qa.englishFragmentIds.length,
+      formatArtifacts: translationPayload.qa.formatArtifactIds.length,
+      definitionFallbackCount: translationPayload.qa.definitionFallbackCount,
+      overrideCount: translationPayload.qa.overrideCount,
+    },
+  },
   sources: [
     { id: 'cefr-j', version: '1.6', levels: ['A1', 'A2', 'B1', 'B2'], rows: sourceRows.cefrJ },
     { id: 'octanove', version: '1.0', levels: ['C1', 'C2'], rows: sourceRows.octanove },
@@ -251,12 +298,13 @@ const manifest = {
     uniqueNormalizedTerms: normalizedTerms.size === entries.length,
     allLevelsPresent: CEFR_LEVELS.every((level) => counts[level] > 0),
     allEntriesHaveDefinitions: entries.every((entry) => Boolean(entry.definition)),
+    allEntriesHaveTranslations: entries.every((entry) => Boolean(entry.translation)),
     allEntriesHaveCatalogSenses: entries.every((entry) => Boolean(entry.catalogSenseId)),
   },
 };
 
 writeFileSync(catalogPath, serializedCatalog);
-writeFileSync(indexPath, `${JSON.stringify({ schemaVersion: 1, title: catalog.title, levels: CEFR_LEVELS, counts }, null, 2)}\n`);
+writeFileSync(indexPath, `${JSON.stringify({ schemaVersion: 2, title: catalog.title, levels: CEFR_LEVELS, counts }, null, 2)}\n`);
 writeFileSync(senseLevelsPath, `${JSON.stringify(Object.fromEntries(entries.map((entry) => [entry.catalogSenseId, entry.level])), null, 2)}\n`);
 writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
 console.log(`Created ${catalogPath} with ${entries.length.toLocaleString()} entries (${CEFR_LEVELS.map((level) => `${level}: ${counts[level].toLocaleString()}`).join(', ')}).`);

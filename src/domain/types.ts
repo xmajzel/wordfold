@@ -25,6 +25,7 @@ export interface CefrCatalogEntry {
   partOfSpeech: string;
   definition: string;
   example: string | null;
+  translation: string;
   catalogSenseId: string;
   source: CefrCatalogSource;
   sourceVersion: string;

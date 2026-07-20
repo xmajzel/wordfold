@@ -4,8 +4,7 @@ import { render, waitFor } from '@testing-library/react-native';
 import LearnScreen from '@/app/(tabs)';
 import type { Word } from '@/domain/types';
 
-const mockSaveWordTranslation = jest.fn(() => new Promise<void>(() => undefined));
-const mockTranslateEnglishToSlovak = jest.fn(async (_text: string) => 'rozsah');
+const mockPrepareWordTranslation = jest.fn(() => new Promise<void>(() => undefined));
 
 const word: Word = {
   id: 'word', collectionId: 'my-words', term: 'scope', normalizedTerm: 'scope',
@@ -58,10 +57,6 @@ jest.mock('react-native-reanimated', () => {
   };
 });
 
-jest.mock('@/features/translation/translator', () => ({
-  translateEnglishToSlovak: (text: string) => mockTranslateEnglishToSlovak(text),
-}));
-
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     words: [word],
@@ -70,18 +65,17 @@ jest.mock('@/providers/app-data-provider', () => ({
     updateLearningFilter: jest.fn(async () => undefined),
     rateWord: jest.fn(async () => undefined),
     markViewed: jest.fn(async () => undefined),
-    saveWordTranslation: mockSaveWordTranslation,
+    prepareWordTranslation: mockPrepareWordTranslation,
   }),
 }));
 
 describe('Today word translation', () => {
   beforeEach(() => jest.clearAllMocks());
 
-  it('generates and persists a missing translation for the active card', async () => {
+  it('waits for the provider to prepare a missing translation for the active card', async () => {
     const view = await render(<LearnScreen/>);
 
-    await waitFor(() => expect(mockTranslateEnglishToSlovak).toHaveBeenCalledWith('scope'));
-    await waitFor(() => expect(mockSaveWordTranslation).toHaveBeenCalledWith('word', 'rozsah'));
+    await waitFor(() => expect(mockPrepareWordTranslation).toHaveBeenCalledWith(word));
     view.getByLabelText('Preparing Slovak hint');
   });
 });

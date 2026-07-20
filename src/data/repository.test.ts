@@ -1,6 +1,6 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
-import { addWord, addWords, completeOnboardingSetup, getLearningFilter, getLearningPreferences, getStats, resetWord, saveLearningFilter, type NewWordInput } from './repository';
+import { addWord, addWords, completeOnboardingSetup, getLearningFilter, getLearningPreferences, getStats, resetWord, saveLearningFilter, updateMissingWordTranslations, type NewWordInput } from './repository';
 
 function createDatabase() {
   const database = {
@@ -38,6 +38,23 @@ describe('word repository', () => {
 
     expect(transaction.runAsync).toHaveBeenCalledTimes(2);
     expect(database.runAsync).not.toHaveBeenCalled();
+  });
+
+  it('backfills only words whose translations are still missing', async () => {
+    const database = createDatabase();
+    (database.runAsync as jest.Mock)
+      .mockResolvedValueOnce({ changes: 0, lastInsertRowId: 0 })
+      .mockResolvedValueOnce({ changes: 1, lastInsertRowId: 0 });
+
+    const result = await updateMissingWordTranslations(database, [
+      { id: 'catalog-1', translation: 'rozsah' },
+      { id: 'catalog-2', translation: 'medzník' },
+    ]);
+
+    expect(database.withExclusiveTransactionAsync).toHaveBeenCalledTimes(1);
+    expect(database.runAsync).toHaveBeenCalledTimes(2);
+    expect((database.runAsync as jest.Mock).mock.calls[0][0]).toContain('translation IS NULL');
+    expect(result.updatedIds).toEqual(['catalog-2']);
   });
 
   it('classifies a matching dictionary sense when adding a word', async () => {

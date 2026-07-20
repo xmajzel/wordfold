@@ -112,6 +112,25 @@ export async function updateWordTranslation(database: SQLiteDatabase, id: string
   return updatedAt;
 }
 
+export async function updateMissingWordTranslations(
+  database: SQLiteDatabase,
+  updates: { id: string; translation: string }[],
+) {
+  if (updates.length === 0) return { updatedAt: null, updatedIds: [] as string[] };
+  const updatedAt = new Date().toISOString();
+  const updatedIds: string[] = [];
+  await database.withExclusiveTransactionAsync(async (transaction) => {
+    for (const update of updates) {
+      const result = await transaction.runAsync(
+        'UPDATE words SET translation = ?, updated_at = ? WHERE id = ? AND translation IS NULL',
+        update.translation.trim(), updatedAt, update.id,
+      );
+      if (result.changes > 0) updatedIds.push(update.id);
+    }
+  });
+  return { updatedAt, updatedIds };
+}
+
 export async function deleteWord(database: SQLiteDatabase, id: string) {
   await database.runAsync('DELETE FROM words WHERE id = ?', id);
 }

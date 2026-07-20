@@ -4,10 +4,12 @@ import { SQLiteProvider, useSQLiteContext, type SQLiteDatabase } from 'expo-sqli
 
 import type { CatalogSense, Collection, DashboardStats, LearningFilter, LearningPreferences, LearningRating, LearningState, ReminderSettings, Word } from '@/domain/types';
 import { lookupSenses } from '@/data/catalog';
+import { getCefrTranslation } from '@/data/cefr-catalog';
 import { migrateDatabase } from '@/data/database';
 import * as repository from '@/data/repository';
 import { applyRating } from '@/features/learning/algorithm';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
+import { translateEnglishToSlovak } from '@/features/translation/translator';
 import { buildRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
 import { rebuildReminderSchedule } from '@/features/reminders/scheduler';
 import { LaunchScreen } from '@/components/launch-screen';
@@ -26,6 +28,7 @@ interface AppDataValue {
   createWords(inputs: repository.NewWordInput[]): Promise<string[]>;
   editWord(id: string, input: repository.NewWordInput): Promise<void>;
   saveWordTranslation(id: string, translation: string): Promise<void>;
+  prepareWordTranslation(word: Word): Promise<void>;
   removeWord(id: string): Promise<void>;
   resetWord(id: string): Promise<void>;
   createCollection(name: string, color: string): Promise<string>;
@@ -60,6 +63,10 @@ function localDateKey(date: Date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 }
 
+function getBundledWordTranslation(word: Word) {
+  return getCefrTranslation(word.catalogSenseId, word.cefrLevel ? word.normalizedTerm : null);
+}
+
 function recommendationsToInputs(recommendations: Recommendation[]): repository.NewWordInput[] {
   return recommendations.map(({ entry, topic }) => ({
     collectionId: 'my-words',
@@ -67,6 +74,7 @@ function recommendationsToInputs(recommendations: Recommendation[]): repository.
     normalizedTerm: entry.normalizedTerm,
     definition: entry.definition,
     example: entry.example,
+    translation: entry.translation,
     partOfSpeech: entry.partOfSpeech,
     catalogSenseId: entry.catalogSenseId,
     cefrLevel: entry.level,
@@ -86,6 +94,9 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const [learningFilter, setLearningFilter] = useState<LearningFilter>('all');
   const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
   const [databaseMutationQueue] = useState(createSerialMutationQueue);
+  const [translationQueue] = useState(createSerialMutationQueue);
+  const translationTasks = useRef(new Map<string, Promise<void>>());
+  const backgroundTranslationAttempts = useRef(new Set<string>());
   const lastScheduleDay = useRef<string | null>(null);
 
   const runDatabaseMutation = useCallback(<T,>(mutation: () => Promise<T>) => (
@@ -93,11 +104,31 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   ), [databaseMutationQueue]);
 
   const refresh = useCallback(async () => {
-    const [nextWords, nextCollections, nextStats, nextSettings, nextPreferences, nextOnboarding, nextLearningFilter] = await Promise.all([
+    const [loadedWords, nextCollections, nextStats, nextSettings, nextPreferences, nextOnboarding, nextLearningFilter] = await Promise.all([
       repository.listWords(appDatabase), repository.listCollections(appDatabase), repository.getStats(appDatabase),
       repository.getReminderSettings(appDatabase), repository.getLearningPreferences(appDatabase),
       repository.isOnboardingComplete(appDatabase), repository.getLearningFilter(appDatabase),
     ]);
+    const translationUpdates = loadedWords.flatMap((word) => {
+      if (word.translation) return [];
+      const translation = getBundledWordTranslation(word);
+      return translation ? [{ id: word.id, translation }] : [];
+    });
+    const translationBackfill = await runDatabaseMutation(
+      () => repository.updateMissingWordTranslations(appDatabase, translationUpdates),
+    );
+    const updatedIds = new Set(translationBackfill.updatedIds);
+    const updatedTranslations = new Map(translationUpdates
+      .filter((update) => updatedIds.has(update.id))
+      .map((update) => [update.id, update.translation]));
+    const synchronizedWords = translationUpdates.length === updatedIds.size
+      ? loadedWords
+      : await repository.listWords(appDatabase);
+    const backfillUpdatedAt = translationBackfill.updatedAt;
+    const nextWords = backfillUpdatedAt ? synchronizedWords.map((word) => {
+      const translation = updatedTranslations.get(word.id);
+      return translation ? { ...word, translation, updatedAt: backfillUpdatedAt } : word;
+    }) : synchronizedWords;
     setWords(nextWords);
     setCollections(nextCollections);
     setStats(nextStats);
@@ -105,7 +136,41 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     setLearningPreferences(nextPreferences);
     setOnboardingComplete(nextOnboarding);
     setLearningFilter(nextLearningFilter);
-  }, [appDatabase]);
+  }, [appDatabase, runDatabaseMutation]);
+
+  const prepareWordTranslation = useCallback((word: Word) => {
+    if (word.translation) return Promise.resolve();
+    const existingTask = translationTasks.current.get(word.id);
+    if (existingTask) return existingTask;
+    const task = translationQueue.run(async () => {
+      const currentWord = await repository.getWord(appDatabase, word.id) ?? word;
+      if (currentWord.translation) return;
+      const bundledTranslation = getBundledWordTranslation(currentWord);
+      const translated = bundledTranslation ?? (await translateEnglishToSlovak(currentWord.term)).trim();
+      if (!translated) throw new Error('Translation returned no text.');
+      const updatedAt = await runDatabaseMutation(
+        () => repository.updateWordTranslation(appDatabase, currentWord.id, translated),
+      );
+      setWords((current) => current.map((item) => item.id === currentWord.id && !item.translation
+        ? { ...item, translation: translated, updatedAt }
+        : item));
+    }).finally(() => {
+      translationTasks.current.delete(word.id);
+    });
+    translationTasks.current.set(word.id, task);
+    return task;
+  }, [appDatabase, runDatabaseMutation, translationQueue]);
+
+  useEffect(() => {
+    for (const word of words) {
+      if (word.translation || getBundledWordTranslation(word)
+        || backgroundTranslationAttempts.current.has(word.id)) continue;
+      backgroundTranslationAttempts.current.add(word.id);
+      void prepareWordTranslation(word).catch((error) => {
+        console.warn(`Could not prepare a Slovak hint for ${word.term}.`, error);
+      });
+    }
+  }, [prepareWordTranslation, words]);
 
   useEffect(() => {
     // The async refresh resolves after the effect body, so this does not cascade a synchronous render.
@@ -171,6 +236,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
         ? { ...word, translation: nextTranslation, updatedAt }
         : word));
     },
+    prepareWordTranslation,
     removeWord: async (id) => {
       await runDatabaseMutation(() => repository.deleteWord(appDatabase, id)); await refresh(); await reschedule();
     },
@@ -236,7 +302,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       await runDatabaseMutation(() => repository.recordNotificationOpen(appDatabase, wordId));
       setStats((current) => current ? { ...current, notificationOpens: current.notificationOpens + 1 } : current);
     },
-  }), [appDatabase, catalogDatabase, collections, learningFilter, learningPreferences, onboardingComplete, refresh, reminderSettings, reschedule, runDatabaseMutation, stats, words]);
+  }), [appDatabase, catalogDatabase, collections, learningFilter, learningPreferences, onboardingComplete, prepareWordTranslation, refresh, reminderSettings, reschedule, runDatabaseMutation, stats, words]);
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>;
 }

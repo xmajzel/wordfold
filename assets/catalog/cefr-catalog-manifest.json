@@ -1,6 +1,35 @@
 {
-  "schemaVersion": 1,
-  "catalogSha256": "1881cc63fd777b515259ee75fa555598762b769133e67aba064a9f8721c248f2",
+  "schemaVersion": 2,
+  "catalogSha256": "7a2bddcc85b7c638af7acef0209763871a8b94d37b4dbf4eee71bc458301ed8b",
+  "translationSource": {
+    "sourceLanguage": "en",
+    "targetLanguage": "sk",
+    "model": {
+      "model": "cstr/madlad400-3b-ct2-int8",
+      "revision": "fd0b55729c074372eb84b52b9309a00dc65c40c4",
+      "license": "Apache-2.0",
+      "source": "https://huggingface.co/cstr/madlad400-3b-ct2-int8",
+      "method": "Translate the English headword with its WordNet part of speech and sense definition; use the translated sense explanation when the headword result is unsafe.",
+      "parameters": {
+        "beamSize": 1,
+        "definitionWords": 12,
+        "maxDecodingLength": 48,
+        "computeType": "int8"
+      },
+      "generatedAt": "2026-07-19T21:45:40+00:00"
+    },
+    "sidecarSha256": "1365bb8574c7a535ea53de607ccd24a844b03730300f0ddecabcf720f2a07042",
+    "overridesSha256": "d0c2272808fcb1a274c46c724c2223a66175680e6b7714fd5d8efbbdd61c419a",
+    "qa": {
+      "translatedEntries": 8300,
+      "emptyTranslations": 0,
+      "identicalToEnglish": 0,
+      "englishFragments": 0,
+      "formatArtifacts": 0,
+      "definitionFallbackCount": 4364,
+      "overrideCount": 24
+    }
+  },
   "sources": [
     {
       "id": "cefr-j",
@@ -145149,6 +145178,7 @@
     "uniqueNormalizedTerms": true,
     "allLevelsPresent": true,
     "allEntriesHaveDefinitions": true,
+    "allEntriesHaveTranslations": true,
     "allEntriesHaveCatalogSenses": true
   }
 }

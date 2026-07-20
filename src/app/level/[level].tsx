@@ -12,7 +12,6 @@ import { getCefrEntries } from '@/data/cefr-catalog';
 import { cefrLevelDescriptions, isCefrLevel } from '@/data/cefr-levels';
 import type { CefrCatalogEntry } from '@/domain/types';
 import { normalizeTerm } from '@/features/import/parser';
-import { translateEnglishToSlovak } from '@/features/translation/translator';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
@@ -39,24 +38,13 @@ export default function CefrLevelScreen() {
     }
     setBusyId(entry.id);
     try {
-      let translation: string;
-      try {
-        translation = (await translateEnglishToSlovak(entry.term)).trim();
-        if (!translation) throw new Error('Translation returned no text.');
-      } catch (error) {
-        Alert.alert(
-          'Translation is not available',
-          `${error instanceof Error ? error.message : 'Use a Wordfold development build.'}\n\nThe word was not added. The first use downloads an on-device language model over Wi-Fi.`,
-        );
-        return;
-      }
       await createWord({
         collectionId,
         term: entry.term,
         normalizedTerm: entry.normalizedTerm,
         definition: entry.definition,
         example: entry.example,
-        translation,
+        translation: entry.translation,
         partOfSpeech: entry.partOfSpeech,
         catalogSenseId: entry.catalogSenseId,
         cefrLevel: entry.level,
@@ -94,7 +82,7 @@ export default function CefrLevelScreen() {
           <Header title={`${validLevel} English`}/>
           <View style={styles.intro}>
             <View style={[styles.levelBadge, { backgroundColor: theme.primarySoft }]}><AppText variant="display" style={{ color: theme.primary }}>{validLevel}</AppText></View>
-            <View style={styles.introText}><AppText variant="heading">{cefrLevelDescriptions[validLevel]}</AppText><AppText style={{ color: theme.muted }}>{entries.length.toLocaleString()} offline words with definitions</AppText></View>
+            <View style={styles.introText}><AppText variant="heading">{cefrLevelDescriptions[validLevel]}</AppText><AppText style={{ color: theme.muted }}>{entries.length.toLocaleString()} offline words with definitions and Slovak hints</AppText></View>
           </View>
           <FormField label="Search this level" value={query} onChangeText={setQuery} placeholder="Word or meaning" autoCapitalize="none"/>
           <AppText variant="caption" style={{ color: theme.muted }}>CEFR-aligned vocabulary: A1–B2 from CEFR-J 1.6, C1–C2 from Octanove 1.0, with meanings from Open English WordNet 2025.</AppText>
