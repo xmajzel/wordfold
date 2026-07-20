@@ -12,7 +12,8 @@ Implementation status:
 - PowerSync CLI `0.10.0` is pinned, and `powersync/service.yaml` plus `powersync/sync-config.yaml` are the versioned Cloud configuration.
 - The EU PowerSync Cloud development instance is connected with verified TLS, Supabase Auth discovery, edition 3 user-scoped Sync Streams, and healthy initial replication for all three synchronized tables.
 - Phase 3 authentication is configured and device-tested, including confirmation callbacks and persisted native sessions.
-- Phase 4A native PowerSync transport is implemented locally and its Android debug build passes; the public client endpoint, installation of the rebuilt development client, and authenticated connection smoke test remain pending.
+- Phase 4A native PowerSync transport is implemented locally, the public client endpoint is configured, and its Android debug build passes; installation of the rebuilt development client and the authenticated connection smoke test remain pending.
+- Phase 4B resumable guest snapshot import is implemented locally with explicit consent, stable per-account UUID mappings, conflict review, ordered writes, PowerSync verification, and retained guest data. Live native verification remains pending.
 
 The first deployment uses:
 

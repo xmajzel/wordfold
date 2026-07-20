@@ -2,7 +2,7 @@
 
 ## Status
 
-Implemented locally on 2026-07-20. Automated native connection-layer tests and the local Android debug build pass. A project-specific `EXPO_PUBLIC_POWERSYNC_URL`, installation of the rebuilt development client, and the authenticated connection smoke test remain required before Phase 4A is operationally complete.
+Implemented locally on 2026-07-20. Automated native connection-layer tests and the local Android debug build pass, and the project-specific `EXPO_PUBLIC_POWERSYNC_URL` is configured. Installation of the rebuilt development client and the authenticated connection smoke test remain required before Phase 4A is operationally complete.
 
 ## Problem
 
@@ -83,4 +83,4 @@ The endpoint is centralized and replaceable; it is not embedded in repository op
 
 ## Next phase
 
-Phase 4B will require a separate specification and approval. It should implement the resumable, user-confirmed guest import with stable UUID mappings and server verification before application repositories switch to synchronized data.
+Phase 4B is approved and implemented locally under [its dedicated specification](SUPABASE_POWERSYNC_PHASE_4B_SPECIFICATION.md). Native authenticated verification remains deferred; Phase 4C synchronized repositories and continuous uploads have not started.
