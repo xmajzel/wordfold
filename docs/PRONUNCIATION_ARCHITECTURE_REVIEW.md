@@ -35,8 +35,12 @@ A few things from the actual repo change the framing of the proposal materially:
 - **[FACT] A custom Expo native module already ships** (`modules/wordfold-translate`,
   Swift + Kotlin). Adding a native TTS-to-file module is well within existing capability — this
   unlocks an option the proposal underweights.
-- **[FACT] expo-speech is not installed**, and its SDK 56 API is **playback-only**: no
-  synthesize-to-file, no SSML, no IPA/phoneme input.
+- **[IMPLEMENTED LOCALLY] Phase 1 live playback and Phase 2 device caching are implemented.**
+  Expo Speech and Expo Intent Launcher provide exact-locale live playback and Android voice
+  installation guidance. A narrow `wordfold-pronunciation` module uses Android
+  `TextToSpeech.synthesizeToFile()` and iOS `AVSpeechSynthesizer.write()` for cache misses;
+  `expo-audio` plays validated cached files. Expo Speech itself remains playback-only: no
+  synthesize-to-file, SSML, or IPA/phoneme input.
 - **[FACT] PowerSync's React Native SDK is installed at `1.35.9`, but no attachment table or
   React Native attachment-storage adapter is configured.** The current built-in JavaScript/
   TypeScript attachment helpers are marked alpha. They are an option, not an existing subsystem.
@@ -47,8 +51,8 @@ A few things from the actual repo change the framing of the proposal materially:
 
 **The pronunciation product strategy — cloud-neural-cached + labeled device fallback +
 device-only mode — is sound. Phase 0 now supplies multilingual identity and exact pronounceable
-locale semantics, so a narrowly specified Phase 1 device-playback implementation can proceed.
-The later cloud/cache phases still require trust-boundary, cache-isolation, provider-quality, and
+locale semantics, and Phases 1–2 now provide exact-locale device playback plus an isolated local
+file cache. The later cloud/download phases still require trust-boundary, provider-quality, and
 file-delivery decisions. Silent quality fallback remains the most dangerous product risk.**
 
 Two structural problems dominate:
@@ -204,7 +208,7 @@ it adds value; PowerSync is not expanded merely because it is available.**
 - Works in both guest and signed-in stores because it is independent of persistence and sync.
 
 **Layer 1 — Namespaced, content-addressed device cache.**
-- Add local cache metadata keyed by a **content hash** of `(exact effective synthesis input,
+- Store files by a **content hash** of `(exact effective synthesis input,
   BCP-47 locale, provider, voice, model version, format)`. A sense may select a different
   phoneme/SSML input, but a sense ID or `term`/`translation` field alone should not duplicate
   byte-identical pronunciation. Never key audio by `word_id` or `normalized_term` alone.
@@ -402,12 +406,25 @@ For each launch locale `L`, gate release on:
   normalization, guest import, cutover/conflict keys, uploader expectations, and tests.
   **Implemented locally on 2026-07-20 using soft dedup.**
 - **Phase 1 (live device pronunciation):** pronounce `term` using its exact configured source
-  BCP-47 locale; enumerate voices and offline capability, label device playback, and show honest
-  missing/network-required voice guidance. Works in guest and signed-in modes without depending
-  on PowerSync.
-- **Phase 2 (local file cache):** add content-addressed cache metadata and public/guest/account
+  BCP-47 locale; enumerate voices on every attempt, select an exact locale match, prefer an
+  enhanced exact voice, label playback `≈ Device voice`, and show honest missing-voice guidance.
+  Android can open the system voice installer; iOS provides the matching Settings path and silent
+  mode reminder. Works in guest and signed-in modes without depending on PowerSync.
+  **Implemented locally on 2026-07-20.** Expo Speech does not expose Android's network-required
+  voice flag, so Phase 1 deliberately makes no offline-voice claim; a custom native enumeration
+  bridge remains deferred.
+- **Phase 2 (local file cache):** add content-addressed cache files and public/guest/account
   filesystem namespaces; add native synth-to-file only if its real-device output passes quality
   and format tests. Wire cache clearing into all account transitions.
+  **Implemented locally on 2026-07-20:** SHA-256 identities preserve exact trimmed text and include
+  locale, exact voice identifier, platform, rate, pitch, format, and synthesis version. Cache
+  writes use per-file temporary paths and atomic moves, duplicate misses share one in-flight task,
+  stale temporary files are removed, and oldest files are evicted above 64 MiB. Guest files
+  persist; account-private directories are cleared before manual sign-out and after automatic
+  account transitions. The `public` namespace is reserved but unused. Generation or cached-file
+  playback failure deletes invalid output and falls back once to Phase 1 live exact-voice speech.
+  Web intentionally remains on Phase 1 browser/device speech. No Supabase, PowerSync, Storage,
+  database, download UI, or cloud-pronunciation changes are part of this phase.
 - **Phase 3 (provider bakeoff + public cloud):** evaluate launch locales with the acceptance corpus,
   then add the cache-first/budgeted/rate-limited Edge Function, service-owned Postgres metadata,
   and immutable `pron-public` Storage. Fetch/cache only requested assets.
@@ -431,6 +448,43 @@ For each launch locale `L`, gate release on:
 - PowerSync Cloud validation was not rerun because the CLI is not authenticated in this
   environment. No PowerSync deployment, remote Supabase migration, EAS build, or cloud build was
   performed.
+
+### Phase 1 local verification
+
+- TypeScript, Expo lint, all 40 Jest suites (160 tests), Android/iOS/web Expo export, and the local
+  Android debug build pass. The Android build confirms that Expo Speech and Expo Intent Launcher
+  autolink successfully.
+- Expo Doctor remains at the pre-existing 19/21 result: the PowerSync CLI dependency tree contains
+  a second React copy, and React Native Directory lacks complete metadata for Quick SQLite and the
+  local translation module. Neither finding was introduced by pronunciation.
+- Measured web design QA passes at 320 px and 390 px mobile widths: the compact control meets the
+  44 px target floor, the full control is 55 px high, and the learning card and word-detail screen
+  have no control clipping, text overflow, or horizontal page overflow.
+- Real-device voice quality, audible playback, and OS voice-installation behavior still require the
+  Phase 1 device matrix. No EAS build or remote pronunciation service was used.
+
+### Phase 2 local verification
+
+- TypeScript, Expo lint, all 43 Jest suites (169 tests), Android/iOS/web Expo export, and the local
+  Android debug build pass. The Android build confirms that `wordfold-pronunciation`, Expo Audio,
+  Expo Asset, and Expo FileSystem autolink and compile.
+- Expo Doctor remains at the expected 19/21 result: the PowerSync CLI dependency tree contains a
+  second React copy, and React Native Directory lacks complete metadata for Quick SQLite and the
+  two local native modules. Expo Doctor initially identified Expo Audio's direct `expo-asset` peer;
+  adding the SDK-compatible direct dependency restored the baseline result.
+- Measured web design QA passes at 320 px and 390 px mobile widths. The compact pronunciation
+  control is 44 px high, the full control is 55 px high, the label does not overflow, and the page
+  scroll width equals the viewport at both sizes. The visible control keeps the `≈ Device voice`
+  disclosure; preparation/play/stop labels are covered by component tests.
+- The rebuilt Android APK requests no microphone or foreground-service permission. Expo Audio adds
+  only `MODIFY_AUDIO_SETTINGS`; existing notification and application permissions are unchanged.
+- The installed machine has Command Line Tools but no full Xcode application, so CocoaPods cannot
+  complete React Native's iOS dependency analysis and a local iOS compile is not possible here.
+  The Swift bridge therefore still requires an Xcode build and real-device CAF generation/playback
+  before Phase 2 is release-ready.
+- Real-device checks remain mandatory for audible output, exact locale behavior after voice changes,
+  Android engine output format, iOS CAF output, cache-hit playback, airplane-mode replay, and voice
+  quality. No EAS build or remote pronunciation service was used.
 
 ---
 
@@ -498,6 +552,7 @@ re-download from Storage; device-generated cache must be regenerated. Both cache
 ## Sources (platform/provider facts)
 
 - [Expo Speech (v56)](https://docs.expo.dev/versions/v56.0.0/sdk/speech/) — playback-only, no synth-to-file, no SSML/IPA
+- [Expo Intent Launcher (v56)](https://docs.expo.dev/versions/v56.0.0/sdk/intent-launcher/) — Android system activity launch
 - [Amazon Polly FAQs](https://aws.amazon.com/polly/faqs/) — caching/storage explicitly permitted
 - [Google Cloud Text-to-Speech basics](https://docs.cloud.google.com/text-to-speech/docs/basics) — generated audio files and applicable Google Cloud terms
 - [Azure TTS data/privacy](https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/speech-service/text-to-speech/data-privacy-security) and [Microsoft Product Terms](https://www.microsoft.com/licensing/terms/en-US/productoffering/MicrosoftAzureServices/MCA) — data handling and paid-tier prebuilt-voice output rights
