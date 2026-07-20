@@ -1,6 +1,6 @@
 import type { Word } from '@/domain/types';
 
-import { applyRating, buildLearningFeed, getAvailableLearningFilters, getNextReviewIntervalDays, getNextReviewIntervalRange } from './algorithm';
+import { applyRating, buildContinuedLearningFeed, buildLearningFeed, getAvailableLearningFilters, getNextReviewIntervalDays, getNextReviewIntervalRange } from './algorithm';
 
 const baseWord = (overrides: Partial<Word>): Word => ({
   id: 'word', collectionId: 'collection', term: 'scope', normalizedTerm: 'scope',
@@ -51,6 +51,23 @@ describe('learning algorithm', () => {
     const words = Array.from({ length: 20 }, (_, index) => baseWord({ id: `n${index}` }));
 
     expect(buildLearningFeed(words, now)).toHaveLength(12);
+  });
+
+  it('continues with a fresh batch of new words from the active category', () => {
+    const completed = Array.from({ length: 12 }, (_, index) => baseWord({ id: `completed-${index}`, cefrLevel: 'A1' }));
+    const remaining = Array.from({ length: 14 }, (_, index) => baseWord({ id: `remaining-${index}`, cefrLevel: 'A1' }));
+    const words = [
+      ...completed,
+      ...remaining,
+      baseWord({ id: 'other-level', cefrLevel: 'B2' }),
+      baseWord({ id: 'future-review', cefrLevel: 'A1', state: 'understood', nextReviewAt: '2026-06-25T00:00:00.000Z' }),
+    ];
+
+    const feed = buildContinuedLearningFeed(words, completed.map((word) => word.id), now, 'A1');
+
+    expect(feed).toHaveLength(12);
+    expect(feed.every((word) => word.state === 'new' && word.cefrLevel === 'A1')).toBe(true);
+    expect(feed.some((word) => word.id.startsWith('completed-'))).toBe(false);
   });
 
   it('keeps every due review even when the new-word quota is full', () => {

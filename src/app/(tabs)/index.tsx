@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, FlatList, Pressable, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
+import Animated, { FadeOut, ReduceMotion } from 'react-native-reanimated';
 
 import { AppText } from '@/components/app-text';
 import { EmptyState } from '@/components/empty-state';
@@ -9,7 +10,7 @@ import { Screen } from '@/components/screen';
 import { SwipeableWordCard } from '@/components/swipeable-word-card';
 import { WordCard } from '@/components/word-card';
 import type { LearningFilter, LearningRating, Word } from '@/domain/types';
-import { buildLearningFeed, filterWordsByLearningCategory, getAvailableLearningFilters } from '@/features/learning/algorithm';
+import { buildContinuedLearningFeed, buildLearningFeed, filterWordsByLearningCategory, getAvailableLearningFilters } from '@/features/learning/algorithm';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
@@ -44,7 +45,7 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
   const theme = useAppTheme();
   const { height } = useWindowDimensions();
   const { words, collections, updateLearningFilter, rateWord, markViewed, prepareWordTranslation } = useAppData();
-  const [sessionFeed] = useState<Word[]>(() => buildLearningFeed(words, new Date(), filter));
+  const [sessionFeed, setSessionFeed] = useState<Word[]>(() => buildLearningFeed(words, new Date(), filter));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [ratingWordId, setRatingWordId] = useState<string | null>(null);
   const [sessionComplete, setSessionComplete] = useState(false);
@@ -59,6 +60,12 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
   const categoryWords = useMemo(() => filterWordsByLearningCategory(words, filter), [filter, words]);
   const currentWords = useMemo(() => Object.fromEntries(words.map((word) => [word.id, word])), [words]);
   const activeWord = currentWords[sessionFeed[currentIndex]?.id] ?? sessionFeed[currentIndex];
+  const continuedSessionFeed = useMemo(() => buildContinuedLearningFeed(
+    words,
+    sessionFeed.map((word) => word.id),
+    new Date(),
+    filter,
+  ), [filter, sessionFeed, words]);
 
   const retryTranslation = useCallback((word: Word) => {
     setTranslationStates((current) => ({ ...current, [word.id]: 'loading' }));
@@ -118,8 +125,17 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
     }
   };
 
+  const continueLearning = () => {
+    if (continuedSessionFeed.length === 0) return;
+    viewedIds.current.clear();
+    setSessionFeed(continuedSessionFeed);
+    setCurrentIndex(0);
+    setSessionComplete(false);
+  };
+
   if (sessionComplete) {
-    return <Screen><Header filter={filter} availableFilters={availableFilters} onSelectFilter={updateLearningFilter}/><EmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} actionLabel="Browse library" onAction={() => router.push('/(tabs)/library')}/></Screen>;
+    const canContinue = continuedSessionFeed.length > 0;
+    return <Screen><Header filter={filter} availableFilters={availableFilters} onSelectFilter={updateLearningFilter}/><Animated.View exiting={FadeOut.duration(140).reduceMotion(ReduceMotion.System)} style={styles.emptyTransition}><EmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} actionLabel={canContinue ? 'Continue learning' : 'Browse library'} onAction={canContinue ? continueLearning : () => router.push('/(tabs)/library')}/></Animated.View></Screen>;
   }
 
   if (sessionFeed.length === 0) {
@@ -173,6 +189,7 @@ function categoryWordLabel(filter: LearningFilter, singular = false) {
 
 const styles = StyleSheet.create({
   screen: { paddingHorizontal: spacing.lg }, headerBlock: { gap: spacing.sm, paddingBottom: spacing.sm }, header: { minHeight: 76, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  emptyTransition: { flex: 1 },
   settings: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 22, borderWidth: 1 }, filters: { gap: spacing.sm },
   filter: { minWidth: 44, minHeight: 44, paddingHorizontal: spacing.md, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' }, position: { textAlign: 'center', paddingVertical: spacing.xs },
 });

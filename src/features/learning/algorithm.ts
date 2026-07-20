@@ -131,3 +131,14 @@ export function buildLearningFeed(words: Word[], now = new Date(), filter: Learn
   }
   return feed;
 }
+
+export function buildContinuedLearningFeed(
+  words: Word[],
+  completedSessionWordIds: Iterable<string>,
+  now = new Date(),
+  filter: LearningFilter = 'all',
+): Word[] {
+  const completedIds = new Set(completedSessionWordIds);
+  const remainingNewWords = words.filter((word) => word.state === 'new' && !completedIds.has(word.id));
+  return buildLearningFeed(remainingNewWords, now, filter);
+}
