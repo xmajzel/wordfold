@@ -14,6 +14,7 @@ const word: Word = {
   understoodStreak: 0, lapseCount: 0, viewCount: 0, lastViewedAt: null, lastRatedAt: null,
   nextReviewAt: null, createdAt: '2026-07-19T10:00:00.000Z', updatedAt: '2026-07-19T10:00:00.000Z',
 };
+let mockWords = [word];
 
 jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
 
@@ -59,7 +60,7 @@ jest.mock('react-native-reanimated', () => {
 
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
-    words: [word],
+    words: mockWords,
     collections: [{ id: 'my-words', name: 'My words' }],
     learningFilter: 'all',
     updateLearningFilter: jest.fn(async () => undefined),
@@ -70,12 +71,30 @@ jest.mock('@/providers/app-data-provider', () => ({
 }));
 
 describe('Today word translation', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockWords = [word];
+  });
 
   it('waits for the provider to prepare a missing translation for the active card', async () => {
     const view = await render(<LearnScreen/>);
 
     await waitFor(() => expect(mockPrepareWordTranslation).toHaveBeenCalledWith(word));
     view.getByLabelText('Preparing Slovak hint');
+  });
+
+  it('does not request a Slovak translation for another language pair', async () => {
+    mockWords = [{
+      ...word, term: 'hola', normalizedTerm: 'hola', sourceLanguageCode: 'es',
+      sourcePronunciationLocale: 'es-MX', targetLanguageCode: 'en', targetPronunciationLocale: 'en-US',
+    }];
+
+    const view = await render(<LearnScreen/>);
+
+    await waitFor(() => view.getByRole('button', {
+      name: 'Play Spanish · Mexico device pronunciation for hola',
+    }));
+    expect(mockPrepareWordTranslation).not.toHaveBeenCalled();
+    expect(view.queryByLabelText('Preparing Slovak hint')).toBeNull();
   });
 });

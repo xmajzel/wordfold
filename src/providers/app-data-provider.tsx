@@ -18,6 +18,7 @@ import { createGuestVocabularyStore, createSyncVocabularyStore } from '@/data/vo
 import { applyRating } from '@/features/learning/algorithm';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
 import { translateEnglishToSlovak } from '@/features/translation/translator';
+import { clearPronunciationAccountCache } from '@/features/pronunciation/cache';
 import { buildRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
 import { clearScheduledReminders, rebuildReminderSchedule } from '@/features/reminders/scheduler';
 import { LaunchScreen } from '@/components/launch-screen';
@@ -284,8 +285,11 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const prepareForSignOut = useCallback(async () => {
     await guestImportService?.cancelAndWait();
     await cutoverService?.cancelAndWait();
-    await clearScheduledReminders(appDatabase);
-  }, [appDatabase, cutoverService, guestImportService]);
+    await Promise.all([
+      clearScheduledReminders(appDatabase),
+      authUserId ? clearPronunciationAccountCache(authUserId) : Promise.resolve(),
+    ]);
+  }, [appDatabase, authUserId, cutoverService, guestImportService]);
 
   const refresh = useCallback(async () => {
     const [loadedWords, nextCollections, nextStats, nextSettings, nextPreferences, nextOnboarding, nextLearningFilter] = await Promise.all([

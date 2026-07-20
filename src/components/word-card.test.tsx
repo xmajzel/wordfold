@@ -45,6 +45,7 @@ describe('WordCard learning actions', () => {
 
     expect(learningCard.queryByText('Seen 2×')).toBeNull();
     expect(learningCard.queryByText('Missed 0×')).toBeNull();
+    expect(learningCard.queryByRole('button', { name: /device pronunciation/ })).toBeNull();
 
     const libraryCard = await render(<WordCard word={word} collectionName="My words" compact/>);
     libraryCard.getByText('My words · seen 2×');
@@ -60,6 +61,14 @@ describe('WordCard learning actions', () => {
     await fireEvent.press(screen.getByRole('button', { name: 'I know this. Stop reviews.' }));
 
     expect(onRate.mock.calls.map(([rating]) => rating)).toEqual(['understood', 'learned']);
+  });
+
+  it('shows the labeled exact-locale pronunciation control only when requested', async () => {
+    const visible = await render(<WordCard word={word} showPronunciation/>);
+    expect(visible.getByRole('button', {
+      name: 'Play English · United States device pronunciation for scope',
+    })).toBeTruthy();
+    expect(visible.getByText('≈ Device voice')).toBeTruthy();
   });
 
   it('shows translation preparation for an untranslated word', async () => {

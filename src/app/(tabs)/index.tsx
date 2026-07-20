@@ -72,7 +72,9 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
   }, []);
 
   useEffect(() => {
-    if (!activeWord || activeWord.translation || translatingIds.current.has(activeWord.id)
+    if (!activeWord || activeWord.translation
+      || activeWord.sourceLanguageCode !== 'en' || activeWord.targetLanguageCode !== 'sk'
+      || translatingIds.current.has(activeWord.id)
       || translationStates[activeWord.id] === 'error') return;
     translatingIds.current.add(activeWord.id);
     const translationRequest = prepareWordTranslation(activeWord);
@@ -160,9 +162,10 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
         renderItem={({ item, index }) => {
           const currentWord = currentWords[item.id] ?? item;
           const translationStatus = currentWord.id === activeWord?.id && !currentWord.translation
+            && currentWord.sourceLanguageCode === 'en' && currentWord.targetLanguageCode === 'sk'
             ? translationStates[currentWord.id] ?? 'loading'
             : undefined;
-          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><SwipeableWordCard word={currentWord} active={index === currentIndex} disabled={ratingWordId !== null} onSwipe={(rating) => void handleRating(currentWord, rating)}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} actionsDisabled={ratingWordId !== null} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={(rating) => void handleRating(currentWord, rating)}/></SwipeableWordCard></View>;
+          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><SwipeableWordCard word={currentWord} active={index === currentIndex} disabled={ratingWordId !== null} onSwipe={(rating) => void handleRating(currentWord, rating)}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} actionsDisabled={ratingWordId !== null} showPronunciation={index === currentIndex} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={(rating) => void handleRating(currentWord, rating)}/></SwipeableWordCard></View>;
         }}
       />
       <AppText variant="caption" style={[styles.position, { color: theme.muted }]}>{Math.min(currentIndex + 1, sessionFeed.length)} of {sessionFeed.length} due now · scroll to skip</AppText>

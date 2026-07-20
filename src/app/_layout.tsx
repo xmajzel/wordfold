@@ -15,6 +15,7 @@ import { AuthProvider } from '@/providers/auth-provider';
 import { SyncProvider } from '@/providers/sync-provider';
 import { LaunchScreen } from '@/components/launch-screen';
 import { getNotificationWordTarget } from '@/features/reminders/notification-navigation';
+import { PronunciationCacheScopeProvider } from '@/features/pronunciation/cache-scope-provider';
 import { palette } from '@/theme/tokens';
 
 Notifications.setNotificationHandler({
@@ -76,7 +77,7 @@ function Navigation() {
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({ Fraunces_600SemiBold, Inter_400Regular, Inter_600SemiBold });
-  return <GestureHandlerRootView style={styles.root}><AuthProvider><SyncProvider><AppDataProvider><AppReadyGate fontsLoaded={fontsLoaded}/></AppDataProvider></SyncProvider></AuthProvider></GestureHandlerRootView>;
+  return <GestureHandlerRootView style={styles.root}><AuthProvider><PronunciationCacheScopeProvider><SyncProvider><AppDataProvider><AppReadyGate fontsLoaded={fontsLoaded}/></AppDataProvider></SyncProvider></PronunciationCacheScopeProvider></AuthProvider></GestureHandlerRootView>;
 }
 
 function AppReadyGate({ fontsLoaded }: { fontsLoaded: boolean }) {
