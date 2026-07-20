@@ -41,6 +41,11 @@ A few things from the actual repo change the framing of the proposal materially:
   `TextToSpeech.synthesizeToFile()` and iOS `AVSpeechSynthesizer.write()` for cache misses;
   `expo-audio` plays validated cached files. Expo Speech itself remains playback-only: no
   synthesize-to-file, SSML, or IPA/phoneme input.
+- **[IMPLEMENTED LOCALLY] Phase 3A provider-bakeoff tooling is complete.** A versioned 30-item
+  candidate corpus for each configured locale, pinned Google/Azure voice matrix, conservative
+  cost planner, paid-generation gates, resumable checksummed output, separate blinded review
+  package/private key, and two-rater scoring are implemented. Every locale remains explicitly
+  blocked on native corpus review; no provider audio was generated and no winner was selected.
 - **[FACT] PowerSync's React Native SDK is installed at `1.35.9`, but no attachment table or
   React Native attachment-storage adapter is configured.** The current built-in JavaScript/
   TypeScript attachment helpers are marked alpha. They are an option, not an existing subsystem.
@@ -425,9 +430,14 @@ For each launch locale `L`, gate release on:
   playback failure deletes invalid output and falls back once to Phase 1 live exact-voice speech.
   Web intentionally remains on Phase 1 browser/device speech. No Supabase, PowerSync, Storage,
   database, download UI, or cloud-pronunciation changes are part of this phase.
-- **Phase 3 (provider bakeoff + public cloud):** evaluate launch locales with the acceptance corpus,
-  then add the cache-first/budgeted/rate-limited Edge Function, service-owned Postgres metadata,
-  and immutable `pron-public` Storage. Fetch/cache only requested assets.
+- **Phase 3A (provider bakeoff):** screen pinned Google and Azure voices with blinded native
+  review before selecting a provider. **Tooling implemented locally on 2026-07-20:** 210 candidate
+  items across seven locales produce 840 planned samples at a conservative estimated $0.27. Paid
+  generation requires native corpus approval, explicit execution, credentials, and a run cap no
+  greater than $20. The human review and provider generation have not run, so no voice has passed.
+- **Phase 3B (public cloud):** only after the winning voices complete the full release corpus,
+  add the cache-first/budgeted/rate-limited Edge Function, service-owned Postgres metadata, and
+  immutable `pron-public` Storage. Fetch/cache only requested assets.
 - **Phase 4 (explicit offline downloads):** add collection download/eviction UX. Evaluate
   PowerSync Attachments against a small custom download cache; adopt it only if its alpha status
   and automatic watch/download model fit the requirement.
@@ -485,6 +495,22 @@ For each launch locale `L`, gate release on:
 - Real-device checks remain mandatory for audible output, exact locale behavior after voice changes,
   Android engine output format, iOS CAF output, cache-hit playback, airplane-mode replay, and voice
   quality. No EAS build or remote pronunciation service was used.
+
+### Phase 3A local verification
+
+- Corpus/config validation passes with exactly 30 items for each of seven locales, two pinned
+  voices per provider/locale, 210 total items, and 840 planned audio samples.
+- The conservative plan contains 8,940 billed characters and estimates $0.2682 for the complete
+  Google/Azure screening run. This is a planning estimate, not a provider quote.
+- TypeScript, Expo lint, all 44 Jest suites (176 tests), and an Android/iOS/web Expo export pass.
+- Expo Doctor remains at the known 19/21 baseline: the PowerSync CLI dependency tree includes a
+  second React version, and React Native Directory lacks complete metadata for Quick SQLite and
+  the two local native modules. Phase 3A introduced neither finding.
+- Safety tests confirm that generation cannot start without `--execute`, cannot exceed the $20
+  ceiling, and remains blocked while native corpus review is pending. Scoring tests enforce two
+  independent raters and the 95%/zero-wrong-locale gates.
+- No cloud TTS request, Supabase deployment, database migration, Storage change, PowerSync change,
+  EAS build, or generated audio occurred.
 
 ---
 
