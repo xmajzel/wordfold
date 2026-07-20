@@ -11,7 +11,8 @@ Implementation status:
 - The development Supabase schema and the dedicated read-only replication role are deployed through versioned migrations.
 - PowerSync CLI `0.10.0` is pinned, and `powersync/service.yaml` plus `powersync/sync-config.yaml` are the versioned Cloud configuration.
 - The EU PowerSync Cloud development instance is connected with verified TLS, Supabase Auth discovery, edition 3 user-scoped Sync Streams, and healthy initial replication for all three synchronized tables.
-- Phase 3 authentication UI and Expo client integration are implemented locally; adding the development publishable key, approving the Auth redirect URL, and running the native confirmation smoke test remain pending.
+- Phase 3 authentication is configured and device-tested, including confirmation callbacks and persisted native sessions.
+- Phase 4A native PowerSync transport is implemented locally and its Android debug build passes; the public client endpoint, installation of the rebuilt development client, and authenticated connection smoke test remain pending.
 
 The first deployment uses:
 

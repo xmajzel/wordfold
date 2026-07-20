@@ -2,12 +2,13 @@
 
 ## Status
 
-Approved architecture documentation. The Supabase database foundation is deployed, the PowerSync Cloud development instance is connected with validated user-scoped Sync Streams, and Phase 3 authentication is implemented locally pending remote configuration and native smoke testing. PowerSync application-data integration has not started.
+Approved architecture documentation. The Supabase database foundation and PowerSync Cloud development instance are deployed, Phase 3 authentication is configured and device-tested, and the Phase 4A native PowerSync connection foundation is implemented locally with a passing Android debug build. The client endpoint, installation of the rebuilt development client, and authenticated PowerSync smoke test remain before Phase 4A is operationally complete. Guest import and synchronized application repositories have not started.
 
 This document is the canonical design for adding optional accounts, offline synchronization, and multi-device restore to Wordfold. The operational setup and future hosting migration are documented separately:
 
 - [Initial managed setup](SUPABASE_POWERSYNC_INITIAL_SETUP.md)
 - [Phase 3 Supabase authentication specification](SUPABASE_AUTH_PHASE_3_SPECIFICATION.md)
+- [Phase 4A native PowerSync connection specification](SUPABASE_POWERSYNC_PHASE_4A_SPECIFICATION.md)
 - [Managed-to-self-hosted migration](SUPABASE_POWERSYNC_SELF_HOSTED_MIGRATION.md)
 
 ## Problem
