@@ -83,4 +83,4 @@ The endpoint is centralized and replaceable; it is not embedded in repository op
 
 ## Next phase
 
-Phase 4B is approved and implemented locally under [its dedicated specification](SUPABASE_POWERSYNC_PHASE_4B_SPECIFICATION.md). Native authenticated verification remains deferred; Phase 4C synchronized repositories and continuous uploads have not started.
+Phase 4B and Phase 4C are approved and implemented locally under their dedicated specifications. Native authenticated import, offline/reconnect, and second-device verification remain deferred.

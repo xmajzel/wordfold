@@ -199,4 +199,4 @@ The contract exposes only safe display state and counts to UI. Supabase clients,
 
 ## Next phase
 
-Phase 4C will separately implement PowerSync-backed signed-in repositories and the general mutation uploader. That phase must not begin until Phase 4B has its own implementation review and approval to proceed.
+Phase 4C was subsequently approved and implemented under [its dedicated specification](SUPABASE_POWERSYNC_PHASE_4C_SPECIFICATION.md). Native import and cutover verification remain deferred until a test device is available.

@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved architecture documentation. The Supabase database foundation and PowerSync Cloud development instance are deployed, Phase 3 authentication is configured and device-tested, and the Phase 4A native PowerSync connection foundation has a passing Android debug build. Phase 4B resumable, user-confirmed guest snapshot import is implemented locally. Authenticated connection and import smoke tests remain deferred until a native device is available. Continuous PowerSync repositories and uploads have not started.
+Approved architecture documentation. The Supabase database foundation and PowerSync Cloud development instance are deployed, Phase 3 authentication is configured and device-tested, and the Phase 4A native PowerSync connection foundation has a passing Android debug build. Phase 4B resumable guest import and Phase 4C continuous offline synchronization are implemented locally. Authenticated import, offline/reconnect, and second-device recovery tests remain deferred until a native device is available.
 
 This document is the canonical design for adding optional accounts, offline synchronization, and multi-device restore to Wordfold. The operational setup and future hosting migration are documented separately:
 
@@ -10,6 +10,7 @@ This document is the canonical design for adding optional accounts, offline sync
 - [Phase 3 Supabase authentication specification](SUPABASE_AUTH_PHASE_3_SPECIFICATION.md)
 - [Phase 4A native PowerSync connection specification](SUPABASE_POWERSYNC_PHASE_4A_SPECIFICATION.md)
 - [Phase 4B resumable guest import specification](SUPABASE_POWERSYNC_PHASE_4B_SPECIFICATION.md)
+- [Phase 4C synchronized repositories and continuous uploads specification](SUPABASE_POWERSYNC_PHASE_4C_SPECIFICATION.md)
 - [Managed-to-self-hosted migration](SUPABASE_POWERSYNC_SELF_HOSTED_MIGRATION.md)
 
 ## Problem
