@@ -12,70 +12,83 @@
 
 A few things from the actual repo change the framing of the proposal materially:
 
-- **[FACT] There is no backend, no auth, no user/account model, and no sync today.**
-  `expo-sqlite` is the only store; Supabase/PowerSync/Storage don't exist yet. The proposal
-  describes a multi-tenant cloud pipeline for an app that is currently single-device,
-  single-user, offline.
-- **[FACT] `words.normalized_term TEXT NOT NULL UNIQUE` is a single-column *global* unique
-  constraint** (`src/data/database.ts:27`) — not scoped by collection, user, or language pair.
-- **[FACT] Language codes are hardcoded as SQL string literals**, not parameters: `addWord`
-  inserts `... 'en', 'sk', ...` (`src/data/repository.ts:75`), same in `src/data/prefill.ts:33`,
-  and the schema defaults are `DEFAULT 'en'` / `DEFAULT 'sk'`. The
-  `sourceLanguageCode`/`targetLanguageCode` fields exist on the type but are **not actually
-  wired through inserts**.
-- **[FACT] Two divergent `normalizeTerm` implementations exist**: runtime
-  (`src/features/import/parser.ts:9`) does `trim → collapse spaces → toLocaleLowerCase('en')`
-  with **no NFKC**; the build scripts do the same **with** `.normalize('NFKC')`. Both hardcode
-  the `'en'` locale.
+- **[FACT] Supabase Auth/Postgres and PowerSync Cloud now exist.** Signed-in users have an
+  authenticated, per-user offline data plane; guest mode remains local-only. Phase 4C is
+  implemented locally, although authenticated airplane-mode/reconnect and two-device recovery
+  remain release-verification gates (`docs/SUPABASE_POWERSYNC_SPECIFICATION.md:5`).
+- **[FACT] The synchronized surface is intentionally narrow.** Only `collections`, `words`, and
+  `learning_events` are in the Postgres publication, PowerSync replication-role grants, sync
+  stream, client schema, and uploader. Supabase Storage, pronunciation Edge Functions, and
+  pronunciation tables do not exist yet.
+- **[IMPLEMENTED LOCALLY] Phase 0 multilingual identity is complete.** Guest SQLite v7 and the
+  additive Supabase migration allow multiple senses, index soft-duplicate checks by user/source
+  language/normalized term, and store exact source and target pronunciation locales. The
+  Supabase migration and PowerSync stream change still require their normal controlled remote
+  rollout.
+- **[IMPLEMENTED LOCALLY] Language and locale are explicit create/edit inputs.** The initial
+  supported set is English (`en-US`, `en-GB`), Spanish (`es-ES`, `es-MX`), German (`de-DE`),
+  Greek (`el-GR`), and Slovak (`sk-SK`). Guest import and cutover preserve separate rows instead
+  of treating equal normalized terms as conflicts; legacy conflict checkpoints remain resumable.
+- **[IMPLEMENTED LOCALLY] Runtime normalization is shared and language-aware:** NFKC, trim,
+  whitespace collapse, then locale-aware lowercasing. Catalog build output already follows the
+  same NFKC/case behavior for its fixed English data.
 - **[FACT] A custom Expo native module already ships** (`modules/wordfold-translate`,
   Swift + Kotlin). Adding a native TTS-to-file module is well within existing capability — this
   unlocks an option the proposal underweights.
 - **[FACT] expo-speech is not installed**, and its SDK 56 API is **playback-only**: no
   synthesize-to-file, no SSML, no IPA/phoneme input.
+- **[FACT] PowerSync's React Native SDK is installed at `1.35.9`, but no attachment table or
+  React Native attachment-storage adapter is configured.** The current built-in JavaScript/
+  TypeScript attachment helpers are marked alpha. They are an option, not an existing subsystem.
 
 ---
 
 ## 1. Overall verdict
 
-**The pronunciation *product strategy* (cloud-neural-cached + device-fallback + device-only
-mode) is sound and industry-standard. The proposed *architecture* is 12–18 months ahead of
-where this codebase is, and its single most dangerous idea — silent quality fallback — directly
-undermines the stated goal of a "reliable learning reference."**
+**The pronunciation product strategy — cloud-neural-cached + labeled device fallback +
+device-only mode — is sound. Phase 0 now supplies multilingual identity and exact pronounceable
+locale semantics, so a narrowly specified Phase 1 device-playback implementation can proceed.
+The later cloud/cache phases still require trust-boundary, cache-isolation, provider-quality, and
+file-delivery decisions. Silent quality fallback remains the most dangerous product risk.**
 
 Two structural problems dominate:
 
-1. **The proposal builds Supabase + PowerSync + Edge Functions + Storage + global asset dedup +
-   RLS for pronunciation, on an app with no accounts and no sync.** That is a large multi-tenant
-   backend justified by an audio-caching feature. The backend should be justified by the
-   *product* (accounts, cross-device sync, publisher catalog), and pronunciation should ride on
-   it — not lead it.
+1. **The current backend is a foundation, not a finished pronunciation pipeline.** Adding a
+   replicated table requires coordinated changes to the Postgres publication, replication-role
+   grants, PowerSync stream, client schema, uploader behavior, RLS, and tenant-isolation tests.
+   The minimal cloud version should avoid that surface until cross-device pronunciation state is
+   a demonstrated requirement.
 2. **The unit of pronunciation is wrong.** The design implicitly treats "a word row" as the
    pronounceable thing. It isn't. Pronunciation is a function of *(exact original text, language,
    sense)* — and `normalized_term` is lossy in exactly the ways that destroy pronunciation
    correctness ("Polish"/"polish", "US"/"us", "read"/"read"). Keying cache off the word row or
    normalized term will produce confident wrong audio.
 
-One-line recommendation: **Ship device-TTS-only first (no backend, no cost, no legal exposure),
-get locale-voice detection genuinely correct, and treat cloud TTS as a later per-catalog-word
-quality upgrade — not the v1 spine.**
+One-line recommendation: **Ship exact-locale device playback first, add a namespaced local file
+cache, then use Supabase Edge Functions + Storage for server-owned cloud audio fetched on demand;
+do not add pronunciation to PowerSync until offline request queuing or cross-device pronunciation
+state genuinely requires it.**
 
 ---
 
 ## 2. Blockers (must fix before building this)
 
-**B1 — Global `UNIQUE(normalized_term)` is incompatible with multilingual and multi-user.
-[FACT/blocker]**
+**B1 — `normalized_term` uniqueness was incompatible with multilingual vocabulary.
+[RESOLVED LOCALLY]**
 Same spelling collides across languages and senses: `gift` (EN present / DE poison), `chat`
 (EN / FR cat), `pie`, `sensible` (EN/ES/FR, opposite meanings). Today a user literally cannot
 have the English word "chat" and later the French "chat." The moment you go multilingual or
-multi-tenant this constraint corrupts data or rejects valid inserts. Must become
-`UNIQUE(owner_scope, source_language_code, target_language_code, normalized_term)` or be dropped
-for a soft dedup. This migration is needed *regardless* of pronunciation.
+multi-tenant this constraint corrupts data or rejects valid inserts. The fix must cover both
+databases, create/edit inputs, conflict keys, guest import, cutover, and tests. A language-pair
+unique key is the minimum improvement, but it still rejects multiple senses of the same spelling;
+decide explicitly between sense-aware uniqueness and soft dedup. Phase 0 chose soft dedup and
+updated guest SQLite, Supabase, import/cutover, manual warnings, and tests.
 
 **B2 — Pronunciation must not be keyed on the word row or `normalized_term`. [INFER/blocker]**
 `normalizeTerm` lowercases and collapses whitespace, so it cannot distinguish heteronyms or
 casing-dependent readings. The cache key must be built from the **original `term`/`translation`
-text + BCP-47 locale + voice + provider + model + sense/phoneme override** — which the proposal's
+text/effective synthesis input + BCP-47 locale + voice + provider + model + phoneme/SSML
+override** — which the proposal's
 "cache identity" list already gets right. The blocker is *organizational*: pronunciation is a
 separate entity from `words`, linked many-to-one, and derived from raw text. Bake that in from
 day one.
@@ -92,17 +105,39 @@ app cannot do.
 `Speech.speak(text, { language })` does not guarantee the utterance used a voice for that
 language; if no matching voice is installed the platform substitutes. **[FACT]** expo-speech
 exposes `getAvailableVoicesAsync()` returning `{identifier, language, name, quality}`. **[REC]**
-Enumerate voices, match the exact BCP-47 tag yourself, and only call `speak` when a real matching
-voice exists; otherwise report "voice not installed" with install guidance. This is the concrete
-answer to "users may learn a language whose voice isn't installed." (Caveat **[INFER]**:
-`getAvailableVoicesAsync` reliability on Android has historically been spotty across SDKs —
-validate on real devices early.)
+Enumerate voices, match the exact BCP-47 tag yourself, and select a known matching voice;
+otherwise report "voice not installed" with install guidance. This is the concrete
+answer to "users may learn a language whose voice isn't installed." Android voices also expose
+whether a network connection is required, but Expo Speech's `Voice` type does not expose that
+flag. Strict offline mode may therefore require a small native voice-enumeration bridge in
+addition to expo-speech. Validate exact locale, offline capability, and real playback on devices.
 
-**B5 — Azure free tier grants no output-use rights. [FACT]** Per Microsoft's product terms, TTS
+**B5 — The learning-language field and locale must be explicit. [RESOLVED LOCALLY]** The model
+maps `term` to `sourceLanguageCode` and `translation` to `targetLanguageCode`. For a Slovak
+user learning Spanish, Spanish is normally the source `term`; calling the translation the
+"target word" reverses the model. Pronounce `term` using its source locale in v1. If translation
+playback is later added, model it as a separate `(word, field)` link. Generic codes such as `es`
+or `en` are not sufficient for exact voice selection; pronunciation needs a BCP-47 locale/accent
+such as `es-ES`, `es-MX`, `en-GB`, or `en-US`; Phase 0 now stores these exact locales.
+
+**B6 — Cloud asset metadata must be server-owned. [INFER/blocker]** Clients must not be able to
+write trusted `provider`, `voice`, `model`, `content_hash`, checksum, or Storage-path metadata.
+An authenticated client may request generation, but only the Edge Function/service may create or
+finalize an asset row. Otherwise a client can fabricate a cache hit, bypass generation controls,
+or point another client at untrusted content.
+
+**B7 — The current PowerSync uploader rejects pronunciation operations. [FACT/blocker]** It
+supports only `collections`, `words`, and `learning_events`; an unknown table or operation throws
+(`src/data/sync/uploader.ts:96`). The first cloud version should request generation directly from
+an authenticated Edge Function. If offline-queueable pronunciation requests are added later,
+their table, RLS, uploader behavior, rejection UX, publication, grants, stream, schema, and tests
+must be specified together.
+
+**B8 — Azure free tier grants no output-use rights. [FACT]** Per Microsoft's product terms, TTS
 output commercial-use rights attach to the *paid* tier only. If Azure is chosen, you cannot ship
 on F0. Budget for S0 from day one or don't pick Azure.
 
-**B6 — "Licensed human dictionary recordings" is not a caching-safe drop-in. [FACT/INFER]** Human
+**B9 — "Licensed human dictionary recordings" is not a caching-safe drop-in. [FACT/INFER]** Human
 recording sets (Forvo-style) are licensed per-clip and typically forbid permanent
 redistribution/local caching without a specific redistribution license. Treat this as a
 separately-negotiated content deal, not a provider swap. Do not design the cache assuming you may
@@ -128,88 +163,137 @@ persist arbitrary licensed human audio.
 - **R4 — Privacy/GDPR: user phrases sent to a third party.** User-entered words/sentences can be
   personal data. Sending them to Google/AWS/Azure is third-party processing requiring disclosure
   + a DPA, and the provider may log inputs. **[REC]** Default cloud generation to *catalog/public*
-  words; make cloud for *private* words explicit opt-in (which is exactly what "Device Only mode"
-  should guarantee — genuinely no network, and ideally no metadata sync of the text either).
-- **R5 — Divergent normalization (NFKC vs none) is a latent data-integrity bug.** Build-time
+  words; make cloud for *private* words explicit opt-in. "Device Only" guarantees that Wordfold
+  does not call its configured cloud provider; a stricter offline/privacy mode must additionally
+  require a verified offline-capable system voice.
+- **R5 — Divergent normalization (NFKC vs none) was a latent data-integrity bug (resolved in
+  Phase 0).** Build-time
   catalog terms are NFKC-normalized; runtime user terms are not. Visually identical terms can
   mismatch on lookup/dedup and (if not careful) on cache keys. **[REC]** Unify on one
   normalization module, shared by runtime and scripts, before layering anything on top.
-- **R6 — Building the multi-tenant backend before accounts exist is the over-engineering risk.**
-  RLS, buckets, sync rules, signed URLs, Edge auth — all presuppose a user identity you don't
-  have. High risk of building the wrong sync boundaries against imagined requirements.
+- **R6 — Expanding the synchronized surface without a cross-device requirement is the
+  over-engineering risk.** Supabase and PowerSync exist, but that does not make every new entity a
+  synchronization entity. On-demand server-generated audio can use Edge Functions, Storage, and
+  a disposable local cache without changing the PowerSync data plane.
+- **R7 — Private audio can survive account transitions.** PowerSync rows are cleared on account
+  change/sign-out, but filesystem audio and local cache metadata are outside that lifecycle.
+  **[REC]** Separate public, guest, and account-private cache namespaces; clear private files and
+  signed URL material on manual sign-out and automatic account/session transitions.
+- **R8 — Tombstones do not trigger FK cascades.** Word deletion is a synchronized tombstone, not
+  a physical delete. Pronunciation links must be filtered/tombstoned explicitly. Shared immutable
+  assets need delayed mark-and-sweep retention and must never be deleted merely because one word
+  or device stopped referencing them.
+- **R9 — The sync foundation is not fully release-proven.** Authenticated native cutover,
+  airplane-mode mutation/reconnect, sign-out with pending writes, and two-device recovery remain
+  deferred. Pronunciation should not depend on unverified sync behavior for its first release.
 
 ---
 
 ## 4. Recommended architecture
 
-**A phased inversion of the proposal: device-first, cloud-later, backend only when the product
-(not audio) needs it.**
+**A device-first playback path with a narrow, server-owned cloud upgrade. Supabase is used where
+it adds value; PowerSync is not expanded merely because it is available.**
 
-**Layer 0 — Pronunciation as a first-class local entity (do this now, no backend).**
-- New local table `pronunciations` keyed by a **content hash** of `(text, languageCode, accent,
-  provider, voice, modelVersion, format, senseId, phonemeOverride)`. Link table
-  `word_pronunciations(word_id, field, pronunciation_id)` where `field ∈ {term, translation}` —
-  because a learner of EN→SK wants to hear the **target** word (and optionally the source). One
-  word → up to two pronounceable texts → each its own cache entry.
-- Playback resolves: local file → else device voice (exact-locale, labeled) → else "unavailable."
+**Layer 0 — Live device playback (first shippable feature).**
+- Pronounce the learning-language `term` with its exact configured BCP-47 source locale.
+- Enumerate installed voices before playback. If there is no exact supported match, show voice
+  installation guidance; never permit the platform to substitute an unknown locale silently.
+- Treat "system voice" and "offline voice" as different properties. Android explicitly models
+  network-required voices, while Expo Speech does not surface that flag. Strict offline mode may
+  need the native voice bridge described in B4.
+- Works in both guest and signed-in stores because it is independent of persistence and sync.
 
-**Layer 1 — Device synthesize-to-file via a native module (the underweighted dark horse).
-[FACT+REC]**
-A custom native module already ships. Add one exposing **Android
-`TextToSpeech.synthesizeToFile()`** and **iOS `AVSpeechSynthesizer.write(_:toBufferCallback:)`**
-(iOS 13+). This produces **cacheable, offline, zero-marginal-cost** audio using the *same* voice
-the user hears live, with **no provider licensing, no privacy exposure, no backend**. Quality is
-below cloud neural but is often adequate as a "reference," and — critically — it's honest: what
-they cache is what their device says. This can be the entire v1 pronunciation feature.
+**Layer 1 — Namespaced, content-addressed device cache.**
+- Add local cache metadata keyed by a **content hash** of `(exact effective synthesis input,
+  BCP-47 locale, provider, voice, model version, format)`. A sense may select a different
+  phoneme/SSML input, but a sense ID or `term`/`translation` field alone should not duplicate
+  byte-identical pronunciation. Never key audio by `word_id` or `normalized_term` alone.
+- Separate `public`, `guest`, and `account/{user_id}` filesystem namespaces. Store durable asset
+  identity and checksums, never signed URLs as durable credentials. Public catalog cache may
+  survive sign-out; account-private cache must not.
+- For device-generated files, the existing native-module pattern can expose Android
+  `TextToSpeech.synthesizeToFile()` and iOS `AVSpeechSynthesizer.write(_:toBufferCallback:)`.
+  Validate output format, voice behavior, and file playback on real Android and iOS devices.
 
-**Layer 2 — Cloud neural TTS as a quality upgrade for *public catalog words only* (later).**
-When accounts+sync exist for the product, add Storage + an Edge Function that generates
-cloud-neural audio **for catalog/CEFR/publisher terms** (public, shared, deduplicated). Private
-user words stay on Layer 1 (device) unless the user opts into cloud. This confines all
-licensing/privacy/cost exposure to text you already control and license.
+**Layer 2 — On-demand cloud neural TTS through Supabase.**
+- An authenticated, cache-first, rate-limited Edge Function accepts exact text, field, locale,
+  optional sense/override, and requested mode. It validates input, computes the canonical cache
+  identity server-side, looks up or generates audio, validates the result, writes immutable
+  Storage + Postgres metadata, and returns an asset descriptor plus a public or short-lived signed
+  URL.
+- Asset metadata is service-write-only. The client downloads on demand into Layer 1. Word
+  create/edit/import never generates audio and never waits for pronunciation.
+- Start with public catalog/CEFR/publisher terms. Private user text remains device-only unless the
+  user explicitly opts into cloud processing.
+- A client cannot declare arbitrary text "public." For public generation it supplies a catalog
+  identity and the server retrieves or verifies the canonical text/locale. Only explicitly opted-in
+  private generation accepts user text and stores it in the per-user namespace.
 
-**Provider for Layer 2: Amazon Polly or Google Cloud TTS**, not Azure (B5). **[FACT]** Polly's
+**Layer 3 — Optional synchronized pronunciation state.**
+- Add a per-user request/link table only if offline request queuing, cross-device selections, or
+  collection-download state proves valuable. Do not sync the entire global asset catalog.
+- Adding this layer requires coordinated changes to the publication, replication role, sync
+  stream, client schema, uploader, RLS, tombstones, tenant tests, and sign-out lifecycle.
+
+**Provider for Layer 2: choose by a measured launch-locale bakeoff.** Amazon Polly and Google
+Cloud TTS are candidates; Azure requires paid-tier output rights (B8). **[FACT]** Polly's
 terms are the most caching-friendly ("cache and replay at no additional cost, no restrictions on
-storing"). Google grants output ownership with caching permitted under GCP ToS (may not use
-output to train competing TTS). Verify the *current* contract before launch — these terms drift.
+storing"), but a provider is not acceptable unless it covers every launch locale/accent at the
+required quality. Verify the current contract before launch because terms and voice catalogs
+change.
 
 **Modes, redefined for honesty:**
-- **Device Only** → Layers 0+1. Truly offline. Reports missing voices. Default for
+- **Device Only** → Layers 0+1. Wordfold does not send user text to its configured cloud TTS
+  provider. Reports missing or network-required voices. When strict offline/privacy mode is
+  selected, play only a voice verified as offline-capable. Default for
   privacy-sensitive users and private words.
-- **Best Available** → adds Layer 2 for catalog words; device-synth audio is the labeled interim,
+- **Best Available** → adds Layer 2; device audio is the labeled interim,
   **never** a silent wrong-locale substitution.
 
 ---
 
 ## 5. Suggested Postgres / Storage / PowerSync data boundaries
 
-*(For Layer 2, once a backend exists.)*
+*(For Layer 2. These are new pronunciation resources; the account/sync foundation already
+exists.)*
 
 **Postgres**
-- `pronunciation_assets` (global, immutable, deduplicated): `id`, `content_hash UNIQUE`, `text`,
-  `language_code`, `accent`, `provider`, `voice`, `model_version`, `format`, `duration_ms`,
-  `sha256`, `storage_path`, `created_at`. **RLS: read = any authenticated; write = service role
-  only** (Edge Function). No user column.
-- `pronunciation_private` (per-user private audio): same shape + `user_id`. **RLS: read/write
-  scoped to `user_id`.**
-- `word_pronunciations` (per-user link): `user_id`, `word_id`, `field`, `asset_id` (points into
-  either table via a type discriminator). RLS by `user_id`.
-- **Do not sync** `storage_path` as a device path, download progress, or eviction state — those
-  are device-local (matches the proposal; correct).
+- `pronunciation_assets`: immutable server-owned metadata: `id`, `scope` (`public`/`private`),
+  nullable `owner_user_id`, canonical `content_hash`, exact effective synthesis input, BCP-47
+  `locale`, `provider`, `voice`, `model_version`, `format`, `duration_ms`, `sha256`, `object_key`,
+  `created_at`. Enforce public/private ownership invariants and separate public-global versus
+  per-owner private uniqueness. **No client insert/update/delete.**
+- Optional server-side request/usage records hold idempotency, status, rate-limit, character, cost,
+  failure, and audit data. Do not publish provider credentials or raw provider errors to clients.
+- Do not add a synchronized `word_pronunciations` table in the initial cloud version. The Edge
+  Function resolves deterministic assets on demand. Add a per-user link/request table only for a
+  concrete offline/cross-device use case.
 
 **Storage (two namespaces, two trust levels)**
 - `pron-public/` — path = `{content_hash}.{ext}`. Truly public or long-TTL signed. Globally
   shared; one file serves all users.
 - `pron-private/{user_id}/{content_hash}.{ext}` — RLS/bucket-policy scoped; short-TTL signed URLs.
 - Files are immutable, content-addressed, checksummed. Regeneration = new hash, never overwrite.
+- The client persists only the object/asset identity and verified local URI. A signed URL expires
+  and must never become the durable cache key.
 
-**PowerSync buckets**
-- A **global bucket** for `pronunciation_assets` metadata (every client subscribes; read-only).
-  This is the shared-catalog case PowerSync handles well.
-- A **per-user bucket** for `pronunciation_private` + `word_pronunciations`.
-- **[FACT]** PowerSync syncs metadata only; bytes move through the **attachments queue**
-  (immutable, UUID/hash-identified, local storage adapter, auto-retry, auto-cleanup). Use it
-  rather than hand-rolling downloads.
+**PowerSync**
+- **Initial cloud version:** no pronunciation table is published or synchronized. This avoids
+  changing the current three-table uploader and tenant boundary for a disposable file cache.
+- **Later, if justified:** synchronize only user-referenced links/requests or a deliberately
+  selected catalog subset. Never auto-subscribe every client to all global asset metadata.
+- **Attachments:** built-in helpers can manage a local-only attachment table, retries, integrity,
+  and cleanup, but the JavaScript/TypeScript feature is currently alpha and requires a React
+  Native storage adapter. Evaluate it for explicit collection downloads. For immutable,
+  server-generated, play-on-demand files, a small signed-URL download/cache layer is the less
+  invasive first choice.
+
+**Lifecycle and deletion**
+- Clear account-private audio/cache metadata during both manual sign-out and automatic account
+  transitions; public catalog audio may remain. Guest files must never be reclassified as private
+  account files merely because guest vocabulary is imported.
+- Word tombstones make pronunciation links inactive but do not immediately delete shared assets.
+  Reclaim unreferenced private/shared objects through a bounded server-side mark-and-sweep policy.
 
 ---
 
@@ -224,9 +308,10 @@ Idle
             ├─ DeviceOnly ─▶ MatchExactVoice(locale)
             │      ├─ found ─▶ (optional synth-to-file → cache) ─▶ Playing
             │      └─ none  ─▶ VoiceMissing(show install guidance)   [never substitute]
-            └─ BestAvailable ─▶ MatchExactVoice(locale)
-                   ├─ found ─▶ Playing(labeled "≈ device") + enqueue CloudGenerate
-                   └─ none  ─▶ Unavailable(labeled) + enqueue CloudGenerate (if online & allowed)
+            └─ BestAvailable ─▶ RequestCloud(if online & allowed)
+                   ├─ ready ─▶ Download + Verify + AtomicCache ─▶ Playing(cloud label)
+                   ├─ pending + exact device voice ─▶ Playing(labeled "≈ device")
+                   └─ pending + no exact voice ─▶ Unavailable(labeled; cloud pending/retry)
 ```
 Invariant: **no state ever plays a non-matching-locale voice.** Cloud arrival upgrades silently
 *upward* (next tap is a cache hit); quality never silently degrades mid-promise.
@@ -235,17 +320,18 @@ Invariant: **no state ever plays a non-matching-locale voice.** Cloud arrival up
 ```
 Requested
  └─▶ ComputeContentHash
- └─▶ DedupLookup(assets: public if catalog-text else private)
-       ├─ exists ─▶ LinkExisting ─▶ Ready
+ └─▶ GateChecks(auth/scope? online? under budget? length ok? not rate-limited?)
+       ├─ fail ─▶ Unavailable/Pending(reason) [word still fully usable]
+       └─ pass ─▶ EdgeFunction(validates + recomputes canonical identity)
+ └─▶ DedupLookup(public catalog or user-private namespace)
+       ├─ exists ─▶ AuthorizeRead ─▶ ReturnAssetDescriptor
        └─ absent ─▶ Enqueue
-            └─ GateChecks(online? wifi-if-required? under budget? length ok? not rate-limited?)
-                 ├─ fail ─▶ Pending(reason) [word still fully usable]
-                 └─ pass ─▶ Generating(EdgeFn, idempotent by hash)
+            └─ Generating(provider, idempotent by server hash)
                        └─ Validate(duration>0, sha256, format)
                             ├─ fail ─▶ Retry(backoff, bounded) ─▶ Failed(reason, surfaced)
-                            └─ pass ─▶ UploadStorage ─▶ WriteMetadata ─▶ Ready
-                                        └─ AttachmentQueue.download ─▶ Verify(sha256)
-                                             ─▶ atomic-rename ─▶ Cached
+                            └─ pass ─▶ UploadImmutableStorage ─▶ WriteMetadata
+                                      ─▶ ReturnAssetDescriptor
+ └─▶ ClientDownload(public/signed URL) ─▶ Verify(sha256) ─▶ AtomicCache ─▶ Ready
 ```
 Invariant (matches the proposal, keep it): **word create/edit never blocks on and never fails due
 to generation.**
@@ -262,11 +348,12 @@ no SSML/IPA) can't fix them without markup you mostly can't send.
   unsolvable from `normalized_term`. Requires a **sense**. **[REC]** Key pronunciation on
   `senseId` (you already have `catalog_sense_id` and a senses catalog) so "lead (metal)" and
   "lead (guide)" get distinct audio. For user words without a sense, accept ambiguity and label it.
-- **Senses generally**: pronunciation belongs to the *sense*, not the term. The catalog already
-  has senses — exploit that.
+- **Senses generally**: text + locale is the base identity, but a sense can select a distinct
+  pronunciation variant. The catalog already has senses — use them when they disambiguate a
+  heteronym, without requiring every ordinary pronunciation to be sense-owned.
 - **Inflections/phrases**: TTS handles running text acceptably; single-word citation form may
-  differ from in-phrase prosody. Decide whether you pronounce the *lemma* or the *entered form* —
-  pick lemma for reference, and store the text you actually synthesized.
+  differ from in-phrase prosody. Pronounce the displayed learning `term` in v1 and store the exact
+  synthesized text. Add lemma pronunciation later only if the product exposes a distinct lemma.
 - **Proper names / loanwords / abbreviations** ("USA", "Dr.", "AI", "café"): neural TTS is
   inconsistent and language-dependent; abbreviations especially ("US" the country vs "us"). No
   reliable automated fix. **[REC]** Allow a per-entry **phoneme/SSML override** *field in the data
@@ -276,9 +363,9 @@ no SSML/IPA) can't fix them without markup you mostly can't send.
 - **Regional accents** (en-US vs en-GB, es-ES vs es-MX): must be an explicit `accent` dimension in
   the key (you have it). Don't conflate with `language_code`.
 
-**Bottom line:** the quality strategy is (1) sense-aware keys, (2) accent as a first-class
-dimension, (3) a reserved override field, (4) native-speaker spot-check per locale — not raw
-provider quality.
+**Bottom line:** the quality strategy is (1) sense-aware variants, (2) accent as a first-class
+dimension, (3) a reserved override field, and (4) a fixed corpus with two independent native
+raters per locale — not raw provider marketing.
 
 ---
 
@@ -286,53 +373,76 @@ provider quality.
 
 For each launch locale `L`, gate release on:
 
-1. **Voice detection:** exact-BCP-47 voice for `L` correctly detected as present/absent on ≥95%
-   of a real-device test matrix (min 3 Android OEMs + 2 iOS versions).
+1. **Voice detection:** exact-BCP-47 voice for `L` and its offline/network requirement correctly
+   detected on ≥95% of a real-device test matrix (min 3 Android OEMs + 2 iOS versions).
 2. **No wrong-locale playback:** in 100% of "voice-not-installed" test cases, app shows
    "unavailable/install" — 0 substitutions. (Hard gate.)
 3. **Cloud coverage:** chosen provider offers a neural voice for `L` + each supported accent.
-4. **Correctness spot-check:** a fixed 50-item set per `L` (incl. ≥10 heteronyms, ≥5 proper
-   names, ≥5 abbreviations) rated by a native speaker; **≥45/50 "acceptable as reference,"**
-   heteronyms judged with sense context. (Human-graded; not automatable.)
+4. **Correctness corpus:** a fixed **≥200-item** set per `L` (250 preferred), balanced across
+   common words, inflections, phrases, heteronyms, proper names/loans, and abbreviations. At least
+   two independent native raters evaluate each provider/voice/accent candidate; **≥95% must be
+   "acceptable as a learning reference,"** with no known wrong-locale result. Heteronyms are
+   judged with sense context. (Human-graded; not automatable.)
 5. **Latency:** cached playback start <150ms p95; first cloud generation <3s p50 / <8s p95.
 6. **Catalog cache hit:** 100% for catalog words after prefetch warmup.
 7. **Offline:** a downloaded collection plays fully in airplane mode; checksum-verified.
 8. **Cost:** measured provider cost per active user per month ≤ your set ceiling (requires dedup +
    no-on-insert).
+9. **Account isolation:** private asset metadata, files, and reusable URLs from user A are absent
+   after sign-out and inaccessible to user B. Public catalog assets remain safe to reuse.
+10. **Backend regression:** authenticated offline/reconnect and two-device recovery tests for the
+    existing Supabase/PowerSync foundation pass before pronunciation relies on synchronized state.
 
 ---
 
 ## 9. Minimal staged rollout
 
-- **Phase 0 (schema hygiene, no feature):** Fix B1 (scope uniqueness), fix hardcoded `'en'/'sk'`
-  inserts to use the language fields, unify normalization (R5). Ships value independent of
-  pronunciation.
-- **Phase 1 (Device-only pronunciation, no backend):** expo-speech playback + rigorous
-  exact-locale voice detection (B4) + honest "voice missing" UX. A shippable pronunciation feature
-  at **zero cost and zero legal exposure.**
-- **Phase 2 (Native synth-to-file cache):** add the native TTS-to-file module → offline cached
-  device audio, downloadable per collection. Still no cloud, no privacy exposure.
-- **Phase 3 (Cloud neural for catalog words):** only after accounts+sync exist for product
-  reasons. Edge Function (cache-first, budgeted, rate-limited) + `pron-public` Storage + global
-  asset dedup, for public catalog text only.
-- **Phase 4 (private cloud, opt-in):** cloud for user-created words behind explicit consent;
-  per-user private namespace.
+- **Phase 0 (multilingual identity, no pronunciation):** choose sense-aware uniqueness versus soft
+  dedup; fix guest and Supabase constraints; pass language codes through create/edit; update
+  normalization, guest import, cutover/conflict keys, uploader expectations, and tests.
+  **Implemented locally on 2026-07-20 using soft dedup.**
+- **Phase 1 (live device pronunciation):** pronounce `term` using its exact configured source
+  BCP-47 locale; enumerate voices and offline capability, label device playback, and show honest
+  missing/network-required voice guidance. Works in guest and signed-in modes without depending
+  on PowerSync.
+- **Phase 2 (local file cache):** add content-addressed cache metadata and public/guest/account
+  filesystem namespaces; add native synth-to-file only if its real-device output passes quality
+  and format tests. Wire cache clearing into all account transitions.
+- **Phase 3 (provider bakeoff + public cloud):** evaluate launch locales with the acceptance corpus,
+  then add the cache-first/budgeted/rate-limited Edge Function, service-owned Postgres metadata,
+  and immutable `pron-public` Storage. Fetch/cache only requested assets.
+- **Phase 4 (explicit offline downloads):** add collection download/eviction UX. Evaluate
+  PowerSync Attachments against a small custom download cache; adopt it only if its alpha status
+  and automatic watch/download model fit the requirement.
+- **Phase 5 (private cloud, opt-in):** cloud for user-created words behind explicit consent,
+  per-user namespace, DPA/privacy disclosure, retention policy, and account-isolation tests.
 - **Deferred indefinitely (cut from scope now):** IPA/SSML override UI, wrong-pronunciation
   reporting+regeneration, self-hosted Piper, licensed human recordings, teacher/user recordings.
   Keep only the *data-model hooks* (senseId, override field, provider/model in key), not the
   features.
 
+### Phase 0 local verification
+
+- TypeScript, Expo lint, all 38 Jest suites (143 tests), local Supabase schema lint, all 57 pgTAP
+  checks, and an Android/iOS/web Expo export pass.
+- Expo Doctor remains at the pre-existing 19/21 result: the PowerSync CLI dependency tree contains
+  a second React copy, and React Native Directory lacks complete metadata for Quick SQLite and the
+  local translation module.
+- PowerSync Cloud validation was not rerun because the CLI is not authenticated in this
+  environment. No PowerSync deployment, remote Supabase migration, EAS build, or cloud build was
+  performed.
+
 ---
 
 ## 10. Accepted risks & product claims to avoid
 
-**Accepted risks (document them):** device-voice quality varies by OS/OEM and is out of your
-control; heteronyms without a sense may be wrong; abbreviations/proper names may be mispronounced;
-on reinstall the local audio cache is lost and re-downloads (Storage is source of truth, device
-cache disposable — this is fine).
+**Accepted risks (document them):** device-voice quality and network requirements vary by OS/OEM
+and are partly outside your control; heteronyms without a sense may be wrong; abbreviations/proper
+names may be mispronounced; on reinstall the local audio cache is lost. Cloud assets can
+re-download from Storage; device-generated cache must be regenerated. Both caches are disposable.
 
 **Claims the product must NOT make:**
-- ❌ "Native/human/perfect pronunciation" — it's synthetic (unless you license human audio per B6).
+- ❌ "Native/human/perfect pronunciation" — it's synthetic (unless you license human audio per B9).
 - ❌ "Correct pronunciation" — say **"reference pronunciation"** / **"neural TTS voice"** /
   **"≈ approximate device voice."**
 - ❌ "Works offline for any language" — only for languages with an installed voice or downloaded
@@ -345,22 +455,29 @@ cache disposable — this is fine).
 
 ## 11. Questions that must be decided before implementation
 
-1. **When do accounts + sync actually land?** If not soon, Phases 3–4 (the entire
-   Supabase/PowerSync/Edge design) are premature. This is the pivotal question.
-2. **Which languages/accents at launch?** Drives provider choice, voice-coverage checks, and the
-   acceptance sets.
-3. **Do you pronounce the source term, the target translation, or both?** This determines whether
-   pronunciation is per-word or per-(word, field) — a schema decision you can't defer.
-4. **Is catalog text (WordNet definitions/examples, CEFR terms) licensed to be sent to a
-   third-party TTS?** Terms are likely fine; sending *definitions/examples* may not be — check
+1. **Resolved for Phase 0:** initial languages/locales are English (`en-US`, `en-GB`), Spanish
+   (`es-ES`, `es-MX`), German (`de-DE`), Greek (`el-GR`), and Slovak (`sk-SK`). Their actual voice
+   quality and availability still require the Phase 1 device matrix.
+2. **Resolved:** soft dedup. Manual create/edit warns for the same source language + normalized
+   term and permits another sense; bulk/catalog flows keep their explicit English-only filtering.
+3. **Resolved for v1:** pronounce the learning-language `term` using its exact source locale.
+   Target pronunciation locale is stored for forward compatibility; translation playback remains
+   outside v1.
+4. **Can signed-out users use cloud catalog audio?** Recommend device playback for everyone and
+   authenticated cloud generation initially; a public catalog delivery path can be added after
+   abuse/cost implications are specified.
+5. **Which provider/voice wins the measured bakeoff?** Do not choose from marketing lists. Voice
+   coverage, quality, caching terms, data handling, latency, and price must all pass per locale.
+6. **Is catalog text (WordNet definitions/examples, CEFR terms) licensed to be sent to a
+   third-party TTS?** Terms are likely fine; sending definitions/examples may not be — check
    `assets/licenses/CONTENT_SOURCES.md`.
-5. **Cloud for private words: default-on or opt-in?** (R4) Recommend opt-in.
-6. **Monthly cost ceiling and who owns the budget alarm?** No cloud TTS until this exists (R1/R2).
-7. **Provider: Polly vs Google?** Decide before Edge design; caching terms and voice coverage
-   differ.
-8. **Legal:** privacy-policy update + provider DPA signed before any user text leaves the device.
-9. **Do you commit to native-speaker QA per locale?** If not, criterion #4 can't be met and you
-   can't honestly claim "reference quality."
+7. **Cloud for private words: default-on or opt-in?** (R4) Recommend opt-in.
+8. **Monthly cost ceiling and who owns the budget alarm?** No cloud TTS until this exists (R1/R2).
+9. **Legal:** privacy-policy update + provider DPA signed before any user text leaves the device.
+10. **Do you commit to two independent native raters per launch locale?** If not, criterion #4
+    cannot be met and the product cannot honestly claim "reference quality."
+11. **What pronunciation state truly needs cross-device sync?** Recommend none for the first cloud
+    release. Add PowerSync request/link state only for an approved offline or multi-device use case.
 
 ---
 
@@ -368,12 +485,12 @@ cache disposable — this is fine).
 
 | Option | Quality (ref.) | Offline | Marginal cost | Caching allowed | Needs backend | Needs native module | Key gotcha |
 |---|---|---|---|---|---|---|---|
-| **Device system TTS (expo-speech)** | Low–Med, device-dependent | ✅ (installed voices) | $0 | N/A (ephemeral) | ❌ | ❌ | **[FACT]** playback only; wrong-locale substitution risk; no SSML/IPA |
-| **Native synth-to-file** (Android `synthesizeToFile` / iOS `AVSpeechSynthesizer.write`) | Low–Med (device neural) | ✅ | $0 | ✅ (your file) | ❌ | ✅ (already done for translation) | Format handling (WAV/PCM); voice availability varies |
+| **Device system TTS (expo-speech)** | Low–Med, device-dependent | ⚠️ voice-dependent | $0 app cost | N/A (ephemeral) | ❌ | ❌ | **[FACT]** playback only; no SSML/IPA; Expo does not expose Android's network-required flag |
+| **Native synth-to-file** (Android `synthesizeToFile` / iOS `AVSpeechSynthesizer.write`) | Low–Med, device-dependent | ⚠️ voice-dependent | $0 app cost | ⚠️ verify platform/engine terms | ❌ | ✅ | Format handling; voice availability/network requirement varies |
 | **Amazon Polly** | High (neural) | ❌ (gen); ✅ after cache | $$ per char | ✅ **[FACT]** explicit, no restrictions | ✅ (creds server-side) | ❌ | Input rights are yours to secure |
-| **Google Cloud TTS** | High (neural/Studio) | ❌ / ✅ cached | $$ per char | ✅ **[FACT]** own output, ToS-bound | ✅ | ❌ | Can't train competing TTS on output; verify current ToS |
-| **Azure Speech** | High (neural) | ❌ / ✅ cached | $$ per char | ✅ paid tier only **[FACT]** | ✅ | ❌ | **Free tier = no output-use rights (B5)**; retention/security conditions |
-| **Licensed human recordings** | Highest (native) | ✅ if cached-permitted | License fee | ⚠️ per-license **[INFER]** | ✅ | ❌ | Redistribution/caching usually restricted (B6); not a drop-in |
+| **Google Cloud TTS** | High (neural/Studio) | ❌ / ✅ cached | $$ per char | ⚠️ generated files, ToS-bound | ✅ | ❌ | Verify current output-use and caching terms before launch |
+| **Azure Speech** | High (neural) | ❌ / ✅ cached | $$ per char | ✅ paid tier only **[FACT]** | ✅ | ❌ | **Free tier = no output-use rights (B8)**; retention/security conditions |
+| **Licensed human recordings** | Highest (native) | ✅ if cached-permitted | License fee | ⚠️ per-license **[INFER]** | ✅ | ❌ | Redistribution/caching usually restricted (B9); not a drop-in |
 | **Self-hosted Piper** | Med (varies by lang) | server-side | infra only | ✅ | ✅ (you run it) | ❌ | Ops burden; uneven language coverage; defer |
 
 ---
@@ -382,7 +499,7 @@ cache disposable — this is fine).
 
 - [Expo Speech (v56)](https://docs.expo.dev/versions/v56.0.0/sdk/speech/) — playback-only, no synth-to-file, no SSML/IPA
 - [Amazon Polly FAQs](https://aws.amazon.com/polly/faqs/) — caching/storage explicitly permitted
-- [Google Cloud Text-to-Speech basics](https://docs.cloud.google.com/text-to-speech/docs/basics) — output ownership/caching
-- [Azure TTS data/privacy](https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/speech-service/text-to-speech/data-privacy-security) and [caching/redistribution Q&A](https://learn.microsoft.com/en-us/answers/questions/5596131/) — paid-tier output rights, retention conditions
+- [Google Cloud Text-to-Speech basics](https://docs.cloud.google.com/text-to-speech/docs/basics) — generated audio files and applicable Google Cloud terms
+- [Azure TTS data/privacy](https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/speech-service/text-to-speech/data-privacy-security) and [Microsoft Product Terms](https://www.microsoft.com/licensing/terms/en-US/productoffering/MicrosoftAzureServices/MCA) — data handling and paid-tier prebuilt-voice output rights
 - [PowerSync Attachments](https://docs.powersync.com/client-sdks/advanced/attachments) — metadata-synced, byte queue, immutable files
-- [Android `TextToSpeech`](https://developer.android.com/reference/android/speech/tts/TextToSpeech) / [iOS `AVSpeechSynthesizer`](https://developer.apple.com/documentation/avfaudio/avspeechsynthesizer) — synth-to-file capabilities
+- [Android `TextToSpeech`](https://developer.android.com/reference/android/speech/tts/TextToSpeech) and [Android `Voice`](https://developer.android.com/reference/android/speech/tts/Voice) / [iOS `AVSpeechSynthesizer`](https://developer.apple.com/documentation/avfaudio/avspeechsynthesizer) — synth-to-file and Android network-required voice capabilities
