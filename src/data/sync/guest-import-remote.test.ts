@@ -68,4 +68,16 @@ describe('SupabaseGuestImportRemote', () => {
 
     expect(query.upsert).toHaveBeenCalledWith(rows, { onConflict: 'id', ignoreDuplicates: true });
   });
+
+  it('uses the authenticated tombstone function for a deleted guest word', async () => {
+    const query = thenableQuery();
+    const client = {
+      from: jest.fn(() => query),
+      rpc: jest.fn(() => query),
+    } as unknown as SupabaseClient;
+
+    await new SupabaseGuestImportRemote(client).tombstoneWord('word-1');
+
+    expect(client.rpc).toHaveBeenCalledWith('tombstone_word', { p_word_id: 'word-1' });
+  });
 });

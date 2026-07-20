@@ -2,7 +2,7 @@ import type { SQLiteDatabase } from 'expo-sqlite';
 
 import { getCefrLevelForCatalogSense } from './cefr-level-lookup';
 
-const DATABASE_VERSION = 5;
+const DATABASE_VERSION = 6;
 
 export async function migrateDatabase(database: SQLiteDatabase) {
   await database.execAsync('PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;');
@@ -172,6 +172,36 @@ export async function migrateDatabase(database: SQLiteDatabase) {
       );
       CREATE INDEX sync_id_mappings_account_type_idx
         ON sync_id_mappings(account_id, entity_type);
+    `);
+  }
+
+  if (currentVersion < 6) {
+    await database.execAsync(`
+      CREATE TABLE sync_cutovers (
+        account_id TEXT PRIMARY KEY NOT NULL,
+        state TEXT NOT NULL CHECK(state IN ('checking', 'needs_conflicts', 'uploading', 'verifying', 'ready', 'error')),
+        collections_total INTEGER NOT NULL DEFAULT 0,
+        collections_uploaded INTEGER NOT NULL DEFAULT 0,
+        words_total INTEGER NOT NULL DEFAULT 0,
+        words_uploaded INTEGER NOT NULL DEFAULT 0,
+        events_total INTEGER NOT NULL DEFAULT 0,
+        events_uploaded INTEGER NOT NULL DEFAULT 0,
+        error_code TEXT,
+        error_message TEXT,
+        started_at TEXT,
+        updated_at TEXT NOT NULL,
+        ready_at TEXT
+      );
+
+      CREATE TABLE scheduled_reminders_v6 (
+        notification_id TEXT PRIMARY KEY NOT NULL,
+        word_id TEXT NOT NULL,
+        scheduled_at TEXT NOT NULL
+      );
+      INSERT INTO scheduled_reminders_v6 (notification_id, word_id, scheduled_at)
+        SELECT notification_id, word_id, scheduled_at FROM scheduled_reminders;
+      DROP TABLE scheduled_reminders;
+      ALTER TABLE scheduled_reminders_v6 RENAME TO scheduled_reminders;
     `);
   }
 

@@ -432,7 +432,7 @@ export class GuestImportService {
   }
 }
 
-function importableSnapshot(snapshot: GuestImportSnapshot): GuestImportSnapshot {
+export function importableSnapshot(snapshot: GuestImportSnapshot): GuestImportSnapshot {
   const usedCollections = new Set(snapshot.words.map((word) => word.collection_id));
   return {
     ...snapshot,
@@ -482,7 +482,7 @@ function requiredRow<T>(rows: Map<string, T>, id: string, entity: string) {
   return row;
 }
 
-function collectionPayload(accountId: string, mapping: GuestImportMapping, row: GuestCollectionRow): RemoteImportRow {
+export function collectionPayload(accountId: string, mapping: GuestImportMapping, row: GuestCollectionRow): RemoteImportRow {
   return {
     id: mapping.remoteId, user_id: accountId, name: row.name, color: row.color,
     created_at: row.created_at, updated_at: row.updated_at, deleted_at: null,
@@ -514,7 +514,7 @@ function mutableWordPayload(collectionId: string, row: GuestWordRow): RemoteImpo
   };
 }
 
-function wordPayload(
+export function wordPayload(
   accountId: string,
   mapping: GuestImportMapping,
   collectionId: string,
@@ -529,11 +529,11 @@ function wordPayload(
   };
 }
 
-function wordUpdatePayload(collectionId: string, row: GuestWordRow): RemoteImportRow {
+export function wordUpdatePayload(collectionId: string, row: GuestWordRow): RemoteImportRow {
   return mutableWordPayload(collectionId, row);
 }
 
-function eventPayload(
+export function eventPayload(
   accountId: string,
   mapping: GuestImportMapping,
   wordId: string | null,

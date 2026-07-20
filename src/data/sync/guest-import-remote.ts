@@ -15,6 +15,7 @@ export interface GuestImportRemote {
   upsertWords(rows: RemoteImportRow[], signal?: AbortSignal): Promise<void>;
   updateWord(id: string, userId: string, row: RemoteImportRow, signal?: AbortSignal): Promise<void>;
   insertEvents(rows: RemoteImportRow[], signal?: AbortSignal): Promise<void>;
+  tombstoneWord(id: string, signal?: AbortSignal): Promise<void>;
 }
 
 export class GuestImportRemoteError extends Error {
@@ -83,6 +84,13 @@ export class SupabaseGuestImportRemote implements GuestImportRemote {
     if (rows.length === 0) return;
     let query = this.client.from('learning_events')
       .upsert(rows, { onConflict: 'id', ignoreDuplicates: true });
+    if (signal) query = query.abortSignal(signal);
+    const { error } = await query;
+    throwIfError(error);
+  }
+
+  async tombstoneWord(id: string, signal?: AbortSignal) {
+    let query = this.client.rpc('tombstone_word', { p_word_id: id });
     if (signal) query = query.abortSignal(signal);
     const { error } = await query;
     throwIfError(error);
