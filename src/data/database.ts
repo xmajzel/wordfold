@@ -2,7 +2,7 @@ import type { SQLiteDatabase } from 'expo-sqlite';
 
 import { getCefrLevelForCatalogSense } from './cefr-level-lookup';
 
-const DATABASE_VERSION = 4;
+const DATABASE_VERSION = 5;
 
 export async function migrateDatabase(database: SQLiteDatabase) {
   await database.execAsync('PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;');
@@ -137,6 +137,41 @@ export async function migrateDatabase(database: SQLiteDatabase) {
       UPDATE content_packs SET name = 'Everyday conversations' WHERE id = 'spoken';
       UPDATE content_packs SET name = 'Work and business' WHERE id = 'business';
       UPDATE content_packs SET name = 'Study and research' WHERE id = 'academic';
+    `);
+  }
+
+  if (currentVersion < 5) {
+    await database.execAsync(`
+      CREATE TABLE sync_imports (
+        account_id TEXT PRIMARY KEY NOT NULL,
+        state TEXT NOT NULL CHECK(state IN ('prepared', 'needs_conflicts', 'uploading', 'verifying', 'completed', 'error')),
+        collections_total INTEGER NOT NULL DEFAULT 0,
+        collections_uploaded INTEGER NOT NULL DEFAULT 0,
+        words_total INTEGER NOT NULL DEFAULT 0,
+        words_uploaded INTEGER NOT NULL DEFAULT 0,
+        events_total INTEGER NOT NULL DEFAULT 0,
+        events_uploaded INTEGER NOT NULL DEFAULT 0,
+        error_code TEXT,
+        error_message TEXT,
+        started_at TEXT,
+        updated_at TEXT NOT NULL,
+        completed_at TEXT
+      );
+
+      CREATE TABLE sync_id_mappings (
+        account_id TEXT NOT NULL REFERENCES sync_imports(account_id) ON DELETE CASCADE,
+        entity_type TEXT NOT NULL CHECK(entity_type IN ('collection', 'word', 'learning_event')),
+        local_id TEXT NOT NULL,
+        remote_id TEXT NOT NULL,
+        has_conflict INTEGER NOT NULL DEFAULT 0 CHECK(has_conflict IN (0, 1)),
+        conflict_resolution TEXT CHECK(conflict_resolution IN ('keep_account', 'use_device')),
+        source_updated_at TEXT,
+        created_at TEXT NOT NULL,
+        PRIMARY KEY (account_id, entity_type, local_id),
+        UNIQUE (account_id, entity_type, remote_id)
+      );
+      CREATE INDEX sync_id_mappings_account_type_idx
+        ON sync_id_mappings(account_id, entity_type);
     `);
   }
 

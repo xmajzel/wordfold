@@ -37,7 +37,9 @@ describe('migrateDatabase', () => {
       expect.any(String),
     );
     expect(database.withExclusiveTransactionAsync).not.toHaveBeenCalled();
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 4');
+    expect((database.execAsync as jest.Mock).mock.calls.some(([sql]) => String(sql).includes('CREATE TABLE sync_imports'))).toBe(true);
+    expect((database.execAsync as jest.Mock).mock.calls.some(([sql]) => String(sql).includes('CREATE TABLE sync_id_mappings'))).toBe(true);
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 5');
   });
 
   it('preserves an existing version-one database without adding personal seed data', async () => {
@@ -45,7 +47,7 @@ describe('migrateDatabase', () => {
 
     await migrateDatabase(database);
 
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 4');
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 5');
     expect(database.withExclusiveTransactionAsync).not.toHaveBeenCalled();
     expect(database.runAsync).not.toHaveBeenCalledWith(expect.stringContaining('INSERT OR IGNORE INTO words'));
   });
@@ -63,15 +65,30 @@ describe('migrateDatabase', () => {
     expect(database.getAllAsync).toHaveBeenCalledWith('SELECT id, catalog_sense_id FROM words WHERE catalog_sense_id IS NOT NULL');
     expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining("'learning_filter', 'all'"));
     expect(database.runAsync).toHaveBeenCalledWith('UPDATE words SET cefr_level = ? WHERE id = ?', 'A1', 'word-1');
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 4');
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 5');
   });
 
   it('does not reapply an up-to-date migration', async () => {
-    const database = createDatabase(4);
+    const database = createDatabase(5);
 
     await migrateDatabase(database);
 
     expect(database.execAsync).toHaveBeenCalledTimes(1);
     expect(database.runAsync).not.toHaveBeenCalled();
+  });
+
+  it('adds import checkpoint tables when upgrading a version-four database', async () => {
+    const database = createDatabase(4);
+
+    await migrateDatabase(database);
+
+    const migration = (database.execAsync as jest.Mock).mock.calls
+      .map(([sql]) => String(sql))
+      .find((sql) => sql.includes('CREATE TABLE sync_imports'));
+    expect(migration).toContain("CHECK(state IN ('prepared', 'needs_conflicts', 'uploading', 'verifying', 'completed', 'error'))");
+    expect(migration).toContain('CREATE TABLE sync_id_mappings');
+    expect(migration).toContain('has_conflict INTEGER NOT NULL DEFAULT 0');
+    expect(migration).toContain('UNIQUE (account_id, entity_type, remote_id)');
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 5');
   });
 });
