@@ -23,6 +23,12 @@ importers:
       '@expo/vector-icons':
         specifier: ^15.1.1
         version: 15.1.1(expo-font@56.0.7)(react-native@0.85.3(@babel/core@7.29.7)(@react-native/jest-preset@0.85.3(@babel/core@7.29.7)(react@19.2.3))(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
+      '@journeyapps/react-native-quick-sqlite':
+        specifier: 2.5.2
+        version: 2.5.2(react-native@0.85.3(@babel/core@7.29.7)(@react-native/jest-preset@0.85.3(@babel/core@7.29.7)(react@19.2.3))(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
+      '@powersync/react-native':
+        specifier: 1.35.9
+        version: 1.35.9(@journeyapps/react-native-quick-sqlite@2.5.2(react-native@0.85.3(@babel/core@7.29.7)(@react-native/jest-preset@0.85.3(@babel/core@7.29.7)(react@19.2.3))(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3))(@powersync/common@1.57.2)(react-native@0.85.3(@babel/core@7.29.7)(@react-native/jest-preset@0.85.3(@babel/core@7.29.7)(react@19.2.3))(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
       '@react-native-async-storage/async-storage':
         specifier: 2.2.0
         version: 2.2.0(react-native@0.85.3(@babel/core@7.29.7)(@react-native/jest-preset@0.85.3(@babel/core@7.29.7)(react@19.2.3))(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))
@@ -1167,6 +1173,12 @@ packages:
   '@journeyapps-labs/micro-streaming@1.0.2':
     resolution: {integrity: sha512-CdgWC817TmbTof7IL6Oy0hCF1KCa6RXogh2uEbOYRNz+XwC1q3KQeChp38qQXvaZZtqdIsiMlZGiGGa638eTFw==}
 
+  '@journeyapps/react-native-quick-sqlite@2.5.2':
+    resolution: {integrity: sha512-fMv+Lq+tK9HHbrgBc2pP1JcGtRSOyY6oHCcgmWhengw/ryCry5p+RUjbpsFrCxU1lw8T4B+VrQ6U9Hhysgkseg==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
 
@@ -1251,11 +1263,31 @@ packages:
     resolution: {integrity: sha512-/eA5YhHx4Li80vctfpKfHRSPcHNf8D8HZU1YUIIACWVElhBxZUY5zmSKhVPSXLFUQy7jri43ubd3Diss+KaqKA==}
     engines: {node: '>=18.0.0'}
 
+  '@powersync/common@1.57.2':
+    resolution: {integrity: sha512-cOsmvBFBK0yvpwjaI46Lm3xCMRaTaydQQ4RolED3Upj6/kawGZHhkh4Guve3nmOSQ/0sGCuiFOcl4Gv9Mp6dOA==}
+
   '@powersync/management-client@0.1.5':
     resolution: {integrity: sha512-zQfqLB0XAGf89f/v0Ux48UOmWLUTsmpXsFtqLSmEkkPk/FOps1PJrQgXSwM+CksV/aWbEJ7CFBBa20VLo4Dd0Q==}
 
   '@powersync/management-types@0.2.4':
     resolution: {integrity: sha512-oRyd4dckWFrSJzyZMm4WUYbpGbCbBy6LDo+FHtldJ3qeBylOnc5a3g7BCsCdX2JqRe54lwPGIYUunLWTT+pzNA==}
+
+  '@powersync/react-native@1.35.9':
+    resolution: {integrity: sha512-+4FTSbix9RQ/8s0QmO3shGaTJcfYZnN70n/V/B1tWe0tISQxwPVL6olRXB6EOiZ1sQ+rF7XBDlUECJiRqqrJxg==}
+    peerDependencies:
+      '@journeyapps/react-native-quick-sqlite': ^2.5.2
+      '@powersync/common': ^1.57.2
+      react: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      '@journeyapps/react-native-quick-sqlite':
+        optional: true
+
+  '@powersync/react@1.10.0':
+    resolution: {integrity: sha512-orM29qocbF8zYTBM27j9nPNztyplpbNVaw8djpqxl8N2wESqHTbHOKpatg+Fa5aofgjzmrkiGwevJvCbiWYYWQ==}
+    peerDependencies:
+      '@powersync/common': ^1.51.0
+      react: '*'
 
   '@powersync/service-client@0.0.6':
     resolution: {integrity: sha512-7IDBDac4ePg9JNFtoL0aDrP5WmDWqw45/kGYl38pXkF6Km0VhVMEUjor/k2+oB05LiC0sfdHf5NXRDRUfK+maw==}
@@ -4012,6 +4044,9 @@ packages:
 
   jose@6.2.3:
     resolution: {integrity: sha512-YYVDInQKFJfR/xa3ojUTl8c2KoTwiL1R5Wg9YCydwH0x0B9grbzlg5HC7mMjCtUJjbQ/YnGEZIhI5tCgfTb4Hw==}
+
+  js-logger@1.6.1:
+    resolution: {integrity: sha512-yTgMCPXVjhmg28CuUH8CKjU+cIKL/G+zTu4Fn4lQxs8mRFH/03QTNvEFngcxfg/gRDiQAOoyCKmMTOm9ayOzXA==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -7357,6 +7392,11 @@ snapshots:
     transitivePeerDependencies:
       - '@types/json-schema'
 
+  '@journeyapps/react-native-quick-sqlite@2.5.2(react-native@0.85.3(@babel/core@7.29.7)(@react-native/jest-preset@0.85.3(@babel/core@7.29.7)(react@19.2.3))(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      react: 19.2.3
+      react-native: 0.85.3(@babel/core@7.29.7)(@react-native/jest-preset@0.85.3(@babel/core@7.29.7)(react@19.2.3))(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3)
+
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
@@ -7529,6 +7569,10 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
+  '@powersync/common@1.57.2':
+    dependencies:
+      js-logger: 1.6.1
+
   '@powersync/management-client@0.1.5(@types/json-schema@7.0.15)':
     dependencies:
       '@journeyapps-labs/common-sdk': 1.0.6(@types/json-schema@7.0.15)
@@ -7545,6 +7589,20 @@ snapshots:
       ts-codec: 1.3.0
     transitivePeerDependencies:
       - babel-plugin-macros
+
+  '@powersync/react-native@1.35.9(@journeyapps/react-native-quick-sqlite@2.5.2(react-native@0.85.3(@babel/core@7.29.7)(@react-native/jest-preset@0.85.3(@babel/core@7.29.7)(react@19.2.3))(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3))(@powersync/common@1.57.2)(react-native@0.85.3(@babel/core@7.29.7)(@react-native/jest-preset@0.85.3(@babel/core@7.29.7)(react@19.2.3))(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@powersync/common': 1.57.2
+      '@powersync/react': 1.10.0(@powersync/common@1.57.2)(react@19.2.3)
+      react: 19.2.3
+      react-native: 0.85.3(@babel/core@7.29.7)(@react-native/jest-preset@0.85.3(@babel/core@7.29.7)(react@19.2.3))(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3)
+    optionalDependencies:
+      '@journeyapps/react-native-quick-sqlite': 2.5.2(react-native@0.85.3(@babel/core@7.29.7)(@react-native/jest-preset@0.85.3(@babel/core@7.29.7)(react@19.2.3))(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
+
+  '@powersync/react@1.10.0(@powersync/common@1.57.2)(react@19.2.3)':
+    dependencies:
+      '@powersync/common': 1.57.2
+      react: 19.2.3
 
   '@powersync/service-client@0.0.6(@types/json-schema@7.0.15)':
     dependencies:
@@ -10849,6 +10907,8 @@ snapshots:
   jimp-compact@0.16.1: {}
 
   jose@6.2.3: {}
+
+  js-logger@1.6.1: {}
 
   js-tokens@4.0.0: {}
 

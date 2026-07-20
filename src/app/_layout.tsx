@@ -12,6 +12,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { AppDataProvider, useAppData } from '@/providers/app-data-provider';
 import { AuthProvider } from '@/providers/auth-provider';
+import { SyncProvider } from '@/providers/sync-provider';
 import { LaunchScreen } from '@/components/launch-screen';
 import { getNotificationWordTarget } from '@/features/reminders/notification-navigation';
 import { palette } from '@/theme/tokens';
@@ -74,7 +75,7 @@ function Navigation() {
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({ Fraunces_600SemiBold, Inter_400Regular, Inter_600SemiBold });
-  return <GestureHandlerRootView style={styles.root}><AuthProvider><AppDataProvider><AppReadyGate fontsLoaded={fontsLoaded}/></AppDataProvider></AuthProvider></GestureHandlerRootView>;
+  return <GestureHandlerRootView style={styles.root}><AuthProvider><SyncProvider><AppDataProvider><AppReadyGate fontsLoaded={fontsLoaded}/></AppDataProvider></SyncProvider></AuthProvider></GestureHandlerRootView>;
 }
 
 function AppReadyGate({ fontsLoaded }: { fontsLoaded: boolean }) {

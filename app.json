@@ -53,7 +53,8 @@
           "defaultChannel": "word-reminders"
         }
       ],
-      "expo-sqlite"
+      "expo-sqlite",
+      "@journeyapps/react-native-quick-sqlite"
     ],
     "experiments": {
       "typedRoutes": true,
