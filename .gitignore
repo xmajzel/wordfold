@@ -44,6 +44,7 @@ example
 # generated native folders
 /ios
 /android
+/modules/*/android/build/
 
 .env
 powersync/cli.yaml
