@@ -29,13 +29,11 @@ describe('SupabasePowerSyncConnector', () => {
     await expect(new SupabasePowerSyncConnector(client, 'https://sync.example.com').fetchCredentials()).resolves.toBeNull();
   });
 
-  it('does not acknowledge an unexpected queued write', async () => {
+  it('does nothing when the upload queue is empty', async () => {
     const client = {} as SupabaseClient;
-    const transaction = { complete: jest.fn() };
-    const database = { getNextCrudTransaction: jest.fn(async () => transaction) };
+    const database = { getNextCrudTransaction: jest.fn(async () => null) };
     const connector = new SupabasePowerSyncConnector(client, 'https://sync.example.com');
 
-    await expect(connector.uploadData(database as never)).rejects.toThrow('uploads are not enabled');
-    expect(transaction.complete).not.toHaveBeenCalled();
+    await expect(connector.uploadData(database as never)).resolves.toBeUndefined();
   });
 });

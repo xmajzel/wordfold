@@ -1,11 +1,22 @@
 import type { AbstractPowerSyncDatabase, PowerSyncBackendConnector, PowerSyncCredentials } from '@powersync/react-native';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
+import { PowerSyncUploader } from './uploader';
+
 export class SupabasePowerSyncConnector implements PowerSyncBackendConnector {
+  private readonly uploader: PowerSyncUploader;
+
   constructor(
     private readonly client: SupabaseClient,
     private readonly endpoint: string,
-  ) {}
+  ) {
+    this.uploader = new PowerSyncUploader(client, async () => {
+      const { data, error } = await client.auth.getSession();
+      if (error) throw error;
+      if (!data.session) throw new Error('The synchronization session has expired.');
+      return data.session.user.id;
+    });
+  }
 
   async fetchCredentials(): Promise<PowerSyncCredentials | null> {
     const { data, error } = await this.client.auth.getSession();
@@ -20,8 +31,6 @@ export class SupabasePowerSyncConnector implements PowerSyncBackendConnector {
   }
 
   async uploadData(database: AbstractPowerSyncDatabase): Promise<void> {
-    const transaction = await database.getNextCrudTransaction();
-    if (!transaction) return;
-    throw new Error('PowerSync uploads are not enabled in Phase 4A.');
+    await this.uploader.uploadNext(database);
   }
 }

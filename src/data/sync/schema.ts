@@ -43,10 +43,23 @@ const learningEvents = new Table({
   occurred_at: column.text,
 }, { indexes: { occurred: ['occurred_at'], word: ['word_id'] } });
 
+const syncWriteErrors = new Table({
+  user_id: column.text,
+  operation_id: column.text,
+  table_name: column.text,
+  row_id: column.text,
+  operation: column.text,
+  error_code: column.text,
+  safe_message: column.text,
+  created_at: column.text,
+  acknowledged_at: column.text,
+}, { localOnly: true, indexes: { acknowledged: ['acknowledged_at'], created: ['created_at'] } });
+
 export const syncSchema = new Schema({
   collections,
   words,
   learning_events: learningEvents,
+  sync_write_errors: syncWriteErrors,
 });
 
 export type SyncDatabase = (typeof syncSchema)['types'];
