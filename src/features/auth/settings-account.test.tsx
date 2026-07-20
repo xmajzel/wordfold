@@ -8,6 +8,9 @@ jest.mock('expo-router', () => ({ router: { back: jest.fn(), push: (...args: unk
 jest.mock('@/providers/auth-provider', () => ({
   useAuth: () => ({ status: 'signedIn', user: { email: 'reader@example.com' } }),
 }));
+jest.mock('@/providers/sync-provider', () => ({
+  useSync: () => ({ phase: 'connected' }),
+}));
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     reminderSettings: { enabled: false, countPerDay: 1, windowStartMinutes: 600, windowEndMinutes: 1200, timeZoneId: 'local' },
@@ -37,10 +40,10 @@ jest.mock('react-native-reanimated', () => {
 describe('Settings account entry', () => {
   beforeEach(() => jest.clearAllMocks());
 
-  it('shows the signed-in account without claiming data sync', async () => {
+  it('shows the signed-in PowerSync connection without claiming vocabulary import', async () => {
     const view = await render(<SettingsScreen/>);
 
-    expect(view.getByText('reader@example.com · data sync is not active yet')).toBeTruthy();
+    expect(view.getByText('reader@example.com · PowerSync connected; import is next')).toBeTruthy();
     await fireEvent.press(view.getByRole('button', { name: 'Open account' }));
     expect(mockPush).toHaveBeenCalledWith('/account');
   });

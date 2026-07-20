@@ -14,11 +14,13 @@ import { formatMinutes, REMINDER_PRESETS } from '@/features/reminders/slots';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { useAuth } from '@/providers/auth-provider';
+import { useSync } from '@/providers/sync-provider';
 import { radii, spacing } from '@/theme/tokens';
 
 export default function SettingsScreen() {
   const theme = useAppTheme();
   const auth = useAuth();
+  const sync = useSync();
   const { reminderSettings, learningPreferences, updateReminderSettings } = useAppData();
   const [draft, setDraft] = useState<ReminderSettings>(() => reminderSettings ?? ({ enabled: false, countPerDay: 1, windowStartMinutes: 600, windowEndMinutes: 1200, timeZoneId: 'local' }));
   const [saving, setSaving] = useState(false);
@@ -63,7 +65,7 @@ export default function SettingsScreen() {
         <View style={styles.flex}>
           <AppText variant="heading">Account and sync</AppText>
           <AppText variant="caption" style={{ color: theme.muted }}>{auth.status === 'signedIn'
-            ? `${auth.user?.email ?? 'Signed in'} · data sync is not active yet`
+            ? `${auth.user?.email ?? 'Signed in'} · ${syncStatusLabel(sync.phase)}`
             : auth.status === 'loading'
               ? 'Checking account on this device…'
               : auth.status === 'unavailable'
@@ -97,10 +99,17 @@ export default function SettingsScreen() {
       {scheduledCount !== null ? <AppText variant="label" style={[styles.center, { color: theme.success }]}>{draft.enabled ? `${scheduledCount} word reminders scheduled ahead.` : 'Reminders are off.'}</AppText> : null}
       <View style={styles.divider}/>
       <AppText variant="heading">Content and privacy</AppText>
-      <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><InfoRow icon="phone-portrait-outline" title="Local during account setup" body="Your words and learning history remain on this device even when signed in."/><InfoRow icon="book-outline" title="Open English WordNet 2025" body="Definitions under CC BY 4.0."/><InfoRow icon="list-outline" title="NGSL discovery packs" body="Spoken, Business, and Academic lists under CC BY-SA 4.0."/></View>
-      <AppText variant="caption" style={{ color: theme.muted }}>Wordfold is a temporary development name. Optional account access is included; cloud data sync, analytics, and payments are not active.</AppText>
+      <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><InfoRow icon="phone-portrait-outline" title="Local vocabulary during sync setup" body="Your current words and learning history stay in the device database until the import phase."/><InfoRow icon="book-outline" title="Open English WordNet 2025" body="Definitions under CC BY 4.0."/><InfoRow icon="list-outline" title="NGSL discovery packs" body="Spoken, Business, and Academic lists under CC BY-SA 4.0."/></View>
+      <AppText variant="caption" style={{ color: theme.muted }}>Wordfold is a temporary development name. Native PowerSync connection setup is included; vocabulary upload, analytics, and payments are not active.</AppText>
     </Screen>
   );
+}
+
+function syncStatusLabel(phase: ReturnType<typeof useSync>['phase']) {
+  if (phase === 'connected') return 'PowerSync connected; import is next';
+  if (phase === 'connecting') return 'connecting to PowerSync';
+  if (phase === 'offline') return 'PowerSync offline; downloaded sync data is available';
+  return 'PowerSync unavailable; local vocabulary is available';
 }
 
 function TimeControl({ label, value, onMinus, onPlus }: { label: string; value: number; onMinus(): void; onPlus(): void }) { const theme = useAppTheme(); return <View style={[styles.timeControl, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={styles.flex}><AppText variant="label">{label}</AppText><AppText variant="title" style={{ color: theme.primary }}>{formatMinutes(value)}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel={`Earlier ${label}`} onPress={onMinus} style={[styles.adjust, { backgroundColor: theme.primarySoft }]}><Ionicons name="remove" color={theme.primary} size={22}/></Pressable><Pressable accessibilityRole="button" accessibilityLabel={`Later ${label}`} onPress={onPlus} style={[styles.adjust, { backgroundColor: theme.primarySoft }]}><Ionicons name="add" color={theme.primary} size={22}/></Pressable></View>; }

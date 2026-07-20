@@ -6,6 +6,7 @@ const mockSignIn = jest.fn();
 const mockSignUp = jest.fn();
 const mockSignOut = jest.fn();
 const mockClearMessage = jest.fn();
+const mockClearBeforeSignOut = jest.fn();
 
 const mockAuth = {
   status: 'signedOut' as const,
@@ -19,6 +20,13 @@ const mockAuth = {
 };
 
 jest.mock('@/providers/auth-provider', () => ({ useAuth: () => mockAuth }));
+jest.mock('@/providers/sync-provider', () => ({
+  useSync: () => ({
+    phase: 'connected', hasSynced: true, lastSyncedAt: null,
+    message: 'PowerSync is connected. Local vocabulary import is the next step.',
+    clearBeforeSignOut: mockClearBeforeSignOut,
+  }),
+}));
 jest.mock('expo-router', () => ({ router: { back: jest.fn() } }));
 jest.mock('react-native-reanimated', () => {
   const { View } = jest.requireActual('react-native');
@@ -42,6 +50,8 @@ describe('AccountScreen', () => {
     mockSignIn.mockResolvedValue({ ok: true, outcome: 'signedIn' });
     mockSignUp.mockResolvedValue({ ok: true, outcome: 'confirmationRequired' });
     mockSignOut.mockResolvedValue({ ok: true, outcome: 'signedOut' });
+    mockClearBeforeSignOut.mockResolvedValue(undefined);
+    Object.assign(mockAuth, { status: 'signedOut', session: null, user: null });
   });
 
   it('validates a signup password before calling Supabase', async () => {
@@ -67,5 +77,32 @@ describe('AccountScreen', () => {
     await waitFor(() => expect(mockSignUp).toHaveBeenCalledWith('reader@example.com', 'long-password'));
     await waitFor(() => expect(view.getByText('Check your email')).toBeTruthy());
     expect(view.queryByText('Signed in')).toBeNull();
+  });
+
+  it('clears synchronized data before signing out of Supabase', async () => {
+    const events: string[] = [];
+    Object.assign(mockAuth, { status: 'signedIn', user: { email: 'reader@example.com' } });
+    mockClearBeforeSignOut.mockImplementation(async () => { events.push('sync cleared'); });
+    mockSignOut.mockImplementation(async () => {
+      events.push('auth signed out');
+      return { ok: true, outcome: 'signedOut' };
+    });
+    const view = await render(<AccountScreen/>);
+
+    await fireEvent.press(view.getByRole('button', { name: 'Sign out of this device' }));
+
+    await waitFor(() => expect(mockSignOut).toHaveBeenCalled());
+    expect(events).toEqual(['sync cleared', 'auth signed out']);
+  });
+
+  it('keeps the session when synchronized data cannot be cleared', async () => {
+    Object.assign(mockAuth, { status: 'signedIn', user: { email: 'reader@example.com' } });
+    mockClearBeforeSignOut.mockRejectedValue(new Error('clear failed'));
+    const view = await render(<AccountScreen/>);
+
+    await fireEvent.press(view.getByRole('button', { name: 'Sign out of this device' }));
+
+    await waitFor(() => expect(view.getByText('Sign out could not safely clear synchronized data. Please try again.')).toBeTruthy());
+    expect(mockSignOut).not.toHaveBeenCalled();
   });
 });

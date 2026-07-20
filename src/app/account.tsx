@@ -9,6 +9,7 @@ import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAuth } from '@/providers/auth-provider';
+import { useSync } from '@/providers/sync-provider';
 import { radii, spacing } from '@/theme/tokens';
 
 type FormMode = 'signIn' | 'signUp';
@@ -20,6 +21,7 @@ function validEmail(value: string) {
 export default function AccountScreen() {
   const theme = useAppTheme();
   const auth = useAuth();
+  const sync = useSync();
   const [mode, setMode] = useState<FormMode>('signIn');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -78,6 +80,12 @@ export default function AccountScreen() {
     setSubmitting(true);
     setFormMessage(null);
     try {
+      try {
+        await sync.clearBeforeSignOut();
+      } catch {
+        setFormMessage('Sign out could not safely clear synchronized data. Please try again.');
+        return;
+      }
       const result = await auth.signOut();
       if (!result.ok) setFormMessage(result.message);
       else setConfirmationPending(false);
@@ -120,8 +128,8 @@ export default function AccountScreen() {
             <AppText>{auth.user?.email ?? 'Confirmed account'}</AppText>
           </View>
           <View style={[styles.notice, { backgroundColor: theme.primarySoft }]}>
-            <Ionicons name="phone-portrait-outline" color={theme.primary} size={20}/>
-            <AppText style={styles.flex}>Account access is ready. Your vocabulary is still stored only on this device until synchronization is added in Phase 4.</AppText>
+            <Ionicons name={sync.phase === 'connected' ? 'cloud-done-outline' : sync.phase === 'error' || sync.phase === 'unavailable' ? 'cloud-offline-outline' : 'cloud-outline'} color={theme.primary} size={20}/>
+            <AppText style={styles.flex}>{sync.message ?? 'Your vocabulary remains stored locally on this device.'}</AppText>
           </View>
           {auth.message || formMessage ? <Message text={formMessage ?? auth.message!} color={formMessage ? theme.danger : theme.success}/> : null}
           <PrimaryButton label="Sign out of this device" variant="secondary" loading={submitting} onPress={() => void signOut()}/>
