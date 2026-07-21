@@ -457,8 +457,9 @@ For each launch locale `L`, gate release on:
   client were implemented as two separately approved steps. The client adds a feature-flagged,
   signed-in, exact-catalog `en-US`/`en-GB` neural preview beside device speech, with verified
   public-MP3 offline replay and no automatic fallback. The 8,300-entry allowlist, budgeted function,
-  immutable `pron-public` Storage, and server-owned metadata remain undeployed; the provisional
-  Slovak voice remains disabled until an approved public Slovak input source exists.
+  immutable `pron-public` Storage, and server-owned metadata are deployed only to development; no
+  authenticated Azure request has been made. The provisional Slovak voice remains disabled until
+  an approved public Slovak input source exists.
 - **Phase 4 (explicit offline downloads):** add collection download/eviction UX. Evaluate
   PowerSync Attachments against a small custom download cache; adopt it only if its alpha status
   and automatic watch/download model fit the requirement.

@@ -1,7 +1,7 @@
 # Pronunciation Phase 3B: authenticated public-catalog neural preview
 
-Status: **3B.1 and 3B.2 approved and implemented locally**. No remote migration, function
-deployment, Azure generation, EAS build, or public rollout has been performed.
+Status: **3B.1 and 3B.2 implemented; development infrastructure deployed**. No authenticated Azure
+generation, EAS build, production feature enablement, or public rollout has been performed.
 
 ## Problem
 

@@ -1,6 +1,7 @@
 # Pronunciation Phase 3B.1 backend foundation
 
-Status: **implemented and verified locally; not deployed** (July 21, 2026).
+Status: **implemented locally and deployed to the linked development project** (July 21, 2026).
+The first real Azure request remains separately gated; this is not a production rollout.
 
 ## What exists
 
@@ -60,12 +61,13 @@ container and run with `psql`; this was the local verification fallback used dur
 
 ## Still blocked
 
-- No remote Supabase migration or function deployment.
-- No real Azure call or paid usage.
-- No production limit/alert values or named budget owner.
-- No written source-license approval covering provider submission, generated-audio distribution,
-  and required CEFR-J/Octanove attribution.
-- No Phase 3B.2 client control, download cache, or playback integration.
+- No real Azure call or paid usage without immediate approval.
+- No public production rollout or independent legal review. The product-owner catalog-use decision
+  covers only the development pilot and retains the existing CEFR-J/Octanove attribution.
+- No production-grade monetary hard stop; the approved character limits are the immediate server
+  guardrail and Jozef is the pilot budget owner.
 - No EAS cloud build.
 
-These are deliberate release gates, not missing backend behavior.
+The development deployment and Phase 3B.2 client are recorded in
+`docs/PRONUNCIATION_PHASE_3C_DEVELOPMENT_PILOT.md`. The remaining items are deliberate release
+gates, not missing backend behavior.
