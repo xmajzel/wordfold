@@ -453,11 +453,12 @@ For each launch locale `L`, gate release on:
   `en-GB-RyanNeural`, and `sk-SK-ViktoriaNeural` are single-reviewer provisional engineering
   defaults, using lower observed latency only to break tied ratings. The two-rater production gate
   remains pending and no voice/provider has passed it.
-- **Phase 3B (authenticated public-catalog neural preview):** implement the backend and client as two
-  separately approved steps. Start with cache-first/budgeted/rate-limited authenticated generation,
-  server-owned Postgres metadata, and immutable `pron-public` Storage. The current 8,300-entry
-  public catalog is English, so only `en-US` and `en-GB` are runtime-eligible initially; the
-  provisional Slovak voice remains disabled until an approved public Slovak input source exists.
+- **[IMPLEMENTED LOCALLY] Phase 3B (authenticated public-catalog neural preview):** the backend and
+  client were implemented as two separately approved steps. The client adds a feature-flagged,
+  signed-in, exact-catalog `en-US`/`en-GB` neural preview beside device speech, with verified
+  public-MP3 offline replay and no automatic fallback. The 8,300-entry allowlist, budgeted function,
+  immutable `pron-public` Storage, and server-owned metadata remain undeployed; the provisional
+  Slovak voice remains disabled until an approved public Slovak input source exists.
 - **Phase 4 (explicit offline downloads):** add collection download/eviction UX. Evaluate
   PowerSync Attachments against a small custom download cache; adopt it only if its alpha status
   and automatic watch/download model fit the requirement.

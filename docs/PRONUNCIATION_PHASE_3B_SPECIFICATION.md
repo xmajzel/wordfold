@@ -1,7 +1,7 @@
 # Pronunciation Phase 3B: authenticated public-catalog neural preview
 
-Status: **3B.1 approved and implemented locally; 3B.2 not started**. No remote migration,
-function deployment, Azure generation, or mobile UI is authorized by this document alone.
+Status: **3B.1 and 3B.2 approved and implemented locally**. No remote migration, function
+deployment, Azure generation, EAS build, or public rollout has been performed.
 
 ## Problem
 
@@ -154,6 +154,20 @@ bucket listing and all writes remain unavailable to application roles. Objects u
 Likely client modules: `src/features/pronunciation/cloud.ts`, a narrow public MP3 cache module,
 pronunciation controls, the two existing call sites, authentication-aware eligibility, and focused
 unit/component tests. Existing native synth-to-file and account cache behavior remain unchanged.
+
+### 3B.2 local implementation
+
+- `EXPO_PUBLIC_PRONUNCIATION_NEURAL_PREVIEW_ENABLED=true` enables the control in a native build;
+  the committed example defaults it to `false`.
+- The client checks a verified public cache before invoking `pronunciation-public`. Ready MP3s are
+  accepted only from the configured Supabase public bucket path and only after response-schema,
+  byte-length, MP3-signature, and SHA-256 checks.
+- The cache persists only immutable public asset metadata and audio under the shared pronunciation
+  cache root. It stores no JWT, private text, or signed URL and therefore may survive sign-out.
+- Device and neural controls share one playback coordinator, but a neural failure never initiates
+  device speech. The user chooses the separately labelled device option.
+- Focused tests cover eligibility, response validation, offline-first orchestration, pending retry,
+  integrity rejection, signed-in/native visibility, safe error copy, and both playback controls.
 
 ## Likely files/modules
 
