@@ -8,7 +8,7 @@ import { EmptyState } from '@/components/empty-state';
 import { FormField } from '@/components/form-field';
 import { LanguageSelector } from '@/components/language-selector';
 import { PrimaryButton } from '@/components/primary-button';
-import { PronunciationButton } from '@/components/pronunciation-button';
+import { PronunciationControls } from '@/components/pronunciation-controls';
 import { Screen } from '@/components/screen';
 import { StateBadge } from '@/components/state-badge';
 import {
@@ -152,9 +152,11 @@ export default function WordDetailScreen() {
     <Screen scroll>
       <Header />
       <View style={styles.titleRow}><View style={styles.titleText}><AppText variant="display">{word.term}</AppText><AppText style={{ color: theme.muted }}>{collections.find((item) => item.id === word.collectionId)?.name}</AppText></View><StateBadge state={word.state}/></View>
-      <PronunciationButton
+      <PronunciationControls
         text={term || word.term}
+        sourceLanguageCode={sourceLanguageCode}
         locale={term ? sourcePronunciationLocale : word.sourcePronunciationLocale}
+        catalogSenseId={catalogAssociationRemoved ? null : word.catalogSenseId}
       />
       <View style={[styles.trail, { backgroundColor: theme.surface, borderColor: theme.border }]}><Trail value={word.viewCount} label="times seen"/><Trail value={word.lapseCount} label="misses"/><Trail value={word.understoodStreak} label="recall steps"/></View>
       {word.state === 'learned' ? <PrimaryButton label="Practice this word again" variant="secondary" onPress={() => void resetWord(word.id)} icon={<Ionicons name="refresh-outline" color={theme.primary} size={18}/>}/> : null}

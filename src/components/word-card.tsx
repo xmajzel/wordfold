@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeIn, FadeInDown, FadeOut, ReduceMotion } from 'react-native-reanimated';
 
 import { AppText } from '@/components/app-text';
-import { PronunciationButton } from '@/components/pronunciation-button';
+import { PronunciationControls } from '@/components/pronunciation-controls';
 import { StateBadge } from '@/components/state-badge';
 import type { LearningRating, Word } from '@/domain/types';
 import { getNextReviewIntervalRange } from '@/features/learning/algorithm';
@@ -33,7 +33,7 @@ export const WordCard = memo(function WordCard({ word, collectionName, onRate, o
     <Animated.View entering={FadeInDown.springify().damping(18).reduceMotion(ReduceMotion.System)} style={[styles.card, dense && styles.denseCard, { backgroundColor: theme.surface, shadowColor: theme.shadow }]}>
       <LinearGradient colors={theme.primaryGradient} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.accentLine}/>
       <View style={styles.topRow}><StateBadge state={word.state}/><View style={styles.cardMeta}>{collectionName ? <AppText variant="caption" style={{ color: theme.muted }}>{collectionName}</AppText> : null}{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}</View></View>
-      <View style={styles.wordSection}><AppText variant="display" style={[styles.word, dense && styles.denseWord]}>{word.term}</AppText>{word.partOfSpeech ? <AppText variant="label" style={{ color: theme.accent }}>{word.partOfSpeech}</AppText> : null}{showPronunciation ? <PronunciationButton text={word.term} locale={word.sourcePronunciationLocale} compact={dense}/> : null}</View>
+      <View style={styles.wordSection}><AppText variant="display" style={[styles.word, dense && styles.denseWord]}>{word.term}</AppText>{word.partOfSpeech ? <AppText variant="label" style={{ color: theme.accent }}>{word.partOfSpeech}</AppText> : null}{showPronunciation ? <PronunciationControls text={word.term} sourceLanguageCode={word.sourceLanguageCode} locale={word.sourcePronunciationLocale} catalogSenseId={word.catalogSenseId} compact={dense}/> : null}</View>
       <AppText numberOfLines={dense ? 2 : undefined} style={styles.definition}>{word.definition}</AppText>
       {word.example ? <View style={[styles.example, dense && styles.denseExample, { backgroundColor: theme.raised }]}><Ionicons name="chatbubble-ellipses-outline" size={18} color={theme.primary}/><AppText accessibilityLabel={word.example} numberOfLines={dense ? 1 : undefined} style={styles.exampleText}>{word.example}</AppText></View> : null}
       {word.translation ? <Pressable accessibilityRole="button" accessibilityLabel={showTranslation ? 'Hide Slovak hint' : 'Need a Slovak hint?'} onPress={() => setShowTranslation((value) => !value)} style={({ pressed }) => [styles.hint, dense && styles.denseHint, { borderColor: theme.border, backgroundColor: theme.glass, transform: [{ scale: pressed ? 0.985 : 1 }] }]}><Ionicons name={showTranslation ? 'eye-off-outline' : 'eye-outline'} color={theme.primary} size={18}/><View style={styles.hintText}>{showTranslation ? <Animated.View entering={FadeIn.duration(180).reduceMotion(ReduceMotion.System)} exiting={FadeOut.duration(120).reduceMotion(ReduceMotion.System)}><AppText variant="label" style={{ color: theme.primary }}>{word.translation}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Tap to hide the translation</AppText></Animated.View> : <AppText variant="label" style={{ color: theme.primary }}>Need a Slovak hint?</AppText>}</View></Pressable> : null}
