@@ -44,8 +44,14 @@ A few things from the actual repo change the framing of the proposal materially:
 - **[IMPLEMENTED LOCALLY] Phase 3A provider-bakeoff tooling is complete.** A versioned 30-item
   candidate corpus for each configured locale, pinned Google/Azure voice matrix, conservative
   cost planner, paid-generation gates, resumable checksummed output, separate blinded review
-  package/private key, and two-rater scoring are implemented. Every locale remains explicitly
-  blocked on native corpus review; no provider audio was generated and no winner was selected.
+  package/private key, and two-rater scoring are implemented. Three locales are native-approved;
+  four carry an explicit best-available non-native provisional review that permits screening but
+  not a native-validation claim. A Google run produced 180 samples before stopping at `es-MX`:
+  Google's live catalog returned no exact `es-MX` voice. Azure then generated and validated all
+  420 planned samples and a blinded reviewer package. One native English/Slovak reviewer completed
+  180 ratings for `en-US`, `en-GB`, and `sk-SK`. Engineering may use three explicitly provisional
+  Azure defaults, but the scorer correctly keeps `canRecommend: false`; four locales remain
+  unrated and no production winner exists.
 - **[FACT] PowerSync's React Native SDK is installed at `1.35.9`, but no attachment table or
   React Native attachment-storage adapter is configured.** The current built-in JavaScript/
   TypeScript attachment helpers are marked alpha. They are an option, not an existing subsystem.
@@ -432,12 +438,25 @@ For each launch locale `L`, gate release on:
   database, download UI, or cloud-pronunciation changes are part of this phase.
 - **Phase 3A (provider bakeoff):** screen pinned Google and Azure voices with blinded native
   review before selecting a provider. **Tooling implemented locally on 2026-07-20:** 210 candidate
-  items across seven locales produce 840 planned samples at a conservative estimated $0.27. Paid
-  generation requires native corpus approval, explicit execution, credentials, and a run cap no
-  greater than $20. The human review and provider generation have not run, so no voice has passed.
-- **Phase 3B (public cloud):** only after the winning voices complete the full release corpus,
-  add the cache-first/budgeted/rate-limited Edge Function, service-owned Postgres metadata, and
-  immutable `pron-public` Storage. Fetch/cache only requested assets.
+  items across seven locales produce 840 planned samples at a conservative estimated $0.28296.
+  Paid generation requires a native or explicitly provisional screening review, explicit
+  execution, credentials, and a run cap no greater than $20. On 2026-07-21, `en-US`, `en-GB`, and
+  `sk-SK` were native-approved; best-available non-native reviews for the other four locales were
+  recorded as provisional. Google generated 180 `en-US`/`en-GB`/`es-ES` samples, then stopped
+  because its live catalog had no exact `es-MX` voice. Azure generated all 420 planned samples
+  across fourteen exact-locale voices; file and blinding audits pass. A loopback-only blinded
+  listening page now supports isolated reviewer IDs, locale progress, immediate atomic resume,
+  keyboard rating, and per-reviewer export without loading the private answer key. One native
+  English/Slovak reviewer rated 180 samples: both English voices were 30/30 per locale and both
+  Slovak voices were 29/30, rejecting only the same syllabic-consonant phrase. `en-US-AvaNeural`,
+  `en-GB-RyanNeural`, and `sk-SK-ViktoriaNeural` are single-reviewer provisional engineering
+  defaults, using lower observed latency only to break tied ratings. The two-rater production gate
+  remains pending and no voice/provider has passed it.
+- **Phase 3B (authenticated public-catalog neural preview):** draft the backend and client as two
+  separately approved steps. Start with cache-first/budgeted/rate-limited authenticated generation,
+  server-owned Postgres metadata, and immutable `pron-public` Storage. The current 8,300-entry
+  public catalog is English, so only `en-US` and `en-GB` are runtime-eligible initially; the
+  provisional Slovak voice remains disabled until an approved public Slovak input source exists.
 - **Phase 4 (explicit offline downloads):** add collection download/eviction UX. Evaluate
   PowerSync Attachments against a small custom download cache; adopt it only if its alpha status
   and automatic watch/download model fit the requirement.
@@ -498,19 +517,43 @@ For each launch locale `L`, gate release on:
 
 ### Phase 3A local verification
 
-- Corpus/config validation passes with exactly 30 items for each of seven locales, two pinned
-  voices per provider/locale, 210 total items, and 840 planned audio samples.
-- The conservative plan contains 8,940 billed characters and estimates $0.2682 for the complete
+- Corpus/config validation passes with exactly 30 items for each of seven locales, two configured
+  candidate identifiers per provider/locale, 210 total items, and 840 planned audio samples. Live
+  catalog verification subsequently rejected Google's configured `es-MX` identifiers.
+- The revised conservative plan contains 9,432 billed characters and estimates $0.28296 for the complete
   Google/Azure screening run. This is a planning estimate, not a provider quote.
-- TypeScript, Expo lint, all 44 Jest suites (176 tests), and an Android/iOS/web Expo export pass.
+- TypeScript, Expo lint, and all 45 Jest suites (182 tests) pass. The prior Android/iOS/web Expo
+  export remains the latest export verification because this metadata/CLI-only change does not
+  alter application bundles.
 - Expo Doctor remains at the known 19/21 baseline: the PowerSync CLI dependency tree includes a
   second React version, and React Native Directory lacks complete metadata for Quick SQLite and
   the two local native modules. Phase 3A introduced neither finding.
 - Safety tests confirm that generation cannot start without `--execute`, cannot exceed the $20
-  ceiling, and remains blocked while native corpus review is pending. Scoring tests enforce two
-  independent raters and the 95%/zero-wrong-locale gates.
-- No cloud TTS request, Supabase deployment, database migration, Storage change, PowerSync change,
-  EAS build, or generated audio occurred.
+  ceiling, rejects falsely qualified provisional metadata, and remains blocked while any corpus
+  screening review is pending. Scoring tests enforce two independent raters and the
+  95%/zero-wrong-locale gates. Review-server integration tests cover blinded metadata, allowlisted
+  byte-range audio, traversal rejection, reviewer isolation, atomic upserts, export, and artifact
+  path confinement.
+- The first Google screening attempt generated 180 checksummed audio files across `en-US`,
+  `en-GB`, and `es-ES`, then failed closed on the first `es-MX` request because the pinned exact
+  voice was absent from Google's live catalog. The Azure S0 run then generated 420/420 unique
+  samples with zero failures: every manifest hash and byte count matches, all fourteen voices have
+  30 samples, and `ffprobe` identifies every file as mono 24 kHz MP3. Its blinded package contains
+  420 unique opaque files and IDs, exposes no provider/model/voice identity, and keeps the complete
+  private mapping outside reviewer output. The local review server is confined to `.artifacts`,
+  binds to `127.0.0.1`, allowlists audio by opaque manifest ID, isolates browser reads/exports by
+  reviewer ID, and writes one combined ratings file atomically. No Supabase deployment, database
+  migration, Storage change, PowerSync change, or EAS build occurred.
+- Measured review-page QA at 375 px, 768 px, and 1280 px finds no horizontal overflow, clipped text,
+  or undersized visible controls. Mobile rating controls are 76 px high; tablet progress stacks
+  above the sample; desktop uses a 24 px column gap and equal 104 px rating cards. Real MP3 playback
+  reached ready state with no browser errors, keyboard navigation passed, and the checked text/color
+  pairs meet WCAG AA contrast. Automated axe-core analysis was not run.
+- The canonical ratings file contains 180 unique ratings by `jozef`: 178 acceptable, two
+  unacceptable, and zero wrong-locale. The two unacceptable results are the same Slovak phrase for
+  both candidates. The unchanged scorer reports zero fully rated samples and `canRecommend: false`.
+  The approved single-reviewer decision and exact provisional selections are recorded separately;
+  no cloud resource or application behavior changed as a result.
 
 ---
 
@@ -546,16 +589,18 @@ re-download from Storage; device-generated cache must be regenerated. Both cache
 4. **Can signed-out users use cloud catalog audio?** Recommend device playback for everyone and
    authenticated cloud generation initially; a public catalog delivery path can be added after
    abuse/cost implications are specified.
-5. **Which provider/voice wins the measured bakeoff?** Do not choose from marketing lists. Voice
-   coverage, quality, caching terms, data handling, latency, and price must all pass per locale.
+5. **Provisionally resolved for engineering only:** Azure `en-US-AvaNeural`, `en-GB-RyanNeural`,
+   and `sk-SK-ViktoriaNeural`. These single-reviewer defaults do not pass the production bakeoff;
+   the four other locales remain unselected.
 6. **Is catalog text (WordNet definitions/examples, CEFR terms) licensed to be sent to a
    third-party TTS?** Terms are likely fine; sending definitions/examples may not be — check
    `assets/licenses/CONTENT_SOURCES.md`.
 7. **Cloud for private words: default-on or opt-in?** (R4) Recommend opt-in.
 8. **Monthly cost ceiling and who owns the budget alarm?** No cloud TTS until this exists (R1/R2).
 9. **Legal:** privacy-policy update + provider DPA signed before any user text leaves the device.
-10. **Do you commit to two independent native raters per launch locale?** If not, criterion #4
-    cannot be met and the product cannot honestly claim "reference quality."
+10. **Resolved as an explicit limitation:** engineering may proceed with one native English/Slovak
+    reviewer, but criterion #4 remains unmet and the product cannot claim reference quality or
+    production approval.
 11. **What pronunciation state truly needs cross-device sync?** Recommend none for the first cloud
     release. Add PowerSync request/link state only for an approved offline or multi-device use case.
 
