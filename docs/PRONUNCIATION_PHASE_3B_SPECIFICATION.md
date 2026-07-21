@@ -1,7 +1,7 @@
 # Pronunciation Phase 3B: authenticated public-catalog neural preview
 
-Status: **draft for product-owner approval**. No implementation or deployment is authorized by
-this document alone.
+Status: **3B.1 approved and implemented locally; 3B.2 not started**. No remote migration,
+function deployment, Azure generation, or mobile UI is authorized by this document alone.
 
 ## Problem
 
@@ -25,6 +25,10 @@ Implement Phase 3B in two approvals:
    preview control alongside the existing device-voice control.
 
 This keeps provider/security behavior testable before the mobile application depends on it.
+
+The local 3B.1 implementation is documented in
+`docs/PRONUNCIATION_PHASE_3B_BACKEND.md`. It deliberately leaves the production budget owner,
+exact production limits/alerts, and source-license review as deployment blockers.
 
 ## 3B.1 expected behavior
 

@@ -18,8 +18,9 @@ A few things from the actual repo change the framing of the proposal materially:
   remain release-verification gates (`docs/SUPABASE_POWERSYNC_SPECIFICATION.md:5`).
 - **[FACT] The synchronized surface is intentionally narrow.** Only `collections`, `words`, and
   `learning_events` are in the Postgres publication, PowerSync replication-role grants, sync
-  stream, client schema, and uploader. Supabase Storage, pronunciation Edge Functions, and
-  pronunciation tables do not exist yet.
+  stream, client schema, and uploader. **[IMPLEMENTED LOCALLY]** Phase 3B.1 adds server-owned
+  pronunciation tables, public immutable Storage, and an authenticated Edge Function outside
+  PowerSync; none of those changes has been deployed remotely.
 - **[IMPLEMENTED LOCALLY] Phase 0 multilingual identity is complete.** Guest SQLite v7 and the
   additive Supabase migration allow multiple senses, index soft-duplicate checks by user/source
   language/normalized term, and store exact source and target pronunciation locales. The
@@ -452,7 +453,7 @@ For each launch locale `L`, gate release on:
   `en-GB-RyanNeural`, and `sk-SK-ViktoriaNeural` are single-reviewer provisional engineering
   defaults, using lower observed latency only to break tied ratings. The two-rater production gate
   remains pending and no voice/provider has passed it.
-- **Phase 3B (authenticated public-catalog neural preview):** draft the backend and client as two
+- **Phase 3B (authenticated public-catalog neural preview):** implement the backend and client as two
   separately approved steps. Start with cache-first/budgeted/rate-limited authenticated generation,
   server-owned Postgres metadata, and immutable `pron-public` Storage. The current 8,300-entry
   public catalog is English, so only `en-US` and `en-GB` are runtime-eligible initially; the
