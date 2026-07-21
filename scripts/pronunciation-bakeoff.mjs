@@ -19,6 +19,8 @@ const SUPPORTED_CATEGORIES = [
   'abbreviation',
 ];
 const PROVIDER_IDS = ['google', 'azure'];
+const REVIEW_STATUSES = ['needs_native_review', 'approved', 'provisional_non_native'];
+const GENERATION_READY_REVIEW_STATUSES = ['approved', 'provisional_non_native'];
 const MINIMUM_AUDIO_BYTES = 100;
 let googleClient;
 
@@ -117,15 +119,20 @@ function validateInputs(corpus, candidates) {
   for (const localeEntry of corpusLocales) {
     const locale = localeEntry?.locale ?? '<unknown>';
     const review = localeEntry?.nativeReview;
-    if (!['needs_native_review', 'approved'].includes(review?.status)) {
-      errors.push(`${locale} nativeReview status must be needs_native_review or approved.`);
-    } else if (review.status === 'approved') {
-      if (!isNonEmptyString(review.reviewerId)) errors.push(`${locale} approved review requires reviewerId.`);
+    if (!REVIEW_STATUSES.includes(review?.status)) {
+      errors.push(`${locale} nativeReview status must be needs_native_review, approved, or provisional_non_native.`);
+    } else if (GENERATION_READY_REVIEW_STATUSES.includes(review.status)) {
+      if (!isNonEmptyString(review.reviewerId)) errors.push(`${locale} completed review requires reviewerId.`);
       if (!isNonEmptyString(review.reviewedAt) || Number.isNaN(Date.parse(review.reviewedAt))) {
-        errors.push(`${locale} approved review requires an ISO review date.`);
+        errors.push(`${locale} completed review requires an ISO review date.`);
       }
-    } else if (review.reviewerId !== null || review.reviewedAt !== null) {
-      errors.push(`${locale} pending native review must keep reviewerId and reviewedAt null.`);
+      const expectedQualification = review.status === 'approved' ? 'native' : 'non_native_best_available';
+      if (review.reviewerQualification !== expectedQualification) {
+        errors.push(`${locale} ${review.status} review requires reviewerQualification=${expectedQualification}.`);
+      }
+    } else if (review.reviewerId !== null || review.reviewedAt !== null
+      || review.reviewerQualification !== null) {
+      errors.push(`${locale} pending native review must keep reviewer metadata null.`);
     }
 
     const items = Array.isArray(localeEntry?.items) ? localeEntry.items : [];
@@ -348,9 +355,9 @@ function assertGenerationAllowed(inputs, options, plan) {
     throw new Error(`Estimated $${plan.estimatedCostUsd} cost exceeds the supplied $${maxCost} cap.`);
   }
   const pending = inputs.corpus.locales
-    .filter((entry) => entry.nativeReview.status !== 'approved')
+    .filter((entry) => !GENERATION_READY_REVIEW_STATUSES.includes(entry.nativeReview.status))
     .map((entry) => entry.locale);
-  if (pending.length) throw new Error(`Native corpus review is required before generation: ${pending.join(', ')}.`);
+  if (pending.length) throw new Error(`Corpus screening review is required before generation: ${pending.join(', ')}.`);
   if (!isNonEmptyString(options.output)) throw new Error('Generation requires --output <directory>.');
   assertArtifactOutputPath(resolve(options.output), 'Generation output');
 }

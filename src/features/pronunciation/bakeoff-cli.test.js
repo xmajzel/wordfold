@@ -37,6 +37,22 @@ describe('pronunciation bakeoff CLI', () => {
     expect(result.stderr).toBe('');
   });
 
+  it('rejects provisional review metadata that claims native qualification', () => {
+    const directory = mkdtempSync(resolve(tmpdir(), 'wordfold-bakeoff-review-'));
+    temporaryDirectories.push(directory);
+    const corpus = JSON.parse(readFileSync(resolve(root, 'assets/pronunciation/bakeoff-corpus.json')));
+    corpus.locales.find(({ locale }) => locale === 'es-ES').nativeReview.reviewerQualification = 'native';
+    const corpusPath = resolve(directory, 'corpus.json');
+    writeFileSync(corpusPath, JSON.stringify(corpus));
+
+    const result = run('validate', '--corpus', corpusPath);
+
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(
+      'es-ES provisional_non_native review requires reviewerQualification=non_native_best_available',
+    );
+  });
+
   it('creates a deterministic offline cost plan', () => {
     const first = run('plan', '--', '--json');
     const second = run('plan', '--json');
@@ -57,7 +73,15 @@ describe('pronunciation bakeoff CLI', () => {
       expect.objectContaining({ provider: 'google', samples: 420 }),
       expect.objectContaining({ provider: 'azure', samples: 420 }),
     ]);
-    expect(Object.values(plan.nativeReview)).toEqual(Array(7).fill('needs_native_review'));
+    expect(plan.nativeReview).toEqual({
+      'en-US': 'approved',
+      'en-GB': 'approved',
+      'es-ES': 'provisional_non_native',
+      'es-MX': 'provisional_non_native',
+      'de-DE': 'provisional_non_native',
+      'el-GR': 'provisional_non_native',
+      'sk-SK': 'approved',
+    });
   });
 
   it('never starts paid generation without explicit execution', () => {
@@ -76,15 +100,39 @@ describe('pronunciation bakeoff CLI', () => {
     expect(result.stderr).toContain('cannot exceed the hard $20 ceiling');
   });
 
-  it('blocks provider access until every locale has native corpus approval', () => {
+  it('blocks provider access while any locale lacks a screening review', () => {
+    const directory = mkdtempSync(resolve(tmpdir(), 'wordfold-bakeoff-pending-'));
+    temporaryDirectories.push(directory);
+    const corpus = JSON.parse(readFileSync(resolve(root, 'assets/pronunciation/bakeoff-corpus.json')));
+    corpus.locales[0].nativeReview = {
+      status: 'needs_native_review',
+      reviewerId: null,
+      reviewedAt: null,
+      reviewerQualification: null,
+    };
+    const corpusPath = resolve(directory, 'corpus.json');
+    writeFileSync(corpusPath, JSON.stringify(corpus));
     const result = run(
-      'generate', '--execute', '--max-cost-usd', '1', '--output', '.artifacts/test-bakeoff',
+      'generate', '--execute', '--max-cost-usd', '1', '--corpus', corpusPath,
+      '--output', '.artifacts/test-bakeoff',
     );
 
     expect(result.status).toBe(1);
-    expect(result.stderr).toContain('Native corpus review is required before generation');
+    expect(result.stderr).toContain('Corpus screening review is required before generation');
     expect(result.stderr).toContain('en-US');
-    expect(result.stderr).toContain('sk-SK');
+  });
+
+  it('accepts provisional reviews for screening generation without treating them as native', () => {
+    const output = resolve(root, '.artifacts/test-bakeoff-provisional');
+    temporaryDirectories.push(output);
+    const result = run(
+      'generate', '--execute', '--provider', 'azure', '--max-cost-usd', '1',
+      '--output', '.artifacts/test-bakeoff-provisional',
+    );
+
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('Azure generation requires AZURE_SPEECH_KEY and AZURE_SPEECH_REGION');
+    expect(result.stderr).not.toContain('Corpus screening review is required');
   });
 
   it('requires the private answer key to be stored outside reviewer output', () => {

@@ -13,7 +13,7 @@
   "locales": [
     {
       "locale": "en-US",
-      "nativeReview": { "status": "needs_native_review", "reviewerId": null, "reviewedAt": null },
+      "nativeReview": { "status": "approved", "reviewerId": "jozef", "reviewedAt": "2026-07-21", "reviewerQualification": "native" },
       "items": [
         { "id": "en-US-common-01", "category": "common_word", "text": "water", "context": "A glass of drinking water." },
         { "id": "en-US-common-02", "category": "common_word", "text": "thought", "context": "A thought or idea." },
@@ -49,7 +49,7 @@
     },
     {
       "locale": "en-GB",
-      "nativeReview": { "status": "needs_native_review", "reviewerId": null, "reviewedAt": null },
+      "nativeReview": { "status": "approved", "reviewerId": "jozef", "reviewedAt": "2026-07-21", "reviewerQualification": "native" },
       "items": [
         { "id": "en-GB-common-01", "category": "common_word", "text": "water", "context": "A glass of drinking water, using British pronunciation." },
         { "id": "en-GB-common-02", "category": "common_word", "text": "thought", "context": "A thought or idea." },
@@ -85,7 +85,7 @@
     },
     {
       "locale": "es-ES",
-      "nativeReview": { "status": "needs_native_review", "reviewerId": null, "reviewedAt": null },
+      "nativeReview": { "status": "provisional_non_native", "reviewerId": "IberiaCheck", "reviewedAt": "2026-07-21", "reviewerQualification": "non_native_best_available" },
       "items": [
         { "id": "es-ES-common-01", "category": "common_word", "text": "gracias", "context": "An expression of thanks." },
         { "id": "es-ES-common-02", "category": "common_word", "text": "zapato", "context": "A shoe." },
@@ -113,7 +113,7 @@
         { "id": "es-ES-name-01", "category": "proper_name_or_loanword", "text": "Jorge", "context": "A Spanish personal name." },
         { "id": "es-ES-name-02", "category": "proper_name_or_loanword", "text": "Guadalajara", "context": "The city in Spain." },
         { "id": "es-ES-name-03", "category": "proper_name_or_loanword", "text": "wifi", "context": "The common technology loanword." },
-        { "id": "es-ES-name-04", "category": "proper_name_or_loanword", "text": "croissant", "context": "The French pastry loanword in Spanish." },
+        { "id": "es-ES-name-04", "category": "proper_name_or_loanword", "text": "cruasán", "context": "The French pastry loanword in Spanish." },
         { "id": "es-ES-abbreviation-01", "category": "abbreviation", "text": "Sr. García", "context": "Señor García." },
         { "id": "es-ES-abbreviation-02", "category": "abbreviation", "text": "UE", "context": "The initials for Unión Europea." },
         { "id": "es-ES-abbreviation-03", "category": "abbreviation", "text": "3,5 GHz", "context": "Tres coma cinco gigahercios." }
@@ -121,7 +121,7 @@
     },
     {
       "locale": "es-MX",
-      "nativeReview": { "status": "needs_native_review", "reviewerId": null, "reviewedAt": null },
+      "nativeReview": { "status": "provisional_non_native", "reviewerId": "Lince", "reviewedAt": "2026-07-21", "reviewerQualification": "non_native_best_available" },
       "items": [
         { "id": "es-MX-common-01", "category": "common_word", "text": "gracias", "context": "An expression of thanks." },
         { "id": "es-MX-common-02", "category": "common_word", "text": "zapato", "context": "A shoe." },
@@ -136,7 +136,7 @@
         { "id": "es-MX-inflection-01", "category": "inflection", "text": "hablábamos", "context": "First-person plural imperfect of hablar." },
         { "id": "es-MX-inflection-02", "category": "inflection", "text": "condujeron", "context": "Third-person plural preterite of conducir." },
         { "id": "es-MX-inflection-03", "category": "inflection", "text": "leyendo", "context": "Gerund of leer." },
-        { "id": "es-MX-inflection-04", "category": "inflection", "text": "pidan", "context": "Present subjunctive or formal imperative of pedir." },
+        { "id": "es-MX-inflection-04", "category": "inflection", "text": "pidan", "context": "Third-person plural present subjunctive or ustedes imperative of pedir." },
         { "id": "es-MX-phrase-01", "category": "phrase", "text": "¿Podría ayudarme, por favor?", "context": "A polite request for assistance." },
         { "id": "es-MX-phrase-02", "category": "phrase", "text": "El tren sale a las ocho y cuarto.", "context": "A travel announcement." },
         { "id": "es-MX-phrase-03", "category": "phrase", "text": "No se lo habría dicho.", "context": "A conditional perfect phrase." },
@@ -157,7 +157,7 @@
     },
     {
       "locale": "de-DE",
-      "nativeReview": { "status": "needs_native_review", "reviewerId": null, "reviewedAt": null },
+      "nativeReview": { "status": "provisional_non_native", "reviewerId": "Linden", "reviewedAt": "2026-07-21", "reviewerQualification": "non_native_best_available" },
       "items": [
         { "id": "de-DE-common-01", "category": "common_word", "text": "danke", "context": "An expression of thanks." },
         { "id": "de-DE-common-02", "category": "common_word", "text": "Eichhörnchen", "context": "A squirrel." },
@@ -177,11 +177,11 @@
         { "id": "de-DE-phrase-02", "category": "phrase", "text": "Der Zug fährt um Viertel nach acht ab.", "context": "A travel announcement." },
         { "id": "de-DE-phrase-03", "category": "phrase", "text": "Ich hätte früher angerufen.", "context": "A conditional perfect statement." },
         { "id": "de-DE-phrase-04", "category": "phrase", "text": "Zwischen zwei Zwetschgenzweigen", "context": "A consonant-cluster tongue twister fragment." },
-        { "id": "de-DE-phrase-05", "category": "phrase", "text": "Wir besprechen das morgen.", "context": "A sentence with a separability-sensitive verb." },
-        { "id": "de-DE-sense-01", "category": "sense_sensitive", "text": "umfahren", "context": "To drive around an obstacle." },
-        { "id": "de-DE-sense-02", "category": "sense_sensitive", "text": "umfahren", "context": "To knock something down with a vehicle." },
-        { "id": "de-DE-sense-03", "category": "sense_sensitive", "text": "übersetzen", "context": "To translate from one language to another." },
-        { "id": "de-DE-sense-04", "category": "sense_sensitive", "text": "übersetzen", "context": "To ferry or cross to the other side." },
+        { "id": "de-DE-phrase-05", "category": "phrase", "text": "Wir besprechen das morgen.", "context": "A sentence with an inseparable prefixed verb." },
+        { "id": "de-DE-sense-01", "category": "sense_sensitive", "text": "Wir umfahren das Hindernis.", "context": "To drive around an obstacle." },
+        { "id": "de-DE-sense-02", "category": "sense_sensitive", "text": "Wir fahren den Pfosten um.", "context": "To knock something down with a vehicle." },
+        { "id": "de-DE-sense-03", "category": "sense_sensitive", "text": "Wir übersetzen den Text.", "context": "To translate from one language to another." },
+        { "id": "de-DE-sense-04", "category": "sense_sensitive", "text": "Wir setzen mit der Fähre über.", "context": "To cross to the other side by ferry." },
         { "id": "de-DE-name-01", "category": "proper_name_or_loanword", "text": "München", "context": "The German city." },
         { "id": "de-DE-name-02", "category": "proper_name_or_loanword", "text": "Goethe", "context": "The German writer's surname." },
         { "id": "de-DE-name-03", "category": "proper_name_or_loanword", "text": "Croissant", "context": "The French pastry loanword." },
@@ -193,7 +193,7 @@
     },
     {
       "locale": "el-GR",
-      "nativeReview": { "status": "needs_native_review", "reviewerId": null, "reviewedAt": null },
+      "nativeReview": { "status": "provisional_non_native", "reviewerId": "Helios", "reviewedAt": "2026-07-21", "reviewerQualification": "non_native_best_available" },
       "items": [
         { "id": "el-GR-common-01", "category": "common_word", "text": "ευχαριστώ", "context": "An expression of thanks." },
         { "id": "el-GR-common-02", "category": "common_word", "text": "καλημέρα", "context": "Good morning." },
@@ -207,29 +207,29 @@
         { "id": "el-GR-common-10", "category": "common_word", "text": "αυτοκίνητο", "context": "A car." },
         { "id": "el-GR-inflection-01", "category": "inflection", "text": "μιλούσαμε", "context": "First-person plural imperfect of speak." },
         { "id": "el-GR-inflection-02", "category": "inflection", "text": "διαβάζοντας", "context": "Gerund-like participial form meaning while reading." },
-        { "id": "el-GR-inflection-03", "category": "inflection", "text": "μεγαλύτερων", "context": "Inflected comparative plural of big." },
+        { "id": "el-GR-inflection-03", "category": "inflection", "text": "μεγαλύτερων", "context": "Genitive plural comparative form meaning bigger or older." },
         { "id": "el-GR-inflection-04", "category": "inflection", "text": "ήρθατε", "context": "Second-person plural past of come." },
         { "id": "el-GR-phrase-01", "category": "phrase", "text": "Μπορείτε να με βοηθήσετε, παρακαλώ;", "context": "A polite request for assistance." },
         { "id": "el-GR-phrase-02", "category": "phrase", "text": "Το τρένο φεύγει στις οκτώ και τέταρτο.", "context": "A travel announcement." },
         { "id": "el-GR-phrase-03", "category": "phrase", "text": "Θα είχα τηλεφωνήσει νωρίτερα.", "context": "A conditional perfect statement." },
-        { "id": "el-GR-phrase-04", "category": "phrase", "text": "Τρεις τίγρεις τρέχουν γρήγορα.", "context": "A phrase testing repeated consonants." },
+        { "id": "el-GR-phrase-04", "category": "phrase", "text": "Τρεις τίγρεις τρέχουν γρήγορα.", "context": "A phrase testing repeated /tr/ consonant clusters." },
         { "id": "el-GR-phrase-05", "category": "phrase", "text": "Θέλω να έρθεις αύριο.", "context": "A sentence with a dependent verb form." },
-        { "id": "el-GR-sense-01", "category": "sense_sensitive", "text": "νέα", "context": "Noun: news." },
-        { "id": "el-GR-sense-02", "category": "sense_sensitive", "text": "νέα", "context": "Adjective or noun referring to young women or new things." },
-        { "id": "el-GR-sense-03", "category": "sense_sensitive", "text": "μια", "context": "Indefinite article: a or one." },
-        { "id": "el-GR-sense-04", "category": "sense_sensitive", "text": "η", "context": "The feminine article or the name of the letter eta, depending on context." },
+        { "id": "el-GR-sense-01", "category": "sense_sensitive", "text": "Άκουσα τα νέα.", "context": "I heard the news." },
+        { "id": "el-GR-sense-02", "category": "sense_sensitive", "text": "Η νέα υπάλληλος έφτασε.", "context": "The new female employee arrived." },
+        { "id": "el-GR-sense-03", "category": "sense_sensitive", "text": "Μια φίλη ήρθε.", "context": "A female friend came; μια is the one-syllable feminine indefinite article." },
+        { "id": "el-GR-sense-04", "category": "sense_sensitive", "text": "Η Μαρία ήρθε.", "context": "Maria arrived; Η is the feminine definite article, pronounced /i/." },
         { "id": "el-GR-name-01", "category": "proper_name_or_loanword", "text": "Θεσσαλονίκη", "context": "The Greek city." },
         { "id": "el-GR-name-02", "category": "proper_name_or_loanword", "text": "Γιώργος", "context": "A Greek personal name." },
         { "id": "el-GR-name-03", "category": "proper_name_or_loanword", "text": "ίντερνετ", "context": "The loanword for internet." },
         { "id": "el-GR-name-04", "category": "proper_name_or_loanword", "text": "μάνατζερ", "context": "The English business loanword manager." },
-        { "id": "el-GR-abbreviation-01", "category": "abbreviation", "text": "κ. Παπαδόπουλος", "context": "Κύριος Παπαδόπουλος." },
+        { "id": "el-GR-abbreviation-01", "category": "abbreviation", "text": "κ. Παπαδόπουλος", "context": "The abbreviation for Κύριος (‘Mr’), followed by the surname Papadopoulos." },
         { "id": "el-GR-abbreviation-02", "category": "abbreviation", "text": "ΕΕ", "context": "The initials for Ευρωπαϊκή Ένωση." },
-        { "id": "el-GR-abbreviation-03", "category": "abbreviation", "text": "3,5 GHz", "context": "Τρία κόμμα πέντε γιγαχέρτζ." }
+        { "id": "el-GR-abbreviation-03", "category": "abbreviation", "text": "3,5 GHz", "context": "The value 3.5 gigahertz, expected in Greek as ‘τρία κόμμα πέντε γιγαχέρτζ’." }
       ]
     },
     {
       "locale": "sk-SK",
-      "nativeReview": { "status": "needs_native_review", "reviewerId": null, "reviewedAt": null },
+      "nativeReview": { "status": "approved", "reviewerId": "jozef", "reviewedAt": "2026-07-21", "reviewerQualification": "native" },
       "items": [
         { "id": "sk-SK-common-01", "category": "common_word", "text": "ďakujem", "context": "An expression of thanks." },
         { "id": "sk-SK-common-02", "category": "common_word", "text": "štvrť", "context": "A quarter or neighbourhood." },
