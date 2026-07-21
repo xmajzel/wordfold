@@ -86,7 +86,8 @@
     "pronunciation:bakeoff": "node scripts/pronunciation-bakeoff.mjs",
     "pronunciation:bakeoff:validate": "node scripts/pronunciation-bakeoff.mjs validate",
     "pronunciation:bakeoff:plan": "node scripts/pronunciation-bakeoff.mjs plan",
-    "pronunciation:review": "node scripts/pronunciation-review-server.mjs"
+    "pronunciation:review": "node scripts/pronunciation-review-server.mjs",
+    "pronunciation:catalog-sql": "node scripts/build-pronunciation-catalog-sql.mjs"
   },
   "jest": {
     "preset": "jest-expo",
