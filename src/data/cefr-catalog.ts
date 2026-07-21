@@ -17,6 +17,10 @@ export function getCefrEntries(level: CefrLevel) {
   return catalog.entries.filter((entry) => entry.level === level);
 }
 
+export function getCefrEntry(catalogSenseId: string | null) {
+  return catalogSenseId ? entriesBySense.get(catalogSenseId) ?? null : null;
+}
+
 export function getCefrTranslation(catalogSenseId: string | null, normalizedTerm?: string | null) {
   return (catalogSenseId ? entriesBySense.get(catalogSenseId) : undefined)?.translation
     ?? (normalizedTerm ? entriesByTerm.get(normalizedTerm)?.translation : undefined)

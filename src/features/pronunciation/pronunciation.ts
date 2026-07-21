@@ -14,8 +14,21 @@ import {
   type DevicePronunciationCallbacks,
   type DevicePronunciationResult,
 } from '@/features/pronunciation/device-speech';
+import {
+  requestNeuralPronunciation,
+  type NeuralPronunciationLocale,
+} from '@/features/pronunciation/cloud';
+import {
+  cacheNeuralPronunciationFile,
+  deleteCachedNeuralPronunciation,
+  getCachedNeuralPronunciationFile,
+} from '@/features/pronunciation/public-cache';
 
 export type PronunciationResult = DevicePronunciationResult | { status: 'stopped' };
+export type NeuralPronunciationResult =
+  | { status: 'started' }
+  | { status: 'pending'; retryAfterSeconds: number }
+  | { status: 'stopped' };
 
 let operationId = 0;
 
@@ -88,4 +101,39 @@ export async function startPronunciation(
   }
   if (operationId !== currentOperation) return { status: 'stopped' };
   return { status: 'started', voice };
+}
+
+export async function startNeuralPronunciation(
+  catalogSenseId: string,
+  locale: NeuralPronunciationLocale,
+  callbacks: DevicePronunciationCallbacks = {},
+): Promise<NeuralPronunciationResult> {
+  const currentOperation = operationId + 1;
+  operationId = currentOperation;
+  await stopPlayers();
+
+  let file = await getCachedNeuralPronunciationFile(catalogSenseId, locale);
+  if (operationId !== currentOperation) return { status: 'stopped' };
+  if (!file) {
+    const response = await requestNeuralPronunciation(catalogSenseId, locale);
+    if (operationId !== currentOperation) return { status: 'stopped' };
+    if (response.status === 'pending') return response;
+    file = await cacheNeuralPronunciationFile(catalogSenseId, response.asset);
+    if (operationId !== currentOperation) return { status: 'stopped' };
+  }
+
+  try {
+    await playPronunciationFile(file.uri, {
+      ...callbacks,
+      onError: (error) => {
+        void deleteCachedNeuralPronunciation(catalogSenseId, locale);
+        callbacks.onError?.(error);
+      },
+    });
+  } catch (error) {
+    await deleteCachedNeuralPronunciation(catalogSenseId, locale);
+    throw error;
+  }
+  if (operationId !== currentOperation) return { status: 'stopped' };
+  return { status: 'started' };
 }

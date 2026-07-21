@@ -16,7 +16,7 @@ export interface CachedPronunciationInput {
   scope: PronunciationCacheScope;
 }
 
-const CACHE_DIRECTORY = 'wordfold-pronunciation';
+export const PRONUNCIATION_CACHE_DIRECTORY = 'wordfold-pronunciation';
 const SYNTHESIS_VERSION = 'device-v1';
 const RATE = 0.9;
 const PITCH = 1;
@@ -34,7 +34,7 @@ async function accountDirectoryName(userId: string) {
 }
 
 async function scopeDirectory(scope: PronunciationCacheScope) {
-  const root = new Directory(Paths.cache, CACHE_DIRECTORY);
+  const root = new Directory(Paths.cache, PRONUNCIATION_CACHE_DIRECTORY);
   if (scope.type === 'account') {
     return new Directory(root, 'account', await accountDirectoryName(scope.userId), SYNTHESIS_VERSION);
   }
@@ -134,7 +134,7 @@ export async function clearPronunciationAccountCache(userId: string) {
   if (Platform.OS === 'web' || !userId) return;
   const accountDirectory = new Directory(
     Paths.cache,
-    CACHE_DIRECTORY,
+    PRONUNCIATION_CACHE_DIRECTORY,
     'account',
     await accountDirectoryName(userId),
   );
@@ -150,10 +150,10 @@ function collectCacheFiles(directory: Directory): File[] {
 }
 
 export async function enforcePronunciationCacheLimit(limit = PRONUNCIATION_CACHE_LIMIT_BYTES) {
-  const root = new Directory(Paths.cache, CACHE_DIRECTORY);
+  const root = new Directory(Paths.cache, PRONUNCIATION_CACHE_DIRECTORY);
   const cacheFiles = collectCacheFiles(root);
-  cacheFiles.filter((file) => /\.tmp\.(caf|wav)$/i.test(file.uri)).forEach(deleteIfPresent);
-  const files = cacheFiles.filter((file) => /\.(caf|wav)$/i.test(file.uri) && !/\.tmp\./i.test(file.uri)).map((file) => {
+  cacheFiles.filter((file) => /\.tmp\.(caf|wav|mp3|json)$/i.test(file.uri)).forEach(deleteIfPresent);
+  const files = cacheFiles.filter((file) => /\.(caf|wav|mp3)$/i.test(file.uri) && !/\.tmp\./i.test(file.uri)).map((file) => {
     const info = file.info();
     return {
       file,
