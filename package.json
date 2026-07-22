@@ -87,7 +87,10 @@
     "pronunciation:bakeoff:validate": "node scripts/pronunciation-bakeoff.mjs validate",
     "pronunciation:bakeoff:plan": "node scripts/pronunciation-bakeoff.mjs plan",
     "pronunciation:review": "node scripts/pronunciation-review-server.mjs",
-    "pronunciation:catalog-sql": "node scripts/build-pronunciation-catalog-sql.mjs"
+    "pronunciation:catalog-sql": "node scripts/build-pronunciation-catalog-sql.mjs",
+    "pronunciation:backfill": "node scripts/pronunciation-backfill.mjs",
+    "pronunciation:backfill:plan": "node scripts/pronunciation-backfill.mjs plan",
+    "pronunciation:backfill:restore-limits": "node scripts/pronunciation-backfill.mjs restore-limits"
   },
   "jest": {
     "preset": "jest-expo",
