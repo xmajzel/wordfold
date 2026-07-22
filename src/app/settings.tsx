@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert, Linking, Pressable, StyleSheet, View } from 'react-native';
+import { Alert, Linking, Platform, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 
@@ -9,6 +9,7 @@ import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import type { ReminderSettings } from '@/domain/types';
 import { topicOptions } from '@/features/recommendations/selector';
+import { neuralPreviewFeatureEnabled } from '@/features/pronunciation/cloud';
 import { requestReminderPermission } from '@/features/reminders/scheduler';
 import { formatMinutes, REMINDER_PRESETS } from '@/features/reminders/slots';
 import { useAppTheme } from '@/hooks/use-app-theme';
@@ -88,6 +89,18 @@ export default function SettingsScreen() {
         </View>
         <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
       </Pressable>
+      {Platform.OS === 'web' || !neuralPreviewFeatureEnabled() ? null : <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Manage offline pronunciation"
+        onPress={() => router.push('/offline-pronunciation' as never)}
+        style={({ pressed }) => [styles.preferenceCard, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.76 : 1 }]}>
+        <View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="cloud-download-outline" color={theme.primary} size={24}/></View>
+        <View style={styles.flex}>
+          <AppText variant="heading">Offline pronunciation</AppText>
+          <AppText variant="caption" style={{ color: theme.muted }}>Download US or UK neural voices by CEFR level</AppText>
+        </View>
+        <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
+      </Pressable>}
       <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={styles.switchRow}><View style={styles.flex}><AppText variant="heading">Word reminders</AppText><AppText style={{ color: theme.muted }}>Fresh words at preferred times.</AppText></View><AppSwitch accessibilityLabel="Enable word reminders" value={draft.enabled} onValueChange={(value) => void toggleEnabled(value)}/></View></View>
       <View><AppText variant="heading">How often?</AppText><AppText style={{ color: theme.muted }}>One to three gentle presets, or your own rhythm up to six.</AppText></View>
       <View style={styles.countGrid}>{[1, 2, 3, 4, 5, 6].map((count) => { const preset = REMINDER_PRESETS.find((item) => item.count === count); const selected = draft.countPerDay === count; return <Pressable key={count} onPress={() => setDraft({ ...draft, countPerDay: count })} style={[styles.countCard, { backgroundColor: selected ? theme.primarySoft : theme.surface, borderColor: selected ? theme.primary : theme.border }]}><AppText variant="heading" style={{ color: selected ? theme.primary : theme.text }}>{count}</AppText><AppText variant="caption" numberOfLines={1} style={{ color: theme.muted }}>{preset?.label ?? 'My rhythm'}</AppText></Pressable>; })}</View>

@@ -16,6 +16,7 @@ import { SyncProvider } from '@/providers/sync-provider';
 import { LaunchScreen } from '@/components/launch-screen';
 import { getNotificationWordTarget } from '@/features/reminders/notification-navigation';
 import { PronunciationCacheScopeProvider } from '@/features/pronunciation/cache-scope-provider';
+import { OfflinePronunciationDownloadsProvider } from '@/features/pronunciation/offline-downloads-provider';
 import { palette } from '@/theme/tokens';
 
 Notifications.setNotificationHandler({
@@ -64,6 +65,7 @@ function Navigation() {
         <Stack.Screen name="onboarding-ready" options={{ gestureEnabled: false }} />
         <Stack.Screen name="preferences" options={{ presentation: 'modal' }} />
         <Stack.Screen name="settings" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="offline-pronunciation" options={{ presentation: 'modal' }} />
         <Stack.Screen name="account" options={{ presentation: 'modal' }} />
         <Stack.Screen name="account-import" options={{ presentation: 'modal' }} />
         <Stack.Screen name="import" options={{ presentation: 'modal' }} />
@@ -77,7 +79,7 @@ function Navigation() {
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({ Fraunces_600SemiBold, Inter_400Regular, Inter_600SemiBold });
-  return <GestureHandlerRootView style={styles.root}><AuthProvider><PronunciationCacheScopeProvider><SyncProvider><AppDataProvider><AppReadyGate fontsLoaded={fontsLoaded}/></AppDataProvider></SyncProvider></PronunciationCacheScopeProvider></AuthProvider></GestureHandlerRootView>;
+  return <GestureHandlerRootView style={styles.root}><AuthProvider><OfflinePronunciationDownloadsProvider><PronunciationCacheScopeProvider><SyncProvider><AppDataProvider><AppReadyGate fontsLoaded={fontsLoaded}/></AppDataProvider></SyncProvider></PronunciationCacheScopeProvider></OfflinePronunciationDownloadsProvider></AuthProvider></GestureHandlerRootView>;
 }
 
 function AppReadyGate({ fontsLoaded }: { fontsLoaded: boolean }) {
