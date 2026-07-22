@@ -28,6 +28,9 @@ release and is not represented as independent legal advice.
 No production rollout, private/manual cloud pronunciation, bulk generation, EAS build, or public
 app feature enablement is approved by this decision.
 
+The later Phase 3D decision approves one bounded development backfill. It supersedes only the
+"bulk generation" exclusion above and leaves every other rollout boundary unchanged.
+
 ## Deployment record
 
 - Supabase migrations `20260721000000`, `20260721180000`, and `20260721180500` were applied to the
