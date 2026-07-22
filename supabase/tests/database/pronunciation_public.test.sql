@@ -79,6 +79,30 @@ select ok(
 );
 
 select ok(
+  exists (
+    select 1
+    from storage.buckets
+    where id = 'pron-manifests'
+      and public
+      and file_size_limit = 8388608
+      and allowed_mime_types = array['application/json']
+  ),
+  'pron-manifests is a public JSON-only bucket with an eight-megabyte limit'
+);
+
+select ok(
+  not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'storage'
+      and tablename = 'objects'
+      and ('anon' = any(roles) or 'authenticated' = any(roles))
+      and cmd in ('INSERT', 'UPDATE', 'DELETE', 'ALL')
+  ),
+  'application roles have no Storage object write policy'
+);
+
+select ok(
   not has_function_privilege(
     'authenticated',
     'public.claim_public_pronunciation(text,text,text,text,text,text,text,text,integer)',
