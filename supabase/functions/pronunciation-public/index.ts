@@ -125,7 +125,7 @@ export default {
       return await handlePronunciationRequest(request, {
         userId: context.userClaims?.id,
         limits: {
-          userHourlyRequests: positiveInteger('PRONUNCIATION_USER_HOURLY_REQUEST_LIMIT', 20, 1000),
+          userHourlyRequests: positiveInteger('PRONUNCIATION_USER_HOURLY_REQUEST_LIMIT', 20, 20_000),
           userDailyCharacters: positiveInteger('PRONUNCIATION_USER_DAILY_CHARACTER_LIMIT', 1000, 1_000_000),
           globalDailyCharacters: positiveInteger('PRONUNCIATION_GLOBAL_DAILY_CHARACTER_LIMIT', 10_000, 100_000_000),
         },

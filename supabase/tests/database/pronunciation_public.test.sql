@@ -226,6 +226,42 @@ select is(
   'pronunciation request audit retention is bounded to thirty days'
 );
 
+select lives_ok(
+  $$
+    select public.authorize_public_pronunciation_request(
+      '00000000-0000-4000-8000-000000000091',
+      '00001740-a:able',
+      'en-GB',
+      repeat('b', 64),
+      'cache_hit',
+      0,
+      20000,
+      125000,
+      125000
+    )
+  $$,
+  'the approved temporary bulk limit is accepted by the budget gate'
+);
+
+select throws_ok(
+  $$
+    select public.authorize_public_pronunciation_request(
+      '00000000-0000-4000-8000-000000000091',
+      '00001740-a:able',
+      'en-GB',
+      repeat('c', 64),
+      'cache_hit',
+      0,
+      20001,
+      125000,
+      125000
+    )
+  $$,
+  '22023',
+  'invalid pronunciation budget request',
+  'hourly limits above the approved bulk ceiling fail closed'
+);
+
 select * from finish();
 
 rollback;
