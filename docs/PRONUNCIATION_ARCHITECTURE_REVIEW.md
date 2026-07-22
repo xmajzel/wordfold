@@ -461,12 +461,15 @@ For each launch locale `L`, gate release on:
   bounded Phase 3D backfill produced and verified all 16,600 English assets with zero pending or
   failed rows. The provisional Slovak voice remains disabled until an approved public Slovak input
   source exists.
-- **[PHASE 4A DEPLOYED] Phase 4 (explicit offline downloads):** a deterministic, immutable public
+- **[PHASE 4A DEPLOYED / PHASE 4B IMPLEMENTED LOCALLY] Phase 4 (explicit offline downloads):** a deterministic, immutable public
   index and two locale shards now expose the 16,600 ready English asset identities, hashes, and
-  sizes without per-word Edge Function calls. Phase 4B still needs the durable collection/level
-  download, progress, cancellation, and eviction UX. Evaluate
-  PowerSync Attachments against a small custom download cache; adopt it only if its alpha status
-  and automatic watch/download model fit the requirement.
+  sizes without per-word Edge Function calls. Phase 4B adds a custom Expo FileSystem document
+  store and native Settings screen for US/UK A1-C2 or full-locale downloads, exact progress,
+  cancellation, file-level resume, disk checks, explicit eviction, and checksum-verified offline
+  playback. Public downloaded packs work without an account and never fall through to the cloud;
+  signed-in playback prefers them before the transient cache and Edge Function. PowerSync
+  Attachments remains excluded because its alpha synchronized-record lifecycle does not fit this
+  immutable, device-selected public corpus. Physical Android/iOS verification is still pending.
 - **Phase 5 (private cloud, opt-in):** cloud for user-created words behind explicit consent,
   per-user namespace, DPA/privacy disclosure, retention policy, and account-isolation tests.
 - **Deferred indefinitely (cut from scope now):** IPA/SSML override UI, wrong-pronunciation
