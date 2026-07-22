@@ -21,12 +21,14 @@ type NeuralPronunciationButtonProps = {
   catalogSenseId: string;
   locale: NeuralPronunciationLocale;
   compact?: boolean;
+  offlineOnly?: boolean;
 };
 
 export function NeuralPronunciationButton({
   catalogSenseId,
   locale,
   compact = false,
+  offlineOnly = false,
 }: NeuralPronunciationButtonProps) {
   const theme = useAppTheme();
   const [status, setStatus] = useState<NeuralStatus>('idle');
@@ -51,14 +53,16 @@ export function NeuralPronunciationButton({
   }, []);
 
   const showPlaybackError = useCallback((error: unknown) => {
-    const message = error instanceof NeuralPronunciationError
+    const message = offlineOnly
+      ? 'This downloaded pronunciation is unavailable. Open Settings and resume or download the pack again.'
+      : error instanceof NeuralPronunciationError
       ? error.message
       : 'Neural voice preview could not be played. Please try again.';
     Alert.alert(
       'Neural voice did not play',
       `${message}\n\nThe device voice option remains available.`,
     );
-  }, []);
+  }, [offlineOnly]);
 
   const play = useCallback(async () => {
     if (status === 'preparing') return;
@@ -88,7 +92,7 @@ export function NeuralPronunciationButton({
           setStatus('idle');
           showPlaybackError(error);
         },
-      });
+      }, { cloudAllowed: !offlineOnly });
       if (!mounted.current || requestId.current !== currentRequest) return;
       if (result.status === 'pending') setStatus('pending');
       else if (result.status === 'stopped') setStatus('idle');
@@ -97,7 +101,7 @@ export function NeuralPronunciationButton({
       setStatus('idle');
       showPlaybackError(error);
     }
-  }, [catalogSenseId, locale, showPlaybackError, status]);
+  }, [catalogSenseId, locale, offlineOnly, showPlaybackError, status]);
 
   const preparing = status === 'preparing';
   const pending = status === 'pending';
@@ -129,7 +133,7 @@ export function NeuralPronunciationButton({
       <AppText variant="label" style={{ color: theme.accent }}>
         {preparing || pending
           ? 'Preparing neural voice…'
-          : speaking ? 'Playing neural voice…' : 'Neural voice preview'}
+          : speaking ? 'Playing neural voice…' : offlineOnly ? 'Downloaded neural voice' : 'Neural voice preview'}
       </AppText>
       {!compact ? <AppText variant="caption" style={{ color: theme.muted }}>
         {pending ? 'Tap to check again' : localeDescription}

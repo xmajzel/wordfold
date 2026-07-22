@@ -23,12 +23,20 @@ import {
   deleteCachedNeuralPronunciation,
   getCachedNeuralPronunciationFile,
 } from '@/features/pronunciation/public-cache';
+import {
+  deleteOfflinePronunciationFile,
+  getOfflinePronunciationFile,
+} from '@/features/pronunciation/offline-store';
 
 export type PronunciationResult = DevicePronunciationResult | { status: 'stopped' };
 export type NeuralPronunciationResult =
   | { status: 'started' }
   | { status: 'pending'; retryAfterSeconds: number }
   | { status: 'stopped' };
+
+export type NeuralPronunciationOptions = {
+  cloudAllowed?: boolean;
+};
 
 let operationId = 0;
 
@@ -107,18 +115,26 @@ export async function startNeuralPronunciation(
   catalogSenseId: string,
   locale: NeuralPronunciationLocale,
   callbacks: DevicePronunciationCallbacks = {},
+  options: NeuralPronunciationOptions = {},
 ): Promise<NeuralPronunciationResult> {
   const currentOperation = operationId + 1;
   operationId = currentOperation;
   await stopPlayers();
 
-  let file = await getCachedNeuralPronunciationFile(catalogSenseId, locale);
+  let file = await getOfflinePronunciationFile(catalogSenseId, locale);
+  let durableOfflineFile = file !== null;
+  if (operationId !== currentOperation) return { status: 'stopped' };
+  if (!file) file = await getCachedNeuralPronunciationFile(catalogSenseId, locale);
   if (operationId !== currentOperation) return { status: 'stopped' };
   if (!file) {
+    if (options.cloudAllowed === false) {
+      throw new Error('This downloaded pronunciation is no longer available. Download the pack again in Settings.');
+    }
     const response = await requestNeuralPronunciation(catalogSenseId, locale);
     if (operationId !== currentOperation) return { status: 'stopped' };
     if (response.status === 'pending') return response;
     file = await cacheNeuralPronunciationFile(catalogSenseId, response.asset);
+    durableOfflineFile = false;
     if (operationId !== currentOperation) return { status: 'stopped' };
   }
 
@@ -126,12 +142,14 @@ export async function startNeuralPronunciation(
     await playPronunciationFile(file.uri, {
       ...callbacks,
       onError: (error) => {
-        void deleteCachedNeuralPronunciation(catalogSenseId, locale);
+        if (durableOfflineFile) void deleteOfflinePronunciationFile(catalogSenseId, locale);
+        else void deleteCachedNeuralPronunciation(catalogSenseId, locale);
         callbacks.onError?.(error);
       },
     });
   } catch (error) {
-    await deleteCachedNeuralPronunciation(catalogSenseId, locale);
+    if (durableOfflineFile) await deleteOfflinePronunciationFile(catalogSenseId, locale);
+    else await deleteCachedNeuralPronunciation(catalogSenseId, locale);
     throw error;
   }
   if (operationId !== currentOperation) return { status: 'stopped' };

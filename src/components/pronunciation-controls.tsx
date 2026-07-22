@@ -7,6 +7,7 @@ import {
   type NeuralPronunciationLocale,
 } from '@/features/pronunciation/cloud';
 import { usePronunciationCacheScope } from '@/features/pronunciation/cache-scope';
+import { useOfflinePronunciationDownloads } from '@/features/pronunciation/offline-downloads-provider';
 import { spacing } from '@/theme/tokens';
 
 type PronunciationControlsProps = {
@@ -21,7 +22,7 @@ export function PronunciationControls(props: PronunciationControlsProps) {
   const eligibility = Platform.OS === 'web' ? null : getNeuralPronunciationEligibility(props);
   return <View style={styles.controls}>
     <PronunciationButton text={props.text} locale={props.locale} compact={props.compact}/>
-    {eligibility ? <SignedInNeuralControl
+    {eligibility ? <NeuralControl
       catalogSenseId={eligibility.catalogSenseId}
       locale={eligibility.locale}
       compact={props.compact}
@@ -29,17 +30,20 @@ export function PronunciationControls(props: PronunciationControlsProps) {
   </View>;
 }
 
-function SignedInNeuralControl({ catalogSenseId, locale, compact }: {
+function NeuralControl({ catalogSenseId, locale, compact }: {
   catalogSenseId: string;
   locale: NeuralPronunciationLocale;
   compact?: boolean;
 }) {
   const cacheScope = usePronunciationCacheScope();
-  if (cacheScope.type !== 'account') return null;
+  const offlineDownloads = useOfflinePronunciationDownloads();
+  const offlineOnly = cacheScope.type !== 'account';
+  if (offlineOnly && !offlineDownloads.hasAsset(catalogSenseId, locale)) return null;
   return <NeuralPronunciationButton
     catalogSenseId={catalogSenseId}
     locale={locale}
     compact={compact}
+    offlineOnly={offlineOnly}
   />;
 }
 

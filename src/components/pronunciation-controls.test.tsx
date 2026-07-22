@@ -6,9 +6,16 @@ import { PronunciationControls } from './pronunciation-controls';
 const mockCacheScope: { type: 'guest' | 'account'; userId?: string } = {
   type: 'account', userId: 'reader',
 };
+let mockHasOfflineAsset = false;
 
 jest.mock('@/features/pronunciation/cache-scope', () => ({
   usePronunciationCacheScope: () => mockCacheScope,
+}));
+
+jest.mock('@/features/pronunciation/offline-downloads-provider', () => ({
+  useOfflinePronunciationDownloads: () => ({
+    hasAsset: () => mockHasOfflineAsset,
+  }),
 }));
 
 jest.mock('@/components/pronunciation-button', () => {
@@ -23,8 +30,9 @@ jest.mock('@/components/pronunciation-button', () => {
 jest.mock('@/components/neural-pronunciation-button', () => {
   const { Pressable, Text } = jest.requireActual<typeof import('react-native')>('react-native');
   return {
-    NeuralPronunciationButton: () => {
-      return <Pressable accessibilityRole="button" accessibilityLabel="neural"><Text>neural</Text></Pressable>;
+    NeuralPronunciationButton: ({ offlineOnly }: { offlineOnly?: boolean }) => {
+      const label = offlineOnly ? 'neural-offline' : 'neural';
+      return <Pressable accessibilityRole="button" accessibilityLabel={label}><Text>{label}</Text></Pressable>;
     },
   };
 });
@@ -38,6 +46,7 @@ describe('PronunciationControls', () => {
   beforeEach(() => {
     process.env.EXPO_PUBLIC_PRONUNCIATION_NEURAL_PREVIEW_ENABLED = 'true';
     Object.assign(mockCacheScope, { type: 'account', userId: 'reader' });
+    mockHasOfflineAsset = false;
     Object.defineProperty(Platform, 'OS', { configurable: true, value: 'ios' });
   });
 
@@ -59,6 +68,10 @@ describe('PronunciationControls', () => {
     Object.assign(mockCacheScope, { type: 'guest', userId: undefined });
     const signedOut = await render(<PronunciationControls {...props}/>);
     expect(signedOut.queryByLabelText('neural')).toBeNull();
+
+    mockHasOfflineAsset = true;
+    const downloaded = await render(<PronunciationControls {...props}/>);
+    expect(downloaded.getByLabelText('neural-offline')).toBeTruthy();
 
     Object.assign(mockCacheScope, { type: 'account', userId: 'reader' });
     Object.defineProperty(Platform, 'OS', { configurable: true, value: 'web' });

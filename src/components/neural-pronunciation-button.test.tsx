@@ -75,4 +75,24 @@ describe('NeuralPronunciationButton', () => {
     ));
     expect(alert.mock.calls[0][1]).not.toContain('file:///');
   });
+
+  it('prevents cloud use for a downloaded guest pronunciation', async () => {
+    mockStartNeuralPronunciation.mockResolvedValue({ status: 'started' });
+    const screen = await render(<NeuralPronunciationButton
+      catalogSenseId="sense-id"
+      locale="en-US"
+      offlineOnly
+    />);
+
+    await fireEvent.press(screen.getByRole('button', {
+      name: 'Play English · United States neural pronunciation preview',
+    }));
+
+    await waitFor(() => expect(mockStartNeuralPronunciation).toHaveBeenCalledWith(
+      'sense-id',
+      'en-US',
+      expect.any(Object),
+      { cloudAllowed: false },
+    ));
+  });
 });

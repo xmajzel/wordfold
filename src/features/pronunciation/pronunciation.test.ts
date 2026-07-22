@@ -13,6 +13,8 @@ const mockRequestNeuralPronunciation = jest.fn();
 const mockGetCachedNeuralFile = jest.fn();
 const mockCacheNeuralFile = jest.fn();
 const mockDeleteCachedNeural = jest.fn();
+const mockGetOfflineNeuralFile = jest.fn();
+const mockDeleteOfflineNeuralFile = jest.fn();
 
 jest.mock('@/features/pronunciation/audio-player', () => ({
   playPronunciationFile: (...args: unknown[]) => mockPlayPronunciationFile(...args),
@@ -43,6 +45,11 @@ jest.mock('@/features/pronunciation/public-cache', () => ({
   getCachedNeuralPronunciationFile: (...args: unknown[]) => mockGetCachedNeuralFile(...args),
   cacheNeuralPronunciationFile: (...args: unknown[]) => mockCacheNeuralFile(...args),
   deleteCachedNeuralPronunciation: (...args: unknown[]) => mockDeleteCachedNeural(...args),
+}));
+
+jest.mock('@/features/pronunciation/offline-store', () => ({
+  getOfflinePronunciationFile: (...args: unknown[]) => mockGetOfflineNeuralFile(...args),
+  deleteOfflinePronunciationFile: (...args: unknown[]) => mockDeleteOfflineNeuralFile(...args),
 }));
 
 const voice = { identifier: 'exact-es-MX', language: 'es-MX' };
@@ -128,6 +135,7 @@ describe('neural pronunciation orchestration', () => {
     jest.clearAllMocks();
     Object.defineProperty(Platform, 'OS', { configurable: true, value: 'ios' });
     mockGetCachedNeuralFile.mockResolvedValue(neuralFile);
+    mockGetOfflineNeuralFile.mockResolvedValue(null);
     mockCacheNeuralFile.mockResolvedValue(neuralFile);
     mockRequestNeuralPronunciation.mockResolvedValue({ status: 'ready', asset });
     mockPlayPronunciationFile.mockImplementation(async (_uri, callbacks) => {
@@ -142,6 +150,30 @@ describe('neural pronunciation orchestration', () => {
     expect(mockGetCachedNeuralFile).toHaveBeenCalledWith('sense-id', 'en-GB');
     expect(mockRequestNeuralPronunciation).not.toHaveBeenCalled();
     expect(mockPlayPronunciationFile).toHaveBeenCalledWith(neuralFile.uri, expect.any(Object));
+  });
+
+  it('prefers a durable downloaded pack without consulting the transient cache or cloud', async () => {
+    const offlineFile = { uri: 'file:///documents/offline.mp3' };
+    mockGetOfflineNeuralFile.mockResolvedValue(offlineFile);
+
+    await expect(startNeuralPronunciation('sense-id', 'en-GB')).resolves.toEqual({ status: 'started' });
+
+    expect(mockGetCachedNeuralFile).not.toHaveBeenCalled();
+    expect(mockRequestNeuralPronunciation).not.toHaveBeenCalled();
+    expect(mockPlayPronunciationFile).toHaveBeenCalledWith(offlineFile.uri, expect.any(Object));
+  });
+
+  it('never invokes the authenticated cloud path for an offline-only user', async () => {
+    mockGetCachedNeuralFile.mockResolvedValue(null);
+
+    await expect(startNeuralPronunciation(
+      'sense-id',
+      'en-US',
+      {},
+      { cloudAllowed: false },
+    )).rejects.toThrow('Download the pack again');
+
+    expect(mockRequestNeuralPronunciation).not.toHaveBeenCalled();
   });
 
   it('requests and verifies a ready asset only after the offline cache misses', async () => {
@@ -173,5 +205,15 @@ describe('neural pronunciation orchestration', () => {
 
     expect(mockDeleteCachedNeural).toHaveBeenCalledWith('sense-id', 'en-US');
     expect(mockStartDevicePronunciation).not.toHaveBeenCalled();
+  });
+
+  it('removes a durable pack file that cannot start playback', async () => {
+    mockGetOfflineNeuralFile.mockResolvedValue({ uri: 'file:///documents/offline.mp3' });
+    mockPlayPronunciationFile.mockRejectedValue(new Error('Unreadable MP3'));
+
+    await expect(startNeuralPronunciation('sense-id', 'en-US')).rejects.toThrow('Unreadable MP3');
+
+    expect(mockDeleteOfflineNeuralFile).toHaveBeenCalledWith('sense-id', 'en-US');
+    expect(mockDeleteCachedNeural).not.toHaveBeenCalled();
   });
 });
