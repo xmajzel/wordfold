@@ -90,7 +90,10 @@
     "pronunciation:catalog-sql": "node scripts/build-pronunciation-catalog-sql.mjs",
     "pronunciation:backfill": "node scripts/pronunciation-backfill.mjs",
     "pronunciation:backfill:plan": "node scripts/pronunciation-backfill.mjs plan",
-    "pronunciation:backfill:restore-limits": "node scripts/pronunciation-backfill.mjs restore-limits"
+    "pronunciation:backfill:restore-limits": "node scripts/pronunciation-backfill.mjs restore-limits",
+    "pronunciation:offline-manifest": "node scripts/pronunciation-offline-manifest.mjs",
+    "pronunciation:offline-manifest:export": "node scripts/pronunciation-offline-manifest.mjs export --linked",
+    "pronunciation:offline-manifest:verify": "node scripts/pronunciation-offline-manifest.mjs verify"
   },
   "jest": {
     "preset": "jest-expo",
