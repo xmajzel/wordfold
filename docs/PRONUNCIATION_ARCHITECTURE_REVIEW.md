@@ -453,14 +453,18 @@ For each launch locale `L`, gate release on:
   `en-GB-RyanNeural`, and `sk-SK-ViktoriaNeural` are single-reviewer provisional engineering
   defaults, using lower observed latency only to break tied ratings. The two-rater production gate
   remains pending and no voice/provider has passed it.
-- **[IMPLEMENTED LOCALLY] Phase 3B (authenticated public-catalog neural preview):** the backend and
+- **[DEPLOYED TO DEVELOPMENT] Phase 3B/3D (authenticated public-catalog neural preview):** the backend and
   client were implemented as two separately approved steps. The client adds a feature-flagged,
   signed-in, exact-catalog `en-US`/`en-GB` neural preview beside device speech, with verified
   public-MP3 offline replay and no automatic fallback. The 8,300-entry allowlist, budgeted function,
-  immutable `pron-public` Storage, and server-owned metadata are deployed only to development; no
-  authenticated Azure request has been made. The provisional Slovak voice remains disabled until
-  an approved public Slovak input source exists.
-- **Phase 4 (explicit offline downloads):** add collection download/eviction UX. Evaluate
+  immutable `pron-public` Storage, and server-owned metadata are deployed to development. The
+  bounded Phase 3D backfill produced and verified all 16,600 English assets with zero pending or
+  failed rows. The provisional Slovak voice remains disabled until an approved public Slovak input
+  source exists.
+- **[PHASE 4A DEPLOYED] Phase 4 (explicit offline downloads):** a deterministic, immutable public
+  index and two locale shards now expose the 16,600 ready English asset identities, hashes, and
+  sizes without per-word Edge Function calls. Phase 4B still needs the durable collection/level
+  download, progress, cancellation, and eviction UX. Evaluate
   PowerSync Attachments against a small custom download cache; adopt it only if its alpha status
   and automatic watch/download model fit the requirement.
 - **Phase 5 (private cloud, opt-in):** cloud for user-created words behind explicit consent,
