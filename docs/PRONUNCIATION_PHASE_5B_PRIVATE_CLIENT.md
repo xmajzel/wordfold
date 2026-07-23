@@ -98,7 +98,8 @@ real Azure request, or EAS build is part of Phase 5B.
 
 - Deploy and validate Phase 5A/5B only after explicit approval.
 - Update the product privacy policy and confirm the Microsoft DPA before user text leaves a device.
-- Implement scheduled removal of expired database metadata and private Storage objects.
+- Deploy and schedule the locally implemented Phase 5C removal of expired database metadata and
+  private Storage objects.
 - Set production monitoring and complete remote two-account isolation testing.
 - Verify the native experience on physical Android and iOS devices. iOS remains deferred until a
   device is available.

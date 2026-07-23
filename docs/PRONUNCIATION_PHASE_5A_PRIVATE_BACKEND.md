@@ -53,8 +53,9 @@ failure does not orphan an undiscoverable private object.
 - Private asset rows carry a rolling `expires_at` value 30 days after last access.
 - Request audit rows continue to use the existing 30-day cleanup window.
 - Explicit opt-out deletion is implemented by the private endpoint.
-- Scheduled deletion of expired private assets and their Storage objects is **not implemented in
-  Phase 5A**. It is a required operational step before this feature is exposed to users.
+- Scheduled deletion of expired private assets and their Storage objects is implemented locally in
+  Phase 5C but is not deployed or scheduled. See
+  `docs/PRONUNCIATION_PHASE_5C_RETENTION_AND_ROLLOUT.md`.
 - Private metadata is excluded from the PowerSync publication, and application roles cannot query
   it directly.
 - Account deletion cascades private metadata through the owner foreign key. A production account
@@ -81,7 +82,7 @@ endpoint remains available only when `PRONUNCIATION_FAKE_PROVIDER=true` for loca
 - **Implemented locally in Phase 5B:** application consent, disclosure, verified account-private
   playback/cache behavior, and retryable opt-out UI. The client remains feature-flagged off and
   not deployed; see `docs/PRONUNCIATION_PHASE_5B_PRIVATE_CLIENT.md`.
-- Implement and test scheduled expiry cleanup for database metadata and Storage objects.
+- Deploy and schedule the locally implemented Phase 5C expiry cleanup after explicit approval.
 - Update the privacy policy and confirm the applicable [Microsoft Products and Services DPA](https://www.microsoft.com/licensing/docs/view/Microsoft-Products-and-Services-Data-Protection-Addendum-DPA)
   before any user-entered text is sent to Azure.
 - Set production limits/alerts and run account-isolation tests against the linked development
