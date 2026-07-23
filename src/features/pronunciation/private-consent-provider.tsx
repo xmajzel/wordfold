@@ -99,6 +99,7 @@ export function PrivatePronunciationConsentProvider({ children }: PropsWithChild
     if (status === 'deletion_pending') {
       throw new Error('Finish deleting previous cloud pronunciation data before enabling it again.');
     }
+    const currentGeneration = generation.current;
     const key = await consentKey(userId);
     const stored: StoredConsent = {
       schemaVersion: 1,
@@ -107,13 +108,15 @@ export function PrivatePronunciationConsentProvider({ children }: PropsWithChild
       enabledAt: new Date().toISOString(),
     };
     await AsyncStorage.setItem(key, JSON.stringify(stored));
-    setStatus('enabled');
+    if (generation.current === currentGeneration) setStatus('enabled');
   }, [status, userId]);
 
   const performDeletion = useCallback(async () => {
     if (!userId) throw new Error('Sign in to finish deleting cloud pronunciation data.');
     if (operation.current) return operation.current;
-    const task = (async () => {
+    const currentGeneration = generation.current;
+    let task: Promise<void>;
+    task = (async () => {
       const key = await consentKey(userId);
       const existing = parseStoredConsent(await AsyncStorage.getItem(key));
       const pending: StoredConsent = {
@@ -123,7 +126,7 @@ export function PrivatePronunciationConsentProvider({ children }: PropsWithChild
         enabledAt: existing?.enabledAt ?? new Date().toISOString(),
       };
       await AsyncStorage.setItem(key, JSON.stringify(pending));
-      setStatus('deletion_pending');
+      if (generation.current === currentGeneration) setStatus('deletion_pending');
 
       const results = await Promise.allSettled([
         clearPrivateNeuralPronunciationCache(userId),
@@ -133,9 +136,9 @@ export function PrivatePronunciationConsentProvider({ children }: PropsWithChild
         throw new Error('Cloud pronunciation is off, but its saved audio could not be fully deleted. Try again when online.');
       }
       await AsyncStorage.removeItem(key);
-      setStatus('disabled');
+      if (generation.current === currentGeneration) setStatus('disabled');
     })().finally(() => {
-      operation.current = null;
+      if (operation.current === task) operation.current = null;
     });
     operation.current = task;
     return task;

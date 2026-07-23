@@ -7,7 +7,7 @@ import {
 } from './private-consent-provider';
 
 const mockStorage = new Map<string, string>();
-const mockClearPrivateCache = jest.fn(async () => undefined);
+const mockClearPrivateCache = jest.fn(async (_userId: string) => undefined);
 const mockDeletePrivatePronunciation = jest.fn(async () => undefined);
 const mockAuth: { user: { id: string } | null } = {
   user: { id: '00000000-0000-4000-8000-0000000000a1' },
@@ -26,7 +26,7 @@ jest.mock('expo-crypto', () => ({
 
 jest.mock('@/providers/auth-provider', () => ({ useAuth: () => mockAuth }));
 jest.mock('@/features/pronunciation/private-cache', () => ({
-  clearPrivateNeuralPronunciationCache: (...args: unknown[]) => mockClearPrivateCache(...args),
+  clearPrivateNeuralPronunciationCache: (userId: string) => mockClearPrivateCache(userId),
 }));
 jest.mock('@/features/pronunciation/private-cloud', () => ({
   deletePrivateNeuralPronunciation: () => mockDeletePrivatePronunciation(),

@@ -20,7 +20,7 @@ import { useAppTheme } from '@/hooks/use-app-theme';
 import { radii, spacing } from '@/theme/tokens';
 
 const AZURE_PRIVACY_URL =
-  'https://learn.microsoft.com/en-us/azure/ai-services/speech-service/'
+  'https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/speech-service/'
   + 'text-to-speech/data-privacy-security';
 
 export default function PrivatePronunciationScreen() {
