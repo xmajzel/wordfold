@@ -233,6 +233,37 @@ describe('private pronunciation Edge Function core', () => {
     );
   });
 
+  it('returns pending while an expired asset is being deleted', async () => {
+    const { dependencies, repository, storage } = harness();
+    jest.mocked(repository.claim).mockImplementationOnce(async (input) => ({
+      id: 'asset-id',
+      ownerUserId: input.ownerUserId,
+      status: 'deleting',
+      claimed: false,
+      leaseToken: null,
+      requestKey: input.requestKey,
+      contentHash: input.requestKey,
+      sha256: 'a'.repeat(64),
+      byteLength: 128,
+      objectKey: `${input.ownerUserId}/${PRIVATE_SYNTHESIS_VERSION}/${input.requestKey}.mp3`,
+      locale: input.locale,
+      synthesisVersion: PRIVATE_SYNTHESIS_VERSION,
+    }));
+
+    const response = await handlePrivatePronunciationRequest(
+      request({ text: 'hello', locale: 'en-US' }),
+      dependencies,
+    );
+
+    expect(response.status).toBe(202);
+    expect(repository.authorize).toHaveBeenCalledWith(expect.objectContaining({
+      requestKind: 'pending',
+      billedCharacters: 0,
+    }));
+    expect(dependencies.synthesize).not.toHaveBeenCalled();
+    expect(storage.createSignedUrl).not.toHaveBeenCalled();
+  });
+
   it('removes only validated current-owner objects before deleting metadata', async () => {
     const { dependencies, repository, storage } = harness();
     const keys = [

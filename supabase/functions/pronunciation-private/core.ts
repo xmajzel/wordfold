@@ -28,7 +28,7 @@ export type PrivatePronunciationLocale = keyof typeof PRIVATE_VOICES;
 export type PrivateAssetRecord = {
   id: string;
   ownerUserId: string;
-  status: 'pending' | 'ready' | 'failed';
+  status: 'pending' | 'ready' | 'failed' | 'deleting';
   claimed: boolean;
   leaseToken: string | null;
   requestKey: string;
