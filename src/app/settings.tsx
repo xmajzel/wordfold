@@ -10,6 +10,8 @@ import { Screen } from '@/components/screen';
 import type { ReminderSettings } from '@/domain/types';
 import { topicOptions } from '@/features/recommendations/selector';
 import { neuralPreviewFeatureEnabled } from '@/features/pronunciation/cloud';
+import { privateNeuralPreviewFeatureEnabled } from '@/features/pronunciation/private-cloud';
+import { usePrivatePronunciationConsent } from '@/features/pronunciation/private-consent-provider';
 import { requestReminderPermission } from '@/features/reminders/scheduler';
 import { formatMinutes, REMINDER_PRESETS } from '@/features/reminders/slots';
 import { useAppTheme } from '@/hooks/use-app-theme';
@@ -101,6 +103,11 @@ export default function SettingsScreen() {
         </View>
         <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
       </Pressable>}
+      {Platform.OS !== 'web'
+        && auth.status === 'signedIn'
+        && privateNeuralPreviewFeatureEnabled()
+        ? <PrivatePronunciationSettingsCard/>
+        : null}
       <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={styles.switchRow}><View style={styles.flex}><AppText variant="heading">Word reminders</AppText><AppText style={{ color: theme.muted }}>Fresh words at preferred times.</AppText></View><AppSwitch accessibilityLabel="Enable word reminders" value={draft.enabled} onValueChange={(value) => void toggleEnabled(value)}/></View></View>
       <View><AppText variant="heading">How often?</AppText><AppText style={{ color: theme.muted }}>One to three gentle presets, or your own rhythm up to six.</AppText></View>
       <View style={styles.countGrid}>{[1, 2, 3, 4, 5, 6].map((count) => { const preset = REMINDER_PRESETS.find((item) => item.count === count); const selected = draft.countPerDay === count; return <Pressable key={count} onPress={() => setDraft({ ...draft, countPerDay: count })} style={[styles.countCard, { backgroundColor: selected ? theme.primarySoft : theme.surface, borderColor: selected ? theme.primary : theme.border }]}><AppText variant="heading" style={{ color: selected ? theme.primary : theme.text }}>{count}</AppText><AppText variant="caption" numberOfLines={1} style={{ color: theme.muted }}>{preset?.label ?? 'My rhythm'}</AppText></Pressable>; })}</View>
@@ -116,6 +123,41 @@ export default function SettingsScreen() {
       <AppText variant="caption" style={{ color: theme.muted }}>Wordfold is a temporary development name. Reminders and learning preferences remain device-only.</AppText>
     </Screen>
   );
+}
+
+function PrivatePronunciationSettingsCard() {
+  const theme = useAppTheme();
+  const consent = usePrivatePronunciationConsent();
+  const detail = consent.status === 'enabled'
+    ? 'On · private neural voice for US English, UK English, and Slovak'
+    : consent.status === 'deletion_pending'
+      ? 'Off · private audio deletion needs attention'
+      : consent.status === 'loading'
+        ? 'Checking this account’s choice…'
+        : 'Off · review what is sent before enabling';
+  return <Pressable
+    accessibilityRole="button"
+    accessibilityLabel="Manage private pronunciation"
+    onPress={() => router.push('/private-pronunciation' as never)}
+    style={({ pressed }) => [styles.preferenceCard, {
+      backgroundColor: theme.surface,
+      borderColor: consent.status === 'deletion_pending' ? theme.danger : theme.border,
+      opacity: pressed ? 0.76 : 1,
+    }]}
+  >
+    <View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}>
+      <Ionicons
+        name={consent.status === 'deletion_pending' ? 'alert-circle-outline' : 'shield-checkmark-outline'}
+        color={consent.status === 'deletion_pending' ? theme.danger : theme.primary}
+        size={24}
+      />
+    </View>
+    <View style={styles.flex}>
+      <AppText variant="heading">Private pronunciation</AppText>
+      <AppText variant="caption" style={{ color: theme.muted }}>{detail}</AppText>
+    </View>
+    <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
+  </Pressable>;
 }
 
 function syncStatusLabel(
