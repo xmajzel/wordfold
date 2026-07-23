@@ -472,13 +472,17 @@ For each launch locale `L`, gate release on:
   immutable, device-selected public corpus. A physical Android device verified full and subset
   download, recovery after a transient DNS failure, and airplane-mode playback. iOS verification
   is deferred because no iOS device is currently available.
-- **[PHASE 5A IMPLEMENTED LOCALLY / NOT DEPLOYED] Phase 5 (private cloud, opt-in):** the
+- **[PHASE 5A/5B IMPLEMENTED LOCALLY / NOT DEPLOYED] Phase 5 (private cloud, opt-in):** the
   authenticated backend accepts exact `en-US`/`en-GB`/`sk-SK` user text, stores no raw synthesis
   text, isolates metadata and private Storage paths by account, returns 60-second signed URLs,
-  shares the public pronunciation budget ledger, and supports owner-scoped deletion. Phase 5B
-  consent/disclosure UI and Phase 5C scheduled expiry cleanup, legal approval, deployment, and
+  shares the public pronunciation budget ledger, and supports owner-scoped deletion. The native
+  client adds default-off account-scoped consent, a complete disclosure, strict response and
+  signed-URL validation, a checksum-verified account-private cache that persists neither raw text
+  nor signed URLs, separate device/cloud controls, and retryable opt-out deletion. Phase 5C
+  scheduled expiry cleanup, legal approval, deployment, physical-device client verification, and
   production isolation validation remain release gates. See
-  `docs/PRONUNCIATION_PHASE_5A_PRIVATE_BACKEND.md`.
+  `docs/PRONUNCIATION_PHASE_5A_PRIVATE_BACKEND.md` and
+  `docs/PRONUNCIATION_PHASE_5B_PRIVATE_CLIENT.md`.
 - **Deferred indefinitely (cut from scope now):** IPA/SSML override UI, wrong-pronunciation
   reporting+regeneration, self-hosted Piper, licensed human recordings, teacher/user recordings.
   Keep only the *data-model hooks* (senseId, override field, provider/model in key), not the

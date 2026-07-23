@@ -78,7 +78,9 @@ endpoint remains available only when `PRONUNCIATION_FAKE_PROVIDER=true` for loca
 
 ## Release gates
 
-- Implement Phase 5B application consent, disclosure, playback/cache behavior, and opt-out UI.
+- **Implemented locally in Phase 5B:** application consent, disclosure, verified account-private
+  playback/cache behavior, and retryable opt-out UI. The client remains feature-flagged off and
+  not deployed; see `docs/PRONUNCIATION_PHASE_5B_PRIVATE_CLIENT.md`.
 - Implement and test scheduled expiry cleanup for database metadata and Storage objects.
 - Update the privacy policy and confirm the applicable [Microsoft Products and Services DPA](https://www.microsoft.com/licensing/docs/view/Microsoft-Products-and-Services-Data-Protection-Addendum-DPA)
   before any user-entered text is sent to Azure.
