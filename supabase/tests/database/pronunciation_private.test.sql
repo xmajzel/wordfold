@@ -95,10 +95,31 @@ select ok(
   'only the service role can claim private pronunciation generation'
 );
 
+select ok(
+  not has_function_privilege(
+    'authenticated',
+    'public.claim_expired_private_pronunciations(integer,integer)',
+    'EXECUTE'
+  )
+    and not has_function_privilege(
+      'powersync_role',
+      'public.claim_expired_private_pronunciations(integer,integer)',
+      'EXECUTE'
+    )
+    and has_function_privilege(
+      'service_role',
+      'public.claim_expired_private_pronunciations(integer,integer)',
+      'EXECUTE'
+    ),
+  'only the service role can claim expired private pronunciation assets'
+);
+
 insert into auth.users (id, email)
 values
   ('00000000-0000-4000-8000-0000000000a1', 'private-a@example.test'),
-  ('00000000-0000-4000-8000-0000000000b2', 'private-b@example.test');
+  ('00000000-0000-4000-8000-0000000000b2', 'private-b@example.test'),
+  ('00000000-0000-4000-8000-0000000000c3', 'private-c@example.test'),
+  ('00000000-0000-4000-8000-0000000000d4', 'private-d@example.test');
 
 select lives_ok(
   $$
@@ -224,6 +245,169 @@ select ok(
       and billed_characters = 0
   ),
   'private audit records contain identity and budget metadata but no catalog or raw text'
+);
+
+create temporary table private_cleanup_ready as
+select public.claim_private_pronunciation(
+  '00000000-0000-4000-8000-0000000000c3',
+  'en-GB',
+  'azure',
+  'en-GB-RyanNeural',
+  'Standard Neural S0',
+  'audio-24khz-96kbitrate-mono-mp3',
+  'azure-private-preview-v1',
+  repeat('1', 64),
+  120
+) as value;
+
+select lives_ok(
+  format(
+    'select public.complete_private_pronunciation(%L, %L, %L, %L, 256)',
+    '00000000-0000-4000-8000-0000000000c3',
+    repeat('1', 64),
+    (select value->>'leaseToken' from private_cleanup_ready),
+    repeat('2', 64)
+  ),
+  'a cleanup test asset can be completed'
+);
+
+select lives_ok(
+  $$
+    select public.claim_private_pronunciation(
+      '00000000-0000-4000-8000-0000000000d4',
+      'sk-SK',
+      'azure',
+      'sk-SK-ViktoriaNeural',
+      'Standard Neural S0',
+      'audio-24khz-96kbitrate-mono-mp3',
+      'azure-private-preview-v1',
+      repeat('3', 64),
+      120
+    )
+  $$,
+  'a non-expired cleanup control asset can be created'
+);
+
+update public.pronunciation_private_assets
+set last_accessed_at = clock_timestamp() - interval '31 days',
+    expires_at = clock_timestamp() - interval '1 day',
+    updated_at = clock_timestamp() - interval '1 day'
+where owner_user_id = '00000000-0000-4000-8000-0000000000c3';
+
+create temporary table private_cleanup_claim as
+select public.claim_expired_private_pronunciations(100, 600) as value;
+
+select is(
+  jsonb_array_length((select value->'assets' from private_cleanup_claim)),
+  1,
+  'cleanup claims only expired private assets'
+);
+
+select is(
+  (
+    public.claim_private_pronunciation(
+      '00000000-0000-4000-8000-0000000000c3',
+      'en-GB',
+      'azure',
+      'en-GB-RyanNeural',
+      'Standard Neural S0',
+      'audio-24khz-96kbitrate-mono-mp3',
+      'azure-private-preview-v1',
+      repeat('1', 64),
+      120
+    )->>'status'
+  ),
+  'deleting',
+  'an asset under cleanup cannot be served or regenerated'
+);
+
+select is(
+  public.finalize_expired_private_pronunciations(
+    array[
+      ((select value->'assets'->0->>'id' from private_cleanup_claim))::uuid
+    ],
+    '00000000-0000-4000-8000-000000000099'
+  ),
+  0::bigint,
+  'cleanup finalization rejects a mismatched lease token'
+);
+
+select is(
+  public.release_expired_private_pronunciations(
+    array[
+      ((select value->'assets'->0->>'id' from private_cleanup_claim))::uuid
+    ],
+    ((select value->>'cleanupToken' from private_cleanup_claim))::uuid
+  ),
+  1::bigint,
+  'a failed Storage deletion releases its cleanup lease'
+);
+
+select ok(
+  exists (
+    select 1
+    from public.pronunciation_private_assets
+    where owner_user_id = '00000000-0000-4000-8000-0000000000c3'
+      and cleanup_token is null
+      and cleanup_expires_at is null
+  ),
+  'releasing cleanup preserves the asset metadata for retry'
+);
+
+create temporary table private_cleanup_retry as
+select public.claim_expired_private_pronunciations(100, 600) as value;
+
+select is(
+  public.finalize_expired_private_pronunciations(
+    array[
+      ((select value->'assets'->0->>'id' from private_cleanup_retry))::uuid
+    ],
+    ((select value->>'cleanupToken' from private_cleanup_retry))::uuid
+  ),
+  1::bigint,
+  'successful Storage deletion permits matching metadata finalization'
+);
+
+select ok(
+  not exists (
+    select 1
+    from public.pronunciation_private_assets
+    where owner_user_id = '00000000-0000-4000-8000-0000000000c3'
+  )
+    and exists (
+      select 1
+      from public.pronunciation_private_assets
+      where owner_user_id = '00000000-0000-4000-8000-0000000000d4'
+    ),
+  'cleanup removes expired metadata without touching non-expired owners'
+);
+
+insert into public.pronunciation_requests (
+  user_id,
+  catalog_sense_id,
+  locale,
+  request_key,
+  request_kind,
+  billed_characters,
+  outcome,
+  request_scope,
+  created_at
+) values (
+  '00000000-0000-4000-8000-0000000000d4',
+  null,
+  'sk-SK',
+  repeat('4', 64),
+  'cache_hit',
+  0,
+  'allowed',
+  'private',
+  clock_timestamp() - interval '31 days'
+);
+
+select is(
+  public.prune_pronunciation_requests(1000),
+  1::bigint,
+  'scheduled cleanup prunes request audits older than 30 days'
 );
 
 select is(
