@@ -113,6 +113,30 @@ describe('offline pronunciation manifest contract', () => {
     );
   });
 
+  it('accepts verified manifest bytes when the native response omits Content-Length', async () => {
+    const bytes = new TextEncoder().encode(`${JSON.stringify(indexFixture)}\n`);
+
+    await expect(fetchOfflineManifestIndex(async () => new Response(bytes, {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    }))).resolves.toEqual(indexFixture);
+  });
+
+  it.each(['invalid', String(OFFLINE_MANIFEST_INDEX_BYTES - 1)])(
+    'rejects an invalid Content-Length header: %s',
+    async (contentLength) => {
+      const bytes = new TextEncoder().encode(`${JSON.stringify(indexFixture)}\n`);
+
+      await expect(fetchOfflineManifestIndex(async () => new Response(bytes, {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': contentLength,
+        },
+      }))).rejects.toMatchObject({ code: 'invalid_manifest' });
+    },
+  );
+
   it('rejects index mutations even when JSON remains structurally plausible', async () => {
     const mutated = { ...indexFixture, assetCount: 16599 };
     expect(() => parseOfflineManifestIndex(mutated)).toThrow(OfflineManifestError);

@@ -205,12 +205,14 @@ async function parseVerifiedJson(
   expectedBytes: number,
 ) {
   const contentType = response.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase();
-  const contentLength = Number(response.headers.get('content-length'));
+  const contentLengthHeader = response.headers.get('content-length');
+  const contentLength = contentLengthHeader === null ? null : Number(contentLengthHeader);
   if (!response.ok
     || contentType !== 'application/json'
     || expectedBytes < 1
     || expectedBytes > OFFLINE_MANIFEST_MAXIMUM_BYTES
-    || (Number.isFinite(contentLength) && contentLength !== expectedBytes)) {
+    || (contentLength !== null
+      && (!Number.isSafeInteger(contentLength) || contentLength !== expectedBytes))) {
     throw new OfflineManifestError('invalid_manifest');
   }
   let bytes: Uint8Array;
