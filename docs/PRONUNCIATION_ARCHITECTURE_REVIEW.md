@@ -461,7 +461,7 @@ For each launch locale `L`, gate release on:
   bounded Phase 3D backfill produced and verified all 16,600 English assets with zero pending or
   failed rows. The provisional Slovak voice remains disabled until an approved public Slovak input
   source exists.
-- **[PHASE 4A DEPLOYED / PHASE 4B IMPLEMENTED LOCALLY] Phase 4 (explicit offline downloads):** a deterministic, immutable public
+- **[PHASE 4A DEPLOYED / PHASE 4B ANDROID-VERIFIED] Phase 4 (explicit offline downloads):** a deterministic, immutable public
   index and two locale shards now expose the 16,600 ready English asset identities, hashes, and
   sizes without per-word Edge Function calls. Phase 4B adds a custom Expo FileSystem document
   store and native Settings screen for US/UK A1-C2 or full-locale downloads, exact progress,
@@ -469,9 +469,16 @@ For each launch locale `L`, gate release on:
   playback. Public downloaded packs work without an account and never fall through to the cloud;
   signed-in playback prefers them before the transient cache and Edge Function. PowerSync
   Attachments remains excluded because its alpha synchronized-record lifecycle does not fit this
-  immutable, device-selected public corpus. Physical Android/iOS verification is still pending.
-- **Phase 5 (private cloud, opt-in):** cloud for user-created words behind explicit consent,
-  per-user namespace, DPA/privacy disclosure, retention policy, and account-isolation tests.
+  immutable, device-selected public corpus. A physical Android device verified full and subset
+  download, recovery after a transient DNS failure, and airplane-mode playback. iOS verification
+  is deferred because no iOS device is currently available.
+- **[PHASE 5A IMPLEMENTED LOCALLY / NOT DEPLOYED] Phase 5 (private cloud, opt-in):** the
+  authenticated backend accepts exact `en-US`/`en-GB`/`sk-SK` user text, stores no raw synthesis
+  text, isolates metadata and private Storage paths by account, returns 60-second signed URLs,
+  shares the public pronunciation budget ledger, and supports owner-scoped deletion. Phase 5B
+  consent/disclosure UI and Phase 5C scheduled expiry cleanup, legal approval, deployment, and
+  production isolation validation remain release gates. See
+  `docs/PRONUNCIATION_PHASE_5A_PRIVATE_BACKEND.md`.
 - **Deferred indefinitely (cut from scope now):** IPA/SSML override UI, wrong-pronunciation
   reporting+regeneration, self-hosted Piper, licensed human recordings, teacher/user recordings.
   Keep only the *data-model hooks* (senseId, override field, provider/model in key), not the
