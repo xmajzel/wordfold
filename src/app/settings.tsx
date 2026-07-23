@@ -11,7 +11,7 @@ import type { ReminderSettings } from '@/domain/types';
 import { topicOptions } from '@/features/recommendations/selector';
 import { neuralPreviewFeatureEnabled } from '@/features/pronunciation/cloud';
 import { privateNeuralPreviewFeatureEnabled } from '@/features/pronunciation/private-cloud';
-import { usePrivatePronunciationConsent } from '@/features/pronunciation/private-consent-provider';
+import { usePrivatePronunciationConsent } from '@/features/pronunciation/private-consent';
 import { requestReminderPermission } from '@/features/reminders/scheduler';
 import { formatMinutes, REMINDER_PRESETS } from '@/features/reminders/slots';
 import { useAppTheme } from '@/hooks/use-app-theme';
@@ -103,9 +103,7 @@ export default function SettingsScreen() {
         </View>
         <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
       </Pressable>}
-      {Platform.OS !== 'web'
-        && auth.status === 'signedIn'
-        && privateNeuralPreviewFeatureEnabled()
+      {Platform.OS !== 'web' && auth.status === 'signedIn'
         ? <PrivatePronunciationSettingsCard/>
         : null}
       <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={styles.switchRow}><View style={styles.flex}><AppText variant="heading">Word reminders</AppText><AppText style={{ color: theme.muted }}>Fresh words at preferred times.</AppText></View><AppSwitch accessibilityLabel="Enable word reminders" value={draft.enabled} onValueChange={(value) => void toggleEnabled(value)}/></View></View>
@@ -128,6 +126,8 @@ export default function SettingsScreen() {
 function PrivatePronunciationSettingsCard() {
   const theme = useAppTheme();
   const consent = usePrivatePronunciationConsent();
+  if (!privateNeuralPreviewFeatureEnabled()
+    && (consent.status === 'disabled' || consent.status === 'loading')) return null;
   const detail = consent.status === 'enabled'
     ? 'On · private neural voice for US English, UK English, and Slovak'
     : consent.status === 'deletion_pending'

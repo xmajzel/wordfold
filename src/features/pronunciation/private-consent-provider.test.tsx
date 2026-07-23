@@ -3,8 +3,8 @@ import { Pressable, Text, View } from 'react-native';
 
 import {
   PrivatePronunciationConsentProvider,
-  usePrivatePronunciationConsent,
 } from './private-consent-provider';
+import { usePrivatePronunciationConsent } from './private-consent';
 
 const mockStorage = new Map<string, string>();
 const mockClearPrivateCache = jest.fn(async (_userId: string) => undefined);

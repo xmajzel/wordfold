@@ -1,5 +1,5 @@
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
-import { Alert } from 'react-native';
+import { Alert, Platform } from 'react-native';
 
 import PrivatePronunciationScreen from '@/app/private-pronunciation';
 
@@ -14,7 +14,7 @@ const mockConsent: {
   userId: '00000000-0000-4000-8000-0000000000a1',
 };
 
-jest.mock('@/features/pronunciation/private-consent-provider', () => ({
+jest.mock('@/features/pronunciation/private-consent', () => ({
   usePrivatePronunciationConsent: () => ({
     ...mockConsent,
     enable: mockEnable,
@@ -46,6 +46,9 @@ describe('private pronunciation disclosure screen', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockConsent.status = 'disabled';
+    mockConsent.userId = '00000000-0000-4000-8000-0000000000a1';
+    Object.defineProperty(Platform, 'OS', { configurable: true, value: 'ios' });
+    process.env.EXPO_PUBLIC_PRONUNCIATION_PRIVATE_PREVIEW_ENABLED = 'true';
   });
   afterEach(() => jest.restoreAllMocks());
 
@@ -85,5 +88,31 @@ describe('private pronunciation disclosure screen', () => {
       name: 'Retry private audio deletion',
     }));
     await waitFor(() => expect(mockRetryDeletion).toHaveBeenCalledTimes(1));
+  });
+
+  it('does not offer cloud consent on web', async () => {
+    Object.defineProperty(Platform, 'OS', { configurable: true, value: 'web' });
+    const screen = await render(<PrivatePronunciationScreen/>);
+
+    expect(screen.getByText(/available only in the Android and iOS app/)).toBeTruthy();
+    expect(screen.queryByRole('button', {
+      name: 'Enable private neural pronunciation',
+    })).toBeNull();
+  });
+
+  it('keeps deletion available but blocks new consent when the build flag is off', async () => {
+    delete process.env.EXPO_PUBLIC_PRONUNCIATION_PRIVATE_PREVIEW_ENABLED;
+    const disabled = await render(<PrivatePronunciationScreen/>);
+    expect(disabled.getByText('Private cloud pronunciation is not available in this build.'))
+      .toBeTruthy();
+    expect(disabled.queryByRole('button', {
+      name: 'Enable private neural pronunciation',
+    })).toBeNull();
+
+    mockConsent.status = 'enabled';
+    const enabled = await render(<PrivatePronunciationScreen/>);
+    expect(enabled.getByRole('button', {
+      name: 'Turn off and delete private audio',
+    })).toBeTruthy();
   });
 });

@@ -21,7 +21,7 @@ jest.mock('@/providers/app-data-provider', () => ({
   }),
 }));
 jest.mock('@/features/reminders/scheduler', () => ({ requestReminderPermission: jest.fn() }));
-jest.mock('@/features/pronunciation/private-consent-provider', () => ({
+jest.mock('@/features/pronunciation/private-consent', () => ({
   usePrivatePronunciationConsent: () => ({
     status: mockPrivateConsentStatus,
     userId: '00000000-0000-4000-8000-0000000000a1',
@@ -68,5 +68,13 @@ describe('Settings account entry', () => {
     expect(view.getByText('Off · private audio deletion needs attention')).toBeTruthy();
     await fireEvent.press(view.getByRole('button', { name: 'Manage private pronunciation' }));
     expect(mockPush).toHaveBeenCalledWith('/private-pronunciation');
+  });
+
+  it('keeps opt-out accessible if a later build disables new private requests', async () => {
+    mockPrivateConsentStatus = 'enabled';
+    const view = await render(<SettingsScreen/>);
+
+    expect(view.getByRole('button', { name: 'Manage private pronunciation' })).toBeTruthy();
+    expect(view.getByText(/On · private neural voice/)).toBeTruthy();
   });
 });

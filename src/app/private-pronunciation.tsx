@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Alert,
   Linking,
+  Platform,
   Pressable,
   StyleSheet,
   View,
@@ -15,7 +16,8 @@ import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import {
   usePrivatePronunciationConsent,
-} from '@/features/pronunciation/private-consent-provider';
+} from '@/features/pronunciation/private-consent';
+import { privateNeuralPreviewFeatureEnabled } from '@/features/pronunciation/private-cloud';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { radii, spacing } from '@/theme/tokens';
 
@@ -26,6 +28,7 @@ const AZURE_PRIVACY_URL =
 export default function PrivatePronunciationScreen() {
   const theme = useAppTheme();
   const consent = usePrivatePronunciationConsent();
+  const featureAvailable = privateNeuralPreviewFeatureEnabled();
   const [working, setWorking] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
@@ -140,7 +143,20 @@ export default function PrivatePronunciationScreen() {
       </AppText>
     </Pressable>
 
-    {consent.status === 'loading' ? (
+    {Platform.OS === 'web' ? (
+      <View style={[styles.status, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+        <Ionicons name="phone-portrait-outline" color={theme.primary} size={20}/>
+        <AppText style={styles.flex}>
+          Private cloud pronunciation is available only in the Android and iOS app.
+        </AppText>
+      </View>
+    ) : !consent.userId ? (
+      <PrimaryButton
+        label="Sign in to review private pronunciation"
+        variant="secondary"
+        onPress={() => router.push('/account' as never)}
+      />
+    ) : consent.status === 'loading' ? (
       <View style={[styles.status, { backgroundColor: theme.surface, borderColor: theme.border }]}>
         <ActivityIndicator color={theme.primary}/>
         <AppText style={{ color: theme.muted }}>Checking this account’s choice…</AppText>
@@ -159,6 +175,13 @@ export default function PrivatePronunciationScreen() {
         loading={working}
         onPress={() => void deleteData(true)}
       />
+    ) : !featureAvailable ? (
+      <View style={[styles.status, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+        <Ionicons name="cloud-offline-outline" color={theme.primary} size={20}/>
+        <AppText style={styles.flex}>
+          Private cloud pronunciation is not available in this build.
+        </AppText>
+      </View>
     ) : (
       <PrimaryButton
         label="Enable private neural pronunciation"
