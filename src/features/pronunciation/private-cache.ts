@@ -143,7 +143,6 @@ async function writeDescriptor(file: File, descriptor: PrivateCacheDescriptor) {
 }
 
 async function downloadAndStore(
-  text: string,
   userId: string,
   asset: PrivateNeuralPronunciationAsset,
   hash: string,
@@ -199,8 +198,6 @@ async function downloadAndStore(
     deleteIfPresent(temporary);
     if (error instanceof PrivateNeuralPronunciationError) throw error;
     throw new PrivateNeuralPronunciationError('unavailable');
-  } finally {
-    void text;
   }
 }
 
@@ -213,7 +210,7 @@ export async function cachePrivateNeuralPronunciationFile(
   const flightKey = `${userId}:${hash}:${asset.contentHash}`;
   const existing = inFlight.get(flightKey);
   if (existing) return existing;
-  const task = downloadAndStore(text, userId, asset, hash)
+  const task = downloadAndStore(userId, asset, hash)
     .finally(() => inFlight.delete(flightKey));
   inFlight.set(flightKey, task);
   return task;
