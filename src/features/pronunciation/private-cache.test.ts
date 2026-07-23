@@ -1,0 +1,127 @@
+import {
+  cachePrivateNeuralPronunciationFile,
+  getCachedPrivateNeuralPronunciationFile,
+} from './private-cache';
+
+const mockContents = new Map<string, Uint8Array>();
+let mockDownloadedBytes = new Uint8Array();
+let mockDownloadCount = 0;
+
+jest.mock('expo-file-system', () => {
+  const uriFor = (...parts: (string | { uri: string })[]) => parts
+    .map((part) => typeof part === 'string' ? part : part.uri)
+    .join('/')
+    .replace(/\/+/, '/');
+
+  class MockDirectory {
+    uri: string;
+    constructor(...parts: (string | { uri: string })[]) { this.uri = uriFor(...parts); }
+    get exists() { return [...mockContents.keys()].some((key) => key.startsWith(this.uri)); }
+    create() {}
+    delete() {
+      for (const key of [...mockContents.keys()]) {
+        if (key.startsWith(this.uri)) mockContents.delete(key);
+      }
+    }
+  }
+
+  class MockFile {
+    uri: string;
+    constructor(...parts: (string | { uri: string })[]) { this.uri = uriFor(...parts); }
+    get exists() { return mockContents.has(this.uri); }
+    get name() { return this.uri.split('/').at(-1) ?? ''; }
+    get parentDirectory() {
+      return { uri: this.uri.slice(0, Math.max(0, this.uri.lastIndexOf('/'))) };
+    }
+    info() { return { size: mockContents.get(this.uri)?.byteLength ?? 0 }; }
+    async bytes() { return mockContents.get(this.uri) ?? new Uint8Array(); }
+    async text() { return new TextDecoder().decode(mockContents.get(this.uri)); }
+    create() { mockContents.set(this.uri, new Uint8Array()); }
+    write(value: string) { mockContents.set(this.uri, new TextEncoder().encode(value)); }
+    delete() { mockContents.delete(this.uri); }
+    async move(destination: MockFile) {
+      const bytes = mockContents.get(this.uri);
+      if (bytes) mockContents.set(destination.uri, bytes);
+      mockContents.delete(this.uri);
+      this.uri = destination.uri;
+    }
+    static async downloadFileAsync(_url: string, destination: MockFile) {
+      mockDownloadCount += 1;
+      mockContents.set(destination.uri, mockDownloadedBytes.slice());
+      return destination;
+    }
+  }
+
+  return { Directory: MockDirectory, File: MockFile, Paths: { cache: { uri: 'cache:' } } };
+});
+
+jest.mock('expo-crypto', () => {
+  const { createHash } = jest.requireActual('crypto');
+  return {
+    CryptoDigestAlgorithm: { SHA256: 'SHA-256' },
+    digestStringAsync: async () => 'private-input-hash',
+    randomUUID: () => 'random-id',
+    digest: async (_algorithm: string, bytes: Uint8Array) => {
+      const digest = createHash('sha256').update(bytes).digest();
+      return Uint8Array.from(digest).buffer;
+    },
+  };
+});
+
+jest.mock('@/features/pronunciation/cache', () => ({
+  PRONUNCIATION_CACHE_DIRECTORY: 'wordfold-pronunciation',
+  pronunciationAccountDirectoryName: async () => 'hashed-account',
+  enforcePronunciationCacheLimit: jest.fn(async () => undefined),
+}));
+
+const userId = '00000000-0000-4000-8000-0000000000a1';
+const contentHash = 'a'.repeat(64);
+const privateText = 'súkromné slovo';
+const asset = {
+  id: '123e4567-e89b-42d3-a456-426614174000',
+  requestKey: contentHash,
+  contentHash,
+  sha256: 'f816ae4c68c76a6b7379bd7fb6c2c8fe4443ba517b7df725dda28488effaa44a',
+  byteLength: 128,
+  contentType: 'audio/mpeg' as const,
+  locale: 'sk-SK' as const,
+  synthesisVersion: 'azure-private-preview-v1' as const,
+  signedUrl: 'https://project.supabase.co/storage/private?token=signed-secret',
+  expiresInSeconds: 60 as const,
+};
+
+describe('verified private pronunciation cache', () => {
+  beforeEach(() => {
+    mockContents.clear();
+    mockDownloadCount = 0;
+    mockDownloadedBytes = new Uint8Array(128);
+    mockDownloadedBytes.set([0x49, 0x44, 0x33]);
+  });
+
+  it('stores a verified account-scoped file without raw text or its signed URL', async () => {
+    const downloaded = await cachePrivateNeuralPronunciationFile(privateText, userId, asset);
+    const cached = await getCachedPrivateNeuralPronunciationFile(privateText, 'sk-SK', userId);
+    const descriptor = [...mockContents.entries()]
+      .find(([key]) => key.endsWith('.json'))?.[1];
+    const descriptorText = new TextDecoder().decode(descriptor);
+
+    expect(mockDownloadCount).toBe(1);
+    expect(downloaded.uri).toBe(cached?.uri);
+    expect(downloaded.uri).toContain('/account/hashed-account/azure-private-preview-v1/');
+    expect(descriptorText).not.toContain(privateText);
+    expect(descriptorText).not.toContain('signed-secret');
+    expect(descriptorText).not.toContain('signedUrl');
+  });
+
+  it('rejects and removes private audio whose checksum changes', async () => {
+    const downloaded = await cachePrivateNeuralPronunciationFile(privateText, userId, asset);
+    const corrupted = mockContents.get(downloaded.uri)!.slice();
+    corrupted[20] = 1;
+    mockContents.set(downloaded.uri, corrupted);
+
+    await expect(
+      getCachedPrivateNeuralPronunciationFile(privateText, 'sk-SK', userId),
+    ).resolves.toBeNull();
+    expect(mockContents.has(downloaded.uri)).toBe(false);
+  });
+});

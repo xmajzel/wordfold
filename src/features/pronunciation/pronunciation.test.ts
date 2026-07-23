@@ -1,6 +1,11 @@
 import { Platform } from 'react-native';
 
-import { startNeuralPronunciation, startPronunciation, stopPronunciation } from './pronunciation';
+import {
+  startNeuralPronunciation,
+  startPrivateNeuralPronunciation,
+  startPronunciation,
+  stopPronunciation,
+} from './pronunciation';
 
 const mockPlayPronunciationFile = jest.fn();
 const mockStopFilePlayback = jest.fn(async () => undefined);
@@ -15,6 +20,10 @@ const mockCacheNeuralFile = jest.fn();
 const mockDeleteCachedNeural = jest.fn();
 const mockGetOfflineNeuralFile = jest.fn();
 const mockDeleteOfflineNeuralFile = jest.fn();
+const mockRequestPrivateNeuralPronunciation = jest.fn();
+const mockGetCachedPrivateNeuralFile = jest.fn();
+const mockCachePrivateNeuralFile = jest.fn();
+const mockDeleteCachedPrivateNeuralFile = jest.fn();
 
 jest.mock('@/features/pronunciation/audio-player', () => ({
   playPronunciationFile: (...args: unknown[]) => mockPlayPronunciationFile(...args),
@@ -50,6 +59,24 @@ jest.mock('@/features/pronunciation/public-cache', () => ({
 jest.mock('@/features/pronunciation/offline-store', () => ({
   getOfflinePronunciationFile: (...args: unknown[]) => mockGetOfflineNeuralFile(...args),
   deleteOfflinePronunciationFile: (...args: unknown[]) => mockDeleteOfflineNeuralFile(...args),
+}));
+
+jest.mock('@/features/pronunciation/private-cloud', () => ({
+  requestPrivateNeuralPronunciation: (...args: unknown[]) => (
+    mockRequestPrivateNeuralPronunciation(...args)
+  ),
+}));
+
+jest.mock('@/features/pronunciation/private-cache', () => ({
+  getCachedPrivateNeuralPronunciationFile: (...args: unknown[]) => (
+    mockGetCachedPrivateNeuralFile(...args)
+  ),
+  cachePrivateNeuralPronunciationFile: (...args: unknown[]) => (
+    mockCachePrivateNeuralFile(...args)
+  ),
+  deleteCachedPrivateNeuralPronunciation: (...args: unknown[]) => (
+    mockDeleteCachedPrivateNeuralFile(...args)
+  ),
 }));
 
 const voice = { identifier: 'exact-es-MX', language: 'es-MX' };
@@ -215,5 +242,93 @@ describe('neural pronunciation orchestration', () => {
 
     expect(mockDeleteOfflineNeuralFile).toHaveBeenCalledWith('sense-id', 'en-US');
     expect(mockDeleteCachedNeural).not.toHaveBeenCalled();
+  });
+});
+
+describe('private neural pronunciation orchestration', () => {
+  const accountScope = {
+    type: 'account' as const,
+    userId: '00000000-0000-4000-8000-0000000000a1',
+  };
+  const privateFile = { uri: 'file:///cache/account/private.mp3' };
+  const privateAsset = { locale: 'sk-SK', contentHash: 'private-hash' };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockGetCachedPrivateNeuralFile.mockResolvedValue(privateFile);
+    mockCachePrivateNeuralFile.mockResolvedValue(privateFile);
+    mockRequestPrivateNeuralPronunciation.mockResolvedValue({
+      status: 'ready', asset: privateAsset,
+    });
+    mockPlayPronunciationFile.mockImplementation(async (_uri, callbacks) => {
+      callbacks.onStart?.();
+      callbacks.onDone?.();
+    });
+  });
+
+  it('plays an account-private verified cache hit without a cloud request', async () => {
+    await expect(startPrivateNeuralPronunciation(
+      'súkromné slovo',
+      'sk-SK',
+      accountScope,
+    )).resolves.toEqual({ status: 'started' });
+
+    expect(mockGetCachedPrivateNeuralFile).toHaveBeenCalledWith(
+      'súkromné slovo', 'sk-SK', accountScope.userId,
+    );
+    expect(mockRequestPrivateNeuralPronunciation).not.toHaveBeenCalled();
+    expect(mockPlayPronunciationFile).toHaveBeenCalledWith(privateFile.uri, expect.any(Object));
+  });
+
+  it('requests, verifies, and caches exact private input only after a cache miss', async () => {
+    mockGetCachedPrivateNeuralFile.mockResolvedValue(null);
+
+    await startPrivateNeuralPronunciation('súkromné slovo', 'sk-SK', accountScope);
+
+    expect(mockRequestPrivateNeuralPronunciation).toHaveBeenCalledWith(
+      'súkromné slovo', 'sk-SK', accountScope.userId,
+    );
+    expect(mockCachePrivateNeuralFile).toHaveBeenCalledWith(
+      'súkromné slovo', accountScope.userId, privateAsset,
+    );
+  });
+
+  it('returns pending without playback or device fallback', async () => {
+    mockGetCachedPrivateNeuralFile.mockResolvedValue(null);
+    mockRequestPrivateNeuralPronunciation.mockResolvedValue({
+      status: 'pending', retryAfterSeconds: 2,
+    });
+
+    await expect(startPrivateNeuralPronunciation(
+      'private',
+      'en-US',
+      accountScope,
+    )).resolves.toEqual({ status: 'pending', retryAfterSeconds: 2 });
+    expect(mockPlayPronunciationFile).not.toHaveBeenCalled();
+    expect(mockStartDevicePronunciation).not.toHaveBeenCalled();
+  });
+
+  it('rejects guests before any private cache or cloud access', async () => {
+    await expect(startPrivateNeuralPronunciation(
+      'private',
+      'en-US',
+      { type: 'guest' },
+    )).rejects.toThrow('Sign in');
+    expect(mockGetCachedPrivateNeuralFile).not.toHaveBeenCalled();
+    expect(mockRequestPrivateNeuralPronunciation).not.toHaveBeenCalled();
+  });
+
+  it('deletes failed private playback without falling back to device speech', async () => {
+    mockPlayPronunciationFile.mockRejectedValue(new Error('Unreadable private MP3'));
+
+    await expect(startPrivateNeuralPronunciation(
+      'private',
+      'en-US',
+      accountScope,
+    )).rejects.toThrow('Unreadable private MP3');
+    expect(mockDeleteCachedPrivateNeuralFile).toHaveBeenCalledWith(
+      'private', 'en-US', accountScope.userId,
+    );
+    expect(mockStartDevicePronunciation).not.toHaveBeenCalled();
   });
 });
