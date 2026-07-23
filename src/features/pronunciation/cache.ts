@@ -29,14 +29,14 @@ function outputExtension() {
   return Platform.OS === 'ios' ? 'caf' : 'wav';
 }
 
-async function accountDirectoryName(userId: string) {
+export async function pronunciationAccountDirectoryName(userId: string) {
   return Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, userId);
 }
 
 async function scopeDirectory(scope: PronunciationCacheScope) {
   const root = new Directory(Paths.cache, PRONUNCIATION_CACHE_DIRECTORY);
   if (scope.type === 'account') {
-    return new Directory(root, 'account', await accountDirectoryName(scope.userId), SYNTHESIS_VERSION);
+    return new Directory(root, 'account', await pronunciationAccountDirectoryName(scope.userId), SYNTHESIS_VERSION);
   }
   return new Directory(root, scope.type, SYNTHESIS_VERSION);
 }
@@ -136,7 +136,7 @@ export async function clearPronunciationAccountCache(userId: string) {
     Paths.cache,
     PRONUNCIATION_CACHE_DIRECTORY,
     'account',
-    await accountDirectoryName(userId),
+    await pronunciationAccountDirectoryName(userId),
   );
   if (accountDirectory.exists) accountDirectory.delete();
 }

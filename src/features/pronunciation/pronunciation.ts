@@ -27,6 +27,15 @@ import {
   deleteOfflinePronunciationFile,
   getOfflinePronunciationFile,
 } from '@/features/pronunciation/offline-store';
+import {
+  cachePrivateNeuralPronunciationFile,
+  deleteCachedPrivateNeuralPronunciation,
+  getCachedPrivateNeuralPronunciationFile,
+} from '@/features/pronunciation/private-cache';
+import {
+  requestPrivateNeuralPronunciation,
+  type PrivateNeuralPronunciationLocale,
+} from '@/features/pronunciation/private-cloud';
 
 export type PronunciationResult = DevicePronunciationResult | { status: 'stopped' };
 export type NeuralPronunciationResult =
@@ -150,6 +159,45 @@ export async function startNeuralPronunciation(
   } catch (error) {
     if (durableOfflineFile) await deleteOfflinePronunciationFile(catalogSenseId, locale);
     else await deleteCachedNeuralPronunciation(catalogSenseId, locale);
+    throw error;
+  }
+  if (operationId !== currentOperation) return { status: 'stopped' };
+  return { status: 'started' };
+}
+
+export async function startPrivateNeuralPronunciation(
+  text: string,
+  locale: PrivateNeuralPronunciationLocale,
+  scope: PronunciationCacheScope,
+  callbacks: DevicePronunciationCallbacks = {},
+): Promise<NeuralPronunciationResult> {
+  if (scope.type !== 'account') {
+    throw new Error('Sign in before using cloud neural pronunciation.');
+  }
+  const currentOperation = operationId + 1;
+  operationId = currentOperation;
+  await stopPlayers();
+
+  let file = await getCachedPrivateNeuralPronunciationFile(text, locale, scope.userId);
+  if (operationId !== currentOperation) return { status: 'stopped' };
+  if (!file) {
+    const response = await requestPrivateNeuralPronunciation(text, locale, scope.userId);
+    if (operationId !== currentOperation) return { status: 'stopped' };
+    if (response.status === 'pending') return response;
+    file = await cachePrivateNeuralPronunciationFile(text, scope.userId, response.asset);
+    if (operationId !== currentOperation) return { status: 'stopped' };
+  }
+
+  try {
+    await playPronunciationFile(file.uri, {
+      ...callbacks,
+      onError: (error) => {
+        void deleteCachedPrivateNeuralPronunciation(text, locale, scope.userId);
+        callbacks.onError?.(error);
+      },
+    });
+  } catch (error) {
+    await deleteCachedPrivateNeuralPronunciation(text, locale, scope.userId);
     throw error;
   }
   if (operationId !== currentOperation) return { status: 'stopped' };
