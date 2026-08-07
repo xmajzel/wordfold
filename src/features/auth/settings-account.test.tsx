@@ -1,6 +1,8 @@
 import { fireEvent, render } from '@testing-library/react-native';
+import { Linking } from 'react-native';
 
 import SettingsScreen from '@/app/settings';
+import { ACCOUNT_DELETION_URL, PRIVACY_POLICY_URL } from '@/features/legal/urls';
 
 const mockPush = jest.fn();
 let mockPrivateConsentStatus: 'disabled' | 'enabled' | 'deletion_pending' = 'disabled';
@@ -76,5 +78,16 @@ describe('Settings account entry', () => {
 
     expect(view.getByRole('button', { name: 'Manage private pronunciation' })).toBeTruthy();
     expect(view.getByText(/On · private neural voice/)).toBeTruthy();
+  });
+
+  it('opens the published privacy and account-deletion pages', async () => {
+    const openUrl = jest.spyOn(Linking, 'openURL').mockResolvedValue(undefined);
+    const view = await render(<SettingsScreen/>);
+
+    await fireEvent.press(view.getByTestId('privacy-policy-link'));
+    await fireEvent.press(view.getByTestId('account-deletion-link'));
+
+    expect(openUrl).toHaveBeenNthCalledWith(1, PRIVACY_POLICY_URL);
+    expect(openUrl).toHaveBeenNthCalledWith(2, ACCOUNT_DELETION_URL);
   });
 });
