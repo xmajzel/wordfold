@@ -36,6 +36,18 @@ Changes made by Wordfold: duplicate source rows are collapsed, unresolved C1/C2 
 
 The exact source rows are in `assets/catalog/sources/`. `assets/catalog/cefr-catalog-manifest.json` records source versions, entry provenance, conflicts, exclusions, transformations, counts, and validation results.
 
+### Learner-friendly English definitions
+
+`assets/catalog/cefr-learner-definitions.json` is a generated presentation overlay. Codex selects one
+meaning from the compatible Open English WordNet senses using the committed source part of speech,
+CEFR level, and any source context, then rewrites that meaning in concise learner-friendly English
+and supplies an example sentence. Generation is restricted to the committed repository evidence;
+it does not search or copy definitions from other dictionaries.
+
+Each overlay record retains its selected WordNet meaning-reference ID, confidence, and review state.
+The base catalog entry and pronunciation identity remain unchanged for compatibility and rollback.
+Records that still need review are not applied at runtime.
+
 ### Bundled English-to-Slovak hints
 
 Each generated CEFR entry includes an offline Slovak hint produced once from its English headword, part of speech, and Open English WordNet sense definition. Generation uses the pinned int8 CTranslate2 conversion of MADLAD-400-3B-MT. If the generated headword is copied, misspelled, or otherwise unsafe, Wordfold stores the translated sense explanation as the hint instead. Catalog-specific corrections can be recorded in `assets/catalog/cefr-translations-en-sk-overrides.json`.

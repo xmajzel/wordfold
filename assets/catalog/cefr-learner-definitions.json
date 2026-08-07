@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "catalogSha256": "",
+  "generator": {
+    "provider": "codex",
+    "method": "Pending full catalog generation.",
+    "promptVersion": 1
+  },
+  "qa": {
+    "mode": "all",
+    "entries": 0,
+    "highConfidence": 0,
+    "mediumConfidence": 0,
+    "lowConfidence": 0,
+    "needsReview": 0,
+    "translationReviewRequired": 0,
+    "translationReviewEntryIds": [],
+    "warnings": []
+  },
+  "entries": {},
+  "sha256": ""
+}
