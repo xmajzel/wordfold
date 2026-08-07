@@ -2,7 +2,7 @@
 
 Wordfold is an offline-first Expo app for practicing vocabulary you actually want to use. Add English words manually or in bulk, keep an optional Slovak hint, and let a small, explainable review schedule bring difficult words back.
 
-Wordfold is a temporary development name and has not been cleared for public store branding.
+Wordfold is the final public product name. The first store release targets Android with English vocabulary and Slovak hints.
 
 ## Development
 
@@ -13,7 +13,7 @@ pnpm install
 pnpm start
 ```
 
-Local notifications work in Expo Go, but the custom ML Kit translation module requires a development build:
+Local notifications work in Expo Go. The custom ML Kit translation module and real Google Play purchases require a development build:
 
 ```bash
 pnpm exec expo run:android
@@ -49,6 +49,8 @@ pnpm build:android:preview
 
 Open the EAS build link on the phone and allow the browser to install unknown apps when Android asks. The development and preview builds use the same application ID, so installing one may replace the other. App data can be cleared by uninstalling the app before a clean-install test.
 
+The production profile creates a Google Play App Bundle. EAS cloud builds consume limited quota, so `pnpm build:android:production` must only be run after explicit release-candidate approval. See [Android production release](docs/ANDROID_PRODUCTION_RELEASE.md).
+
 ## Verification
 
 ```bash
@@ -81,6 +83,25 @@ pnpm build:cefr
 ```
 
 The translation step downloads about 3 GB of pinned model data into the local Hugging Face cache; the model is not bundled in the app. The catalog build produces `assets/catalog/cefr-catalog.json` and a provenance and QA report at `assets/catalog/cefr-catalog-manifest.json`. The app treats these as CEFR-aligned categories rather than an official Council of Europe vocabulary list.
+
+Learner-friendly English definitions are maintained as a separate, identity-preserving overlay at
+`assets/catalog/cefr-learner-definitions.json`. Inputs are prepared from the committed CEFR sources
+and every compatible bundled WordNet sense; generation uses repository-grounded Codex review, not
+a runtime or paid batch API. To prepare deterministic pilot or full-catalog chunks and validate
+completed outputs:
+
+```bash
+node scripts/prepare-cefr-learner-definitions.mjs --mode pilot --chunk-size 34
+node scripts/prepare-cefr-learner-definitions.mjs --mode all --chunk-size 200
+node scripts/validate-cefr-learner-definitions.mjs \
+  --manifest .artifacts/cefr-learner-definitions/all/manifest.json \
+  --output assets/catalog/cefr-learner-definitions.json \
+  --require-complete
+```
+
+Preparation and intermediate agent outputs stay under ignored `.artifacts/`. The validator rejects
+unknown senses, missing entries, invalid schemas, circular definitions, and low-confidence output
+that has not been marked for review.
 
 See [content attribution](assets/licenses/CONTENT_SOURCES.md) for sources, licenses, and modifications.
 
