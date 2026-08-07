@@ -13,6 +13,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AppDataProvider, useAppData } from '@/providers/app-data-provider';
 import { AuthProvider } from '@/providers/auth-provider';
 import { SyncProvider } from '@/providers/sync-provider';
+import { PurchaseProvider } from '@/providers/purchase-provider';
 import { LaunchScreen } from '@/components/launch-screen';
 import { getNotificationWordTarget } from '@/features/reminders/notification-navigation';
 import { PronunciationCacheScopeProvider } from '@/features/pronunciation/cache-scope-provider';
@@ -70,6 +71,7 @@ function Navigation() {
         <Stack.Screen name="private-pronunciation" options={{ presentation: 'modal' }} />
         <Stack.Screen name="account" options={{ presentation: 'modal' }} />
         <Stack.Screen name="account-import" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="upgrade" options={{ presentation: 'modal' }} />
         <Stack.Screen name="import" options={{ presentation: 'modal' }} />
         <Stack.Screen name="word/new" options={{ presentation: 'modal' }} />
         <Stack.Screen name="word/[id]" />
@@ -81,7 +83,7 @@ function Navigation() {
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({ Fraunces_600SemiBold, Inter_400Regular, Inter_600SemiBold });
-  return <GestureHandlerRootView style={styles.root}><AuthProvider><PrivatePronunciationConsentProvider><OfflinePronunciationDownloadsProvider><PronunciationCacheScopeProvider><SyncProvider><AppDataProvider><AppReadyGate fontsLoaded={fontsLoaded}/></AppDataProvider></SyncProvider></PronunciationCacheScopeProvider></OfflinePronunciationDownloadsProvider></PrivatePronunciationConsentProvider></AuthProvider></GestureHandlerRootView>;
+  return <GestureHandlerRootView style={styles.root}><AuthProvider><PurchaseProvider><PrivatePronunciationConsentProvider><OfflinePronunciationDownloadsProvider><PronunciationCacheScopeProvider><SyncProvider><AppDataProvider><AppReadyGate fontsLoaded={fontsLoaded}/></AppDataProvider></SyncProvider></PronunciationCacheScopeProvider></OfflinePronunciationDownloadsProvider></PrivatePronunciationConsentProvider></PurchaseProvider></AuthProvider></GestureHandlerRootView>;
 }
 
 function AppReadyGate({ fontsLoaded }: { fontsLoaded: boolean }) {

@@ -1,12 +1,12 @@
 {
   "name": "wordfold",
-  "main": "expo-router/entry",
+  "main": "index.ts",
   "version": "1.0.0",
   "dependencies": {
     "@expo-google-fonts/fraunces": "^0.4.1",
     "@expo-google-fonts/inter": "^0.4.2",
     "@expo/metro-runtime": "^56.0.17",
-    "@expo/ui": "~56.0.22",
+    "@expo/ui": "~56.0.24",
     "@expo/vector-icons": "^15.1.1",
     "@journeyapps/react-native-quick-sqlite": "2.5.2",
     "@powersync/react-native": "1.35.9",
@@ -36,10 +36,13 @@
     "expo-symbols": "~56.0.6",
     "expo-system-ui": "~56.0.5",
     "expo-web-browser": "~56.0.5",
+    "expo-widgets": "~56.0.25",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-native": "0.85.3",
+    "react-native-android-widget": "^0.21.0",
     "react-native-gesture-handler": "~2.31.1",
+    "react-native-purchases": "^10.7.0",
     "react-native-reanimated": "4.3.1",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "4.25.2",
@@ -75,6 +78,7 @@
     "web": "expo start --web",
     "build:android:dev": "npx eas-cli@latest build --platform android --profile development",
     "build:android:preview": "npx eas-cli@latest build --platform android --profile preview",
+    "build:android:production": "npx eas-cli@latest build --platform android --profile production",
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
     "test": "jest --runInBand",
@@ -97,6 +101,9 @@
   },
   "jest": {
     "preset": "jest-expo",
+    "moduleNameMapper": {
+      "^@/features/widgets/widget-sync$": "<rootDir>/src/features/widgets/widget-sync.ts"
+    },
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/modules/"

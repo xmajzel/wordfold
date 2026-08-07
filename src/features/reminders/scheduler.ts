@@ -3,8 +3,8 @@ import { Platform } from 'react-native';
 import type { SQLiteDatabase } from 'expo-sqlite';
 
 import type { ReminderSettings, Word } from '@/domain/types';
-import { buildLearningFeed } from '@/features/learning/algorithm';
 import { calculateReminderSlots } from './slots';
+import { pickReminderWord } from './word-selector';
 
 const CHANNEL_ID = 'word-reminders';
 let rebuildQueue: Promise<unknown> = Promise.resolve();
@@ -64,19 +64,6 @@ function upcomingDates(settings: ReminderSettings, now = new Date()) {
   return dates;
 }
 
-function pickWord(words: Word[], date: Date, usedWordIds: Set<string>) {
-  const activeWords = words.filter((word) => word.state !== 'learned');
-  const ranked = buildLearningFeed(activeWords, date);
-  const fallback = activeWords
-    .filter((word) => !ranked.some((rankedWord) => rankedWord.id === word.id))
-    .sort((left, right) => (left.lastViewedAt ?? '').localeCompare(right.lastViewedAt ?? ''));
-  const candidates = [...ranked, ...fallback];
-  const unused = candidates.find((word) => !usedWordIds.has(word.id));
-  if (unused) return unused;
-  usedWordIds.clear();
-  return candidates[0] ?? null;
-}
-
 async function performReminderScheduleRebuild(
   database: SQLiteDatabase,
   words: Word[],
@@ -93,7 +80,7 @@ async function performReminderScheduleRebuild(
   const usedWordIds = new Set<string>();
   let count = 0;
   for (const date of upcomingDates(settings)) {
-    const word = pickWord(words, date, usedWordIds);
+    const word = pickReminderWord(words, date, usedWordIds);
     if (!word) break;
     usedWordIds.add(word.id);
     const notificationId = await Notifications.scheduleNotificationAsync({
