@@ -17,6 +17,9 @@ jest.mock('@/providers/auth-provider', () => ({
 jest.mock('@/providers/sync-provider', () => ({
   useSync: () => ({ phase: 'signedOut', hasSynced: false }),
 }));
+jest.mock('@/providers/purchase-provider', () => ({
+  usePurchase: () => ({ unlimited: false }),
+}));
 jest.mock('@/data/sync/database', () => ({ powerSyncDatabase: {} }));
 jest.mock('@/data/supabase/client', () => ({ supabase: null }));
 jest.mock('@/data/sync/guest-import-remote', () => ({ SupabaseGuestImportRemote: jest.fn() }));

@@ -12,6 +12,7 @@ import { getCefrEntries } from '@/data/cefr-catalog';
 import { cefrLevelDescriptions, isCefrLevel } from '@/data/cefr-levels';
 import type { CefrCatalogEntry } from '@/domain/types';
 import { normalizeTerm } from '@/features/import/parser';
+import { WordCapacityExceededError } from '@/features/purchases/capacity';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
@@ -57,6 +58,13 @@ export default function CefrLevelScreen() {
         targetPronunciationLocale: 'sk-SK',
       });
     } catch (error) {
+      if (error instanceof WordCapacityExceededError) {
+        Alert.alert('Free library is full', error.message, [
+          { text: 'Not now', style: 'cancel' },
+          { text: 'Unlock unlimited', onPress: () => router.push('/upgrade' as never) },
+        ]);
+        return;
+      }
       Alert.alert(
         'Could not add word',
         error instanceof Error && error.message.includes('UNIQUE')

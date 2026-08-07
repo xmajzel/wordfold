@@ -11,6 +11,7 @@ import { Screen } from '@/components/screen';
 import { WordCard } from '@/components/word-card';
 import { getCefrLevelSummaries } from '@/data/cefr-levels';
 import { buildRecommendations, topicOptions } from '@/features/recommendations/selector';
+import { WordCapacityExceededError } from '@/features/purchases/capacity';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
@@ -19,7 +20,7 @@ const cefrLevelSummaries = getCefrLevelSummaries();
 
 export default function LibraryScreen() {
   const theme = useAppTheme();
-  const { words, collections, learningPreferences, createCollection, addRecommendedWords } = useAppData();
+  const { words, collections, learningPreferences, createCollection, addRecommendedWords, wordCapacity } = useAppData();
   const [selectedCollection, setSelectedCollection] = useState('all');
   const [showCollectionForm, setShowCollectionForm] = useState(false);
   const [collectionName, setCollectionName] = useState('');
@@ -32,6 +33,9 @@ export default function LibraryScreen() {
     10,
   ), [learningPreferences, words]);
   const hasPreferences = learningPreferences.levels.length > 0 && learningPreferences.topics.length > 0;
+  const recommendationAddCount = wordCapacity.remaining === null
+    ? Math.min(10, recommendationPreview.length)
+    : Math.min(10, recommendationPreview.length, wordCapacity.remaining);
 
   const addCollection = async () => {
     if (!collectionName.trim()) return;
@@ -42,10 +46,17 @@ export default function LibraryScreen() {
   const addRecommendations = async () => {
     setRecommendationsBusy(true);
     try {
-      const count = await addRecommendedWords(10);
+      if (recommendationAddCount === 0 && recommendationPreview.length > 0) {
+        router.push('/upgrade' as never);
+        return;
+      }
+      const count = await addRecommendedWords(recommendationAddCount);
       Alert.alert(count > 0 ? 'Recommendations added' : 'You are caught up', count > 0
         ? `${count} ${count === 1 ? 'word is' : 'words are'} ready to practice.`
         : 'There are no unused recommendations for these preferences right now.');
+    } catch (error) {
+      if (error instanceof WordCapacityExceededError) router.push('/upgrade' as never);
+      else Alert.alert('Recommendations unavailable', error instanceof Error ? error.message : 'Please try again.');
     } finally { setRecommendationsBusy(false); }
   };
 
@@ -64,6 +75,7 @@ export default function LibraryScreen() {
         ListHeaderComponent={<View style={styles.headerContent}>
           <View style={styles.header}><View><AppText variant="title">Your library</AppText><AppText style={{ color: theme.muted }}>{words.length} {words.length === 1 ? 'word' : 'words'} across {collections.length} {collections.length === 1 ? 'collection' : 'collections'}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Open settings" onPress={() => router.push('/settings')} style={[styles.iconButton, { backgroundColor: theme.surface }]}><Ionicons name="settings-outline" color={theme.primary} size={21}/></Pressable></View>
           <View style={styles.actionRow}><View style={styles.action}><PrimaryButton label="Add a word" onPress={() => router.push('/word/new')} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/></View><View style={styles.action}><PrimaryButton label="Bulk paste" variant="secondary" onPress={() => router.push('/import')} icon={<Ionicons name="clipboard-outline" color={theme.primary} size={18}/>}/></View></View>
+          {wordCapacity.shouldShowNotice ? <Pressable testID="word-capacity-notice" accessibilityRole="button" accessibilityLabel="Open unlimited words" onPress={() => router.push('/upgrade' as never)} style={[styles.capacityNotice, { backgroundColor: theme.primarySoft }]}><Ionicons name="infinite-outline" color={theme.primary} size={21}/><View style={styles.packText}><AppText variant="label">{wordCapacity.remaining === 0 ? 'Free library full' : `${wordCapacity.remaining} free ${wordCapacity.remaining === 1 ? 'word remains' : 'words remain'}`}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Unlock unlimited words forever with one Google Play purchase.</AppText></View><Ionicons name="chevron-forward" color={theme.primary} size={20}/></Pressable> : null}
           <View style={styles.sectionHeader}><AppText variant="heading">Collections</AppText><Pressable onPress={() => setShowCollectionForm((value) => !value)}><AppText variant="label" style={{ color: theme.primary }}>{showCollectionForm ? 'Cancel' : 'New collection'}</AppText></Pressable></View>
           {showCollectionForm ? <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><FormField label="Collection name" value={collectionName} onChangeText={setCollectionName} placeholder="Project management" returnKeyType="done" onSubmitEditing={() => void addCollection()}/><PrimaryButton label="Create collection" onPress={() => void addCollection()} disabled={!collectionName.trim()}/></View> : null}
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
@@ -91,7 +103,7 @@ export default function LibraryScreen() {
           {hasPreferences ? <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
             <View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="sparkles-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">{learningPreferences.levels.join(', ')} English</AppText><AppText variant="caption" style={{ color: theme.muted }}>{topicOptions.filter((topic) => learningPreferences.topics.includes(topic.id)).map((topic) => topic.title).join(' · ')}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Edit learning preferences" onPress={() => router.push('/preferences' as never)} style={styles.editPreferences}><AppText variant="label" style={{ color: theme.primary }}>Edit</AppText></Pressable></View>
             {recommendationPreview.length > 0 ? <View style={styles.recommendationWords}>{recommendationPreview.slice(0, 3).map(({ entry }) => <View key={entry.id} style={[styles.recommendationWord, { backgroundColor: theme.primarySoft }]}><AppText variant="label" style={{ color: theme.primary }}>{entry.term}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{entry.level}</AppText></View>)}</View> : <AppText style={{ color: theme.muted }}>You have already added every available recommendation for these choices.</AppText>}
-            <PrimaryButton label={recommendationPreview.length > 0 ? `Add ${Math.min(10, recommendationPreview.length)} recommended words` : 'No new recommendations'} loading={recommendationsBusy} disabled={recommendationPreview.length === 0} onPress={() => void addRecommendations()} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/>
+            <PrimaryButton label={recommendationPreview.length === 0 ? 'No new recommendations' : recommendationAddCount === 0 ? 'Unlock to add recommendations' : `Add ${recommendationAddCount} recommended words`} loading={recommendationsBusy} disabled={recommendationPreview.length === 0} onPress={() => void addRecommendations()} icon={<Ionicons name={recommendationAddCount === 0 ? 'infinite-outline' : 'add'} color="#FFFFFF" size={18}/>}/>
           </View> : <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="options-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">Make recommendations personal</AppText><AppText variant="caption" style={{ color: theme.muted }}>Choose at least one level and interest.</AppText></View></View><PrimaryButton label="Choose learning preferences" variant="secondary" onPress={() => router.push('/preferences' as never)}/></View>}
         </View>}
       />
@@ -111,6 +123,7 @@ const styles = StyleSheet.create({
   chips: { gap: spacing.sm }, chip: { minHeight: 40, paddingHorizontal: spacing.md, borderRadius: radii.pill, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   panel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.lg }, empty: { minHeight: 220 },
   packText: { flex: 1, gap: 2 }, recommendationHeading: { flexDirection: 'row', alignItems: 'center', gap: spacing.md }, recommendationIcon: { width: 44, height: 44, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' }, editPreferences: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }, recommendationWords: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, recommendationWord: { minHeight: 48, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderRadius: radii.control, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  capacityNotice: { minHeight: 76, borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   levelGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, levelCard: { width: '48.5%', minHeight: 132, borderWidth: 1, borderRadius: radii.card, padding: spacing.md, gap: spacing.sm },
   levelBadge: { width: 52, height: 52, borderRadius: 18, alignItems: 'center', justifyContent: 'center' }, levelText: { flex: 1, gap: 2 },
 });

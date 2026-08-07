@@ -17,6 +17,7 @@ import {
 import type { CatalogSense } from '@/domain/types';
 import { potentialWordDuplicates } from '@/domain/word-identity';
 import { normalizeTerm } from '@/features/import/parser';
+import { WordCapacityExceededError } from '@/features/purchases/capacity';
 import { translateEnglishToSlovak } from '@/features/translation/translator';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
@@ -82,7 +83,14 @@ export default function NewWordScreen() {
       });
       router.back();
     } catch (error) {
-      Alert.alert('Could not add word', error instanceof Error ? error.message : 'Please check the fields and try again.');
+      if (error instanceof WordCapacityExceededError) {
+        Alert.alert('Free library is full', error.message, [
+          { text: 'Not now', style: 'cancel' },
+          { text: 'Unlock unlimited', onPress: () => router.push('/upgrade' as never) },
+        ]);
+      } else {
+        Alert.alert('Could not add word', error instanceof Error ? error.message : 'Please check the fields and try again.');
+      }
     } finally { setSaving(false); }
   };
 
