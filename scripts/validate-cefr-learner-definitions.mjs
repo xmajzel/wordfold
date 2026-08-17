@@ -72,10 +72,11 @@ function normalizeSentence(value) {
 }
 
 function validateRecord(record, input, errors, warnings) {
+  const initialErrorCount = errors.length;
   const label = input.entryId;
   if (!record || typeof record !== 'object' || Array.isArray(record)) {
     errors.push(`${label}: output must be an object.`);
-    return;
+    return false;
   }
   const keys = Object.keys(record).sort();
   if (JSON.stringify(keys) !== JSON.stringify(outputKeys)) errors.push(`${label}: output fields do not match the required schema.`);
@@ -90,20 +91,28 @@ function validateRecord(record, input, errors, warnings) {
   if (typeof record.example !== 'string' || words(record.example).length < 4 || words(record.example).length > 24) {
     errors.push(`${label}: example must contain 4-24 words.`);
   } else if (!containsTermOrCommonInflection(record.example, input.term)) {
-    warnings.push(`${label}: example does not contain the term or a common inflection.`);
+    errors.push(`${label}: example does not contain the term or a common inflection.`);
   }
   if (typeof record.definition === 'string' && containsTerm(record.definition, input.term)) {
-    warnings.push(`${label}: definition may be circular.`);
+    errors.push(`${label}: definition may be circular.`);
   }
   if (!confidenceValues.has(record.confidence)) errors.push(`${label}: confidence is invalid.`);
   if (typeof record.needsReview !== 'boolean') errors.push(`${label}: needsReview must be boolean.`);
   if (record.confidence === 'low' && record.needsReview === false) errors.push(`${label}: low-confidence output must need review.`);
   if (typeof record.reviewNote !== 'string') errors.push(`${label}: reviewNote must be a string.`);
-  if (record.needsReview && !record.reviewNote?.trim()) errors.push(`${label}: reviewed entries need a reviewNote.`);
-  if (!record.needsReview && record.reviewNote?.trim()) warnings.push(`${label}: reviewNote is present although needsReview is false.`);
+  if (record.needsReview && (typeof record.reviewNote !== 'string' || !record.reviewNote.trim())) {
+    errors.push(`${label}: reviewed entries need a reviewNote.`);
+  }
+  if (!record.needsReview && typeof record.reviewNote === 'string' && record.reviewNote.trim()) {
+    warnings.push(`${label}: reviewNote is present although needsReview is false.`);
+  }
+  return errors.length === initialErrorCount;
 }
 
 const options = parseArgs(process.argv.slice(2));
+if (options.requireComplete && options.allowIncomplete) {
+  throw new Error('--require-complete cannot be combined with --allow-incomplete.');
+}
 const preparation = JSON.parse(readFileSync(options.manifestPath, 'utf8'));
 const errors = [];
 const warnings = [];
@@ -128,7 +137,7 @@ for (const chunk of preparation.chunks) {
       errors.push(`${input.entryId}: output is missing.`);
       continue;
     }
-    validateRecord(record, input, errors, warnings);
+    if (!validateRecord(record, input, errors, warnings)) continue;
     const selectedSense = input.candidateSenses.find((sense) => sense.id === record.meaningReferenceSenseId);
     compiled.set(input.entryId, {
       ...record,
@@ -143,7 +152,7 @@ for (const chunk of preparation.chunks) {
   }
 }
 
-if (!options.allowIncomplete && compiled.size !== preparation.selectedEntries) {
+if ((!options.allowIncomplete || options.requireComplete) && compiled.size !== preparation.selectedEntries) {
   errors.push(`Compiled ${compiled.size} entries; expected ${preparation.selectedEntries}.`);
 }
 if (options.requireComplete && preparation.selectedEntries !== preparation.catalogEntries) {
