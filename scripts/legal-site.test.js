@@ -7,8 +7,8 @@ describe('public legal site', () => {
   const deletion = fs.readFileSync(path.join(root, 'account-deletion', 'index.html'), 'utf8');
 
   it('publishes the approved contact and no placeholders', () => {
-    expect(privacy).toContain('jozefmajzel1@gmail.com');
-    expect(deletion).toContain('jozefmajzel1@gmail.com');
+    expect(privacy).toContain('support@wordfold.app');
+    expect(deletion).toContain('support@wordfold.app');
     expect(`${privacy}${deletion}`).not.toMatch(/example\.com|TODO|replace-with/i);
   });
 
