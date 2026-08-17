@@ -2,9 +2,9 @@
 
 ## Status
 
-Approved and implemented locally on 2026-07-20. All 30 test suites (109 tests), lint, TypeScript, the local Expo export, and the local Android debug build pass. Expo Doctor reports 19/21 checks with two pre-existing dependency metadata advisories. A live authenticated import and interruption/recovery scenarios remain unverified until a native test device is available.
+Approved and implemented locally on 2026-07-20, then native-verified by 2026-08-17. All 30 implementation-time test suites (109 tests), lint, TypeScript, the local Expo export, and the local Android debug build passed. Expo Doctor reported 19/21 checks with two pre-existing dependency metadata advisories. The live authenticated import and interruption/recovery scenarios also pass.
 
-Phase 4A is implemented, but its authenticated physical-device smoke test is deferred because a test device is not currently available. Phase 4B may be implemented locally, but neither phase is release-verified until native testing is completed.
+Phase 4A and Phase 4B are implemented. Their authenticated physical-device flows, together with the Phase 4C offline and recovery matrix, passed release verification on 2026-08-17.
 
 ## Problem
 
@@ -161,7 +161,7 @@ The contract exposes only safe display state and counts to UI. Supabase clients,
 
 ## Risks and assumptions
 
-- Phase 4A's native connection is assumed for implementation but remains manually unverified.
+- Phase 4A's native connection was an implementation assumption and was subsequently verified on a physical device.
 - Importing potentially large histories through bounded Data API batches is adequate for the current personal vocabulary scale. A server-side bulk RPC is deferred unless measured limits require one.
 - **Use this device version** intentionally replaces the account word's mutable content and current progress. **Keep account version** intentionally omits the device history for that conflicting word to avoid inconsistent counters.
 - The server remains authoritative after accepting writes; Postgres may assign a newer `updated_at` during conflict updates.
@@ -195,8 +195,8 @@ The contract exposes only safe display state and counts to UI. Supabase clients,
 - A different account cannot reuse another account's mappings or completion marker.
 - Existing signed-out behavior, local vocabulary UI, and safe sign-out remain unchanged.
 - Focused tests, the full test suite, lint, TypeScript, Expo Doctor, and local exports pass.
-- Native device scenarios remain explicitly unverified until a phone or emulator is available.
+- Native import, interruption, and recovery scenarios passed on a physical device by 2026-08-17.
 
 ## Next phase
 
-Phase 4C was subsequently approved and implemented under [its dedicated specification](SUPABASE_POWERSYNC_PHASE_4C_SPECIFICATION.md). Native import and cutover verification remain deferred until a test device is available.
+Phase 4C was subsequently approved and implemented under [its dedicated specification](SUPABASE_POWERSYNC_PHASE_4C_SPECIFICATION.md). Native import and cutover verification passed on 2026-08-17.

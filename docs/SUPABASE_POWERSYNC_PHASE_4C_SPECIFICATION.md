@@ -2,9 +2,9 @@
 
 ## Status
 
-Approved and implemented locally on 2026-07-20. The version 6 device migration, resumable delta cutover, PowerSync vocabulary repository, Supabase uploader, provider authority switch, safe upload/rejection status, and sign-out cleanup are implemented with focused tests.
+Approved and implemented on 2026-07-20. The version 6 device migration, resumable delta cutover, PowerSync vocabulary repository, Supabase uploader, provider authority switch, safe upload/rejection status, and sign-out cleanup are implemented with focused tests.
 
-No Supabase migration or PowerSync service deployment was required. Automated local verification is recorded below; authenticated native offline/reconnect and two-device recovery tests remain deferred until a physical test device is available.
+Release verification completed on 2026-08-17. Automated checks, authenticated native cutover, offline mutation and reconnection, rejected-write rollback, force-close recovery, sign-out with pending writes, and second-device restoration all pass. Phase 4C added no Supabase schema or Sync Streams change; the development replication credential was rotated and its PowerSync service connection revalidated separately.
 
 Phase 4A provides the authenticated PowerSync connection. Phase 4B provides a user-confirmed, resumable guest snapshot import. Phase 4C completes the native cutover so signed-in vocabulary reads and writes use PowerSync locally and upload to Supabase when connectivity returns.
 
@@ -231,7 +231,7 @@ Exact filenames may be combined when the existing module stays clearer, but the 
 - Known validation rejection classification must remain narrow. Misclassifying a transient or programming error as rejected could acknowledge a change that should have retried.
 - Server and device timestamps can differ; timestamps are used to identify a changed guest snapshot, not to resolve concurrent account writes.
 - Removing the scheduled-reminder foreign key weakens local referential enforcement, so every schedule rebuild and sign-out must clear stale rows explicitly.
-- Phase 4A/4B live native verification is still deferred. Phase 4C can be implemented and unit-tested locally, but it is not release-ready without a real authenticated device and two-device recovery test.
+- The authenticated native and two-device recovery flows were release-verified on 2026-08-17.
 
 ## Explicitly not changed
 
@@ -279,7 +279,7 @@ Exact filenames may be combined when the existing module stays clearer, but the 
 3. **Uploader:** implement CRUD/RPC dispatch, known-rejection handling, retry behavior, and connector tests. Can proceed after the repository mutation shapes from task 2 are fixed.
 4. **Provider cutover:** select guest versus synchronized authority, subscribe to PowerSync changes, and keep device-only settings local. Depends on tasks 1–3.
 5. **UX and reminders:** add cutover/upload/rejection states and UUID-compatible reminder/sign-out behavior. Depends on task 4.
-6. **Verification and documentation:** run all local gates, self-review against this specification, and document unverified native scenarios. Depends on tasks 1–5.
+6. **Verification and documentation:** run all local gates, self-review against this specification, and record native verification results. Depends on tasks 1–5.
 
 Each task is reviewable independently, but no intermediate state is considered release-ready before task 6.
 
@@ -297,7 +297,8 @@ Completed on 2026-07-20:
 - PowerSync Cloud diagnostics: the deployed source is connected, initial replication is complete, replication lag is zero, and `collections`, `words`, and `learning_events` have no reported errors. Full validation passes for the configuration schema, source connection, and Sync Streams.
 - Expo Doctor: 19 of 21 checks passed. The remaining checks report the existing `react` copy under the PowerSync CLI's `@oclif/table` dependency and React Native Directory metadata warnings for Quick SQLite and the local `wordfold-translate` module; the successful native build provides the stronger native compatibility check for this implementation.
 
-Deferred or environment-blocked:
+Environment notes:
 
 - The standard `supabase test db` wrapper cannot mount `supabase/tests` because Docker Desktop does not currently share this workspace path; the pgTAP SQL itself passed through the container execution described above.
-- Authenticated native cutover, airplane-mode mutation/reconnect, rejected-write rollback, force-close, sign-out-with-pending-writes, and second-device recovery still require a physical development-build test device.
+
+Manual native verification completed on 2026-08-17: authenticated cutover, airplane-mode mutation/reconnect, rejected-write rollback, force-close recovery, sign-out with pending writes, and second-device restoration all passed.
