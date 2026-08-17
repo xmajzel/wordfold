@@ -23,7 +23,7 @@ const STEP_NAMES = ['Language', 'Levels', 'Interests', 'Review'] as const;
 export default function OnboardingScreen() {
   const theme = useAppTheme();
   const insets = useSafeAreaInsets();
-  const { words, onboardingComplete, completePersonalizedOnboarding } = useAppData();
+  const { words, onboardingComplete, completePersonalizedOnboarding, wordCapacity } = useAppData();
   const [wasCompleteOnEntry] = useState(onboardingComplete === true);
   const [step, setStep] = useState(0);
   const [furthestStep, setFurthestStep] = useState(0);
@@ -32,11 +32,12 @@ export default function OnboardingScreen() {
   const [topics, setTopics] = useState<ContentPackId[]>([]);
   const [busy, setBusy] = useState(false);
   const preferences = useMemo(() => normalizeLearningPreferences({ levels, topics }), [levels, topics]);
+  const previewLimit = wordCapacity.remaining === null ? 10 : Math.min(10, wordCapacity.remaining);
   const preview = useMemo(() => buildRecommendations(
     preferences,
     words.filter((word) => word.sourceLanguageCode === 'en').map((word) => word.normalizedTerm),
-    10,
-  ), [preferences, words]);
+    previewLimit,
+  ), [preferences, previewLimit, words]);
 
   if (wasCompleteOnEntry) return <Redirect href="/(tabs)" />;
 
@@ -46,8 +47,8 @@ export default function OnboardingScreen() {
   const toggleTopic = (topic: ContentPackId) => setTopics((current) => current.includes(topic)
     ? current.filter((item) => item !== topic)
     : normalizeLearningPreferences({ levels: [], topics: [...current, topic] }).topics);
-  const canContinue = step === 1 ? levels.length > 0 : step === 2 ? topics.length > 0 : step !== 3 || preview.length > 0;
-  const maxValidStep = levels.length === 0 ? 1 : topics.length === 0 || preview.length === 0 ? 2 : 3;
+  const canContinue = step === 1 ? levels.length > 0 : step === 2 ? topics.length > 0 : step !== 3 || preview.length > 0 || previewLimit === 0;
+  const maxValidStep = levels.length === 0 ? 1 : topics.length === 0 || (preview.length === 0 && previewLimit > 0) ? 2 : 3;
   const maxNavigableStep = Math.min(furthestStep, maxValidStep);
 
   const goToStep = (nextStep: number) => {
@@ -178,8 +179,8 @@ function ReviewStep({ preferences, preview }: { preferences: LearningPreferences
       <SummaryRow icon="heart-outline" label="Interests" value={topicNames.join('\n')}/>
     </View>
     <View>
-      <AppText variant="heading">Your first {preview.length} words</AppText>
-      <AppText style={{ color: theme.muted }}>These words will be added to your library.</AppText>
+      <AppText variant="heading">{preview.length > 0 ? `Your first ${preview.length} words` : 'Your preferences are ready'}</AppText>
+      <AppText style={{ color: theme.muted }}>{preview.length > 0 ? 'These words will be added to your library.' : 'Your current library is full. Unlock unlimited words later to add recommendations.'}</AppText>
     </View>
     <View style={styles.previewGrid}>{preview.map(({ entry }) => <View key={entry.id} style={[styles.wordChip, { backgroundColor: theme.primarySoft }]}><AppText variant="label" style={{ color: theme.primary }}>{entry.term}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{entry.level}</AppText></View>)}</View>
     <AppText variant="caption" style={{ color: theme.muted }}>Existing words are never removed. Future recommendations will follow the same preferences.</AppText>

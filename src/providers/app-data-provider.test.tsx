@@ -17,6 +17,9 @@ jest.mock('@/providers/auth-provider', () => ({
 jest.mock('@/providers/sync-provider', () => ({
   useSync: () => ({ phase: 'signedOut', hasSynced: false }),
 }));
+jest.mock('@/providers/purchase-provider', () => ({
+  usePurchase: () => ({ unlimited: false }),
+}));
 jest.mock('@/data/sync/database', () => ({ powerSyncDatabase: {} }));
 jest.mock('@/data/supabase/client', () => ({ supabase: null }));
 jest.mock('@/data/sync/guest-import-remote', () => ({ SupabaseGuestImportRemote: jest.fn() }));
@@ -99,6 +102,14 @@ function TranslationProbe() {
   return <Pressable accessibilityRole="button" onPress={() => void saveWordTranslation(word.id, 'rozsah')}><Text>Save translation</Text></Pressable>;
 }
 
+function PrepareTranslationProbe() {
+  const { words, prepareWordTranslation } = useAppData();
+  if (!words[0]) return <Text>Loading words</Text>;
+  return <Pressable accessibilityRole="button" onPress={() => void prepareWordTranslation(words[0])}>
+    <Text>{words[0].translation ?? 'Prepare translation'}</Text>
+  </Pressable>;
+}
+
 describe('AppDataProvider', () => {
   beforeEach(() => jest.clearAllMocks());
 
@@ -157,32 +168,41 @@ describe('AppDataProvider', () => {
     ));
   });
 
-  it('backfills saved catalog words without invoking on-device translation', async () => {
+  it('does not mutate a saved catalog word that has no translation during refresh', async () => {
     const catalogWord = { ...word, id: 'catalog', normalizedTerm: 'catalog-word', translation: null, cefrLevel: 'A1' as const };
     (repository.listWords as jest.Mock).mockResolvedValue([catalogWord]);
 
     await render(<AppDataProvider><Text>Ready</Text></AppDataProvider>);
 
-    await waitFor(() => expect(repository.updateMissingWordTranslations).toHaveBeenCalledWith(
-      expect.anything(),
-      [{ id: 'catalog', translation: 'katalógový preklad' }],
-    ));
+    await waitFor(() => expect(repository.listWords).toHaveBeenCalled());
+    expect(repository.updateMissingWordTranslations).not.toHaveBeenCalled();
+    expect(repository.updateWordTranslation).not.toHaveBeenCalled();
     expect(mockTranslateEnglishToSlovak).not.toHaveBeenCalled();
   });
 
-  it('queues and persists an on-device hint for a personal word', async () => {
+  it('does not translate a saved personal word in the background', async () => {
     const personalWord = { ...word, id: 'personal', term: 'private term', normalizedTerm: 'private-term', translation: null };
     (repository.listWords as jest.Mock).mockResolvedValue([personalWord]);
-    (repository.getWord as jest.Mock).mockResolvedValue(personalWord);
 
     await render(<AppDataProvider><Text>Ready</Text></AppDataProvider>);
 
-    await waitFor(() => expect(mockTranslateEnglishToSlovak).toHaveBeenCalledWith('private term'));
-    await waitFor(() => expect(repository.updateWordTranslation).toHaveBeenCalledWith(
-      expect.anything(),
-      'personal',
-      'osobný preklad',
-    ));
+    await waitFor(() => expect(repository.listWords).toHaveBeenCalled());
+    expect(mockTranslateEnglishToSlovak).not.toHaveBeenCalled();
+    expect(repository.updateWordTranslation).not.toHaveBeenCalled();
+  });
+
+  it('prepares an explicitly requested hint in memory without persisting the saved word', async () => {
+    const personalWord = { ...word, id: 'personal', term: 'private term', normalizedTerm: 'private-term', translation: null };
+    (repository.listWords as jest.Mock).mockResolvedValue([personalWord]);
+    (repository.getWord as jest.Mock).mockResolvedValue(personalWord);
+    const view = await render(<AppDataProvider><PrepareTranslationProbe/></AppDataProvider>);
+
+    const prepareButton = await waitFor(() => view.getByRole('button', { name: 'Prepare translation' }));
+    await fireEvent.press(prepareButton);
+
+    await waitFor(() => view.getByText('osobný preklad'));
+    expect(repository.updateWordTranslation).not.toHaveBeenCalled();
+    expect(repository.updateMissingWordTranslations).not.toHaveBeenCalled();
   });
 
   it('does not translate unsupported language pairs in the background', async () => {

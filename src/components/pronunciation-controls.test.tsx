@@ -8,6 +8,7 @@ const mockCacheScope: { type: 'guest' | 'account'; userId?: string } = {
 };
 let mockHasOfflineAsset = false;
 let mockConsentStatus: 'loading' | 'disabled' | 'enabled' | 'deletion_pending' = 'disabled';
+let mockConsentUserId: string | null = 'reader';
 
 jest.mock('@/features/pronunciation/cache-scope', () => ({
   usePronunciationCacheScope: () => mockCacheScope,
@@ -19,10 +20,10 @@ jest.mock('@/features/pronunciation/offline-downloads-provider', () => ({
   }),
 }));
 
-jest.mock('@/features/pronunciation/private-consent-provider', () => ({
+jest.mock('@/features/pronunciation/private-consent', () => ({
   usePrivatePronunciationConsent: () => ({
     status: mockConsentStatus,
-    userId: mockCacheScope.userId ?? null,
+    userId: mockConsentUserId,
   }),
 }));
 
@@ -67,6 +68,7 @@ describe('PronunciationControls', () => {
     Object.assign(mockCacheScope, { type: 'account', userId: 'reader' });
     mockHasOfflineAsset = false;
     mockConsentStatus = 'disabled';
+    mockConsentUserId = 'reader';
     Object.defineProperty(Platform, 'OS', { configurable: true, value: 'ios' });
   });
 
@@ -115,5 +117,11 @@ describe('PronunciationControls', () => {
     const signedOut = await render(<PronunciationControls {...manual}/>);
     expect(signedOut.queryByLabelText('private-enabled')).toBeNull();
     expect(signedOut.queryByLabelText('private-disabled')).toBeNull();
+
+    Object.assign(mockCacheScope, { type: 'account', userId: 'next-reader' });
+    mockConsentUserId = 'reader';
+    const transitioning = await render(<PronunciationControls {...manual}/>);
+    expect(transitioning.queryByLabelText('private-enabled')).toBeNull();
+    expect(transitioning.queryByLabelText('private-disabled')).toBeNull();
   });
 });

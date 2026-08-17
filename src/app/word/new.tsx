@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
@@ -17,6 +17,7 @@ import {
 import type { CatalogSense } from '@/domain/types';
 import { potentialWordDuplicates } from '@/domain/word-identity';
 import { normalizeTerm } from '@/features/import/parser';
+import { WordCapacityExceededError } from '@/features/purchases/capacity';
 import { translateEnglishToSlovak } from '@/features/translation/translator';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
@@ -32,6 +33,7 @@ export default function NewWordScreen() {
   const [example, setExample] = useState('');
   const [partOfSpeech, setPartOfSpeech] = useState('');
   const [selectedSenseId, setSelectedSenseId] = useState<string | null>(null);
+  const selectedSenseTranslation = useRef<string | null>(null);
   const [sourceLanguageCode, setSourceLanguageCode] = useState(defaultSourceLanguageCode);
   const [targetLanguageCode, setTargetLanguageCode] = useState(defaultTargetLanguageCode);
   const [sourcePronunciationLocale, setSourcePronunciationLocale] = useState(
@@ -67,7 +69,13 @@ export default function NewWordScreen() {
   };
 
   const selectSense = (sense: CatalogSense) => {
+    const previousSenseTranslation = selectedSenseTranslation.current;
+    const nextSenseTranslation = targetLanguageCode === 'sk' ? sense.translation ?? null : null;
     setSelectedSenseId(sense.id); setDefinition(sense.definition); setExample(sense.example ?? ''); setPartOfSpeech(sense.partOfSpeech);
+    setTranslation((current) => current === (previousSenseTranslation ?? '')
+      ? nextSenseTranslation ?? ''
+      : current);
+    selectedSenseTranslation.current = nextSenseTranslation;
   };
 
   const persistWord = async () => {
@@ -82,7 +90,14 @@ export default function NewWordScreen() {
       });
       router.back();
     } catch (error) {
-      Alert.alert('Could not add word', error instanceof Error ? error.message : 'Please check the fields and try again.');
+      if (error instanceof WordCapacityExceededError) {
+        Alert.alert('Free library is full', error.message, [
+          { text: 'Not now', style: 'cancel' },
+          { text: 'Unlock unlimited', onPress: () => router.push('/upgrade' as never) },
+        ]);
+      } else {
+        Alert.alert('Could not add word', error instanceof Error ? error.message : 'Please check the fields and try again.');
+      }
     } finally { setSaving(false); }
   };
 
@@ -111,13 +126,17 @@ export default function NewWordScreen() {
     if (!languageChanged) return;
     setSenses([]); setSelectedSenseId(null); setHasLookedUp(false);
     setDefinition(''); setExample(''); setPartOfSpeech('');
+    selectedSenseTranslation.current = null;
   };
 
   const changeTargetLanguage = (languageCode: string, locale: string) => {
     const languageChanged = languageCode !== targetLanguageCode;
     setTargetLanguageCode(languageCode);
     setTargetPronunciationLocale(locale);
-    if (languageChanged) setTranslation('');
+    if (languageChanged) {
+      setTranslation('');
+      selectedSenseTranslation.current = null;
+    }
   };
 
   return (

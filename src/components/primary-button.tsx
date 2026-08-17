@@ -9,8 +9,8 @@ import { radii, spacing } from '@/theme/tokens';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export function PrimaryButton({ label, onPress, variant = 'primary', disabled, loading, icon }:
-  { label: string; onPress(): void; variant?: 'primary' | 'secondary' | 'danger'; disabled?: boolean; loading?: boolean; icon?: ReactNode }) {
+export function PrimaryButton({ label, onPress, variant = 'primary', disabled, loading, icon, testID }:
+  { label: string; onPress(): void; variant?: 'primary' | 'secondary' | 'danger'; disabled?: boolean; loading?: boolean; icon?: ReactNode; testID?: string }) {
   const theme = useAppTheme();
   const color = variant === 'secondary' ? theme.primary : '#FFFFFF';
   const scale = useSharedValue(1);
@@ -21,6 +21,7 @@ export function PrimaryButton({ label, onPress, variant = 'primary', disabled, l
   const colors = variant === 'primary' ? theme.primaryGradient : variant === 'danger' ? [theme.danger, '#B63C61'] as const : [theme.surface, theme.surface] as const;
   return (
     <AnimatedPressable
+      testID={testID}
       accessibilityRole="button"
       accessibilityLabel={label}
       disabled={disabled || loading}

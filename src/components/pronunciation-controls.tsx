@@ -14,7 +14,7 @@ import {
   getPrivateNeuralPronunciationEligibility,
   type PrivateNeuralPronunciationLocale,
 } from '@/features/pronunciation/private-cloud';
-import { usePrivatePronunciationConsent } from '@/features/pronunciation/private-consent-provider';
+import { usePrivatePronunciationConsent } from '@/features/pronunciation/private-consent';
 import { spacing } from '@/theme/tokens';
 
 type PronunciationControlsProps = {
@@ -69,7 +69,9 @@ function PrivateControl({ text, locale, compact }: {
 }) {
   const cacheScope = usePronunciationCacheScope();
   const consent = usePrivatePronunciationConsent();
-  if (cacheScope.type !== 'account' || consent.status === 'loading') return null;
+  if (cacheScope.type !== 'account'
+    || consent.userId !== cacheScope.userId
+    || consent.status === 'loading') return null;
   return <PrivatePronunciationButton
     text={text}
     locale={locale}

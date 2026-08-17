@@ -12,9 +12,9 @@ Implementation status:
 - PowerSync CLI `0.10.0` is pinned, and `powersync/service.yaml` plus `powersync/sync-config.yaml` are the versioned Cloud configuration.
 - The EU PowerSync Cloud development instance is connected with verified TLS, Supabase Auth discovery, edition 3 user-scoped Sync Streams, and healthy zero-lag replication for all three synchronized tables. Configuration, source-connection, and Sync Streams validation pass after the development replication credential was rotated on 2026-07-20.
 - Phase 3 authentication is configured and device-tested, including confirmation callbacks and persisted native sessions.
-- Phase 4A native PowerSync transport is implemented locally, the public client endpoint is configured, and its Android debug build passes; installation of the rebuilt development client and the authenticated connection smoke test remain pending.
-- Phase 4B resumable guest snapshot import is implemented locally with explicit consent, stable per-account UUID mappings, conflict review, ordered writes, PowerSync verification, and retained guest data. Live native verification remains pending.
-- Phase 4C continuous offline synchronization is implemented locally: post-import changes reconcile before repository cutover, signed-in vocabulary uses PowerSync SQLite, queued mutations upload through Supabase, and safe rejection/sign-out handling is present. Native offline/reconnect and second-device verification remain pending.
+- Phase 4A native PowerSync transport is implemented, the public client endpoint is configured, and its Android debug build and authenticated connection smoke test pass.
+- Phase 4B resumable guest snapshot import is implemented and native-verified with explicit consent, stable per-account UUID mappings, conflict review, ordered writes, PowerSync verification, and retained guest data.
+- Phase 4C continuous offline synchronization is implemented and release-verified: post-import changes reconcile before repository cutover, signed-in vocabulary uses PowerSync SQLite, queued mutations upload through Supabase, and native offline/reconnect, recovery, rejection, sign-out, and second-device scenarios pass.
 
 The first deployment uses:
 

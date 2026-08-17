@@ -2,7 +2,7 @@
 
 ## Status
 
-Implemented locally on 2026-07-20. Automated native connection-layer tests and the local Android debug build pass, and the project-specific `EXPO_PUBLIC_POWERSYNC_URL` is configured. Installation of the rebuilt development client and the authenticated connection smoke test remain required before Phase 4A is operationally complete.
+Implemented locally on 2026-07-20 and native-verified by 2026-08-17. Automated connection-layer tests, the local Android debug build, installation of the rebuilt development client, and the authenticated connection smoke test pass. The project-specific `EXPO_PUBLIC_POWERSYNC_URL` is configured.
 
 ## Problem
 
@@ -63,7 +63,7 @@ The endpoint is centralized and replaceable; it is not embedded in repository op
 - Clearing fails: Supabase sign-out is not attempted, avoiding an account-data isolation failure.
 - A different account follows the current account: the old database is cleared before connecting the new account.
 
-## Explicitly deferred
+## Explicitly deferred from Phase 4A
 
 - Guest vocabulary import and stable legacy-to-UUID mappings.
 - Switching screens or repositories to PowerSync data.
@@ -83,4 +83,4 @@ The endpoint is centralized and replaceable; it is not embedded in repository op
 
 ## Next phase
 
-Phase 4B and Phase 4C are approved and implemented locally under their dedicated specifications. Native authenticated import, offline/reconnect, and second-device verification remain deferred.
+Phase 4B and Phase 4C are approved and implemented under their dedicated specifications. Native authenticated import, offline/reconnect, and second-device verification passed on 2026-08-17.

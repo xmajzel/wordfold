@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 
@@ -97,6 +97,34 @@ export default function AccountScreen() {
     }
   };
 
+  const deleteAccount = async () => {
+    setSubmitting(true);
+    setFormMessage(null);
+    try {
+      await appData.deleteCloudAccount();
+      Alert.alert(
+        'Cloud account deleted',
+        'Your synchronized account data was deleted. This device keeps a local copy of your vocabulary.',
+        [{ text: 'Continue', onPress: () => router.back() }],
+      );
+    } catch (error) {
+      setFormMessage(error instanceof Error
+        ? error.message
+        : 'The cloud account could not be deleted. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const confirmDeleteAccount = () => Alert.alert(
+    'Delete cloud account?',
+    'This permanently removes your sign-in, synchronized vocabulary, learning history, and private cloud audio. A local vocabulary copy stays on this device. Your Google Play purchase is not affected.',
+    [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Delete cloud account', style: 'destructive', onPress: () => void deleteAccount() },
+    ],
+  );
+
   return (
     <Screen scroll>
       <View style={styles.header}>
@@ -163,6 +191,13 @@ export default function AccountScreen() {
           ) : null}
           {auth.message || formMessage ? <Message text={formMessage ?? auth.message!} color={formMessage ? theme.danger : theme.success}/> : null}
           <PrimaryButton label="Sign out of this device" variant="secondary" loading={submitting} onPress={() => void signOut()}/>
+          <View style={[styles.dangerZone, { borderColor: theme.danger }]}>
+            <View style={styles.textGroup}>
+              <AppText variant="heading" style={{ color: theme.danger }}>Delete cloud account</AppText>
+              <AppText variant="caption" style={{ color: theme.muted }}>Irreversible in the cloud. Your current vocabulary remains locally on this device.</AppText>
+            </View>
+            <PrimaryButton testID="delete-account-button" label="Delete cloud account" variant="danger" disabled={submitting} onPress={confirmDeleteAccount}/>
+          </View>
         </View>
       ) : null}
 
@@ -254,6 +289,7 @@ const styles = StyleSheet.create({
   textGroup: { gap: spacing.sm },
   notice: { borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', alignItems: 'flex-start', gap: spacing.sm },
   flex: { flex: 1 },
+  dangerZone: { borderTopWidth: 1, paddingTop: spacing.lg, gap: spacing.md },
   segment: { flexDirection: 'row', padding: spacing.xs, borderRadius: radii.control, backgroundColor: '#0000000A' },
   modeButton: { flex: 1, minHeight: 42, borderRadius: radii.control - spacing.xs, alignItems: 'center', justifyContent: 'center' },
 });

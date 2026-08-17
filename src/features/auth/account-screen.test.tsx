@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
+import { Alert } from 'react-native';
 
 import AccountScreen from '@/app/account';
 
@@ -8,6 +9,7 @@ const mockSignOut = jest.fn();
 const mockClearMessage = jest.fn();
 const mockClearBeforeSignOut = jest.fn();
 const mockPrepareForSignOut = jest.fn();
+const mockDeleteCloudAccount = jest.fn();
 
 const mockAuth = {
   status: 'signedOut' as const,
@@ -29,6 +31,7 @@ jest.mock('@/providers/app-data-provider', () => ({
     },
     dataSource: 'guest',
     prepareForSignOut: mockPrepareForSignOut,
+    deleteCloudAccount: mockDeleteCloudAccount,
   }),
 }));
 jest.mock('@/providers/sync-provider', () => ({
@@ -63,6 +66,7 @@ describe('AccountScreen', () => {
     mockSignOut.mockResolvedValue({ ok: true, outcome: 'signedOut' });
     mockClearBeforeSignOut.mockResolvedValue(undefined);
     mockPrepareForSignOut.mockResolvedValue(undefined);
+    mockDeleteCloudAccount.mockResolvedValue(undefined);
     Object.assign(mockAuth, { status: 'signedOut', session: null, user: null });
   });
 
@@ -117,5 +121,18 @@ describe('AccountScreen', () => {
 
     await waitFor(() => expect(view.getByText('Sign out could not safely clear synchronized data. Please try again.')).toBeTruthy());
     expect(mockSignOut).not.toHaveBeenCalled();
+  });
+
+  it('requires destructive confirmation before deleting the cloud account', async () => {
+    Object.assign(mockAuth, { status: 'signedIn', user: { email: 'reader@example.com' } });
+    const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
+    const view = await render(<AccountScreen/>);
+
+    await fireEvent.press(view.getByTestId('delete-account-button'));
+
+    expect(mockDeleteCloudAccount).not.toHaveBeenCalled();
+    const actions = alert.mock.calls[0][2];
+    await act(async () => actions?.find((action) => action.style === 'destructive')?.onPress?.());
+    await waitFor(() => expect(mockDeleteCloudAccount).toHaveBeenCalledTimes(1));
   });
 });

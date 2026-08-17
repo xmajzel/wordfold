@@ -1,6 +1,8 @@
 import { fireEvent, render } from '@testing-library/react-native';
+import { Linking } from 'react-native';
 
 import SettingsScreen from '@/app/settings';
+import { ACCOUNT_DELETION_URL, PRIVACY_POLICY_URL } from '@/features/legal/urls';
 
 const mockPush = jest.fn();
 let mockPrivateConsentStatus: 'disabled' | 'enabled' | 'deletion_pending' = 'disabled';
@@ -21,7 +23,7 @@ jest.mock('@/providers/app-data-provider', () => ({
   }),
 }));
 jest.mock('@/features/reminders/scheduler', () => ({ requestReminderPermission: jest.fn() }));
-jest.mock('@/features/pronunciation/private-consent-provider', () => ({
+jest.mock('@/features/pronunciation/private-consent', () => ({
   usePrivatePronunciationConsent: () => ({
     status: mockPrivateConsentStatus,
     userId: '00000000-0000-4000-8000-0000000000a1',
@@ -68,5 +70,24 @@ describe('Settings account entry', () => {
     expect(view.getByText('Off · private audio deletion needs attention')).toBeTruthy();
     await fireEvent.press(view.getByRole('button', { name: 'Manage private pronunciation' }));
     expect(mockPush).toHaveBeenCalledWith('/private-pronunciation');
+  });
+
+  it('keeps opt-out accessible if a later build disables new private requests', async () => {
+    mockPrivateConsentStatus = 'enabled';
+    const view = await render(<SettingsScreen/>);
+
+    expect(view.getByRole('button', { name: 'Manage private pronunciation' })).toBeTruthy();
+    expect(view.getByText(/On · private neural voice/)).toBeTruthy();
+  });
+
+  it('opens the published privacy and account-deletion pages', async () => {
+    const openUrl = jest.spyOn(Linking, 'openURL').mockResolvedValue(undefined);
+    const view = await render(<SettingsScreen/>);
+
+    await fireEvent.press(view.getByTestId('privacy-policy-link'));
+    await fireEvent.press(view.getByTestId('account-deletion-link'));
+
+    expect(openUrl).toHaveBeenNthCalledWith(1, PRIVACY_POLICY_URL);
+    expect(openUrl).toHaveBeenNthCalledWith(2, ACCOUNT_DELETION_URL);
   });
 });

@@ -1,6 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 
 import type { CatalogSense, Collection, DashboardStats, LearningFilter, LearningPreferences, LearningRating, ReminderSettings, Word } from '@/domain/types';
+import { getCefrEntryForNormalizedTerm } from '@/data/cefr-catalog';
 import type { NewWordInput } from '@/data/repository';
 import { createId } from '@/data/repository';
 import { isLearningFilter } from '@/data/cefr-levels';
@@ -114,7 +115,21 @@ export function AppDataProvider({ children }: PropsWithChildren) {
   const value = useMemo<AppDataValue>(() => ({
     dataSource: 'guest', words, collections, stats, reminderSettings, learningPreferences, learningFilter, onboardingComplete,
     refresh: async () => undefined,
-    findSenses: async (term) => { const sense = previewSenses[normalizeTerm(term)]; return sense ? [sense] : []; },
+    findSenses: async (term) => {
+      const normalizedTerm = normalizeTerm(term);
+      const entry = getCefrEntryForNormalizedTerm(normalizedTerm);
+      if (entry) return [{
+        id: entry.catalogSenseId,
+        term: entry.term,
+        partOfSpeech: entry.partOfSpeech,
+        definition: entry.definition,
+        example: entry.example,
+        translation: entry.translation,
+        rank: -101,
+      }];
+      const sense = previewSenses[normalizedTerm];
+      return sense ? [sense] : [];
+    },
     createWord: async (input) => { const word = toWord(input); setWords((current) => [word, ...current]); return word.id; },
     createWords: async (inputs) => { const next = inputs.map((input) => toWord(input)); setWords((current) => [...next, ...current]); return next.map((word) => word.id); },
     editWord: async (id, input) => setWords((current) => current.map((word) => word.id === id ? { ...word, ...input, normalizedTerm: input.normalizedTerm, updatedAt: new Date().toISOString() } : word)),

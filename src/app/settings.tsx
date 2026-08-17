@@ -11,7 +11,8 @@ import type { ReminderSettings } from '@/domain/types';
 import { topicOptions } from '@/features/recommendations/selector';
 import { neuralPreviewFeatureEnabled } from '@/features/pronunciation/cloud';
 import { privateNeuralPreviewFeatureEnabled } from '@/features/pronunciation/private-cloud';
-import { usePrivatePronunciationConsent } from '@/features/pronunciation/private-consent-provider';
+import { ACCOUNT_DELETION_URL, PRIVACY_POLICY_URL } from '@/features/legal/urls';
+import { usePrivatePronunciationConsent } from '@/features/pronunciation/private-consent';
 import { requestReminderPermission } from '@/features/reminders/scheduler';
 import { formatMinutes, REMINDER_PRESETS } from '@/features/reminders/slots';
 import { useAppTheme } from '@/hooks/use-app-theme';
@@ -103,9 +104,7 @@ export default function SettingsScreen() {
         </View>
         <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
       </Pressable>}
-      {Platform.OS !== 'web'
-        && auth.status === 'signedIn'
-        && privateNeuralPreviewFeatureEnabled()
+      {Platform.OS !== 'web' && auth.status === 'signedIn'
         ? <PrivatePronunciationSettingsCard/>
         : null}
       <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={styles.switchRow}><View style={styles.flex}><AppText variant="heading">Word reminders</AppText><AppText style={{ color: theme.muted }}>Fresh words at preferred times.</AppText></View><AppSwitch accessibilityLabel="Enable word reminders" value={draft.enabled} onValueChange={(value) => void toggleEnabled(value)}/></View></View>
@@ -120,7 +119,9 @@ export default function SettingsScreen() {
       <View style={styles.divider}/>
       <AppText variant="heading">Content and privacy</AppText>
       <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><InfoRow icon="phone-portrait-outline" title="Offline-first vocabulary" body={dataSource === 'synced' ? 'Account vocabulary stays on this device and synchronizes when connected.' : 'Device vocabulary stays local until account import and reconciliation finish.'}/><InfoRow icon="book-outline" title="Open English WordNet 2025" body="Definitions under CC BY 4.0."/><InfoRow icon="list-outline" title="NGSL discovery packs" body="Spoken, Business, and Academic lists under CC BY-SA 4.0."/></View>
-      <AppText variant="caption" style={{ color: theme.muted }}>Wordfold is a temporary development name. Reminders and learning preferences remain device-only.</AppText>
+      <Pressable testID="privacy-policy-link" accessibilityRole="link" accessibilityLabel="Open privacy policy" onPress={() => void Linking.openURL(PRIVACY_POLICY_URL)} style={[styles.preferenceCard, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="shield-checkmark-outline" color={theme.primary} size={24}/></View><View style={styles.flex}><AppText variant="heading">Privacy policy</AppText><AppText variant="caption" style={{ color: theme.muted }}>What Wordfold stores locally and when cloud services are used</AppText></View><Ionicons name="open-outline" color={theme.primary} size={20}/></Pressable>
+      <Pressable testID="account-deletion-link" accessibilityRole="link" accessibilityLabel="Open account deletion information" onPress={() => void Linking.openURL(ACCOUNT_DELETION_URL)} style={[styles.preferenceCard, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="trash-outline" color={theme.primary} size={24}/></View><View style={styles.flex}><AppText variant="heading">Account deletion</AppText><AppText variant="caption" style={{ color: theme.muted }}>Delete in the app or request deletion after uninstalling</AppText></View><Ionicons name="open-outline" color={theme.primary} size={20}/></Pressable>
+      <AppText variant="caption" style={{ color: theme.muted }}>Wordfold reminders and learning preferences remain device-only.</AppText>
     </Screen>
   );
 }
@@ -128,6 +129,8 @@ export default function SettingsScreen() {
 function PrivatePronunciationSettingsCard() {
   const theme = useAppTheme();
   const consent = usePrivatePronunciationConsent();
+  if (!privateNeuralPreviewFeatureEnabled()
+    && (consent.status === 'disabled' || consent.status === 'loading')) return null;
   const detail = consent.status === 'enabled'
     ? 'On · private neural voice for US English, UK English, and Slovak'
     : consent.status === 'deletion_pending'

@@ -72,6 +72,7 @@ verified download and is never persisted.
 
 - `src/features/pronunciation/private-cloud.ts`
 - `src/features/pronunciation/private-cache.ts`
+- `src/features/pronunciation/private-consent.tsx`
 - `src/features/pronunciation/private-consent-provider.tsx`
 - `src/components/private-pronunciation-button.tsx`
 - `src/app/private-pronunciation.tsx`
@@ -80,11 +81,25 @@ verified download and is never persisted.
 No database migration, PowerSync change, backend contract change, dependency, remote deployment,
 real Azure request, or EAS build is part of Phase 5B.
 
+## Local verification
+
+- All 63 Jest suites (279 tests) pass, including strict private response/URL validation,
+  account-specific consent transitions, consent-off request blocking, deletion retry, verified
+  cache reuse/corruption handling, signed-token/raw-text non-persistence, playback orchestration,
+  Settings state, and disclosure behavior.
+- TypeScript, Expo lint, offline-manifest verification, and Android/iOS/web Expo export pass.
+- Expo Doctor remains at the pre-existing 19/21 baseline: an existing CLI dependency carries a
+  second React copy, and React Native Directory has incomplete metadata for Quick SQLite and the
+  two local native modules.
+- No remote Supabase deployment, real Azure request, physical-device Phase 5B test, or EAS build
+  was performed.
+
 ## Remaining release gates
 
 - Deploy and validate Phase 5A/5B only after explicit approval.
 - Update the product privacy policy and confirm the Microsoft DPA before user text leaves a device.
-- Implement scheduled removal of expired database metadata and private Storage objects.
+- Deploy and schedule the locally implemented Phase 5C removal of expired database metadata and
+  private Storage objects.
 - Set production monitoring and complete remote two-account isolation testing.
 - Verify the native experience on physical Android and iOS devices. iOS remains deferred until a
   device is available.

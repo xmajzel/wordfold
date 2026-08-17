@@ -1,9 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Crypto from 'expo-crypto';
 import {
-  createContext,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -13,15 +11,14 @@ import {
 
 import { clearPrivateNeuralPronunciationCache } from '@/features/pronunciation/private-cache';
 import { deletePrivateNeuralPronunciation } from '@/features/pronunciation/private-cloud';
+import {
+  PrivatePronunciationConsentContext,
+  type PrivatePronunciationConsentStatus,
+  type PrivatePronunciationConsentValue,
+} from '@/features/pronunciation/private-consent';
 import { useAuth } from '@/providers/auth-provider';
 
 export const PRIVATE_PRONUNCIATION_DISCLOSURE_VERSION = '2026-07-23';
-
-export type PrivatePronunciationConsentStatus =
-  | 'loading'
-  | 'disabled'
-  | 'enabled'
-  | 'deletion_pending';
 
 type StoredConsent = {
   schemaVersion: 1;
@@ -29,17 +26,6 @@ type StoredConsent = {
   state: 'enabled' | 'deletion_pending';
   enabledAt: string;
 };
-
-type PrivatePronunciationConsentValue = {
-  status: PrivatePronunciationConsentStatus;
-  userId: string | null;
-  enable(): Promise<void>;
-  disableAndDelete(): Promise<void>;
-  retryDeletion(): Promise<void>;
-};
-
-const PrivatePronunciationConsentContext =
-  createContext<PrivatePronunciationConsentValue | null>(null);
 
 async function consentKey(userId: string) {
   const accountHash = await Crypto.digestStringAsync(
@@ -67,9 +53,15 @@ function parseStoredConsent(value: string | null): StoredConsent | null {
 export function PrivatePronunciationConsentProvider({ children }: PropsWithChildren) {
   const auth = useAuth();
   const userId = auth.user?.id ?? null;
-  const [status, setStatus] = useState<PrivatePronunciationConsentStatus>('loading');
+  const [consentState, setConsentState] = useState<{
+    ownerUserId: string | null;
+    status: PrivatePronunciationConsentStatus;
+  }>({ ownerUserId: null, status: 'loading' });
   const generation = useRef(0);
   const operation = useRef<Promise<void> | null>(null);
+  const effectiveStatus: PrivatePronunciationConsentStatus = !userId
+    ? 'disabled'
+    : consentState.ownerUserId === userId ? consentState.status : 'loading';
 
   useEffect(() => {
     const currentGeneration = generation.current + 1;
@@ -77,26 +69,28 @@ export function PrivatePronunciationConsentProvider({ children }: PropsWithChild
     operation.current = null;
     if (!userId) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setStatus('disabled');
+      setConsentState({ ownerUserId: null, status: 'disabled' });
       return;
     }
-    setStatus('loading');
+    setConsentState({ ownerUserId: userId, status: 'loading' });
     void (async () => {
       const key = await consentKey(userId);
       const raw = await AsyncStorage.getItem(key);
       const stored = parseStoredConsent(raw);
       if (!stored && raw !== null) await AsyncStorage.removeItem(key);
       if (generation.current === currentGeneration) {
-        setStatus(stored?.state ?? 'disabled');
+        setConsentState({ ownerUserId: userId, status: stored?.state ?? 'disabled' });
       }
     })().catch(() => {
-      if (generation.current === currentGeneration) setStatus('disabled');
+      if (generation.current === currentGeneration) {
+        setConsentState({ ownerUserId: userId, status: 'disabled' });
+      }
     });
   }, [userId]);
 
   const enable = useCallback(async () => {
     if (!userId) throw new Error('Sign in before enabling cloud neural pronunciation.');
-    if (status === 'deletion_pending') {
+    if (effectiveStatus === 'deletion_pending') {
       throw new Error('Finish deleting previous cloud pronunciation data before enabling it again.');
     }
     const currentGeneration = generation.current;
@@ -108,13 +102,16 @@ export function PrivatePronunciationConsentProvider({ children }: PropsWithChild
       enabledAt: new Date().toISOString(),
     };
     await AsyncStorage.setItem(key, JSON.stringify(stored));
-    if (generation.current === currentGeneration) setStatus('enabled');
-  }, [status, userId]);
+    if (generation.current === currentGeneration) {
+      setConsentState({ ownerUserId: userId, status: 'enabled' });
+    }
+  }, [effectiveStatus, userId]);
 
   const performDeletion = useCallback(async () => {
     if (!userId) throw new Error('Sign in to finish deleting cloud pronunciation data.');
     if (operation.current) return operation.current;
     const currentGeneration = generation.current;
+    setConsentState({ ownerUserId: userId, status: 'deletion_pending' });
     let task: Promise<void>;
     task = (async () => {
       const key = await consentKey(userId);
@@ -126,7 +123,6 @@ export function PrivatePronunciationConsentProvider({ children }: PropsWithChild
         enabledAt: existing?.enabledAt ?? new Date().toISOString(),
       };
       await AsyncStorage.setItem(key, JSON.stringify(pending));
-      if (generation.current === currentGeneration) setStatus('deletion_pending');
 
       const results = await Promise.allSettled([
         clearPrivateNeuralPronunciationCache(userId),
@@ -136,7 +132,9 @@ export function PrivatePronunciationConsentProvider({ children }: PropsWithChild
         throw new Error('Cloud pronunciation is off, but its saved audio could not be fully deleted. Try again when online.');
       }
       await AsyncStorage.removeItem(key);
-      if (generation.current === currentGeneration) setStatus('disabled');
+      if (generation.current === currentGeneration) {
+        setConsentState({ ownerUserId: userId, status: 'disabled' });
+      }
     })().finally(() => {
       if (operation.current === task) operation.current = null;
     });
@@ -145,24 +143,14 @@ export function PrivatePronunciationConsentProvider({ children }: PropsWithChild
   }, [userId]);
 
   const value = useMemo<PrivatePronunciationConsentValue>(() => ({
-    status,
+    status: effectiveStatus,
     userId,
     enable,
     disableAndDelete: performDeletion,
     retryDeletion: performDeletion,
-  }), [enable, performDeletion, status, userId]);
+  }), [effectiveStatus, enable, performDeletion, userId]);
 
   return <PrivatePronunciationConsentContext.Provider value={value}>
     {children}
   </PrivatePronunciationConsentContext.Provider>;
-}
-
-export function usePrivatePronunciationConsent() {
-  const value = useContext(PrivatePronunciationConsentContext);
-  if (!value) {
-    throw new Error(
-      'usePrivatePronunciationConsent must be used inside PrivatePronunciationConsentProvider',
-    );
-  }
-  return value;
 }

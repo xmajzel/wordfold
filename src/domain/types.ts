@@ -73,6 +73,7 @@ export interface CatalogSense {
   partOfSpeech: string;
   definition: string;
   example: string | null;
+  translation?: string | null;
   rank: number;
 }
 

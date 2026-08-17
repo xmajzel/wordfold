@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/images/icon.png",
-      "bundleIdentifier": "com.jozefmajzel.wordfolddev",
+      "bundleIdentifier": "com.jozefmajzel.wordfold",
       "supportsTablet": true
     },
     "android": {
@@ -20,7 +20,10 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.jozefmajzel.wordfolddev"
+      "permissions": [
+        "com.android.vending.BILLING"
+      ],
+      "package": "com.jozefmajzel.wordfold"
     },
     "web": {
       "output": "static",
@@ -53,8 +56,51 @@
           "defaultChannel": "word-reminders"
         }
       ],
+      [
+        "expo-widgets",
+        {
+          "widgets": [
+            {
+              "name": "TodayWordWidget",
+              "displayName": "Today's word",
+              "description": "Shows the next active word in Wordfold.",
+              "ios": {
+                "supportedFamilies": [
+                  "systemSmall",
+                  "systemMedium"
+                ]
+              },
+              "android": null
+            }
+          ]
+        }
+      ],
+      [
+        "react-native-android-widget",
+        {
+          "widgets": [
+            {
+              "name": "TodayWordWidget",
+              "label": "Today's word",
+              "description": "Shows the next active word in Wordfold.",
+              "minWidth": "110dp",
+              "minHeight": "110dp",
+              "targetCellWidth": 2,
+              "targetCellHeight": 2,
+              "maxResizeWidth": "360dp",
+              "resizeMode": "horizontal",
+              "updatePeriodMillis": 1800000
+            }
+          ]
+        }
+      ],
       "expo-sqlite",
-      "@journeyapps/react-native-quick-sqlite"
+      "@journeyapps/react-native-quick-sqlite",
+      "./plugins/with-android-workmanager-version",
+      "./plugins/with-revenuecat-android",
+      "expo-asset",
+      "expo-audio",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,

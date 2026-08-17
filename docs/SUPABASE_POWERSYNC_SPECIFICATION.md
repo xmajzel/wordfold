@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved architecture documentation. The Supabase database foundation and PowerSync Cloud development instance are deployed, Phase 3 authentication is configured and device-tested, and the Phase 4A native PowerSync connection foundation has a passing Android debug build. Phase 4B resumable guest import and Phase 4C continuous offline synchronization are implemented locally. Authenticated import, offline/reconnect, and second-device recovery tests remain deferred until a native device is available.
+Approved and release-verified architecture documentation. The Supabase database foundation and PowerSync Cloud development instance are deployed, Phase 3 authentication is configured, and Phases 4A–4C are implemented. Automated checks, authenticated import, offline/reconnect behavior, force-close recovery, queued-write sign-out, rejected-write rollback, and second-device restoration passed by 2026-08-17.
 
 This document is the canonical design for adding optional accounts, offline synchronization, and multi-device restore to Wordfold. The operational setup and future hosting migration are documented separately:
 
