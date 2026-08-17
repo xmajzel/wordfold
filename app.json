@@ -96,7 +96,11 @@
       ],
       "expo-sqlite",
       "@journeyapps/react-native-quick-sqlite",
-      "./plugins/with-revenuecat-android"
+      "./plugins/with-android-workmanager-version",
+      "./plugins/with-revenuecat-android",
+      "expo-asset",
+      "expo-audio",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,
