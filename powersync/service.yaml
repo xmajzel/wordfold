@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://unpkg.com/@powersync/cli-schemas@0.10.0/json-schema/service-config.json
+
+_type: cloud
+name: wordfold-development
+region: eu
+
+replication:
+  connections:
+    - type: postgresql
+      name: wordfold-supabase-development
+      hostname: db.mqpswvmpuuijmouqvqsx.supabase.co
+      port: 5432
+      database: postgres
+      username: powersync_role
+      password:
+        secret: !env POWERSYNC_DB_PASSWORD
+      sslmode: verify-full
+
+client_auth:
+  supabase: true

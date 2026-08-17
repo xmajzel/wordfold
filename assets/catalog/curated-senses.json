@@ -1,0 +1,93 @@
+[
+  {
+    "id": "wordfold:stakeholder:business",
+    "term": "stakeholder",
+    "partOfSpeech": "n",
+    "definition": "A person or group with an interest in, influence on, or impact from a project or decision.",
+    "example": "The project manager invited key stakeholders to review the plan."
+  },
+  {
+    "id": "wordfold:deliverable:business",
+    "term": "deliverable",
+    "partOfSpeech": "n",
+    "definition": "A specific result, document, or product that a project must produce.",
+    "example": "The design specification is the first project deliverable."
+  },
+  {
+    "id": "wordfold:milestone:business",
+    "term": "milestone",
+    "partOfSpeech": "n",
+    "definition": "A significant point or achievement used to track progress in a project.",
+    "example": "Completing user testing is an important milestone."
+  },
+  {
+    "id": "wordfold:governance:business",
+    "term": "governance",
+    "partOfSpeech": "n",
+    "definition": "The rules, roles, and decision processes used to direct and control an organization or project.",
+    "example": "Clear governance explains who can approve a change."
+  },
+  {
+    "id": "wordfold:dependency:business",
+    "term": "dependency",
+    "partOfSpeech": "n",
+    "definition": "A relationship in which one task or result relies on another being completed or available.",
+    "example": "The supplier approval is a dependency for the launch."
+  },
+  {
+    "id": "wordfold:alignment:business",
+    "term": "alignment",
+    "partOfSpeech": "n",
+    "definition": "Agreement between people, plans, or goals about the direction and priorities of work.",
+    "example": "The workshop created alignment on the product goals."
+  },
+  {
+    "id": "wordfold:benchmark:business",
+    "term": "benchmark",
+    "partOfSpeech": "n",
+    "definition": "A standard or reference point used to compare performance or quality.",
+    "example": "Last quarter's result provides a useful benchmark."
+  },
+  {
+    "id": "wordfold:collaboration:business",
+    "term": "collaboration",
+    "partOfSpeech": "n",
+    "definition": "The act of working with other people or groups to produce a shared result.",
+    "example": "Good collaboration helped the teams resolve the issue quickly."
+  },
+  {
+    "id": "wordfold:constraint:business",
+    "term": "constraint",
+    "partOfSpeech": "n",
+    "definition": "A limit or restriction that affects how work can be planned or completed.",
+    "example": "The fixed budget is the project's main constraint."
+  },
+  {
+    "id": "wordfold:forecast:business",
+    "term": "forecast",
+    "partOfSpeech": "n",
+    "definition": "An estimate of a future result based on current information and assumptions.",
+    "example": "The latest forecast shows the project finishing in October."
+  },
+  {
+    "id": "wordfold:portfolio:business",
+    "term": "portfolio",
+    "partOfSpeech": "n",
+    "definition": "A group of projects or investments managed together to achieve strategic goals.",
+    "example": "Leadership reviewed the project portfolio before allocating funds."
+  },
+  {
+    "id": "wordfold:strategy:business",
+    "term": "strategy",
+    "partOfSpeech": "n",
+    "definition": "A high-level plan for achieving a long-term goal under particular conditions.",
+    "example": "The team changed its strategy after speaking with customers."
+  },
+  {
+    "id": "wordfold:scope:business",
+    "term": "scope",
+    "partOfSpeech": "n",
+    "definition": "The defined boundaries of what a project or piece of work includes and excludes.",
+    "example": "The requested report is outside the agreed project scope."
+  }
+]

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Wordfold pronunciation review</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#review-card">Skip to sample</a>
+    <div class="aurora aurora-one" aria-hidden="true"></div>
+    <div class="aurora aurora-two" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">Wordfold pronunciation lab</p>
+        <h1>Listen without knowing the voice.</h1>
+        <p class="lede">Rate reference pronunciation one sample at a time. Provider and voice identities stay hidden.</p>
+      </div>
+      <span class="privacy-badge"><span aria-hidden="true">●</span> Local &amp; blinded</span>
+    </header>
+
+    <main class="page-shell">
+      <section class="setup-card panel" id="setup-card" aria-labelledby="setup-title">
+        <div>
+          <p class="step-label">Before you begin</p>
+          <h2 id="setup-title">Choose your review session</h2>
+          <p class="supporting">Use a unique reviewer ID. Your progress is stored locally in the shared ratings file, while other reviewers’ decisions remain hidden.</p>
+        </div>
+        <form id="setup-form" class="setup-form">
+          <label for="reviewer-id">Reviewer ID</label>
+          <input id="reviewer-id" name="reviewerId" type="text" maxlength="64" pattern="[A-Za-z0-9][A-Za-z0-9._-]{0,63}" placeholder="for example: jozef-a" autocomplete="off" required>
+          <p class="field-help">Letters, numbers, dots, underscores, and hyphens only.</p>
+
+          <label for="locale-select">Locale to review</label>
+          <select id="locale-select" name="locale" required disabled>
+            <option value="">Loading locales…</option>
+          </select>
+
+          <button class="button primary-button" type="submit" id="start-button" disabled>Start or resume review</button>
+        </form>
+      </section>
+
+      <section id="review-workspace" hidden>
+        <div class="session-toolbar panel">
+          <div>
+            <p class="step-label">Active session</p>
+            <p class="session-name"><span id="active-reviewer"></span> · <span id="active-locale"></span></p>
+          </div>
+          <div class="toolbar-actions">
+            <a class="button secondary-button" id="export-link" href="#">Export my ratings</a>
+            <button class="button ghost-button" type="button" id="change-session">Change session</button>
+          </div>
+        </div>
+
+        <div class="review-layout">
+          <article class="review-card panel" id="review-card" tabindex="-1" aria-labelledby="sample-text">
+            <div class="sample-meta-row">
+              <div>
+                <span class="category-chip" id="sample-category"></span>
+                <span class="sample-position" id="sample-position"></span>
+              </div>
+              <span class="save-status" id="save-status" role="status" aria-live="polite">Ready</span>
+            </div>
+
+            <div class="sample-copy">
+              <p class="sample-kicker">Synthesis text</p>
+              <h2 id="sample-text"></h2>
+              <p class="sample-context" id="sample-context"></p>
+            </div>
+
+            <div class="listen-row">
+              <button class="play-button" id="play-button" type="button" aria-label="Play pronunciation sample">
+                <span class="play-icon" aria-hidden="true">▶</span>
+                <span><strong>Play sample</strong><small>Space to replay</small></span>
+              </button>
+              <audio id="audio-player" preload="metadata"></audio>
+              <p class="listen-note">Listen for clarity, natural stress, and the requested regional accent.</p>
+            </div>
+
+            <fieldset class="rating-fieldset">
+              <legend>How should this sample be rated?</legend>
+              <div class="rating-grid">
+                <button class="rating-button rating-good" type="button" data-rating="acceptable" aria-pressed="false">
+                  <span class="shortcut" aria-hidden="true">1</span>
+                  <span><strong>Acceptable</strong><small>Natural and correct locale</small></span>
+                </button>
+                <button class="rating-button rating-bad" type="button" data-rating="unacceptable" aria-pressed="false">
+                  <span class="shortcut" aria-hidden="true">2</span>
+                  <span><strong>Unacceptable</strong><small>Pronunciation needs work</small></span>
+                </button>
+                <button class="rating-button rating-locale" type="button" data-rating="wrong-locale" aria-pressed="false">
+                  <span class="shortcut" aria-hidden="true">3</span>
+                  <span><strong>Wrong locale</strong><small>Sounds like another region</small></span>
+                </button>
+              </div>
+            </fieldset>
+
+            <label class="note-label" for="rating-note">Optional note</label>
+            <textarea id="rating-note" maxlength="500" rows="3" placeholder="Briefly describe the issue for later investigation."></textarea>
+            <div class="note-footer"><span id="note-count">0 / 500</span><span>Saved with your rating</span></div>
+
+            <div class="navigation-row">
+              <button class="button secondary-button" id="previous-button" type="button">← Previous</button>
+              <button class="button secondary-button" id="next-button" type="button">Next →</button>
+            </div>
+          </article>
+
+          <aside class="progress-panel panel" aria-labelledby="progress-title">
+            <p class="step-label">Your progress</p>
+            <div class="progress-heading">
+              <h2 id="progress-title"><span id="progress-completed">0</span> of <span id="progress-total">0</span></h2>
+              <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-track" role="progressbar" aria-label="Locale review progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p class="progress-copy" id="progress-copy">Start listening to build progress.</p>
+
+            <div class="completion-callout" id="completion-callout" hidden>
+              <span class="completion-icon" aria-hidden="true">✓</span>
+              <div><strong>Locale complete</strong><p>Export your ratings or revisit any sample.</p></div>
+            </div>
+
+            <div class="shortcut-guide">
+              <h3>Keyboard</h3>
+              <dl>
+                <div><dt>Space</dt><dd>Play</dd></div>
+                <div><dt>1 · 2 · 3</dt><dd>Rate</dd></div>
+                <div><dt>← · →</dt><dd>Navigate</dd></div>
+              </dl>
+            </div>
+
+            <p class="blind-reminder"><strong>Stay independent.</strong> Use a different reviewer ID for every person and do not discuss ratings until both reviews are complete.</p>
+          </aside>
+        </div>
+      </section>
+
+      <p class="fatal-error" id="fatal-error" role="alert" hidden></p>
+    </main>
+  </body>
+</html>

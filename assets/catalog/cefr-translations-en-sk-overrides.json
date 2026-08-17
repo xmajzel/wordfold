@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "translations": {
+    "a2:02804097-a:scientific": "vedecký",
+    "a2:01452455-a:lost": "stratený",
+    "a2:02785116-n:balloon": "balón",
+    "b1:02002147-s:devastating": "zdrvujúci",
+    "b1:01462677-s:adorable": "rozkošný",
+    "b1:00191603-a:aware": "vedomý si",
+    "b1:09772396-n:balance": "osoba v znamení Váh",
+    "b1:05683749-n:awareness": "povedomie",
+    "b1:08563758-n:county": "grófstvo",
+    "b1:14479414-n:vacancy": "neobsadenosť",
+    "b2:01361079-s:exhausting": "vyčerpávajúci",
+    "b2:06325134-n:clause": "vedľajšia veta",
+    "b2:00558456-n:completion": "úspešná prihrávka",
+    "b2:00103013-r:delicately": "jemne",
+    "b2:04773530-n:complexity": "zložitosť",
+    "b2:01836317-s:potent": "vplyvný",
+    "b2:08703415-n:mansion": "astrologický dom",
+    "b2:00566339-n:stroke": "úder",
+    "c1:02341306-s:victorious": "víťazný",
+    "c1:02904232-a:juvenile": "mladistvý",
+    "c1:03949542-n:pinnacle": "vežička",
+    "c2:05996720-n:edification": "poučenie",
+    "c2:06763518-n:proposition": "výrok",
+    "c2:07231421-n:stipulation": "dohoda"
+  }
+}

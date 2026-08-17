@@ -1,0 +1,9 @@
+{
+  "platforms": ["android", "apple"],
+  "apple": {
+    "modules": ["WordfoldPronunciationModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.wordfoldpronunciation.WordfoldPronunciationModule"]
+  }
+}

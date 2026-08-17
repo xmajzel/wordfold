@@ -8,6 +8,7 @@ node_modules/
 dist/
 web-build/
 expo-env.d.ts
+.artifacts/
 
 # Native
 .kotlin/
@@ -30,6 +31,9 @@ yarn-error.*
 .DS_Store
 *.pem
 
+# IDE
+.idea/
+
 # local env files
 .env*.local
 
@@ -41,3 +45,7 @@ example
 # generated native folders
 /ios
 /android
+/modules/*/android/build/
+
+.env
+powersync/cli.yaml
