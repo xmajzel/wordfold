@@ -103,6 +103,30 @@ Preparation and intermediate agent outputs stay under ignored `.artifacts/`. The
 unknown senses, missing entries, invalid schemas, circular definitions, and low-confidence output
 that has not been marked for review.
 
+The 56 English records whose source evidence was incomplete or conflicting are independently
+adjudicated in `assets/catalog/cefr-learner-definition-adjudications.json`. A reviewed Slovak overlay
+at `assets/catalog/cefr-learner-translations-sk.json` aligns all 8,300 hints with the final English
+meaning without changing the base catalog or pronunciation identities. The deterministic Codex
+preparation, validation, and independent-review workflow is run with:
+
+```bash
+node scripts/prepare-cefr-learner-translations.mjs --mode pilot --chunk-size 100
+node scripts/prepare-cefr-learner-translations.mjs --mode all --chunk-size 200
+node scripts/validate-cefr-learner-translations.mjs \
+  --manifest .artifacts/cefr-learner-translations-sk/all/manifest.json \
+  --output .artifacts/cefr-learner-translations-sk/all/compiled.pre-review.json
+node scripts/prepare-cefr-learner-translation-review.mjs
+# Independently review every generated review-*.input.json into its matching review-*.output.json.
+node scripts/apply-cefr-learner-translation-review.mjs
+node scripts/validate-cefr-learner-translations.mjs \
+  --manifest .artifacts/cefr-learner-translations-sk/all/manifest.json \
+  --output assets/catalog/cefr-learner-translations-sk.json \
+  --require-complete
+```
+
+The complete asset is accepted only after the independent review report exists and no Slovak record
+is unresolved. Generation and review use Codex subagents, not a paid batch API.
+
 See [content attribution](assets/licenses/CONTENT_SOURCES.md) for sources, licenses, and modifications.
 
 ## Architecture

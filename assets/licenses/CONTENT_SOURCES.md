@@ -48,6 +48,11 @@ Each overlay record retains its selected WordNet meaning-reference ID, confidenc
 The base catalog entry and pronunciation identity remain unchanged for compatibility and rollback.
 Records that still need review are not applied at runtime.
 
+Every originally review-gated English record is resolved in
+`assets/catalog/cefr-learner-definition-adjudications.json`. WordNet-backed adjudications retain the
+supporting sense ID; curated meanings use a null reference instead of falsely attributing an absent
+meaning to WordNet.
+
 ### Bundled English-to-Slovak hints
 
 Each generated CEFR entry includes an offline Slovak hint produced once from its English headword, part of speech, and Open English WordNet sense definition. Generation uses the pinned int8 CTranslate2 conversion of MADLAD-400-3B-MT. If the generated headword is copied, misspelled, or otherwise unsafe, Wordfold stores the translated sense explanation as the hint instead. Catalog-specific corrections can be recorded in `assets/catalog/cefr-translations-en-sk-overrides.json`.
@@ -60,6 +65,12 @@ Each generated CEFR entry includes an offline Slovak hint produced once from its
 - License text: https://www.apache.org/licenses/LICENSE-2.0
 
 The committed translation sidecar records the model revision, generation parameters, content hash, fallback decisions, overrides, and QA totals. These generated hints are learning aids and may still need native-speaker corrections; the overrides file is the durable correction layer.
+
+`assets/catalog/cefr-learner-translations-sk.json` is the final presentation overlay aligned to the
+reviewed learner meaning, example, and part of speech. It was generated and independently reviewed
+with Codex using only committed catalog evidence. Existing MADLAD hints and manual overrides were
+treated as comparison evidence, not authoritative output. The base translation data remains intact
+for identity compatibility and rollback.
 
 ## NGSL discovery packs
 

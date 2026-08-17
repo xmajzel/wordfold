@@ -1,6 +1,8 @@
 import type { CefrCatalogEntry, CefrLevel } from '@/domain/types';
 import catalogJson from '../../assets/catalog/cefr-catalog.json';
+import learnerAdjudicationsJson from '../../assets/catalog/cefr-learner-definition-adjudications.json';
 import learnerDefinitionsJson from '../../assets/catalog/cefr-learner-definitions.json';
+import learnerTranslationsJson from '../../assets/catalog/cefr-learner-translations-sk.json';
 
 interface CefrCatalogAsset {
   schemaVersion: number;
@@ -28,16 +30,73 @@ interface LearnerDefinitionsAsset {
   entries: Record<string, LearnerDefinition>;
 }
 
+interface LearnerAdjudication {
+  entryId: string;
+  normalizedTerm: string;
+  definition: string;
+  example: string;
+  confidence: 'high' | 'medium';
+  needsReview: false;
+  partOfSpeech: string;
+}
+
+interface LearnerAdjudicationsAsset {
+  schemaVersion: number;
+  entries: Record<string, LearnerAdjudication>;
+}
+
+interface LearnerTranslation {
+  entryId: string;
+  normalizedTerm: string;
+  translation: string;
+  confidence: 'high' | 'medium' | 'low';
+  needsReview: boolean;
+  reviewNote: string;
+}
+
+interface LearnerTranslationsAsset {
+  schemaVersion: number;
+  entries: Record<string, LearnerTranslation>;
+}
+
 const baseCatalog = catalogJson as CefrCatalogAsset;
 const learnerDefinitions = learnerDefinitionsJson as LearnerDefinitionsAsset;
-const entries = baseCatalog.entries.map((entry) => {
-  const learner = learnerDefinitions.entries[entry.id];
-  if (!learner || learner.needsReview) return entry;
+const learnerAdjudications = learnerAdjudicationsJson as LearnerAdjudicationsAsset;
+const learnerTranslations = learnerTranslationsJson as LearnerTranslationsAsset;
+const entries = baseCatalog.entries.map((baseEntry) => {
+  const adjudication = learnerAdjudications.entries[baseEntry.id];
+  const learner = adjudication
+    && adjudication.entryId === baseEntry.id
+    && adjudication.normalizedTerm === baseEntry.normalizedTerm
+    && !adjudication.needsReview
+    && (adjudication.confidence === 'high' || adjudication.confidence === 'medium')
+    ? adjudication
+    : learnerDefinitions.entries[baseEntry.id];
+  const entry = !learner
+    || learner.needsReview
+    || learner.confidence === 'low'
+    || learner.entryId !== baseEntry.id
+    || learner.normalizedTerm !== baseEntry.normalizedTerm
+    ? baseEntry
+    : {
+      ...baseEntry,
+      partOfSpeech: learner.partOfSpeech,
+      definition: learner.definition,
+      example: learner.example,
+    };
+  const translated = learnerTranslations.entries[baseEntry.id];
+  if (
+    !translated
+    || translated.needsReview
+    || translated.confidence === 'low'
+    || typeof translated.translation !== 'string'
+    || !translated.translation.trim()
+    || translated.entryId !== baseEntry.id
+    || translated.normalizedTerm !== baseEntry.normalizedTerm
+  ) return entry;
   return {
     ...entry,
-    partOfSpeech: learner.partOfSpeech,
-    definition: learner.definition,
-    example: learner.example,
+    translation: translated.translation,
   };
 });
 const entriesBySense = new Map(entries.map((entry) => [entry.catalogSenseId, entry]));

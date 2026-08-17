@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
@@ -33,6 +33,7 @@ export default function NewWordScreen() {
   const [example, setExample] = useState('');
   const [partOfSpeech, setPartOfSpeech] = useState('');
   const [selectedSenseId, setSelectedSenseId] = useState<string | null>(null);
+  const selectedSenseTranslation = useRef<string | null>(null);
   const [sourceLanguageCode, setSourceLanguageCode] = useState(defaultSourceLanguageCode);
   const [targetLanguageCode, setTargetLanguageCode] = useState(defaultTargetLanguageCode);
   const [sourcePronunciationLocale, setSourcePronunciationLocale] = useState(
@@ -68,7 +69,13 @@ export default function NewWordScreen() {
   };
 
   const selectSense = (sense: CatalogSense) => {
+    const previousSenseTranslation = selectedSenseTranslation.current;
+    const nextSenseTranslation = targetLanguageCode === 'sk' ? sense.translation ?? null : null;
     setSelectedSenseId(sense.id); setDefinition(sense.definition); setExample(sense.example ?? ''); setPartOfSpeech(sense.partOfSpeech);
+    setTranslation((current) => current === (previousSenseTranslation ?? '')
+      ? nextSenseTranslation ?? ''
+      : current);
+    selectedSenseTranslation.current = nextSenseTranslation;
   };
 
   const persistWord = async () => {
@@ -119,13 +126,17 @@ export default function NewWordScreen() {
     if (!languageChanged) return;
     setSenses([]); setSelectedSenseId(null); setHasLookedUp(false);
     setDefinition(''); setExample(''); setPartOfSpeech('');
+    selectedSenseTranslation.current = null;
   };
 
   const changeTargetLanguage = (languageCode: string, locale: string) => {
     const languageChanged = languageCode !== targetLanguageCode;
     setTargetLanguageCode(languageCode);
     setTargetPronunciationLocale(locale);
-    if (languageChanged) setTranslation('');
+    if (languageChanged) {
+      setTranslation('');
+      selectedSenseTranslation.current = null;
+    }
   };
 
   return (

@@ -124,6 +124,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
         partOfSpeech: entry.partOfSpeech,
         definition: entry.definition,
         example: entry.example,
+        translation: entry.translation,
         rank: -101,
       }];
       const sense = previewSenses[normalizedTerm];

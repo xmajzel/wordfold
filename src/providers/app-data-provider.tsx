@@ -161,7 +161,6 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const [databaseMutationQueue] = useState(createSerialMutationQueue);
   const [translationQueue] = useState(createSerialMutationQueue);
   const translationTasks = useRef(new Map<string, Promise<void>>());
-  const backgroundTranslationAttempts = useRef(new Set<string>());
   const lastScheduleDay = useRef<string | null>(null);
   const automaticCutover = useRef<string | null>(null);
 
@@ -333,34 +332,14 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       repository.getReminderSettings(appDatabase), repository.getLearningPreferences(appDatabase),
       repository.isOnboardingComplete(appDatabase), repository.getLearningFilter(appDatabase),
     ]);
-    const translationUpdates = loadedWords.flatMap((word) => {
-      if (word.translation) return [];
-      const translation = getBundledWordTranslation(word);
-      return translation ? [{ id: word.id, translation }] : [];
-    });
-    const translationBackfill = await runDatabaseMutation(
-      () => vocabularyStore.updateMissingWordTranslations(translationUpdates),
-    );
-    const updatedIds = new Set(translationBackfill.updatedIds);
-    const updatedTranslations = new Map(translationUpdates
-      .filter((update) => updatedIds.has(update.id))
-      .map((update) => [update.id, update.translation]));
-    const synchronizedWords = translationUpdates.length === updatedIds.size
-      ? loadedWords
-      : await vocabularyStore.listWords();
-    const backfillUpdatedAt = translationBackfill.updatedAt;
-    const nextWords = backfillUpdatedAt ? synchronizedWords.map((word) => {
-      const translation = updatedTranslations.get(word.id);
-      return translation ? { ...word, translation, updatedAt: backfillUpdatedAt } : word;
-    }) : synchronizedWords;
-    setWords(nextWords);
+    setWords(loadedWords);
     setCollections(nextCollections);
     setStats(nextStats);
     setReminderSettings(nextSettings);
     setLearningPreferences(nextPreferences);
     setOnboardingComplete(nextOnboarding);
     setLearningFilter(nextLearningFilter);
-  }, [appDatabase, runDatabaseMutation, vocabularyStore]);
+  }, [appDatabase, vocabularyStore]);
 
   const prepareWordTranslation = useCallback((word: Word) => {
     if (word.translation) return Promise.resolve();
@@ -375,30 +354,15 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       const bundledTranslation = getBundledWordTranslation(currentWord);
       const translated = bundledTranslation ?? (await translateEnglishToSlovak(currentWord.term)).trim();
       if (!translated) throw new Error('Translation returned no text.');
-      const updatedAt = await runDatabaseMutation(
-        () => vocabularyStore.saveWordTranslation(currentWord.id, translated),
-      );
       setWords((current) => current.map((item) => item.id === currentWord.id && !item.translation
-        ? { ...item, translation: translated, updatedAt }
+        ? { ...item, translation: translated }
         : item));
     }).finally(() => {
       translationTasks.current.delete(word.id);
     });
     translationTasks.current.set(word.id, task);
     return task;
-  }, [runDatabaseMutation, translationQueue, vocabularyStore]);
-
-  useEffect(() => {
-    for (const word of words) {
-      if (word.translation || word.sourceLanguageCode !== 'en' || word.targetLanguageCode !== 'sk'
-        || getBundledWordTranslation(word)
-        || backgroundTranslationAttempts.current.has(word.id)) continue;
-      backgroundTranslationAttempts.current.add(word.id);
-      void prepareWordTranslation(word).catch((error) => {
-        console.warn(`Could not prepare a Slovak hint for ${word.term}.`, error);
-      });
-    }
-  }, [prepareWordTranslation, words]);
+  }, [translationQueue, vocabularyStore]);
 
   useEffect(() => {
     // The async refresh resolves after the effect body, so this does not cascade a synchronous render.

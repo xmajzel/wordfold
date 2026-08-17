@@ -45,6 +45,7 @@ describe('catalog lookup', () => {
     expect(senses[0]).toEqual(expect.objectContaining({
       id: 'legacy-sense',
       definition: "A business that keeps, lends, and manages people's money.",
+      translation: 'banka',
       rank: -101,
     }));
     expect(senses.slice(1).some((sense) => sense.id === 'legacy-sense')).toBe(false);

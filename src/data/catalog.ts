@@ -45,6 +45,7 @@ export async function lookupSenses(database: SQLiteDatabase, term: string): Prom
     partOfSpeech: learnerEntry.partOfSpeech,
     definition: learnerEntry.definition,
     example: learnerEntry.example,
+    translation: learnerEntry.translation,
     rank: -101,
   }, ...senses.filter((sense) => sense.id !== learnerEntry.catalogSenseId)].slice(0, 12);
 }
