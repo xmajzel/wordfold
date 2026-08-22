@@ -18,4 +18,14 @@ describe('public legal site', () => {
     expect(deletion).toContain('local vocabulary copy');
     expect(deletion).toContain('Google Play lifetime purchase is not deleted');
   });
+
+  it('discloses optional Azure pronunciation processing and retention', () => {
+    expect(privacy).toContain('exact displayed word or phrase and selected locale');
+    expect(privacy).toContain('explicitly enable optional cloud neural pronunciation');
+    expect(privacy).toContain('Microsoft Azure Speech');
+    expect(privacy).toContain('do not contain the raw word or phrase');
+    expect(privacy).toContain('30 days after their latest use');
+    expect(privacy).toContain('keeps the feature off and offers a retry');
+    expect(privacy).toContain('Device pronunciation remains available');
+  });
 });
