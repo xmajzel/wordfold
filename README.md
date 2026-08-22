@@ -13,12 +13,18 @@ pnpm install
 pnpm start
 ```
 
-Local notifications work in Expo Go. The custom ML Kit translation module and real Google Play purchases require a development build:
+Local notifications work in Expo Go. The custom ML Kit translation module requires a development
+build; real Google Play purchases require a Play-installed testing build:
 
 ```bash
-pnpm exec expo run:android
+pnpm android
 pnpm exec expo run:ios
 ```
+
+The Android development build is installed as `Wordfold (Dev)` with application ID
+`com.jozefmajzel.wordfold.debug`, so it can coexist with the Google Play build. The two apps have
+separate local data and login state. Test real Google Play purchases in the Play-installed app,
+because the development application ID is not registered in Play.
 
 The first English-to-Slovak translation downloads an on-device language model over Wi-Fi.
 
@@ -47,7 +53,9 @@ For a standalone, release-like APK that does not need Metro:
 pnpm build:android:preview
 ```
 
-Open the EAS build link on the phone and allow the browser to install unknown apps when Android asks. The development and preview builds use the same application ID, so installing one may replace the other. App data can be cleared by uninstalling the app before a clean-install test.
+Open the EAS build link on the phone and allow the browser to install unknown apps when Android
+asks. The preview build uses the production application ID and may replace the Google Play build;
+the development build has its own application ID and remains installed separately.
 
 The production profile creates a Google Play App Bundle. EAS cloud builds consume limited quota, so `pnpm build:android:production` must only be run after explicit release-candidate approval. See [Android production release](docs/ANDROID_PRODUCTION_RELEASE.md).
 
