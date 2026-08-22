@@ -18,7 +18,7 @@ import {
 } from '@/features/pronunciation/private-consent';
 import { useAuth } from '@/providers/auth-provider';
 
-export const PRIVATE_PRONUNCIATION_DISCLOSURE_VERSION = '2026-07-23';
+export const PRIVATE_PRONUNCIATION_DISCLOSURE_VERSION = '2026-08-22';
 
 type StoredConsent = {
   schemaVersion: 1;
