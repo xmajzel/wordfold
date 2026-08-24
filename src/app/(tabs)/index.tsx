@@ -1,16 +1,17 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, FlatList, Pressable, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import Animated, { FadeOut, ReduceMotion } from 'react-native-reanimated';
 
 import { AppText } from '@/components/app-text';
 import { EmptyState } from '@/components/empty-state';
+import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import { SwipeableWordCard } from '@/components/swipeable-word-card';
 import { WordCard } from '@/components/word-card';
 import type { LearningFilter, LearningRating, Word } from '@/domain/types';
-import { buildContinuedLearningFeed, buildLearningFeed, filterWordsByLearningCategory, getAvailableLearningFilters } from '@/features/learning/algorithm';
+import { buildContinuedLearningFeed, buildLearningFeed, buildNotificationLearningSession, filterWordsByLearningCategory, getAvailableLearningFilters } from '@/features/learning/algorithm';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
@@ -29,23 +30,54 @@ const filterOptions: { id: LearningFilter; label: string }[] = [
 
 export default function LearnScreen() {
   const { words, learningFilter, updateLearningFilter } = useAppData();
+  const { notificationWordId: notificationWordIdParam } = useLocalSearchParams<{
+    notificationWordId?: string | string[];
+  }>();
+  const requestedNotificationWordId = Array.isArray(notificationWordIdParam)
+    ? notificationWordIdParam[0]
+    : notificationWordIdParam;
+  const notificationWordId = requestedNotificationWordId
+    && words.some((word) => word.id === requestedNotificationWordId)
+    ? requestedNotificationWordId
+    : null;
   const availableFilters = useMemo(() => getAvailableLearningFilters(words), [words]);
   const activeFilter = availableFilters.includes(learningFilter) ? learningFilter : 'all';
-  const sessionKey = `${activeFilter}:${words.map((word) => word.id).sort().join(':')}`;
+  const sessionFilter = notificationWordId ? 'all' : activeFilter;
+  const sessionKey = `${sessionFilter}:${notificationWordId ?? 'regular'}:${words.map((word) => word.id).sort().join(':')}`;
+
+  const selectFilter = useCallback(async (filter: LearningFilter) => {
+    if (requestedNotificationWordId) router.setParams({ notificationWordId: '' });
+    await updateLearningFilter(filter);
+  }, [requestedNotificationWordId, updateLearningFilter]);
 
   useEffect(() => {
     if (activeFilter === learningFilter) return;
     void updateLearningFilter(activeFilter);
   }, [activeFilter, learningFilter, updateLearningFilter]);
 
-  return <LearningSession key={sessionKey} filter={activeFilter} availableFilters={availableFilters}/>;
+  return <LearningSession
+    key={sessionKey}
+    filter={sessionFilter}
+    availableFilters={availableFilters}
+    notificationWordId={notificationWordId}
+    onSelectFilter={selectFilter}
+  />;
 }
 
-function LearningSession({ filter, availableFilters }: { filter: LearningFilter; availableFilters: LearningFilter[] }) {
+function LearningSession({ filter, availableFilters, notificationWordId, onSelectFilter }: {
+  filter: LearningFilter;
+  availableFilters: LearningFilter[];
+  notificationWordId: string | null;
+  onSelectFilter(filter: LearningFilter): Promise<void>;
+}) {
   const theme = useAppTheme();
   const { height } = useWindowDimensions();
-  const { words, collections, updateLearningFilter, rateWord, markViewed, prepareWordTranslation } = useAppData();
-  const [sessionFeed, setSessionFeed] = useState<Word[]>(() => buildLearningFeed(words, new Date(), filter));
+  const { words, collections, rateWord, markViewed, prepareWordTranslation } = useAppData();
+  const [initialSession] = useState(() => notificationWordId
+    ? buildNotificationLearningSession(words, notificationWordId, new Date())
+    : { feed: buildLearningFeed(words, new Date(), filter), reviewWord: null });
+  const [sessionFeed, setSessionFeed] = useState<Word[]>(initialSession.feed);
+  const [notificationReviewWord, setNotificationReviewWord] = useState<Word | null>(initialSession.reviewWord);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [sessionComplete, setSessionComplete] = useState(false);
   const [listHeight, setListHeight] = useState(0);
@@ -61,7 +93,12 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
   const denseCards = cardHeight < 500;
   const categoryWords = useMemo(() => filterWordsByLearningCategory(words, filter), [filter, words]);
   const currentWords = useMemo(() => Object.fromEntries(words.map((word) => [word.id, word])), [words]);
-  const activeWord = currentWords[sessionFeed[currentIndex]?.id] ?? sessionFeed[currentIndex];
+  const currentNotificationReviewWord = notificationReviewWord
+    ? currentWords[notificationReviewWord.id] ?? notificationReviewWord
+    : null;
+  const activeWord = currentNotificationReviewWord
+    ?? currentWords[sessionFeed[currentIndex]?.id]
+    ?? sessionFeed[currentIndex];
   const continuedSessionFeed = useMemo(() => buildContinuedLearningFeed(
     words,
     sessionFeed.map((word) => word.id),
@@ -94,6 +131,7 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
   }, [activeWord, prepareWordTranslation, translationStates]);
 
   useEffect(() => {
+    if (currentNotificationReviewWord) return;
     const word = sessionFeed[currentIndex];
     if (!word || viewedIds.current.has(word.id)) return;
     const timer = setTimeout(() => {
@@ -103,7 +141,7 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
       });
     }, 1000);
     return () => clearTimeout(timer);
-  }, [currentIndex, markViewed, mutationQueue, sessionFeed]);
+  }, [currentIndex, currentNotificationReviewWord, markViewed, mutationQueue, sessionFeed]);
 
   const collectionNames = useMemo(() => Object.fromEntries(collections.map((item) => [item.id, item.name])), [collections]);
 
@@ -148,19 +186,54 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
     updateSessionComplete(false);
   };
 
+  if (currentNotificationReviewWord) {
+    const canContinue = sessionFeed.length > 0;
+    const translationStatus = !currentNotificationReviewWord.translation
+      && currentNotificationReviewWord.sourceLanguageCode === 'en'
+      && currentNotificationReviewWord.targetLanguageCode === 'sk'
+      ? translationStates[currentNotificationReviewWord.id] ?? 'loading'
+      : undefined;
+    return (
+      <Screen style={styles.screen}>
+        <Header filter={filter} availableFilters={availableFilters} onSelectFilter={onSelectFilter}/>
+        <View style={styles.notificationReviewIntro}>
+          <AppText variant="heading">{canContinue ? 'Already reviewed' : 'You are caught up'}</AppText>
+          <AppText style={[styles.notificationReviewMessage, { color: theme.muted }]}>
+            {canContinue
+              ? 'You already reviewed this reminder word. Looking at it again will not change your progress.'
+              : 'Today’s session is complete. You can review this reminder word without changing your progress.'}
+          </AppText>
+        </View>
+        <View style={styles.notificationReviewCard}>
+          <WordCard
+            word={currentNotificationReviewWord}
+            collectionName={collectionNames[currentNotificationReviewWord.collectionId]}
+            dense={denseCards}
+            showPronunciation
+            translationStatus={translationStatus}
+            onRetryTranslation={() => retryTranslation(currentNotificationReviewWord)}
+          />
+        </View>
+        {canContinue
+          ? <PrimaryButton label="Continue today’s words" onPress={() => setNotificationReviewWord(null)}/>
+          : null}
+      </Screen>
+    );
+  }
+
   if (sessionComplete) {
     const canContinue = continuedSessionFeed.length > 0;
-    return <Screen><Header filter={filter} availableFilters={availableFilters} onSelectFilter={updateLearningFilter}/><Animated.View exiting={FadeOut.duration(140).reduceMotion(ReduceMotion.System)} style={styles.emptyTransition}><EmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} actionLabel={canContinue ? 'Continue learning' : 'Browse library'} onAction={canContinue ? continueLearning : () => router.push('/(tabs)/library')}/></Animated.View></Screen>;
+    return <Screen><Header filter={filter} availableFilters={availableFilters} onSelectFilter={onSelectFilter}/><Animated.View exiting={FadeOut.duration(140).reduceMotion(ReduceMotion.System)} style={styles.emptyTransition}><EmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} actionLabel={canContinue ? 'Continue learning' : 'Browse library'} onAction={canContinue ? continueLearning : () => router.push('/(tabs)/library')}/></Animated.View></Screen>;
   }
 
   if (sessionFeed.length === 0) {
     const hasCategoryWords = categoryWords.length > 0;
-    return <Screen><Header filter={filter} availableFilters={availableFilters} onSelectFilter={updateLearningFilter}/><EmptyState title={hasCategoryWords ? 'You are caught up' : `No ${categoryWordLabel(filter)} yet`} message={hasCategoryWords ? `No ${categoryWordLabel(filter)} are due right now.` : 'Add words from the library or choose another category.'} actionLabel="Browse library" onAction={() => router.push('/(tabs)/library')}/></Screen>;
+    return <Screen><Header filter={filter} availableFilters={availableFilters} onSelectFilter={onSelectFilter}/><EmptyState title={hasCategoryWords ? 'You are caught up' : `No ${categoryWordLabel(filter)} yet`} message={hasCategoryWords ? `No ${categoryWordLabel(filter)} are due right now.` : 'Add words from the library or choose another category.'} actionLabel="Browse library" onAction={() => router.push('/(tabs)/library')}/></Screen>;
   }
 
   return (
     <Screen style={styles.screen}>
-      <Header filter={filter} availableFilters={availableFilters} onSelectFilter={updateLearningFilter}/>
+      <Header filter={filter} availableFilters={availableFilters} onSelectFilter={onSelectFilter}/>
       <FlatList
         ref={listRef}
         data={sessionFeed}
@@ -207,6 +280,9 @@ function categoryWordLabel(filter: LearningFilter, singular = false) {
 const styles = StyleSheet.create({
   screen: { paddingHorizontal: spacing.lg }, headerBlock: { gap: spacing.sm, paddingBottom: spacing.sm }, header: { minHeight: 76, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   emptyTransition: { flex: 1 },
+  notificationReviewIntro: { alignItems: 'center', gap: spacing.xs, paddingVertical: spacing.sm },
+  notificationReviewMessage: { textAlign: 'center' },
+  notificationReviewCard: { flex: 1, paddingVertical: spacing.sm },
   settings: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 22, borderWidth: 1 }, filters: { gap: spacing.sm },
   filter: { minWidth: 44, minHeight: 44, paddingHorizontal: spacing.md, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' }, position: { textAlign: 'center', paddingVertical: spacing.xs },
 });

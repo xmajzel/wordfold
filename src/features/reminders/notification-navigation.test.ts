@@ -5,15 +5,15 @@ function notification(data?: Record<string, unknown>): NotificationDataCarrier {
 }
 
 describe('notification navigation', () => {
-  it('builds the detail route from the notification word id', () => {
+  it('builds the Today route from the notification word id', () => {
     expect(getNotificationWordTarget(notification({
       wordId: 'seed-headway-upper-intermediate-se3qku',
       url: '/word/a-different-word',
     }))).toEqual({
       wordId: 'seed-headway-upper-intermediate-se3qku',
       href: {
-        pathname: '/word/[id]',
-        params: { id: 'seed-headway-upper-intermediate-se3qku' },
+        pathname: '/(tabs)',
+        params: { notificationWordId: 'seed-headway-upper-intermediate-se3qku' },
       },
     });
   });

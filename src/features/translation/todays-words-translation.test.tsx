@@ -16,7 +16,10 @@ const word: Word = {
 };
 let mockWords = [word];
 
-jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
+jest.mock('expo-router', () => ({
+  router: { push: jest.fn(), setParams: jest.fn() },
+  useLocalSearchParams: () => ({}),
+}));
 
 jest.mock('@/components/swipeable-word-card', () => {
   const React = jest.requireActual('react');

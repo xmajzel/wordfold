@@ -13,8 +13,8 @@ export function getNotificationWordTarget(notification: NotificationDataCarrier)
   return {
     wordId,
     href: {
-      pathname: '/word/[id]' as const,
-      params: { id: wordId },
+      pathname: '/(tabs)' as const,
+      params: { notificationWordId: wordId },
     },
   };
 }

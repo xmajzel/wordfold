@@ -8,6 +8,8 @@ const mockBuildLearningFeed = jest.fn<Word[], unknown[]>();
 const mockBuildContinuedLearningFeed = jest.fn<Word[], unknown[]>();
 const mockRateWord = jest.fn<Promise<void>, [Word, LearningRating]>(async () => undefined);
 const mockRouterPush = jest.fn();
+const mockRouterSetParams = jest.fn();
+let mockSearchParams: { notificationWordId?: string } = {};
 
 const baseWord = (overrides: Partial<Word>): Word => ({
   id: 'word', collectionId: 'my-words', term: 'scope', normalizedTerm: 'scope',
@@ -22,8 +24,15 @@ const baseWord = (overrides: Partial<Word>): Word => ({
 const mockFirstWord = baseWord({ id: 'first', term: 'scope', normalizedTerm: 'scope' });
 const mockNextWord = baseWord({ id: 'next', term: 'focus', normalizedTerm: 'focus', translation: 'sústredenie' });
 const mockThirdWord = baseWord({ id: 'third', term: 'pace', normalizedTerm: 'pace', translation: 'tempo' });
+let mockWords = [mockFirstWord, mockNextWord];
 
-jest.mock('expo-router', () => ({ router: { push: (...args: unknown[]) => mockRouterPush(...args) } }));
+jest.mock('expo-router', () => ({
+  router: {
+    push: (...args: unknown[]) => mockRouterPush(...args),
+    setParams: (...args: unknown[]) => mockRouterSetParams(...args),
+  },
+  useLocalSearchParams: () => mockSearchParams,
+}));
 
 jest.mock('expo-haptics', () => ({
   NotificationFeedbackType: { Success: 'success' },
@@ -86,7 +95,7 @@ jest.mock('@/components/swipeable-word-card', () => {
 
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
-    words: [mockFirstWord, mockNextWord],
+    words: mockWords,
     collections: [{ id: 'my-words', name: 'My words' }],
     learningFilter: 'all',
     updateLearningFilter: jest.fn(async () => undefined),
@@ -99,6 +108,8 @@ jest.mock('@/providers/app-data-provider', () => ({
 describe('continued learning session', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockSearchParams = {};
+    mockWords = [mockFirstWord, mockNextWord];
     mockRateWord.mockImplementation(async () => undefined);
     mockBuildLearningFeed.mockReturnValue([mockFirstWord]);
     mockBuildContinuedLearningFeed.mockReturnValue([mockNextWord]);
@@ -193,5 +204,55 @@ describe('continued learning session', () => {
     await fireEvent.press(browseButton);
 
     expect(mockRouterPush).toHaveBeenCalledWith('/(tabs)/library');
+  });
+
+  it('starts a notification session with the notified unfinished word', async () => {
+    mockSearchParams = { notificationWordId: mockNextWord.id };
+    const view = await render(<LearnScreen/>);
+
+    expect(view.getAllByTestId(/swipe-wrapper-/).map((node) => node.props.testID)).toEqual([
+      'swipe-wrapper-next',
+      'swipe-wrapper-first',
+    ]);
+    view.getByText(/^1 of 2 due now/);
+  });
+
+  it('shows a completed notification word read-only when Today is complete', async () => {
+    const completedWord = baseWord({
+      id: 'completed',
+      term: 'finished',
+      normalizedTerm: 'finished',
+      state: 'understood',
+      lastRatedAt: '2026-08-24T08:00:00.000Z',
+      nextReviewAt: '2026-08-27T08:00:00.000Z',
+    });
+    mockWords = [completedWord];
+    mockSearchParams = { notificationWordId: completedWord.id };
+
+    const view = await render(<LearnScreen/>);
+
+    view.getByText('You are caught up');
+    view.getByText('finished');
+    view.getByText('Today’s session is complete. You can review this reminder word without changing your progress.');
+    expect(view.queryByRole('button', { name: /Keep learning/ })).toBeNull();
+    expect(view.queryByRole('button', { name: /I know this/ })).toBeNull();
+    expect(view.queryByTestId('swipe-wrapper-completed')).toBeNull();
+  });
+
+  it('continues with unfinished words after reviewing a completed notification word', async () => {
+    const completedWord = baseWord({
+      id: 'completed',
+      term: 'finished',
+      normalizedTerm: 'finished',
+      state: 'learned',
+    });
+    mockWords = [completedWord, mockNextWord];
+    mockSearchParams = { notificationWordId: completedWord.id };
+    const view = await render(<LearnScreen/>);
+
+    await fireEvent.press(view.getByRole('button', { name: 'Continue today’s words' }));
+
+    await waitFor(() => view.getByTestId('swipe-wrapper-next'));
+    view.getByRole('button', { name: /Keep learning/ });
   });
 });

@@ -1,6 +1,6 @@
 import type { Word } from '@/domain/types';
 
-import { applyRating, buildContinuedLearningFeed, buildLearningFeed, getAvailableLearningFilters, getNextReviewIntervalDays, getNextReviewIntervalRange } from './algorithm';
+import { applyRating, buildContinuedLearningFeed, buildLearningFeed, buildNotificationLearningSession, getAvailableLearningFilters, getNextReviewIntervalDays, getNextReviewIntervalRange } from './algorithm';
 
 const baseWord = (overrides: Partial<Word>): Word => ({
   id: 'word', collectionId: 'collection', term: 'scope', normalizedTerm: 'scope',
@@ -120,5 +120,44 @@ describe('learning algorithm', () => {
     expect(getAvailableLearningFilters(words)).toEqual(['all', 'personal', 'C1']);
     expect(getAvailableLearningFilters([words[0]])).toEqual(['all', 'C1']);
     expect(getAvailableLearningFilters([])).toEqual(['all']);
+  });
+
+  it('puts an unfinished notification word before the remaining Today feed', () => {
+    const words = Array.from({ length: 14 }, (_, index) => baseWord({ id: `word-${index}` }));
+    const regularFeed = buildLearningFeed(words, now);
+    const notificationWordId = words.find((word) => !regularFeed.some((due) => due.id === word.id))!.id;
+
+    const session = buildNotificationLearningSession(words, notificationWordId, now);
+
+    expect(session.reviewWord).toBeNull();
+    expect(session.feed[0].id).toBe(notificationWordId);
+    expect(session.feed.slice(1).map((word) => word.id)).toEqual(
+      regularFeed.map((word) => word.id),
+    );
+    expect(new Set(session.feed.map((word) => word.id)).size).toBe(session.feed.length);
+  });
+
+  it('keeps an already completed notification word read-only', () => {
+    const completed = baseWord({
+      id: 'completed',
+      state: 'understood',
+      lastRatedAt: '2026-06-21T08:00:00.000Z',
+      nextReviewAt: '2026-06-24T08:00:00.000Z',
+    });
+    const unfinished = baseWord({ id: 'unfinished' });
+
+    expect(buildNotificationLearningSession([completed, unfinished], completed.id, now)).toEqual({
+      feed: [unfinished],
+      reviewWord: completed,
+    });
+  });
+
+  it('falls back to the regular Today feed when the notification word is missing', () => {
+    const words = [baseWord({ id: 'first' }), baseWord({ id: 'second' })];
+
+    expect(buildNotificationLearningSession(words, 'deleted', now)).toEqual({
+      feed: buildLearningFeed(words, now),
+      reviewWord: null,
+    });
   });
 });
