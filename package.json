@@ -74,6 +74,7 @@
     "powersync:deploy": "powersync deploy",
     "powersync:deploy:sync": "powersync deploy sync-config",
     "android": "APP_VARIANT=development expo run:android",
+    "android:dev": "APP_VARIANT=development expo prebuild --clean --platform android && APP_VARIANT=development expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
     "build:android:dev": "npx eas-cli@latest build --platform android --profile development",

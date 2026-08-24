@@ -17,9 +17,16 @@ Local notifications work in Expo Go. The custom ML Kit translation module requir
 build; real Google Play purchases require a Play-installed testing build:
 
 ```bash
-pnpm android
+pnpm android:dev
 pnpm exec expo run:ios
 ```
+
+`pnpm android:dev` regenerates the Git-ignored native Android project with the development
+application ID, builds and installs the app, launches it, and keeps Metro running for Fast Refresh.
+Use this command for the first development installation and after native configuration changes.
+For subsequent builds without native configuration changes, use `pnpm android`; when the
+development app is already installed, `pnpm start:dev` is the fastest way to resume JavaScript
+development.
 
 The Android development build is installed as `Wordfold (Dev)` with application ID
 `com.jozefmajzel.wordfold.debug`, so it can coexist with the Google Play build. The two apps have
@@ -31,6 +38,30 @@ The first English-to-Slovak translation downloads an on-device language model ov
 ## Android phone builds
 
 Android APK builds can be installed directly on a phone without a Google Play developer account. A free Expo account is required for EAS cloud builds.
+
+### Local development over Wi-Fi
+
+Connect the Mac and Android phone to the same Wi-Fi network and enable **Wireless debugging** in
+the phone's developer options. Pair the phone using the address and pairing port shown under
+**Pair device with pairing code**:
+
+```bash
+adb pair PHONE_IP:PAIR_PORT
+```
+
+Then use the separate address and connection port shown on the main **Wireless debugging** screen:
+
+```bash
+adb connect PHONE_IP:DEBUG_PORT
+adb devices -l
+```
+
+After the phone appears with status `device`, regenerate, build, install, and launch the development
+app while keeping Metro active for Fast Refresh:
+
+```bash
+pnpm android:dev
+```
 
 Sign in once:
 
