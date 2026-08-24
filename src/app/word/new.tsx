@@ -25,7 +25,8 @@ import { radii, spacing } from '@/theme/tokens';
 
 export default function NewWordScreen() {
   const theme = useAppTheme();
-  const { words, collections, findSenses, createWord } = useAppData();
+  const { words, collections, findSenses, createWord, pronunciationVoicePreference } = useAppData();
+  const preferredEnglishLocale = pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : 'en-US';
   const [collectionId, setCollectionId] = useState(collections[0]?.id ?? 'my-words');
   const [term, setTerm] = useState('');
   const [translation, setTranslation] = useState('');
@@ -37,7 +38,9 @@ export default function NewWordScreen() {
   const [sourceLanguageCode, setSourceLanguageCode] = useState(defaultSourceLanguageCode);
   const [targetLanguageCode, setTargetLanguageCode] = useState(defaultTargetLanguageCode);
   const [sourcePronunciationLocale, setSourcePronunciationLocale] = useState(
-    defaultPronunciationLocale(defaultSourceLanguageCode),
+    defaultSourceLanguageCode === 'en'
+      ? preferredEnglishLocale
+      : defaultPronunciationLocale(defaultSourceLanguageCode),
   );
   const [targetPronunciationLocale, setTargetPronunciationLocale] = useState(
     defaultPronunciationLocale(defaultTargetLanguageCode),
@@ -122,7 +125,7 @@ export default function NewWordScreen() {
   const changeSourceLanguage = (languageCode: string, locale: string) => {
     const languageChanged = languageCode !== sourceLanguageCode;
     setSourceLanguageCode(languageCode);
-    setSourcePronunciationLocale(locale);
+    setSourcePronunciationLocale(languageCode === 'en' ? preferredEnglishLocale : locale);
     if (!languageChanged) return;
     setSenses([]); setSelectedSenseId(null); setHasLookedUp(false);
     setDefinition(''); setExample(''); setPartOfSpeech('');

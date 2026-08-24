@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 
-import type { CatalogSense, Collection, DashboardStats, LearningFilter, LearningPreferences, LearningRating, ReminderSettings, Word } from '@/domain/types';
+import type { CatalogSense, Collection, DashboardStats, LearningFilter, LearningPreferences, LearningRating, PronunciationVoicePreference, ReminderSettings, Word } from '@/domain/types';
 import { getCefrEntryForNormalizedTerm } from '@/data/cefr-catalog';
 import type { NewWordInput } from '@/data/repository';
 import { createId } from '@/data/repository';
@@ -16,6 +16,7 @@ interface AppDataValue {
   words: Word[]; collections: Collection[]; stats: DashboardStats | null;
   reminderSettings: ReminderSettings | null;
   learningPreferences: LearningPreferences;
+  pronunciationVoicePreference: PronunciationVoicePreference;
   learningFilter: LearningFilter;
   onboardingComplete: boolean | null;
   refresh(): Promise<void>; findSenses(term: string): Promise<CatalogSense[]>;
@@ -28,7 +29,8 @@ interface AppDataValue {
   updateReminderSettings(settings: ReminderSettings): Promise<number>;
   updateLearningFilter(filter: LearningFilter): Promise<void>;
   saveLearningPreferences(preferences: LearningPreferences): Promise<void>;
-  completePersonalizedOnboarding(preferences: LearningPreferences): Promise<number>;
+  savePronunciationVoicePreference(preference: PronunciationVoicePreference): Promise<void>;
+  completePersonalizedOnboarding(preferences: LearningPreferences, preference: PronunciationVoicePreference): Promise<number>;
   addRecommendedWords(limit?: number): Promise<number>;
   noteNotificationOpen(wordId: string | null): Promise<void>;
   guestImport: GuestImportViewModel;
@@ -67,14 +69,18 @@ function toWord(input: NewWordInput, id = createId('web-word')): Word {
     nextReviewAt: null, createdAt: now, updatedAt: now };
 }
 
-function recommendationsToWords(recommendations: Recommendation[]) {
+function recommendationsToWords(
+  recommendations: Recommendation[],
+  preference: PronunciationVoicePreference,
+) {
+  const locale = preference === 'neural-en-GB' ? 'en-GB' : 'en-US';
   return recommendations.map(({ entry, topic }) => toWord({
     collectionId: 'my-words', term: entry.term, normalizedTerm: entry.normalizedTerm,
     definition: entry.definition, example: entry.example, partOfSpeech: entry.partOfSpeech,
     translation: entry.translation,
     catalogSenseId: entry.catalogSenseId, cefrLevel: entry.level, source: topic ?? 'manual',
     sourceLanguageCode: 'en', targetLanguageCode: 'sk',
-    sourcePronunciationLocale: 'en-US', targetPronunciationLocale: 'sk-SK',
+    sourcePronunciationLocale: locale, targetPronunciationLocale: 'sk-SK',
   }));
 }
 
@@ -83,6 +89,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
   const [collections, setCollections] = useState(initialCollections);
   const [reminderSettings, setReminderSettings] = useState<ReminderSettings>({ enabled: false, countPerDay: 1, windowStartMinutes: 600, windowEndMinutes: 1200, timeZoneId: 'local' });
   const [learningPreferences, setLearningPreferences] = useState<LearningPreferences>({ levels: [], topics: [] });
+  const [pronunciationVoicePreference, setPronunciationVoicePreference] = useState<PronunciationVoicePreference>('device');
   const [learningFilter, setLearningFilter] = useState<LearningFilter>('all');
   const [onboardingComplete, setOnboardingComplete] = useState(false);
 
@@ -113,7 +120,8 @@ export function AppDataProvider({ children }: PropsWithChildren) {
   }, [words]);
 
   const value = useMemo<AppDataValue>(() => ({
-    dataSource: 'guest', words, collections, stats, reminderSettings, learningPreferences, learningFilter, onboardingComplete,
+    dataSource: 'guest', words, collections, stats, reminderSettings, learningPreferences,
+    pronunciationVoicePreference, learningFilter, onboardingComplete,
     refresh: async () => undefined,
     findSenses: async (term) => {
       const normalizedTerm = normalizeTerm(term);
@@ -152,13 +160,15 @@ export function AppDataProvider({ children }: PropsWithChildren) {
       setLearningFilter(filter);
     },
     saveLearningPreferences: async (preferences) => setLearningPreferences(normalizeLearningPreferences(preferences)),
-    completePersonalizedOnboarding: async (preferences) => {
+    savePronunciationVoicePreference: async (preference) => setPronunciationVoicePreference(preference),
+    completePersonalizedOnboarding: async (preferences, preference) => {
       const normalized = normalizeLearningPreferences(preferences);
       const recommendations = buildRecommendations(normalized, words
         .filter((word) => word.sourceLanguageCode === 'en')
         .map((word) => word.normalizedTerm), 10);
       setLearningPreferences(normalized);
-      setWords((current) => [...recommendationsToWords(recommendations), ...current]);
+      setPronunciationVoicePreference(preference);
+      setWords((current) => [...recommendationsToWords(recommendations, preference), ...current]);
       setOnboardingComplete(true);
       return recommendations.length;
     },
@@ -166,7 +176,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
       const recommendations = buildRecommendations(learningPreferences, words
         .filter((word) => word.sourceLanguageCode === 'en')
         .map((word) => word.normalizedTerm), limit);
-      setWords((current) => [...recommendationsToWords(recommendations), ...current]);
+      setWords((current) => [...recommendationsToWords(recommendations, pronunciationVoicePreference), ...current]);
       return recommendations.length;
     },
     noteNotificationOpen: async () => undefined,
@@ -187,7 +197,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
     resolveSyncCutoverConflict: async () => undefined,
     keepAccountRename: async () => undefined,
     prepareForSignOut: async () => undefined,
-  }), [collections, learningFilter, learningPreferences, onboardingComplete, reminderSettings, stats, words]);
+  }), [collections, learningFilter, learningPreferences, onboardingComplete, pronunciationVoicePreference, reminderSettings, stats, words]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 

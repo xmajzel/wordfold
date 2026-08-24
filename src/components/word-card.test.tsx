@@ -4,6 +4,14 @@ import type { Word } from '@/domain/types';
 
 import { WordCard } from './word-card';
 
+jest.mock('@/providers/app-data-provider', () => ({
+  useAppData: () => ({ pronunciationVoicePreference: 'device' }),
+}));
+
+jest.mock('@/features/pronunciation/offline-downloads-provider', () => ({
+  useOfflinePronunciationDownloads: () => ({ hasAsset: () => false }),
+}));
+
 jest.mock('expo-haptics', () => ({
   NotificationFeedbackType: { Success: 'success' },
   notificationAsync: jest.fn(async () => undefined),
@@ -68,7 +76,7 @@ describe('WordCard learning actions', () => {
     expect(visible.getByRole('button', {
       name: 'Play English · United States device pronunciation for scope',
     })).toBeTruthy();
-    expect(visible.getByText('≈ Device voice')).toBeTruthy();
+    expect(visible.getByText('Phone voice')).toBeTruthy();
   });
 
   it('shows translation preparation for an untranslated word', async () => {

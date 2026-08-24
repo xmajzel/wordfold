@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import { render } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 
 import { PronunciationControls } from './pronunciation-controls';
 
@@ -9,6 +9,12 @@ const mockCacheScope: { type: 'guest' | 'account'; userId?: string } = {
 let mockHasOfflineAsset = false;
 let mockConsentStatus: 'loading' | 'disabled' | 'enabled' | 'deletion_pending' = 'disabled';
 let mockConsentUserId: string | null = 'reader';
+let mockVoicePreference: 'device' | 'neural-en-US' | 'neural-en-GB' = 'device';
+const mockNeuralRender = jest.fn();
+
+jest.mock('@/providers/app-data-provider', () => ({
+  useAppData: () => ({ pronunciationVoicePreference: mockVoicePreference }),
+}));
 
 jest.mock('@/features/pronunciation/cache-scope', () => ({
   usePronunciationCacheScope: () => mockCacheScope,
@@ -30,8 +36,9 @@ jest.mock('@/features/pronunciation/private-consent', () => ({
 jest.mock('@/components/pronunciation-button', () => {
   const { Pressable, Text } = jest.requireActual<typeof import('react-native')>('react-native');
   return {
-    PronunciationButton: () => {
-      return <Pressable accessibilityRole="button" accessibilityLabel="device"><Text>device</Text></Pressable>;
+    PronunciationButton: ({ idleLabel }: { idleLabel?: string }) => {
+      const label = idleLabel ?? 'device';
+      return <Pressable accessibilityRole="button" accessibilityLabel={label}><Text>{label}</Text></Pressable>;
     },
   };
 });
@@ -39,9 +46,14 @@ jest.mock('@/components/pronunciation-button', () => {
 jest.mock('@/components/neural-pronunciation-button', () => {
   const { Pressable, Text } = jest.requireActual<typeof import('react-native')>('react-native');
   return {
-    NeuralPronunciationButton: ({ offlineOnly }: { offlineOnly?: boolean }) => {
+    NeuralPronunciationButton: ({
+      offlineOnly,
+      locale,
+      onUnavailable,
+    }: { offlineOnly?: boolean; locale: string; onUnavailable?(): void }) => {
+      mockNeuralRender(locale);
       const label = offlineOnly ? 'neural-offline' : 'neural';
-      return <Pressable accessibilityRole="button" accessibilityLabel={label}><Text>{label}</Text></Pressable>;
+      return <Pressable accessibilityRole="button" accessibilityLabel={label} onPress={onUnavailable}><Text>{label}</Text></Pressable>;
     },
   };
 });
@@ -69,6 +81,8 @@ describe('PronunciationControls', () => {
     mockHasOfflineAsset = false;
     mockConsentStatus = 'disabled';
     mockConsentUserId = 'reader';
+    mockVoicePreference = 'device';
+    mockNeuralRender.mockClear();
     Object.defineProperty(Platform, 'OS', { configurable: true, value: 'ios' });
   });
 
@@ -77,19 +91,29 @@ describe('PronunciationControls', () => {
     delete process.env.EXPO_PUBLIC_PRONUNCIATION_PRIVATE_PREVIEW_ENABLED;
   });
 
-  it('shows both choices for an eligible signed-in catalog word', async () => {
+  it('shows only the phone voice when it is preferred', async () => {
     const screen = await render(<PronunciationControls {...props}/>);
-    expect(screen.getByLabelText('device')).toBeTruthy();
-    expect(screen.getByLabelText('neural')).toBeTruthy();
+    expect(screen.getByLabelText('Phone voice')).toBeTruthy();
+    expect(screen.queryByLabelText('neural')).toBeNull();
   });
 
-  it('keeps device voice but hides neural for edited text, signed-out users, and web', async () => {
+  it('uses the preferred natural locale for English playback', async () => {
+    mockVoicePreference = 'neural-en-GB';
+    const screen = await render(<PronunciationControls {...props}/>);
+    expect(screen.getByLabelText('neural')).toBeTruthy();
+    expect(screen.queryByLabelText('Phone voice')).toBeNull();
+    expect(mockNeuralRender).toHaveBeenCalledWith('en-GB');
+  });
+
+  it('uses the phone voice when natural pronunciation is unavailable', async () => {
+    mockVoicePreference = 'neural-en-US';
     const edited = await render(<PronunciationControls {...props} text="Scope"/>);
-    expect(edited.getByLabelText('device')).toBeTruthy();
+    expect(edited.getByLabelText('Phone voice')).toBeTruthy();
     expect(edited.queryByLabelText('neural')).toBeNull();
 
     Object.assign(mockCacheScope, { type: 'guest', userId: undefined });
     const signedOut = await render(<PronunciationControls {...props}/>);
+    expect(signedOut.getByLabelText('Phone voice')).toBeTruthy();
     expect(signedOut.queryByLabelText('neural')).toBeNull();
 
     mockHasOfflineAsset = true;
@@ -99,13 +123,23 @@ describe('PronunciationControls', () => {
     Object.assign(mockCacheScope, { type: 'account', userId: 'reader' });
     Object.defineProperty(Platform, 'OS', { configurable: true, value: 'web' });
     const web = await render(<PronunciationControls {...props}/>);
+    expect(web.getByLabelText('Phone voice')).toBeTruthy();
     expect(web.queryByLabelText('neural')).toBeNull();
+  });
+
+  it('reveals a small phone fallback only after natural playback fails', async () => {
+    mockVoicePreference = 'neural-en-US';
+    const screen = await render(<PronunciationControls {...props}/>);
+    expect(screen.queryByLabelText('Use phone voice instead')).toBeNull();
+
+    await fireEvent.press(screen.getByLabelText('neural'));
+    expect(screen.getByLabelText('Use phone voice instead')).toBeTruthy();
   });
 
   it('offers private cloud review for a signed-in manual word and honors consent', async () => {
     const manual = { ...props, text: 'custom phrase', catalogSenseId: null };
     const disabled = await render(<PronunciationControls {...manual}/>);
-    expect(disabled.getByLabelText('device')).toBeTruthy();
+    expect(disabled.getByLabelText('Phone voice')).toBeTruthy();
     expect(disabled.getByLabelText('private-disabled')).toBeTruthy();
     expect(disabled.queryByLabelText('neural')).toBeNull();
 

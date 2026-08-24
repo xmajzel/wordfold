@@ -63,6 +63,10 @@ jest.mock('@/features/learning/algorithm', () => {
   };
 });
 
+jest.mock('@/features/pronunciation/offline-downloads-provider', () => ({
+  useOfflinePronunciationDownloads: () => ({ hasAsset: () => false }),
+}));
+
 jest.mock('@/components/swipeable-word-card', () => {
   const React = jest.requireActual('react');
   const { View } = jest.requireActual('react-native');

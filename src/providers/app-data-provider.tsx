@@ -2,7 +2,7 @@ import { createContext, PropsWithChildren, Suspense, useCallback, useContext, us
 import { AppState, StyleSheet, View } from 'react-native';
 import { SQLiteProvider, useSQLiteContext, type SQLiteDatabase } from 'expo-sqlite';
 
-import type { CatalogSense, Collection, DashboardStats, LearningFilter, LearningPreferences, LearningRating, LearningState, ReminderSettings, Word } from '@/domain/types';
+import type { CatalogSense, Collection, DashboardStats, LearningFilter, LearningPreferences, LearningRating, LearningState, PronunciationVoicePreference, ReminderSettings, Word } from '@/domain/types';
 import { lookupSenses } from '@/data/catalog';
 import {
   finalizeLocalAccountDeletion,
@@ -42,6 +42,7 @@ interface AppDataValue {
   stats: DashboardStats | null;
   reminderSettings: ReminderSettings | null;
   learningPreferences: LearningPreferences;
+  pronunciationVoicePreference: PronunciationVoicePreference;
   learningFilter: LearningFilter;
   onboardingComplete: boolean | null;
   wordCapacity: ReturnType<typeof getWordCapacity>;
@@ -60,7 +61,11 @@ interface AppDataValue {
   updateReminderSettings(settings: ReminderSettings): Promise<number>;
   updateLearningFilter(filter: LearningFilter): Promise<void>;
   saveLearningPreferences(preferences: LearningPreferences): Promise<void>;
-  completePersonalizedOnboarding(preferences: LearningPreferences): Promise<number>;
+  savePronunciationVoicePreference(preference: PronunciationVoicePreference): Promise<void>;
+  completePersonalizedOnboarding(
+    preferences: LearningPreferences,
+    pronunciationVoicePreference: PronunciationVoicePreference,
+  ): Promise<number>;
   addRecommendedWords(limit?: number): Promise<number>;
   noteNotificationOpen(wordId: string | null): Promise<void>;
   guestImport: GuestImportViewModel;
@@ -106,7 +111,9 @@ function getBundledWordTranslation(word: Word) {
 function recommendationsToInputs(
   recommendations: Recommendation[],
   collectionId: string,
+  pronunciationVoicePreference: PronunciationVoicePreference,
 ): repository.NewWordInput[] {
+  const locale = pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : 'en-US';
   return recommendations.map(({ entry, topic }) => ({
     collectionId,
     term: entry.term,
@@ -120,7 +127,7 @@ function recommendationsToInputs(
     source: topic ?? 'manual',
     sourceLanguageCode: 'en',
     targetLanguageCode: 'sk',
-    sourcePronunciationLocale: 'en-US',
+    sourcePronunciationLocale: locale,
     targetPronunciationLocale: 'sk-SK',
   }));
 }
@@ -141,6 +148,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [reminderSettings, setReminderSettings] = useState<ReminderSettings | null>(null);
   const [learningPreferences, setLearningPreferences] = useState<LearningPreferences>({ levels: [], topics: [] });
+  const [pronunciationVoicePreference, setPronunciationVoicePreference] = useState<PronunciationVoicePreference>('device');
   const [learningFilter, setLearningFilter] = useState<LearningFilter>('all');
   const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
   const [guestImport, setGuestImport] = useState<GuestImportViewModel>({
@@ -327,16 +335,18 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   }, [appDatabase, auth, authStatus, authUserId, cutoverService, dataSource, guestImportService, prepareForSignOut, sync]);
 
   const refresh = useCallback(async () => {
-    const [loadedWords, nextCollections, nextStats, nextSettings, nextPreferences, nextOnboarding, nextLearningFilter] = await Promise.all([
+    const [loadedWords, nextCollections, nextStats, nextSettings, nextPreferences, nextVoicePreference, nextOnboarding, nextLearningFilter] = await Promise.all([
       vocabularyStore.listWords(), vocabularyStore.listCollections(), vocabularyStore.getStats(),
       repository.getReminderSettings(appDatabase), repository.getLearningPreferences(appDatabase),
-      repository.isOnboardingComplete(appDatabase), repository.getLearningFilter(appDatabase),
+      repository.getPronunciationVoicePreference(appDatabase), repository.isOnboardingComplete(appDatabase),
+      repository.getLearningFilter(appDatabase),
     ]);
     setWords(loadedWords);
     setCollections(nextCollections);
     setStats(nextStats);
     setReminderSettings(nextSettings);
     setLearningPreferences(nextPreferences);
+    setPronunciationVoicePreference(nextVoicePreference);
     setOnboardingComplete(nextOnboarding);
     setLearningFilter(nextLearningFilter);
   }, [appDatabase, vocabularyStore]);
@@ -432,7 +442,8 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   }, [refreshReminderSchedule]);
 
   const value = useMemo<AppDataValue>(() => ({
-    dataSource, words, collections, stats, reminderSettings, learningPreferences, learningFilter, onboardingComplete,
+    dataSource, words, collections, stats, reminderSettings, learningPreferences,
+    pronunciationVoicePreference, learningFilter, onboardingComplete,
     wordCapacity: getWordCapacity(words.length, purchase.unlimited), refresh,
     guestImport, prepareGuestImport, resolveGuestImportConflict, runGuestImport, refreshGuestImport, pauseGuestImport,
     cutover, runSyncCutover, resolveSyncCutoverConflict, keepAccountRename, prepareForSignOut, deleteCloudAccount,
@@ -509,7 +520,11 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       await runDatabaseMutation(() => repository.saveLearningPreferences(appDatabase, normalized));
       setLearningPreferences(normalized);
     },
-    completePersonalizedOnboarding: async (preferences) => {
+    savePronunciationVoicePreference: async (preference) => {
+      await runDatabaseMutation(() => repository.savePronunciationVoicePreference(appDatabase, preference));
+      setPronunciationVoicePreference(preference);
+    },
+    completePersonalizedOnboarding: async (preferences, voicePreference) => {
       const existing = await vocabularyStore.listWords();
       const starterLimit = purchase.unlimited
         ? 10
@@ -523,12 +538,23 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
           await repository.saveLearningPreferences(appDatabase, preferences);
           const collectionId = collections[0]?.id;
           if (!collectionId && recommendations.length > 0) throw new Error('Create a collection before adding recommendations.');
-          await vocabularyStore.createWords(recommendationsToInputs(recommendations, collectionId ?? 'my-words'));
+          await vocabularyStore.createWords(recommendationsToInputs(
+            recommendations,
+            collectionId ?? 'my-words',
+            voicePreference,
+          ));
+          await repository.savePronunciationVoicePreference(appDatabase, voicePreference);
           await repository.completeOnboarding(appDatabase);
         } else {
-          await repository.completeOnboardingSetup(appDatabase, preferences, recommendationsToInputs(recommendations, collections[0]?.id ?? 'my-words'));
+          await repository.completeOnboardingSetup(
+            appDatabase,
+            preferences,
+            voicePreference,
+            recommendationsToInputs(recommendations, collections[0]?.id ?? 'my-words', voicePreference),
+          );
         }
       });
+      setPronunciationVoicePreference(voicePreference);
       await refresh(); await reschedule();
       return recommendations.length;
     },
@@ -542,7 +568,11 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
         assertWordCapacity((await vocabularyStore.listWords()).length, recommendations.length, purchase.unlimited);
         const collectionId = collections[0]?.id;
         if (!collectionId) throw new Error('Create a collection before adding recommendations.');
-        await vocabularyStore.createWords(recommendationsToInputs(recommendations, collectionId));
+        await vocabularyStore.createWords(recommendationsToInputs(
+          recommendations,
+          collectionId,
+          pronunciationVoicePreference,
+        ));
       });
       await refresh(); await reschedule();
       return recommendations.length;
@@ -551,7 +581,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       await runDatabaseMutation(() => vocabularyStore.recordNotificationOpen(wordId));
       setStats((current) => current ? { ...current, notificationOpens: current.notificationOpens + 1 } : current);
     },
-  }), [appDatabase, catalogDatabase, collections, cutover, dataSource, deleteCloudAccount, guestImport, keepAccountRename, learningFilter, learningPreferences, onboardingComplete, pauseGuestImport, prepareForSignOut, prepareGuestImport, prepareWordTranslation, purchase.unlimited, refresh, refreshGuestImport, reminderSettings, reschedule, resolveGuestImportConflict, resolveSyncCutoverConflict, runDatabaseMutation, runGuestImport, runSyncCutover, stats, vocabularyStore, words]);
+  }), [appDatabase, catalogDatabase, collections, cutover, dataSource, deleteCloudAccount, guestImport, keepAccountRename, learningFilter, learningPreferences, onboardingComplete, pauseGuestImport, prepareForSignOut, prepareGuestImport, prepareWordTranslation, pronunciationVoicePreference, purchase.unlimited, refresh, refreshGuestImport, reminderSettings, reschedule, resolveGuestImportConflict, resolveSyncCutoverConflict, runDatabaseMutation, runGuestImport, runSyncCutover, stats, vocabularyStore, words]);
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>;
 }

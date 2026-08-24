@@ -8,6 +8,10 @@ export const NEURAL_MAXIMUM_BYTES = 1_048_576;
 
 export type NeuralPronunciationLocale = 'en-US' | 'en-GB';
 
+export function neuralVoiceLabel(locale: NeuralPronunciationLocale) {
+  return locale === 'en-US' ? 'Ava · US English' : 'Ryan · UK English';
+}
+
 export type NeuralPronunciationAsset = {
   id: string;
   requestKey: string;

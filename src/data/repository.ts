@@ -1,6 +1,6 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
-import type { CefrLevel, Collection, ContentPackId, ContentSource, DashboardStats, LearningFilter, LearningPreferences, ReminderSettings, Word } from '@/domain/types';
+import type { CefrLevel, Collection, ContentPackId, ContentSource, DashboardStats, LearningFilter, LearningPreferences, PronunciationVoicePreference, ReminderSettings, Word } from '@/domain/types';
 import { isSupportedLanguageCode, isSupportedPronunciationLocale } from '@/domain/languages';
 import { getCefrLevelForCatalogSense } from '@/data/cefr-level-lookup';
 import { isCefrLevel, isLearningFilter } from '@/data/cefr-levels';
@@ -314,6 +314,31 @@ export async function saveLearningPreferences(database: SQLiteDatabase, preferen
   await database.withExclusiveTransactionAsync((transaction) => writeLearningPreferences(transaction, preferences));
 }
 
+export function isPronunciationVoicePreference(value: unknown): value is PronunciationVoicePreference {
+  return value === 'device' || value === 'neural-en-US' || value === 'neural-en-GB';
+}
+
+export async function getPronunciationVoicePreference(
+  database: SQLiteDatabase,
+): Promise<PronunciationVoicePreference> {
+  const row = await database.getFirstAsync<{ value: string }>(
+    "SELECT value FROM app_metadata WHERE key = 'pronunciation_voice_preference'",
+  );
+  return isPronunciationVoicePreference(row?.value) ? row.value : 'device';
+}
+
+export async function savePronunciationVoicePreference(
+  database: SQLiteDatabase,
+  preference: PronunciationVoicePreference,
+) {
+  if (!isPronunciationVoicePreference(preference)) throw new Error('Choose a supported pronunciation voice.');
+  await database.runAsync(
+    `INSERT INTO app_metadata (key, value) VALUES ('pronunciation_voice_preference', ?)
+     ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
+    preference,
+  );
+}
+
 export async function isOnboardingComplete(database: SQLiteDatabase) {
   const row = await database.getFirstAsync<{ value: string }>(
     "SELECT value FROM app_metadata WHERE key = 'onboarding_complete'",
@@ -328,11 +353,13 @@ export async function completeOnboarding(database: SQLiteDatabase) {
 export async function completeOnboardingSetup(
   database: SQLiteDatabase,
   preferences: LearningPreferences,
+  pronunciationVoicePreference: PronunciationVoicePreference,
   starterWords: NewWordInput[],
 ) {
   const ids: string[] = [];
   await database.withExclusiveTransactionAsync(async (transaction) => {
     await writeLearningPreferences(transaction, preferences);
+    await savePronunciationVoicePreference(transaction, pronunciationVoicePreference);
     for (const input of starterWords) ids.push(await addWord(transaction, input));
     await completeOnboarding(transaction);
   });

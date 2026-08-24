@@ -20,7 +20,8 @@ import { radii, spacing } from '@/theme/tokens';
 export default function CefrLevelScreen() {
   const theme = useAppTheme();
   const { level } = useLocalSearchParams<{ level: string }>();
-  const { words, collections, createWord } = useAppData();
+  const { words, collections, createWord, pronunciationVoicePreference } = useAppData();
+  const preferredEnglishLocale = pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : 'en-US';
   const [query, setQuery] = useState('');
   const [busyId, setBusyId] = useState<string | null>(null);
   const validLevel = isCefrLevel(level) ? level : null;
@@ -54,7 +55,7 @@ export default function CefrLevelScreen() {
         source: 'manual',
         sourceLanguageCode: 'en',
         targetLanguageCode: 'sk',
-        sourcePronunciationLocale: 'en-US',
+        sourcePronunciationLocale: preferredEnglishLocale,
         targetPronunciationLocale: 'sk-SK',
       });
     } catch (error) {

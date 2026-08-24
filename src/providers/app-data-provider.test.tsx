@@ -57,6 +57,8 @@ jest.mock('@/data/repository', () => ({
     timeZoneId: Intl.DateTimeFormat().resolvedOptions().timeZone || 'local',
   })),
   getLearningPreferences: jest.fn(async () => ({ levels: [], topics: [] })),
+  getPronunciationVoicePreference: jest.fn(async () => 'device'),
+  savePronunciationVoicePreference: jest.fn(async () => undefined),
   isOnboardingComplete: jest.fn(async () => false),
   getLearningFilter: jest.fn(async () => 'all'),
   getWord: jest.fn(async () => null),

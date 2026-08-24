@@ -1,6 +1,6 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
-import { addWord, addWords, completeOnboardingSetup, getLearningFilter, getLearningPreferences, getStats, resetWord, saveLearningFilter, updateMissingWordTranslations, type NewWordInput } from './repository';
+import { addWord, addWords, completeOnboardingSetup, getLearningFilter, getLearningPreferences, getPronunciationVoicePreference, getStats, resetWord, saveLearningFilter, savePronunciationVoicePreference, updateMissingWordTranslations, type NewWordInput } from './repository';
 
 function createDatabase() {
   const database = {
@@ -134,6 +134,18 @@ describe('word repository', () => {
     });
   });
 
+  it('defaults invalid voice preferences to the phone voice and persists supported choices', async () => {
+    const database = createDatabase();
+    database.getFirstAsync = jest.fn(async () => ({ value: 'unsupported' }));
+
+    await expect(getPronunciationVoicePreference(database)).resolves.toBe('device');
+    await savePronunciationVoicePreference(database, 'neural-en-GB');
+    expect(database.runAsync).toHaveBeenCalledWith(
+      expect.stringContaining('pronunciation_voice_preference'),
+      'neural-en-GB',
+    );
+  });
+
   it('saves preferences, starter words, and completion atomically', async () => {
     const database = createDatabase();
     database.getAllAsync = jest.fn(async () => [
@@ -145,12 +157,14 @@ describe('word repository', () => {
     const ids = await completeOnboardingSetup(
       database,
       { levels: ['A2'], topics: ['business'] },
+      'neural-en-US',
       [words[0]],
     );
 
     expect(ids).toHaveLength(1);
     expect(database.withExclusiveTransactionAsync).toHaveBeenCalledTimes(1);
     expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining('preferred_cefr_levels'), '["A2"]');
+    expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining('pronunciation_voice_preference'), 'neural-en-US');
     expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining('onboarding_complete'));
   });
 });

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 
@@ -16,6 +17,7 @@ import {
 } from '@/features/pronunciation/private-cloud';
 import { usePrivatePronunciationConsent } from '@/features/pronunciation/private-consent';
 import { spacing } from '@/theme/tokens';
+import { useAppData } from '@/providers/app-data-provider';
 
 type PronunciationControlsProps = {
   text: string;
@@ -26,16 +28,40 @@ type PronunciationControlsProps = {
 };
 
 export function PronunciationControls(props: PronunciationControlsProps) {
-  const publicEligibility = Platform.OS === 'web' ? null : getNeuralPronunciationEligibility(props);
+  const { pronunciationVoicePreference } = useAppData();
+  const cacheScope = usePronunciationCacheScope();
+  const offlineDownloads = useOfflinePronunciationDownloads();
+  const [failedNaturalKey, setFailedNaturalKey] = useState<string | null>(null);
+  const naturalVoiceSelected = pronunciationVoicePreference !== 'device';
+  const preferredLocale = props.sourceLanguageCode === 'en'
+    ? pronunciationVoicePreference === 'neural-en-US' ? 'en-US'
+      : pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : props.locale
+    : props.locale;
+  const effectiveProps = { ...props, locale: preferredLocale };
+  const publicEligibility = Platform.OS === 'web' ? null : getNeuralPronunciationEligibility(effectiveProps);
+  const naturalVoiceAvailable = naturalVoiceSelected && publicEligibility !== null
+    && (cacheScope.type === 'account'
+      || offlineDownloads.hasAsset(publicEligibility.catalogSenseId, publicEligibility.locale));
   const privateEligibility = Platform.OS === 'web' || publicEligibility
     ? null
-    : getPrivateNeuralPronunciationEligibility(props);
+    : getPrivateNeuralPronunciationEligibility(effectiveProps);
+  const naturalKey = `${pronunciationVoicePreference}:${publicEligibility?.catalogSenseId ?? 'none'}:${preferredLocale}`;
+  const showDeviceFallback = failedNaturalKey === naturalKey;
+
   return <View style={styles.controls}>
-    <PronunciationButton text={props.text} locale={props.locale} compact={props.compact}/>
-    {publicEligibility ? <NeuralControl
+    {naturalVoiceAvailable && publicEligibility ? <NeuralControl
       catalogSenseId={publicEligibility.catalogSenseId}
       locale={publicEligibility.locale}
       compact={props.compact}
+      offlineOnly={cacheScope.type !== 'account'}
+      availableOffline={offlineDownloads.hasAsset(publicEligibility.catalogSenseId, publicEligibility.locale)}
+      onUnavailable={() => setFailedNaturalKey(naturalKey)}
+    /> : null}
+    {!naturalVoiceAvailable || showDeviceFallback ? <PronunciationButton
+      text={props.text}
+      locale={props.locale}
+      compact={showDeviceFallback || props.compact}
+      idleLabel={showDeviceFallback ? 'Use phone voice instead' : 'Phone voice'}
     /> : null}
     {privateEligibility ? <PrivateControl
       text={privateEligibility.text}
@@ -45,20 +71,28 @@ export function PronunciationControls(props: PronunciationControlsProps) {
   </View>;
 }
 
-function NeuralControl({ catalogSenseId, locale, compact }: {
+function NeuralControl({
+  catalogSenseId,
+  locale,
+  compact,
+  offlineOnly,
+  availableOffline,
+  onUnavailable,
+}: {
   catalogSenseId: string;
   locale: NeuralPronunciationLocale;
   compact?: boolean;
+  offlineOnly: boolean;
+  availableOffline: boolean;
+  onUnavailable(): void;
 }) {
-  const cacheScope = usePronunciationCacheScope();
-  const offlineDownloads = useOfflinePronunciationDownloads();
-  const offlineOnly = cacheScope.type !== 'account';
-  if (offlineOnly && !offlineDownloads.hasAsset(catalogSenseId, locale)) return null;
   return <NeuralPronunciationButton
     catalogSenseId={catalogSenseId}
     locale={locale}
     compact={compact}
     offlineOnly={offlineOnly}
+    availableOffline={availableOffline}
+    onUnavailable={onUnavailable}
   />;
 }
 

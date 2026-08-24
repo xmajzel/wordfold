@@ -34,6 +34,10 @@ jest.mock('expo-haptics', () => ({
   selectionAsync: jest.fn(async () => undefined),
 }));
 
+jest.mock('@/features/pronunciation/offline-downloads-provider', () => ({
+  useOfflinePronunciationDownloads: () => ({ hasAsset: () => false }),
+}));
+
 jest.mock('react-native-reanimated', () => {
   const { View } = jest.requireActual('react-native');
   const transition = {

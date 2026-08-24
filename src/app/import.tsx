@@ -18,7 +18,15 @@ type ReviewedLine = ParsedImportLine & { sense: CatalogSense | null; duplicate: 
 
 export default function ImportScreen() {
   const theme = useAppTheme();
-  const { words, collections, findSenses, createWords, wordCapacity } = useAppData();
+  const {
+    words,
+    collections,
+    findSenses,
+    createWords,
+    wordCapacity,
+    pronunciationVoicePreference,
+  } = useAppData();
+  const preferredEnglishLocale = pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : 'en-US';
   const [input, setInput] = useState('');
   const [collectionId, setCollectionId] = useState(collections[0]?.id ?? 'my-words');
   const [reviewed, setReviewed] = useState<ReviewedLine[] | null>(null);
@@ -60,7 +68,7 @@ export default function ImportScreen() {
         partOfSpeech: line.sense!.partOfSpeech, catalogSenseId: line.sense!.id,
         translation: line.translation ?? line.sense!.translation ?? null,
         sourceLanguageCode: 'en', targetLanguageCode: 'sk',
-        sourcePronunciationLocale: 'en-US', targetPronunciationLocale: 'sk-SK',
+        sourcePronunciationLocale: preferredEnglishLocale, targetPronunciationLocale: 'sk-SK',
       })));
       Alert.alert('Words imported', `${selectedImportable.length} ${selectedImportable.length === 1 ? 'word is' : 'words are'} ready to practice.`, [{ text: 'Done', onPress: () => router.back() }]);
     } catch (error) {
