@@ -21,11 +21,15 @@ import {
 import {
   buildOfflinePackPlan,
   downloadOfflinePack,
+  inspectOfflineLibrary,
   inspectOfflinePack,
   offlineAvailableDiskSpace,
   OFFLINE_DOWNLOAD_DISK_RESERVE_BYTES,
+  reconcileOfflineLibrary,
+  removeOfflineLibraryLocale,
   removeOfflineLocale,
   removeOfflinePack,
+  type OfflineLibraryInspection,
   type OfflinePackInspection,
   type OfflinePackPlan,
 } from '@/features/pronunciation/offline-store';
@@ -33,6 +37,7 @@ import {
 export const OFFLINE_PRONUNCIATION_LOCALES = ['en-US', 'en-GB'] as const;
 
 export type OfflinePackViewState = Omit<OfflinePackInspection, 'plan' | 'availableCatalogSenseIds'>;
+export type OfflineLibraryViewState = Omit<OfflineLibraryInspection, 'availableCatalogSenseIds'>;
 
 export type OfflineDownloadJob = {
   locale: NeuralPronunciationLocale;
@@ -45,18 +50,32 @@ export type OfflineDownloadJob = {
   completedBytes: number;
 };
 
+export type OfflineLibraryDownloadJob = {
+  locale: NeuralPronunciationLocale;
+  stage: 'preparing' | 'verifying' | 'downloading' | 'cancelling';
+  assetCount: number;
+  totalBytes: number;
+  completedCount: number;
+  completedBytes: number;
+};
+
 type OfflineDownloadsContextValue = {
   packs: Record<string, OfflinePackViewState>;
+  library: Record<NeuralPronunciationLocale, OfflineLibraryViewState>;
   preparing: boolean;
   preparationError: string | null;
   availableDiskBytes: number | null;
   job: OfflineDownloadJob | null;
+  libraryJob: OfflineLibraryDownloadJob | null;
+  libraryError: string | null;
   prepareManifests(): Promise<void>;
   downloadLevel(locale: NeuralPronunciationLocale, level: CefrLevel): Promise<void>;
   downloadLocale(locale: NeuralPronunciationLocale): Promise<void>;
   cancelDownload(): void;
   removeLevel(locale: NeuralPronunciationLocale, level: CefrLevel): Promise<void>;
   removeLocale(locale: NeuralPronunciationLocale): Promise<void>;
+  reconcileLibrary(locale: NeuralPronunciationLocale, catalogSenseIds: string[]): Promise<void>;
+  removeLibrary(locale: NeuralPronunciationLocale): Promise<void>;
   hasAsset(catalogSenseId: string, locale: NeuralPronunciationLocale): boolean;
 };
 
@@ -96,8 +115,19 @@ export function OfflinePronunciationDownloadsProvider({ children }: { children: 
   const [preparationError, setPreparationError] = useState<string | null>(null);
   const [availableDiskBytes, setAvailableDiskBytes] = useState<number | null>(null);
   const [job, setJob] = useState<OfflineDownloadJob | null>(null);
+  const [library, setLibrary] = useState<Record<NeuralPronunciationLocale, OfflineLibraryViewState>>({
+    'en-US': { locale: 'en-US', requiredCount: 0, requiredBytes: 0, downloadedCount: 0, downloadedBytes: 0 },
+    'en-GB': { locale: 'en-GB', requiredCount: 0, requiredBytes: 0, downloadedCount: 0, downloadedBytes: 0 },
+  });
+  const [libraryJob, setLibraryJob] = useState<OfflineLibraryDownloadJob | null>(null);
+  const [libraryError, setLibraryError] = useState<string | null>(null);
   const inspectionsRef = useRef(new Map<string, OfflinePackInspection>());
+  const libraryInspectionsRef = useRef(new Map<NeuralPronunciationLocale, OfflineLibraryInspection>());
   const plansRef = useRef(new Map<string, OfflinePackPlan>());
+  const shardsRef = useRef(new Map<NeuralPronunciationLocale, {
+    shard: Awaited<ReturnType<typeof fetchOfflineManifestShard>>;
+    sha256: string;
+  }>());
   const preparationPromiseRef = useRef<Promise<void> | null>(null);
   const controllerRef = useRef<AbortController | null>(null);
 
@@ -116,6 +146,12 @@ export function OfflinePronunciationDownloadsProvider({ children }: { children: 
     }));
   }, []);
 
+  const applyLibraryInspection = useCallback((inspection: OfflineLibraryInspection) => {
+    libraryInspectionsRef.current.set(inspection.locale, inspection);
+    const { availableCatalogSenseIds: _available, ...view } = inspection;
+    setLibrary((current) => ({ ...current, [inspection.locale]: view }));
+  }, []);
+
   const refreshPack = useCallback(async (locale: NeuralPronunciationLocale, level: CefrLevel) => {
     const inspection = await inspectOfflinePack(locale, level);
     applyInspection(inspection);
@@ -124,12 +160,16 @@ export function OfflinePronunciationDownloadsProvider({ children }: { children: 
 
   const refreshInstalled = useCallback(async () => {
     if (Platform.OS === 'web') return;
-    const inspections = await Promise.all(OFFLINE_PRONUNCIATION_LOCALES.flatMap((locale) => (
-      cefrLevels.map((level) => inspectOfflinePack(locale, level))
-    )));
+    const [inspections, libraryInspections] = await Promise.all([
+      Promise.all(OFFLINE_PRONUNCIATION_LOCALES.flatMap((locale) => (
+        cefrLevels.map((level) => inspectOfflinePack(locale, level))
+      ))),
+      Promise.all(OFFLINE_PRONUNCIATION_LOCALES.map(inspectOfflineLibrary)),
+    ]);
     for (const inspection of inspections) applyInspection(inspection);
+    for (const inspection of libraryInspections) applyLibraryInspection(inspection);
     setAvailableDiskBytes(offlineAvailableDiskSpace());
-  }, [applyInspection]);
+  }, [applyInspection, applyLibraryInspection]);
 
   useEffect(() => {
     const timeout = setTimeout(() => void refreshInstalled().catch(() => undefined), 0);
@@ -150,6 +190,7 @@ export function OfflinePronunciationDownloadsProvider({ children }: { children: 
           sha256: index.shards[locale].sha256,
         })));
         for (const { locale, shard, sha256 } of shards) {
+          shardsRef.current.set(locale, { shard, sha256 });
           for (const level of cefrLevels) {
             const key = offlinePackKey(locale, level);
             const plan = buildOfflinePackPlan(shard, level, sha256);
@@ -275,6 +316,7 @@ export function OfflinePronunciationDownloadsProvider({ children }: { children: 
     const controller = controllerRef.current;
     if (!controller) return;
     setJob((current) => current ? { ...current, stage: 'cancelling' } : current);
+    setLibraryJob((current) => current ? { ...current, stage: 'cancelling' } : current);
     controller.abort();
   }, []);
 
@@ -295,30 +337,124 @@ export function OfflinePronunciationDownloadsProvider({ children }: { children: 
     setAvailableDiskBytes(offlineAvailableDiskSpace());
   }, [refreshPack]);
 
+  const reconcileLibrary = useCallback(async (
+    locale: NeuralPronunciationLocale,
+    catalogSenseIds: string[],
+  ) => {
+    if (Platform.OS === 'web') return;
+    if (controllerRef.current) throw new Error('Another pronunciation download is already running.');
+    setLibraryError(null);
+    const controller = new AbortController();
+    controllerRef.current = controller;
+    try {
+      setLibraryJob({
+        locale, stage: 'preparing', assetCount: catalogSenseIds.length, totalBytes: 0,
+        completedCount: 0, completedBytes: 0,
+      });
+      if (catalogSenseIds.length === 0 && !shardsRef.current.has(locale)) {
+        removeOfflineLibraryLocale(locale);
+        applyLibraryInspection(await inspectOfflineLibrary(locale));
+        return;
+      }
+      if (!shardsRef.current.has(locale)) await prepareManifests();
+      const manifest = shardsRef.current.get(locale);
+      if (!manifest) throw new Error(`The ${locale} pronunciation manifest is unavailable.`);
+      const uniqueIds = [...new Set(catalogSenseIds)];
+      const relevantLevels = [...new Set(uniqueIds.flatMap((id) => {
+        const entry = getCefrEntry(id);
+        return entry ? [entry.level] : [];
+      }))];
+      await Promise.all(relevantLevels.map((level) => refreshPack(locale, level)));
+      const desired = uniqueIds.filter((id) => {
+        const entry = getCefrEntry(id);
+        return entry && !inspectionsRef.current
+          .get(offlinePackKey(locale, entry.level))
+          ?.availableCatalogSenseIds.includes(id);
+      });
+      const desiredAssets = desired.map((id) => manifest.shard.assets.find((asset) => asset.catalogSenseId === id));
+      if (desiredAssets.some((asset) => !asset)) {
+        throw new Error('A library pronunciation is missing from the verified manifest.');
+      }
+      const current = await inspectOfflineLibrary(locale);
+      const available = new Set(current.availableCatalogSenseIds);
+      const remainingBytes = desiredAssets.reduce((total, asset) => (
+        total + (asset && !available.has(asset.catalogSenseId) ? asset.byteLength : 0)
+      ), 0);
+      if (remainingBytes > 0
+        && offlineAvailableDiskSpace() < remainingBytes + OFFLINE_DOWNLOAD_DISK_RESERVE_BYTES) {
+        throw new Error('Not enough free device storage for these library pronunciations.');
+      }
+      const inspection = await reconcileOfflineLibrary(
+        manifest.shard,
+        manifest.sha256,
+        desired,
+        {
+          signal: controller.signal,
+          onProgress: (progress) => setLibraryJob((active) => active ? {
+            ...active,
+            stage: progress.stage,
+            assetCount: progress.assetCount,
+            totalBytes: progress.totalBytes,
+            completedCount: progress.completedCount,
+            completedBytes: progress.completedBytes,
+          } : active),
+        },
+      );
+      applyLibraryInspection(inspection);
+    } catch (error) {
+      if (!controller.signal.aborted && !(error instanceof Error && error.name === 'AbortError')) {
+        setLibraryError(errorMessage(error));
+        throw error;
+      }
+    } finally {
+      controllerRef.current = null;
+      setLibraryJob(null);
+      const inspection = await inspectOfflineLibrary(locale).catch(() => null);
+      if (inspection) applyLibraryInspection(inspection);
+      setAvailableDiskBytes(offlineAvailableDiskSpace());
+    }
+  }, [applyLibraryInspection, prepareManifests, refreshPack]);
+
+  const removeLibrary = useCallback(async (locale: NeuralPronunciationLocale) => {
+    if (controllerRef.current) throw new Error('Cancel the active pronunciation download first.');
+    removeOfflineLibraryLocale(locale);
+    applyLibraryInspection(await inspectOfflineLibrary(locale));
+    setAvailableDiskBytes(offlineAvailableDiskSpace());
+  }, [applyLibraryInspection]);
+
   const hasAsset = useCallback((catalogSenseId: string, locale: NeuralPronunciationLocale) => {
     const entry = getCefrEntry(catalogSenseId);
     if (!entry) return false;
     return inspectionsRef.current
       .get(offlinePackKey(locale, entry.level))
-      ?.availableCatalogSenseIds.includes(catalogSenseId) ?? false;
+      ?.availableCatalogSenseIds.includes(catalogSenseId)
+      || libraryInspectionsRef.current.get(locale)
+        ?.availableCatalogSenseIds.includes(catalogSenseId)
+      || false;
   }, []);
 
   const value = useMemo<OfflineDownloadsContextValue>(() => ({
     packs,
+    library,
     preparing,
     preparationError,
     availableDiskBytes,
     job,
+    libraryJob,
+    libraryError,
     prepareManifests,
     downloadLevel,
     downloadLocale,
     cancelDownload,
     removeLevel,
     removeLocale,
+    reconcileLibrary,
+    removeLibrary,
     hasAsset,
   }), [
-    packs, preparing, preparationError, availableDiskBytes, job, prepareManifests, downloadLevel,
-    downloadLocale, cancelDownload, removeLevel, removeLocale, hasAsset,
+    packs, library, preparing, preparationError, availableDiskBytes, job, libraryJob, libraryError,
+    prepareManifests, downloadLevel, downloadLocale, cancelDownload, removeLevel, removeLocale,
+    reconcileLibrary, removeLibrary, hasAsset,
   ]);
 
   return <OfflineDownloadsContext.Provider value={value}>

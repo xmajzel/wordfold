@@ -9,6 +9,7 @@ import { AppText } from '@/components/app-text';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import { requestReminderPermission } from '@/features/reminders/scheduler';
+import { useOfflinePronunciationDownloads } from '@/features/pronunciation/offline-downloads-provider';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
@@ -34,10 +35,25 @@ type ReminderSetupState =
 export default function OnboardingReadyScreen() {
   const theme = useAppTheme();
   const { count } = useLocalSearchParams<{ count?: string }>();
-  const { onboardingComplete, updateReminderSettings } = useAppData();
+  const {
+    words,
+    onboardingComplete,
+    pronunciationVoicePreference,
+    updateReminderSettings,
+  } = useAppData();
+  const downloads = useOfflinePronunciationDownloads();
   const [busy, setBusy] = useState(false);
   const [reminderState, setReminderState] = useState<ReminderSetupState>({ status: 'idle' });
   const wordCount = Number.isFinite(Number(count)) ? Number(count) : 0;
+  const pronunciationLocale = pronunciationVoicePreference === 'neural-en-US'
+    ? 'en-US'
+    : pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : null;
+  const pronunciationIds = [...new Set(words.flatMap((word) => (
+    word.sourceLanguageCode === 'en' && word.catalogSenseId ? [word.catalogSenseId] : []
+  )))];
+  const availablePronunciations = pronunciationLocale
+    ? pronunciationIds.filter((id) => downloads.hasAsset(id, pronunciationLocale)).length
+    : 0;
   if (onboardingComplete === false) return <Redirect href="/onboarding" />;
 
   const finish = () => router.replace('/(tabs)');
@@ -139,6 +155,27 @@ export default function OnboardingReadyScreen() {
           <AppText variant="display" style={styles.center}>Your first words are ready.</AppText>
           <AppText style={[styles.center, { color: theme.muted }]}>{wordCount} carefully selected {wordCount === 1 ? 'word is' : 'words are'} waiting in your library.</AppText>
         </Animated.View>
+        {Platform.OS !== 'web' && pronunciationLocale ? <Animated.View
+          accessibilityLiveRegion="polite"
+          entering={FadeInDown.delay(240).duration(440).reduceMotion(ReduceMotion.System)}
+          style={[styles.pronunciationCard, { backgroundColor: theme.primarySoft }]}
+        >
+          <Ionicons
+            name={availablePronunciations >= pronunciationIds.length ? 'cloud-done-outline' : 'cloud-download-outline'}
+            color={theme.primary}
+            size={24}
+          />
+          <View style={styles.pronunciationText}>
+            <AppText variant="label">
+              {availablePronunciations >= pronunciationIds.length
+                ? 'Pronunciations are ready offline.'
+                : 'Preparing pronunciations for offline use…'}
+            </AppText>
+            <AppText variant="caption" style={{ color: theme.muted }}>
+              {availablePronunciations} of {pronunciationIds.length} ready. You can continue now; Wordfold will retry automatically if needed.
+            </AppText>
+          </View>
+        </Animated.View> : null}
         <Animated.View
           accessibilityLiveRegion="polite"
           entering={FadeInDown.delay(280).duration(460).reduceMotion(ReduceMotion.System)}
@@ -192,6 +229,8 @@ const styles = StyleSheet.create({
   heading: { gap: spacing.sm },
   center: { textAlign: 'center' },
   reminderCard: { width: '100%', borderWidth: 1, borderRadius: radii.sheet, padding: spacing.xl, alignItems: 'center', gap: spacing.md },
+  pronunciationCard: { width: '100%', borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  pronunciationText: { flex: 1, gap: 2 },
   icon: { width: 56, height: 56, borderRadius: 19, alignItems: 'center', justifyContent: 'center' },
   fullWidth: { alignSelf: 'stretch' },
   laterButton: { minHeight: 44, paddingHorizontal: spacing.lg, alignItems: 'center', justifyContent: 'center' },

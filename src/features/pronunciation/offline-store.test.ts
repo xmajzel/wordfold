@@ -2,7 +2,9 @@ import {
   buildOfflinePackPlan,
   downloadOfflinePack,
   getOfflinePronunciationFile,
+  inspectOfflineLibrary,
   inspectOfflinePack,
+  reconcileOfflineLibrary,
   removeOfflinePack,
 } from './offline-store';
 import type { OfflineManifestShard } from './offline-manifest';
@@ -93,7 +95,11 @@ jest.mock('expo-file-system', () => {
   return {
     Directory: MockDirectory,
     File: MockFile,
-    Paths: { document: { uri: 'document:' }, availableDiskSpace: 1024 * 1024 * 1024 },
+    Paths: {
+      document: { uri: 'document:' },
+      cache: { uri: 'cache:' },
+      availableDiskSpace: 1024 * 1024 * 1024,
+    },
   };
 });
 
@@ -219,5 +225,42 @@ describe('durable offline pronunciation store', () => {
 
     removeOfflinePack('en-US', 'A1');
     await expect(inspectOfflinePack('en-US', 'A1')).resolves.toMatchObject({ state: 'not_downloaded' });
+  });
+
+  it('keeps exactly the selected library audio, verifies it, and serves it offline', async () => {
+    await expect(reconcileOfflineLibrary(shard, 'c'.repeat(64), ['sense-a'], {
+      signal: new AbortController().signal,
+    })).resolves.toMatchObject({ requiredCount: 1, downloadedCount: 1, downloadedBytes: 128 });
+    await expect(getOfflinePronunciationFile('sense-a', 'en-US')).resolves.toMatchObject({
+      uri: expect.stringContaining(`${firstHash}.mp3`),
+    });
+
+    await reconcileOfflineLibrary(shard, 'c'.repeat(64), ['sense-b'], {
+      signal: new AbortController().signal,
+    });
+    await expect(getOfflinePronunciationFile('sense-a', 'en-US')).resolves.toBeNull();
+    await expect(getOfflinePronunciationFile('sense-b', 'en-US')).resolves.toMatchObject({
+      uri: expect.stringContaining(`${secondHash}.mp3`),
+    });
+
+    const secondPath = [...mockContents.keys()].find((key) => key.endsWith(`${secondHash}.mp3`))!;
+    const corrupted = mockContents.get(secondPath)!.slice();
+    corrupted[20] = 9;
+    mockContents.set(secondPath, corrupted);
+    await expect(inspectOfflineLibrary('en-US')).resolves.toMatchObject({
+      requiredCount: 1,
+      downloadedCount: 0,
+    });
+    expect(mockContents.has(secondPath)).toBe(false);
+  });
+
+  it('removes the library store when no catalog words remain', async () => {
+    await reconcileOfflineLibrary(shard, 'c'.repeat(64), ['sense-a'], {
+      signal: new AbortController().signal,
+    });
+    await expect(reconcileOfflineLibrary(shard, 'c'.repeat(64), [], {
+      signal: new AbortController().signal,
+    })).resolves.toMatchObject({ requiredCount: 0, downloadedCount: 0 });
+    await expect(getOfflinePronunciationFile('sense-a', 'en-US')).resolves.toBeNull();
   });
 });

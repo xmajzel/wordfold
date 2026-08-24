@@ -17,6 +17,7 @@ import {
 } from '@/features/pronunciation/offline-manifest';
 
 export const OFFLINE_PACK_SCHEMA_VERSION = 1;
+export const OFFLINE_LIBRARY_SCHEMA_VERSION = 1;
 export const OFFLINE_DOWNLOAD_CONCURRENCY = 3;
 export const OFFLINE_DOWNLOAD_DISK_RESERVE_BYTES = 25 * 1024 * 1024;
 
@@ -24,6 +25,7 @@ const SHA256_PATTERN = /^[a-f0-9]{64}$/;
 const MP3_EXTENSION = '.mp3';
 const PLAN_FILE_NAME = 'plan.json';
 const COMPLETE_FILE_NAME = 'complete.json';
+const LIBRARY_INDEX_FILE_NAME = 'index.json';
 
 export type OfflinePackPlan = {
   schemaVersion: typeof OFFLINE_PACK_SCHEMA_VERSION;
@@ -55,6 +57,28 @@ export type OfflinePackProgress = {
   totalBytes: number;
   completedCount: number;
   completedBytes: number;
+};
+
+export type OfflineLibraryInspection = {
+  locale: NeuralPronunciationLocale;
+  requiredCount: number;
+  requiredBytes: number;
+  downloadedCount: number;
+  downloadedBytes: number;
+  availableCatalogSenseIds: string[];
+};
+
+type OfflineLibraryIndex = {
+  schemaVersion: typeof OFFLINE_LIBRARY_SCHEMA_VERSION;
+  catalogSha256: typeof OFFLINE_MANIFEST_CATALOG_SHA256;
+  synthesisVersion: typeof NEURAL_SYNTHESIS_VERSION;
+  shardSha256: string;
+  locale: NeuralPronunciationLocale;
+  assets: OfflineManifestAsset[];
+};
+
+type StoredLibraryIndex = Omit<OfflineLibraryIndex, 'assets'> & {
+  assets: [string, string, string, number][];
 };
 
 type StoredPlan = Omit<OfflinePackPlan, 'assets'> & {
@@ -96,6 +120,25 @@ function planFile(locale: NeuralPronunciationLocale, level: CefrLevel) {
 
 function completionFile(locale: NeuralPronunciationLocale, level: CefrLevel) {
   return new File(packDirectory(locale, level), COMPLETE_FILE_NAME);
+}
+
+function libraryDirectory(locale: NeuralPronunciationLocale) {
+  return new Directory(
+    Paths.document,
+    PRONUNCIATION_CACHE_DIRECTORY,
+    'offline',
+    NEURAL_SYNTHESIS_VERSION,
+    'library',
+    locale,
+  );
+}
+
+function libraryIndexFile(locale: NeuralPronunciationLocale) {
+  return new File(libraryDirectory(locale), LIBRARY_INDEX_FILE_NAME);
+}
+
+function libraryAssetFile(locale: NeuralPronunciationLocale, asset: OfflineManifestAsset) {
+  return new File(libraryDirectory(locale), `${asset.contentHash}${MP3_EXTENSION}`);
 }
 
 function assetFile(plan: OfflinePackPlan, asset: OfflineManifestAsset) {
@@ -222,6 +265,204 @@ async function readPlan(locale: NeuralPronunciationLocale, level: CefrLevel) {
   } catch {
     return null;
   }
+}
+
+function storedLibraryIndex(index: OfflineLibraryIndex): StoredLibraryIndex {
+  return {
+    ...index,
+    assets: index.assets.map((asset) => [
+      asset.catalogSenseId,
+      asset.contentHash,
+      asset.sha256,
+      asset.byteLength,
+    ]),
+  };
+}
+
+function parseStoredLibraryIndex(
+  value: unknown,
+  locale: NeuralPronunciationLocale,
+): OfflineLibraryIndex | null {
+  if (!isPlainObject(value) || !hasExactKeys(value, [
+    'schemaVersion', 'catalogSha256', 'synthesisVersion', 'shardSha256', 'locale', 'assets',
+  ]) || value.schemaVersion !== OFFLINE_LIBRARY_SCHEMA_VERSION
+    || value.catalogSha256 !== OFFLINE_MANIFEST_CATALOG_SHA256
+    || value.synthesisVersion !== NEURAL_SYNTHESIS_VERSION
+    || value.locale !== locale
+    || typeof value.shardSha256 !== 'string'
+    || !SHA256_PATTERN.test(value.shardSha256)
+    || !Array.isArray(value.assets)) return null;
+  const assets: OfflineManifestAsset[] = [];
+  const ids = new Set<string>();
+  const hashes = new Set<string>();
+  for (const tuple of value.assets) {
+    if (!Array.isArray(tuple) || tuple.length !== 4) return null;
+    const [catalogSenseId, contentHash, sha256, byteLength] = tuple;
+    if (typeof catalogSenseId !== 'string' || !getCefrEntry(catalogSenseId)
+      || ids.has(catalogSenseId)
+      || typeof contentHash !== 'string' || !SHA256_PATTERN.test(contentHash)
+      || hashes.has(contentHash)
+      || typeof sha256 !== 'string' || !SHA256_PATTERN.test(sha256)
+      || !Number.isInteger(byteLength) || (byteLength as number) < 101
+      || (byteLength as number) > NEURAL_MAXIMUM_BYTES) return null;
+    ids.add(catalogSenseId);
+    hashes.add(contentHash);
+    assets.push({
+      catalogSenseId,
+      contentHash,
+      sha256,
+      byteLength: byteLength as number,
+    });
+  }
+  return { ...value, assets } as OfflineLibraryIndex;
+}
+
+async function readLibraryIndex(locale: NeuralPronunciationLocale) {
+  const file = libraryIndexFile(locale);
+  if (!file.exists) return null;
+  try {
+    return parseStoredLibraryIndex(JSON.parse(await file.text()), locale);
+  } catch {
+    return null;
+  }
+}
+
+export async function inspectOfflineLibrary(
+  locale: NeuralPronunciationLocale,
+): Promise<OfflineLibraryInspection> {
+  const directory = libraryDirectory(locale);
+  if (!directory.exists) return {
+    locale, requiredCount: 0, requiredBytes: 0, downloadedCount: 0, downloadedBytes: 0,
+    availableCatalogSenseIds: [],
+  };
+  cleanupTemporaryFiles(directory);
+  const index = await readLibraryIndex(locale);
+  if (!index) {
+    deleteIfPresent(directory);
+    return {
+      locale, requiredCount: 0, requiredBytes: 0, downloadedCount: 0, downloadedBytes: 0,
+      availableCatalogSenseIds: [],
+    };
+  }
+  const availableCatalogSenseIds: string[] = [];
+  let downloadedBytes = 0;
+  for (const asset of index.assets) {
+    const file = libraryAssetFile(locale, asset);
+    if (await verifyAudioFile(file, asset)) {
+      availableCatalogSenseIds.push(asset.catalogSenseId);
+      downloadedBytes += asset.byteLength;
+    } else if (file.exists) deleteIfPresent(file);
+  }
+  return {
+    locale,
+    requiredCount: index.assets.length,
+    requiredBytes: index.assets.reduce((total, asset) => total + asset.byteLength, 0),
+    downloadedCount: availableCatalogSenseIds.length,
+    downloadedBytes,
+    availableCatalogSenseIds,
+  };
+}
+
+async function downloadVerifiedAsset(
+  asset: OfflineManifestAsset,
+  destination: File,
+  signal: AbortSignal,
+) {
+  if (await verifyAudioFile(destination, asset)) return;
+  deleteIfPresent(destination);
+  destination.parentDirectory.create({ idempotent: true, intermediates: true });
+  const temporary = new File(
+    destination.parentDirectory,
+    `${asset.contentHash}.${Crypto.randomUUID()}.tmp.mp3`,
+  );
+  try {
+    const task = File.createDownloadTask(offlineAudioPublicUrl(asset), temporary, {
+      signal,
+      sessionType: 'foreground',
+    });
+    const downloaded = await task.downloadAsync();
+    throwIfAborted(signal);
+    if (!downloaded || !await verifyAudioFile(temporary, asset)) {
+      throw new Error('Downloaded pronunciation audio could not be verified.');
+    }
+    await temporary.move(destination, { overwrite: true });
+    if (!await verifyAudioFile(destination, asset)) {
+      deleteIfPresent(destination);
+      throw new Error('Stored pronunciation audio could not be verified.');
+    }
+  } finally {
+    if (temporary.uri !== destination.uri) deleteIfPresent(temporary);
+  }
+}
+
+export async function reconcileOfflineLibrary(
+  shard: OfflineManifestShard,
+  shardSha256: string,
+  desiredCatalogSenseIds: string[],
+  options: {
+    signal: AbortSignal;
+    onProgress?: (progress: OfflinePackProgress) => void;
+  },
+) {
+  if (!SHA256_PATTERN.test(shardSha256)) throw new Error('Offline pronunciation shard identity is invalid.');
+  const desiredIds = [...new Set(desiredCatalogSenseIds)].sort();
+  if (desiredIds.length === 0) {
+    deleteIfPresent(libraryDirectory(shard.locale));
+    return inspectOfflineLibrary(shard.locale);
+  }
+  const byId = new Map(shard.assets.map((asset) => [asset.catalogSenseId, asset]));
+  const assets = desiredIds.map((id) => byId.get(id));
+  if (assets.some((asset) => !asset)) throw new Error('A library pronunciation is missing from the verified manifest.');
+  const exactAssets = assets as OfflineManifestAsset[];
+  const index: OfflineLibraryIndex = {
+    schemaVersion: OFFLINE_LIBRARY_SCHEMA_VERSION,
+    catalogSha256: OFFLINE_MANIFEST_CATALOG_SHA256,
+    synthesisVersion: NEURAL_SYNTHESIS_VERSION,
+    shardSha256,
+    locale: shard.locale,
+    assets: exactAssets,
+  };
+  await writeJsonAtomic(libraryIndexFile(shard.locale), storedLibraryIndex(index));
+  let completedCount = 0;
+  let completedBytes = 0;
+  const totalBytes = exactAssets.reduce((total, asset) => total + asset.byteLength, 0);
+  const report = (stage: OfflinePackProgress['stage']) => options.onProgress?.({
+    stage,
+    assetCount: exactAssets.length,
+    totalBytes,
+    completedCount,
+    completedBytes,
+  });
+  report('verifying');
+  let nextIndex = 0;
+  const worker = async () => {
+    while (true) {
+      throwIfAborted(options.signal);
+      const indexValue = nextIndex;
+      nextIndex += 1;
+      if (indexValue >= exactAssets.length) return;
+      const asset = exactAssets[indexValue];
+      await downloadVerifiedAsset(asset, libraryAssetFile(shard.locale, asset), options.signal);
+      completedCount += 1;
+      completedBytes += asset.byteLength;
+      report('downloading');
+    }
+  };
+  const results = await Promise.allSettled(Array.from(
+    { length: Math.min(OFFLINE_DOWNLOAD_CONCURRENCY, exactAssets.length) },
+    () => worker(),
+  ));
+  const rejected = results.find((result): result is PromiseRejectedResult => result.status === 'rejected');
+  if (rejected) throw rejected.reason;
+  throwIfAborted(options.signal);
+  const keep = new Set(exactAssets.map((asset) => `${asset.contentHash}${MP3_EXTENSION}`));
+  const directory = libraryDirectory(shard.locale);
+  for (const item of directory.list()) {
+    if (item instanceof File && item.name.endsWith(MP3_EXTENSION) && !keep.has(item.name)) {
+      deleteIfPresent(item);
+    }
+  }
+  return inspectOfflineLibrary(shard.locale);
 }
 
 export function buildOfflinePackPlan(
@@ -464,6 +705,10 @@ export function removeOfflineLocale(locale: NeuralPronunciationLocale) {
   deleteIfPresent(directory);
 }
 
+export function removeOfflineLibraryLocale(locale: NeuralPronunciationLocale) {
+  deleteIfPresent(libraryDirectory(locale));
+}
+
 export async function getOfflinePronunciationFile(
   catalogSenseId: string,
   locale: NeuralPronunciationLocale,
@@ -471,12 +716,19 @@ export async function getOfflinePronunciationFile(
   const entry = getCefrEntry(catalogSenseId);
   if (!entry) return null;
   const plan = await readPlan(locale, entry.level);
-  const asset = plan?.assets.find((candidate) => candidate.catalogSenseId === catalogSenseId);
-  if (!plan || !asset) return null;
-  const file = assetFile(plan, asset);
-  if (await verifyAudioFile(file, asset)) return file;
-  deleteIfPresent(file);
-  deleteIfPresent(completionFile(locale, entry.level));
+  const packAsset = plan?.assets.find((candidate) => candidate.catalogSenseId === catalogSenseId);
+  if (plan && packAsset) {
+    const file = assetFile(plan, packAsset);
+    if (await verifyAudioFile(file, packAsset)) return file;
+    deleteIfPresent(file);
+    deleteIfPresent(completionFile(locale, entry.level));
+  }
+  const libraryIndex = await readLibraryIndex(locale);
+  const libraryAsset = libraryIndex?.assets.find((candidate) => candidate.catalogSenseId === catalogSenseId);
+  if (!libraryAsset) return null;
+  const libraryFile = libraryAssetFile(locale, libraryAsset);
+  if (await verifyAudioFile(libraryFile, libraryAsset)) return libraryFile;
+  deleteIfPresent(libraryFile);
   return null;
 }
 
@@ -488,7 +740,11 @@ export async function deleteOfflinePronunciationFile(
   if (!entry) return;
   const plan = await readPlan(locale, entry.level);
   const asset = plan?.assets.find((candidate) => candidate.catalogSenseId === catalogSenseId);
-  if (!plan || !asset) return;
-  deleteIfPresent(assetFile(plan, asset));
-  deleteIfPresent(completionFile(locale, entry.level));
+  if (plan && asset) {
+    deleteIfPresent(assetFile(plan, asset));
+    deleteIfPresent(completionFile(locale, entry.level));
+  }
+  const libraryIndex = await readLibraryIndex(locale);
+  const libraryAsset = libraryIndex?.assets.find((candidate) => candidate.catalogSenseId === catalogSenseId);
+  if (libraryAsset) deleteIfPresent(libraryAssetFile(locale, libraryAsset));
 }

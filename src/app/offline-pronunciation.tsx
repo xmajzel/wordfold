@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -11,21 +11,23 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 
 import { AppText } from '@/components/app-text';
+import { PronunciationVoicePicker } from '@/components/pronunciation-voice-picker';
 import { Screen } from '@/components/screen';
 import { cefrLevels } from '@/data/cefr-levels';
-import type { CefrLevel } from '@/domain/types';
-import type { NeuralPronunciationLocale } from '@/features/pronunciation/cloud';
+import type { CefrLevel, PronunciationVoicePreference } from '@/domain/types';
+import { neuralVoiceLabel, type NeuralPronunciationLocale } from '@/features/pronunciation/cloud';
 import {
   OFFLINE_PRONUNCIATION_LOCALES,
   offlinePackKey,
   useOfflinePronunciationDownloads,
 } from '@/features/pronunciation/offline-downloads-provider';
 import { useAppTheme } from '@/hooks/use-app-theme';
+import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
 
 const localeDetails: Record<NeuralPronunciationLocale, { title: string; voice: string }> = {
-  'en-US': { title: 'English · United States', voice: 'Ava neural voice' },
-  'en-GB': { title: 'English · United Kingdom', voice: 'Ryan neural voice' },
+  'en-US': { title: 'English · United States', voice: neuralVoiceLabel('en-US') },
+  'en-GB': { title: 'English · United Kingdom', voice: neuralVoiceLabel('en-GB') },
 };
 
 function formatBytes(bytes: number | null) {
@@ -43,7 +45,22 @@ function actionError(error: unknown) {
 export default function OfflinePronunciationScreen() {
   const theme = useAppTheme();
   const downloads = useOfflinePronunciationDownloads();
+  const {
+    words,
+    pronunciationVoicePreference,
+    savePronunciationVoicePreference,
+  } = useAppData();
   const prepareManifests = downloads.prepareManifests;
+  const [savingVoice, setSavingVoice] = useState(false);
+  const selectedLocale: NeuralPronunciationLocale | null = pronunciationVoicePreference === 'neural-en-US'
+    ? 'en-US'
+    : pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : null;
+  const catalogSenseIds = useMemo(() => [...new Set(words.flatMap((word) => (
+    word.sourceLanguageCode === 'en' && word.catalogSenseId ? [word.catalogSenseId] : []
+  )))], [words]);
+  const availableLibraryCount = selectedLocale
+    ? catalogSenseIds.filter((id) => downloads.hasAsset(id, selectedLocale)).length
+    : 0;
 
   useEffect(() => {
     if (Platform.OS !== 'web') void prepareManifests().catch(() => undefined);
@@ -51,6 +68,18 @@ export default function OfflinePronunciationScreen() {
 
   const run = (operation: () => Promise<void>) => {
     void operation().catch(actionError);
+  };
+
+  const selectVoice = async (preference: PronunciationVoicePreference) => {
+    if (preference === pronunciationVoicePreference) return;
+    setSavingVoice(true);
+    try {
+      await savePronunciationVoicePreference(preference);
+    } catch (error) {
+      actionError(error);
+    } finally {
+      setSavingVoice(false);
+    }
   };
 
   const confirmDownload = (
@@ -115,11 +144,68 @@ export default function OfflinePronunciationScreen() {
       <View style={[styles.notice, { backgroundColor: theme.primarySoft }]}>
         <Ionicons name="cloud-download-outline" color={theme.primary} size={22}/>
         <View style={styles.flex}>
-          <AppText>Choose only the voice and CEFR levels you need. Downloads stay on this device and work without an account.</AppText>
+          <AppText>Choose who pronounces your English words. Natural voice audio is downloaded for your library automatically and then works offline.</AppText>
           {downloads.availableDiskBytes != null ? <AppText variant="caption" style={{ color: theme.muted }}>
             {formatBytes(downloads.availableDiskBytes)} available on this device
           </AppText> : null}
         </View>
+      </View>
+
+      <View style={styles.sectionHeading}>
+        <AppText variant="heading">Preferred voice</AppText>
+        <AppText style={{ color: theme.muted }}>Test each option, then choose the voice used throughout Wordfold.</AppText>
+      </View>
+      <PronunciationVoicePicker
+        value={pronunciationVoicePreference}
+        onChange={(preference) => void selectVoice(preference)}
+        disabled={savingVoice}
+      />
+
+      <View style={styles.sectionHeading}>
+        <AppText variant="heading">My library pronunciations</AppText>
+        <AppText style={{ color: theme.muted }}>
+          Catalog words you add are kept ready offline automatically. Custom words continue to use the phone voice.
+        </AppText>
+      </View>
+      <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+        {selectedLocale ? <>
+          <View style={styles.row}>
+            <View style={[styles.localeIcon, { backgroundColor: theme.primarySoft }]}>
+              <Ionicons name="checkmark-circle-outline" color={theme.primary} size={24}/>
+            </View>
+            <View style={styles.flex}>
+              <AppText variant="label">{localeDetails[selectedLocale].voice}</AppText>
+              <AppText variant="caption" style={{ color: theme.muted }}>
+                {availableLibraryCount.toLocaleString()} of {catalogSenseIds.length.toLocaleString()} catalog {catalogSenseIds.length === 1 ? 'word' : 'words'} available offline
+              </AppText>
+            </View>
+            {downloads.libraryJob?.locale === selectedLocale ? <ActivityIndicator color={theme.primary}/> : null}
+          </View>
+          {downloads.libraryJob?.locale === selectedLocale
+            ? <LibraryDownloadProgressCard/>
+            : availableLibraryCount < catalogSenseIds.length
+              ? <SmallAction
+                label="Retry missing audio"
+                disabled={downloads.job !== null || downloads.libraryJob !== null}
+                onPress={() => run(() => downloads.reconcileLibrary(selectedLocale, catalogSenseIds))}
+              />
+              : <AppText variant="caption" style={{ color: theme.success }}>
+                {catalogSenseIds.length ? 'Your catalog words are ready offline.' : 'Audio will download automatically when you add a catalog word.'}
+              </AppText>}
+          {downloads.libraryError ? <AppText variant="caption" style={{ color: theme.danger }}>
+            {downloads.libraryError}
+          </AppText> : null}
+        </> : <View style={styles.row}>
+          <View style={[styles.localeIcon, { backgroundColor: theme.primarySoft }]}>
+            <Ionicons name="phone-portrait-outline" color={theme.primary} size={24}/>
+          </View>
+          <View style={styles.flex}>
+            <AppText variant="label">Phone voice selected</AppText>
+            <AppText variant="caption" style={{ color: theme.muted }}>
+              No Wordfold audio download is needed. Install the exact system voice for reliable offline use.
+            </AppText>
+          </View>
+        </View>}
       </View>
 
       {downloads.job ? <DownloadProgressCard onCancel={downloads.cancelDownload}/> : null}
@@ -133,16 +219,48 @@ export default function OfflinePronunciationScreen() {
         />
       </View> : null}
 
+      <View style={styles.sectionHeading}>
+        <AppText variant="heading">Whole level downloads · optional</AppText>
+        <AppText style={{ color: theme.muted }}>
+          Download an entire CEFR level only when you want pronunciation ready before adding its words.
+        </AppText>
+      </View>
+
       {OFFLINE_PRONUNCIATION_LOCALES.map((locale) => <LocaleSection
         key={locale}
         locale={locale}
-        busy={downloads.job !== null}
+        busy={downloads.job !== null || downloads.libraryJob !== null}
         preparing={downloads.preparing}
         onDownload={confirmDownload}
         onRemove={confirmRemove}
       />)}
     </>}
   </Screen>;
+}
+
+function LibraryDownloadProgressCard() {
+  const theme = useAppTheme();
+  const { libraryJob, cancelDownload } = useOfflinePronunciationDownloads();
+  if (!libraryJob) return null;
+  const ratio = libraryJob.totalBytes > 0
+    ? Math.min(1, libraryJob.completedBytes / libraryJob.totalBytes)
+    : 0;
+  const percent = Math.round(ratio * 100);
+  return <View style={styles.inlineProgress} accessibilityLiveRegion="polite">
+    <AppText variant="caption" style={{ color: theme.muted }}>
+      {libraryJob.stage === 'preparing' ? 'Preparing verified audio…'
+        : libraryJob.stage === 'cancelling' ? 'Stopping download…'
+          : `${libraryJob.completedCount.toLocaleString()} of ${libraryJob.assetCount.toLocaleString()} · ${percent}%`}
+    </AppText>
+    <View style={[styles.progressTrack, { backgroundColor: theme.primarySoft }]}>
+      <View style={[styles.progressFill, { backgroundColor: theme.primary, width: `${percent}%` }]}/>
+    </View>
+    <SmallAction
+      label={libraryJob.stage === 'cancelling' ? 'Stopping…' : 'Cancel download'}
+      disabled={libraryJob.stage === 'cancelling'}
+      onPress={cancelDownload}
+    />
+  </View>;
 }
 
 function DownloadProgressCard({ onCancel }: { onCancel(): void }) {
@@ -297,6 +415,7 @@ const styles = StyleSheet.create({
   close: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
   flex: { flex: 1 },
   notice: { borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', gap: spacing.sm },
+  sectionHeading: { gap: spacing.xs, marginTop: spacing.sm },
   errorRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   localeSection: { gap: spacing.md },
   localeHeader: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
@@ -311,4 +430,5 @@ const styles = StyleSheet.create({
   progressCard: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md },
   progressTrack: { height: 8, borderRadius: 4, overflow: 'hidden' },
   progressFill: { height: 8, borderRadius: 4 },
+  inlineProgress: { gap: spacing.sm },
 });

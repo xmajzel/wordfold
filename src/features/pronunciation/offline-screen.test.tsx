@@ -10,6 +10,8 @@ const mockCancelDownload = jest.fn();
 const mockRemoveLevel = jest.fn(async () => undefined);
 const mockRemoveLocale = jest.fn(async () => undefined);
 const mockPrepareManifests = jest.fn(async () => undefined);
+const mockReconcileLibrary = jest.fn(async () => undefined);
+const mockSaveVoice = jest.fn(async () => undefined);
 const mockPacks: Record<string, Record<string, unknown>> = {};
 const mockDownloads: Record<string, unknown> = {
   packs: mockPacks,
@@ -17,13 +19,35 @@ const mockDownloads: Record<string, unknown> = {
   preparationError: null,
   availableDiskBytes: 512 * 1024 * 1024,
   job: null,
+  libraryJob: null,
+  libraryError: null,
+  library: {
+    'en-US': { locale: 'en-US', requiredCount: 0, requiredBytes: 0, downloadedCount: 0, downloadedBytes: 0 },
+    'en-GB': { locale: 'en-GB', requiredCount: 0, requiredBytes: 0, downloadedCount: 0, downloadedBytes: 0 },
+  },
   prepareManifests: mockPrepareManifests,
   downloadLevel: mockDownloadLevel,
   downloadLocale: mockDownloadLocale,
   cancelDownload: mockCancelDownload,
   removeLevel: mockRemoveLevel,
   removeLocale: mockRemoveLocale,
+  reconcileLibrary: mockReconcileLibrary,
+  hasAsset: jest.fn(() => false),
 };
+
+jest.mock('@/providers/app-data-provider', () => ({
+  useAppData: () => ({
+    words: [],
+    pronunciationVoicePreference: 'neural-en-US',
+    savePronunciationVoicePreference: mockSaveVoice,
+  }),
+}));
+
+jest.mock('@/features/pronunciation/voice-samples', () => ({
+  BUNDLED_VOICE_SAMPLE_TEXT: 'Hello! Learning a new language opens the door to new ideas, new places, and new conversations.',
+  playBundledVoiceSample: jest.fn(async () => undefined),
+  preloadBundledVoiceSamples: jest.fn(async () => undefined),
+}));
 
 jest.mock('@/features/pronunciation/offline-downloads-provider', () => ({
   OFFLINE_PRONUNCIATION_LOCALES: ['en-US', 'en-GB'],
@@ -64,6 +88,8 @@ describe('OfflinePronunciationScreen', () => {
       preparing: false,
       preparationError: null,
       job: null,
+      libraryJob: null,
+      libraryError: null,
     });
     Object.defineProperty(Platform, 'OS', { configurable: true, value: 'ios' });
   });
