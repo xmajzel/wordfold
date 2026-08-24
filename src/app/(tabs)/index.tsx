@@ -47,12 +47,14 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
   const { words, collections, updateLearningFilter, rateWord, markViewed, prepareWordTranslation } = useAppData();
   const [sessionFeed, setSessionFeed] = useState<Word[]>(() => buildLearningFeed(words, new Date(), filter));
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [ratingWordId, setRatingWordId] = useState<string | null>(null);
   const [sessionComplete, setSessionComplete] = useState(false);
   const [listHeight, setListHeight] = useState(0);
   const [translationStates, setTranslationStates] = useState<Record<string, 'loading' | 'error'>>({});
   const listRef = useRef<FlatList<Word>>(null);
   const viewedIds = useRef(new Set<string>());
+  const submittedRatings = useRef(new Map<string, LearningRating>());
+  const sessionFeedLengthRef = useRef(sessionFeed.length);
+  const sessionCompleteRef = useRef(false);
   const [mutationQueue] = useState(createSerialMutationQueue);
   const translatingIds = useRef(new Set<string>());
   const cardHeight = listHeight || Math.max(390, height - 241);
@@ -105,34 +107,45 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
 
   const collectionNames = useMemo(() => Object.fromEntries(collections.map((item) => [item.id, item.name])), [collections]);
 
-  const handleRating = async (word: Word, rating: LearningRating) => {
-    if (ratingWordId) return;
-    setRatingWordId(word.id);
+  const updateSessionComplete = (complete: boolean) => {
+    sessionCompleteRef.current = complete;
+    setSessionComplete(complete);
+  };
+
+  const handleRating = (word: Word, rating: LearningRating) => {
+    if (submittedRatings.current.has(word.id)) return;
+    submittedRatings.current.set(word.id, rating);
     const nextIndex = currentIndex + 1;
     if (nextIndex < sessionFeed.length) {
       setCurrentIndex(nextIndex);
       requestAnimationFrame(() => listRef.current?.scrollToIndex({ index: nextIndex, animated: true }));
     } else {
-      setSessionComplete(true);
+      updateSessionComplete(true);
     }
-    try {
-      await mutationQueue.run(() => rateWord(word, rating));
-    } catch {
-      setSessionComplete(false);
-      setCurrentIndex(currentIndex);
-      requestAnimationFrame(() => listRef.current?.scrollToIndex({ index: currentIndex, animated: true }));
-      Alert.alert('Progress was not saved', 'Please try rating this word again.');
-    } finally {
-      setRatingWordId(null);
-    }
+
+    // Keep successful words submitted for this session so an outgoing card cannot be rated twice.
+    void mutationQueue.run(() => rateWord(word, rating)).catch(() => {
+      submittedRatings.current.delete(word.id);
+      const retryIndex = sessionFeedLengthRef.current;
+      sessionFeedLengthRef.current += 1;
+      setSessionFeed((current) => [...current, word]);
+      if (sessionCompleteRef.current) {
+        updateSessionComplete(false);
+        setCurrentIndex(retryIndex);
+        requestAnimationFrame(() => listRef.current?.scrollToIndex({ index: retryIndex, animated: true }));
+      }
+      Alert.alert('Progress was not saved', `${word.term} was returned to this session. Please try again.`);
+    });
   };
 
   const continueLearning = () => {
     if (continuedSessionFeed.length === 0) return;
     viewedIds.current.clear();
+    submittedRatings.current.clear();
+    sessionFeedLengthRef.current = continuedSessionFeed.length;
     setSessionFeed(continuedSessionFeed);
     setCurrentIndex(0);
-    setSessionComplete(false);
+    updateSessionComplete(false);
   };
 
   if (sessionComplete) {
@@ -161,11 +174,12 @@ function LearningSession({ filter, availableFilters }: { filter: LearningFilter;
         onMomentumScrollEnd={(event) => setCurrentIndex(Math.round(event.nativeEvent.contentOffset.y / (cardHeight + spacing.md)))}
         renderItem={({ item, index }) => {
           const currentWord = currentWords[item.id] ?? item;
+          const sessionRating = submittedRatings.current.get(currentWord.id);
           const translationStatus = currentWord.id === activeWord?.id && !currentWord.translation
             && currentWord.sourceLanguageCode === 'en' && currentWord.targetLanguageCode === 'sk'
             ? translationStates[currentWord.id] ?? 'loading'
             : undefined;
-          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><SwipeableWordCard word={currentWord} active={index === currentIndex} disabled={ratingWordId !== null} onSwipe={(rating) => void handleRating(currentWord, rating)}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} actionsDisabled={ratingWordId !== null} showPronunciation={index === currentIndex} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={(rating) => void handleRating(currentWord, rating)}/></SwipeableWordCard></View>;
+          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><SwipeableWordCard word={currentWord} active={index === currentIndex} disabled={sessionRating !== undefined} onSwipe={(rating) => handleRating(currentWord, rating)}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} sessionRating={sessionRating} showPronunciation={index === currentIndex} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={sessionRating === undefined ? (rating) => handleRating(currentWord, rating) : undefined}/></SwipeableWordCard></View>;
         }}
       />
       <AppText variant="caption" style={[styles.position, { color: theme.muted }]}>{Math.min(currentIndex + 1, sessionFeed.length)} of {sessionFeed.length} due now · scroll to skip</AppText>

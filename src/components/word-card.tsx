@@ -13,8 +13,8 @@ import { getNextReviewIntervalRange } from '@/features/learning/algorithm';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { radii, spacing } from '@/theme/tokens';
 
-export const WordCard = memo(function WordCard({ word, collectionName, onRate, onRetryTranslation, translationStatus, compact = false, dense = false, actionsDisabled = false, showPronunciation = false }:
-  { word: Word; collectionName?: string; onRate?(rating: LearningRating): void; onRetryTranslation?(): void; translationStatus?: 'loading' | 'error'; compact?: boolean; dense?: boolean; actionsDisabled?: boolean; showPronunciation?: boolean }) {
+export const WordCard = memo(function WordCard({ word, collectionName, onRate, onRetryTranslation, sessionRating, translationStatus, compact = false, dense = false, showPronunciation = false }:
+  { word: Word; collectionName?: string; onRate?(rating: LearningRating): void; onRetryTranslation?(): void; sessionRating?: LearningRating; translationStatus?: 'loading' | 'error'; compact?: boolean; dense?: boolean; showPronunciation?: boolean }) {
   const theme = useAppTheme();
   const [showTranslation, setShowTranslation] = useState(false);
   const nextReviewRange = getNextReviewIntervalRange(word);
@@ -39,34 +39,46 @@ export const WordCard = memo(function WordCard({ word, collectionName, onRate, o
       {word.translation ? <Pressable accessibilityRole="button" accessibilityLabel={showTranslation ? 'Hide Slovak hint' : 'Need a Slovak hint?'} onPress={() => setShowTranslation((value) => !value)} style={({ pressed }) => [styles.hint, dense && styles.denseHint, { borderColor: theme.border, backgroundColor: theme.glass, transform: [{ scale: pressed ? 0.985 : 1 }] }]}><Ionicons name={showTranslation ? 'eye-off-outline' : 'eye-outline'} color={theme.primary} size={18}/><View style={styles.hintText}>{showTranslation ? <Animated.View entering={FadeIn.duration(180).reduceMotion(ReduceMotion.System)} exiting={FadeOut.duration(120).reduceMotion(ReduceMotion.System)}><AppText variant="label" style={{ color: theme.primary }}>{word.translation}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Tap to hide the translation</AppText></Animated.View> : <AppText variant="label" style={{ color: theme.primary }}>Need a Slovak hint?</AppText>}</View></Pressable> : null}
       {!word.translation && translationStatus === 'loading' ? <View accessibilityRole="progressbar" accessibilityLabel="Preparing Slovak hint" style={[styles.hint, dense && styles.denseHint, { borderColor: theme.border, backgroundColor: theme.glass }]}><ActivityIndicator color={theme.primary} size="small"/><AppText variant="label" style={{ color: theme.muted }}>Preparing Slovak hint…</AppText></View> : null}
       {!word.translation && translationStatus === 'error' ? <Pressable accessibilityRole="button" accessibilityLabel="Retry Slovak hint" onPress={onRetryTranslation} style={({ pressed }) => [styles.hint, dense && styles.denseHint, { borderColor: theme.border, backgroundColor: theme.glass, opacity: pressed ? 0.75 : 1 }]}><Ionicons name="refresh-outline" color={theme.primary} size={18}/><View style={styles.hintText}><AppText variant="label" style={{ color: theme.primary }}>Retry Slovak hint</AppText><AppText variant="caption" style={{ color: theme.muted }}>Translation was not available</AppText></View></Pressable> : null}
-      {onRate ? <View style={[styles.ratingBlock, dense && styles.denseRatingBlock]}>
+      {sessionRating ? <SessionRatingStatus rating={sessionRating} dense={dense}/> : onRate ? <View style={[styles.ratingBlock, dense && styles.denseRatingBlock]}>
         <AppText variant="label" style={styles.ratingPrompt}>Swipe or tap</AppText>
         <View style={styles.actions}>
-          <RecallButton dense={dense} disabled={actionsDisabled} icon="calendar-outline" label="Keep learning" detail={`Review in ${nextReviewRange.minDays}–${nextReviewRange.maxDays} days`} color={theme.primary} onPress={() => rate('understood')}/>
-          <RecallButton dense={dense} disabled={actionsDisabled} icon="checkmark-circle-outline" label="I know this" detail="Stop reviews" color={theme.success} onPress={() => rate('learned')}/>
+          <RecallButton dense={dense} icon="calendar-outline" label="Keep learning" detail={`Review in ${nextReviewRange.minDays}–${nextReviewRange.maxDays} days`} color={theme.primary} onPress={() => rate('understood')}/>
+          <RecallButton dense={dense} icon="checkmark-circle-outline" label="I know this" detail="Stop reviews" color={theme.success} onPress={() => rate('learned')}/>
         </View>
       </View> : null}
     </Animated.View>
   );
 });
 
-function RecallButton({ icon, label, detail, color, onPress, disabled, dense }: {
+function SessionRatingStatus({ rating, dense }: { rating: LearningRating; dense: boolean }) {
+  const theme = useAppTheme();
+  const learned = rating === 'learned';
+  const color = learned ? theme.success : theme.primary;
+  const detail = learned ? 'Reviews stopped' : 'Kept in learning';
+  return <View
+    accessible
+    accessibilityRole="text"
+    accessibilityLabel={`Rated this session. ${detail}.`}
+    style={[styles.sessionRating, dense && styles.denseSessionRating, { backgroundColor: `${color}0D`, borderColor: `${color}52` }]}>
+    <View aria-hidden style={[styles.sessionRatingIcon, dense && styles.denseSessionRatingIcon, { backgroundColor: `${color}1C` }]}><Ionicons name={learned ? 'checkmark-circle-outline' : 'calendar-outline'} color={color} size={dense ? 20 : 22}/></View>
+    <View style={styles.sessionRatingText}><AppText variant="label">Rated this session</AppText><AppText variant="caption" style={{ color: theme.muted }}>{detail}</AppText></View>
+  </View>;
+}
+
+function RecallButton({ icon, label, detail, color, onPress, dense }: {
   icon: keyof typeof Ionicons.glyphMap;
   label: string;
   detail: string;
   color: string;
   onPress(): void;
-  disabled: boolean;
   dense: boolean;
 }) {
   const theme = useAppTheme();
   return <Pressable
     accessibilityRole="button"
     accessibilityLabel={`${label}. ${detail}.`}
-    accessibilityState={{ disabled }}
-    disabled={disabled}
     onPress={onPress}
-    style={({ pressed }) => [styles.action, dense && styles.denseAction, { borderColor: `${color}52`, backgroundColor: `${color}0D`, opacity: disabled ? 0.45 : pressed ? 0.82 : 1, transform: [{ scale: pressed ? 0.96 : 1 }] }]}>
+    style={({ pressed }) => [styles.action, dense && styles.denseAction, { borderColor: `${color}52`, backgroundColor: `${color}0D`, opacity: pressed ? 0.82 : 1, transform: [{ scale: pressed ? 0.96 : 1 }] }]}>
     <View style={[styles.actionIcon, dense && styles.denseActionIcon, { backgroundColor: `${color}1C` }]}><Ionicons name={icon} color={color} size={dense ? 20 : 22}/></View>
     <AppText variant="caption" style={[styles.actionLabel, { color: theme.text }]}>{label}</AppText>
     <AppText variant="caption" style={[styles.actionDetail, { color: theme.muted }]}>{detail}</AppText>
@@ -92,6 +104,11 @@ const styles = StyleSheet.create({
   hintText: { flex: 1 },
   ratingBlock: { gap: spacing.sm }, denseRatingBlock: { gap: spacing.xs }, ratingPrompt: { textAlign: 'center' },
   actions: { flexDirection: 'row', gap: spacing.sm },
+  sessionRating: { minHeight: 104, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.md, borderWidth: 1, borderRadius: radii.control, paddingHorizontal: spacing.lg },
+  denseSessionRating: { minHeight: 76 },
+  sessionRatingIcon: { width: 38, height: 38, borderRadius: 19, alignItems: 'center', justifyContent: 'center' },
+  denseSessionRatingIcon: { width: 32, height: 32, borderRadius: 16 },
+  sessionRatingText: { gap: 2 },
   action: { flex: 1, minHeight: 104, borderWidth: 1, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center', gap: 2, padding: spacing.xs },
   denseAction: { minHeight: 76 },
   actionIcon: { width: 38, height: 38, borderRadius: 19, alignItems: 'center', justifyContent: 'center', marginBottom: 2 },
