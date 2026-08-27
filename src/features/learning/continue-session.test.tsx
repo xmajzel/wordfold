@@ -277,13 +277,16 @@ describe('continued learning session', () => {
     });
     const view = await render(<LearnScreen/>);
 
-    view.getByText('Recommended for you');
+    view.getByText('You’re caught up');
+    view.getByText('No B1 words are due right now.');
+    view.getByText('Start a fresh batch');
+    expect(view.queryByText('Recommended for you')).toBeNull();
     view.getByText('B2 English');
-    view.getByText('Work and business');
+    view.getByText('Work and business · 10 words');
     expect(view.getAllByText(/^recommended [1-3]$/)).toHaveLength(3);
     expect(view.queryByRole('button', { name: 'Browse library' })).toBeNull();
 
-    await fireEvent.press(view.getByRole('button', { name: 'Add 10 recommended words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Add 10 words & start learning' }));
 
     await waitFor(() => expect(mockAddRecommendedWords).toHaveBeenCalledWith(10));
     expect(mockUpdateLearningFilter).toHaveBeenCalledWith('all');

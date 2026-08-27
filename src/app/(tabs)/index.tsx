@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, FlatList, Pressable, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useLocalSearchParams } from 'expo-router';
-import Animated, { FadeOut, ReduceMotion } from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeOut, ReduceMotion } from 'react-native-reanimated';
 
 import { AppText } from '@/components/app-text';
 import { EmptyState } from '@/components/empty-state';
@@ -321,29 +321,38 @@ function LearningEmptyState({ title, message, recommendations, learningPreferenc
     .filter((topic) => learningPreferences.topics.includes(topic.id))
     .map((topic) => topic.title)
     .join(' · ');
+  const statusTitle = title === 'You are caught up' ? 'You’re caught up' : title;
+  const wordLabel = recommendations.length === 1 ? 'word' : 'words';
   return <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.learningEmptyContent}>
-    <View style={styles.learningEmptyIntro}>
-      <Ionicons name="layers-outline" size={38} color={theme.primary}/>
-      <AppText variant="heading">{title}</AppText>
-      <AppText style={[styles.learningEmptyMessage, { color: theme.muted }]}>{message}</AppText>
-    </View>
-    <View testID="today-recommendations" style={styles.recommendationSection}>
-      <View>
-        <AppText variant="heading">Recommended for you</AppText>
-        <AppText variant="caption" style={{ color: theme.muted }}>A fresh batch shaped by your level and interests.</AppText>
-      </View>
-      <View style={[styles.recommendationPanel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-        <View style={styles.recommendationHeading}>
-          <View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="sparkles-outline" color={theme.primary} size={22}/></View>
+    <Animated.View
+      entering={FadeInDown.duration(220).reduceMotion(ReduceMotion.System)}
+      testID="today-recommendations"
+      style={[styles.nextBatchCardShadow, { shadowColor: theme.shadow }]}
+    >
+      <View style={[styles.nextBatchCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+        <View style={[styles.completionStatus, { backgroundColor: `${theme.success}12`, borderBottomColor: `${theme.success}2E` }]}>
+          <View aria-hidden style={[styles.completionIcon, { backgroundColor: theme.surface }]}>
+            <Ionicons name="checkmark" color={theme.success} size={20}/>
+          </View>
           <View style={styles.recommendationText}>
-            <AppText variant="label">{learningPreferences.levels.join(', ')} English</AppText>
-            <AppText variant="caption" style={{ color: theme.muted }}>{topics}</AppText>
+            <AppText variant="label">{statusTitle}</AppText>
+            <AppText variant="caption" style={{ color: theme.muted }}>{message}</AppText>
           </View>
         </View>
-        <View style={styles.recommendationWords}>{recommendations.slice(0, 3).map(({ entry }) => <View key={entry.id} style={[styles.recommendationWord, { backgroundColor: theme.primarySoft }]}><AppText variant="label" style={{ color: theme.primary }}>{entry.term}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{entry.level}</AppText></View>)}</View>
-        <PrimaryButton testID="add-today-recommendations" label={`Add ${recommendations.length} recommended ${recommendations.length === 1 ? 'word' : 'words'}`} loading={busy} onPress={onAdd} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/>
+        <View style={styles.nextBatchBody}>
+          <AppText variant="heading">Start a fresh batch</AppText>
+          <View style={styles.recommendationHeading}>
+            <View aria-hidden style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="sparkles-outline" color={theme.primary} size={20}/></View>
+            <View style={styles.recommendationText}>
+              <AppText variant="label">{learningPreferences.levels.join(', ')} English</AppText>
+              <AppText variant="caption" style={{ color: theme.muted }}>{topics} · {recommendations.length} {wordLabel}</AppText>
+            </View>
+          </View>
+          <View style={styles.recommendationWords}>{recommendations.slice(0, 3).map(({ entry }) => <View key={entry.id} style={[styles.recommendationWord, { backgroundColor: theme.primarySoft }]}><AppText variant="label">{entry.term}</AppText><AppText variant="caption">{entry.level}</AppText></View>)}</View>
+          <PrimaryButton testID="add-today-recommendations" label={`Add ${recommendations.length} ${wordLabel} & start learning`} loading={busy} onPress={onAdd} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/>
+        </View>
       </View>
-    </View>
+    </Animated.View>
   </ScrollView>;
 }
 
@@ -370,13 +379,14 @@ const styles = StyleSheet.create({
   notificationReviewIntro: { alignItems: 'center', gap: spacing.xs, paddingVertical: spacing.sm },
   notificationReviewMessage: { textAlign: 'center' },
   notificationReviewCard: { flex: 1, paddingVertical: spacing.sm },
-  learningEmptyContent: { flexGrow: 1, justifyContent: 'center', gap: spacing.lg, padding: spacing.xl },
-  learningEmptyIntro: { alignItems: 'center', gap: spacing.sm },
-  learningEmptyMessage: { textAlign: 'center' },
-  recommendationSection: { gap: spacing.sm },
-  recommendationPanel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.lg },
+  learningEmptyContent: { flexGrow: 1, justifyContent: 'center', paddingVertical: spacing.xl },
+  nextBatchCardShadow: { width: '100%', maxWidth: 560, alignSelf: 'center', borderRadius: radii.sheet, shadowOffset: { width: 0, height: 12 }, shadowOpacity: 0.12, shadowRadius: 22, elevation: 4 },
+  nextBatchCard: { overflow: 'hidden', borderWidth: 1, borderRadius: radii.sheet },
+  completionStatus: { minHeight: 76, flexDirection: 'row', alignItems: 'center', gap: spacing.md, padding: spacing.lg, borderBottomWidth: 1 },
+  completionIcon: { width: 40, height: 40, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
+  nextBatchBody: { padding: spacing.xl, gap: spacing.lg },
   recommendationHeading: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  recommendationIcon: { width: 44, height: 44, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
+  recommendationIcon: { width: 40, height: 40, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
   recommendationText: { flex: 1, gap: 2 },
   recommendationWords: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
   recommendationWord: { minHeight: 48, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderRadius: radii.control, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
