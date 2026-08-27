@@ -12,6 +12,12 @@ const mockRemoveLocale = jest.fn(async () => undefined);
 const mockPrepareManifests = jest.fn(async () => undefined);
 const mockReconcileLibrary = jest.fn(async () => undefined);
 const mockSaveVoice = jest.fn(async () => undefined);
+const mockActiveCourse = {
+  displayName: 'English with Slovak hints',
+  sourceLanguageCode: 'en',
+  defaultSourcePronunciationLocale: 'en-US',
+  capabilities: { offlinePronunciation: true },
+};
 const mockPacks: Record<string, Record<string, unknown>> = {};
 const mockDownloads: Record<string, unknown> = {
   packs: mockPacks,
@@ -38,6 +44,7 @@ const mockDownloads: Record<string, unknown> = {
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     words: [],
+    activeCourse: mockActiveCourse,
     pronunciationVoicePreference: 'neural-en-US',
     savePronunciationVoicePreference: mockSaveVoice,
   }),
@@ -91,6 +98,12 @@ describe('OfflinePronunciationScreen', () => {
       libraryJob: null,
       libraryError: null,
     });
+    Object.assign(mockActiveCourse, {
+      displayName: 'English with Slovak hints',
+      sourceLanguageCode: 'en',
+      defaultSourcePronunciationLocale: 'en-US',
+      capabilities: { offlinePronunciation: true },
+    });
     Object.defineProperty(Platform, 'OS', { configurable: true, value: 'ios' });
   });
 
@@ -132,5 +145,40 @@ describe('OfflinePronunciationScreen', () => {
     expect(screen.getByText('1 of 2 · 50%')).toBeTruthy();
     await fireEvent.press(screen.getByRole('button', { name: 'Cancel download' }));
     expect(mockCancelDownload).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows only honest exact-locale device guidance for the Spanish course', async () => {
+    Object.assign(mockActiveCourse, {
+      displayName: 'Spanish with Slovak hints',
+      sourceLanguageCode: 'es',
+      defaultSourcePronunciationLocale: 'es-ES',
+      capabilities: { offlinePronunciation: false },
+    });
+
+    const screen = await render(<OfflinePronunciationScreen/>);
+
+    expect(screen.getByText(/exact installed Spanish · Spain phone voice/)).toBeTruthy();
+    expect(screen.getByText(/cannot verify whether that system voice works offline/)).toBeTruthy();
+    expect(screen.getByRole('radio', { name: 'Choose Phone voice · Spanish · Spain' })).toBeTruthy();
+    expect(screen.queryByRole('radio', { name: 'Choose Ava · US English' })).toBeNull();
+    expect(screen.queryByText('Whole level downloads · optional')).toBeNull();
+    expect(mockPrepareManifests).not.toHaveBeenCalled();
+  });
+
+  it('documents exact-voice browser limitations for the Spanish course', async () => {
+    Object.assign(mockActiveCourse, {
+      displayName: 'Spanish with Slovak hints',
+      sourceLanguageCode: 'es',
+      defaultSourcePronunciationLocale: 'es-ES',
+      capabilities: { offlinePronunciation: false },
+    });
+    Object.defineProperty(Platform, 'OS', { configurable: true, value: 'web' });
+
+    const screen = await render(<OfflinePronunciationScreen/>);
+
+    expect(screen.getByText(/Spanish · Spain pronunciation uses live browser speech/)).toBeTruthy();
+    expect(screen.getByText(/cannot download or cache it on web/)).toBeTruthy();
+    expect(screen.queryByRole('radio', { name: 'Choose Phone voice · Spanish · Spain' })).toBeNull();
+    expect(mockPrepareManifests).not.toHaveBeenCalled();
   });
 });

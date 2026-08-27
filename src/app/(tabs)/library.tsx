@@ -9,29 +9,43 @@ import { FormField } from '@/components/form-field';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import { WordCard } from '@/components/word-card';
-import { getCefrLevelSummaries } from '@/data/cefr-levels';
+import { getCourseCatalogEntries } from '@/data/course-catalog';
+import { cefrLevelDescriptions, cefrLevels } from '@/data/cefr-levels';
+import { getCourseForWord, wordBelongsToCourse } from '@/domain/courses';
+import { languageLabel } from '@/domain/languages';
 import { buildRecommendations, topicOptions } from '@/features/recommendations/selector';
 import { WordCapacityExceededError } from '@/features/purchases/capacity';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
 
-const cefrLevelSummaries = getCefrLevelSummaries();
-
 export default function LibraryScreen() {
   const theme = useAppTheme();
-  const { words, collections, learningPreferences, createCollection, addRecommendedWords, wordCapacity } = useAppData();
+  const {
+    words, collections, activeCourse, activeCourseId, learningPreferences,
+    createCollection, addRecommendedWords, wordCapacity,
+  } = useAppData();
   const [selectedCollection, setSelectedCollection] = useState('all');
   const [showCollectionForm, setShowCollectionForm] = useState(false);
   const [collectionName, setCollectionName] = useState('');
   const [recommendationsBusy, setRecommendationsBusy] = useState(false);
-  const filteredWords = useMemo(() => selectedCollection === 'all' ? words : words.filter((word) => word.collectionId === selectedCollection), [selectedCollection, words]);
+  const activeWords = useMemo(() => words.filter((word) => wordBelongsToCourse(word, activeCourseId)), [activeCourseId, words]);
+  const otherWords = useMemo(() => words.filter((word) => !getCourseForWord(word)), [words]);
+  const filteredWords = useMemo(() => selectedCollection === 'other-vocabulary'
+    ? otherWords
+    : selectedCollection === 'all' ? activeWords : activeWords.filter((word) => word.collectionId === selectedCollection), [activeWords, otherWords, selectedCollection]);
   const collectionNames = useMemo(() => Object.fromEntries(collections.map((item) => [item.id, item.name])), [collections]);
-  const recommendationPreview = useMemo(() => buildRecommendations(
+  const learnedLanguage = languageLabel(activeCourse.sourceLanguageCode);
+  const cefrLevelSummaries = useMemo(() => cefrLevels.map((level) => ({
+    level,
+    count: getCourseCatalogEntries(activeCourseId, level).length,
+    description: cefrLevelDescriptions[level],
+  })), [activeCourseId]);
+  const recommendationPreview = useMemo(() => activeCourse.capabilities.recommendations ? buildRecommendations(
     learningPreferences,
-    words.filter((word) => word.sourceLanguageCode === 'en').map((word) => word.normalizedTerm),
+    activeWords.map((word) => word.normalizedTerm),
     10,
-  ), [learningPreferences, words]);
+  ) : [], [activeCourse.capabilities.recommendations, activeWords, learningPreferences]);
   const hasPreferences = learningPreferences.levels.length > 0 && learningPreferences.topics.length > 0;
   const recommendationAddCount = wordCapacity.remaining === null
     ? Math.min(10, recommendationPreview.length)
@@ -73,7 +87,7 @@ export default function LibraryScreen() {
         windowSize={7}
         ItemSeparatorComponent={() => <View style={styles.separator}/>}
         ListHeaderComponent={<View style={styles.headerContent}>
-          <View style={styles.header}><View><AppText variant="title">Your library</AppText><AppText style={{ color: theme.muted }}>{words.length} {words.length === 1 ? 'word' : 'words'} across {collections.length} {collections.length === 1 ? 'collection' : 'collections'}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Open settings" onPress={() => router.push('/settings')} style={[styles.iconButton, { backgroundColor: theme.surface }]}><Ionicons name="settings-outline" color={theme.primary} size={21}/></Pressable></View>
+          <View style={styles.header}><View><AppText variant="title">Your {learnedLanguage.toLowerCase()} library</AppText><AppText style={{ color: theme.muted }}>{activeWords.length} {activeWords.length === 1 ? 'word' : 'words'} across {collections.length} {collections.length === 1 ? 'collection' : 'collections'}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Open settings" onPress={() => router.push('/settings')} style={[styles.iconButton, { backgroundColor: theme.surface }]}><Ionicons name="settings-outline" color={theme.primary} size={21}/></Pressable></View>
           <View style={styles.actionRow}><View style={styles.action}><PrimaryButton label="Add a word" onPress={() => router.push('/word/new')} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/></View><View style={styles.action}><PrimaryButton label="Bulk paste" variant="secondary" onPress={() => router.push('/import')} icon={<Ionicons name="clipboard-outline" color={theme.primary} size={18}/>}/></View></View>
           {wordCapacity.shouldShowNotice ? <Pressable testID="word-capacity-notice" accessibilityRole="button" accessibilityLabel="Open unlimited words" onPress={() => router.push('/upgrade' as never)} style={[styles.capacityNotice, { backgroundColor: theme.primarySoft }]}><Ionicons name="infinite-outline" color={theme.primary} size={21}/><View style={styles.packText}><AppText variant="label">{wordCapacity.remaining === 0 ? 'Free library full' : `${wordCapacity.remaining} free ${wordCapacity.remaining === 1 ? 'word remains' : 'words remain'}`}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Unlock unlimited words forever with one Google Play purchase.</AppText></View><Ionicons name="chevron-forward" color={theme.primary} size={20}/></Pressable> : null}
           <View style={styles.sectionHeader}><AppText variant="heading">Collections</AppText><Pressable onPress={() => setShowCollectionForm((value) => !value)}><AppText variant="label" style={{ color: theme.primary }}>{showCollectionForm ? 'Cancel' : 'New collection'}</AppText></Pressable></View>
@@ -81,27 +95,40 @@ export default function LibraryScreen() {
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
             <FilterChip label="All words" selected={selectedCollection === 'all'} onPress={() => setSelectedCollection('all')}/>
             {collections.map((collection) => <FilterChip key={collection.id} label={collection.name} selected={selectedCollection === collection.id} onPress={() => setSelectedCollection(collection.id)}/>) }
+            {otherWords.length > 0 ? <FilterChip label={`Other vocabulary (${otherWords.length})`} selected={selectedCollection === 'other-vocabulary'} onPress={() => setSelectedCollection('other-vocabulary')}/> : null}
           </ScrollView>
-          <View style={styles.sectionHeader}><View><AppText variant="heading">English levels</AppText><AppText variant="caption" style={{ color: theme.muted }}>Browse the built-in CEFR-aligned catalog. Add only the words you want to learn.</AppText></View></View>
+          <View style={styles.sectionHeader}><View><AppText variant="heading">{learnedLanguage} levels</AppText><AppText variant="caption" style={{ color: theme.muted }}>{activeCourse.capabilities.bundledCatalog
+            ? 'Browse the built-in CEFR-aligned catalog. Add only the words you want to learn.'
+            : 'A1–C2 are ready for organization. The Spanish catalog stays unavailable until licensing and independent editorial review are complete.'}</AppText></View></View>
           <View style={styles.levelGrid}>
             {cefrLevelSummaries.map((item) => <Pressable
               key={item.level}
               accessibilityRole="button"
-              accessibilityLabel={`Browse English level ${item.level}`}
+              accessibilityLabel={`Browse ${learnedLanguage} level ${item.level}`}
               onPress={() => router.push({ pathname: '/level/[level]', params: { level: item.level } } as never)}
               style={[styles.levelCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
               <View style={[styles.levelBadge, { backgroundColor: theme.primarySoft }]}><AppText variant="heading" style={{ color: theme.primary }}>{item.level}</AppText></View>
-              <View style={styles.levelText}><AppText variant="label">{item.description}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{item.count.toLocaleString()} words</AppText></View>
+              <View style={styles.levelText}><AppText variant="label">{item.description}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{item.count > 0 ? `${item.count.toLocaleString()} words` : 'Catalog pending review'}</AppText></View>
               <Ionicons name="chevron-forward" color={theme.primary} size={18}/>
             </Pressable>)}
           </View>
         </View>}
-        ListEmptyComponent={<View style={styles.empty}><EmptyState title="No words here yet" message="Add a word or choose learning preferences for recommendations below."/></View>}
-        renderItem={({ item }) => <Pressable onPress={() => router.push(`/word/${item.id}`)}><WordCard word={item} collectionName={collectionNames[item.collectionId]} compact/></Pressable>}
+        ListEmptyComponent={<View style={styles.empty}><EmptyState title={selectedCollection === 'other-vocabulary' ? 'No other vocabulary' : `No ${learnedLanguage.toLowerCase()} words here yet`} message={selectedCollection === 'other-vocabulary'
+          ? 'Words outside the supported English → Slovak and Spanish → Slovak courses appear here.'
+          : activeCourse.capabilities.recommendations
+          ? 'Add a word or choose learning preferences for recommendations below.'
+          : 'Add a Spanish word manually or bulk paste your own reviewed vocabulary.'}/></View>}
+        renderItem={({ item }) => <Pressable onPress={() => router.push(`/word/${item.id}`)}>
+          {selectedCollection === 'other-vocabulary' ? <AppText variant="caption" style={{ color: theme.muted }}>{languageLabel(item.targetLanguageCode)} → {languageLabel(item.sourceLanguageCode)}</AppText> : null}
+          <WordCard word={item} collectionName={collectionNames[item.collectionId]} compact/>
+        </Pressable>}
         ListFooterComponent={<View style={styles.footer}>
-          <View style={styles.sectionHeader}><View><AppText variant="heading">Recommended for you</AppText><AppText variant="caption" style={{ color: theme.muted }}>Small batches shaped by your level and interests.</AppText></View></View>
-          {hasPreferences ? <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-            <View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="sparkles-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">{learningPreferences.levels.join(', ')} English</AppText><AppText variant="caption" style={{ color: theme.muted }}>{topicOptions.filter((topic) => learningPreferences.topics.includes(topic.id)).map((topic) => topic.title).join(' · ')}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Edit learning preferences" onPress={() => router.push('/preferences' as never)} style={styles.editPreferences}><AppText variant="label" style={{ color: theme.primary }}>Edit</AppText></Pressable></View>
+          <View style={styles.sectionHeader}><View><AppText variant="heading">{activeCourse.capabilities.recommendations ? 'Recommended for you' : 'Spanish catalog status'}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{activeCourse.capabilities.recommendations ? 'Small batches shaped by your level and interests.' : 'Manual and imported Spanish words are fully available now.'}</AppText></View></View>
+          {!activeCourse.capabilities.recommendations ? <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+            <View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="shield-checkmark-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">Reviewed A1–C2 content is not bundled yet</AppText><AppText variant="caption" style={{ color: theme.muted }}>Instituto Cervantes informs the editorial structure only. Its content is not copied or packaged without permission.</AppText></View></View>
+            <View style={styles.actionRow}><View style={styles.action}><PrimaryButton label="Add Spanish word" onPress={() => router.push('/word/new')} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/></View><View style={styles.action}><PrimaryButton label="Import" variant="secondary" onPress={() => router.push('/import')} icon={<Ionicons name="clipboard-outline" color={theme.primary} size={18}/>}/></View></View>
+          </View> : hasPreferences ? <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+            <View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="sparkles-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">{learningPreferences.levels.join(', ')} {learnedLanguage}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{topicOptions.filter((topic) => learningPreferences.topics.includes(topic.id)).map((topic) => topic.title).join(' · ')}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Edit learning preferences" onPress={() => router.push('/preferences' as never)} style={styles.editPreferences}><AppText variant="label" style={{ color: theme.primary }}>Edit</AppText></Pressable></View>
             {recommendationPreview.length > 0 ? <View style={styles.recommendationWords}>{recommendationPreview.slice(0, 3).map(({ entry }) => <View key={entry.id} style={[styles.recommendationWord, { backgroundColor: theme.primarySoft }]}><AppText variant="label" style={{ color: theme.primary }}>{entry.term}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{entry.level}</AppText></View>)}</View> : <AppText style={{ color: theme.muted }}>You have already added every available recommendation for these choices.</AppText>}
             <PrimaryButton label={recommendationPreview.length === 0 ? 'No new recommendations' : recommendationAddCount === 0 ? 'Unlock to add recommendations' : `Add ${recommendationAddCount} recommended words`} loading={recommendationsBusy} disabled={recommendationPreview.length === 0} onPress={() => void addRecommendations()} icon={<Ionicons name={recommendationAddCount === 0 ? 'infinite-outline' : 'add'} color="#FFFFFF" size={18}/>}/>
           </View> : <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="options-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">Make recommendations personal</AppText><AppText variant="caption" style={{ color: theme.muted }}>Choose at least one level and interest.</AppText></View></View><PrimaryButton label="Choose learning preferences" variant="secondary" onPress={() => router.push('/preferences' as never)}/></View>}

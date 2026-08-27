@@ -53,6 +53,17 @@ describe('today word widget data', () => {
     });
   });
 
+  it('selects only words from the requested course', () => {
+    const english = word(1);
+    const spanish = word(2, {
+      term: 'hola', normalizedTerm: 'hola', sourceLanguageCode: 'es',
+      sourcePronunciationLocale: 'es-ES',
+    });
+
+    expect(getTodayWordWidgetProps([english, spanish], now, 'es-sk').wordId).toBe(spanish.id);
+    expect(getTodayWordWidgetProps([english, spanish], now, 'en-sk').wordId).toBe(english.id);
+  });
+
   it('builds current and local-midnight entries and selects the active stored entry', () => {
     const timeline = buildTodayWordWidgetTimeline([word(1)], now, 2);
     const stored = storeTodayWordWidgetTimeline(timeline);

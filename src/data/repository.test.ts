@@ -1,6 +1,6 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
-import { addWord, addWords, completeOnboardingSetup, getLearningFilter, getLearningPreferences, getPronunciationVoicePreference, getStats, resetWord, saveLearningFilter, savePronunciationVoicePreference, updateMissingWordTranslations, type NewWordInput } from './repository';
+import { addWord, addWords, completeOnboardingSetup, getActiveCourseId, getLearningFilter, getLearningPreferences, getPronunciationVoicePreference, getStats, resetWord, saveActiveCourseId, saveLearningFilter, saveLearningPreferences, savePronunciationVoicePreference, updateMissingWordTranslations, type NewWordInput } from './repository';
 
 function createDatabase() {
   const database = {
@@ -109,6 +109,27 @@ describe('word repository', () => {
     expect(stats.recentActivity.slice(0, -1).every((day) => day.count === 0)).toBe(true);
   });
 
+  it('scopes dashboard statistics to the selected language pair', async () => {
+    const database = createDatabase();
+    database.getAllAsync = jest.fn(async () => []);
+    database.getFirstAsync = jest.fn(async () => null);
+
+    await getStats(database, 'es-sk');
+
+    expect(database.getAllAsync).toHaveBeenNthCalledWith(
+      1,
+      expect.stringContaining('source_language_code = ? AND target_language_code = ?'),
+      'es',
+      'sk',
+    );
+    expect(database.getFirstAsync).toHaveBeenNthCalledWith(
+      2,
+      expect.stringContaining('source_language_code = ? AND target_language_code = ?'),
+      'es',
+      'sk',
+    );
+  });
+
   it('defaults invalid stored learning filters to all and persists explicit choices', async () => {
     const database = createDatabase();
     database.getFirstAsync = jest.fn(async () => ({ value: 'unknown' }));
@@ -116,12 +137,31 @@ describe('word repository', () => {
     await expect(getLearningFilter(database)).resolves.toBe('all');
     await saveLearningFilter(database, 'B2');
 
-    expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining("'learning_filter'"), 'B2');
+    expect(database.runAsync).toHaveBeenCalledWith(
+      expect.stringContaining('VALUES (?, ?)'),
+      'learning_filter:en-sk',
+      'B2',
+    );
+  });
+
+  it('defaults invalid active courses to English and persists a supported course', async () => {
+    const database = createDatabase();
+    database.getFirstAsync = jest.fn(async () => ({ value: 'sk-es' }));
+
+    await expect(getActiveCourseId(database)).resolves.toBe('en-sk');
+    await saveActiveCourseId(database, 'es-sk');
+
+    expect(database.runAsync).toHaveBeenCalledWith(
+      expect.stringContaining("'active_course_id'"),
+      'es-sk',
+    );
   });
 
   it('validates stored learning preferences', async () => {
     const database = createDatabase();
-    database.getFirstAsync = jest.fn(async () => ({ value: '["C2","invalid","A1"]' }));
+    database.getFirstAsync = jest.fn()
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce({ value: '["C2","invalid","A1"]' });
     database.getAllAsync = jest.fn(async () => [
       { id: 'spoken', name: 'Everyday conversations', enabled: 1 },
       { id: 'business', name: 'Work and business', enabled: 0 },
@@ -134,6 +174,28 @@ describe('word repository', () => {
     });
   });
 
+  it('keeps Spanish learning preferences independent from legacy English metadata', async () => {
+    const database = createDatabase();
+    database.getFirstAsync = jest.fn(async () => ({
+      value: JSON.stringify({ levels: ['A2'], topics: ['spoken'] }),
+    }));
+
+    await expect(getLearningPreferences(database, 'es-sk')).resolves.toEqual({
+      levels: ['A2'], topics: ['spoken'],
+    });
+    await saveLearningPreferences(database, { levels: ['B1'], topics: ['academic'] }, 'es-sk');
+
+    expect(database.runAsync).toHaveBeenCalledWith(
+      expect.stringContaining('VALUES (?, ?)'),
+      'learning_preferences:es-sk',
+      JSON.stringify({ levels: ['B1'], topics: ['academic'] }),
+    );
+    expect(database.runAsync).not.toHaveBeenCalledWith(
+      expect.stringContaining('preferred_cefr_levels'),
+      expect.anything(),
+    );
+  });
+
   it('defaults invalid voice preferences to the phone voice and persists supported choices', async () => {
     const database = createDatabase();
     database.getFirstAsync = jest.fn(async () => ({ value: 'unsupported' }));
@@ -141,9 +203,20 @@ describe('word repository', () => {
     await expect(getPronunciationVoicePreference(database)).resolves.toBe('device');
     await savePronunciationVoicePreference(database, 'neural-en-GB');
     expect(database.runAsync).toHaveBeenCalledWith(
-      expect.stringContaining('pronunciation_voice_preference'),
+      expect.stringContaining('VALUES (?, ?)'),
+      'pronunciation_voice_preference:en-sk',
       'neural-en-GB',
     );
+  });
+
+  it('defaults Spanish to device pronunciation and rejects an English neural voice', async () => {
+    const database = createDatabase();
+    database.getFirstAsync = jest.fn(async () => null);
+
+    await expect(getPronunciationVoicePreference(database, 'es-sk')).resolves.toBe('device');
+    await expect(savePronunciationVoicePreference(database, 'neural-en-US', 'es-sk'))
+      .rejects.toThrow('Spanish with Slovak hints');
+    expect(database.runAsync).not.toHaveBeenCalled();
   });
 
   it('saves preferences, starter words, and completion atomically', async () => {
@@ -164,7 +237,11 @@ describe('word repository', () => {
     expect(ids).toHaveLength(1);
     expect(database.withExclusiveTransactionAsync).toHaveBeenCalledTimes(1);
     expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining('preferred_cefr_levels'), '["A2"]');
-    expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining('pronunciation_voice_preference'), 'neural-en-US');
+    expect(database.runAsync).toHaveBeenCalledWith(
+      expect.stringContaining('VALUES (?, ?)'),
+      'pronunciation_voice_preference:en-sk',
+      'neural-en-US',
+    );
     expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining('onboarding_complete'));
   });
 });

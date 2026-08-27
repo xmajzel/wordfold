@@ -34,4 +34,20 @@ describe('LanguageSelector', () => {
 
     expect(onChange).toHaveBeenCalledWith('en', 'en-GB');
   });
+
+  it('can withhold an unreviewed regional locale', async () => {
+    const screen = await render(
+      <LanguageSelector
+        label="Learning language"
+        languageCode="es"
+        pronunciationLocale="es-ES"
+        allowedLanguageCodes={['es']}
+        allowedPronunciationLocales={['es-ES']}
+        onChange={jest.fn()}
+      />,
+    );
+
+    expect(screen.getByRole('button', { name: 'Learning language pronunciation: Spain' })).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Learning language pronunciation: Mexico' })).toBeNull();
+  });
 });

@@ -4,6 +4,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { AppText } from '@/components/app-text';
 import { PronunciationButton } from '@/components/pronunciation-button';
+import { languageLabel, pronunciationLocaleLabel } from '@/domain/languages';
 import type { PronunciationVoicePreference } from '@/domain/types';
 import {
   neuralVoiceLabel,
@@ -17,7 +18,7 @@ import {
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { radii, spacing } from '@/theme/tokens';
 
-const choices: {
+const englishChoices: {
   id: PronunciationVoicePreference;
   title: string;
   detail: string;
@@ -37,29 +38,44 @@ const choices: {
     detail: 'Your added catalog words download automatically, then play offline.',
     locale: 'en-GB',
   },
-  {
-    id: 'device',
-    title: 'Phone voice',
-    detail: 'May take a few seconds to start the first time. Works offline once the exact system voice is installed.',
-    locale: null,
-  },
 ];
+
+const deviceSampleText: Record<string, string> = {
+  en: BUNDLED_VOICE_SAMPLE_TEXT,
+  es: 'Hola. Aprender un idioma nuevo abre la puerta a nuevas ideas, lugares y conversaciones.',
+};
 
 export function PronunciationVoicePicker({
   value,
   onChange,
   disabled = false,
+  sourceLanguageCode = 'en',
+  pronunciationLocale = 'en-US',
 }: {
   value: PronunciationVoicePreference;
   onChange(value: PronunciationVoicePreference): void;
   disabled?: boolean;
+  sourceLanguageCode?: string;
+  pronunciationLocale?: string;
 }) {
   const theme = useAppTheme();
   const [testing, setTesting] = useState<NeuralPronunciationLocale | null>(null);
+  const pronunciationLabel = `${languageLabel(sourceLanguageCode)} · ${pronunciationLocaleLabel(sourceLanguageCode, pronunciationLocale)}`;
+  const choices: typeof englishChoices = [
+    ...(sourceLanguageCode === 'en' ? englishChoices : []),
+    {
+      id: 'device' as const,
+      title: `Phone voice · ${pronunciationLabel}`,
+      detail: `Uses only the exact installed ${pronunciationLabel} voice. Voice quality and offline availability depend on the device.`,
+      locale: null,
+    },
+  ];
 
   useEffect(() => {
-    void preloadBundledVoiceSamples().catch(() => undefined);
-  }, []);
+    if (sourceLanguageCode === 'en') {
+      void preloadBundledVoiceSamples().catch(() => undefined);
+    }
+  }, [sourceLanguageCode]);
 
   const testNeural = async (locale: NeuralPronunciationLocale) => {
     setTesting(locale);
@@ -133,10 +149,10 @@ export function PronunciationVoicePicker({
               {testing === choice.locale ? 'Preparing sample…' : 'Test voice'}
             </AppText>
           </Pressable> : <PronunciationButton
-            text={BUNDLED_VOICE_SAMPLE_TEXT}
-            locale="en-US"
+            text={deviceSampleText[sourceLanguageCode] ?? `Test ${languageLabel(sourceLanguageCode)} pronunciation.`}
+            locale={pronunciationLocale}
             compact
-            idleLabel="Test phone voice"
+            idleLabel={`Test ${pronunciationLabel} phone voice`}
           />}
         </View>
       </View>;

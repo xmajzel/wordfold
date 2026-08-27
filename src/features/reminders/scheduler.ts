@@ -2,6 +2,7 @@ import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 import type { SQLiteDatabase } from 'expo-sqlite';
 
+import type { CourseId } from '@/domain/courses';
 import type { ReminderSettings, Word } from '@/domain/types';
 import { calculateReminderSlots } from './slots';
 import { pickReminderWord } from './word-selector';
@@ -68,6 +69,7 @@ async function performReminderScheduleRebuild(
   database: SQLiteDatabase,
   words: Word[],
   settings: ReminderSettings,
+  courseId?: CourseId,
 ) {
   await clearScheduledReminders(database);
   if (!settings.enabled || words.every((word) => word.state === 'learned')) return 0;
@@ -80,7 +82,7 @@ async function performReminderScheduleRebuild(
   const usedWordIds = new Set<string>();
   let count = 0;
   for (const date of upcomingDates(settings)) {
-    const word = pickReminderWord(words, date, usedWordIds);
+    const word = pickReminderWord(words, date, usedWordIds, courseId);
     if (!word) break;
     usedWordIds.add(word.id);
     const notificationId = await Notifications.scheduleNotificationAsync({
@@ -110,8 +112,9 @@ export function rebuildReminderSchedule(
   database: SQLiteDatabase,
   words: Word[],
   settings: ReminderSettings,
+  courseId?: CourseId,
 ) {
-  const rebuild = rebuildQueue.then(() => performReminderScheduleRebuild(database, words, settings));
+  const rebuild = rebuildQueue.then(() => performReminderScheduleRebuild(database, words, settings, courseId));
   rebuildQueue = rebuild.catch(() => undefined);
   return rebuild;
 }

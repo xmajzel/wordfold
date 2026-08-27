@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 
 import { AppText } from '@/components/app-text';
 import { AppSwitch } from '@/components/app-switch';
+import { CourseSelector } from '@/components/course-selector';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import type { ReminderSettings } from '@/domain/types';
@@ -25,9 +26,13 @@ export default function SettingsScreen() {
   const theme = useAppTheme();
   const auth = useAuth();
   const sync = useSync();
-  const { reminderSettings, learningPreferences, guestImport, dataSource, updateReminderSettings } = useAppData();
+  const {
+    reminderSettings, learningPreferences, guestImport, dataSource, activeCourse,
+    activeCourseId, switchActiveCourse, updateReminderSettings,
+  } = useAppData();
   const [draft, setDraft] = useState<ReminderSettings>(() => reminderSettings ?? ({ enabled: false, countPerDay: 1, windowStartMinutes: 600, windowEndMinutes: 1200, timeZoneId: 'local' }));
   const [saving, setSaving] = useState(false);
+  const [switchingCourse, setSwitchingCourse] = useState(false);
   const [scheduledCount, setScheduledCount] = useState<number | null>(null);
   const toggleEnabled = async (enabled: boolean) => {
     if (!enabled) { setDraft({ ...draft, enabled: false }); return; }
@@ -78,6 +83,22 @@ export default function SettingsScreen() {
         </View>
         <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
       </Pressable>
+      <View style={styles.section}>
+        <View>
+          <AppText variant="heading">Learning language</AppText>
+          <AppText style={{ color: theme.muted }}>Each course keeps its own levels, filter, voice, and progress. The global reminder rhythm and widget always select words from the active course.</AppText>
+        </View>
+        <CourseSelector
+          value={activeCourseId}
+          disabled={switchingCourse}
+          onChange={(courseId) => {
+            setSwitchingCourse(true);
+            void switchActiveCourse(courseId)
+              .catch((error) => Alert.alert('Could not switch course', error instanceof Error ? error.message : 'Please try again.'))
+              .finally(() => setSwitchingCourse(false));
+          }}
+        />
+      </View>
       <Pressable
         accessibilityRole="button"
         accessibilityLabel="Edit learning preferences"
@@ -87,12 +108,14 @@ export default function SettingsScreen() {
         <View style={styles.flex}>
           <AppText variant="heading">Learning preferences</AppText>
           <AppText variant="caption" style={{ color: theme.muted }}>{learningPreferences.levels.length > 0
-            ? `${learningPreferences.levels.join(', ')} · ${topicOptions.filter((topic) => learningPreferences.topics.includes(topic.id)).map((topic) => topic.title).join(', ') || 'Choose interests'}`
-            : 'Choose levels and interests for recommendations'}</AppText>
+            ? activeCourse.capabilities.recommendations
+              ? `${learningPreferences.levels.join(', ')} · ${topicOptions.filter((topic) => learningPreferences.topics.includes(topic.id)).map((topic) => topic.title).join(', ') || 'Choose interests'}`
+              : `${learningPreferences.levels.join(', ')} · device pronunciation`
+            : activeCourse.capabilities.recommendations ? 'Choose levels and interests for recommendations' : 'Choose Spanish levels for your manual vocabulary'}</AppText>
         </View>
         <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
       </Pressable>
-      {Platform.OS === 'web' || !neuralPreviewFeatureEnabled() ? null : <Pressable
+      {Platform.OS === 'web' || !neuralPreviewFeatureEnabled() || !activeCourse.capabilities.offlinePronunciation ? null : <Pressable
         accessibilityRole="button"
         accessibilityLabel="Manage offline pronunciation"
         onPress={() => router.push('/offline-pronunciation' as never)}
@@ -104,10 +127,10 @@ export default function SettingsScreen() {
         </View>
         <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
       </Pressable>}
-      {Platform.OS !== 'web' && auth.status === 'signedIn'
+      {Platform.OS !== 'web' && auth.status === 'signedIn' && activeCourse.capabilities.privateNeuralPronunciation
         ? <PrivatePronunciationSettingsCard/>
         : null}
-      <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={styles.switchRow}><View style={styles.flex}><AppText variant="heading">Word reminders</AppText><AppText style={{ color: theme.muted }}>Fresh words at preferred times.</AppText></View><AppSwitch accessibilityLabel="Enable word reminders" value={draft.enabled} onValueChange={(value) => void toggleEnabled(value)}/></View></View>
+      <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={styles.switchRow}><View style={styles.flex}><AppText variant="heading">Word reminders</AppText><AppText style={{ color: theme.muted }}>Fresh {activeCourse.directionLabel} words at preferred times.</AppText></View><AppSwitch accessibilityLabel="Enable word reminders" value={draft.enabled} onValueChange={(value) => void toggleEnabled(value)}/></View></View>
       <View><AppText variant="heading">How often?</AppText><AppText style={{ color: theme.muted }}>One to three gentle presets, or your own rhythm up to six.</AppText></View>
       <View style={styles.countGrid}>{[1, 2, 3, 4, 5, 6].map((count) => { const preset = REMINDER_PRESETS.find((item) => item.count === count); const selected = draft.countPerDay === count; return <Pressable key={count} onPress={() => setDraft({ ...draft, countPerDay: count })} style={[styles.countCard, { backgroundColor: selected ? theme.primarySoft : theme.surface, borderColor: selected ? theme.primary : theme.border }]}><AppText variant="heading" style={{ color: selected ? theme.primary : theme.text }}>{count}</AppText><AppText variant="caption" numberOfLines={1} style={{ color: theme.muted }}>{preset?.label ?? 'My rhythm'}</AppText></Pressable>; })}</View>
       <View><AppText variant="heading">Preferred window</AppText><AppText style={{ color: theme.muted }}>Multiple reminders are spaced evenly from first to last.</AppText></View>
@@ -118,7 +141,13 @@ export default function SettingsScreen() {
       {scheduledCount !== null ? <AppText variant="label" style={[styles.center, { color: theme.success }]}>{draft.enabled ? `${scheduledCount} word reminders scheduled ahead.` : 'Reminders are off.'}</AppText> : null}
       <View style={styles.divider}/>
       <AppText variant="heading">Content and privacy</AppText>
-      <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><InfoRow icon="phone-portrait-outline" title="Offline-first vocabulary" body={dataSource === 'synced' ? 'Account vocabulary stays on this device and synchronizes when connected.' : 'Device vocabulary stays local until account import and reconciliation finish.'}/><InfoRow icon="book-outline" title="Open English WordNet 2025" body="Definitions under CC BY 4.0."/><InfoRow icon="list-outline" title="NGSL discovery packs" body="Spoken, Business, and Academic lists under CC BY-SA 4.0."/></View>
+      <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+        <InfoRow icon="phone-portrait-outline" title="Offline-first vocabulary" body={dataSource === 'synced' ? 'Account vocabulary stays on this device and synchronizes when connected.' : 'Device vocabulary stays local until account import and reconciliation finish.'}/>
+        {activeCourseId === 'en-sk' ? <>
+          <InfoRow icon="book-outline" title="Open English WordNet 2025" body="Definitions under CC BY 4.0."/>
+          <InfoRow icon="list-outline" title="NGSL discovery packs" body="Spoken, Business, and Academic lists under CC BY-SA 4.0."/>
+        </> : <InfoRow icon="shield-checkmark-outline" title="Spanish catalog quality gate" body="Instituto Cervantes guides level design only. No Cervantes text is bundled; reviewed original Spanish catalog content will appear after licensing and editorial approval."/>}
+      </View>
       <Pressable testID="privacy-policy-link" accessibilityRole="link" accessibilityLabel="Open privacy policy" onPress={() => void Linking.openURL(PRIVACY_POLICY_URL)} style={[styles.preferenceCard, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="shield-checkmark-outline" color={theme.primary} size={24}/></View><View style={styles.flex}><AppText variant="heading">Privacy policy</AppText><AppText variant="caption" style={{ color: theme.muted }}>What Wordfold stores locally and when cloud services are used</AppText></View><Ionicons name="open-outline" color={theme.primary} size={20}/></Pressable>
       <Pressable testID="account-deletion-link" accessibilityRole="link" accessibilityLabel="Open account deletion information" onPress={() => void Linking.openURL(ACCOUNT_DELETION_URL)} style={[styles.preferenceCard, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="trash-outline" color={theme.primary} size={24}/></View><View style={styles.flex}><AppText variant="heading">Account deletion</AppText><AppText variant="caption" style={{ color: theme.muted }}>Delete in the app or request deletion after uninstalling</AppText></View><Ionicons name="open-outline" color={theme.primary} size={20}/></Pressable>
       <AppText variant="caption" style={{ color: theme.muted }}>Wordfold reminders and learning preferences remain device-only.</AppText>
@@ -187,4 +216,5 @@ const styles = StyleSheet.create({
   preferenceCard: { minHeight: 96, borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, flexDirection: 'row', alignItems: 'center', gap: spacing.md }, preferenceIcon: { width: 48, height: 48, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
   countGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, countCard: { width: '31%', minHeight: 76, borderWidth: 1, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center', padding: spacing.sm },
   timeControl: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, flexDirection: 'row', alignItems: 'center', gap: spacing.sm }, adjust: { width: 48, height: 48, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' }, notice: { borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', gap: spacing.sm }, center: { textAlign: 'center' }, divider: { height: 1, marginVertical: spacing.sm }, infoRow: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.md },
+  section: { gap: spacing.md },
 });

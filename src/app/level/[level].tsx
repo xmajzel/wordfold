@@ -8,9 +8,10 @@ import { EmptyState } from '@/components/empty-state';
 import { FormField } from '@/components/form-field';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
-import { getCefrEntries } from '@/data/cefr-catalog';
+import { getCourseCatalogEntries, type CourseCatalogEntry } from '@/data/course-catalog';
 import { cefrLevelDescriptions, isCefrLevel } from '@/data/cefr-levels';
-import type { CefrCatalogEntry } from '@/domain/types';
+import { wordBelongsToCourse } from '@/domain/courses';
+import { languageLabel } from '@/domain/languages';
 import { normalizeTerm } from '@/features/import/parser';
 import { WordCapacityExceededError } from '@/features/purchases/capacity';
 import { useAppTheme } from '@/hooks/use-app-theme';
@@ -20,21 +21,29 @@ import { radii, spacing } from '@/theme/tokens';
 export default function CefrLevelScreen() {
   const theme = useAppTheme();
   const { level } = useLocalSearchParams<{ level: string }>();
-  const { words, collections, createWord, pronunciationVoicePreference } = useAppData();
-  const preferredEnglishLocale = pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : 'en-US';
+  const {
+    words, collections, activeCourse, activeCourseId, createWord, pronunciationVoicePreference,
+  } = useAppData();
+  const preferredSourceLocale = activeCourseId === 'en-sk' && pronunciationVoicePreference === 'neural-en-GB'
+    ? 'en-GB'
+    : activeCourse.defaultSourcePronunciationLocale;
+  const learnedLanguage = languageLabel(activeCourse.sourceLanguageCode);
   const [query, setQuery] = useState('');
   const [busyId, setBusyId] = useState<string | null>(null);
   const validLevel = isCefrLevel(level) ? level : null;
-  const entries = useMemo(() => validLevel ? getCefrEntries(validLevel) : [], [validLevel]);
+  const entries = useMemo(() => validLevel ? getCourseCatalogEntries(activeCourseId, validLevel) : [], [activeCourseId, validLevel]);
   const normalizedQuery = normalizeTerm(query);
   const filteredEntries = useMemo(() => normalizedQuery
     ? entries.filter((entry) => entry.normalizedTerm.includes(normalizedQuery) || normalizeTerm(entry.definition).includes(normalizedQuery))
     : entries, [entries, normalizedQuery]);
   const addedTerms = useMemo(() => new Set(words
-    .filter((word) => word.sourceLanguageCode === 'en')
-    .map((word) => word.normalizedTerm)), [words]);
+    .filter((word) => wordBelongsToCourse(word, activeCourseId))
+    .map((word) => word.normalizedTerm)), [activeCourseId, words]);
+  const addedSenseIds = useMemo(() => new Set(words
+    .filter((word) => wordBelongsToCourse(word, activeCourseId) && word.catalogSenseId)
+    .map((word) => word.catalogSenseId)), [activeCourseId, words]);
 
-  const addWord = async (entry: CefrCatalogEntry) => {
+  const addWord = async (entry: CourseCatalogEntry) => {
     const collectionId = collections.find((collection) => collection.id === 'my-words')?.id ?? collections[0]?.id;
     if (!collectionId) {
       Alert.alert('Create a collection first', 'This word needs a collection before it can be added.');
@@ -53,10 +62,10 @@ export default function CefrLevelScreen() {
         catalogSenseId: entry.catalogSenseId,
         cefrLevel: entry.level,
         source: 'manual',
-        sourceLanguageCode: 'en',
-        targetLanguageCode: 'sk',
-        sourcePronunciationLocale: preferredEnglishLocale,
-        targetPronunciationLocale: 'sk-SK',
+        sourceLanguageCode: activeCourse.sourceLanguageCode,
+        targetLanguageCode: activeCourse.targetLanguageCode,
+        sourcePronunciationLocale: preferredSourceLocale,
+        targetPronunciationLocale: activeCourse.defaultTargetPronunciationLocale,
       });
     } catch (error) {
       if (error instanceof WordCapacityExceededError) {
@@ -78,7 +87,7 @@ export default function CefrLevelScreen() {
   };
 
   if (!validLevel) {
-    return <Screen><Header title="English levels"/><EmptyState title="Level not available" message="Choose a level from A1 through C2." actionLabel="Back to the library" onAction={() => router.replace('/(tabs)/library')}/></Screen>;
+    return <Screen><Header title={`${learnedLanguage} levels`}/><EmptyState title="Level not available" message="Choose a level from A1 through C2." actionLabel="Back to the library" onAction={() => router.replace('/(tabs)/library')}/></Screen>;
   }
 
   return (
@@ -94,19 +103,30 @@ export default function CefrLevelScreen() {
         windowSize={7}
         ItemSeparatorComponent={() => <View style={styles.separator}/>}
         ListHeaderComponent={<View style={styles.headerContent}>
-          <Header title={`${validLevel} English`}/>
+          <Header title={`${validLevel} ${learnedLanguage}`}/>
           <View style={styles.intro}>
             <View style={[styles.levelBadge, { backgroundColor: theme.primarySoft }]}><AppText variant="display" style={{ color: theme.primary }}>{validLevel}</AppText></View>
-            <View style={styles.introText}><AppText variant="heading">{cefrLevelDescriptions[validLevel]}</AppText><AppText style={{ color: theme.muted }}>{entries.length.toLocaleString()} offline words with definitions and Slovak hints</AppText></View>
+            <View style={styles.introText}><AppText variant="heading">{cefrLevelDescriptions[validLevel]}</AppText><AppText style={{ color: theme.muted }}>{entries.length > 0
+              ? `${entries.length.toLocaleString()} offline words with ${learnedLanguage} definitions and Slovak hints`
+              : 'Reviewed built-in words are not available for this level yet'}</AppText></View>
           </View>
           <FormField label="Search this level" value={query} onChangeText={setQuery} placeholder="Word or meaning" autoCapitalize="none"/>
-          <AppText variant="caption" style={{ color: theme.muted }}>CEFR-aligned vocabulary: A1–B2 from CEFR-J 1.6, C1–C2 from Octanove 1.0, with meanings from Open English WordNet 2025.</AppText>
+          <AppText variant="caption" style={{ color: theme.muted }}>{activeCourseId === 'en-sk'
+            ? 'CEFR-aligned vocabulary: A1–B2 from CEFR-J 1.6, C1–C2 from Octanove 1.0, with meanings from Open English WordNet 2025.'
+            : 'Instituto Cervantes is used only as an editorial reference. No Cervantes content is bundled; publication waits for an approved source and independent review.'}</AppText>
           {normalizedQuery ? <AppText variant="label">{filteredEntries.length.toLocaleString()} results</AppText> : null}
         </View>}
-        ListEmptyComponent={<EmptyState title="No matching words" message="Try a different word or definition."/>}
+        ListEmptyComponent={<EmptyState
+          title={entries.length === 0 ? `No reviewed ${learnedLanguage} catalog words yet` : 'No matching words'}
+          message={entries.length === 0 ? 'You can still add a word manually or import your own vocabulary.' : 'Try a different word or definition.'}
+          actionLabel={entries.length === 0 ? `Add a ${learnedLanguage} word` : undefined}
+          onAction={entries.length === 0 ? () => router.push('/word/new') : undefined}
+        />}
         renderItem={({ item }) => <CatalogWordCard
           entry={item}
-          added={addedTerms.has(item.normalizedTerm)}
+          added={activeCourseId === 'es-sk'
+            ? addedSenseIds.has(item.catalogSenseId)
+            : addedTerms.has(item.normalizedTerm)}
           loading={busyId === item.id}
           disabled={busyId !== null}
           onAdd={() => void addWord(item)}
@@ -122,14 +142,14 @@ function Header({ title }: { title: string }) {
 }
 
 function CatalogWordCard({ entry, added, loading, disabled, onAdd }: {
-  entry: CefrCatalogEntry;
+  entry: CourseCatalogEntry;
   added: boolean;
   loading: boolean;
   disabled: boolean;
   onAdd(): void;
 }) {
   const theme = useAppTheme();
-  const source = entry.source === 'cefr-j' ? 'CEFR-J' : 'Octanove';
+  const source = entry.source === 'cefr-j' ? 'CEFR-J' : entry.source === 'octanove' ? 'Octanove' : 'Wordfold original';
   return <View style={[styles.card, { backgroundColor: theme.surface, borderColor: theme.border }]}>
     <View style={styles.wordHeader}><View style={styles.wordTitle}><AppText variant="heading">{entry.term}</AppText><AppText variant="caption" style={{ color: theme.accent }}>{entry.partOfSpeech}</AppText></View><AppText variant="caption" style={{ color: theme.muted }}>{source} {entry.sourceVersion}</AppText></View>
     <AppText>{entry.definition}</AppText>

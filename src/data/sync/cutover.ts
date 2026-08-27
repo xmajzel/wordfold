@@ -423,7 +423,10 @@ function planFor(
     if (mapping.sourceUpdatedAt === null && mapping.hasConflict && mapping.conflictResolution === null && accountWord) {
       conflicts.push({
         kind: 'new_word', localId: localWord.id, remoteId: accountWord.id, term: localWord.term,
-        localDefinition: localWord.definition, accountDefinition: accountWord.definition, resolution: null,
+        localDefinition: localWord.definition, accountDefinition: accountWord.definition,
+        sourceLanguageCode: localWord.source_language_code,
+        targetLanguageCode: localWord.target_language_code,
+        resolution: null,
       });
     }
   }

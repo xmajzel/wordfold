@@ -129,6 +129,8 @@ jest.mock('@/components/swipeable-word-card', () => {
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     words: mockWords,
+    activeCourseId: 'en-sk',
+    activeCourse: { sourceLanguageCode: 'en', capabilities: { recommendations: true } },
     collections: [{ id: 'my-words', name: 'My words' }],
     learningFilter: mockLearningFilter,
     learningPreferences: mockLearningPreferences,

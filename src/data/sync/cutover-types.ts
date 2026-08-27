@@ -28,6 +28,8 @@ export interface SyncCutoverRenameConflict {
   term: string;
   localDefinition: string;
   accountDefinition: string;
+  sourceLanguageCode?: string;
+  targetLanguageCode?: string;
 }
 
 export type SyncCutoverConflict = (GuestImportConflict & { kind: 'new_word' }) | SyncCutoverRenameConflict;

@@ -10,11 +10,14 @@ import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import { SwipeableWordCard } from '@/components/swipeable-word-card';
 import { WordCard } from '@/components/word-card';
+import { wordBelongsToCourse } from '@/domain/courses';
+import { languageLabel } from '@/domain/languages';
 import type { LearningFilter, LearningPreferences, LearningRating, Word } from '@/domain/types';
 import { buildContinuedLearningFeed, buildLearningFeed, buildNotificationLearningSession, filterWordsByLearningCategory, getAvailableLearningFilters } from '@/features/learning/algorithm';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
 import { WordCapacityExceededError } from '@/features/purchases/capacity';
 import { buildRecommendations, topicOptions, type Recommendation } from '@/features/recommendations/selector';
+import { isOnDeviceTranslationPairSupported } from '@/features/translation/translator';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
@@ -31,7 +34,8 @@ const filterOptions: { id: LearningFilter; label: string }[] = [
 ];
 
 export default function LearnScreen() {
-  const { words, learningFilter, updateLearningFilter } = useAppData();
+  const { words, activeCourseId, learningFilter, updateLearningFilter } = useAppData();
+  const activeWords = useMemo(() => words.filter((word) => wordBelongsToCourse(word, activeCourseId)), [activeCourseId, words]);
   const { notificationWordId: notificationWordIdParam } = useLocalSearchParams<{
     notificationWordId?: string | string[];
   }>();
@@ -42,10 +46,10 @@ export default function LearnScreen() {
     && words.some((word) => word.id === requestedNotificationWordId)
     ? requestedNotificationWordId
     : null;
-  const availableFilters = useMemo(() => getAvailableLearningFilters(words), [words]);
+  const availableFilters = useMemo(() => getAvailableLearningFilters(activeWords), [activeWords]);
   const activeFilter = availableFilters.includes(learningFilter) ? learningFilter : 'all';
   const sessionFilter = notificationWordId ? 'all' : activeFilter;
-  const sessionKey = `${sessionFilter}:${notificationWordId ?? 'regular'}:${words.map((word) => word.id).sort().join(':')}`;
+  const sessionKey = `${activeCourseId}:${sessionFilter}:${notificationWordId ?? 'regular'}:${activeWords.map((word) => word.id).sort().join(':')}`;
 
   const selectFilter = useCallback(async (filter: LearningFilter) => {
     if (requestedNotificationWordId) router.setParams({ notificationWordId: '' });
@@ -77,6 +81,8 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
   const {
     words,
     collections,
+    activeCourse,
+    activeCourseId,
     learningPreferences,
     wordCapacity,
     addRecommendedWords,
@@ -84,9 +90,15 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     markViewed,
     prepareWordTranslation,
   } = useAppData();
-  const [initialSession] = useState(() => notificationWordId
-    ? buildNotificationLearningSession(words, notificationWordId, new Date())
-    : { feed: buildLearningFeed(words, new Date(), filter), reviewWord: null });
+  const activeWords = useMemo(() => words.filter((word) => wordBelongsToCourse(word, activeCourseId)), [activeCourseId, words]);
+  const [initialSession] = useState(() => {
+    if (!notificationWordId) return { feed: buildLearningFeed(activeWords, new Date(), filter), reviewWord: null };
+    const notificationWord = words.find((word) => word.id === notificationWordId) ?? null;
+    if (notificationWord && !wordBelongsToCourse(notificationWord, activeCourseId)) {
+      return { feed: buildLearningFeed(activeWords, new Date(), 'all'), reviewWord: notificationWord };
+    }
+    return buildNotificationLearningSession(activeWords, notificationWordId, new Date());
+  });
   const [sessionFeed, setSessionFeed] = useState<Word[]>(initialSession.feed);
   const [notificationReviewWord, setNotificationReviewWord] = useState<Word | null>(initialSession.reviewWord);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -103,7 +115,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
   const translatingIds = useRef(new Set<string>());
   const cardHeight = listHeight || Math.max(390, height - 241);
   const denseCards = cardHeight < 500;
-  const categoryWords = useMemo(() => filterWordsByLearningCategory(words, filter), [filter, words]);
+  const categoryWords = useMemo(() => filterWordsByLearningCategory(activeWords, filter), [activeWords, filter]);
   const currentWords = useMemo(() => Object.fromEntries(words.map((word) => [word.id, word])), [words]);
   const currentNotificationReviewWord = notificationReviewWord
     ? currentWords[notificationReviewWord.id] ?? notificationReviewWord
@@ -112,16 +124,16 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     ?? currentWords[sessionFeed[currentIndex]?.id]
     ?? sessionFeed[currentIndex];
   const continuedSessionFeed = useMemo(() => buildContinuedLearningFeed(
-    words,
+    activeWords,
     sessionFeed.map((word) => word.id),
     new Date(),
     filter,
-  ), [filter, sessionFeed, words]);
-  const recommendationPreview = useMemo(() => buildRecommendations(
+  ), [activeWords, filter, sessionFeed]);
+  const recommendationPreview = useMemo(() => activeCourse.capabilities.recommendations ? buildRecommendations(
     learningPreferences,
-    words.filter((word) => word.sourceLanguageCode === 'en').map((word) => word.normalizedTerm),
+    activeWords.map((word) => word.normalizedTerm),
     10,
-  ), [learningPreferences, words]);
+  ) : [], [activeCourse.capabilities.recommendations, activeWords, learningPreferences]);
   const hasRecommendationPreferences = learningPreferences.levels.length > 0
     && learningPreferences.topics.length > 0;
   const recommendationAddCount = wordCapacity.remaining === null
@@ -137,7 +149,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
 
   useEffect(() => {
     if (!activeWord || activeWord.translation
-      || activeWord.sourceLanguageCode !== 'en' || activeWord.targetLanguageCode !== 'sk'
+      || !isOnDeviceTranslationPairSupported(activeWord.sourceLanguageCode, activeWord.targetLanguageCode)
       || translatingIds.current.has(activeWord.id)
       || translationStates[activeWord.id] === 'error') return;
     translatingIds.current.add(activeWord.id);
@@ -234,13 +246,15 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
   if (currentNotificationReviewWord) {
     const canContinue = sessionFeed.length > 0;
     const translationStatus = !currentNotificationReviewWord.translation
-      && currentNotificationReviewWord.sourceLanguageCode === 'en'
-      && currentNotificationReviewWord.targetLanguageCode === 'sk'
+      && isOnDeviceTranslationPairSupported(
+        currentNotificationReviewWord.sourceLanguageCode,
+        currentNotificationReviewWord.targetLanguageCode,
+      )
       ? translationStates[currentNotificationReviewWord.id] ?? 'loading'
       : undefined;
     return (
       <Screen style={styles.screen}>
-        <Header filter={filter} availableFilters={availableFilters} onSelectFilter={onSelectFilter}/>
+        <Header filter={filter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={onSelectFilter}/>
         <View style={styles.notificationReviewIntro}>
           <AppText variant="heading">{canContinue ? 'Already reviewed' : 'You are caught up'}</AppText>
           <AppText style={[styles.notificationReviewMessage, { color: theme.muted }]}>
@@ -268,17 +282,17 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
 
   if (sessionComplete) {
     const canContinue = continuedSessionFeed.length > 0;
-    return <Screen><Header filter={filter} availableFilters={availableFilters} onSelectFilter={onSelectFilter}/><Animated.View exiting={FadeOut.duration(140).reduceMotion(ReduceMotion.System)} style={styles.emptyTransition}>{canContinue ? <EmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} actionLabel="Continue learning" onAction={continueLearning}/> : <LearningEmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} recommendations={canAddRecommendations ? recommendationPreview.slice(0, recommendationAddCount) : []} learningPreferences={learningPreferences} busy={recommendationsBusy} onAdd={() => void addRecommendationsAndContinue()}/>}</Animated.View></Screen>;
+    return <Screen><Header filter={filter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={onSelectFilter}/><Animated.View exiting={FadeOut.duration(140).reduceMotion(ReduceMotion.System)} style={styles.emptyTransition}>{canContinue ? <EmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} actionLabel="Continue learning" onAction={continueLearning}/> : <LearningEmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} recommendations={canAddRecommendations ? recommendationPreview.slice(0, recommendationAddCount) : []} learningPreferences={learningPreferences} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} busy={recommendationsBusy} onAdd={() => void addRecommendationsAndContinue()}/>}</Animated.View></Screen>;
   }
 
   if (sessionFeed.length === 0) {
     const hasCategoryWords = categoryWords.length > 0;
-    return <Screen><Header filter={filter} availableFilters={availableFilters} onSelectFilter={onSelectFilter}/><LearningEmptyState title={hasCategoryWords ? 'You are caught up' : `No ${categoryWordLabel(filter)} yet`} message={hasCategoryWords ? `No ${categoryWordLabel(filter)} are due right now.` : 'Add words from the library or choose another category.'} recommendations={canAddRecommendations ? recommendationPreview.slice(0, recommendationAddCount) : []} learningPreferences={learningPreferences} busy={recommendationsBusy} onAdd={() => void addRecommendationsAndContinue()}/></Screen>;
+    return <Screen><Header filter={filter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={onSelectFilter}/><LearningEmptyState title={hasCategoryWords ? 'You are caught up' : `No ${categoryWordLabel(filter)} yet`} message={hasCategoryWords ? `No ${categoryWordLabel(filter)} are due right now.` : `Add ${languageLabel(activeCourse.sourceLanguageCode).toLowerCase()} words from the library or choose another category.`} recommendations={canAddRecommendations ? recommendationPreview.slice(0, recommendationAddCount) : []} learningPreferences={learningPreferences} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} busy={recommendationsBusy} onAdd={() => void addRecommendationsAndContinue()}/></Screen>;
   }
 
   return (
     <Screen style={styles.screen}>
-      <Header filter={filter} availableFilters={availableFilters} onSelectFilter={onSelectFilter}/>
+      <Header filter={filter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={onSelectFilter}/>
       <FlatList
         ref={listRef}
         data={sessionFeed}
@@ -294,7 +308,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
           const currentWord = currentWords[item.id] ?? item;
           const sessionRating = submittedRatings.current.get(currentWord.id);
           const translationStatus = currentWord.id === activeWord?.id && !currentWord.translation
-            && currentWord.sourceLanguageCode === 'en' && currentWord.targetLanguageCode === 'sk'
+            && isOnDeviceTranslationPairSupported(currentWord.sourceLanguageCode, currentWord.targetLanguageCode)
             ? translationStates[currentWord.id] ?? 'loading'
             : undefined;
           return <View style={{ height: cardHeight, marginBottom: spacing.md }}><SwipeableWordCard word={currentWord} active={index === currentIndex} disabled={sessionRating !== undefined} onSwipe={(rating) => handleRating(currentWord, rating)}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} sessionRating={sessionRating} showPronunciation={index === currentIndex} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={sessionRating === undefined ? (rating) => handleRating(currentWord, rating) : undefined}/></SwipeableWordCard></View>;
@@ -305,11 +319,12 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
   );
 }
 
-function LearningEmptyState({ title, message, recommendations, learningPreferences, busy, onAdd }: {
+function LearningEmptyState({ title, message, recommendations, learningPreferences, learnedLanguage, busy, onAdd }: {
   title: string;
   message: string;
   recommendations: Recommendation[];
   learningPreferences: LearningPreferences;
+  learnedLanguage: string;
   busy: boolean;
   onAdd(): void;
 }) {
@@ -344,7 +359,7 @@ function LearningEmptyState({ title, message, recommendations, learningPreferenc
           <View style={styles.recommendationHeading}>
             <View aria-hidden style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="sparkles-outline" color={theme.primary} size={20}/></View>
             <View style={styles.recommendationText}>
-              <AppText variant="label">{learningPreferences.levels.join(', ')} English</AppText>
+              <AppText variant="label">{learningPreferences.levels.join(', ')} {learnedLanguage}</AppText>
               <AppText variant="caption" style={{ color: theme.muted }}>{topics} · {recommendations.length} {wordLabel}</AppText>
             </View>
           </View>
@@ -356,10 +371,10 @@ function LearningEmptyState({ title, message, recommendations, learningPreferenc
   </ScrollView>;
 }
 
-function Header({ filter, availableFilters, onSelectFilter }: { filter: LearningFilter; availableFilters: LearningFilter[]; onSelectFilter(filter: LearningFilter): Promise<void> }) {
+function Header({ filter, availableFilters, learnedLanguage, onSelectFilter }: { filter: LearningFilter; availableFilters: LearningFilter[]; learnedLanguage: string; onSelectFilter(filter: LearningFilter): Promise<void> }) {
   const theme = useAppTheme();
   return <View style={styles.headerBlock}>
-    <View style={styles.header}><View><AppText variant="title">Today’s words</AppText><AppText variant="caption" style={{ color: theme.muted }}>Showing {filter === 'all' ? 'all words' : categoryWordLabel(filter)}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Open settings" onPress={() => router.push('/settings')} style={({ pressed }) => [styles.settings, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.7 : 1 }]}><Ionicons name="options-outline" color={theme.primary} size={22}/></Pressable></View>
+    <View style={styles.header}><View><AppText variant="title">Today’s {learnedLanguage.toLowerCase()}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Showing {filter === 'all' ? `all ${learnedLanguage.toLowerCase()} words` : categoryWordLabel(filter)}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Open settings" onPress={() => router.push('/settings')} style={({ pressed }) => [styles.settings, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.7 : 1 }]}><Ionicons name="options-outline" color={theme.primary} size={22}/></Pressable></View>
     <ScrollView horizontal accessibilityRole="tablist" showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filters}>
       {filterOptions.filter((option) => availableFilters.includes(option.id)).map((option) => <Pressable key={option.id} accessibilityRole="tab" accessibilityLabel={`Show ${option.label} words`} accessibilityState={{ selected: filter === option.id }} aria-selected={filter === option.id} onPress={() => void onSelectFilter(option.id)} style={[styles.filter, { backgroundColor: filter === option.id ? theme.primary : theme.surface, borderColor: filter === option.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: filter === option.id ? '#FFFFFF' : theme.text }}>{option.label}</AppText></Pressable>)}
     </ScrollView>

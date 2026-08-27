@@ -50,6 +50,8 @@ export interface GuestImportConflict {
   term: string;
   localDefinition: string;
   accountDefinition: string;
+  sourceLanguageCode?: string;
+  targetLanguageCode?: string;
   resolution: GuestImportConflictResolution | null;
 }
 

@@ -4,15 +4,17 @@ import { AppText } from '@/components/app-text';
 import { Screen } from '@/components/screen';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
+import { languageLabel } from '@/domain/languages';
 import { radii, spacing, stateColors } from '@/theme/tokens';
 
 export default function ProgressScreen() {
   const theme = useAppTheme();
-  const { stats } = useAppData();
+  const { stats, activeCourse } = useAppData();
+  const learnedLanguage = languageLabel(activeCourse.sourceLanguageCode);
   const stateTotal = stats ? Math.max(stats.totalWords, 1) : 1;
   return (
     <Screen scroll>
-      <View style={styles.header}><AppText variant="title">Your progress</AppText><AppText style={{ color: theme.muted }}>A quiet record of words becoming familiar.</AppText></View>
+      <View style={styles.header}><AppText variant="title">Your {learnedLanguage.toLowerCase()} progress</AppText><AppText style={{ color: theme.muted }}>A quiet record of {learnedLanguage.toLowerCase()} words becoming familiar.</AppText></View>
       <ActivityChart activity={stats?.recentActivity ?? []} viewedToday={stats?.viewedToday ?? 0} viewedLifetime={stats?.viewedLifetime ?? 0}/>
       <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
         <View style={styles.panelTitle}><AppText variant="heading">Memory mix</AppText><AppText variant="caption" style={{ color: theme.muted }}>{stats?.totalWords ?? 0} total {(stats?.totalWords ?? 0) === 1 ? 'word' : 'words'}</AppText></View>

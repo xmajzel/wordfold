@@ -11,6 +11,7 @@ let mockConsentStatus: 'loading' | 'disabled' | 'enabled' | 'deletion_pending' =
 let mockConsentUserId: string | null = 'reader';
 let mockVoicePreference: 'device' | 'neural-en-US' | 'neural-en-GB' = 'device';
 const mockNeuralRender = jest.fn();
+const mockDeviceRender = jest.fn();
 
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({ pronunciationVoicePreference: mockVoicePreference }),
@@ -36,7 +37,8 @@ jest.mock('@/features/pronunciation/private-consent', () => ({
 jest.mock('@/components/pronunciation-button', () => {
   const { Pressable, Text } = jest.requireActual<typeof import('react-native')>('react-native');
   return {
-    PronunciationButton: ({ idleLabel }: { idleLabel?: string }) => {
+    PronunciationButton: ({ idleLabel, locale, text }: { idleLabel?: string; locale: string; text: string }) => {
+      mockDeviceRender({ idleLabel, locale, text });
       const label = idleLabel ?? 'device';
       return <Pressable accessibilityRole="button" accessibilityLabel={label}><Text>{label}</Text></Pressable>;
     },
@@ -83,6 +85,7 @@ describe('PronunciationControls', () => {
     mockConsentUserId = 'reader';
     mockVoicePreference = 'device';
     mockNeuralRender.mockClear();
+    mockDeviceRender.mockClear();
     Object.defineProperty(Platform, 'OS', { configurable: true, value: 'ios' });
   });
 
@@ -103,6 +106,24 @@ describe('PronunciationControls', () => {
     expect(screen.getByLabelText('neural')).toBeTruthy();
     expect(screen.queryByLabelText('Phone voice')).toBeNull();
     expect(mockNeuralRender).toHaveBeenCalledWith('en-GB');
+  });
+
+  it('keeps Spanish course pronunciation on the word exact locale even with a stale English preference', async () => {
+    mockVoicePreference = 'neural-en-GB';
+    const screen = await render(<PronunciationControls
+      text="hola"
+      sourceLanguageCode="es"
+      locale="es-ES"
+      catalogSenseId="wordfold:hola:greeting"
+    />);
+
+    expect(screen.getByLabelText('Phone voice')).toBeTruthy();
+    expect(screen.queryByLabelText('neural')).toBeNull();
+    expect(mockDeviceRender).toHaveBeenCalledWith({
+      idleLabel: 'Phone voice',
+      locale: 'es-ES',
+      text: 'hola',
+    });
   });
 
   it('uses the phone voice when natural pronunciation is unavailable', async () => {

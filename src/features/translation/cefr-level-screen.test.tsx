@@ -40,14 +40,25 @@ jest.mock('react-native-reanimated', () => {
   };
 });
 
-jest.mock('@/data/cefr-catalog', () => ({
-  getCefrEntries: () => [mockEntry],
+jest.mock('@/data/course-catalog', () => ({
+  getCourseCatalogEntries: () => [{
+    ...mockEntry,
+    courseId: 'en-sk', sourceLanguageCode: 'en', targetLanguageCode: 'sk',
+    publicationStatus: 'production', learnerContentReviewStatus: 'approved',
+    hintReviewStatus: 'approved', levelEvidence: 'cefr-j:1.6',
+  }],
 }));
 
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     words: [],
+    activeCourseId: 'en-sk',
+    activeCourse: {
+      sourceLanguageCode: 'en', targetLanguageCode: 'sk',
+      defaultSourcePronunciationLocale: 'en-US', defaultTargetPronunciationLocale: 'sk-SK',
+    },
     collections: [{ id: 'my-words', name: 'My words' }],
+    pronunciationVoicePreference: 'device',
     createWord: mockCreateWord,
   }),
 }));

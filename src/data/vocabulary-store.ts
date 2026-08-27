@@ -1,5 +1,6 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
+import type { CourseId } from '@/domain/courses';
 import type { Collection, DashboardStats, LearningRating, Word } from '@/domain/types';
 import * as guestRepository from '@/data/repository';
 import * as syncRepository from '@/data/sync/repository';
@@ -9,7 +10,7 @@ export interface VocabularyStore {
   listWords(): Promise<Word[]>;
   getWord(id: string): Promise<Word | null>;
   listCollections(): Promise<Collection[]>;
-  getStats(): Promise<DashboardStats>;
+  getStats(courseId?: CourseId): Promise<DashboardStats>;
   createWord(input: guestRepository.NewWordInput): Promise<string>;
   createWords(inputs: guestRepository.NewWordInput[]): Promise<string[]>;
   editWord(id: string, input: guestRepository.NewWordInput): Promise<void>;
@@ -32,7 +33,7 @@ export function createGuestVocabularyStore(database: SQLiteDatabase): Vocabulary
     listWords: () => guestRepository.listWords(database),
     getWord: (id) => guestRepository.getWord(database, id),
     listCollections: () => guestRepository.listCollections(database),
-    getStats: () => guestRepository.getStats(database),
+    getStats: (courseId) => guestRepository.getStats(database, courseId),
     createWord: (input) => guestRepository.addWord(database, input),
     createWords: (inputs) => guestRepository.addWords(database, inputs),
     editWord: (id, input) => guestRepository.updateWord(database, id, input),
@@ -60,7 +61,7 @@ export function createSyncVocabularyStore(database: PowerSyncStoreDatabase, user
     listWords: () => syncRepository.listSyncWords(database),
     getWord: (id) => syncRepository.getSyncWord(database, id),
     listCollections: () => syncRepository.listSyncCollections(database),
-    getStats: () => syncRepository.getSyncStats(database),
+    getStats: (courseId) => syncRepository.getSyncStats(database, courseId),
     createWord: (input) => syncRepository.addSyncWord(database, userId, input),
     createWords: (inputs) => syncRepository.addSyncWords(database, userId, inputs),
     editWord: (id, input) => syncRepository.updateSyncWord(database, id, input),

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Redirect, router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,11 +7,13 @@ import Animated, { FadeInLeft, FadeInRight, ReduceMotion } from 'react-native-re
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AppText } from '@/components/app-text';
+import { CourseSelector } from '@/components/course-selector';
 import { LevelSelection, TopicSelection } from '@/components/preference-cards';
 import { PrimaryButton } from '@/components/primary-button';
 import { PronunciationVoicePicker } from '@/components/pronunciation-voice-picker';
 import { Screen } from '@/components/screen';
 import { cefrLevelDescriptions } from '@/data/cefr-levels';
+import { wordBelongsToCourse, type CourseDefinition, type CourseId } from '@/domain/courses';
 import type { CefrLevel, ContentPackId, LearningPreferences, PronunciationVoicePreference } from '@/domain/types';
 import { neuralPreviewFeatureEnabled, neuralVoiceLabel } from '@/features/pronunciation/cloud';
 import { buildRecommendations, normalizeLearningPreferences, topicOptions } from '@/features/recommendations/selector';
@@ -22,30 +24,39 @@ import { radii, spacing } from '@/theme/tokens';
 export default function OnboardingScreen() {
   const theme = useAppTheme();
   const insets = useSafeAreaInsets();
-  const { words, onboardingComplete, completePersonalizedOnboarding, wordCapacity } = useAppData();
+  const {
+    words, onboardingComplete, activeCourse, activeCourseId, switchActiveCourse,
+    completePersonalizedOnboarding, wordCapacity,
+  } = useAppData();
   const [wasCompleteOnEntry] = useState(onboardingComplete === true);
   const [step, setStep] = useState(0);
   const [furthestStep, setFurthestStep] = useState(0);
   const [transitionDirection, setTransitionDirection] = useState<'forward' | 'backward'>('forward');
   const [levels, setLevels] = useState<CefrLevel[]>([]);
   const [topics, setTopics] = useState<ContentPackId[]>([]);
-  const [voicePreference, setVoicePreference] = useState<PronunciationVoicePreference>('neural-en-US');
+  const [voicePreference, setVoicePreference] = useState<PronunciationVoicePreference>(activeCourseId === 'en-sk' ? 'neural-en-US' : 'device');
   const [busy, setBusy] = useState(false);
-  const showVoiceStep = Platform.OS !== 'web' && neuralPreviewFeatureEnabled();
-  const stepNames = showVoiceStep
-    ? ['Language', 'Voice', 'Levels', 'Interests', 'Review'] as const
-    : ['Language', 'Levels', 'Interests', 'Review'] as const;
+  const [switchingCourse, setSwitchingCourse] = useState(false);
+  const showVoiceStep = activeCourse.capabilities.offlinePronunciation && Platform.OS !== 'web' && neuralPreviewFeatureEnabled();
+  const showInterestsStep = activeCourse.capabilities.recommendations;
+  const stepNames: readonly string[] = [
+    'Language',
+    ...(showVoiceStep ? ['Voice'] as const : []),
+    'Levels',
+    ...(showInterestsStep ? ['Interests'] as const : []),
+    'Review',
+  ];
   const stepCount = stepNames.length;
-  const levelStep = showVoiceStep ? 2 : 1;
-  const interestsStep = levelStep + 1;
-  const reviewStep = interestsStep + 1;
+  const levelStep = stepNames.indexOf('Levels');
+  const interestsStep = stepNames.indexOf('Interests');
+  const reviewStep = stepNames.indexOf('Review');
   const preferences = useMemo(() => normalizeLearningPreferences({ levels, topics }), [levels, topics]);
   const previewLimit = wordCapacity.remaining === null ? 10 : Math.min(10, wordCapacity.remaining);
-  const preview = useMemo(() => buildRecommendations(
+  const preview = useMemo(() => activeCourse.capabilities.recommendations ? buildRecommendations(
     preferences,
-    words.filter((word) => word.sourceLanguageCode === 'en').map((word) => word.normalizedTerm),
+    words.filter((word) => wordBelongsToCourse(word, activeCourseId)).map((word) => word.normalizedTerm),
     previewLimit,
-  ), [preferences, previewLimit, words]);
+  ) : [], [activeCourse.capabilities.recommendations, activeCourseId, preferences, previewLimit, words]);
 
   if (wasCompleteOnEntry) return <Redirect href="/(tabs)" />;
 
@@ -55,11 +66,11 @@ export default function OnboardingScreen() {
   const toggleTopic = (topic: ContentPackId) => setTopics((current) => current.includes(topic)
     ? current.filter((item) => item !== topic)
     : normalizeLearningPreferences({ levels: [], topics: [...current, topic] }).topics);
-  const canContinue = step === levelStep ? levels.length > 0
-    : step === interestsStep ? topics.length > 0
-      : step !== reviewStep || preview.length > 0 || previewLimit === 0;
+  const canContinue = switchingCourse ? false : step === levelStep ? levels.length > 0
+    : interestsStep >= 0 && step === interestsStep ? topics.length > 0
+      : step !== reviewStep || !activeCourse.capabilities.recommendations || preview.length > 0 || previewLimit === 0;
   const maxValidStep = levels.length === 0 ? levelStep
-    : topics.length === 0 || (preview.length === 0 && previewLimit > 0) ? interestsStep : reviewStep;
+    : showInterestsStep && (topics.length === 0 || (preview.length === 0 && previewLimit > 0)) ? interestsStep : reviewStep;
   const maxNavigableStep = Math.min(furthestStep, maxValidStep);
 
   const goToStep = (nextStep: number) => {
@@ -119,7 +130,20 @@ export default function OnboardingScreen() {
         entering={(transitionDirection === 'backward' ? FadeInLeft : FadeInRight).duration(260).reduceMotion(ReduceMotion.System)}
         style={styles.step}>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.stepContent}>
-          {step === 0 ? <LanguageStep /> : null}
+          {step === 0 ? <LanguageStep
+            value={activeCourseId}
+            disabled={switchingCourse}
+            onChange={(courseId) => {
+              setLevels([]);
+              setTopics([]);
+              setVoicePreference(courseId === 'en-sk' ? 'neural-en-US' : 'device');
+              setFurthestStep(0);
+              setSwitchingCourse(true);
+              void switchActiveCourse(courseId)
+                .catch((error) => Alert.alert('Could not switch course', error instanceof Error ? error.message : 'Please try again.'))
+                .finally(() => setSwitchingCourse(false));
+            }}
+          /> : null}
           {showVoiceStep && step === 1 ? <View style={styles.section}>
             <StepHeading
               eyebrow="YOUR VOICE"
@@ -134,10 +158,12 @@ export default function OnboardingScreen() {
           {step === levelStep ? <View style={styles.section}>
             <StepHeading eyebrow="YOUR STARTING POINT" title="Which levels feel right?" body="Choose one level or combine a few. You can change this later."/>
             <LevelSelection selected={levels} onToggle={toggleLevel}/>
-            <AppText variant="caption" style={{ color: theme.muted }}>Levels set the difficulty boundary for every recommendation.</AppText>
+            <AppText variant="caption" style={{ color: theme.muted }}>{activeCourse.capabilities.recommendations
+              ? 'Levels set the difficulty boundary for every recommendation.'
+              : 'Levels organize your Spanish learning now and will filter the reviewed catalog when it is ready.'}</AppText>
           </View> : null}
-          {step === interestsStep ? <View style={styles.section}>
-            <StepHeading eyebrow="YOUR INTERESTS" title="What will you use English for?" body="Pick every area that matters. We will prioritize words that match."/>
+          {interestsStep >= 0 && step === interestsStep ? <View style={styles.section}>
+            <StepHeading eyebrow="YOUR INTERESTS" title={`What will you use ${activeCourse.sourceLanguageCode === 'en' ? 'English' : 'Spanish'} for?`} body="Pick every area that matters. We will prioritize words that match."/>
             <TopicSelection selected={topics} onToggle={toggleTopic}/>
             <View style={[styles.note, { backgroundColor: theme.primarySoft }]}>
               <Ionicons name="sparkles-outline" color={theme.primary} size={20}/>
@@ -148,6 +174,7 @@ export default function OnboardingScreen() {
             preferences={preferences}
             preview={preview}
             voicePreference={showVoiceStep ? voicePreference : 'device'}
+            course={activeCourse}
           /> : null}
         </ScrollView>
       </Animated.View>
@@ -172,16 +199,12 @@ export default function OnboardingScreen() {
   );
 }
 
-function LanguageStep() {
+function LanguageStep({ value, onChange, disabled }: { value: CourseId; onChange(courseId: CourseId): void; disabled: boolean }) {
   const theme = useAppTheme();
   return <View style={styles.section}>
     <View style={styles.heroMark}><LinearGradient colors={theme.primaryGradient} style={styles.heroGradient}><AppText variant="title" style={styles.heroLetter}>W</AppText></LinearGradient></View>
     <StepHeading eyebrow="WELCOME" title="Keep useful words close." body="Build a small vocabulary practice around your level, work, studies, and everyday life." centered/>
-    <View style={[styles.languageCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-      <View style={[styles.languageIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="language-outline" color={theme.primary} size={26}/></View>
-      <View style={styles.flex}><AppText variant="heading">English → Slovak</AppText><AppText variant="caption" style={{ color: theme.muted }}>Definitions stay in English. Slovak translation waits behind a hint.</AppText></View>
-      <Ionicons name="checkmark-circle" color={theme.success} size={24}/>
-    </View>
+    <CourseSelector value={value} onChange={onChange} disabled={disabled}/>
     <View style={[styles.privacyRow, { backgroundColor: theme.primarySoft }]}><Ionicons name="phone-portrait-outline" color={theme.primary} size={19}/><AppText variant="caption" style={styles.flex}>Your words and progress stay on this device.</AppText></View>
   </View>;
 }
@@ -195,17 +218,20 @@ function StepHeading({ eyebrow, title, body, centered = false }: { eyebrow: stri
   </View>;
 }
 
-function ReviewStep({ preferences, preview, voicePreference }: {
+function ReviewStep({ preferences, preview, voicePreference, course }: {
   preferences: LearningPreferences;
   preview: ReturnType<typeof buildRecommendations>;
   voicePreference: PronunciationVoicePreference;
+  course: CourseDefinition;
 }) {
   const theme = useAppTheme();
   const topicNames = topicOptions.filter((topic) => preferences.topics.includes(topic.id)).map((topic) => topic.title);
   return <View style={styles.section}>
-    <StepHeading eyebrow="YOUR PLAN" title="A focused start, made for you." body="We will add a small starter set now. Your choices can be edited at any time."/>
+    <StepHeading eyebrow="YOUR PLAN" title="A focused start, made for you." body={course.capabilities.recommendations
+      ? 'We will add a small starter set now. Your choices can be edited at any time.'
+      : 'Your Spanish course is ready for manual and imported words. Your choices can be edited at any time.'}/>
     <View style={[styles.summaryCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-      <SummaryRow icon="language-outline" label="Language" value="English → Slovak"/>
+      <SummaryRow icon="language-outline" label="Language" value={course.directionLabel}/>
       <View style={[styles.divider, { backgroundColor: theme.border }]}/>
       <SummaryRow
         icon="volume-high-outline"
@@ -215,12 +241,18 @@ function ReviewStep({ preferences, preview, voicePreference }: {
       />
       <View style={[styles.divider, { backgroundColor: theme.border }]}/>
       <SummaryRow icon="speedometer-outline" label="Levels" value={preferences.levels.map((level) => `${level} · ${cefrLevelDescriptions[level]}`).join('\n')}/>
-      <View style={[styles.divider, { backgroundColor: theme.border }]}/>
-      <SummaryRow icon="heart-outline" label="Interests" value={topicNames.join('\n')}/>
+      {course.capabilities.recommendations ? <>
+        <View style={[styles.divider, { backgroundColor: theme.border }]}/>
+        <SummaryRow icon="heart-outline" label="Interests" value={topicNames.join('\n')}/>
+      </> : null}
     </View>
     <View>
       <AppText variant="heading">{preview.length > 0 ? `Your first ${preview.length} words` : 'Your preferences are ready'}</AppText>
-      <AppText style={{ color: theme.muted }}>{preview.length > 0 ? 'These words will be added to your library.' : 'Your current library is full. Unlock unlimited words later to add recommendations.'}</AppText>
+      <AppText style={{ color: theme.muted }}>{preview.length > 0
+        ? 'These words will be added to your library.'
+        : course.capabilities.recommendations
+          ? 'Your current library is full. Unlock unlimited words later to add recommendations.'
+          : 'Add Spanish words manually or import them. The built-in A1–C2 catalog stays hidden until every entry has approved provenance and independent editorial review.'}</AppText>
     </View>
     {voicePreference === 'device' || preview.length === 0 ? null : <View style={[styles.note, { backgroundColor: theme.primarySoft }]}>
       <Ionicons name="cloud-download-outline" color={theme.primary} size={20}/>

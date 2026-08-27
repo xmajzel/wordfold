@@ -14,6 +14,7 @@ import { AppText } from '@/components/app-text';
 import { PronunciationVoicePicker } from '@/components/pronunciation-voice-picker';
 import { Screen } from '@/components/screen';
 import { cefrLevels } from '@/data/cefr-levels';
+import { languageLabel, pronunciationLocaleLabel } from '@/domain/languages';
 import type { CefrLevel, PronunciationVoicePreference } from '@/domain/types';
 import { neuralVoiceLabel, type NeuralPronunciationLocale } from '@/features/pronunciation/cloud';
 import {
@@ -47,9 +48,15 @@ export default function OfflinePronunciationScreen() {
   const downloads = useOfflinePronunciationDownloads();
   const {
     words,
+    activeCourse,
     pronunciationVoicePreference,
     savePronunciationVoicePreference,
   } = useAppData();
+  const supportsOfflineDownloads = activeCourse.capabilities.offlinePronunciation;
+  const deviceVoiceLabel = `${languageLabel(activeCourse.sourceLanguageCode)} · ${pronunciationLocaleLabel(
+    activeCourse.sourceLanguageCode,
+    activeCourse.defaultSourcePronunciationLocale,
+  )}`;
   const prepareManifests = downloads.prepareManifests;
   const [savingVoice, setSavingVoice] = useState(false);
   const selectedLocale: NeuralPronunciationLocale | null = pronunciationVoicePreference === 'neural-en-US'
@@ -63,8 +70,10 @@ export default function OfflinePronunciationScreen() {
     : 0;
 
   useEffect(() => {
-    if (Platform.OS !== 'web') void prepareManifests().catch(() => undefined);
-  }, [prepareManifests]);
+    if (Platform.OS !== 'web' && supportsOfflineDownloads) {
+      void prepareManifests().catch(() => undefined);
+    }
+  }, [prepareManifests, supportsOfflineDownloads]);
 
   const run = (operation: () => Promise<void>) => {
     void operation().catch(actionError);
@@ -139,8 +148,30 @@ export default function OfflinePronunciationScreen() {
 
     {Platform.OS === 'web' ? <View style={[styles.notice, { backgroundColor: theme.primarySoft }]}>
       <Ionicons name="phone-portrait-outline" color={theme.primary} size={22}/>
-      <AppText style={styles.flex}>Pronunciation downloads are available in the Android and iOS apps.</AppText>
-    </View> : <>
+      <AppText style={styles.flex}>
+        {supportsOfflineDownloads
+          ? 'Pronunciation downloads are available in the Android and iOS apps.'
+          : `${deviceVoiceLabel} pronunciation uses live browser speech. The browser must provide that exact voice; voice quality and offline availability vary, and Wordfold cannot download or cache it on web.`}
+      </AppText>
+    </View> : !supportsOfflineDownloads ? <>
+      <View style={[styles.notice, { backgroundColor: theme.primarySoft }]}>
+        <Ionicons name="phone-portrait-outline" color={theme.primary} size={22}/>
+        <AppText style={styles.flex}>
+          {activeCourse.displayName} uses only the exact installed {deviceVoiceLabel} phone voice. Wordfold cannot verify whether that system voice works offline; test it in airplane mode before relying on it.
+        </AppText>
+      </View>
+      <View style={styles.sectionHeading}>
+        <AppText variant="heading">Pronunciation voice</AppText>
+        <AppText style={{ color: theme.muted }}>Test the course voice installed on this device.</AppText>
+      </View>
+      <PronunciationVoicePicker
+        value={pronunciationVoicePreference}
+        onChange={(preference) => void selectVoice(preference)}
+        disabled={savingVoice}
+        sourceLanguageCode={activeCourse.sourceLanguageCode}
+        pronunciationLocale={activeCourse.defaultSourcePronunciationLocale}
+      />
+    </> : <>
       <View style={[styles.notice, { backgroundColor: theme.primarySoft }]}>
         <Ionicons name="cloud-download-outline" color={theme.primary} size={22}/>
         <View style={styles.flex}>
@@ -159,6 +190,8 @@ export default function OfflinePronunciationScreen() {
         value={pronunciationVoicePreference}
         onChange={(preference) => void selectVoice(preference)}
         disabled={savingVoice}
+        sourceLanguageCode={activeCourse.sourceLanguageCode}
+        pronunciationLocale={activeCourse.defaultSourcePronunciationLocale}
       />
 
       <View style={styles.sectionHeading}>
@@ -202,7 +235,7 @@ export default function OfflinePronunciationScreen() {
           <View style={styles.flex}>
             <AppText variant="label">Phone voice selected</AppText>
             <AppText variant="caption" style={{ color: theme.muted }}>
-              No Wordfold audio download is needed. Install the exact system voice for reliable offline use.
+              No Wordfold audio download is needed. Offline availability depends on the exact installed system voice and must be tested on this device.
             </AppText>
           </View>
         </View>}

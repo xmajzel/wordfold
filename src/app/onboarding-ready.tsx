@@ -37,6 +37,7 @@ export default function OnboardingReadyScreen() {
   const { count } = useLocalSearchParams<{ count?: string }>();
   const {
     words,
+    activeCourse,
     onboardingComplete,
     pronunciationVoicePreference,
     updateReminderSettings,
@@ -152,8 +153,12 @@ export default function OnboardingReadyScreen() {
           </Animated.View>
         </View>
         <Animated.View entering={FadeInDown.delay(180).duration(420).reduceMotion(ReduceMotion.System)} style={styles.heading}>
-          <AppText variant="display" style={styles.center}>Your first words are ready.</AppText>
-          <AppText style={[styles.center, { color: theme.muted }]}>{wordCount} carefully selected {wordCount === 1 ? 'word is' : 'words are'} waiting in your library.</AppText>
+          <AppText variant="display" style={styles.center}>{wordCount > 0 ? 'Your first words are ready.' : `Your ${activeCourse.directionLabel} plan is ready.`}</AppText>
+          <AppText style={[styles.center, { color: theme.muted }]}>{wordCount > 0
+            ? `${wordCount} carefully selected ${wordCount === 1 ? 'word is' : 'words are'} waiting in your library.`
+            : activeCourse.id === 'es-sk'
+              ? 'Add Spanish words manually or import your own definitions, examples, and Slovak hints. Reviewed built-in content will appear only after the catalog quality gate.'
+              : 'No new words were added. Your existing vocabulary and learning preferences are unchanged.'}</AppText>
         </Animated.View>
         {Platform.OS !== 'web' && pronunciationLocale ? <Animated.View
           accessibilityLiveRegion="polite"

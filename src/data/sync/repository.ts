@@ -1,5 +1,6 @@
 import * as Crypto from 'expo-crypto';
 
+import { defaultCourseId, getCourseDefinition, type CourseId } from '@/domain/courses';
 import type { CefrLevel, Collection, DashboardStats, Word } from '@/domain/types';
 import { validateWordLanguages, type NewWordInput } from '@/data/repository';
 import { getCefrLevelForCatalogSense } from '@/data/cefr-level-lookup';
@@ -231,9 +232,17 @@ export async function recordSyncNotificationOpen(
   );
 }
 
-export async function getSyncStats(database: QueryableDatabase): Promise<DashboardStats> {
+export async function getSyncStats(
+  database: QueryableDatabase,
+  courseId: CourseId = defaultCourseId,
+): Promise<DashboardStats> {
+  const course = getCourseDefinition(courseId);
+  const languageParameters = [course.sourceLanguageCode, course.targetLanguageCode];
   const stateRows = await database.getAll<{ state: Word['state']; count: number }>(
-    'SELECT state, COUNT(*) AS count FROM words WHERE deleted_at IS NULL GROUP BY state',
+    `SELECT state, COUNT(*) AS count FROM words
+     WHERE deleted_at IS NULL AND source_language_code = ? AND target_language_code = ?
+     GROUP BY state`,
+    languageParameters,
   );
   const counts = Object.fromEntries(stateRows.map((row) => [row.state, row.count]));
   const today = new Date();
@@ -242,17 +251,26 @@ export async function getSyncStats(database: QueryableDatabase): Promise<Dashboa
     `SELECT
        COALESCE(SUM(CASE WHEN type = 'view' AND occurred_at >= ? THEN 1 ELSE 0 END), 0) AS viewed_today,
        COALESCE(SUM(CASE WHEN type = 'notification_open' THEN 1 ELSE 0 END), 0) AS notification_opens
-     FROM learning_events`,
-    [today.toISOString()],
+     FROM learning_events AS events
+     INNER JOIN words ON words.id = events.word_id
+     WHERE words.deleted_at IS NULL
+       AND words.source_language_code = ? AND words.target_language_code = ?`,
+    [today.toISOString(), ...languageParameters],
   );
   const lifetimeRows = await database.getAll<{ total: number }>(
-    'SELECT COALESCE(SUM(view_count), 0) AS total FROM words WHERE deleted_at IS NULL',
+    `SELECT COALESCE(SUM(view_count), 0) AS total FROM words
+     WHERE deleted_at IS NULL AND source_language_code = ? AND target_language_code = ?`,
+    languageParameters,
   );
   const activityStart = new Date(today);
   activityStart.setDate(today.getDate() - 6);
   const recentViews = await database.getAll<{ occurred_at: string }>(
-    "SELECT occurred_at FROM learning_events WHERE type = 'view' AND occurred_at >= ? ORDER BY occurred_at",
-    [activityStart.toISOString()],
+    `SELECT events.occurred_at FROM learning_events AS events
+     INNER JOIN words ON words.id = events.word_id
+     WHERE events.type = 'view' AND events.occurred_at >= ? AND words.deleted_at IS NULL
+       AND words.source_language_code = ? AND words.target_language_code = ?
+     ORDER BY events.occurred_at`,
+    [activityStart.toISOString(), ...languageParameters],
   );
   const activityCounts = new Map<string, number>();
   for (const event of recentViews) {
