@@ -29,6 +29,11 @@ function LookupProbe() {
   </Pressable>;
 }
 
+function CapacityProbe() {
+  const { wordCapacity } = useAppData();
+  return <Text>{wordCapacity.remaining} free word slots</Text>;
+}
+
 describe('web app data provider', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -50,5 +55,11 @@ describe('web app data provider', () => {
         translation: 'banka',
       }),
     ]));
+  });
+
+  it('exposes free word capacity on web', async () => {
+    const view = await render(<AppDataProvider><CapacityProbe/></AppDataProvider>);
+
+    view.getByText('100 free word slots');
   });
 });
