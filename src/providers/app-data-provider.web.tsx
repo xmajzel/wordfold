@@ -7,6 +7,7 @@ import { createId } from '@/data/repository';
 import { isLearningFilter } from '@/data/cefr-levels';
 import { normalizeTerm } from '@/features/import/parser';
 import { applyRating } from '@/features/learning/algorithm';
+import { getWordCapacity } from '@/features/purchases/capacity';
 import { buildRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
 import { emptyGuestImportCounts, type GuestImportConflictResolution, type GuestImportViewModel } from '@/data/sync/guest-import-types';
 import type { SyncCutoverViewModel } from '@/data/sync/cutover-types';
@@ -19,6 +20,7 @@ interface AppDataValue {
   pronunciationVoicePreference: PronunciationVoicePreference;
   learningFilter: LearningFilter;
   onboardingComplete: boolean | null;
+  wordCapacity: ReturnType<typeof getWordCapacity>;
   refresh(): Promise<void>; findSenses(term: string): Promise<CatalogSense[]>;
   createWord(input: NewWordInput): Promise<string>; createWords(inputs: NewWordInput[]): Promise<string[]>;
   editWord(id: string, input: NewWordInput): Promise<void>; removeWord(id: string): Promise<void>;
@@ -122,6 +124,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
   const value = useMemo<AppDataValue>(() => ({
     dataSource: 'guest', words, collections, stats, reminderSettings, learningPreferences,
     pronunciationVoicePreference, learningFilter, onboardingComplete,
+    wordCapacity: getWordCapacity(words.length, false),
     refresh: async () => undefined,
     findSenses: async (term) => {
       const normalizedTerm = normalizeTerm(term);

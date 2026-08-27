@@ -1,15 +1,22 @@
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
-import { Alert } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 
 import LearnScreen from '@/app/(tabs)';
-import type { LearningRating, Word } from '@/domain/types';
+import type { LearningFilter, LearningPreferences, LearningRating, Word } from '@/domain/types';
+import type { Recommendation } from '@/features/recommendations/selector';
 
 const mockBuildLearningFeed = jest.fn<Word[], unknown[]>();
 const mockBuildContinuedLearningFeed = jest.fn<Word[], unknown[]>();
 const mockRateWord = jest.fn<Promise<void>, [Word, LearningRating]>(async () => undefined);
+const mockAddRecommendedWords = jest.fn<Promise<number>, [number?]>();
+const mockUpdateLearningFilter = jest.fn<Promise<void>, [LearningFilter]>();
+const mockBuildRecommendations = jest.fn<Recommendation[], unknown[]>();
 const mockRouterPush = jest.fn();
 const mockRouterSetParams = jest.fn();
 let mockSearchParams: { notificationWordId?: string } = {};
+let mockLearningFilter: LearningFilter = 'all';
+let mockLearningPreferences: LearningPreferences = { levels: [], topics: [] };
+let mockWordCapacity = { limit: 100, count: 2, remaining: 98 as number | null, unlimited: false, shouldShowNotice: false };
 
 const baseWord = (overrides: Partial<Word>): Word => ({
   id: 'word', collectionId: 'my-words', term: 'scope', normalizedTerm: 'scope',
@@ -24,6 +31,24 @@ const baseWord = (overrides: Partial<Word>): Word => ({
 const mockFirstWord = baseWord({ id: 'first', term: 'scope', normalizedTerm: 'scope' });
 const mockNextWord = baseWord({ id: 'next', term: 'focus', normalizedTerm: 'focus', translation: 'sústredenie' });
 const mockThirdWord = baseWord({ id: 'third', term: 'pace', normalizedTerm: 'pace', translation: 'tempo' });
+const mockRecommendedWord = baseWord({ id: 'recommended', term: 'negotiate', normalizedTerm: 'negotiate', cefrLevel: 'B2', source: 'business' });
+const mockRecommendationBatch = Array.from({ length: 10 }, (_, index): Recommendation => ({
+  entry: {
+    id: `recommendation-${index}`,
+    term: `recommended ${index + 1}`,
+    normalizedTerm: `recommended ${index + 1}`,
+    level: 'B2',
+    partOfSpeech: 'noun',
+    definition: 'A recommended word.',
+    example: null,
+    translation: `odporúčané ${index + 1}`,
+    catalogSenseId: `recommendation-sense-${index}`,
+    source: 'cefr-j',
+    sourceVersion: 'test',
+    sourcePartOfSpeech: ['noun'],
+  },
+  topic: 'business',
+}));
 let mockWords = [mockFirstWord, mockNextWord];
 
 jest.mock('expo-router', () => ({
@@ -78,6 +103,14 @@ jest.mock('@/features/pronunciation/offline-downloads-provider', () => ({
   useOfflinePronunciationDownloads: () => ({ hasAsset: () => false }),
 }));
 
+jest.mock('@/features/recommendations/selector', () => {
+  const actual = jest.requireActual('@/features/recommendations/selector');
+  return {
+    ...actual,
+    buildRecommendations: (...args: unknown[]) => mockBuildRecommendations(...args),
+  };
+});
+
 jest.mock('@/components/swipeable-word-card', () => {
   const React = jest.requireActual('react');
   const { View } = jest.requireActual('react-native');
@@ -97,8 +130,11 @@ jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     words: mockWords,
     collections: [{ id: 'my-words', name: 'My words' }],
-    learningFilter: 'all',
-    updateLearningFilter: jest.fn(async () => undefined),
+    learningFilter: mockLearningFilter,
+    learningPreferences: mockLearningPreferences,
+    wordCapacity: mockWordCapacity,
+    addRecommendedWords: mockAddRecommendedWords,
+    updateLearningFilter: mockUpdateLearningFilter,
     rateWord: mockRateWord,
     markViewed: jest.fn(async () => undefined),
     prepareWordTranslation: jest.fn(async () => undefined),
@@ -110,7 +146,13 @@ describe('continued learning session', () => {
     jest.clearAllMocks();
     mockSearchParams = {};
     mockWords = [mockFirstWord, mockNextWord];
+    mockLearningFilter = 'all';
+    mockLearningPreferences = { levels: [], topics: [] };
+    mockWordCapacity = { limit: 100, count: 2, remaining: 98, unlimited: false, shouldShowNotice: false };
     mockRateWord.mockImplementation(async () => undefined);
+    mockAddRecommendedWords.mockResolvedValue(0);
+    mockUpdateLearningFilter.mockImplementation(async (filter) => { mockLearningFilter = filter; });
+    mockBuildRecommendations.mockReturnValue([]);
     mockBuildLearningFeed.mockReturnValue([mockFirstWord]);
     mockBuildContinuedLearningFeed.mockReturnValue([mockNextWord]);
   });
@@ -188,6 +230,8 @@ describe('continued learning session', () => {
 
     await fireEvent.press(view.getByRole('button', { name: /Keep learning/ }));
     const continueButton = await waitFor(() => view.getByRole('button', { name: 'Continue learning' }));
+    expect(view.queryByTestId('empty-state-compact-action')).toBeNull();
+    expect(StyleSheet.flatten(continueButton.props.style).borderColor).toBe('transparent');
     await fireEvent.press(continueButton);
 
     await waitFor(() => view.getByText('focus'));
@@ -201,9 +245,74 @@ describe('continued learning session', () => {
 
     await fireEvent.press(view.getByRole('button', { name: /Keep learning/ }));
     const browseButton = await waitFor(() => view.getByRole('button', { name: 'Browse library' }));
+    expect(view.getByTestId('empty-state-compact-action')).toHaveStyle({ width: '100%', maxWidth: 200 });
+    expect(StyleSheet.flatten(browseButton.props.style).borderColor).not.toBe('transparent');
     await fireEvent.press(browseButton);
 
     expect(mockRouterPush).toHaveBeenCalledWith('/(tabs)/library');
+  });
+
+  it('shows a compact secondary library action when Today starts caught up', async () => {
+    mockBuildLearningFeed.mockReturnValue([]);
+    mockBuildContinuedLearningFeed.mockReturnValue([]);
+    const view = await render(<LearnScreen/>);
+
+    const browseButton = view.getByRole('button', { name: 'Browse library' });
+
+    expect(view.getByTestId('empty-state-compact-action')).toHaveStyle({ width: '100%', maxWidth: 200 });
+    expect(StyleSheet.flatten(browseButton.props.style).borderColor).not.toBe('transparent');
+  });
+
+  it('adds a recommended batch and starts it as a new learning session', async () => {
+    const existingB1Word = baseWord({ id: 'existing-b1', term: 'existing', normalizedTerm: 'existing', cefrLevel: 'B1' });
+    mockWords = [existingB1Word];
+    mockLearningFilter = 'B1';
+    mockLearningPreferences = { levels: ['B2'], topics: ['business'] };
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch);
+    mockBuildLearningFeed.mockImplementation((words: unknown) => (words as Word[]).filter((word) => word.id === mockRecommendedWord.id));
+    mockBuildContinuedLearningFeed.mockReturnValue([]);
+    mockAddRecommendedWords.mockImplementation(async (limit) => {
+      mockWords = [mockRecommendedWord, ...mockWords];
+      return limit ?? 0;
+    });
+    const view = await render(<LearnScreen/>);
+
+    view.getByText('Recommended for you');
+    view.getByText('B2 English');
+    view.getByText('Work and business');
+    expect(view.getAllByText(/^recommended [1-3]$/)).toHaveLength(3);
+    expect(view.queryByRole('button', { name: 'Browse library' })).toBeNull();
+
+    await fireEvent.press(view.getByRole('button', { name: 'Add 10 recommended words' }));
+
+    await waitFor(() => expect(mockAddRecommendedWords).toHaveBeenCalledWith(10));
+    expect(mockUpdateLearningFilter).toHaveBeenCalledWith('all');
+    view.rerender(<LearnScreen/>);
+    await waitFor(() => view.getByText('negotiate'));
+    view.getByText(/^1 of 1 due now/);
+  });
+
+  it('falls back to the compact library action when the free library is full', async () => {
+    mockLearningPreferences = { levels: ['B2'], topics: ['business'] };
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch);
+    mockWordCapacity = { limit: 100, count: 100, remaining: 0, unlimited: false, shouldShowNotice: true };
+    mockBuildLearningFeed.mockReturnValue([]);
+    mockBuildContinuedLearningFeed.mockReturnValue([]);
+    const view = await render(<LearnScreen/>);
+
+    expect(view.queryByTestId('today-recommendations')).toBeNull();
+    expect(view.getByTestId('empty-state-compact-action')).toHaveStyle({ width: '100%', maxWidth: 200 });
+  });
+
+  it('falls back to the compact library action when recommendations are exhausted', async () => {
+    mockLearningPreferences = { levels: ['B2'], topics: ['business'] };
+    mockBuildRecommendations.mockReturnValue([]);
+    mockBuildLearningFeed.mockReturnValue([]);
+    mockBuildContinuedLearningFeed.mockReturnValue([]);
+    const view = await render(<LearnScreen/>);
+
+    expect(view.queryByTestId('today-recommendations')).toBeNull();
+    view.getByRole('button', { name: 'Browse library' });
   });
 
   it('starts a notification session with the notified unfinished word', async () => {
@@ -224,7 +333,7 @@ describe('continued learning session', () => {
       normalizedTerm: 'finished',
       state: 'understood',
       lastRatedAt: '2026-08-24T08:00:00.000Z',
-      nextReviewAt: '2026-08-27T08:00:00.000Z',
+      nextReviewAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
     });
     mockWords = [completedWord];
     mockSearchParams = { notificationWordId: completedWord.id };

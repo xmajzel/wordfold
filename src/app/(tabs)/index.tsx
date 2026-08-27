@@ -10,12 +10,14 @@ import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import { SwipeableWordCard } from '@/components/swipeable-word-card';
 import { WordCard } from '@/components/word-card';
-import type { LearningFilter, LearningRating, Word } from '@/domain/types';
+import type { LearningFilter, LearningPreferences, LearningRating, Word } from '@/domain/types';
 import { buildContinuedLearningFeed, buildLearningFeed, buildNotificationLearningSession, filterWordsByLearningCategory, getAvailableLearningFilters } from '@/features/learning/algorithm';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
+import { WordCapacityExceededError } from '@/features/purchases/capacity';
+import { buildRecommendations, topicOptions, type Recommendation } from '@/features/recommendations/selector';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
-import { spacing } from '@/theme/tokens';
+import { radii, spacing } from '@/theme/tokens';
 
 const filterOptions: { id: LearningFilter; label: string }[] = [
   { id: 'all', label: 'All' },
@@ -72,7 +74,16 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
 }) {
   const theme = useAppTheme();
   const { height } = useWindowDimensions();
-  const { words, collections, rateWord, markViewed, prepareWordTranslation } = useAppData();
+  const {
+    words,
+    collections,
+    learningPreferences,
+    wordCapacity,
+    addRecommendedWords,
+    rateWord,
+    markViewed,
+    prepareWordTranslation,
+  } = useAppData();
   const [initialSession] = useState(() => notificationWordId
     ? buildNotificationLearningSession(words, notificationWordId, new Date())
     : { feed: buildLearningFeed(words, new Date(), filter), reviewWord: null });
@@ -82,6 +93,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
   const [sessionComplete, setSessionComplete] = useState(false);
   const [listHeight, setListHeight] = useState(0);
   const [translationStates, setTranslationStates] = useState<Record<string, 'loading' | 'error'>>({});
+  const [recommendationsBusy, setRecommendationsBusy] = useState(false);
   const listRef = useRef<FlatList<Word>>(null);
   const viewedIds = useRef(new Set<string>());
   const submittedRatings = useRef(new Map<string, LearningRating>());
@@ -105,6 +117,19 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     new Date(),
     filter,
   ), [filter, sessionFeed, words]);
+  const recommendationPreview = useMemo(() => buildRecommendations(
+    learningPreferences,
+    words.filter((word) => word.sourceLanguageCode === 'en').map((word) => word.normalizedTerm),
+    10,
+  ), [learningPreferences, words]);
+  const hasRecommendationPreferences = learningPreferences.levels.length > 0
+    && learningPreferences.topics.length > 0;
+  const recommendationAddCount = wordCapacity.remaining === null
+    ? recommendationPreview.length
+    : Math.min(recommendationPreview.length, wordCapacity.remaining);
+  const canAddRecommendations = hasRecommendationPreferences
+    && recommendationPreview.length > 0
+    && recommendationAddCount > 0;
 
   const retryTranslation = useCallback((word: Word) => {
     setTranslationStates((current) => ({ ...current, [word.id]: 'loading' }));
@@ -186,6 +211,26 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     updateSessionComplete(false);
   };
 
+  const addRecommendationsAndContinue = async () => {
+    if (!canAddRecommendations || recommendationsBusy) return;
+    setRecommendationsBusy(true);
+    try {
+      const count = await addRecommendedWords(recommendationAddCount);
+      if (count === 0) {
+        Alert.alert('Recommendations unavailable', 'There are no unused recommendations for these preferences right now.');
+        return;
+      }
+      if (filter !== 'all') await onSelectFilter('all');
+    } catch (error) {
+      const message = error instanceof WordCapacityExceededError
+        ? error.message
+        : error instanceof Error ? error.message : 'Please try again.';
+      Alert.alert('Recommendations unavailable', message);
+    } finally {
+      setRecommendationsBusy(false);
+    }
+  };
+
   if (currentNotificationReviewWord) {
     const canContinue = sessionFeed.length > 0;
     const translationStatus = !currentNotificationReviewWord.translation
@@ -223,12 +268,12 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
 
   if (sessionComplete) {
     const canContinue = continuedSessionFeed.length > 0;
-    return <Screen><Header filter={filter} availableFilters={availableFilters} onSelectFilter={onSelectFilter}/><Animated.View exiting={FadeOut.duration(140).reduceMotion(ReduceMotion.System)} style={styles.emptyTransition}><EmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} actionLabel={canContinue ? 'Continue learning' : 'Browse library'} onAction={canContinue ? continueLearning : () => router.push('/(tabs)/library')}/></Animated.View></Screen>;
+    return <Screen><Header filter={filter} availableFilters={availableFilters} onSelectFilter={onSelectFilter}/><Animated.View exiting={FadeOut.duration(140).reduceMotion(ReduceMotion.System)} style={styles.emptyTransition}>{canContinue ? <EmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} actionLabel="Continue learning" onAction={continueLearning}/> : <LearningEmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} recommendations={canAddRecommendations ? recommendationPreview.slice(0, recommendationAddCount) : []} learningPreferences={learningPreferences} busy={recommendationsBusy} onAdd={() => void addRecommendationsAndContinue()}/>}</Animated.View></Screen>;
   }
 
   if (sessionFeed.length === 0) {
     const hasCategoryWords = categoryWords.length > 0;
-    return <Screen><Header filter={filter} availableFilters={availableFilters} onSelectFilter={onSelectFilter}/><EmptyState title={hasCategoryWords ? 'You are caught up' : `No ${categoryWordLabel(filter)} yet`} message={hasCategoryWords ? `No ${categoryWordLabel(filter)} are due right now.` : 'Add words from the library or choose another category.'} actionLabel="Browse library" onAction={() => router.push('/(tabs)/library')}/></Screen>;
+    return <Screen><Header filter={filter} availableFilters={availableFilters} onSelectFilter={onSelectFilter}/><LearningEmptyState title={hasCategoryWords ? 'You are caught up' : `No ${categoryWordLabel(filter)} yet`} message={hasCategoryWords ? `No ${categoryWordLabel(filter)} are due right now.` : 'Add words from the library or choose another category.'} recommendations={canAddRecommendations ? recommendationPreview.slice(0, recommendationAddCount) : []} learningPreferences={learningPreferences} busy={recommendationsBusy} onAdd={() => void addRecommendationsAndContinue()}/></Screen>;
   }
 
   return (
@@ -260,6 +305,48 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
   );
 }
 
+function LearningEmptyState({ title, message, recommendations, learningPreferences, busy, onAdd }: {
+  title: string;
+  message: string;
+  recommendations: Recommendation[];
+  learningPreferences: LearningPreferences;
+  busy: boolean;
+  onAdd(): void;
+}) {
+  const theme = useAppTheme();
+  if (recommendations.length === 0) {
+    return <EmptyState title={title} message={message} actionLabel="Browse library" actionVariant="secondary" compactAction onAction={() => router.push('/(tabs)/library')}/>;
+  }
+  const topics = topicOptions
+    .filter((topic) => learningPreferences.topics.includes(topic.id))
+    .map((topic) => topic.title)
+    .join(' · ');
+  return <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.learningEmptyContent}>
+    <View style={styles.learningEmptyIntro}>
+      <Ionicons name="layers-outline" size={38} color={theme.primary}/>
+      <AppText variant="heading">{title}</AppText>
+      <AppText style={[styles.learningEmptyMessage, { color: theme.muted }]}>{message}</AppText>
+    </View>
+    <View testID="today-recommendations" style={styles.recommendationSection}>
+      <View>
+        <AppText variant="heading">Recommended for you</AppText>
+        <AppText variant="caption" style={{ color: theme.muted }}>A fresh batch shaped by your level and interests.</AppText>
+      </View>
+      <View style={[styles.recommendationPanel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+        <View style={styles.recommendationHeading}>
+          <View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="sparkles-outline" color={theme.primary} size={22}/></View>
+          <View style={styles.recommendationText}>
+            <AppText variant="label">{learningPreferences.levels.join(', ')} English</AppText>
+            <AppText variant="caption" style={{ color: theme.muted }}>{topics}</AppText>
+          </View>
+        </View>
+        <View style={styles.recommendationWords}>{recommendations.slice(0, 3).map(({ entry }) => <View key={entry.id} style={[styles.recommendationWord, { backgroundColor: theme.primarySoft }]}><AppText variant="label" style={{ color: theme.primary }}>{entry.term}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{entry.level}</AppText></View>)}</View>
+        <PrimaryButton testID="add-today-recommendations" label={`Add ${recommendations.length} recommended ${recommendations.length === 1 ? 'word' : 'words'}`} loading={busy} onPress={onAdd} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/>
+      </View>
+    </View>
+  </ScrollView>;
+}
+
 function Header({ filter, availableFilters, onSelectFilter }: { filter: LearningFilter; availableFilters: LearningFilter[]; onSelectFilter(filter: LearningFilter): Promise<void> }) {
   const theme = useAppTheme();
   return <View style={styles.headerBlock}>
@@ -283,6 +370,16 @@ const styles = StyleSheet.create({
   notificationReviewIntro: { alignItems: 'center', gap: spacing.xs, paddingVertical: spacing.sm },
   notificationReviewMessage: { textAlign: 'center' },
   notificationReviewCard: { flex: 1, paddingVertical: spacing.sm },
+  learningEmptyContent: { flexGrow: 1, justifyContent: 'center', gap: spacing.lg, padding: spacing.xl },
+  learningEmptyIntro: { alignItems: 'center', gap: spacing.sm },
+  learningEmptyMessage: { textAlign: 'center' },
+  recommendationSection: { gap: spacing.sm },
+  recommendationPanel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.lg },
+  recommendationHeading: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  recommendationIcon: { width: 44, height: 44, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
+  recommendationText: { flex: 1, gap: 2 },
+  recommendationWords: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
+  recommendationWord: { minHeight: 48, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderRadius: radii.control, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   settings: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 22, borderWidth: 1 }, filters: { gap: spacing.sm },
   filter: { minWidth: 44, minHeight: 44, paddingHorizontal: spacing.md, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' }, position: { textAlign: 'center', paddingVertical: spacing.xs },
 });
