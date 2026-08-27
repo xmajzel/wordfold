@@ -6,6 +6,10 @@ public class WordfoldTranslateModule: Module {
     Name("WordfoldTranslate")
 
     AsyncFunction("translate") { (text: String, sourceCode: String, targetCode: String, promise: Promise) in
+      guard self.isSupportedPair(sourceCode: sourceCode, targetCode: targetCode) else {
+        promise.reject("E_LANGUAGE", "Unsupported translation language pair")
+        return
+      }
       guard let sourceLanguage = self.language(for: sourceCode),
             let targetLanguage = self.language(for: targetCode) else {
         promise.reject("E_LANGUAGE", "Unsupported translation language pair")
@@ -33,9 +37,14 @@ public class WordfoldTranslateModule: Module {
     }
   }
 
+  private func isSupportedPair(sourceCode: String, targetCode: String) -> Bool {
+    return targetCode == "sk" && (sourceCode == "en" || sourceCode == "es")
+  }
+
   private func language(for code: String) -> TranslateLanguage? {
     switch code {
     case "en": return .english
+    case "es": return .spanish
     case "sk": return .slovak
     default: return nil
     }
