@@ -9,11 +9,16 @@ Free services may pause after inactivity. Check both services before Play review
 ## Current production state
 
 - Supabase project `Wordfold Production` is active in Frankfurt (`eu-central-1`) with ref `ygmvphfkkjwwqmbddqhe`.
-- All committed migrations are applied and the `account-delete` Edge Function is deployed.
+- All committed migrations are applied. The account-deletion and public/private pronunciation
+  Edge Functions, including scheduled private-audio cleanup, are deployed and production-tested.
 - Email/password signup, email confirmation, an eight-character password minimum, and `wordfold://account` redirects are configured.
-- The production Supabase URL, publishable key, and disabled pronunciation-preview flags are configured in EAS.
+- The production Supabase URL and publishable key are configured in EAS. Both pronunciation flags
+  were enabled for the approved Android release candidate on August 27, 2026: public catalog audio
+  is available offline, while private cloud pronunciation remains account-bound and explicit opt-in.
 - Database and PowerSync-role passwords are stored in macOS Keychain items named `wordfold-production-supabase-db` and `wordfold-production-powersync-role`; they are not stored in the repository.
-- PowerSync, RevenueCat/Google Play, custom SMTP, and GitHub Pages still require the external setup described below. The PowerSync and RevenueCat EAS variables must be added after those services exist.
+- The production EAS environment contains the Supabase, PowerSync, RevenueCat, and pronunciation
+  client variables. Google Play product setup, custom SMTP, and GitHub Pages remain governed by
+  the external release checklist below.
 
 ## Required production configuration
 
@@ -24,8 +29,8 @@ EXPO_PUBLIC_SUPABASE_URL=https://your-production-project.supabase.co
 EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-production-publishable-key
 EXPO_PUBLIC_POWERSYNC_URL=https://your-production-instance.powersync.com
 EXPO_PUBLIC_REVENUECAT_ANDROID_API_KEY=your-revenuecat-android-public-sdk-key
-EXPO_PUBLIC_PRONUNCIATION_NEURAL_PREVIEW_ENABLED=false
-EXPO_PUBLIC_PRONUNCIATION_PRIVATE_PREVIEW_ENABLED=false
+EXPO_PUBLIC_PRONUNCIATION_NEURAL_PREVIEW_ENABLED=true
+EXPO_PUBLIC_PRONUNCIATION_PRIVATE_PREVIEW_ENABLED=true
 ```
 
 All `EXPO_PUBLIC_` values are embedded in the app. Never put database passwords, the Supabase service-role key, SMTP credentials, PowerSync admin/replication credentials, or Azure credentials in them.
@@ -34,7 +39,8 @@ All `EXPO_PUBLIC_` values are embedded in the app. Never put database passwords,
 
 1. Create a production project in the intended region.
 2. Apply every committed migration and run the database tests and linter.
-3. Deploy the `account-delete` Edge Function and other public functions required by the release. Keep private Azure pronunciation disabled.
+3. Verify the deployed `account-delete`, public pronunciation, private pronunciation, and private
+   pronunciation cleanup Edge Functions required by the release.
 4. Enable email/password authentication and email confirmation.
 5. Add `wordfold://account` to allowed authentication redirects.
 6. Configure custom SMTP before opening registration to the public. Supabase's default SMTP is limited to project-team addresses, currently two messages per hour, and is not a production delivery service.
@@ -64,6 +70,15 @@ GitHub Pages publishes only `site/`, never the internal `docs/` directory. Expec
 - `https://xmajzel.github.io/wordfold/account-deletion/`
 
 Enable GitHub Pages with GitHub Actions, publish the workflow from `main`, verify both URLs, and use them in the Play Console privacy and account-deletion fields. Complete Data Safety consistently with the published policy and installed SDK behavior.
+
+## Android pronunciation acceptance
+
+The project owner completed the physical Android acceptance pass on August 27, 2026. The verified
+flows include the Ava, Ryan, and Phone voice onboarding tests; automatic initial-word and newly
+added catalog-word downloads; restart persistence; airplane-mode playback; natural-voice failure
+with the compact Phone voice fallback; and signed-in private-pronunciation consent and deletion.
+The owner also confirmed the approved Azure budget notifications. iOS remains deferred because no
+physical iOS device is currently available and is not a blocker for the Android-first release.
 
 ## Verification order
 

@@ -103,6 +103,10 @@ The separately approved production rollout was completed on August 17, 2026:
     temporary account was deleted. Final counts were zero for all four resources. An aggregate
     query examined 25 recent production log records and found zero occurrences of the synthetic
     canary text in either event messages or structured attributes.
+12. On August 27, 2026, the project owner confirmed the Android physical-device acceptance matrix
+    and the approved Azure budget notifications. The EAS production environment then enabled both
+    pronunciation client flags for the approved Android release candidate. Private pronunciation
+    remains signed-in, disclosure-gated, and explicit opt-in.
 
 Supabase Cron is based on `pg_cron`, can invoke Edge Functions, and recommends no more than eight
 concurrent jobs with each job completing within ten minutes:
@@ -175,8 +179,6 @@ destructive down migrations.
 
 ## Remaining release gates
 
-- Create and verify the approved Azure budget notifications in the production subscription.
-- Enable the client flag only for an approved Android development pilot.
 - Complete iOS validation when a physical iOS device becomes available.
 
 The project owner, a native Slovak and English speaker, approved the production Slovak canary voice
