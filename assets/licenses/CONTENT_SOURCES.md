@@ -1,5 +1,31 @@
 # Content sources
 
+## Spanish course status and Instituto Cervantes framework permission
+
+Instituto Cervantes granted Wordfold written permission on 27 August 2026 to use the
+Plan Curricular del Instituto Cervantes (PCIC) as a reference framework for developing,
+organizing, and classifying original Spanish-learning content across A1-C2 in a
+commercial digital language-learning application.
+
+- Reference: https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/indice.htm
+- Accessed: 27 August 2026
+- Permission evidence: `docs/legal/INSTITUTO_CERVANTES_PCIC_PERMISSION.md`
+- Authorized use: PCIC levels, categories, and classifications may structure
+  Wordfold's original Spanish curriculum.
+- Approved description: “Spanish learning content structured according to the Plan
+  Curricular del Instituto Cervantes (PCIC), A1-C2.”
+- Bundled PCIC content: none
+- Restrictions: protected PCIC materials are not reproduced beyond the permitted
+  reference scope; Wordfold does not claim certification, accreditation, endorsement,
+  or official validation and does not use the Instituto Cervantes logo as a
+  promotional mark.
+
+`assets/catalog/spanish/cefr-pilot.json` contains six original Wordfold draft records
+created solely to validate the course-aware catalog schema and level code paths. They
+are explicitly excluded from production catalog APIs and recommendations until
+independent Spanish and Slovak review is recorded. The editorial and promotion rules
+are documented in `docs/SPANISH_CATALOG_EDITORIAL_POLICY.md`.
+
 ## Open English WordNet 2025
 
 Definitions, examples, parts of speech, and sense data are adapted from Open English WordNet 2025 by the Global WordNet Association.
