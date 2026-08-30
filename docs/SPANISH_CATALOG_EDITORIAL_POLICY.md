@@ -73,3 +73,63 @@ An asset may change from `draft` to `production` only when:
 5. deterministic validation passes and each manifest count matches the entries; and
 6. release QA confirms the product labels the catalog CEFR-aligned and displays all
    required attribution.
+
+## A1 pilot review rubric
+
+The 500-entry A1 pilot is authored and reviewed outside runtime catalog APIs. Agent or
+machine-authored output is always draft and never counts as reviewer approval.
+
+The Spanish reviewer evaluates every immutable candidate for:
+
+- the selected lemma, explicit sense, controlled part of speech, gender/alternative
+  forms, and primary curriculum classification;
+- defensible A1 usefulness and broadly understood neutral Spanish;
+- a concise, non-circular, learner-appropriate original definition;
+- a natural original example that expresses the selected sense; and
+- exclusion or explicit treatment of regionalisms, proper names, arbitrary
+  inflections, and unstable phrase fragments.
+
+The Slovak reviewer independently evaluates every hint for:
+
+- the exact selected Spanish sense rather than the spelling alone;
+- natural, correctly spelled Slovak and an appropriate aspect/form where relevant;
+- enough specificity to avoid a misleading broader or narrower meaning; and
+- absence of untranslated Spanish, copied definitions, or unnecessary explanation.
+
+Each reviewer uses a distinct stable reviewer ID and attests to the relevant language
+qualification. Review files bind to the complete candidate SHA-256. Reviewers choose
+`approved` or `changes_requested` and give a note for every requested change. They do
+not see or edit the other reviewer's decisions while their own review is in progress.
+
+Any content change invalidates the affected decisions. An adjudication records the
+before/after value, reason, adjudicator, and date; the corrected entry then requires
+fresh approval from both reviewers. A compile command must reject missing decisions,
+same-reviewer submissions, stale hashes, requested changes, and unresolved
+adjudications.
+
+## Local A1 pilot workflow
+
+Download and extract the pinned `omw-es-2.0.tar.xz` release outside the repository,
+then generate the committed lexical-evidence sidecar while verifying the archive hash:
+
+```sh
+pnpm spanish:a1:sources --archive <path-to-omw-es-2.0.tar.xz> --omw <path-to-omw-es.xml>
+```
+
+Validate the immutable candidates, source manifest, exact quotas, and evidence:
+
+```sh
+pnpm spanish:a1:validate --sources assets/catalog/spanish/a1-source-manifest.json --candidates assets/catalog/spanish/a1-candidates.json --evidence assets/catalog/spanish/a1-lexical-evidence.json
+```
+
+Prepare independent ignored review packages:
+
+```sh
+pnpm spanish:a1:prepare-reviews --sources assets/catalog/spanish/a1-source-manifest.json --candidates assets/catalog/spanish/a1-candidates.json --evidence assets/catalog/spanish/a1-lexical-evidence.json --spanish-output .artifacts/spanish-a1/reviews/spanish-review.json --slovak-output .artifacts/spanish-a1/reviews/slovak-review.json
+```
+
+After the two reviewers complete their separate files, score them with
+`pnpm spanish:a1:score`. Use `pnpm spanish:a1:compile` only with both completed review
+files and a resolved adjudication file. Compilation produces a reviewed draft
+promotion candidate, not a runtime release; a separate approved promotion task must
+still integrate it.
