@@ -7,12 +7,12 @@ assignee: "root"
 branch: ""
 skills: []
 specs: ["slovak-native-spanish-course-research-and-implementation-specification", "spanish-a1-500-entry-original-catalog-pilot-specification"]
-depends_on: ["approve-slovak-native-spanish-course-semantics-and-content-source-path"]
+depends_on: ["approve-slovak-native-spanish-course-semantics-and-content-source-path", "build-deterministic-spanish-a1-candidate-and-review-pipeline"]
 blocks: ["add-spanish-public-private-and-downloadable-neural-pronunciation-parity"]
-blocked_by: ["Requires written bulk-reuse permission or a completed original A1-C2 editorial dataset plus independent Spanish and Slovak reviewer sign-off; neither artifact currently exists.", "PCIC framework permission is recorded. Production remains blocked on creating the original or separately licensed A1-C2 learner-facing dataset and obtaining independent Spanish-content and Slovak-hint reviewer sign-off."]
+blocked_by: ["Requires written bulk-reuse permission or a completed original A1-C2 editorial dataset plus independent Spanish and Slovak reviewer sign-off; neither artifact currently exists.", "PCIC framework permission is recorded. Production remains blocked on creating the original or separately licensed A1-C2 learner-facing dataset and obtaining independent Spanish-content and Slovak-hint reviewer sign-off.", "The original 500-entry A1 draft and review pipeline are complete. Production remains blocked on independent Spanish-content and Slovak-hint review of A1; full A1-C2 completion additionally requires original A2-C2 datasets and their reviews."]
 relates_to: ["slovak-native-spanish-course-research-and-implementation-specification"]
 created: "2026-08-27T18:04:44.938Z"
-updated: "2026-08-27T22:18:27.923Z"
+updated: "2026-08-28T17:07:15.219Z"
 verified: ""
 verified_sha: ""
 archived: ""
@@ -68,3 +68,7 @@ Requires written bulk-reuse permission or a completed original A1-C2 editorial d
 PCIC framework permission is recorded. Production remains blocked on creating the original or separately licensed A1-C2 learner-facing dataset and obtaining independent Spanish-content and Slovak-hint reviewer sign-off.
 
 - [progress] 2026-08-27T22:18:27.923Z by root: Completed parallel PCIC-framework and lexical-source research. Proposed a precise draft-only 500-entry A1 pilot spec with 20 Wordfold-authored category quotas, pinned OMW Spanish 2.0 sense evidence, immutable review hashes, distinct Spanish/Slovak review gates, and no runtime exposure before sign-off.
+
+## Blocker
+
+The original 500-entry A1 draft and review pipeline are complete. Production remains blocked on independent Spanish-content and Slovak-hint review of A1; full A1-C2 completion additionally requires original A2-C2 datasets and their reviews.
