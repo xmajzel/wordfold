@@ -73,6 +73,10 @@ describe('CEFR catalog word translation', () => {
   it('saves the bundled Slovak translation when adding the word', async () => {
     const view = await render(<CefrLevelScreen/>);
 
+    view.getByText('Your progress');
+    view.getByText('0 of 1 known');
+    view.getByText('1', { exact: true });
+    view.getByText('Not added');
     await fireEvent.press(view.getByRole('button', { name: 'Add to My words' }));
 
     await waitFor(() => expect(mockCreateWord).toHaveBeenCalledWith(expect.objectContaining({

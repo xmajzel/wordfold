@@ -63,9 +63,21 @@ describe('library course visibility', () => {
   it('keeps pre-existing words outside registered courses accessible', async () => {
     const screen = await render(<LibraryScreen/>);
 
+    expect(screen.queryByText('Baum')).toBeNull();
+    await fireEvent.press(screen.getByRole('tab', { name: 'Show My words' }));
     await fireEvent.press(screen.getByText('Other vocabulary (1)'));
 
     await waitFor(() => screen.getByText('Baum'));
     screen.getByText('Slovak → German');
+  });
+
+  it('opens on discovery instead of the potentially long personal list', async () => {
+    const screen = await render(<LibraryScreen/>);
+
+    expect(screen.getByRole('tab', { name: 'Show Discover' }).props.accessibilityState).toEqual({ selected: true });
+    expect(screen.getByRole('tab', { name: 'Show My words' }).props.accessibilityState).toEqual({ selected: false });
+    screen.getByText('English levels');
+    expect(screen.getAllByText('0 known · 0 learning')).toHaveLength(6);
+    expect(screen.queryByText('Baum')).toBeNull();
   });
 });

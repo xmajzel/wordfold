@@ -12,11 +12,13 @@ import { getCourseCatalogEntries, type CourseCatalogEntry } from '@/data/course-
 import { cefrLevelDescriptions, isCefrLevel } from '@/data/cefr-levels';
 import { wordBelongsToCourse } from '@/domain/courses';
 import { languageLabel } from '@/domain/languages';
+import type { Word } from '@/domain/types';
 import { normalizeTerm } from '@/features/import/parser';
+import { calculateCefrProgress, type CefrProgress } from '@/features/learning/cefr-progress';
 import { WordCapacityExceededError } from '@/features/purchases/capacity';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
-import { radii, spacing } from '@/theme/tokens';
+import { radii, spacing, stateColors } from '@/theme/tokens';
 
 export default function CefrLevelScreen() {
   const theme = useAppTheme();
@@ -32,16 +34,18 @@ export default function CefrLevelScreen() {
   const [busyId, setBusyId] = useState<string | null>(null);
   const validLevel = isCefrLevel(level) ? level : null;
   const entries = useMemo(() => validLevel ? getCourseCatalogEntries(activeCourseId, validLevel) : [], [activeCourseId, validLevel]);
+  const activeWords = useMemo(() => words.filter((word) => wordBelongsToCourse(word, activeCourseId)), [activeCourseId, words]);
+  const progress = useMemo(() => calculateCefrProgress(entries, activeWords), [activeWords, entries]);
   const normalizedQuery = normalizeTerm(query);
   const filteredEntries = useMemo(() => normalizedQuery
     ? entries.filter((entry) => entry.normalizedTerm.includes(normalizedQuery) || normalizeTerm(entry.definition).includes(normalizedQuery))
     : entries, [entries, normalizedQuery]);
-  const addedTerms = useMemo(() => new Set(words
-    .filter((word) => wordBelongsToCourse(word, activeCourseId))
-    .map((word) => word.normalizedTerm)), [activeCourseId, words]);
-  const addedSenseIds = useMemo(() => new Set(words
-    .filter((word) => wordBelongsToCourse(word, activeCourseId) && word.catalogSenseId)
-    .map((word) => word.catalogSenseId)), [activeCourseId, words]);
+  const wordsByTerm = useMemo(() => new Map(activeWords.flatMap((word) => (
+    word.catalogSenseId === null ? [[word.normalizedTerm, word] as const] : []
+  ))), [activeWords]);
+  const wordsBySense = useMemo(() => new Map(activeWords.flatMap((word) => (
+    word.catalogSenseId ? [[word.catalogSenseId, word] as const] : []
+  ))), [activeWords]);
 
   const addWord = async (entry: CourseCatalogEntry) => {
     const collectionId = collections.find((collection) => collection.id === 'my-words')?.id ?? collections[0]?.id;
@@ -110,6 +114,7 @@ export default function CefrLevelScreen() {
               ? `${entries.length.toLocaleString()} offline words with ${learnedLanguage} definitions and Slovak hints`
               : 'Reviewed built-in words are not available for this level yet'}</AppText></View>
           </View>
+          {entries.length > 0 ? <LevelProgressSummary progress={progress}/> : null}
           <FormField label="Search this level" value={query} onChangeText={setQuery} placeholder="Word or meaning" autoCapitalize="none"/>
           <AppText variant="caption" style={{ color: theme.muted }}>{activeCourseId === 'en-sk'
             ? 'CEFR-aligned vocabulary: A1–B2 from CEFR-J 1.6, C1–C2 from Octanove 1.0, with meanings from Open English WordNet 2025.'
@@ -124,9 +129,7 @@ export default function CefrLevelScreen() {
         />}
         renderItem={({ item }) => <CatalogWordCard
           entry={item}
-          added={activeCourseId === 'es-sk'
-            ? addedSenseIds.has(item.catalogSenseId)
-            : addedTerms.has(item.normalizedTerm)}
+          word={wordsBySense.get(item.catalogSenseId) ?? wordsByTerm.get(item.normalizedTerm)}
           loading={busyId === item.id}
           disabled={busyId !== null}
           onAdd={() => void addWord(item)}
@@ -141,21 +144,54 @@ function Header({ title }: { title: string }) {
   return <View style={styles.header}><Pressable accessibilityRole="button" accessibilityLabel="Go back" onPress={() => router.back()} style={[styles.back, { backgroundColor: theme.surface }]}><Ionicons name="arrow-back" color={theme.text} size={22}/></Pressable><AppText variant="label">{title}</AppText><View style={styles.back}/></View>;
 }
 
-function CatalogWordCard({ entry, added, loading, disabled, onAdd }: {
+function CatalogWordCard({ entry, word, loading, disabled, onAdd }: {
   entry: CourseCatalogEntry;
-  added: boolean;
+  word?: Word;
   loading: boolean;
   disabled: boolean;
   onAdd(): void;
 }) {
   const theme = useAppTheme();
+  const added = Boolean(word);
   const source = entry.source === 'cefr-j' ? 'CEFR-J' : entry.source === 'octanove' ? 'Octanove' : 'Wordfold original';
   return <View style={[styles.card, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-    <View style={styles.wordHeader}><View style={styles.wordTitle}><AppText variant="heading">{entry.term}</AppText><AppText variant="caption" style={{ color: theme.accent }}>{entry.partOfSpeech}</AppText></View><AppText variant="caption" style={{ color: theme.muted }}>{source} {entry.sourceVersion}</AppText></View>
+    <View style={styles.wordHeader}><View style={styles.wordTitle}><AppText variant="heading">{entry.term}</AppText><AppText variant="caption" style={{ color: theme.accent }}>{entry.partOfSpeech}</AppText></View><View style={styles.cardMeta}><AppText variant="caption" style={{ color: theme.muted }}>{source} {entry.sourceVersion}</AppText>{word ? <CatalogProgressBadge state={word.state}/> : null}</View></View>
     <AppText>{entry.definition}</AppText>
     {entry.example ? <AppText style={{ color: theme.muted }}>“{entry.example}”</AppText> : null}
     <PrimaryButton label={added ? 'Added to My words' : 'Add to My words'} variant={added ? 'secondary' : 'primary'} disabled={added || disabled} loading={loading} onPress={onAdd} icon={added ? <Ionicons name="checkmark" color={theme.primary} size={18}/> : <Ionicons name="add" color="#FFFFFF" size={18}/>}/>
   </View>;
+}
+
+function LevelProgressSummary({ progress }: { progress: CefrProgress }) {
+  const theme = useAppTheme();
+  return <View accessible accessibilityRole="summary" accessibilityLabel={`${progress.known} known, ${progress.learning} learning, ${progress.addedNotStarted} added but not started, ${progress.notAdded} not added, out of ${progress.total} words`} style={[styles.progressPanel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+    <View style={styles.progressHeading}><AppText variant="heading">Your progress</AppText><AppText variant="label" style={{ color: theme.primary }}>{progress.known.toLocaleString()} of {progress.total.toLocaleString()} known</AppText></View>
+    <View style={[styles.progressBar, { backgroundColor: theme.raised }]}>
+      <View style={{ flex: progress.known, backgroundColor: stateColors.learned }}/>
+      <View style={{ flex: progress.learning, backgroundColor: stateColors.understood }}/>
+      <View style={{ flex: progress.addedNotStarted, backgroundColor: stateColors.new }}/>
+      <View style={{ flex: progress.notAdded }}/>
+    </View>
+    <View style={styles.progressGrid}>
+      <ProgressStat label="Known" value={progress.known} color={stateColors.learned}/>
+      <ProgressStat label="Learning" value={progress.learning} color={stateColors.understood}/>
+      <ProgressStat label="Added, not started" value={progress.addedNotStarted} color={stateColors.new}/>
+      <ProgressStat label="Not added" value={progress.notAdded} color={theme.muted}/>
+    </View>
+  </View>;
+}
+
+function ProgressStat({ label, value, color }: { label: string; value: number; color: string }) {
+  const theme = useAppTheme();
+  return <View style={styles.progressStat}><View style={[styles.progressDot, { backgroundColor: color }]}/><View style={styles.progressStatText}><AppText variant="label">{value.toLocaleString()}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{label}</AppText></View></View>;
+}
+
+function CatalogProgressBadge({ state }: { state: Word['state'] }) {
+  const known = state === 'learned';
+  const notStarted = state === 'new';
+  const label = known ? 'Known' : notStarted ? 'Added, not started' : 'Learning';
+  const color = known ? stateColors.learned : notStarted ? stateColors.new : stateColors.understood;
+  return <View style={[styles.catalogProgressBadge, { backgroundColor: `${color}18`, borderColor: `${color}2E` }]}><AppText variant="caption" style={{ color }}>{label}</AppText></View>;
 }
 
 const styles = StyleSheet.create({
@@ -163,6 +199,7 @@ const styles = StyleSheet.create({
   headerContent: { gap: spacing.lg, marginBottom: spacing.lg }, header: { minHeight: 68, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   back: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' }, intro: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg },
   levelBadge: { width: 82, height: 82, borderRadius: 26, alignItems: 'center', justifyContent: 'center' }, introText: { flex: 1, gap: spacing.xs },
+  progressPanel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md }, progressHeading: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', gap: spacing.md }, progressBar: { height: 12, flexDirection: 'row', borderRadius: radii.pill, overflow: 'hidden' }, progressGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, progressStat: { width: '48%', flexDirection: 'row', alignItems: 'center', gap: spacing.sm }, progressDot: { width: 10, height: 10, borderRadius: 5 }, progressStatText: { flex: 1 },
   card: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md }, wordHeader: { flexDirection: 'row', justifyContent: 'space-between', gap: spacing.md },
-  wordTitle: { flex: 1, gap: 2 },
+  wordTitle: { flex: 1, gap: 2 }, cardMeta: { alignItems: 'flex-end', gap: spacing.xs }, catalogProgressBadge: { borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.sm, paddingVertical: spacing.xs },
 });

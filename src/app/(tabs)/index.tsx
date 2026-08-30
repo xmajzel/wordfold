@@ -282,12 +282,12 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
 
   if (sessionComplete) {
     const canContinue = continuedSessionFeed.length > 0;
-    return <Screen><Header filter={filter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={onSelectFilter}/><Animated.View exiting={FadeOut.duration(140).reduceMotion(ReduceMotion.System)} style={styles.emptyTransition}>{canContinue ? <EmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} actionLabel="Continue learning" onAction={continueLearning}/> : <LearningEmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} recommendations={canAddRecommendations ? recommendationPreview.slice(0, recommendationAddCount) : []} learningPreferences={learningPreferences} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} busy={recommendationsBusy} onAdd={() => void addRecommendationsAndContinue()}/>}</Animated.View></Screen>;
+    return <Screen><Header filter={filter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={onSelectFilter}/><Animated.View exiting={FadeOut.duration(140).reduceMotion(ReduceMotion.System)} style={styles.emptyTransition}>{canContinue ? <EmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} actionLabel="Continue learning" onAction={continueLearning}/> : <LearningEmptyState title="Session complete" message={`You worked through every ${categoryWordLabel(filter, true)} due in this session.`} recommendations={canAddRecommendations ? recommendationPreview.slice(0, recommendationAddCount) : []} learningPreferences={learningPreferences} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} showManualCourseSetup={activeWords.length === 0 && !activeCourse.capabilities.recommendations} busy={recommendationsBusy} onAdd={() => void addRecommendationsAndContinue()}/>}</Animated.View></Screen>;
   }
 
   if (sessionFeed.length === 0) {
     const hasCategoryWords = categoryWords.length > 0;
-    return <Screen><Header filter={filter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={onSelectFilter}/><LearningEmptyState title={hasCategoryWords ? 'You are caught up' : `No ${categoryWordLabel(filter)} yet`} message={hasCategoryWords ? `No ${categoryWordLabel(filter)} are due right now.` : `Add ${languageLabel(activeCourse.sourceLanguageCode).toLowerCase()} words from the library or choose another category.`} recommendations={canAddRecommendations ? recommendationPreview.slice(0, recommendationAddCount) : []} learningPreferences={learningPreferences} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} busy={recommendationsBusy} onAdd={() => void addRecommendationsAndContinue()}/></Screen>;
+    return <Screen><Header filter={filter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={onSelectFilter}/><LearningEmptyState title={hasCategoryWords ? 'You are caught up' : `No ${categoryWordLabel(filter)} yet`} message={hasCategoryWords ? `No ${categoryWordLabel(filter)} are due right now.` : `Add ${languageLabel(activeCourse.sourceLanguageCode).toLowerCase()} words from the library or choose another category.`} recommendations={canAddRecommendations ? recommendationPreview.slice(0, recommendationAddCount) : []} learningPreferences={learningPreferences} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} showManualCourseSetup={activeWords.length === 0 && !activeCourse.capabilities.recommendations} busy={recommendationsBusy} onAdd={() => void addRecommendationsAndContinue()}/></Screen>;
   }
 
   return (
@@ -319,16 +319,45 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
   );
 }
 
-function LearningEmptyState({ title, message, recommendations, learningPreferences, learnedLanguage, busy, onAdd }: {
+function LearningEmptyState({ title, message, recommendations, learningPreferences, learnedLanguage, showManualCourseSetup, busy, onAdd }: {
   title: string;
   message: string;
   recommendations: Recommendation[];
   learningPreferences: LearningPreferences;
   learnedLanguage: string;
+  showManualCourseSetup: boolean;
   busy: boolean;
   onAdd(): void;
 }) {
   const theme = useAppTheme();
+  if (recommendations.length === 0 && showManualCourseSetup) {
+    return <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.learningEmptyContent}>
+      <Animated.View
+        entering={FadeInDown.duration(220).reduceMotion(ReduceMotion.System)}
+        testID="today-course-empty"
+        style={[styles.nextBatchCardShadow, { shadowColor: theme.shadow }]}
+      >
+        <View style={[styles.nextBatchCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+          <View style={[styles.completionStatus, { backgroundColor: `${theme.primary}0D`, borderBottomColor: `${theme.primary}2E` }]}>
+            <View aria-hidden style={[styles.completionIcon, { backgroundColor: theme.surface }]}>
+              <Ionicons name="language-outline" color={theme.primary} size={20}/>
+            </View>
+            <View style={styles.recommendationText}>
+              <AppText variant="label">No {learnedLanguage} words yet</AppText>
+              <AppText variant="caption" style={{ color: theme.muted }}>Each language keeps its own library and progress.</AppText>
+            </View>
+          </View>
+          <View style={styles.nextBatchBody}>
+            <AppText variant="heading">Start your {learnedLanguage} library</AppText>
+            <View style={styles.courseEmptyActions}>
+              <PrimaryButton label={`Add a ${learnedLanguage} word`} onPress={() => router.push('/word/new')} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/>
+              <PrimaryButton label="Bulk paste" variant="secondary" onPress={() => router.push('/import')} icon={<Ionicons name="clipboard-outline" color={theme.primary} size={18}/>}/>
+            </View>
+          </View>
+        </View>
+      </Animated.View>
+    </ScrollView>;
+  }
   if (recommendations.length === 0) {
     return <EmptyState title={title} message={message} actionLabel="Browse library" actionVariant="secondary" compactAction onAction={() => router.push('/(tabs)/library')}/>;
   }
@@ -400,6 +429,7 @@ const styles = StyleSheet.create({
   completionStatus: { minHeight: 76, flexDirection: 'row', alignItems: 'center', gap: spacing.md, padding: spacing.lg, borderBottomWidth: 1 },
   completionIcon: { width: 40, height: 40, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
   nextBatchBody: { padding: spacing.xl, gap: spacing.lg },
+  courseEmptyActions: { gap: spacing.sm },
   recommendationHeading: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   recommendationIcon: { width: 40, height: 40, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
   recommendationText: { flex: 1, gap: 2 },

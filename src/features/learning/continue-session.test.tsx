@@ -14,6 +14,7 @@ const mockBuildRecommendations = jest.fn<Recommendation[], unknown[]>();
 const mockRouterPush = jest.fn();
 const mockRouterSetParams = jest.fn();
 let mockSearchParams: { notificationWordId?: string } = {};
+let mockActiveCourseId: 'en-sk' | 'es-sk' = 'en-sk';
 let mockLearningFilter: LearningFilter = 'all';
 let mockLearningPreferences: LearningPreferences = { levels: [], topics: [] };
 let mockWordCapacity = { limit: 100, count: 2, remaining: 98 as number | null, unlimited: false, shouldShowNotice: false };
@@ -129,8 +130,10 @@ jest.mock('@/components/swipeable-word-card', () => {
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     words: mockWords,
-    activeCourseId: 'en-sk',
-    activeCourse: { sourceLanguageCode: 'en', capabilities: { recommendations: true } },
+    activeCourseId: mockActiveCourseId,
+    activeCourse: mockActiveCourseId === 'es-sk'
+      ? { sourceLanguageCode: 'es', capabilities: { recommendations: false } }
+      : { sourceLanguageCode: 'en', capabilities: { recommendations: true } },
     collections: [{ id: 'my-words', name: 'My words' }],
     learningFilter: mockLearningFilter,
     learningPreferences: mockLearningPreferences,
@@ -147,6 +150,7 @@ describe('continued learning session', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockSearchParams = {};
+    mockActiveCourseId = 'en-sk';
     mockWords = [mockFirstWord, mockNextWord];
     mockLearningFilter = 'all';
     mockLearningPreferences = { levels: [], topics: [] };
@@ -263,6 +267,34 @@ describe('continued learning session', () => {
 
     expect(view.getByTestId('empty-state-compact-action')).toHaveStyle({ width: '100%', maxWidth: 200 });
     expect(StyleSheet.flatten(browseButton.props.style).borderColor).not.toBe('transparent');
+  });
+
+  it('shows connected first-word actions when the active course has no words', async () => {
+    mockActiveCourseId = 'es-sk';
+    mockBuildLearningFeed.mockReturnValue([]);
+    mockBuildContinuedLearningFeed.mockReturnValue([]);
+    const view = await render(<LearnScreen/>);
+
+    view.getByTestId('today-course-empty');
+    view.getByText('No Spanish words yet');
+    view.getByText('Each language keeps its own library and progress.');
+    view.getByText('Start your Spanish library');
+    expect(view.queryByRole('button', { name: 'Browse library' })).toBeNull();
+
+    await fireEvent.press(view.getByRole('button', { name: 'Add a Spanish word' }));
+    expect(mockRouterPush).toHaveBeenCalledWith('/word/new');
+    await fireEvent.press(view.getByRole('button', { name: 'Bulk paste' }));
+    expect(mockRouterPush).toHaveBeenCalledWith('/import');
+  });
+
+  it('keeps the existing library fallback for an empty course that supports recommendations', async () => {
+    mockWords = [];
+    mockBuildLearningFeed.mockReturnValue([]);
+    mockBuildContinuedLearningFeed.mockReturnValue([]);
+    const view = await render(<LearnScreen/>);
+
+    expect(view.queryByTestId('today-course-empty')).toBeNull();
+    view.getByRole('button', { name: 'Browse library' });
   });
 
   it('adds a recommended batch and starts it as a new learning session', async () => {
