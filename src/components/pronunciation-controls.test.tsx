@@ -179,4 +179,16 @@ describe('PronunciationControls', () => {
     expect(transitioning.queryByLabelText('private-enabled')).toBeNull();
     expect(transitioning.queryByLabelText('private-disabled')).toBeNull();
   });
+
+  it.each([
+    [false, 52],
+    [true, 44],
+  ])('reserves the private pronunciation control while consent is loading (compact: %s)', async (compact, minHeight) => {
+    mockConsentStatus = 'loading';
+    const manual = { ...props, text: 'custom phrase', catalogSenseId: null };
+    const screen = await render(<PronunciationControls {...manual} compact={compact}/>);
+
+    expect(screen.getByTestId('private-pronunciation-loading')).toHaveStyle({ minHeight });
+    expect(screen.getByLabelText('Checking cloud pronunciation')).toBeTruthy();
+  });
 });
