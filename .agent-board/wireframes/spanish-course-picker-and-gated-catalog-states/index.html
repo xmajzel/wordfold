@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wordfold Spanish course design gate</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel" src="kit.jsx"></script>
+  <script type="text/babel" src="screens.jsx"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #171426; color: #f8f5ff; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+    .canvas { padding: 42px; min-width: max-content; }
+    .section-title { margin: 0 0 8px; font-size: 22px; }
+    .section-note { margin: 0 0 24px; color: #b8b1ca; max-width: 760px; line-height: 1.5; }
+    .artboards { display: flex; gap: 32px; align-items: flex-start; }
+    .artboard-label { margin: 0 0 10px; color: #d9d3ef; font-size: 13px; font-weight: 700; }
+    .device { width: 390px; height: 844px; overflow: hidden; border-radius: 36px; box-shadow: 0 22px 60px #05030f99; background: #f6f5ff; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { OnboardingEnglish, OnboardingSpanish, SettingsCourse, SpanishLibraryEmpty } = window;
+    const A = ({ label, children }) => <div><p className="artboard-label">{label}</p><div className="device">{children}</div></div>;
+    function App() {
+      return <main className="canvas">
+        <h1 className="section-title">Spanish course selection · approved feature spec</h1>
+        <p className="section-note">Minimal existing-system extension: one radio-card choice in onboarding, a persistent settings switcher, and an honest empty-catalog state while reviewed Spanish content remains gated.</p>
+        <div className="artboards">
+          <A label="Onboarding · existing-user default"><OnboardingEnglish /></A>
+          <A label="Onboarding · Spanish selected"><OnboardingSpanish /></A>
+          <A label="Settings · switch without data loss"><SettingsCourse /></A>
+          <A label="Library · reviewed catalog unavailable"><SpanishLibraryEmpty /></A>
+        </div>
+      </main>;
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

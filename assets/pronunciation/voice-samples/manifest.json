@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "samples": [
+    {
+      "locale": "en-US",
+      "voiceId": "en-US-AvaNeural",
+      "fileName": "ava-en-US.mp3",
+      "text": "Hello! Learning a new language opens the door to new ideas, new places, and new conversations.",
+      "outputFormat": "audio-24khz-96kbitrate-mono-mp3",
+      "byteLength": 83808,
+      "sha256": "6f3b0bf19bf3c5117f2fe482208fab56f8543472adc46a6406aec1630aaae2bb"
+    },
+    {
+      "locale": "en-GB",
+      "voiceId": "en-GB-RyanNeural",
+      "fileName": "ryan-en-GB.mp3",
+      "text": "Hello! Learning a new language opens the door to new ideas, new places, and new conversations.",
+      "outputFormat": "audio-24khz-96kbitrate-mono-mp3",
+      "byteLength": 94176,
+      "sha256": "d1a3193ea76f264a8344b3d7e57dbc754dc094e6f3ac652e0e0f343dab565635"
+    }
+  ]
+}

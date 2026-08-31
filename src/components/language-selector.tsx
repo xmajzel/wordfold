@@ -9,6 +9,8 @@ interface LanguageSelectorProps {
   label: string;
   languageCode: string;
   pronunciationLocale: string;
+  allowedLanguageCodes?: readonly string[];
+  allowedPronunciationLocales?: readonly string[];
   onChange(languageCode: string, pronunciationLocale: string): void;
 }
 
@@ -16,6 +18,8 @@ export function LanguageSelector({
   label,
   languageCode,
   pronunciationLocale,
+  allowedLanguageCodes,
+  allowedPronunciationLocales,
   onChange,
 }: LanguageSelectorProps) {
   const theme = useAppTheme();
@@ -24,7 +28,7 @@ export function LanguageSelector({
   return <View style={styles.group}>
     <AppText variant="label">{label}</AppText>
     <View style={styles.chips}>
-      {languageOptions.map((language) => {
+      {languageOptions.filter((language) => !allowedLanguageCodes || allowedLanguageCodes.includes(language.code)).map((language) => {
         const selected = language.code === languageCode;
         return <Pressable
           key={language.code}
@@ -46,7 +50,9 @@ export function LanguageSelector({
     {selectedLanguage.pronunciationLocales.length > 1 ? <>
       <AppText variant="caption" style={{ color: theme.muted }}>Pronunciation region</AppText>
       <View style={styles.chips}>
-        {selectedLanguage.pronunciationLocales.map((locale) => {
+        {selectedLanguage.pronunciationLocales.filter((locale) => (
+          !allowedPronunciationLocales || allowedPronunciationLocales.includes(locale.code)
+        )).map((locale) => {
           const selected = locale.code === pronunciationLocale;
           return <Pressable
             key={locale.code}

@@ -55,17 +55,35 @@ describe('device pronunciation', () => {
   });
 
   it('stops queued speech and starts the exact voice with learning-friendly settings', async () => {
+    const spainVoice: Voice = {
+      ...enhancedVoice,
+      identifier: 'voice-es-ES-enhanced',
+      name: 'Enhanced Spain Spanish',
+      language: 'es-ES',
+    };
+    (Speech.getAvailableVoicesAsync as jest.Mock).mockResolvedValue([
+      defaultVoice,
+      enhancedVoice,
+      spainVoice,
+    ]);
     const callbacks = { onStart: jest.fn(), onDone: jest.fn(), onStopped: jest.fn(), onError: jest.fn() };
 
-    await expect(startDevicePronunciation('  hola  ', 'es-MX', callbacks)).resolves.toEqual({
-      status: 'started', voice: enhancedVoice,
+    await expect(startDevicePronunciation('  hola  ', 'es-ES', callbacks)).resolves.toEqual({
+      status: 'started', voice: spainVoice,
     });
 
     expect(Speech.stop).toHaveBeenCalledTimes(1);
     expect(Speech.speak).toHaveBeenCalledWith('hola', expect.objectContaining({
-      language: 'es-MX', voice: 'voice-enhanced', pitch: 1, rate: 0.9, volume: 1,
+      language: 'es-ES', voice: 'voice-es-ES-enhanced', pitch: 1, rate: 0.9, volume: 1,
       useApplicationAudioSession: false, ...callbacks,
     }));
+  });
+
+  it('does not substitute Mexico Spanish when the approved Spain Spanish voice is missing', async () => {
+    await expect(startDevicePronunciation('hola', 'es-ES')).resolves.toEqual({ status: 'missing_voice' });
+
+    expect(Speech.stop).not.toHaveBeenCalled();
+    expect(Speech.speak).not.toHaveBeenCalled();
   });
 
   it('does not ask the platform to speak when the exact locale is unavailable', async () => {

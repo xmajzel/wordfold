@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "courseId": "es-sk",
+  "level": "A1",
+  "publicationStatus": "draft",
+  "createdAt": "2026-08-28",
+  "contentPolicy": "docs/SPANISH_CATALOG_EDITORIAL_POLICY.md",
+  "attribution": "Spanish learning content structured according to the Plan Curricular del Instituto Cervantes (PCIC), A1-C2. Wordfold's vocabulary, definitions, examples, and Slovak learning hints are original content. Wordfold is not certified, accredited, or endorsed by Instituto Cervantes.",
+  "sources": [
+    {
+      "id": "instituto-cervantes-pcic",
+      "version": "accessed-2026-08-27",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/indice.htm",
+      "sha256": "d38b6e0f42f6b607d2596b41a3ec31373ec64dfc050f7946482d8f7463a4f7d2",
+      "license": "Written framework-use permission received 2026-08-27",
+      "attribution": "Plan Curricular del Instituto Cervantes (PCIC)",
+      "redistributionScope": "Levels, categories, and classifications may structure original Wordfold content; protected PCIC learner-facing prose and bulk lexical inventories are not reproduced.",
+      "transformations": [
+        "Reference the twenty top-level Nociones específicas classifications as curriculum evidence.",
+        "Independently select and grade every candidate term.",
+        "Write all definitions, examples, and Slovak hints as original Wordfold content."
+      ],
+      "evidencePath": "docs/legal/INSTITUTO_CERVANTES_PCIC_PERMISSION.md"
+    },
+    {
+      "id": "omw-es:2.0",
+      "version": "2.0",
+      "url": "https://github.com/omwn/omw-data/releases/download/v2.0/omw-es-2.0.tar.xz",
+      "sha256": "d8450d42885cd51f3db39fe64219a7a003eeb432b4caa00428285fe6ab224303",
+      "license": "CC BY 3.0",
+      "attribution": "Multilingual Central Repository 3.0 (release 2016), González-Agirre, Laparra and Rigau (2012), packaged by Open Multilingual Wordnet 2.0.",
+      "redistributionScope": "Commercial reuse, redistribution, and adaptation are permitted with attribution. Only the Spanish omw-es module is extracted.",
+      "transformations": [
+        "Extract Spanish lemma, universal POS, lexical-entry ID, sense ID, and synset ID.",
+        "Match independently selected Wordfold candidates by normalized Spanish lemma and compatible POS.",
+        "Retain original source identifiers; do not copy source glosses into learner content."
+      ]
+    },
+    {
+      "id": "wordfold-original-spanish-a1",
+      "version": "draft-2026-08-28",
+      "url": "docs/SPANISH_CATALOG_EDITORIAL_POLICY.md",
+      "sha256": "178fea98c92a0c588fc4878f127dbf2e31b2b236d39fc4744a40ca0f631e4a15",
+      "license": "Wordfold-owned original content",
+      "attribution": "Wordfold",
+      "redistributionScope": "Original candidate selection, level decisions, definitions, examples, and Slovak learning hints. Draft content requires independent review before release.",
+      "transformations": [
+        "Author candidates in five isolated batches of one hundred.",
+        "Normalize identifiers and attach source evidence deterministically.",
+        "Reject production compilation until Spanish and Slovak reviewer gates pass."
+      ]
+    }
+  ],
+  "optionalRankingEvidence": {
+    "id": "googlebooks-spa-20200217",
+    "version": "Spanish 2019 corpus, 2000-2019 window",
+    "url": "https://storage.googleapis.com/books/ngrams/books/datasetsv3.html",
+    "usage": "Optional aggregate ranking signal only. It never assigns a CEFR level or sense and raw n-gram rows are not bundled."
+  }
+}

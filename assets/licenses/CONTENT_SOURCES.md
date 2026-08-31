@@ -1,5 +1,57 @@
 # Content sources
 
+## Spanish course status and Instituto Cervantes framework permission
+
+Instituto Cervantes granted Wordfold written permission on 27 August 2026 to use the
+Plan Curricular del Instituto Cervantes (PCIC) as a reference framework for developing,
+organizing, and classifying original Spanish-learning content across A1-C2 in a
+commercial digital language-learning application.
+
+- Reference: https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/indice.htm
+- Accessed: 27 August 2026
+- Permission evidence: `docs/legal/INSTITUTO_CERVANTES_PCIC_PERMISSION.md`
+- Authorized use: PCIC levels, categories, and classifications may structure
+  Wordfold's original Spanish curriculum.
+- Approved description: “Spanish learning content structured according to the Plan
+  Curricular del Instituto Cervantes (PCIC), A1-C2.”
+- Bundled PCIC content: none
+- Restrictions: protected PCIC materials are not reproduced beyond the permitted
+  reference scope; Wordfold does not claim certification, accreditation, endorsement,
+  or official validation and does not use the Instituto Cervantes logo as a
+  promotional mark.
+
+`assets/catalog/spanish/cefr-pilot.json` contains six original Wordfold draft records
+created solely to validate the course-aware catalog schema and level code paths. They
+are explicitly excluded from production catalog APIs and recommendations until
+independent Spanish and Slovak review is recorded. The editorial and promotion rules
+are documented in `docs/SPANISH_CATALOG_EDITORIAL_POLICY.md`.
+
+### Spanish A1 lexical evidence
+
+The original 500-entry Spanish A1 editorial pilot uses the Spanish module from Open
+Multilingual Wordnet 2.0 for lemma, part-of-speech, and candidate sense identifiers.
+The module packages the Spanish data from Multilingual Central Repository 3.0 release
+2016. It does not supply Wordfold's level decisions, learner definitions, examples, or
+Slovak hints.
+
+- Source release: https://github.com/omwn/omw-data/releases/tag/v2.0
+- Pinned asset: `omw-es-2.0.tar.xz`
+- SHA-256: `d8450d42885cd51f3db39fe64219a7a003eeb432b4caa00428285fe6ab224303`
+- License: Creative Commons Attribution 3.0 Unported (CC BY 3.0)
+- Attribution: Multilingual Central Repository 3.0 (release 2016), González-Agirre,
+  Laparra and Rigau (2012), packaged by Open Multilingual Wordnet 2.0
+- Transformations: only the Spanish lemma, universal POS, lexical-entry ID, sense ID,
+  and synset ID are extracted. Source glosses are not used as learner content.
+
+The separately licensed English module from the MCR package is not ingested. Every
+Spanish definition and example and every Slovak hint in the pilot is original draft
+Wordfold content and remains excluded from runtime APIs until independent Spanish and
+Slovak review is complete.
+
+Google Books Ngram Spanish corpus `googlebooks-spa-20200217` may be used as an optional
+aggregate ranking signal over the 2000-2019 window. It never determines a CEFR level or
+sense, and raw n-gram rows are not bundled.
+
 ## Open English WordNet 2025
 
 Definitions, examples, parts of speech, and sense data are adapted from Open English WordNet 2025 by the Global WordNet Association.

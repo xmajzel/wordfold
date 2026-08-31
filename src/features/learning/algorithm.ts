@@ -132,6 +132,29 @@ export function buildLearningFeed(words: Word[], now = new Date(), filter: Learn
   return feed;
 }
 
+export interface NotificationLearningSession {
+  feed: Word[];
+  reviewWord: Word | null;
+}
+
+export function buildNotificationLearningSession(
+  words: Word[],
+  notificationWordId: string,
+  now = new Date(),
+): NotificationLearningSession {
+  const notificationWord = words.find((word) => word.id === notificationWordId) ?? null;
+  const regularFeed = buildLearningFeed(words, now, 'all');
+  if (!notificationWord) return { feed: regularFeed, reviewWord: null };
+
+  const remainingFeed = regularFeed.filter((word) => word.id !== notificationWordId);
+  const notificationWordIsDue = notificationWord.state === 'new'
+    || regularFeed.some((word) => word.id === notificationWordId);
+  if (notificationWordIsDue) {
+    return { feed: [notificationWord, ...remainingFeed], reviewWord: null };
+  }
+  return { feed: remainingFeed, reviewWord: notificationWord };
+}
+
 export function buildContinuedLearningFeed(
   words: Word[],
   completedSessionWordIds: Iterable<string>,

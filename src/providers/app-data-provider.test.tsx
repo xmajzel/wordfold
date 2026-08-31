@@ -10,6 +10,7 @@ import { AppDataProvider, useAppData } from './app-data-provider';
 const mockSQLiteProvider = jest.fn(({ children }: { children: ReactNode }) => children);
 const mockRebuildReminderSchedule = jest.fn(async (..._args: unknown[]) => 0);
 const mockTranslateEnglishToSlovak = jest.fn(async (_text: string) => 'osobný preklad');
+const mockPrepareTranslationError = jest.fn();
 
 jest.mock('@/providers/auth-provider', () => ({
   useAuth: () => ({ status: 'signedOut', user: null }),
@@ -57,6 +58,10 @@ jest.mock('@/data/repository', () => ({
     timeZoneId: Intl.DateTimeFormat().resolvedOptions().timeZone || 'local',
   })),
   getLearningPreferences: jest.fn(async () => ({ levels: [], topics: [] })),
+  getActiveCourseId: jest.fn(async () => 'en-sk'),
+  saveActiveCourseId: jest.fn(async () => undefined),
+  getPronunciationVoicePreference: jest.fn(async () => 'device'),
+  savePronunciationVoicePreference: jest.fn(async () => undefined),
   isOnboardingComplete: jest.fn(async () => false),
   getLearningFilter: jest.fn(async () => 'all'),
   getWord: jest.fn(async () => null),
@@ -74,7 +79,10 @@ jest.mock('@/data/cefr-catalog', () => ({
 }));
 
 jest.mock('@/features/translation/translator', () => ({
-  translateEnglishToSlovak: (text: string) => mockTranslateEnglishToSlovak(text),
+  isOnDeviceTranslationPairSupported: (source: string, target: string) => (
+    (source === 'en' || source === 'es') && target === 'sk'
+  ),
+  translateOnDevice: (text: string) => mockTranslateEnglishToSlovak(text),
 }));
 
 jest.mock('@/features/reminders/scheduler', () => ({
@@ -110,6 +118,21 @@ function PrepareTranslationProbe() {
   </Pressable>;
 }
 
+function PrepareTranslationErrorProbe() {
+  const { words, prepareWordTranslation } = useAppData();
+  if (!words[0]) return <Text>Loading words</Text>;
+  return <Pressable accessibilityRole="button" onPress={() => {
+    void prepareWordTranslation(words[0]).catch(mockPrepareTranslationError);
+  }}><Text>Prepare translation</Text></Pressable>;
+}
+
+function CourseProbe() {
+  const { activeCourseId, activeCourse, words, switchActiveCourse } = useAppData();
+  return <Pressable accessibilityRole="button" onPress={() => void switchActiveCourse('es-sk').catch(() => undefined)}>
+    <Text>{`${activeCourseId}:${activeCourse.displayName}:${words.length}`}</Text>
+  </Pressable>;
+}
+
 describe('AppDataProvider', () => {
   beforeEach(() => jest.clearAllMocks());
 
@@ -127,6 +150,46 @@ describe('AppDataProvider', () => {
     const catalogProvider = providerCalls.find(({ databaseName }) => databaseName === 'wordnet.sqlite');
 
     expect(catalogProvider?.useSuspense).not.toBe(true);
+  });
+
+  it('switches courses without replacing vocabulary and loads course-scoped settings', async () => {
+    (repository.listWords as jest.Mock).mockResolvedValue([word]);
+    (repository.getLearningPreferences as jest.Mock).mockResolvedValueOnce({ levels: [], topics: [] })
+      .mockResolvedValueOnce({ levels: ['A2'], topics: ['spoken'] });
+    const view = await render(<AppDataProvider><CourseProbe/></AppDataProvider>);
+    const switchButton = await waitFor(() => view.getByRole('button', {
+      name: 'en-sk:English with Slovak hints:1',
+    }));
+
+    await fireEvent.press(switchButton);
+
+    await waitFor(() => view.getByText('es-sk:Spanish with Slovak hints:1'));
+    expect(repository.saveActiveCourseId).toHaveBeenCalledWith(expect.anything(), 'es-sk');
+    expect(repository.getLearningPreferences).toHaveBeenCalledWith(expect.anything(), 'es-sk');
+    expect(repository.getStats).toHaveBeenCalledWith(expect.anything(), 'es-sk');
+  });
+
+  it('does not persist a course switch when scoped data cannot be loaded', async () => {
+    (repository.listWords as jest.Mock).mockResolvedValue([word]);
+    const healthyStats = {
+        totalWords: 1, newWords: 1, difficultWords: 0, understoodWords: 0, learnedWords: 0,
+        viewedToday: 0, viewedLifetime: 1, notificationOpens: 0, recentActivity: [],
+      };
+    (repository.getStats as jest.Mock).mockImplementation(async (_database, courseId = 'en-sk') => {
+      if (courseId === 'es-sk') throw new Error('stats unavailable');
+      return healthyStats;
+    });
+    const view = await render(<AppDataProvider><CourseProbe/></AppDataProvider>);
+    const switchButton = await waitFor(() => view.getByRole('button', {
+      name: 'en-sk:English with Slovak hints:1',
+    }));
+
+    await fireEvent.press(switchButton);
+
+    await waitFor(() => expect(repository.getStats).toHaveBeenCalledWith(expect.anything(), 'es-sk'));
+    expect(repository.saveActiveCourseId).not.toHaveBeenCalled();
+    view.getByText('en-sk:English with Slovak hints:1');
+    (repository.getStats as jest.Mock).mockResolvedValue(healthyStats);
   });
 
   it('rebuilds pending reminders after reviews are stopped', async () => {
@@ -180,6 +243,24 @@ describe('AppDataProvider', () => {
     expect(mockTranslateEnglishToSlovak).not.toHaveBeenCalled();
   });
 
+  it('never replaces a missing reviewed catalog hint with runtime translation', async () => {
+    const catalogWord = {
+      ...word, id: 'catalog', normalizedTerm: 'missing-catalog-hint', translation: null,
+      catalogSenseId: 'catalog-sense', cefrLevel: 'A1' as const,
+    };
+    (repository.listWords as jest.Mock).mockResolvedValue([catalogWord]);
+    (repository.getWord as jest.Mock).mockResolvedValue(catalogWord);
+    const view = await render(<AppDataProvider><PrepareTranslationErrorProbe/></AppDataProvider>);
+
+    const prepareButton = await waitFor(() => view.getByRole('button', { name: 'Prepare translation' }));
+    await fireEvent.press(prepareButton);
+
+    await waitFor(() => expect(mockPrepareTranslationError).toHaveBeenCalledWith(
+      expect.objectContaining({ message: expect.stringContaining('reviewed Slovak hint') }),
+    ));
+    expect(mockTranslateEnglishToSlovak).not.toHaveBeenCalled();
+  });
+
   it('does not translate a saved personal word in the background', async () => {
     const personalWord = { ...word, id: 'personal', term: 'private term', normalizedTerm: 'private-term', translation: null };
     (repository.listWords as jest.Mock).mockResolvedValue([personalWord]);
@@ -203,6 +284,23 @@ describe('AppDataProvider', () => {
     await waitFor(() => view.getByText('osobný preklad'));
     expect(repository.updateWordTranslation).not.toHaveBeenCalled();
     expect(repository.updateMissingWordTranslations).not.toHaveBeenCalled();
+  });
+
+  it('prepares an explicitly requested Spanish hint in memory', async () => {
+    const spanishWord = {
+      ...word, id: 'spanish', term: 'corazón', normalizedTerm: 'corazón', translation: null,
+      catalogSenseId: null, sourceLanguageCode: 'es', sourcePronunciationLocale: 'es-ES',
+    };
+    (repository.listWords as jest.Mock).mockResolvedValue([spanishWord]);
+    (repository.getWord as jest.Mock).mockResolvedValue(spanishWord);
+    const view = await render(<AppDataProvider><PrepareTranslationProbe/></AppDataProvider>);
+
+    const prepareButton = await waitFor(() => view.getByRole('button', { name: 'Prepare translation' }));
+    await fireEvent.press(prepareButton);
+
+    await waitFor(() => view.getByText('osobný preklad'));
+    expect(mockTranslateEnglishToSlovak).toHaveBeenCalledWith('corazón');
+    expect(repository.updateWordTranslation).not.toHaveBeenCalled();
   });
 
   it('does not translate unsupported language pairs in the background', async () => {

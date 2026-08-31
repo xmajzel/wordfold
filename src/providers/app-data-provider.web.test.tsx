@@ -29,6 +29,37 @@ function LookupProbe() {
   </Pressable>;
 }
 
+function CapacityProbe() {
+  const { wordCapacity } = useAppData();
+  return <Text>{wordCapacity.remaining} free word slots</Text>;
+}
+
+function CourseProbe() {
+  const { activeCourseId, learningFilter, switchActiveCourse, updateLearningFilter } = useAppData();
+  return <>
+    <Text>{`${activeCourseId}:${learningFilter}`}</Text>
+    <Pressable accessibilityRole="button" onPress={() => void switchActiveCourse('es-sk')}>
+      <Text>Choose Spanish</Text>
+    </Pressable>
+    <Pressable accessibilityRole="button" onPress={() => void updateLearningFilter('A2')}>
+      <Text>Choose A2</Text>
+    </Pressable>
+  </>;
+}
+
+function SpanishLookupProbe() {
+  const { activeCourseId, findSenses, switchActiveCourse } = useAppData();
+  return <>
+    <Text>{activeCourseId}</Text>
+    <Pressable accessibilityRole="button" onPress={() => void switchActiveCourse('es-sk')}>
+      <Text>Choose Spanish lookup</Text>
+    </Pressable>
+    <Pressable accessibilityRole="button" onPress={() => void findSenses('bank').then(mockFound)}>
+      <Text>Find Spanish bank</Text>
+    </Pressable>
+  </>;
+}
+
 describe('web app data provider', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -50,5 +81,33 @@ describe('web app data provider', () => {
         translation: 'banka',
       }),
     ]));
+  });
+
+  it('exposes free word capacity on web', async () => {
+    const view = await render(<AppDataProvider><CapacityProbe/></AppDataProvider>);
+
+    view.getByText('100 free word slots');
+  });
+
+  it('persists active course and settings under course-specific web keys', async () => {
+    const view = await render(<AppDataProvider><CourseProbe/></AppDataProvider>);
+
+    await fireEvent.press(view.getByRole('button', { name: 'Choose Spanish' }));
+    await waitFor(() => view.getByText('es-sk:all'));
+    await fireEvent.press(view.getByRole('button', { name: 'Choose A2' }));
+    await waitFor(() => view.getByText('es-sk:A2'));
+
+    expect(window.localStorage.setItem).toHaveBeenCalledWith('wordfold.activeCourseId', 'es-sk');
+    expect(window.localStorage.setItem).toHaveBeenCalledWith('wordfold.learningFilter.es-sk', 'A2');
+  });
+
+  it('does not resolve an English catalog sense while Spanish is active', async () => {
+    const view = await render(<AppDataProvider><SpanishLookupProbe/></AppDataProvider>);
+
+    await fireEvent.press(view.getByRole('button', { name: 'Choose Spanish lookup' }));
+    await waitFor(() => view.getByText('es-sk'));
+    await fireEvent.press(view.getByRole('button', { name: 'Find Spanish bank' }));
+
+    await waitFor(() => expect(mockFound).toHaveBeenCalledWith([]));
   });
 });

@@ -18,6 +18,7 @@ import {
   usePrivatePronunciationConsent,
 } from '@/features/pronunciation/private-consent';
 import { privateNeuralPreviewFeatureEnabled } from '@/features/pronunciation/private-cloud';
+import { PRIVACY_POLICY_URL } from '@/features/legal/urls';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { radii, spacing } from '@/theme/tokens';
 
@@ -123,9 +124,25 @@ export default function PrivatePronunciationScreen() {
       <DisclosureRow
         icon="trash-outline"
         title="Your control"
-        body="You can turn the feature off and request deletion below. Automatic expiry cleanup is not active in this development build."
+        body="You can turn the feature off and delete its private data below. Server audio expires automatically 30 days after its latest use; audit records are kept for no more than 30 days."
       />
     </View>
+
+    <Pressable
+      accessibilityRole="link"
+      accessibilityLabel="Read Wordfold privacy policy"
+      onPress={() => void Linking.openURL(PRIVACY_POLICY_URL)}
+      style={({ pressed }) => [styles.link, {
+        borderColor: theme.border,
+        backgroundColor: theme.surface,
+        opacity: pressed ? 0.75 : 1,
+      }]}
+    >
+      <Ionicons name="document-text-outline" color={theme.primary} size={20}/>
+      <AppText variant="label" style={[styles.flex, { color: theme.primary }]}>
+        Wordfold privacy policy
+      </AppText>
+    </Pressable>
 
     <Pressable
       accessibilityRole="link"

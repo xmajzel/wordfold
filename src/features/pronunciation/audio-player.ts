@@ -27,6 +27,10 @@ async function configureAudioMode() {
   return audioModeReady;
 }
 
+export async function preparePronunciationFilePlayback() {
+  await Promise.all([loadExpoAudio(), configureAudioMode()]);
+}
+
 export async function stopPronunciationFilePlayback() {
   const stop = activeStop;
   activeStop = null;

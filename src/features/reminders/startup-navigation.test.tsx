@@ -30,7 +30,7 @@ jest.mock('@/providers/app-data-provider', () => ({
 describe('startup navigation', () => {
   beforeEach(() => jest.clearAllMocks());
 
-  it('opens the exact word from the notification on a cold start', async () => {
+  it('opens Today with the exact word from the notification on a cold start', async () => {
     mockGetLastNotificationResponse.mockReturnValue({
       notification: {
         request: {
@@ -48,8 +48,8 @@ describe('startup navigation', () => {
     const view = await render(<Index />);
 
     expect(view.getByTestId('redirect-target').props.children).toBe(JSON.stringify({
-      pathname: '/word/[id]',
-      params: { id: 'seed-headway-upper-intermediate-se3qku' },
+      pathname: '/(tabs)',
+      params: { notificationWordId: 'seed-headway-upper-intermediate-se3qku' },
     }));
     await waitFor(() => {
       expect(mockNoteNotificationOpen).toHaveBeenCalledWith('seed-headway-upper-intermediate-se3qku');

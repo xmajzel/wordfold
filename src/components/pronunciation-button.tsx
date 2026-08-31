@@ -19,9 +19,10 @@ interface PronunciationButtonProps {
   text: string;
   locale: string;
   compact?: boolean;
+  idleLabel?: string;
 }
 
-export function PronunciationButton({ text, locale, compact = false }: PronunciationButtonProps) {
+export function PronunciationButton({ text, locale, compact = false, idleLabel }: PronunciationButtonProps) {
   const theme = useAppTheme();
   const cacheScope = usePronunciationCacheScope();
   const [status, setStatus] = useState<PronunciationStatus>('idle');
@@ -138,7 +139,7 @@ export function PronunciationButton({ text, locale, compact = false }: Pronuncia
     </View>
     <View style={styles.text}>
       <AppText variant="label" style={{ color: theme.primary }}>
-        {preparing ? 'Preparing voice…' : speaking ? 'Playing device voice…' : '≈ Device voice'}
+        {preparing ? 'Preparing voice…' : speaking ? 'Playing device voice…' : idleLabel ?? '≈ Device voice'}
       </AppText>
       {!compact ? <AppText variant="caption" style={{ color: theme.muted }}>{localeDescription}</AppText> : null}
     </View>

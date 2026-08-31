@@ -1,3 +1,4 @@
+import type { CourseId } from '@/domain/courses';
 import type { Word } from '@/domain/types';
 import { buildReminderWordCandidates } from '@/features/reminders/word-selector';
 
@@ -23,8 +24,8 @@ export interface StoredTodayWordWidgetTimelineEntry {
   props: TodayWordWidgetProps;
 }
 
-export function getTodayWordWidgetProps(words: Word[], date = new Date()): TodayWordWidgetProps {
-  const word = buildReminderWordCandidates(words, date)[0];
+export function getTodayWordWidgetProps(words: Word[], date = new Date(), courseId?: CourseId): TodayWordWidgetProps {
+  const word = buildReminderWordCandidates(words, date, courseId)[0];
   if (!word) {
     return {
       status: 'empty',
@@ -48,10 +49,11 @@ export function buildTodayWordWidgetTimeline(
   words: Word[],
   now = new Date(),
   futureDays = TODAY_WORD_WIDGET_FUTURE_DAYS,
+  courseId?: CourseId,
 ): TodayWordWidgetTimelineEntry[] {
   const entries: TodayWordWidgetTimelineEntry[] = [{
     date: new Date(now),
-    props: getTodayWordWidgetProps(words, now),
+    props: getTodayWordWidgetProps(words, now, courseId),
   }];
   const nextDate = new Date(now);
   nextDate.setHours(0, 0, 0, 0);
@@ -59,7 +61,7 @@ export function buildTodayWordWidgetTimeline(
   for (let day = 1; day <= futureDays; day += 1) {
     const date = new Date(nextDate);
     date.setDate(nextDate.getDate() + day);
-    entries.push({ date, props: getTodayWordWidgetProps(words, date) });
+    entries.push({ date, props: getTodayWordWidgetProps(words, date, courseId) });
   }
 
   return entries;

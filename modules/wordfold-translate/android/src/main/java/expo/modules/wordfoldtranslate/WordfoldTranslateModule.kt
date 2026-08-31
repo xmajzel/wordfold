@@ -13,6 +13,10 @@ class WordfoldTranslateModule : Module() {
     Name("WordfoldTranslate")
 
     AsyncFunction("translate") { text: String, sourceCode: String, targetCode: String, promise: Promise ->
+      if (targetCode != "sk" || (sourceCode != "en" && sourceCode != "es")) {
+        promise.reject("E_LANGUAGE", "Unsupported translation language pair", null)
+        return@AsyncFunction
+      }
       val sourceLanguage = TranslateLanguage.fromLanguageTag(sourceCode)
       val targetLanguage = TranslateLanguage.fromLanguageTag(targetCode)
       if (sourceLanguage == null || targetLanguage == null) {
@@ -28,13 +32,19 @@ class WordfoldTranslateModule : Module() {
       val conditions = DownloadConditions.Builder().requireWifi().build()
 
       translator.downloadModelIfNeeded(conditions)
-        .continueWithTask { translator.translate(text) }
-        .addOnSuccessListener { result ->
-          promise.resolve(result)
-          translator.close()
+        .addOnSuccessListener {
+          translator.translate(text)
+            .addOnSuccessListener { result ->
+              promise.resolve(result)
+              translator.close()
+            }
+            .addOnFailureListener { error ->
+              promise.reject("E_TRANSLATION", error.message ?: "Translation failed", error)
+              translator.close()
+            }
         }
         .addOnFailureListener { error ->
-          promise.reject("E_TRANSLATION", error.message ?: "Translation failed", error)
+          promise.reject("E_MODEL_DOWNLOAD", error.message ?: "Translation model download failed", error)
           translator.close()
         }
     }

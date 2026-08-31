@@ -1,5 +1,7 @@
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
-import { Alert, Platform } from 'react-native';
+import { Alert, Linking, Platform } from 'react-native';
+
+import { PRIVACY_POLICY_URL } from '@/features/legal/urls';
 
 import PrivatePronunciationScreen from '@/app/private-pronunciation';
 
@@ -58,10 +60,24 @@ describe('private pronunciation disclosure screen', () => {
     expect(screen.getByText('What leaves this device')).toBeTruthy();
     expect(screen.getByText(/exact displayed word or phrase/)).toBeTruthy();
     expect(screen.getByText(/do not store the raw word or phrase/)).toBeTruthy();
+    expect(screen.getByText(/expires automatically 30 days after its latest use/)).toBeTruthy();
     await fireEvent.press(screen.getByRole('button', {
       name: 'Enable private neural pronunciation',
     }));
     await waitFor(() => expect(mockEnable).toHaveBeenCalledTimes(1));
+  });
+
+  it('links to the Wordfold and Azure privacy information', async () => {
+    const openUrl = jest.spyOn(Linking, 'openURL').mockResolvedValue(undefined);
+    const screen = await render(<PrivatePronunciationScreen/>);
+
+    await fireEvent.press(screen.getByRole('link', { name: 'Read Wordfold privacy policy' }));
+    expect(openUrl).toHaveBeenCalledWith(PRIVACY_POLICY_URL);
+
+    await fireEvent.press(screen.getByRole('link', {
+      name: 'Read Microsoft Azure speech data privacy information',
+    }));
+    expect(openUrl).toHaveBeenCalledWith(expect.stringContaining('learn.microsoft.com'));
   });
 
   it('requires destructive confirmation before turning off and deleting', async () => {

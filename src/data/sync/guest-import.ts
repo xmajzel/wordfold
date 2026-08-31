@@ -397,6 +397,8 @@ export class GuestImportService {
         term: localWord.term,
         localDefinition: localWord.definition,
         accountDefinition: accountWord.definition,
+        sourceLanguageCode: localWord.source_language_code,
+        targetLanguageCode: localWord.target_language_code,
         resolution: mapping.conflictResolution,
       });
     }

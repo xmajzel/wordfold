@@ -1,6 +1,7 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
-import type { CefrLevel, Collection, ContentPackId, ContentSource, DashboardStats, LearningFilter, LearningPreferences, ReminderSettings, Word } from '@/domain/types';
+import { defaultCourseId, getCourseDefinition, isCourseId, type CourseId } from '@/domain/courses';
+import type { CefrLevel, Collection, ContentPackId, ContentSource, DashboardStats, LearningFilter, LearningPreferences, PronunciationVoicePreference, ReminderSettings, Word } from '@/domain/types';
 import { isSupportedLanguageCode, isSupportedPronunciationLocale } from '@/domain/languages';
 import { getCefrLevelForCatalogSense } from '@/data/cefr-level-lookup';
 import { isCefrLevel, isLearningFilter } from '@/data/cefr-levels';
@@ -203,9 +204,16 @@ export async function recordNotificationOpen(database: SQLiteDatabase, wordId: s
   );
 }
 
-export async function getStats(database: SQLiteDatabase): Promise<DashboardStats> {
+export async function getStats(
+  database: SQLiteDatabase,
+  courseId: CourseId = defaultCourseId,
+): Promise<DashboardStats> {
+  const course = getCourseDefinition(courseId);
+  const languageParameters = [course.sourceLanguageCode, course.targetLanguageCode] as const;
   const stateRows = await database.getAllAsync<{ state: Word['state']; count: number }>(
-    'SELECT state, COUNT(*) AS count FROM words GROUP BY state',
+    `SELECT state, COUNT(*) AS count FROM words
+     WHERE source_language_code = ? AND target_language_code = ? GROUP BY state`,
+    ...languageParameters,
   );
   const counts = Object.fromEntries(stateRows.map((row) => [row.state, row.count]));
   const today = new Date();
@@ -214,15 +222,25 @@ export async function getStats(database: SQLiteDatabase): Promise<DashboardStats
     `SELECT
       SUM(CASE WHEN type = 'view' AND occurred_at >= ? THEN 1 ELSE 0 END) AS viewed_today,
       SUM(CASE WHEN type = 'notification_open' THEN 1 ELSE 0 END) AS notification_opens
-     FROM learning_events`,
-    today.toISOString(),
+     FROM learning_events AS events
+     INNER JOIN words ON words.id = events.word_id
+     WHERE words.source_language_code = ? AND words.target_language_code = ?`,
+    today.toISOString(), ...languageParameters,
   );
-  const lifetime = await database.getFirstAsync<{ total: number }>('SELECT COALESCE(SUM(view_count), 0) AS total FROM words');
+  const lifetime = await database.getFirstAsync<{ total: number }>(
+    `SELECT COALESCE(SUM(view_count), 0) AS total FROM words
+     WHERE source_language_code = ? AND target_language_code = ?`,
+    ...languageParameters,
+  );
   const activityStart = new Date(today);
   activityStart.setDate(today.getDate() - 6);
   const recentViews = await database.getAllAsync<{ occurred_at: string }>(
-    "SELECT occurred_at FROM learning_events WHERE type = 'view' AND occurred_at >= ? ORDER BY occurred_at",
-    activityStart.toISOString(),
+    `SELECT events.occurred_at FROM learning_events AS events
+     INNER JOIN words ON words.id = events.word_id
+     WHERE events.type = 'view' AND events.occurred_at >= ?
+       AND words.source_language_code = ? AND words.target_language_code = ?
+     ORDER BY events.occurred_at`,
+    activityStart.toISOString(), ...languageParameters,
   );
   const activityCounts = new Map<string, number>();
   for (const event of recentViews) {
@@ -281,7 +299,57 @@ function parsePreferredLevels(value: string | undefined): CefrLevel[] {
   }
 }
 
-export async function getLearningPreferences(database: SQLiteDatabase): Promise<LearningPreferences> {
+function courseMetadataKey(key: string, courseId: CourseId) {
+  return `${key}:${courseId}`;
+}
+
+function parseLearningPreferences(value: string | undefined): LearningPreferences | null {
+  if (!value) return null;
+  try {
+    const parsed: unknown = JSON.parse(value);
+    if (!parsed || typeof parsed !== 'object') return null;
+    const candidate = parsed as { levels?: unknown; topics?: unknown };
+    return normalizeLearningPreferences({
+      levels: Array.isArray(candidate.levels)
+        ? candidate.levels.filter((item): item is CefrLevel => typeof item === 'string' && isCefrLevel(item))
+        : [],
+      topics: Array.isArray(candidate.topics)
+        ? candidate.topics.filter((item): item is ContentPackId => item === 'spoken' || item === 'business' || item === 'academic')
+        : [],
+    });
+  } catch {
+    return null;
+  }
+}
+
+export async function getActiveCourseId(database: SQLiteDatabase): Promise<CourseId> {
+  const row = await database.getFirstAsync<{ value: string }>(
+    "SELECT value FROM app_metadata WHERE key = 'active_course_id'",
+  );
+  return isCourseId(row?.value) ? row.value : defaultCourseId;
+}
+
+export async function saveActiveCourseId(database: SQLiteDatabase, courseId: CourseId) {
+  if (!isCourseId(courseId)) throw new Error('Choose a supported course.');
+  await database.runAsync(
+    `INSERT INTO app_metadata (key, value) VALUES ('active_course_id', ?)
+     ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
+    courseId,
+  );
+}
+
+export async function getLearningPreferences(
+  database: SQLiteDatabase,
+  courseId: CourseId = defaultCourseId,
+): Promise<LearningPreferences> {
+  const courseRow = await database.getFirstAsync<{ value: string }>(
+    'SELECT value FROM app_metadata WHERE key = ?',
+    courseMetadataKey('learning_preferences', courseId),
+  );
+  const coursePreferences = parseLearningPreferences(courseRow?.value);
+  if (coursePreferences) return coursePreferences;
+  if (courseId !== defaultCourseId) return { levels: [], topics: [] };
+
   const [levelRow, packs] = await Promise.all([
     database.getFirstAsync<{ value: string }>(
       "SELECT value FROM app_metadata WHERE key = 'preferred_cefr_levels'",
@@ -294,8 +362,19 @@ export async function getLearningPreferences(database: SQLiteDatabase): Promise<
   });
 }
 
-async function writeLearningPreferences(database: SQLiteDatabase, rawPreferences: LearningPreferences) {
+async function writeLearningPreferences(
+  database: SQLiteDatabase,
+  rawPreferences: LearningPreferences,
+  courseId: CourseId,
+) {
   const preferences = normalizeLearningPreferences(rawPreferences);
+  await database.runAsync(
+    `INSERT INTO app_metadata (key, value) VALUES (?, ?)
+     ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
+    courseMetadataKey('learning_preferences', courseId),
+    JSON.stringify(preferences),
+  );
+  if (courseId !== defaultCourseId) return;
   await database.runAsync(
     `INSERT INTO app_metadata (key, value) VALUES ('preferred_cefr_levels', ?)
      ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
@@ -310,8 +389,49 @@ async function writeLearningPreferences(database: SQLiteDatabase, rawPreferences
   }
 }
 
-export async function saveLearningPreferences(database: SQLiteDatabase, preferences: LearningPreferences) {
-  await database.withExclusiveTransactionAsync((transaction) => writeLearningPreferences(transaction, preferences));
+export async function saveLearningPreferences(
+  database: SQLiteDatabase,
+  preferences: LearningPreferences,
+  courseId: CourseId = defaultCourseId,
+) {
+  await database.withExclusiveTransactionAsync((transaction) => writeLearningPreferences(transaction, preferences, courseId));
+}
+
+export function isPronunciationVoicePreference(value: unknown): value is PronunciationVoicePreference {
+  return value === 'device' || value === 'neural-en-US' || value === 'neural-en-GB';
+}
+
+export async function getPronunciationVoicePreference(
+  database: SQLiteDatabase,
+  courseId: CourseId = defaultCourseId,
+): Promise<PronunciationVoicePreference> {
+  const courseRow = await database.getFirstAsync<{ value: string }>(
+    'SELECT value FROM app_metadata WHERE key = ?',
+    courseMetadataKey('pronunciation_voice_preference', courseId),
+  );
+  if (isPronunciationVoicePreference(courseRow?.value)) return courseRow.value;
+  if (courseId !== defaultCourseId) return 'device';
+  const legacyRow = await database.getFirstAsync<{ value: string }>(
+    "SELECT value FROM app_metadata WHERE key = 'pronunciation_voice_preference'",
+  );
+  return isPronunciationVoicePreference(legacyRow?.value) ? legacyRow.value : 'device';
+}
+
+export async function savePronunciationVoicePreference(
+  database: SQLiteDatabase,
+  preference: PronunciationVoicePreference,
+  courseId: CourseId = defaultCourseId,
+) {
+  if (!isPronunciationVoicePreference(preference)) throw new Error('Choose a supported pronunciation voice.');
+  if (courseId !== defaultCourseId && preference !== 'device') {
+    throw new Error(`Choose a pronunciation voice supported by ${getCourseDefinition(courseId).displayName}.`);
+  }
+  await database.runAsync(
+    `INSERT INTO app_metadata (key, value) VALUES (?, ?)
+     ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
+    courseMetadataKey('pronunciation_voice_preference', courseId),
+    preference,
+  );
 }
 
 export async function isOnboardingComplete(database: SQLiteDatabase) {
@@ -328,28 +448,45 @@ export async function completeOnboarding(database: SQLiteDatabase) {
 export async function completeOnboardingSetup(
   database: SQLiteDatabase,
   preferences: LearningPreferences,
+  pronunciationVoicePreference: PronunciationVoicePreference,
   starterWords: NewWordInput[],
+  courseId: CourseId = defaultCourseId,
 ) {
   const ids: string[] = [];
   await database.withExclusiveTransactionAsync(async (transaction) => {
-    await writeLearningPreferences(transaction, preferences);
+    await writeLearningPreferences(transaction, preferences, courseId);
+    await savePronunciationVoicePreference(transaction, pronunciationVoicePreference, courseId);
     for (const input of starterWords) ids.push(await addWord(transaction, input));
     await completeOnboarding(transaction);
   });
   return ids;
 }
 
-export async function getLearningFilter(database: SQLiteDatabase): Promise<LearningFilter> {
-  const row = await database.getFirstAsync<{ value: string }>(
+export async function getLearningFilter(
+  database: SQLiteDatabase,
+  courseId: CourseId = defaultCourseId,
+): Promise<LearningFilter> {
+  const courseRow = await database.getFirstAsync<{ value: string }>(
+    'SELECT value FROM app_metadata WHERE key = ?',
+    courseMetadataKey('learning_filter', courseId),
+  );
+  if (isLearningFilter(courseRow?.value)) return courseRow.value;
+  if (courseId !== defaultCourseId) return 'all';
+  const legacyRow = await database.getFirstAsync<{ value: string }>(
     "SELECT value FROM app_metadata WHERE key = 'learning_filter'",
   );
-  return isLearningFilter(row?.value) ? row.value : 'all';
+  return isLearningFilter(legacyRow?.value) ? legacyRow.value : 'all';
 }
 
-export async function saveLearningFilter(database: SQLiteDatabase, filter: LearningFilter) {
+export async function saveLearningFilter(
+  database: SQLiteDatabase,
+  filter: LearningFilter,
+  courseId: CourseId = defaultCourseId,
+) {
   await database.runAsync(
-    `INSERT INTO app_metadata (key, value) VALUES ('learning_filter', ?)
+    `INSERT INTO app_metadata (key, value) VALUES (?, ?)
      ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
+    courseMetadataKey('learning_filter', courseId),
     filter,
   );
 }

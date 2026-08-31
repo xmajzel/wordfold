@@ -19,6 +19,7 @@ import { getNotificationWordTarget } from '@/features/reminders/notification-nav
 import { PronunciationCacheScopeProvider } from '@/features/pronunciation/cache-scope-provider';
 import { OfflinePronunciationDownloadsProvider } from '@/features/pronunciation/offline-downloads-provider';
 import { PrivatePronunciationConsentProvider } from '@/features/pronunciation/private-consent-provider';
+import { PronunciationLibraryDownloadCoordinator } from '@/features/pronunciation/library-download-coordinator';
 import { palette } from '@/theme/tokens';
 
 Notifications.setNotificationHandler({
@@ -106,7 +107,7 @@ function AppReadyGate({ fontsLoaded }: { fontsLoaded: boolean }) {
 
   return (
     <View style={styles.root}>
-      {ready ? <Navigation /> : null}
+      {ready ? <><PronunciationLibraryDownloadCoordinator/><Navigation /></> : null}
       {showLaunch ? <LaunchScreen ready={releaseLaunch} onFinish={finishLaunch}/> : null}
     </View>
   );

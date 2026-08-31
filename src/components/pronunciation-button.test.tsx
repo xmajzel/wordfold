@@ -32,28 +32,28 @@ describe('PronunciationButton', () => {
       callbacks.onStart();
       return { status: 'started', voice: { identifier: 'voice' } };
     });
-    const screen = await render(<PronunciationButton text="hola" locale="es-MX"/>);
+    const screen = await render(<PronunciationButton text="hola" locale="es-ES"/>);
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Play Spanish · Mexico device pronunciation for hola' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Play Spanish · Spain device pronunciation for hola' }));
 
     await waitFor(() => expect(mockStartPronunciation).toHaveBeenCalledWith(
-      'hola', 'es-MX', { type: 'guest' }, expect.objectContaining({ onStart: expect.any(Function), onDone: expect.any(Function) }),
+      'hola', 'es-ES', { type: 'guest' }, expect.objectContaining({ onStart: expect.any(Function), onDone: expect.any(Function) }),
     ));
-    expect(screen.getByRole('button', { name: 'Stop Spanish · Mexico device pronunciation' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Stop Spanish · Spain device pronunciation' })).toBeTruthy();
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Stop Spanish · Mexico device pronunciation' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Stop Spanish · Spain device pronunciation' }));
     await waitFor(() => expect(mockStopPronunciation).toHaveBeenCalledTimes(1));
   });
 
   it('shows an honest missing exact-voice message instead of speaking a fallback', async () => {
     const alert = jest.spyOn(Alert, 'alert').mockImplementation(jest.fn());
     mockStartPronunciation.mockResolvedValue({ status: 'missing_voice' });
-    const screen = await render(<PronunciationButton text="hola" locale="es-MX"/>);
+    const screen = await render(<PronunciationButton text="hola" locale="es-ES"/>);
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Play Spanish · Mexico device pronunciation for hola' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Play Spanish · Spain device pronunciation for hola' }));
 
     await waitFor(() => expect(alert).toHaveBeenCalled());
-    expect(alert.mock.calls[0][0]).toBe('Spanish · Mexico voice is not installed');
+    expect(alert.mock.calls[0][0]).toBe('Spanish · Spain voice is not installed');
     expect(alert.mock.calls[0][1]).toEqual(expect.stringContaining('will not substitute'));
   });
 

@@ -18,7 +18,13 @@ jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     guestImport: { phase: 'ready' },
     reminderSettings: { enabled: false, countPerDay: 1, windowStartMinutes: 600, windowEndMinutes: 1200, timeZoneId: 'local' },
+    activeCourseId: 'en-sk',
+    activeCourse: {
+      id: 'en-sk', directionLabel: 'Slovak → English', sourceLanguageCode: 'en',
+      capabilities: { recommendations: true, offlinePronunciation: true, privateNeuralPronunciation: true },
+    },
     learningPreferences: { levels: [], topics: [] },
+    switchActiveCourse: jest.fn(async () => undefined),
     updateReminderSettings: jest.fn(async () => 0),
   }),
 }));

@@ -4,6 +4,14 @@ import type { Word } from '@/domain/types';
 
 import { WordCard } from './word-card';
 
+jest.mock('@/providers/app-data-provider', () => ({
+  useAppData: () => ({ pronunciationVoicePreference: 'device' }),
+}));
+
+jest.mock('@/features/pronunciation/offline-downloads-provider', () => ({
+  useOfflinePronunciationDownloads: () => ({ hasAsset: () => false }),
+}));
+
 jest.mock('expo-haptics', () => ({
   NotificationFeedbackType: { Success: 'success' },
   notificationAsync: jest.fn(async () => undefined),
@@ -63,12 +71,26 @@ describe('WordCard learning actions', () => {
     expect(onRate.mock.calls.map(([rating]) => rating)).toEqual(['understood', 'learned']);
   });
 
+  it.each([
+    ['learned' as const, 'Reviews stopped'],
+    ['understood' as const, 'Kept in learning'],
+  ])('replaces actions with the completed %s result', async (sessionRating, detail) => {
+    const screen = await render(<WordCard word={word} sessionRating={sessionRating} onRate={jest.fn()}/>);
+
+    screen.getByLabelText(`Rated this session. ${detail}.`);
+    screen.getByText('Rated this session');
+    screen.getByText(detail);
+    expect(screen.queryByText('Swipe or tap')).toBeNull();
+    expect(screen.queryByRole('button', { name: /Keep learning/ })).toBeNull();
+    expect(screen.queryByRole('button', { name: /I know this/ })).toBeNull();
+  });
+
   it('shows the labeled exact-locale pronunciation control only when requested', async () => {
     const visible = await render(<WordCard word={word} showPronunciation/>);
     expect(visible.getByRole('button', {
       name: 'Play English · United States device pronunciation for scope',
     })).toBeTruthy();
-    expect(visible.getByText('≈ Device voice')).toBeTruthy();
+    expect(visible.getByText('Phone voice')).toBeTruthy();
   });
 
   it('shows translation preparation for an untranslated word', async () => {

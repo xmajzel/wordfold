@@ -8,8 +8,15 @@ import {
 } from './offline-downloads-provider';
 
 const mockInspections = new Map<string, Record<string, unknown>>();
+const mockLibraryInspections = new Map<string, Record<string, unknown>>();
 const mockDownloadPack = jest.fn();
+const mockReconcileLibrary = jest.fn();
 let mockDiskSpace = 1024 * 1024 * 1024;
+
+jest.mock('@/data/cefr-catalog', () => ({
+  getCefrEntries: () => [{ catalogSenseId: 'sense-a' }],
+  getCefrEntry: (id: string) => id === 'sense-a' ? { catalogSenseId: id, level: 'A1' } : null,
+}));
 
 jest.mock('@/features/pronunciation/offline-manifest', () => ({
   fetchOfflineManifestIndex: jest.fn(async () => ({
@@ -18,7 +25,10 @@ jest.mock('@/features/pronunciation/offline-manifest', () => ({
       'en-GB': { sha256: 'b'.repeat(64) },
     },
   })),
-  fetchOfflineManifestShard: jest.fn(async (_index, locale) => ({ locale })),
+  fetchOfflineManifestShard: jest.fn(async (_index, locale) => ({
+    locale,
+    assets: [{ catalogSenseId: 'sense-a', contentHash: 'c'.repeat(64), sha256: 'd'.repeat(64), byteLength: 128 }],
+  })),
 }));
 
 jest.mock('@/features/pronunciation/offline-store', () => ({
@@ -46,11 +56,25 @@ jest.mock('@/features/pronunciation/offline-store', () => ({
     plan: null,
   }),
   downloadOfflinePack: (...args: unknown[]) => mockDownloadPack(...args),
+  inspectOfflineLibrary: async (locale: string) => mockLibraryInspections.get(locale) ?? ({
+    locale,
+    requiredCount: 0,
+    requiredBytes: 0,
+    downloadedCount: 0,
+    downloadedBytes: 0,
+    availableCatalogSenseIds: [],
+  }),
+  reconcileOfflineLibrary: (...args: unknown[]) => mockReconcileLibrary(...args),
+  removeOfflineLibraryLocale: (locale: string) => mockLibraryInspections.delete(locale),
   offlineAvailableDiskSpace: () => mockDiskSpace,
   removeOfflinePack: (locale: string, level: string) => mockInspections.delete(`${locale}:${level}`),
   removeOfflineLocale: (locale: string) => {
     for (const key of [...mockInspections.keys()]) if (key.startsWith(`${locale}:`)) mockInspections.delete(key);
   },
+}));
+
+jest.mock('@/features/pronunciation/audio-player', () => ({
+  playPronunciationFile: jest.fn(async () => undefined),
 }));
 
 function Probe() {
@@ -61,17 +85,22 @@ function Probe() {
   return <>
     <Text>{a1.state}:{a1.totalAudioBytes ?? 'unknown'}</Text>
     <Text>{downloads.job ? `${downloads.job.stage}:${downloads.job.completedCount}` : 'idle'}</Text>
+    <Text>{downloads.library['en-US'].downloadedCount} library words</Text>
+    <Text>{downloads.libraryJob ? `library:${downloads.libraryJob.stage}` : 'library-idle'}</Text>
     <Text>{error}</Text>
     <Pressable accessibilityRole="button" accessibilityLabel="prepare" onPress={() => run(downloads.prepareManifests())}/>
     <Pressable accessibilityRole="button" accessibilityLabel="download" onPress={() => run(downloads.downloadLevel('en-US', 'A1'))}/>
     <Pressable accessibilityRole="button" accessibilityLabel="cancel" onPress={downloads.cancelDownload}/>
+    <Pressable accessibilityRole="button" accessibilityLabel="library" onPress={() => run(downloads.reconcileLibrary('en-US', ['sense-a']))}/>
   </>;
 }
 
 describe('OfflinePronunciationDownloadsProvider', () => {
   beforeEach(() => {
     mockInspections.clear();
+    mockLibraryInspections.clear();
     mockDownloadPack.mockReset();
+    mockReconcileLibrary.mockReset();
     mockDiskSpace = 1024 * 1024 * 1024;
   });
 
@@ -136,5 +165,35 @@ describe('OfflinePronunciationDownloadsProvider', () => {
 
     await waitFor(() => expect(screen.getByText('idle')).toBeTruthy());
     expect(screen.queryByText('cancelled')).toBeNull();
+  });
+
+  it('publishes automatic library progress and the verified result', async () => {
+    mockReconcileLibrary.mockImplementation(async (shard, _sha, desired, options) => {
+      options.onProgress({
+        stage: 'downloading', assetCount: desired.length, totalBytes: 128,
+        completedCount: 1, completedBytes: 128,
+      });
+      const inspection = {
+        locale: shard.locale,
+        requiredCount: 1,
+        requiredBytes: 128,
+        downloadedCount: 1,
+        downloadedBytes: 128,
+        availableCatalogSenseIds: ['sense-a'],
+      };
+      mockLibraryInspections.set(shard.locale, inspection);
+      return inspection;
+    });
+    const screen = await render(<OfflinePronunciationDownloadsProvider><Probe/></OfflinePronunciationDownloadsProvider>);
+
+    await fireEvent.press(screen.getByRole('button', { name: 'library' }));
+    await waitFor(() => expect(screen.getByText('1 library words')).toBeTruthy());
+    expect(mockReconcileLibrary).toHaveBeenCalledWith(
+      expect.objectContaining({ locale: 'en-US' }),
+      'a'.repeat(64),
+      ['sense-a'],
+      expect.objectContaining({ signal: expect.anything(), onProgress: expect.any(Function) }),
+    );
+    expect(screen.getByText('library-idle')).toBeTruthy();
   });
 });

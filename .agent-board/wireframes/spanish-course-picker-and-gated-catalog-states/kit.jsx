@@ -1,0 +1,16 @@
+const T = {
+  c: { canvas:'#F6F5FF', surface:'#FFFFFF', primary:'#6657D9', soft:'#E9E5FF', text:'#1E1A35', muted:'#716C86', border:'#E6E2F2', success:'#168A78', accent:'#E16F9E' },
+  s: { xs:4, sm:8, md:12, lg:16, xl:24, xxl:32 },
+  r: { control:14, card:20, pill:999 },
+};
+function Status(){return <div style={{height:46,display:'flex',alignItems:'end',justifyContent:'space-between',padding:'0 24px 8px',fontSize:12,fontWeight:700}}><span>9:41</span><span>● ● ▰</span></div>}
+function Screen({children,footer}){return <div style={{height:'100%',display:'flex',flexDirection:'column',background:`linear-gradient(145deg,${T.c.canvas},#F1EEFF 55%,#FDF2F7)`}}><Status/><div style={{flex:1,overflow:'hidden',padding:'0 20px'}}>{children}</div>{footer}</div>}
+function Logo(){return <div style={{width:34,height:34,borderRadius:11,display:'grid',placeItems:'center',color:'white',fontWeight:900,background:`linear-gradient(135deg,${T.c.primary},${T.c.accent})`,transform:'rotate(-3deg)'}}>W</div>}
+function Eyebrow({children}){return <div style={{color:T.c.primary,fontWeight:800,fontSize:12,letterSpacing:1.2}}>{children}</div>}
+function Title({children}){return <h1 style={{margin:'8px 0',fontSize:32,lineHeight:1.08,color:T.c.text}}>{children}</h1>}
+function Body({children,center=false}){return <p style={{margin:0,color:T.c.muted,fontSize:15,lineHeight:1.45,textAlign:center?'center':'left'}}>{children}</p>}
+function CourseCard({selected,title,description,flag}){return <div role="radio" aria-checked={selected} style={{minHeight:112,padding:16,borderRadius:T.r.card,border:`2px solid ${selected?T.c.primary:T.c.border}`,background:selected?T.c.soft:T.c.surface,display:'flex',gap:14,alignItems:'center'}}><div style={{width:50,height:50,borderRadius:17,display:'grid',placeItems:'center',fontSize:24,background:T.c.surface}}>{flag}</div><div style={{flex:1}}><div style={{fontWeight:800,fontSize:18,color:T.c.text}}>{title}</div><div style={{fontSize:13,lineHeight:1.35,color:T.c.muted,marginTop:5}}>{description}</div></div><div style={{width:24,height:24,borderRadius:12,border:`2px solid ${selected?T.c.primary:T.c.border}`,background:selected?T.c.primary:'transparent',color:'white',display:'grid',placeItems:'center',fontSize:14}}>{selected?'✓':''}</div></div>}
+function Button({children,secondary=false}){return <div style={{height:50,borderRadius:T.r.control,display:'grid',placeItems:'center',fontWeight:800,border:`1px solid ${secondary?T.c.border:'transparent'}`,color:secondary?T.c.primary:'white',background:secondary?T.c.surface:`linear-gradient(135deg,${T.c.primary},#9C62DE,${T.c.accent})`}}>{children}</div>}
+function Footer(){return <div style={{padding:'14px 20px 28px',display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,borderTop:`1px solid ${T.c.border}`,background:'#FFFFFFD9'}}><Button secondary>Back</Button><Button>Continue</Button></div>}
+function Top({step='Step 1 of 5'}){return <><div style={{height:48,display:'flex',alignItems:'center',justifyContent:'space-between'}}><Logo/><span style={{fontSize:12,color:T.c.muted}}>{step}</span></div><div style={{height:3,display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:8}}>{[0,1,2,3,4].map((n)=><i key={n} style={{background:n===0?T.c.primary:T.c.border,borderRadius:3}}/>)}</div></>}
+Object.assign(window,{T,Screen,Logo,Eyebrow,Title,Body,CourseCard,Button,Footer,Top});

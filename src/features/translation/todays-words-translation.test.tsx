@@ -15,8 +15,13 @@ const word: Word = {
   nextReviewAt: null, createdAt: '2026-07-19T10:00:00.000Z', updatedAt: '2026-07-19T10:00:00.000Z',
 };
 let mockWords = [word];
+let mockActiveCourseId: 'en-sk' | 'es-sk' = 'en-sk';
+let mockSearchParams: { notificationWordId?: string } = {};
 
-jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
+jest.mock('expo-router', () => ({
+  router: { push: jest.fn(), setParams: jest.fn() },
+  useLocalSearchParams: () => mockSearchParams,
+}));
 
 jest.mock('@/components/swipeable-word-card', () => {
   const React = jest.requireActual('react');
@@ -32,6 +37,10 @@ jest.mock('expo-haptics', () => ({
   NotificationFeedbackType: { Success: 'success' },
   notificationAsync: jest.fn(async () => undefined),
   selectionAsync: jest.fn(async () => undefined),
+}));
+
+jest.mock('@/features/pronunciation/offline-downloads-provider', () => ({
+  useOfflinePronunciationDownloads: () => ({ hasAsset: () => false }),
 }));
 
 jest.mock('react-native-reanimated', () => {
@@ -61,8 +70,16 @@ jest.mock('react-native-reanimated', () => {
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     words: mockWords,
+    activeCourseId: mockActiveCourseId,
+    activeCourse: {
+      sourceLanguageCode: mockActiveCourseId === 'es-sk' ? 'es' : 'en',
+      capabilities: { recommendations: mockActiveCourseId === 'en-sk' },
+    },
     collections: [{ id: 'my-words', name: 'My words' }],
     learningFilter: 'all',
+    learningPreferences: { levels: [], topics: [] },
+    wordCapacity: { remaining: null },
+    addRecommendedWords: jest.fn(async () => 0),
     updateLearningFilter: jest.fn(async () => undefined),
     rateWord: jest.fn(async () => undefined),
     markViewed: jest.fn(async () => undefined),
@@ -74,6 +91,8 @@ describe('Today word translation', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockWords = [word];
+    mockActiveCourseId = 'en-sk';
+    mockSearchParams = {};
   });
 
   it('waits for the provider to prepare a missing translation for the active card', async () => {
@@ -88,6 +107,7 @@ describe('Today word translation', () => {
       ...word, term: 'hola', normalizedTerm: 'hola', sourceLanguageCode: 'es',
       sourcePronunciationLocale: 'es-MX', targetLanguageCode: 'en', targetPronunciationLocale: 'en-US',
     }];
+    mockSearchParams = { notificationWordId: 'word' };
 
     const view = await render(<LearnScreen/>);
 
@@ -96,5 +116,18 @@ describe('Today word translation', () => {
     }));
     expect(mockPrepareWordTranslation).not.toHaveBeenCalled();
     expect(view.queryByLabelText('Preparing Slovak hint')).toBeNull();
+  });
+
+  it('requests a missing Slovak hint for a Spanish manual word', async () => {
+    mockWords = [{
+      ...word, catalogSenseId: null, term: 'corazón', normalizedTerm: 'corazón',
+      sourceLanguageCode: 'es', sourcePronunciationLocale: 'es-ES',
+    }];
+    mockActiveCourseId = 'es-sk';
+
+    const view = await render(<LearnScreen/>);
+
+    await waitFor(() => expect(mockPrepareWordTranslation).toHaveBeenCalledWith(mockWords[0]));
+    view.getByLabelText('Preparing Slovak hint');
   });
 });

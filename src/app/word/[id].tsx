@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -11,6 +11,7 @@ import { PrimaryButton } from '@/components/primary-button';
 import { PronunciationControls } from '@/components/pronunciation-controls';
 import { Screen } from '@/components/screen';
 import { StateBadge } from '@/components/state-badge';
+import { getCourseForLanguagePair } from '@/domain/courses';
 import {
   defaultPronunciationLocale,
   defaultSourceLanguageCode,
@@ -19,7 +20,11 @@ import {
 } from '@/domain/languages';
 import { potentialWordDuplicates } from '@/domain/word-identity';
 import { normalizeTerm } from '@/features/import/parser';
-import { translateEnglishToSlovak } from '@/features/translation/translator';
+import {
+  isOnDeviceTranslationPairSupported,
+  translateOnDevice,
+  TranslationCancelledError,
+} from '@/features/translation/translator';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
@@ -46,6 +51,9 @@ export default function WordDetailScreen() {
   const [catalogAssociationRemoved, setCatalogAssociationRemoved] = useState(false);
   const [saving, setSaving] = useState(false);
   const [translating, setTranslating] = useState(false);
+  const translationController = useRef<AbortController | null>(null);
+
+  useEffect(() => () => translationController.current?.abort(), []);
 
   useEffect(() => {
     if (!word) return;
@@ -80,6 +88,20 @@ export default function WordDetailScreen() {
 
   const save = () => {
     if (!term.trim() || !definition.trim()) return;
+    if (!getCourseForLanguagePair(sourceLanguageCode, targetLanguageCode)) {
+      Alert.alert(
+        'Choose a supported course pair',
+        'Wordfold currently studies English or Spanish with Slovak hints. Choose English → Slovak or Spanish → Slovak before saving.',
+      );
+      return;
+    }
+    if (sourceLanguageCode === 'es' && sourcePronunciationLocale !== 'es-ES') {
+      Alert.alert(
+        'Choose Spain pronunciation',
+        'Spanish course editing currently supports only the reviewed es-ES locale. Mexico Spanish will be selectable after its own device and native-speaker quality gate.',
+      );
+      return;
+    }
     const duplicates = potentialWordDuplicates(
       words, sourceLanguageCode, normalizeTerm(term, sourceLanguageCode), word.id,
     );
@@ -99,14 +121,29 @@ export default function WordDetailScreen() {
 
   const confirmDelete = () => Alert.alert('Delete this word?', 'Its learning history will also be removed.', [{ text: 'Cancel', style: 'cancel' }, { text: 'Delete', style: 'destructive', onPress: () => void removeWord(word.id).then(() => router.replace('/(tabs)/library')) }]);
   const generateTranslation = async () => {
-    if (sourceLanguageCode !== 'en' || targetLanguageCode !== 'sk') return;
+    if (!isOnDeviceTranslationPairSupported(sourceLanguageCode, targetLanguageCode)) return;
+    translationController.current?.abort();
+    const controller = new AbortController();
+    translationController.current = controller;
     setTranslating(true);
-    try { setTranslation(await translateEnglishToSlovak(term)); }
-    catch (error) { Alert.alert('Translation is not available', error instanceof Error ? error.message : 'Use a development build.'); }
-    finally { setTranslating(false); }
+    try {
+      setTranslation(await translateOnDevice(term, { sourceLanguageCode, targetLanguageCode }, {
+        signal: controller.signal,
+      }));
+    } catch (error) {
+      if (!(error instanceof TranslationCancelledError)) {
+        Alert.alert('Translation is not available', error instanceof Error ? error.message : 'Use a development build.');
+      }
+    } finally {
+      if (translationController.current === controller) {
+        translationController.current = null;
+        setTranslating(false);
+      }
+    }
   };
 
   const changeSourceLanguage = (languageCode: string, locale: string) => {
+    translationController.current?.abort();
     if (languageCode === sourceLanguageCode) {
       setSourcePronunciationLocale(locale);
       return;
@@ -122,12 +159,13 @@ export default function WordDetailScreen() {
     }
     Alert.alert(
       'Change learning language?',
-      'The existing English dictionary link and CEFR level will be removed. Your definition and progress will stay.',
+      `The existing ${languageLabel(word.sourceLanguageCode)} catalog link and CEFR level will be removed. Your definition and progress will stay.`,
       [{ text: 'Cancel', style: 'cancel' }, { text: 'Change language', onPress: apply }],
     );
   };
 
   const changeTargetLanguage = (languageCode: string, locale: string) => {
+    translationController.current?.abort();
     if (languageCode === targetLanguageCode) {
       setTargetPronunciationLocale(locale);
       return;
@@ -160,20 +198,20 @@ export default function WordDetailScreen() {
       />
       <View style={[styles.trail, { backgroundColor: theme.surface, borderColor: theme.border }]}><Trail value={word.viewCount} label="times seen"/><Trail value={word.lapseCount} label="misses"/><Trail value={word.understoodStreak} label="recall steps"/></View>
       {word.state === 'learned' ? <PrimaryButton label="Practice this word again" variant="secondary" onPress={() => void resetWord(word.id)} icon={<Ionicons name="refresh-outline" color={theme.primary} size={18}/>}/> : null}
-      <LanguageSelector label="Learning language" languageCode={sourceLanguageCode} pronunciationLocale={sourcePronunciationLocale} onChange={changeSourceLanguage}/>
+      <LanguageSelector label="Learning language" languageCode={sourceLanguageCode} pronunciationLocale={sourcePronunciationLocale} allowedPronunciationLocales={sourceLanguageCode === 'es' ? ['es-ES'] : undefined} onChange={changeSourceLanguage}/>
       <LanguageSelector label="Hint language" languageCode={targetLanguageCode} pronunciationLocale={targetPronunciationLocale} onChange={changeTargetLanguage}/>
-      <FormField label={`${languageLabel(sourceLanguageCode)} word or phrase`} value={term} onChangeText={setTerm}/>
+      <FormField label={`${languageLabel(sourceLanguageCode)} word or phrase`} value={term} onChangeText={(value) => { translationController.current?.abort(); setTerm(value); }}/>
       <FormField label="Definition" value={definition} onChangeText={setDefinition} multiline/>
       <FormField label="Example" value={example} onChangeText={setExample} multiline/>
-      <FormField label={`${languageLabel(targetLanguageCode)} hint`} value={translation} onChangeText={setTranslation}/>
-      {sourceLanguageCode === 'en' && targetLanguageCode === 'sk'
-        ? <PrimaryButton label="Generate Slovak hint on device" variant="secondary" loading={translating} disabled={!term.trim()} onPress={() => void generateTranslation()} icon={<Ionicons name="language-outline" color={theme.primary} size={18}/>}/>
-        : <AppText variant="caption" style={{ color: theme.muted }}>Automatic on-device translation currently supports English → Slovak only.</AppText>}
+      <FormField label={`${languageLabel(targetLanguageCode)} hint`} value={translation} onChangeText={(value) => { translationController.current?.abort(); setTranslation(value); }}/>
+      {isOnDeviceTranslationPairSupported(sourceLanguageCode, targetLanguageCode)
+        ? <PrimaryButton label={`Generate ${languageLabel(targetLanguageCode)} hint on device`} variant="secondary" loading={translating} disabled={!term.trim()} onPress={() => void generateTranslation()} icon={<Ionicons name="language-outline" color={theme.primary} size={18}/>}/>
+        : <AppText variant="caption" style={{ color: theme.muted }}>Automatic on-device translation supports English → Slovak and Spanish → Slovak.</AppText>}
       <FormField label="Part of speech" value={partOfSpeech} onChangeText={setPartOfSpeech}/>
       <View><AppText variant="label">Collection</AppText><View style={styles.chips}>{collections.map((collection) => <Pressable key={collection.id} onPress={() => setCollectionId(collection.id)} style={[styles.chip, { backgroundColor: collectionId === collection.id ? theme.primary : theme.surface, borderColor: collectionId === collection.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: collectionId === collection.id ? '#FFFFFF' : theme.text }}>{collection.name}</AppText></Pressable>)}</View></View>
       <PrimaryButton label="Save changes" loading={saving} disabled={!term.trim() || !definition.trim()} onPress={save}/>
       <PrimaryButton label="Delete word" variant="danger" onPress={confirmDelete}/>
-      <AppText variant="caption" style={{ color: theme.muted }}>Source: {word.cefrLevel ? `${word.cefrLevel} English catalog` : word.source === 'manual' ? 'Your library' : `${word.source} discovery pack`} · Created {new Date(word.createdAt).toLocaleDateString()}</AppText>
+      <AppText variant="caption" style={{ color: theme.muted }}>Source: {word.cefrLevel ? `${word.cefrLevel} ${languageLabel(word.sourceLanguageCode)} catalog` : word.source === 'manual' ? 'Your library' : `${word.source} discovery pack`} · Created {new Date(word.createdAt).toLocaleDateString()}</AppText>
     </Screen>
   );
 }

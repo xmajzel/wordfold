@@ -10,6 +10,14 @@ const mockCancelDownload = jest.fn();
 const mockRemoveLevel = jest.fn(async () => undefined);
 const mockRemoveLocale = jest.fn(async () => undefined);
 const mockPrepareManifests = jest.fn(async () => undefined);
+const mockReconcileLibrary = jest.fn(async () => undefined);
+const mockSaveVoice = jest.fn(async () => undefined);
+const mockActiveCourse = {
+  displayName: 'English with Slovak hints',
+  sourceLanguageCode: 'en',
+  defaultSourcePronunciationLocale: 'en-US',
+  capabilities: { offlinePronunciation: true },
+};
 const mockPacks: Record<string, Record<string, unknown>> = {};
 const mockDownloads: Record<string, unknown> = {
   packs: mockPacks,
@@ -17,13 +25,36 @@ const mockDownloads: Record<string, unknown> = {
   preparationError: null,
   availableDiskBytes: 512 * 1024 * 1024,
   job: null,
+  libraryJob: null,
+  libraryError: null,
+  library: {
+    'en-US': { locale: 'en-US', requiredCount: 0, requiredBytes: 0, downloadedCount: 0, downloadedBytes: 0 },
+    'en-GB': { locale: 'en-GB', requiredCount: 0, requiredBytes: 0, downloadedCount: 0, downloadedBytes: 0 },
+  },
   prepareManifests: mockPrepareManifests,
   downloadLevel: mockDownloadLevel,
   downloadLocale: mockDownloadLocale,
   cancelDownload: mockCancelDownload,
   removeLevel: mockRemoveLevel,
   removeLocale: mockRemoveLocale,
+  reconcileLibrary: mockReconcileLibrary,
+  hasAsset: jest.fn(() => false),
 };
+
+jest.mock('@/providers/app-data-provider', () => ({
+  useAppData: () => ({
+    words: [],
+    activeCourse: mockActiveCourse,
+    pronunciationVoicePreference: 'neural-en-US',
+    savePronunciationVoicePreference: mockSaveVoice,
+  }),
+}));
+
+jest.mock('@/features/pronunciation/voice-samples', () => ({
+  BUNDLED_VOICE_SAMPLE_TEXT: 'Hello! Learning a new language opens the door to new ideas, new places, and new conversations.',
+  playBundledVoiceSample: jest.fn(async () => undefined),
+  preloadBundledVoiceSamples: jest.fn(async () => undefined),
+}));
 
 jest.mock('@/features/pronunciation/offline-downloads-provider', () => ({
   OFFLINE_PRONUNCIATION_LOCALES: ['en-US', 'en-GB'],
@@ -64,6 +95,14 @@ describe('OfflinePronunciationScreen', () => {
       preparing: false,
       preparationError: null,
       job: null,
+      libraryJob: null,
+      libraryError: null,
+    });
+    Object.assign(mockActiveCourse, {
+      displayName: 'English with Slovak hints',
+      sourceLanguageCode: 'en',
+      defaultSourcePronunciationLocale: 'en-US',
+      capabilities: { offlinePronunciation: true },
     });
     Object.defineProperty(Platform, 'OS', { configurable: true, value: 'ios' });
   });
@@ -106,5 +145,40 @@ describe('OfflinePronunciationScreen', () => {
     expect(screen.getByText('1 of 2 · 50%')).toBeTruthy();
     await fireEvent.press(screen.getByRole('button', { name: 'Cancel download' }));
     expect(mockCancelDownload).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows only honest exact-locale device guidance for the Spanish course', async () => {
+    Object.assign(mockActiveCourse, {
+      displayName: 'Spanish with Slovak hints',
+      sourceLanguageCode: 'es',
+      defaultSourcePronunciationLocale: 'es-ES',
+      capabilities: { offlinePronunciation: false },
+    });
+
+    const screen = await render(<OfflinePronunciationScreen/>);
+
+    expect(screen.getByText(/exact installed Spanish · Spain phone voice/)).toBeTruthy();
+    expect(screen.getByText(/cannot verify whether that system voice works offline/)).toBeTruthy();
+    expect(screen.getByRole('radio', { name: 'Choose Phone voice · Spanish · Spain' })).toBeTruthy();
+    expect(screen.queryByRole('radio', { name: 'Choose Ava · US English' })).toBeNull();
+    expect(screen.queryByText('Whole level downloads · optional')).toBeNull();
+    expect(mockPrepareManifests).not.toHaveBeenCalled();
+  });
+
+  it('documents exact-voice browser limitations for the Spanish course', async () => {
+    Object.assign(mockActiveCourse, {
+      displayName: 'Spanish with Slovak hints',
+      sourceLanguageCode: 'es',
+      defaultSourcePronunciationLocale: 'es-ES',
+      capabilities: { offlinePronunciation: false },
+    });
+    Object.defineProperty(Platform, 'OS', { configurable: true, value: 'web' });
+
+    const screen = await render(<OfflinePronunciationScreen/>);
+
+    expect(screen.getByText(/Spanish · Spain pronunciation uses live browser speech/)).toBeTruthy();
+    expect(screen.getByText(/cannot download or cache it on web/)).toBeTruthy();
+    expect(screen.queryByRole('radio', { name: 'Choose Phone voice · Spanish · Spain' })).toBeNull();
+    expect(mockPrepareManifests).not.toHaveBeenCalled();
   });
 });

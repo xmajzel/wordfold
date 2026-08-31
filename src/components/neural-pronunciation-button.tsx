@@ -6,6 +6,7 @@ import { AppText } from '@/components/app-text';
 import { languageLabel, pronunciationLocaleLabel } from '@/domain/languages';
 import {
   NeuralPronunciationError,
+  neuralVoiceLabel,
   type NeuralPronunciationLocale,
 } from '@/features/pronunciation/cloud';
 import {
@@ -22,6 +23,8 @@ type NeuralPronunciationButtonProps = {
   locale: NeuralPronunciationLocale;
   compact?: boolean;
   offlineOnly?: boolean;
+  availableOffline?: boolean;
+  onUnavailable?(): void;
 };
 
 export function NeuralPronunciationButton({
@@ -29,6 +32,8 @@ export function NeuralPronunciationButton({
   locale,
   compact = false,
   offlineOnly = false,
+  availableOffline = false,
+  onUnavailable,
 }: NeuralPronunciationButtonProps) {
   const theme = useAppTheme();
   const [status, setStatus] = useState<NeuralStatus>('idle');
@@ -36,6 +41,7 @@ export function NeuralPronunciationButton({
   const requestId = useRef(0);
   const mounted = useRef(true);
   const localeDescription = `${languageLabel('en')} · ${pronunciationLocaleLabel('en', locale)}`;
+  const voiceLabel = neuralVoiceLabel(locale);
 
   useEffect(() => {
     statusRef.current = status;
@@ -59,10 +65,10 @@ export function NeuralPronunciationButton({
       ? error.message
       : 'Neural voice preview could not be played. Please try again.';
     Alert.alert(
-      'Neural voice did not play',
-      `${message}\n\nThe device voice option remains available.`,
+      `${voiceLabel} did not play`,
+      `${message}\n\nThe phone voice fallback is now available.`,
     );
-  }, [offlineOnly]);
+  }, [offlineOnly, voiceLabel]);
 
   const play = useCallback(async () => {
     if (status === 'preparing') return;
@@ -90,6 +96,7 @@ export function NeuralPronunciationButton({
         onError: (error) => {
           if (!mounted.current || requestId.current !== currentRequest) return;
           setStatus('idle');
+          onUnavailable?.();
           showPlaybackError(error);
         },
       }, { cloudAllowed: !offlineOnly });
@@ -99,20 +106,21 @@ export function NeuralPronunciationButton({
     } catch (error) {
       if (!mounted.current || requestId.current !== currentRequest) return;
       setStatus('idle');
+      onUnavailable?.();
       showPlaybackError(error);
     }
-  }, [catalogSenseId, locale, offlineOnly, showPlaybackError, status]);
+  }, [catalogSenseId, locale, offlineOnly, onUnavailable, showPlaybackError, status]);
 
   const preparing = status === 'preparing';
   const pending = status === 'pending';
   const speaking = status === 'speaking';
   const actionLabel = speaking
-    ? `Stop ${localeDescription} neural pronunciation`
-    : `${pending ? 'Check' : 'Play'} ${localeDescription} neural pronunciation preview`;
+    ? `Stop ${voiceLabel} pronunciation`
+    : `${pending ? 'Check' : 'Play'} ${voiceLabel} pronunciation`;
 
   return <Pressable
     accessibilityRole="button"
-    accessibilityLabel={preparing ? `Preparing ${localeDescription} neural pronunciation` : actionLabel}
+    accessibilityLabel={preparing ? `Preparing ${voiceLabel} pronunciation` : actionLabel}
     accessibilityState={{ busy: preparing, disabled: preparing }}
     disabled={preparing}
     onPress={() => void play()}
@@ -132,11 +140,11 @@ export function NeuralPronunciationButton({
     <View style={styles.text}>
       <AppText variant="label" style={{ color: theme.accent }}>
         {preparing || pending
-          ? 'Preparing neural voice…'
-          : speaking ? 'Playing neural voice…' : offlineOnly ? 'Downloaded neural voice' : 'Neural voice preview'}
+          ? `Preparing ${voiceLabel.split(' · ')[0]}…`
+          : speaking ? `Playing ${voiceLabel.split(' · ')[0]}…` : voiceLabel}
       </AppText>
       {!compact ? <AppText variant="caption" style={{ color: theme.muted }}>
-        {pending ? 'Tap to check again' : localeDescription}
+        {pending ? 'Tap to check again' : availableOffline ? 'Ready offline' : localeDescription}
       </AppText> : null}
     </View>
   </Pressable>;

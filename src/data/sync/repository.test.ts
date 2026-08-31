@@ -3,6 +3,7 @@ import type { RatingUpdate } from '@/features/learning/algorithm';
 import {
   addSyncWord,
   deleteSyncWord,
+  getSyncStats,
   listSyncWords,
   recordSyncView,
   saveSyncRating,
@@ -40,6 +41,23 @@ describe('PowerSync vocabulary repository', () => {
     const context = database([]);
     await listSyncWords(context.database);
     expect(context.database.getAll).toHaveBeenCalledWith(expect.stringContaining('deleted_at IS NULL'));
+  });
+
+  it('scopes synchronized dashboard statistics to the selected language pair', async () => {
+    const context = database([]);
+
+    await getSyncStats(context.database, 'es-sk');
+
+    expect(context.database.getAll).toHaveBeenNthCalledWith(
+      1,
+      expect.stringContaining('source_language_code = ? AND target_language_code = ?'),
+      ['es', 'sk'],
+    );
+    expect(context.database.getAll).toHaveBeenNthCalledWith(
+      3,
+      expect.stringContaining('source_language_code = ? AND target_language_code = ?'),
+      ['es', 'sk'],
+    );
   });
 
   it('creates complete UUID-keyed words locally', async () => {

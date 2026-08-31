@@ -7,6 +7,8 @@ import { AppText } from '@/components/app-text';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import type { GuestImportConflictResolution } from '@/data/sync/guest-import-types';
+import { getCourseForLanguagePair } from '@/domain/courses';
+import { languageLabel } from '@/domain/languages';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { useSync } from '@/providers/sync-provider';
@@ -94,6 +96,7 @@ export default function AccountImportScreen() {
           {guestImport.conflicts.map((conflict) => (
             <View key={conflict.localId} style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
               <AppText variant="heading">{conflict.term}</AppText>
+              <ConflictLanguagePair source={conflict.sourceLanguageCode} target={conflict.targetLanguageCode}/>
               <Choice
                 label="Keep account version"
                 detail={conflict.accountDefinition}
@@ -148,6 +151,7 @@ export default function AccountImportScreen() {
           {cutover.conflicts.map((conflict) => (
             <View key={conflict.localId} style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
               <AppText variant="heading">{conflict.term}</AppText>
+              <ConflictLanguagePair source={conflict.sourceLanguageCode} target={conflict.targetLanguageCode}/>
               {conflict.kind === 'new_word' ? <>
                 <Choice label="Keep account version" detail={conflict.accountDefinition}
                   selected={conflict.resolution === 'keep_account'} disabled={busy}
@@ -206,6 +210,15 @@ export default function AccountImportScreen() {
 function Count({ label, value }: { label: string; value: number }) {
   const theme = useAppTheme();
   return <View style={[styles.count, { backgroundColor: theme.primarySoft }]}><AppText variant="heading" style={{ color: theme.primary }}>{value}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{label}</AppText></View>;
+}
+
+function ConflictLanguagePair({ source, target }: { source?: string; target?: string }) {
+  const theme = useAppTheme();
+  if (!source || !target) return null;
+  const course = getCourseForLanguagePair(source, target);
+  return <AppText variant="caption" style={{ color: theme.muted }}>
+    {course?.directionLabel ?? `${languageLabel(target)} → ${languageLabel(source)}`}
+  </AppText>;
 }
 
 function StatusPanel({ icon, text, loading = false }: { icon: keyof typeof Ionicons.glyphMap; text: string; loading?: boolean }) {

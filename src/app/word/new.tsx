@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
@@ -8,24 +8,24 @@ import { FormField } from '@/components/form-field';
 import { LanguageSelector } from '@/components/language-selector';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
-import {
-  defaultPronunciationLocale,
-  defaultSourceLanguageCode,
-  defaultTargetLanguageCode,
-  languageLabel,
-} from '@/domain/languages';
+import { languageLabel } from '@/domain/languages';
 import type { CatalogSense } from '@/domain/types';
 import { potentialWordDuplicates } from '@/domain/word-identity';
 import { normalizeTerm } from '@/features/import/parser';
 import { WordCapacityExceededError } from '@/features/purchases/capacity';
-import { translateEnglishToSlovak } from '@/features/translation/translator';
+import {
+  isOnDeviceTranslationPairSupported,
+  translateOnDevice,
+  TranslationCancelledError,
+} from '@/features/translation/translator';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
 
 export default function NewWordScreen() {
   const theme = useAppTheme();
-  const { words, collections, findSenses, createWord } = useAppData();
+  const { words, collections, findSenses, createWord, pronunciationVoicePreference, activeCourse } = useAppData();
+  const preferredEnglishLocale = pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : 'en-US';
   const [collectionId, setCollectionId] = useState(collections[0]?.id ?? 'my-words');
   const [term, setTerm] = useState('');
   const [translation, setTranslation] = useState('');
@@ -34,26 +34,35 @@ export default function NewWordScreen() {
   const [partOfSpeech, setPartOfSpeech] = useState('');
   const [selectedSenseId, setSelectedSenseId] = useState<string | null>(null);
   const selectedSenseTranslation = useRef<string | null>(null);
-  const [sourceLanguageCode, setSourceLanguageCode] = useState(defaultSourceLanguageCode);
-  const [targetLanguageCode, setTargetLanguageCode] = useState(defaultTargetLanguageCode);
+  const translationController = useRef<AbortController | null>(null);
+  const [sourceLanguageCode, setSourceLanguageCode] = useState(activeCourse.sourceLanguageCode);
+  const [targetLanguageCode, setTargetLanguageCode] = useState(activeCourse.targetLanguageCode);
   const [sourcePronunciationLocale, setSourcePronunciationLocale] = useState(
-    defaultPronunciationLocale(defaultSourceLanguageCode),
+    activeCourse.sourceLanguageCode === 'en'
+      ? preferredEnglishLocale
+      : activeCourse.defaultSourcePronunciationLocale,
   );
   const [targetPronunciationLocale, setTargetPronunciationLocale] = useState(
-    defaultPronunciationLocale(defaultTargetLanguageCode),
+    activeCourse.defaultTargetPronunciationLocale,
   );
   const [senses, setSenses] = useState<CatalogSense[]>([]);
   const [lookingUp, setLookingUp] = useState(false);
   const [saving, setSaving] = useState(false);
   const [translating, setTranslating] = useState(false);
   const [hasLookedUp, setHasLookedUp] = useState(false);
+  const canLookupCatalog = sourceLanguageCode === activeCourse.sourceLanguageCode
+    && activeCourse.capabilities.bundledCatalog;
+  const canTranslate = isOnDeviceTranslationPairSupported(sourceLanguageCode, targetLanguageCode);
+
+  useEffect(() => () => translationController.current?.abort(), []);
 
   const lookup = async () => {
-    if (!term.trim() || sourceLanguageCode !== 'en') return;
+    if (!term.trim() || !canLookupCatalog) return;
+    translationController.current?.abort();
     setLookingUp(true);
     setHasLookedUp(true);
     try {
-      const results = await findSenses(term);
+      const results = await findSenses(term, activeCourse.id);
       setSenses(results);
       if (results[0]) selectSense(results[0]);
       else { setSelectedSenseId(null); setDefinition(''); setExample(''); setPartOfSpeech(''); }
@@ -61,14 +70,29 @@ export default function NewWordScreen() {
   };
 
   const generateTranslation = async () => {
-    if (!term.trim() || sourceLanguageCode !== 'en' || targetLanguageCode !== 'sk') return;
+    if (!term.trim() || !canTranslate) return;
+    translationController.current?.abort();
+    const controller = new AbortController();
+    translationController.current = controller;
     setTranslating(true);
-    try { setTranslation(await translateEnglishToSlovak(term)); }
-    catch (error) { Alert.alert('Translation is not available', `${error instanceof Error ? error.message : 'Use a development build.'}\n\nThe first use also downloads an on-device language model over Wi-Fi.`); }
-    finally { setTranslating(false); }
+    try {
+      setTranslation(await translateOnDevice(term, { sourceLanguageCode, targetLanguageCode }, {
+        signal: controller.signal,
+      }));
+    } catch (error) {
+      if (!(error instanceof TranslationCancelledError)) {
+        Alert.alert('Translation is not available', error instanceof Error ? error.message : 'Use a development build.');
+      }
+    } finally {
+      if (translationController.current === controller) {
+        translationController.current = null;
+        setTranslating(false);
+      }
+    }
   };
 
   const selectSense = (sense: CatalogSense) => {
+    translationController.current?.abort();
     const previousSenseTranslation = selectedSenseTranslation.current;
     const nextSenseTranslation = targetLanguageCode === 'sk' ? sense.translation ?? null : null;
     setSelectedSenseId(sense.id); setDefinition(sense.definition); setExample(sense.example ?? ''); setPartOfSpeech(sense.partOfSpeech);
@@ -120,9 +144,10 @@ export default function NewWordScreen() {
   };
 
   const changeSourceLanguage = (languageCode: string, locale: string) => {
+    translationController.current?.abort();
     const languageChanged = languageCode !== sourceLanguageCode;
     setSourceLanguageCode(languageCode);
-    setSourcePronunciationLocale(locale);
+    setSourcePronunciationLocale(languageCode === 'en' ? preferredEnglishLocale : locale);
     if (!languageChanged) return;
     setSenses([]); setSelectedSenseId(null); setHasLookedUp(false);
     setDefinition(''); setExample(''); setPartOfSpeech('');
@@ -130,6 +155,7 @@ export default function NewWordScreen() {
   };
 
   const changeTargetLanguage = (languageCode: string, locale: string) => {
+    translationController.current?.abort();
     const languageChanged = languageCode !== targetLanguageCode;
     setTargetLanguageCode(languageCode);
     setTargetPronunciationLocale(locale);
@@ -142,20 +168,20 @@ export default function NewWordScreen() {
   return (
     <Screen scroll>
       <ModalHeader title="Add a word" />
-      <LanguageSelector label="Learning language" languageCode={sourceLanguageCode} pronunciationLocale={sourcePronunciationLocale} onChange={changeSourceLanguage}/>
-      <LanguageSelector label="Hint language" languageCode={targetLanguageCode} pronunciationLocale={targetPronunciationLocale} onChange={changeTargetLanguage}/>
-      <FormField label={`${languageLabel(sourceLanguageCode)} word or phrase`} value={term} onChangeText={(value) => { setTerm(value); setSenses([]); setSelectedSenseId(null); setHasLookedUp(false); }} placeholder="stakeholder" autoCapitalize="none" returnKeyType="search" onSubmitEditing={() => void lookup()}/>
-      {sourceLanguageCode === 'en'
+      <LanguageSelector label="Learning language" languageCode={sourceLanguageCode} pronunciationLocale={sourcePronunciationLocale} allowedLanguageCodes={[activeCourse.sourceLanguageCode]} allowedPronunciationLocales={activeCourse.sourceLanguageCode === 'es' ? ['es-ES'] : undefined} onChange={changeSourceLanguage}/>
+      <LanguageSelector label="Hint language" languageCode={targetLanguageCode} pronunciationLocale={targetPronunciationLocale} allowedLanguageCodes={[activeCourse.targetLanguageCode]} onChange={changeTargetLanguage}/>
+      <FormField label={`${languageLabel(sourceLanguageCode)} word or phrase`} value={term} onChangeText={(value) => { translationController.current?.abort(); setTerm(value); setSenses([]); setSelectedSenseId(null); setHasLookedUp(false); }} placeholder={sourceLanguageCode === 'es' ? 'corazón' : 'stakeholder'} autoCapitalize="none" returnKeyType="search" onSubmitEditing={() => void lookup()}/>
+      {canLookupCatalog
         ? <PrimaryButton label="Find definition offline" variant="secondary" loading={lookingUp} disabled={!term.trim()} onPress={() => void lookup()} icon={<Ionicons name="search-outline" size={18} color={theme.primary}/>}/>
-        : <AppText variant="caption" style={{ color: theme.muted }}>Offline definitions currently support English terms only. Add the definition manually.</AppText>}
+        : <AppText variant="caption" style={{ color: theme.muted }}>Offline definitions are not available for this language pair. Add the definition manually.</AppText>}
       {senses.length > 1 ? <View style={styles.group}><AppText variant="label">Choose the intended meaning</AppText>{senses.map((sense) => <Pressable key={sense.id} onPress={() => selectSense(sense)} style={[styles.sense, { borderColor: selectedSenseId === sense.id ? theme.primary : theme.border, backgroundColor: selectedSenseId === sense.id ? theme.primarySoft : theme.surface }]}><AppText variant="caption" style={{ color: theme.accent }}>{sense.partOfSpeech}</AppText><AppText>{sense.definition}</AppText></Pressable>)}</View> : null}
       {hasLookedUp && !lookingUp && senses.length === 0 ? <View style={[styles.notice, { backgroundColor: theme.primarySoft }]}><Ionicons name="create-outline" color={theme.primary} size={20}/><AppText style={styles.noticeText}>WordNet has no matching sense. Add a clear definition manually; AI fallback is intentionally outside this MVP.</AppText></View> : null}
       <FormField label="Definition" value={definition} onChangeText={setDefinition} placeholder="What this word or phrase means" multiline/>
       <FormField label="Example" value={example} onChangeText={setExample} placeholder="Use the word in context" multiline/>
-      <FormField label={`${languageLabel(targetLanguageCode)} hint`} value={translation} onChangeText={setTranslation} placeholder="Optional translation" hint="Optional. It stays hidden until you ask for a hint."/>
-      {sourceLanguageCode === 'en' && targetLanguageCode === 'sk'
-        ? <PrimaryButton label="Generate Slovak hint on device" variant="secondary" loading={translating} disabled={!term.trim()} onPress={() => void generateTranslation()} icon={<Ionicons name="language-outline" size={18} color={theme.primary}/>}/>
-        : <AppText variant="caption" style={{ color: theme.muted }}>Automatic on-device translation currently supports English → Slovak only.</AppText>}
+      <FormField label={`${languageLabel(targetLanguageCode)} hint`} value={translation} onChangeText={(value) => { translationController.current?.abort(); setTranslation(value); }} placeholder="Optional translation" hint="Optional. It stays hidden until you ask for a hint."/>
+      {canTranslate
+        ? <PrimaryButton label={`Generate ${languageLabel(targetLanguageCode)} hint on device`} variant="secondary" loading={translating} disabled={!term.trim()} onPress={() => void generateTranslation()} icon={<Ionicons name="language-outline" size={18} color={theme.primary}/>}/>
+        : <AppText variant="caption" style={{ color: theme.muted }}>Automatic on-device translation supports English → Slovak and Spanish → Slovak.</AppText>}
       <FormField label="Part of speech" value={partOfSpeech} onChangeText={setPartOfSpeech} placeholder="noun"/>
       <View style={styles.group}><AppText variant="label">Collection</AppText><View style={styles.chips}>{collections.map((collection) => <Pressable key={collection.id} onPress={() => setCollectionId(collection.id)} style={[styles.chip, { backgroundColor: collectionId === collection.id ? theme.primary : theme.surface, borderColor: collectionId === collection.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: collectionId === collection.id ? '#FFFFFF' : theme.text }}>{collection.name}</AppText></Pressable>)}</View></View>
       <PrimaryButton label="Add to my words" loading={saving} disabled={!term.trim() || !definition.trim()} onPress={save}/>

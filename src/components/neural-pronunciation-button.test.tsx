@@ -23,13 +23,13 @@ describe('NeuralPronunciationButton', () => {
     />);
 
     await fireEvent.press(screen.getByRole('button', {
-      name: 'Play English · United States neural pronunciation preview',
+      name: 'Play Ava · US English pronunciation',
     }));
 
-    await waitFor(() => expect(screen.getByText('Preparing neural voice…')).toBeTruthy());
+    await waitFor(() => expect(screen.getByText('Preparing Ava…')).toBeTruthy());
     expect(screen.getByText('Tap to check again')).toBeTruthy();
     await fireEvent.press(screen.getByRole('button', {
-      name: 'Check English · United States neural pronunciation preview',
+      name: 'Check Ava · US English pronunciation',
     }));
     await waitFor(() => expect(mockStartNeuralPronunciation).toHaveBeenCalledTimes(2));
   });
@@ -45,34 +45,37 @@ describe('NeuralPronunciationButton', () => {
     />);
 
     await fireEvent.press(screen.getByRole('button', {
-      name: 'Play English · United Kingdom neural pronunciation preview',
+      name: 'Play Ryan · UK English pronunciation',
     }));
     await waitFor(() => expect(screen.getByRole('button', {
-      name: 'Stop English · United Kingdom neural pronunciation',
+      name: 'Stop Ryan · UK English pronunciation',
     })).toBeTruthy());
     await fireEvent.press(screen.getByRole('button', {
-      name: 'Stop English · United Kingdom neural pronunciation',
+      name: 'Stop Ryan · UK English pronunciation',
     }));
 
     await waitFor(() => expect(mockStopPronunciation).toHaveBeenCalledTimes(1));
   });
 
-  it('uses safe neural error copy and leaves device voice as an explicit choice', async () => {
+  it('uses safe natural-voice error copy and reveals the phone fallback', async () => {
     const alert = jest.spyOn(Alert, 'alert').mockImplementation(jest.fn());
+    const onUnavailable = jest.fn();
     mockStartNeuralPronunciation.mockRejectedValue(new Error('file:///private/cache/token.mp3'));
     const screen = await render(<NeuralPronunciationButton
       catalogSenseId="sense-id"
       locale="en-US"
+      onUnavailable={onUnavailable}
     />);
 
     await fireEvent.press(screen.getByRole('button', {
-      name: 'Play English · United States neural pronunciation preview',
+      name: 'Play Ava · US English pronunciation',
     }));
 
     await waitFor(() => expect(alert).toHaveBeenCalledWith(
-      'Neural voice did not play',
-      expect.stringContaining('The device voice option remains available.'),
+      'Ava · US English did not play',
+      expect.stringContaining('The phone voice fallback is now available.'),
     ));
+    expect(onUnavailable).toHaveBeenCalledTimes(1);
     expect(alert.mock.calls[0][1]).not.toContain('file:///');
   });
 
@@ -85,7 +88,7 @@ describe('NeuralPronunciationButton', () => {
     />);
 
     await fireEvent.press(screen.getByRole('button', {
-      name: 'Play English · United States neural pronunciation preview',
+      name: 'Play Ava · US English pronunciation',
     }));
 
     await waitFor(() => expect(mockStartNeuralPronunciation).toHaveBeenCalledWith(

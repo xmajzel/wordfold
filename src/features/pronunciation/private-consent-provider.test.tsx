@@ -2,6 +2,7 @@ import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import { Pressable, Text, View } from 'react-native';
 
 import {
+  PRIVATE_PRONUNCIATION_DISCLOSURE_VERSION,
   PrivatePronunciationConsentProvider,
 } from './private-consent-provider';
 import { usePrivatePronunciationConsent } from './private-consent';
@@ -78,6 +79,28 @@ describe('private pronunciation consent', () => {
       'wordfold.privatePronunciationConsent.v1.hash-00000000-0000-4000-8000-0000000000a1',
     ]);
     expect([...mockStorage.values()][0]).not.toContain('00000000-0000-4000-8000-0000000000a1');
+    expect(JSON.parse([...mockStorage.values()][0])).toMatchObject({
+      disclosureVersion: PRIVATE_PRONUNCIATION_DISCLOSURE_VERSION,
+      state: 'enabled',
+    });
+  });
+
+  it('requires renewed consent after the disclosure version changes', async () => {
+    mockStorage.set(
+      'wordfold.privatePronunciationConsent.v1.hash-00000000-0000-4000-8000-0000000000a1',
+      JSON.stringify({
+        schemaVersion: 1,
+        disclosureVersion: '2026-07-23',
+        state: 'enabled',
+        enabledAt: '2026-07-23T12:00:00.000Z',
+      }),
+    );
+
+    const screen = await render(
+      <PrivatePronunciationConsentProvider><Probe/></PrivatePronunciationConsentProvider>,
+    );
+    await waitFor(() => expect(screen.getByText('disabled')).toBeTruthy());
+    expect(mockStorage.size).toBe(0);
   });
 
   it('disables first and retains a retryable deletion state when server deletion fails', async () => {
