@@ -245,6 +245,30 @@ describe('continued learning session', () => {
     expect(mockRouterPush).not.toHaveBeenCalled();
   });
 
+  it('does not return words from earlier batches while their ratings are still saving', async () => {
+    let finishFirstRating!: () => void;
+    mockWords = [mockFirstWord, mockNextWord, mockThirdWord];
+    mockBuildContinuedLearningFeed.mockImplementation((_words, completedIds) => {
+      const completed = new Set(completedIds as Iterable<string>);
+      return mockWords.filter((word) => !completed.has(word.id)).slice(0, 1);
+    });
+    mockRateWord.mockImplementationOnce(() => new Promise<void>((resolve) => {
+      finishFirstRating = resolve;
+    }));
+    const view = await render(<LearnScreen/>);
+
+    await fireEvent.press(view.getByRole('button', { name: /I know this/ }));
+    await fireEvent.press(await waitFor(() => view.getByRole('button', { name: 'Continue learning' })));
+    await waitFor(() => view.getByText('focus'));
+
+    await fireEvent.press(view.getByRole('button', { name: /I know this/ }));
+    await fireEvent.press(await waitFor(() => view.getByRole('button', { name: 'Continue learning' })));
+
+    await waitFor(() => view.getByText('pace'));
+    expect(view.queryByText('scope')).toBeNull();
+    await act(async () => finishFirstRating());
+  });
+
   it('opens the library when no new words remain', async () => {
     mockBuildContinuedLearningFeed.mockReturnValue([]);
     const view = await render(<LearnScreen/>);
