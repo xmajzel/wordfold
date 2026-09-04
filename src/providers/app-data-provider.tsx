@@ -108,6 +108,10 @@ function localDateKey(date: Date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 }
 
+function learnedWordIdsKey(words: Word[]) {
+  return JSON.stringify(words.filter((word) => word.state === 'learned').map((word) => word.id).sort());
+}
+
 function getBundledWordTranslation(word: Word) {
   const course = getCourseForWord(word);
   if (!course) return null;
@@ -181,11 +185,13 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const [translationQueue] = useState(createSerialMutationQueue);
   const translationTasks = useRef(new Map<string, Promise<void>>());
   const lastScheduleDay = useRef<string | null>(null);
+  const lastScheduledLearnedWordIds = useRef<string | null>(null);
   const automaticCutover = useRef<string | null>(null);
 
   const vocabularyStore = useMemo(() => dataSource === 'synced' && authUserId
     ? createSyncVocabularyStore(powerSyncDatabase, authUserId)
     : createGuestVocabularyStore(appDatabase), [appDatabase, authUserId, dataSource]);
+  const currentLearnedWordIds = useMemo(() => learnedWordIdsKey(words), [words]);
 
   const runDatabaseMutation = useCallback(<T,>(mutation: () => Promise<T>) => (
     databaseMutationQueue.run(mutation)
@@ -449,6 +455,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   }, [appDatabase, reschedule, runDatabaseMutation]);
 
   useEffect(() => {
+    if ((dataSource !== 'guest' && dataSource !== 'synced') || onboardingComplete === null) return;
     // The async database reads complete before any provider state is refreshed.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     void refreshReminderSchedule(true).catch((error) => console.warn('Could not refresh reminder schedule.', error));
@@ -458,7 +465,15 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       }
     });
     return () => subscription.remove();
-  }, [refreshReminderSchedule]);
+  }, [dataSource, onboardingComplete, refreshReminderSchedule]);
+
+  useEffect(() => {
+    if ((dataSource !== 'guest' && dataSource !== 'synced') || onboardingComplete === null) return;
+    const previousLearnedWordIds = lastScheduledLearnedWordIds.current;
+    lastScheduledLearnedWordIds.current = currentLearnedWordIds;
+    if (previousLearnedWordIds === null || previousLearnedWordIds === currentLearnedWordIds) return;
+    void reschedule().catch((error) => console.warn('Could not refresh reminders after learning progress changed.', error));
+  }, [currentLearnedWordIds, dataSource, onboardingComplete, reschedule]);
 
   const value = useMemo<AppDataValue>(() => ({
     dataSource, words, collections, stats, reminderSettings, activeCourseId,
@@ -510,7 +525,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       await runDatabaseMutation(() => vocabularyStore.removeWord(id)); await refresh(); await reschedule();
     },
     resetWord: async (id) => {
-      await runDatabaseMutation(() => vocabularyStore.resetWord(id)); await refresh(); await reschedule();
+      await runDatabaseMutation(() => vocabularyStore.resetWord(id)); await refresh();
     },
     createCollection: async (name, color) => {
       const id = await runDatabaseMutation(() => vocabularyStore.createCollection(name, color)); await refresh(); return id;
@@ -525,7 +540,6 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       if (wordBelongsToCourse(currentWord, activeCourseId)) {
         setStats((current) => updateRatingStats(current, currentWord.state, update.state));
       }
-      if (rating === 'learned') await reschedule();
     },
     markViewed: async (id) => {
       const occurredAt = new Date();
