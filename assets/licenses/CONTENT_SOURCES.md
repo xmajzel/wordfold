@@ -40,13 +40,36 @@ Slovak hints.
 - License: Creative Commons Attribution 3.0 Unported (CC BY 3.0)
 - Attribution: Multilingual Central Repository 3.0 (release 2016), González-Agirre,
   Laparra and Rigau (2012), packaged by Open Multilingual Wordnet 2.0
-- Transformations: only the Spanish lemma, universal POS, lexical-entry ID, sense ID,
-  and synset ID are extracted. Source glosses are not used as learner content.
+- Transformations: Spanish lemmas, POS, lexical-entry/sense/synset IDs, ILIs, and
+  available Spanish source definitions/examples are extracted. Duplicate sense rows
+  for the same synset are grouped with aliases retained. Source descriptions are
+  review evidence, not learner content.
 
 The separately licensed English module from the MCR package is not ingested. Every
 Spanish definition and example and every Slovak hint in the pilot is original draft
 Wordfold content and remains excluded from runtime APIs until independent Spanish and
 Slovak review is complete.
+
+### WordNet 3.0 semantic references for Spanish review
+
+The Spanish review workspace uses the `omw-en:2.0` module required by the pinned
+Spanish OMW release to explain candidate source meanings. This is a separate source
+from the Open English WordNet 2025 database used by the English course.
+
+- Release: https://github.com/omwn/omw-data/releases/tag/v2.0
+- Pinned asset: `omw-en-2.0.tar.xz`
+- SHA-256: `0e09dfb7f096bc3f10b9de68ffecf13839fa22ae46fd9b227cec890d204ca1dc`
+- License: WordNet 3.0; the complete notice and disclaimer accompany the extracted
+  references in `assets/licenses/WORDNET_3_0_LICENSE.txt`.
+- Attribution: WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.
+- Transformations: map the Spanish synset offset/POS to English, allowing only
+  adjective `a` to satellite `s` fallback and requiring equal ILIs; extract English
+  definitions, member lemmas and examples verbatim for editorial review.
+
+Preserve the complete license, copyright notice and disclaimer on all copies,
+including modified/internal copies. The license prohibits using the Princeton name
+in advertising or publicity pertaining to distribution. Review reference text stays
+outside Wordfold learner definitions, examples, hints, and runtime catalogs.
 
 Google Books Ngram Spanish corpus `googlebooks-spa-20200217` may be used as an optional
 aggregate ranking signal over the 2000-2019 window. It never determines a CEFR level or

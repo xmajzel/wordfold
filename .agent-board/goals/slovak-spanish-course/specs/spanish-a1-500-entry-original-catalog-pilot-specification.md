@@ -1,10 +1,10 @@
 ---
 id: "spanish-a1-500-entry-original-catalog-pilot-specification"
 title: "Spanish A1 500-entry original catalog pilot specification"
-status: "proposed"
+status: "approved"
 category: "content"
 created: "2026-08-27T22:16:21.120Z"
-updated: "2026-08-27T22:16:21.120Z"
+updated: "2026-09-04T11:23:58.705Z"
 ---
 
 ## Context

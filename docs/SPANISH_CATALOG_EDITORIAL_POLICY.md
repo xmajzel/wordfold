@@ -59,6 +59,47 @@ sense and level, avoid circular definitions, and avoid copying dictionary or cou
 text. Slovak hints must match that same sense rather than merely the most common
 translation of the spelling.
 
+### Scope of the 500-entry draft
+
+This quota-based editorial pilot tests the content and review process. It is not a
+self-contained first-500 course: core verbs, time words, numbers, and colors are
+not comprehensively represented. No external lesson that supplies those gaps is
+assumed. Release planning must separately establish that coverage before presenting
+the pilot as a complete beginner course.
+
+The September 2026 editorial review identified repeated category-only level
+rationales. A category is not evidence for an A1 placement. The draft labels must
+be validated sense by sense, particularly the flagged science, technology,
+government, economics, industry, agriculture, energy, fiction, faith, and philosophy
+vocabulary. Do not silently move entries across levels merely to obtain a passing
+validator; replacement terms and quota changes require an explicit curriculum
+decision. Original learner-friendly wording is also not proof of an official level.
+
+### Grammatical and regional presentation
+
+The draft records grammatical gender independently of whether a lemma contains
+spaces. Nominal expressions such as `tiempo libre`, `correo electrónico`, and
+`oficina de correos` use NOUN and their normal gender, with stable catalog IDs.
+Canonical adjectives retain the existing headword and record useful feminine forms;
+important plurals and article constructions belong in `alternativeForms`, rather
+than becoming extra counted entries. Feminine `agua` and `hambre` retain feminine
+agreement despite singular `el`; `vacaciones` retains its usual plural headword.
+Regular paradigms are not exhaustively duplicated. These fields are exposed to the
+editorial reviewer; their eventual learner presentation is a production decision.
+
+The first pronunciation locale remains `es-ES`. Spain-preferred vocabulary, such as
+`móvil`, may be retained when explicitly documented with useful alternatives such as
+`celular`. A regional alternative is evidence for the same intended meaning, not a
+new CEFR entry or a reason to silently change pronunciation locale.
+
+### Approved editorial corrections
+
+`assets/catalog/spanish/a1-editorial-corrections.json` records the reconciled
+September 2026 Spanish and Slovak AI findings, with before/after fields and reasons.
+Owner approval authorizes these draft edits. It does not write native-speaker
+decisions or attestations. The original reports remain unchanged; after candidate
+edits, their old hashes document the reviewed baseline rather than the new payload.
+
 ## Production promotion gate
 
 An asset may change from `draft` to `production` only when:
@@ -98,7 +139,8 @@ The Slovak reviewer independently evaluates every hint for:
 
 Each reviewer uses a distinct stable reviewer ID and attests to the relevant language
 qualification. Review files bind to the complete candidate SHA-256. Reviewers choose
-`approved` or `changes_requested` and give a note for every requested change. They do
+`approved`, `changes-requested`, or `rejected` and give a note for every requested
+change or rejection. They do
 not see or edit the other reviewer's decisions while their own review is in progress.
 
 Any content change invalidates the affected decisions. An adjudication records the
@@ -109,11 +151,14 @@ adjudications.
 
 ## Local A1 pilot workflow
 
-Download and extract the pinned `omw-es-2.0.tar.xz` release outside the repository,
-then generate the committed lexical-evidence sidecar while verifying the archive hash:
+### Editorial source preparation
+
+Download and extract the pinned `omw-es-2.0.tar.xz` and `omw-en-2.0.tar.xz` releases
+outside the repository, then generate the lexical-evidence sidecar while verifying
+both sources:
 
 ```sh
-pnpm spanish:a1:sources --archive <path-to-omw-es-2.0.tar.xz> --omw <path-to-omw-es.xml>
+pnpm spanish:a1:sources --archive <path-to-omw-es-2.0.tar.xz> --omw <path-to-omw-es.xml> --english-archive <path-to-omw-en-2.0.tar.xz> --english-omw <path-to-omw-en.xml>
 ```
 
 Validate the immutable candidates, source manifest, exact quotas, and evidence:
@@ -127,6 +172,30 @@ Prepare independent ignored review packages:
 ```sh
 pnpm spanish:a1:prepare-reviews --sources assets/catalog/spanish/a1-source-manifest.json --candidates assets/catalog/spanish/a1-candidates.json --evidence assets/catalog/spanish/a1-lexical-evidence.json --spanish-output .artifacts/spanish-a1/reviews/spanish-review.json --slovak-output .artifacts/spanish-a1/reviews/slovak-review.json
 ```
+
+Preparation refuses existing files. After approved content/evidence changes, refresh
+only untouched pending packages with:
+
+```sh
+node scripts/spanish-a1-pipeline.mjs refresh-reviews --sources assets/catalog/spanish/a1-source-manifest.json --candidates assets/catalog/spanish/a1-candidates.json --evidence assets/catalog/spanish/a1-lexical-evidence.json --spanish-output .artifacts/spanish-a1/reviews/spanish-review.json --slovak-output .artifacts/spanish-a1/reviews/slovak-review.json
+```
+
+Refresh preserves reviewer IDs and qualifications and creates unique byte-original
+`.backup` files beside both packages. It refuses decisions, notes, sense selections,
+attestations, completion dates, changed entry identities, or an active save lock.
+Never clear human work to bypass this check; completed or partially reviewed content
+requires explicit adjudication and fresh review of the changed payload.
+
+Each Spanish source option now carries a readable English WordNet definition,
+member lemmas and any examples, plus Spanish descriptions when the pinned Spanish
+source supplies them. Source languages are labelled; reference text is not
+machine-translated. Duplicate Spanish senses pointing to the same synset form one
+option with retained source aliases. The English reference maps by the same WordNet
+3.0 offset and equal ILI; only adjective `a` to satellite `s` fallback is allowed.
+Reviewers must understand the displayed references to make a meaningful selection.
+These descriptions never replace original Wordfold learner text or establish a
+CEFR grade. Slovak sessions contain the candidate context and hint, not these
+source-sense descriptions or another reviewer's decisions.
 
 After the two reviewers complete their separate files, score them with
 `pnpm spanish:a1:score`. Use `pnpm spanish:a1:compile` only with both completed review

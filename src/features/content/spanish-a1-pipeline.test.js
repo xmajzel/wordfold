@@ -2,13 +2,19 @@
 
 const { spawnSync } = require('node:child_process');
 const { createHash } = require('node:crypto');
-const { mkdtempSync, readFileSync, writeFileSync } = require('node:fs');
+const { existsSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } = require('node:fs');
 const { tmpdir } = require('node:os');
 const { join, resolve } = require('node:path');
 
 const root = resolve(__dirname, '../../..');
 const script = resolve(root, 'scripts/spanish-a1-pipeline.mjs');
 const pinnedOmwSha256 = 'd8450d42885cd51f3db39fe64219a7a003eeb432b4caa00428285fe6ab224303';
+const englishSource = JSON.parse(readFileSync(resolve(root, 'assets/catalog/spanish/a1-source-manifest.json'), 'utf8')).sources.find((source) => source.id === 'omw-en:2.0');
+const englishSemanticSource = {
+  id: englishSource.id, version: englishSource.version, archiveSha256: englishSource.sha256,
+  license: englishSource.license, attribution: englishSource.attribution, copyright: englishSource.copyright,
+  licensePath: englishSource.licensePath, licenseText: readFileSync(resolve(root, englishSource.licensePath), 'utf8'),
+};
 const categories = {
   '1': { label: 'Individuo: dimensión física', count: 30 },
   '2': { label: 'Individuo: dimensión perceptiva y anímica', count: 25 },
@@ -36,6 +42,7 @@ function sourceManifest() {
   return {
     schemaVersion: 1,
     sources: [
+      englishSource,
       {
         id: 'pcic-framework-permission',
         version: 'permission-2026-08-27',
@@ -126,6 +133,7 @@ function lexicalEvidenceSidecar(candidates) {
     candidatesSha256: createHash('sha256')
       .update(`${JSON.stringify(candidates, null, 2)}\n`)
       .digest('hex'),
+    semanticSource: englishSemanticSource,
     source: {
       id: 'omw-es',
       version: '2.0',
@@ -153,7 +161,15 @@ function lexicalEvidenceSidecar(candidates) {
         writtenForm: entry.term,
         partOfSpeech: 'n',
         senseId: `omw-es-sense-${index + 1}`,
-        synsetId: `omw-es-${index + 1}-n`,
+        synsetId: `omw-es-${String(index + 1).padStart(8, '0')}-n`,
+        semanticReference: {
+          spanishSynsetId: `omw-es-${String(index + 1).padStart(8, '0')}-n`,
+          englishSynsetId: `omw-en-${String(index + 1).padStart(8, '0')}-n`,
+          iliId: `i${index + 1}`,
+          spanish: { definition: null, examples: [] },
+          english: { definition: `English sense ${index + 1}`, members: [`member${index + 1}`], examples: [] },
+          sourceSenseAliases: [{ lexicalEntryId: `omw-es-entry-${index + 1}`, senseId: `omw-es-sense-${index + 1}` }],
+        },
       }],
       requiresSpanishSenseSelection: false,
       exceptionRationale: null,
@@ -253,7 +269,7 @@ describe('deterministic Spanish A1 draft pipeline', () => {
 
   it('refuses invalid source hashes and incorrect candidate totals or quotas', () => {
     const invalidSources = sourceManifest();
-    invalidSources.sources[1].sha256 = 'b'.repeat(64);
+    invalidSources.sources.find((source) => source.id === 'omw-es').sha256 = 'b'.repeat(64);
     const invalidSourcesPath = join(directory, 'invalid-sources.json');
     writeJson(invalidSourcesPath, invalidSources);
     const sourceResult = run(['validate', '--sources', invalidSourcesPath, '--candidates', candidatesPath]);
@@ -307,6 +323,8 @@ describe('deterministic Spanish A1 draft pipeline', () => {
     expect(compiled.entries.every((entry) => entry.lexicalEvidence?.senseId)).toBe(true);
     expect(compiled.entries.every((entry) => entry.learnerContentReviewStatus === 'approved')).toBe(true);
     expect(compiled.entries.every((entry) => entry.hintReviewStatus === 'approved')).toBe(true);
+    expect(JSON.stringify(compiled)).not.toContain('semanticReference');
+    expect(JSON.stringify(compiled)).not.toContain('English sense');
   });
 
   it('requires a current evidence sidecar when candidate lexical evidence is null', () => {
@@ -403,6 +421,7 @@ describe('deterministic Spanish A1 draft pipeline', () => {
 
   it.each([
     ['stale', (review) => ({ ...review, candidateSha256: '0'.repeat(64) }), 'stale candidate hash'],
+    ['altered-reference', (review) => ({ ...review, subjects: review.subjects.map((subject, index) => index === 0 ? { ...subject, definition: 'Unreviewed substituted meaning' } : subject) }), 'subjects do not match'],
     ['incomplete', (review) => ({ ...review, decisions: review.decisions.slice(1) }), 'review is incomplete'],
     ['rejected', (review) => ({
       ...review,
@@ -487,5 +506,109 @@ describe('deterministic Spanish A1 draft pipeline', () => {
 
     expect(result.status).toBe(1);
     expect(result.stderr).toContain('unresolved adjudication');
+  });
+
+  it.each([
+    ['missing definition', (sense) => { sense.semanticReference.english.definition = ''; }, 'English definition'],
+    ['wrong offset', (sense) => { sense.semanticReference.englishSynsetId = 'omw-en-99999999-n'; }, 'offset/POS mapping'],
+    ['invalid satellite fallback', (sense) => { sense.semanticReference.englishSynsetId = 'omw-en-00000001-s'; }, 'offset/POS mapping'],
+    ['missing ILI', (sense) => { sense.semanticReference.iliId = ''; }, 'ILI'],
+    ['wrong canonical alias', (sense) => { sense.semanticReference.sourceSenseAliases[0].senseId = 'other'; }, 'first source-order alias'],
+  ])('rejects semantic evidence with %s', (label, mutate, message) => {
+    const evidence = lexicalEvidenceSidecar(candidateDataset());
+    mutate(evidence.entries[0].candidateSenses[0]);
+    const path = join(directory, `invalid-semantic-${label}.json`);
+    writeJson(path, evidence);
+    const result = run(['validate', '--sources', sourcesPath, '--candidates', candidatesPath, '--evidence', path]);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(message);
+  });
+
+  it('rejects repeated presented synsets and missing redistributed WordNet license text', () => {
+    const evidence = lexicalEvidenceSidecar(candidateDataset());
+    evidence.entries[0].candidateSenses.push({ ...evidence.entries[0].candidateSenses[0], senseId: 'duplicate' });
+    const path = join(directory, 'invalid-semantic-duplicate.json');
+    writeJson(path, evidence);
+    const duplicate = run(['validate', '--sources', sourcesPath, '--candidates', candidatesPath, '--evidence', path]);
+    expect(duplicate.stderr).toContain('duplicate presented OMW synset');
+    evidence.entries[0].candidateSenses.pop();
+    evidence.semanticSource = { ...evidence.semanticSource, licenseText: 'abbreviated license' };
+    writeJson(path, evidence);
+    const license = run(['validate', '--sources', sourcesPath, '--candidates', candidatesPath, '--evidence', path]);
+    expect(license.status).toBe(1);
+    expect(license.stderr).toContain('complete WordNet 3.0 license');
+  });
+
+  function refreshFixture(name, mutate = () => {}) {
+    const spanish = JSON.parse(readFileSync(spanishTemplatePath, 'utf8'));
+    const slovak = JSON.parse(readFileSync(slovakTemplatePath, 'utf8'));
+    spanish.reviewerId = 'annamariea-es';
+    spanish.qualification = 'Native Spanish speaker';
+    slovak.reviewerId = 'jozef-sk';
+    slovak.qualification = 'Native Slovak speaker';
+    spanish.candidateSha256 = '0'.repeat(64);
+    slovak.candidateSha256 = '0'.repeat(64);
+    spanish.lexicalEvidenceSha256 = '0'.repeat(64);
+    slovak.lexicalEvidenceSha256 = '0'.repeat(64);
+    mutate(spanish, slovak);
+    const spanishPath = join(directory, `${name}-spanish.json`);
+    const slovakPath = join(directory, `${name}-slovak.json`);
+    writeJson(spanishPath, spanish);
+    writeJson(slovakPath, slovak);
+    const before = [readFileSync(spanishPath), readFileSync(slovakPath)];
+    return { spanishPath, slovakPath, before, args: [
+      'refresh-reviews', '--sources', sourcesPath, '--candidates', candidatesPath, '--evidence', evidencePath,
+      '--spanish-output', spanishPath, '--slovak-output', slovakPath,
+    ] };
+  }
+
+  it('refreshes stale untouched packages with preserved identities and exact original backups', () => {
+    const fixture = refreshFixture('refresh-success');
+    const result = run(fixture.args);
+    expect(result.status).toBe(0);
+    const spanish = JSON.parse(readFileSync(fixture.spanishPath, 'utf8'));
+    const slovak = JSON.parse(readFileSync(fixture.slovakPath, 'utf8'));
+    expect(spanish).toMatchObject({ reviewerId: 'annamariea-es', qualification: 'Native Spanish speaker', attestation: '', reviewedAt: '' });
+    expect(slovak).toMatchObject({ reviewerId: 'jozef-sk', qualification: 'Native Slovak speaker' });
+    expect(spanish.candidateSha256).not.toBe('0'.repeat(64));
+    expect(spanish.semanticSource.licenseText).toBe(englishSemanticSource.licenseText);
+    expect(spanish.lexicalSource).toHaveProperty('attribution');
+    expect(slovak).not.toHaveProperty('semanticSource');
+    expect(slovak.subjects[0]).not.toHaveProperty('lexicalEvidence');
+    const backups = readdirSync(directory).filter((file) => file.startsWith('refresh-success-') && file.endsWith('.backup')).sort();
+    expect(backups).toHaveLength(2);
+    expect(readFileSync(join(directory, backups.find((file) => file.includes('-spanish.'))))).toEqual(fixture.before[0]);
+    expect(readFileSync(join(directory, backups.find((file) => file.includes('-slovak.'))))).toEqual(fixture.before[1]);
+    expect(existsSync(`${fixture.spanishPath}.lock`)).toBe(false);
+  });
+
+  it.each([
+    ['notes', (_spanish, slovak) => { slovak.decisions[0].notes = 'Unfinished reviewer thought'; }],
+    ['decision', (spanish) => { spanish.decisions[0].decision = 'approved'; }],
+    ['sense selection', (spanish) => { spanish.decisions[0].selectedSenseId = 'omw-es-sense-1'; }],
+    ['exception', (spanish) => { spanish.decisions[0].originalEditorialExceptionApproved = true; }],
+    ['attestation', (spanish) => { spanish.attestation = 'Review in progress'; }],
+    ['date', (_spanish, slovak) => { slovak.reviewedAt = '2026-09-05'; }],
+    ['unknown field', (spanish) => { spanish.decisions[0].privateNote = 'Keep this'; }],
+  ])('refuses to refresh either package when %s exist, preserving both byte-for-byte', (label, mutate) => {
+    const fixture = refreshFixture(`refresh-refusal-${label}`, mutate);
+    const result = run(fixture.args);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('Refresh refused');
+    expect(readFileSync(fixture.spanishPath)).toEqual(fixture.before[0]);
+    expect(readFileSync(fixture.slovakPath)).toEqual(fixture.before[1]);
+  });
+
+  it('refuses refresh while the review server owns a package lock and never recreates existing templates', () => {
+    const fixture = refreshFixture('refresh-locked');
+    writeFileSync(`${fixture.slovakPath}.lock`, '{"token":"other-process"}');
+    const result = run(fixture.args);
+    expect(result.status).toBe(1);
+    expect(readFileSync(fixture.spanishPath)).toEqual(fixture.before[0]);
+    expect(readFileSync(fixture.slovakPath)).toEqual(fixture.before[1]);
+    expect(JSON.parse(readFileSync(`${fixture.slovakPath}.lock`, 'utf8')).token).toBe('other-process');
+    const recreate = run(['prepare-reviews', ...fixture.args.slice(1)]);
+    expect(recreate.status).toBe(1);
+    expect(recreate.stderr).toContain('already exists');
   });
 });

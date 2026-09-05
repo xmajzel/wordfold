@@ -31,9 +31,25 @@
       "attribution": "Multilingual Central Repository 3.0 (release 2016), González-Agirre, Laparra and Rigau (2012), packaged by Open Multilingual Wordnet 2.0.",
       "redistributionScope": "Commercial reuse, redistribution, and adaptation are permitted with attribution. Only the Spanish omw-es module is extracted.",
       "transformations": [
-        "Extract Spanish lemma, universal POS, lexical-entry ID, sense ID, and synset ID.",
+        "Extract Spanish lemma, universal POS, lexical-entry ID, sense ID, synset ID, ILI and any source definition/examples as review evidence.",
         "Match independently selected Wordfold candidates by normalized Spanish lemma and compatible POS.",
         "Retain original source identifiers; do not copy source glosses into learner content."
+      ]
+    },
+    {
+      "id": "omw-en:2.0",
+      "version": "2.0",
+      "url": "https://github.com/omwn/omw-data/releases/download/v2.0/omw-en-2.0.tar.xz",
+      "sha256": "0e09dfb7f096bc3f10b9de68ffecf13839fa22ae46fd9b227cec890d204ca1dc",
+      "license": "WordNet 3.0 license",
+      "licensePath": "assets/licenses/WORDNET_3_0_LICENSE.txt",
+      "copyright": "WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+      "attribution": "Princeton WordNet 3.0, packaged as OMW English 2.0; Fellbaum, Christiane (ed.), WordNet: An Electronic Lexical Database, MIT Press, 1998.",
+      "redistributionScope": "Review-support definitions, examples and synset members only. Preserve the complete copyright, license and disclaimer on all copies, including internal modifications. Princeton University or Princeton may not be used in advertising or publicity pertaining to distribution.",
+      "transformations": [
+        "Extract English definitions, examples and member lemmas verbatim as review evidence only.",
+        "Match Spanish offsets and POS, with exact-offset adjective a to satellite s fallback only when the direct ID is absent; require equal non-empty ILIs.",
+        "Group Spanish choices by synset, retaining source-order canonical sense IDs and every original source-sense alias."
       ]
     },
     {
