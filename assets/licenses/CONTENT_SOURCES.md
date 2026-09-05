@@ -164,3 +164,18 @@ No Oxford, Cambridge, British Council, Headway, or other publisher vocabulary li
 ## Wordfold curated senses
 
 The short project and business definitions in `assets/catalog/curated-senses.json` are original Wordfold content. They are ranked ahead of dictionary senses where a modern work-related meaning is more useful to this app's starter audience.
+
+## Original Spanish supplemental curriculum
+
+`assets/catalog/spanish/expansion-candidates.json` contains 185 independently
+AI-authored Wordfold senses selected against the PCIC/CEFR reference framework,
+with original Spanish definitions/examples and Slovak hints. No PCIC learner-facing
+prose or bulk publisher word list is reproduced. The per-sense framework references,
+provisional placements, objective coverage and gaps are in `a1-c2-inventory.json`.
+
+The learner preview in `expansion-preview.json` contains only original learner
+fields and audit hashes; licensed OMW/WordNet reviewer glosses are not included.
+Both independent AI assessments and their prior revisions are retained under
+`assets/catalog/spanish/reviews/`. These assessments are not native attestations,
+certification, endorsement or production-release approval. See
+`docs/SPANISH_CATALOG_EXPANSION.md` for the separate draft and release workflows.

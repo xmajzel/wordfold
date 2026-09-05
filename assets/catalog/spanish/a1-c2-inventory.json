@@ -1,0 +1,1686 @@
+{
+  "schemaVersion": 1,
+  "courseId": "es-sk",
+  "inventoryId": "wordfold-spanish-sense-inventory-2026-09-05",
+  "status": "partial",
+  "completionClaim": false,
+  "attribution": "Spanish learning content structured according to the Plan Curricular del Instituto Cervantes (PCIC), A1–C2. Independent Wordfold selections; not certified, accredited or endorsed by Instituto Cervantes.",
+  "selectionPolicy": "Choose communicative objectives first, then distinct useful senses. Counts are derived from enumerated selections, not English catalog quotas. Each level remains provisional; a vocabulary card does not demonstrate CEFR competence.",
+  "references": [
+    {
+      "id": "pcic-objectives-a1-a2",
+      "title": "PCIC objectives A1-A2",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/01_objetivos_relacion_a1-a2.htm",
+      "accessedAt": "2026-09-05",
+      "use": "Framework objectives only; not a claim that PCIC assigns these exact headword senses to these levels."
+    },
+    {
+      "id": "pcic-objectives-b1-b2",
+      "title": "PCIC objectives B1-B2",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/01_objetivos_relacion_b1-b2.htm",
+      "accessedAt": "2026-09-05",
+      "use": "Framework objectives only; not a claim that PCIC assigns these exact headword senses to these levels."
+    },
+    {
+      "id": "pcic-objectives-c1-c2",
+      "title": "PCIC objectives C1-C2",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/01_objetivos_relacion_c1-c2.htm",
+      "accessedAt": "2026-09-05",
+      "use": "Framework objectives only; not a claim that PCIC assigns these exact headword senses to these levels."
+    },
+    {
+      "id": "cefr-levels",
+      "title": "Council of Europe CEFR levels",
+      "url": "https://www.coe.int/en/web/common-european-framework-reference-languages/level-descriptions",
+      "accessedAt": "2026-09-05",
+      "use": "Six-level can-do framework; not a finite word list or word-count standard."
+    }
+  ],
+  "legacyCatalog": {
+    "path": "assets/catalog/spanish/a1-candidates.json",
+    "entryCount": 500,
+    "identityPolicy": "Preserve all existing stable IDs and selected senses. Do not silently relevel or replace records.",
+    "placementStatus": "needs-individual-level-adjudication",
+    "coverageCredit": "Existing topical records are retained and counted as available drafts, but not credited as validated coverage of these new functional objectives.",
+    "requiredFollowUp": "Replace the legacy20 generic category rationales with individual sense-level evidence, then adjudicate borderline placements."
+  },
+  "prototypePolicy": {
+    "path": "assets/catalog/spanish/cefr-pilot.json",
+    "entryCount": 6,
+    "includeInPreview": false,
+    "reason": "Test fixtures, not level corpora. The A1 pie headword overlaps the legacy catalog; no automatic merging or promotion.",
+    "futureMigration": "Any reused prototype sense needs a documented identity/duplicate decision and current review."
+  },
+  "supplementalCatalog": {
+    "path": "assets/catalog/spanish/expansion-candidates.json",
+    "batchId": "expansion-2026-09-05",
+    "entryCount": 185,
+    "authoredBaselineSha256": "7142e94dc1548c3b566f182a20a3cc67a20125e039dac2a3e2e04c91761c4309",
+    "reviewedSnapshotSha256": "efb38afe1a97ddeb34e34aeeb1e20f0fdf80ba586ebd20aa77b1bb52330ddcf4",
+    "reviewedSnapshotCanonicalSha256": "c1de4e30998438fef7213afca6d82503e62fa4ea2378f8b9ca9bfba4f3912591",
+    "baselineNote": "Historical pre-review authoring snapshot. Root corrected exampleSurfaceForm En virtud de to En virtud del before independent reviews; current hashes are recorded by the level-aware review pipeline, not frozen here.",
+    "placementStatus": "provisional",
+    "humanReviewStatus": "not-attested",
+    "audioReviewStatus": "not-reviewed"
+  },
+  "counts": {
+    "A1": {
+      "legacyDrafts": 500,
+      "authoredExpansion": 81,
+      "plannedAdditionalSenses": 43,
+      "objectives": 6,
+      "coverageStatus": "partial"
+    },
+    "A2": {
+      "legacyDrafts": 0,
+      "authoredExpansion": 24,
+      "plannedAdditionalSenses": 20,
+      "objectives": 4,
+      "coverageStatus": "partial"
+    },
+    "B1": {
+      "legacyDrafts": 0,
+      "authoredExpansion": 22,
+      "plannedAdditionalSenses": 20,
+      "objectives": 4,
+      "coverageStatus": "partial"
+    },
+    "B2": {
+      "legacyDrafts": 0,
+      "authoredExpansion": 19,
+      "plannedAdditionalSenses": 15,
+      "objectives": 3,
+      "coverageStatus": "partial"
+    },
+    "C1": {
+      "legacyDrafts": 0,
+      "authoredExpansion": 20,
+      "plannedAdditionalSenses": 20,
+      "objectives": 4,
+      "coverageStatus": "partial"
+    },
+    "C2": {
+      "legacyDrafts": 0,
+      "authoredExpansion": 19,
+      "plannedAdditionalSenses": 20,
+      "objectives": 4,
+      "coverageStatus": "partial"
+    }
+  },
+  "objectives": [
+    {
+      "id": "A1-identity",
+      "level": "A1",
+      "objective": "Give basic identity, possession and location information.",
+      "topic": "personal information",
+      "register": "neutral",
+      "referenceIds": [
+        "pcic-objectives-a1-a2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:a1:exp-001-ser",
+        "es-sk:a1:exp-002-estar",
+        "es-sk:a1:exp-003-tener",
+        "es-sk:a1:exp-004-haber",
+        "es-sk:a1:exp-008-saber"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "a1-identity-planned-01",
+          "sense": "un (indefinite article)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Give basic identity, possession and location information.) with un (indefinite article); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-identity-planned-02",
+          "sense": "este (near demonstrative)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Give basic identity, possession and location information.) with este (near demonstrative); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-identity-planned-03",
+          "sense": "mi (possessive)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Give basic identity, possession and location information.) with mi (possessive); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-identity-planned-04",
+          "sense": "ella (subject pronoun)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Give basic identity, possession and location information.) with ella (subject pronoun); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-identity-planned-05",
+          "sense": "ellos (subject pronoun)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Give basic identity, possession and location information.) with ellos (subject pronoun); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "A1-actions",
+      "level": "A1",
+      "objective": "Perform and describe immediate concrete actions.",
+      "topic": "everyday actions",
+      "register": "neutral",
+      "referenceIds": [
+        "pcic-objectives-a1-a2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:a1:exp-005-ir",
+        "es-sk:a1:exp-006-hacer",
+        "es-sk:a1:exp-007-poder",
+        "es-sk:a1:exp-009-dar",
+        "es-sk:a1:exp-010-venir",
+        "es-sk:a1:exp-011-ver",
+        "es-sk:a1:exp-012-oir",
+        "es-sk:a1:exp-013-decir",
+        "es-sk:a1:exp-014-poner"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "a1-actions-planned-01",
+          "sense": "escuchar (listen attentively)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Perform and describe immediate concrete actions.) with escuchar (listen attentively); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-actions-planned-02",
+          "sense": "mirar (look intentionally)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Perform and describe immediate concrete actions.) with mirar (look intentionally); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-actions-planned-03",
+          "sense": "traer (bring here)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Perform and describe immediate concrete actions.) with traer (bring here); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-actions-planned-04",
+          "sense": "buscar (locate missing object: existing sense review)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Perform and describe immediate concrete actions.) with buscar (locate missing object: existing sense review); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-actions-planned-05",
+          "sense": "tomar (drink)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Perform and describe immediate concrete actions.) with tomar (drink); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "A1-time",
+      "level": "A1",
+      "objective": "Recognize dates, simple durations and routine sequence.",
+      "topic": "calendar and time",
+      "register": "neutral",
+      "referenceIds": [
+        "pcic-objectives-a1-a2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:a1:exp-015-dia",
+        "es-sk:a1:exp-016-semana",
+        "es-sk:a1:exp-017-mes",
+        "es-sk:a1:exp-018-ano",
+        "es-sk:a1:exp-019-hora",
+        "es-sk:a1:exp-020-hoy",
+        "es-sk:a1:exp-021-ayer",
+        "es-sk:a1:exp-022-ahora",
+        "es-sk:a1:exp-023-antes",
+        "es-sk:a1:exp-024-despues",
+        "es-sk:a1:exp-042-lunes",
+        "es-sk:a1:exp-043-martes",
+        "es-sk:a1:exp-044-miercoles",
+        "es-sk:a1:exp-045-jueves",
+        "es-sk:a1:exp-046-viernes",
+        "es-sk:a1:exp-047-sabado",
+        "es-sk:a1:exp-048-domingo",
+        "es-sk:a1:exp-049-enero",
+        "es-sk:a1:exp-050-febrero",
+        "es-sk:a1:exp-051-marzo",
+        "es-sk:a1:exp-052-abril",
+        "es-sk:a1:exp-053-mayo",
+        "es-sk:a1:exp-054-junio",
+        "es-sk:a1:exp-055-julio",
+        "es-sk:a1:exp-056-agosto",
+        "es-sk:a1:exp-057-septiembre",
+        "es-sk:a1:exp-058-octubre",
+        "es-sk:a1:exp-059-noviembre",
+        "es-sk:a1:exp-060-diciembre"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "a1-time-planned-01",
+          "sense": "minuto (time unit)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize dates, simple durations and routine sequence.) with minuto (time unit); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-time-planned-02",
+          "sense": "segundo (time unit)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize dates, simple durations and routine sequence.) with segundo (time unit); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-time-planned-03",
+          "sense": "fecha (calendar date)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize dates, simple durations and routine sequence.) with fecha (calendar date); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-time-planned-04",
+          "sense": "temprano (early)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize dates, simple durations and routine sequence.) with temprano (early); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-time-planned-05",
+          "sense": "tarde (late: separate from existing afternoon)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize dates, simple durations and routine sequence.) with tarde (late: separate from existing afternoon); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "A1-quantities",
+      "level": "A1",
+      "objective": "Recognize small quantities and identify objects by basic color.",
+      "topic": "quantity and description",
+      "register": "neutral",
+      "referenceIds": [
+        "pcic-objectives-a1-a2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:a1:exp-025-cero",
+        "es-sk:a1:exp-026-uno",
+        "es-sk:a1:exp-027-dos",
+        "es-sk:a1:exp-028-tres",
+        "es-sk:a1:exp-029-cuatro",
+        "es-sk:a1:exp-030-cinco",
+        "es-sk:a1:exp-031-seis",
+        "es-sk:a1:exp-032-siete",
+        "es-sk:a1:exp-033-ocho",
+        "es-sk:a1:exp-034-nueve",
+        "es-sk:a1:exp-035-diez",
+        "es-sk:a1:exp-036-rojo",
+        "es-sk:a1:exp-037-azul",
+        "es-sk:a1:exp-038-verde",
+        "es-sk:a1:exp-039-amarillo",
+        "es-sk:a1:exp-040-blanco",
+        "es-sk:a1:exp-041-negro"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "a1-quantities-planned-01",
+          "sense": "once (11)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with once (11); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-02",
+          "sense": "doce (12)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with doce (12); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-03",
+          "sense": "trece (13)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with trece (13); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-04",
+          "sense": "catorce (14)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with catorce (14); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-05",
+          "sense": "quince (15)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with quince (15); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-06",
+          "sense": "dieciséis (16)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with dieciséis (16); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-07",
+          "sense": "diecisiete (17)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with diecisiete (17); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-08",
+          "sense": "dieciocho (18)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with dieciocho (18); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-09",
+          "sense": "diecinueve (19)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with diecinueve (19); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-10",
+          "sense": "veinte (20)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with veinte (20); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-11",
+          "sense": "treinta (30)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with treinta (30); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-12",
+          "sense": "cuarenta (40)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with cuarenta (40); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-13",
+          "sense": "cincuenta (50)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with cincuenta (50); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-14",
+          "sense": "sesenta (60)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with sesenta (60); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-15",
+          "sense": "setenta (70)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with setenta (70); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-16",
+          "sense": "ochenta (80)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with ochenta (80); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-17",
+          "sense": "noventa (90)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with noventa (90); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-quantities-planned-18",
+          "sense": "cien (100)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Recognize small quantities and identify objects by basic color.) with cien (100); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "A1-function-words",
+      "level": "A1",
+      "objective": "Link short clauses and ask basic information questions.",
+      "topic": "grammatical vocabulary",
+      "register": "neutral and address-sensitive",
+      "referenceIds": [
+        "pcic-objectives-a1-a2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:a1:exp-061-yo",
+        "es-sk:a1:exp-062-tu",
+        "es-sk:a1:exp-063-usted",
+        "es-sk:a1:exp-064-nosotros",
+        "es-sk:a1:exp-065-que",
+        "es-sk:a1:exp-066-quien",
+        "es-sk:a1:exp-067-donde",
+        "es-sk:a1:exp-068-cuando",
+        "es-sk:a1:exp-069-si",
+        "es-sk:a1:exp-070-no",
+        "es-sk:a1:exp-071-y",
+        "es-sk:a1:exp-072-o",
+        "es-sk:a1:exp-073-pero",
+        "es-sk:a1:exp-074-porque",
+        "es-sk:a1:exp-079-de",
+        "es-sk:a1:exp-080-en",
+        "es-sk:a1:exp-081-el"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "a1-function-words-planned-01",
+          "sense": "a (destination preposition)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Link short clauses and ask basic information questions.) with a (destination preposition); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-function-words-planned-02",
+          "sense": "con (accompaniment)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Link short clauses and ask basic information questions.) with con (accompaniment); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-function-words-planned-03",
+          "sense": "para (purpose)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Link short clauses and ask basic information questions.) with para (purpose); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-function-words-planned-04",
+          "sense": "cómo (manner question)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Link short clauses and ask basic information questions.) with cómo (manner question); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-function-words-planned-05",
+          "sense": "cuánto (quantity question)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Link short clauses and ask basic information questions.) with cuánto (quantity question); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "A1-social",
+      "level": "A1",
+      "objective": "Open and close brief exchanges and use basic politeness.",
+      "topic": "social interaction",
+      "register": "neutral",
+      "referenceIds": [
+        "pcic-objectives-a1-a2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:a1:exp-075-hola",
+        "es-sk:a1:exp-076-adios",
+        "es-sk:a1:exp-077-gracias",
+        "es-sk:a1:exp-078-por-favor"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "a1-social-planned-01",
+          "sense": "perdón (apology)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Open and close brief exchanges and use basic politeness.) with perdón (apology); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-social-planned-02",
+          "sense": "lo siento (regret formula)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Open and close brief exchanges and use basic politeness.) with lo siento (regret formula); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-social-planned-03",
+          "sense": "de nada (response to thanks)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Open and close brief exchanges and use basic politeness.) with de nada (response to thanks); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-social-planned-04",
+          "sense": "buenos días (greeting)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Open and close brief exchanges and use basic politeness.) with buenos días (greeting); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a1-social-planned-05",
+          "sense": "hasta luego (leave-taking)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Open and close brief exchanges and use basic politeness.) with hasta luego (leave-taking); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "A2-travel-repair",
+      "level": "A2",
+      "objective": "Handle predictable travel changes and missing property.",
+      "topic": "travel and accommodation",
+      "register": "neutral",
+      "referenceIds": [
+        "pcic-objectives-a1-a2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:a2:exp-001-retraso",
+        "es-sk:a2:exp-002-perder",
+        "es-sk:a2:exp-003-recoger",
+        "es-sk:a2:exp-004-alojamiento",
+        "es-sk:a2:exp-005-ida-y-vuelta",
+        "es-sk:a2:exp-006-averia"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "a2-travel-repair-planned-01",
+          "sense": "transbordo (change of vehicle)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Handle predictable travel changes and missing property.) with transbordo (change of vehicle); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-travel-repair-planned-02",
+          "sense": "retrasarse (run late)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Handle predictable travel changes and missing property.) with retrasarse (run late); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-travel-repair-planned-03",
+          "sense": "disponible (available)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Handle predictable travel changes and missing property.) with disponible (available); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-travel-repair-planned-04",
+          "sense": "confirmar (booking)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Handle predictable travel changes and missing property.) with confirmar (booking); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-travel-repair-planned-05",
+          "sense": "facturar (check in luggage)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Handle predictable travel changes and missing property.) with facturar (check in luggage); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "A2-routines",
+      "level": "A2",
+      "objective": "Describe habits and stages of ordinary daily activity.",
+      "topic": "daily routine",
+      "register": "neutral; regional meal usage",
+      "referenceIds": [
+        "pcic-objectives-a1-a2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:a2:exp-007-soler",
+        "es-sk:a2:exp-008-acostarse",
+        "es-sk:a2:exp-009-despertarse",
+        "es-sk:a2:exp-010-almorzar",
+        "es-sk:a2:exp-011-pasear",
+        "es-sk:a2:exp-012-apagar"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "a2-routines-planned-01",
+          "sense": "vestirse (get dressed)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Describe habits and stages of ordinary daily activity.) with vestirse (get dressed); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-routines-planned-02",
+          "sense": "cepillarse (brush own teeth)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Describe habits and stages of ordinary daily activity.) with cepillarse (brush own teeth); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-routines-planned-03",
+          "sense": "encender (switch on)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Describe habits and stages of ordinary daily activity.) with encender (switch on); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-routines-planned-04",
+          "sense": "acordarse de (remember)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Describe habits and stages of ordinary daily activity.) with acordarse de (remember); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-routines-planned-05",
+          "sense": "quedar (arrange to meet)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Describe habits and stages of ordinary daily activity.) with quedar (arrange to meet); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "A2-services",
+      "level": "A2",
+      "objective": "Follow ordinary purchase, form and appointment instructions.",
+      "topic": "public and commercial services",
+      "register": "neutral",
+      "referenceIds": [
+        "pcic-objectives-a1-a2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:a2:exp-013-recibo",
+        "es-sk:a2:exp-014-cajero-automatico",
+        "es-sk:a2:exp-015-rellenar",
+        "es-sk:a2:exp-016-firmar",
+        "es-sk:a2:exp-017-cancelar",
+        "es-sk:a2:exp-018-urgente"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "a2-services-planned-01",
+          "sense": "formulario (form)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Follow ordinary purchase, form and appointment instructions.) with formulario (form); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-services-planned-02",
+          "sense": "cambio (money returned)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Follow ordinary purchase, form and appointment instructions.) with cambio (money returned); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-services-planned-03",
+          "sense": "de segunda mano (used goods)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Follow ordinary purchase, form and appointment instructions.) with de segunda mano (used goods); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-services-planned-04",
+          "sense": "pedir cita (book appointment)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Follow ordinary purchase, form and appointment instructions.) with pedir cita (book appointment); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-services-planned-05",
+          "sense": "fecha de caducidad (expiry date)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Follow ordinary purchase, form and appointment instructions.) with fecha de caducidad (expiry date); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "A2-comparison",
+      "level": "A2",
+      "objective": "Compare familiar options and report a change of state.",
+      "topic": "comparison and aspect",
+      "register": "neutral",
+      "referenceIds": [
+        "pcic-objectives-a1-a2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:a2:exp-019-mas",
+        "es-sk:a2:exp-020-menos",
+        "es-sk:a2:exp-021-mejor",
+        "es-sk:a2:exp-022-peor",
+        "es-sk:a2:exp-023-todavia",
+        "es-sk:a2:exp-024-ya"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "a2-comparison-planned-01",
+          "sense": "tan (degree equality)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Compare familiar options and report a change of state.) with tan (degree equality); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-comparison-planned-02",
+          "sense": "igual (equal)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Compare familiar options and report a change of state.) with igual (equal); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-comparison-planned-03",
+          "sense": "diferente (different)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Compare familiar options and report a change of state.) with diferente (different); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-comparison-planned-04",
+          "sense": "demasiado (excessive degree)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Compare familiar options and report a change of state.) with demasiado (excessive degree); qualified level adjudication remains pending."
+        },
+        {
+          "id": "a2-comparison-planned-05",
+          "sense": "suficiente (enough)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Compare familiar options and report a change of state.) with suficiente (enough); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "B1-experiences",
+      "level": "B1",
+      "objective": "Relate an unexpected event with sequence and outcome.",
+      "topic": "personal narrative",
+      "register": "neutral",
+      "referenceIds": [
+        "pcic-objectives-b1-b2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:b1:exp-001-ocurrir",
+        "es-sk:b1:exp-002-darse-cuenta-de",
+        "es-sk:b1:exp-003-de-repente",
+        "es-sk:b1:exp-004-mientras",
+        "es-sk:b1:exp-005-al-final",
+        "es-sk:b1:exp-006-aprovechar"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "b1-experiences-planned-01",
+          "sense": "suceder (happen)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Relate an unexpected event with sequence and outcome.) with suceder (happen); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-experiences-planned-02",
+          "sense": "sorprenderse (be surprised)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Relate an unexpected event with sequence and outcome.) with sorprenderse (be surprised); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-experiences-planned-03",
+          "sense": "resultar (turn out)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Relate an unexpected event with sequence and outcome.) with resultar (turn out); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-experiences-planned-04",
+          "sense": "en cuanto (as soon as)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Relate an unexpected event with sequence and outcome.) with en cuanto (as soon as); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-experiences-planned-05",
+          "sense": "por suerte (fortunately)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Relate an unexpected event with sequence and outcome.) with por suerte (fortunately); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "B1-problems",
+      "level": "B1",
+      "objective": "Explain a practical complication and request a remedy.",
+      "topic": "travel and household problems",
+      "register": "neutral",
+      "referenceIds": [
+        "pcic-objectives-b1-b2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:b1:exp-007-queja",
+        "es-sk:b1:exp-008-reembolso",
+        "es-sk:b1:exp-009-resolver",
+        "es-sk:b1:exp-010-estropearse",
+        "es-sk:b1:exp-011-por-si-acaso"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "b1-problems-planned-01",
+          "sense": "reclamar (request remedy)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Explain a practical complication and request a remedy.) with reclamar (request remedy); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-problems-planned-02",
+          "sense": "solucionar (solve)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Explain a practical complication and request a remedy.) with solucionar (solve); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-problems-planned-03",
+          "sense": "sustituir (replace)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Explain a practical complication and request a remedy.) with sustituir (replace); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-problems-planned-04",
+          "sense": "garantía (product warranty)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Explain a practical complication and request a remedy.) with garantía (product warranty); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-problems-planned-05",
+          "sense": "en caso de (contingency)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Explain a practical complication and request a remedy.) with en caso de (contingency); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "B1-opinions",
+      "level": "B1",
+      "objective": "Explain a familiar preference with reasons and concessions.",
+      "topic": "opinions and choices",
+      "register": "neutral",
+      "referenceIds": [
+        "pcic-objectives-b1-b2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:b1:exp-012-opinar",
+        "es-sk:b1:exp-013-estar-de-acuerdo",
+        "es-sk:b1:exp-014-ventaja",
+        "es-sk:b1:exp-015-desventaja",
+        "es-sk:b1:exp-016-aunque"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "b1-opinions-planned-01",
+          "sense": "en mi opinión (stance)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Explain a familiar preference with reasons and concessions.) with en mi opinión (stance); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-opinions-planned-02",
+          "sense": "por un lado (organizing point)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Explain a familiar preference with reasons and concessions.) with por un lado (organizing point); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-opinions-planned-03",
+          "sense": "por otro lado (other point)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Explain a familiar preference with reasons and concessions.) with por otro lado (other point); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-opinions-planned-04",
+          "sense": "depender de (depend on)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Explain a familiar preference with reasons and concessions.) with depender de (depend on); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-opinions-planned-05",
+          "sense": "merecer la pena (be worthwhile)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Explain a familiar preference with reasons and concessions.) with merecer la pena (be worthwhile); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "B1-work",
+      "level": "B1",
+      "objective": "Manage a simple application and routine workplace correspondence.",
+      "topic": "work and administration",
+      "register": "neutral",
+      "referenceIds": [
+        "pcic-objectives-b1-b2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:b1:exp-017-experiencia",
+        "es-sk:b1:exp-018-solicitud",
+        "es-sk:b1:exp-019-entrevista",
+        "es-sk:b1:exp-020-plazo",
+        "es-sk:b1:exp-021-adjuntar",
+        "es-sk:b1:exp-022-curriculum"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "b1-work-planned-01",
+          "sense": "vacante (open position)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Manage a simple application and routine workplace correspondence.) with vacante (open position); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-work-planned-02",
+          "sense": "jornada (working-day length)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Manage a simple application and routine workplace correspondence.) with jornada (working-day length); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-work-planned-03",
+          "sense": "a tiempo parcial (part-time)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Manage a simple application and routine workplace correspondence.) with a tiempo parcial (part-time); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-work-planned-04",
+          "sense": "disponibilidad (availability)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Manage a simple application and routine workplace correspondence.) with disponibilidad (availability); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b1-work-planned-05",
+          "sense": "requisito (requirement)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Manage a simple application and routine workplace correspondence.) with requisito (requirement); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "B2-argument",
+      "level": "B2",
+      "objective": "Develop a claim using contrast, consequence and counterargument.",
+      "topic": "organized discussion",
+      "register": "neutral",
+      "referenceIds": [
+        "pcic-objectives-b1-b2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:b2:exp-001-argumento",
+        "es-sk:b2:exp-002-sin-embargo",
+        "es-sk:b2:exp-003-por-lo-tanto",
+        "es-sk:b2:exp-004-a-pesar-de",
+        "es-sk:b2:exp-005-sostener",
+        "es-sk:b2:exp-006-cuestionar",
+        "es-sk:b2:exp-007-en-cambio"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "b2-argument-planned-01",
+          "sense": "refutar (rebut with reasons)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Develop a claim using contrast, consequence and counterargument.) with refutar (rebut with reasons); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b2-argument-planned-02",
+          "sense": "respaldar (support a claim)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Develop a claim using contrast, consequence and counterargument.) with respaldar (support a claim); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b2-argument-planned-03",
+          "sense": "de hecho (evidential clarification)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Develop a claim using contrast, consequence and counterargument.) with de hecho (evidential clarification); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b2-argument-planned-04",
+          "sense": "en definitiva (synthesis)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Develop a claim using contrast, consequence and counterargument.) with en definitiva (synthesis); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b2-argument-planned-05",
+          "sense": "por el contrario (opposition)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Develop a claim using contrast, consequence and counterargument.) with por el contrario (opposition); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "B2-public-issues",
+      "level": "B2",
+      "objective": "Evaluate consequences and resources in public-interest topics.",
+      "topic": "environment, technology and society",
+      "register": "neutral",
+      "referenceIds": [
+        "pcic-objectives-b1-b2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:b2:exp-008-desigualdad",
+        "es-sk:b2:exp-009-sostenible",
+        "es-sk:b2:exp-010-privacidad",
+        "es-sk:b2:exp-011-impacto",
+        "es-sk:b2:exp-012-recurso",
+        "es-sk:b2:exp-013-concienciar"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "b2-public-issues-planned-01",
+          "sense": "huella de carbono (environmental measure)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Evaluate consequences and resources in public-interest topics.) with huella de carbono (environmental measure); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b2-public-issues-planned-02",
+          "sense": "brecha digital (access gap)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Evaluate consequences and resources in public-interest topics.) with brecha digital (access gap); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b2-public-issues-planned-03",
+          "sense": "accesibilidad (accessibility)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Evaluate consequences and resources in public-interest topics.) with accesibilidad (accessibility); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b2-public-issues-planned-04",
+          "sense": "conciliación (work-life balance)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Evaluate consequences and resources in public-interest topics.) with conciliación (work-life balance); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b2-public-issues-planned-05",
+          "sense": "participación ciudadana (public participation)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Evaluate consequences and resources in public-interest topics.) with participación ciudadana (public participation); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "B2-professional",
+      "level": "B2",
+      "objective": "Negotiate a proposal against resource constraints and responsibilities.",
+      "topic": "professional collaboration",
+      "register": "neutral and formal",
+      "referenceIds": [
+        "pcic-objectives-b1-b2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:b2:exp-014-negociar",
+        "es-sk:b2:exp-015-propuesta",
+        "es-sk:b2:exp-016-viable",
+        "es-sk:b2:exp-017-presupuesto",
+        "es-sk:b2:exp-018-compromiso",
+        "es-sk:b2:exp-019-llevar-a-cabo"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "b2-professional-planned-01",
+          "sense": "priorizar (set priority)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Negotiate a proposal against resource constraints and responsibilities.) with priorizar (set priority); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b2-professional-planned-02",
+          "sense": "acordar (reach agreement)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Negotiate a proposal against resource constraints and responsibilities.) with acordar (reach agreement); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b2-professional-planned-03",
+          "sense": "cumplir (meet commitment)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Negotiate a proposal against resource constraints and responsibilities.) with cumplir (meet commitment); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b2-professional-planned-04",
+          "sense": "rentable (financially viable)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Negotiate a proposal against resource constraints and responsibilities.) with rentable (financially viable); qualified level adjudication remains pending."
+        },
+        {
+          "id": "b2-professional-planned-05",
+          "sense": "a largo plazo (long-term horizon)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Negotiate a proposal against resource constraints and responsibilities.) with a largo plazo (long-term horizon); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "C1-nuance",
+      "level": "C1",
+      "objective": "Distinguish implied meaning, qualification and underlying assumptions.",
+      "topic": "implicit meaning",
+      "register": "neutral and formal",
+      "referenceIds": [
+        "pcic-objectives-c1-c2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:c1:exp-001-matizar",
+        "es-sk:c1:exp-002-aludir",
+        "es-sk:c1:exp-003-subyacer",
+        "es-sk:c1:exp-004-ambiguedad",
+        "es-sk:c1:exp-005-connotacion"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "c1-nuance-planned-01",
+          "sense": "presuponer (assume beforehand)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Distinguish implied meaning, qualification and underlying assumptions.) with presuponer (assume beforehand); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-nuance-planned-02",
+          "sense": "dar a entender (imply)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Distinguish implied meaning, qualification and underlying assumptions.) with dar a entender (imply); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-nuance-planned-03",
+          "sense": "equívoco (liable to misinterpretation)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Distinguish implied meaning, qualification and underlying assumptions.) with equívoco (liable to misinterpretation); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-nuance-planned-04",
+          "sense": "conllevar (entail)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Distinguish implied meaning, qualification and underlying assumptions.) with conllevar (entail); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-nuance-planned-05",
+          "sense": "precisar (make exact)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Distinguish implied meaning, qualification and underlying assumptions.) with precisar (make exact); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "C1-structured-discourse",
+      "level": "C1",
+      "objective": "Control concession, summary and scope in extended explanation.",
+      "topic": "formal organization",
+      "register": "formal",
+      "referenceIds": [
+        "pcic-objectives-c1-c2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:c1:exp-006-salvedad",
+        "es-sk:c1:exp-007-si-bien",
+        "es-sk:c1:exp-008-por-consiguiente",
+        "es-sk:c1:exp-009-no-obstante",
+        "es-sk:c1:exp-010-a-grandes-rasgos"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "c1-structured-discourse-planned-01",
+          "sense": "a tenor de (according to evidence)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Control concession, summary and scope in extended explanation.) with a tenor de (according to evidence); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-structured-discourse-planned-02",
+          "sense": "en lo que respecta a (scope)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Control concession, summary and scope in extended explanation.) with en lo que respecta a (scope); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-structured-discourse-planned-03",
+          "sense": "dicho de otro modo (reformulation)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Control concession, summary and scope in extended explanation.) with dicho de otro modo (reformulation); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-structured-discourse-planned-04",
+          "sense": "en última instancia (ultimate consideration)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Control concession, summary and scope in extended explanation.) with en última instancia (ultimate consideration); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-structured-discourse-planned-05",
+          "sense": "aun así (concession)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Control concession, summary and scope in extended explanation.) with aun así (concession); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "C1-evidence",
+      "level": "C1",
+      "objective": "Evaluate source reliability and separate inference from observation.",
+      "topic": "critical source appraisal",
+      "register": "neutral and formal",
+      "referenceIds": [
+        "pcic-objectives-c1-c2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:c1:exp-011-fidedigno",
+        "es-sk:c1:exp-012-sesgo",
+        "es-sk:c1:exp-013-corroborar",
+        "es-sk:c1:exp-014-inferir",
+        "es-sk:c1:exp-015-pertinente"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "c1-evidence-planned-01",
+          "sense": "verosímil (plausible)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Evaluate source reliability and separate inference from observation.) with verosímil (plausible); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-evidence-planned-02",
+          "sense": "fundamentar (ground in reasons)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Evaluate source reliability and separate inference from observation.) with fundamentar (ground in reasons); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-evidence-planned-03",
+          "sense": "indicio (suggestive evidence)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Evaluate source reliability and separate inference from observation.) with indicio (suggestive evidence); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-evidence-planned-04",
+          "sense": "contrastable (verifiable)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Evaluate source reliability and separate inference from observation.) with contrastable (verifiable); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-evidence-planned-05",
+          "sense": "extrapolar (extend beyond observed data)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Evaluate source reliability and separate inference from observation.) with extrapolar (extend beyond observed data); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "C1-negotiation",
+      "level": "C1",
+      "objective": "Manage reservations, responsibility and precise administrative repair.",
+      "topic": "delicate professional interaction",
+      "register": "neutral and formal",
+      "referenceIds": [
+        "pcic-objectives-c1-c2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:c1:exp-016-subsanar",
+        "es-sk:c1:exp-017-incumbir",
+        "es-sk:c1:exp-018-discrepancia",
+        "es-sk:c1:exp-019-consenso",
+        "es-sk:c1:exp-020-reticencia"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "c1-negotiation-planned-01",
+          "sense": "disentir (disagree)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Manage reservations, responsibility and precise administrative repair.) with disentir (disagree); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-negotiation-planned-02",
+          "sense": "conceder (acknowledge a point)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Manage reservations, responsibility and precise administrative repair.) with conceder (acknowledge a point); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-negotiation-planned-03",
+          "sense": "interpelar (address a challenge)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Manage reservations, responsibility and precise administrative repair.) with interpelar (address a challenge); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-negotiation-planned-04",
+          "sense": "reacio (reluctant)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Manage reservations, responsibility and precise administrative repair.) with reacio (reluctant); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c1-negotiation-planned-05",
+          "sense": "salvaguardar (protect a condition)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Manage reservations, responsibility and precise administrative repair.) with salvaguardar (protect a condition); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "C2-precision",
+      "level": "C2",
+      "objective": "Distinguish close evaluative meanings and argumentative responsibility.",
+      "topic": "polemical and institutional interpretation",
+      "register": "formal",
+      "referenceIds": [
+        "pcic-objectives-c1-c2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:c2:exp-001-tergiversar",
+        "es-sk:c2:exp-002-soslayar",
+        "es-sk:c2:exp-003-desvirtuar",
+        "es-sk:c2:exp-004-dirimir",
+        "es-sk:c2:exp-005-esgrimir",
+        "es-sk:c2:exp-006-fehaciente",
+        "es-sk:c2:exp-007-tacito"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "c2-precision-planned-01",
+          "sense": "desmentir (deny factual claim)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Distinguish close evaluative meanings and argumentative responsibility.) with desmentir (deny factual claim); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-precision-planned-02",
+          "sense": "rebatir (counter an argument)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Distinguish close evaluative meanings and argumentative responsibility.) with rebatir (counter an argument); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-precision-planned-03",
+          "sense": "eludir (evade responsibility)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Distinguish close evaluative meanings and argumentative responsibility.) with eludir (evade responsibility); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-precision-planned-04",
+          "sense": "aducir (put forward reason)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Distinguish close evaluative meanings and argumentative responsibility.) with aducir (put forward reason); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-precision-planned-05",
+          "sense": "dilucidar (clarify difficult question)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Distinguish close evaluative meanings and argumentative responsibility.) with dilucidar (clarify difficult question); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "C2-register",
+      "level": "C2",
+      "objective": "Preserve exact relations and implied responsibility in formal reformulation.",
+      "topic": "high-register discourse",
+      "register": "formal and neutral",
+      "referenceIds": [
+        "pcic-objectives-c1-c2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:c2:exp-008-a-sabiendas",
+        "es-sk:c2:exp-009-con-todo",
+        "es-sk:c2:exp-010-en-virtud-de",
+        "es-sk:c2:exp-011-habida-cuenta-de"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "c2-register-planned-01",
+          "sense": "sin perjuicio de (without affecting)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Preserve exact relations and implied responsibility in formal reformulation.) with sin perjuicio de (without affecting); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-register-planned-02",
+          "sense": "a todas luces (clearly)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Preserve exact relations and implied responsibility in formal reformulation.) with a todas luces (clearly); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-register-planned-03",
+          "sense": "a expensas de (at another's cost)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Preserve exact relations and implied responsibility in formal reformulation.) with a expensas de (at another's cost); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-register-planned-04",
+          "sense": "por ende (formal consequence)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Preserve exact relations and implied responsibility in formal reformulation.) with por ende (formal consequence); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-register-planned-05",
+          "sense": "a la sazón (at that time)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Preserve exact relations and implied responsibility in formal reformulation.) with a la sazón (at that time); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "C2-idiom",
+      "level": "C2",
+      "objective": "Interpret idiomatic stance, interpersonal risk and deliberate avoidance.",
+      "topic": "colloquial pragmatics",
+      "register": "informal; context-sensitive",
+      "referenceIds": [
+        "pcic-objectives-c1-c2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:c2:exp-012-tomar-el-pelo",
+        "es-sk:c2:exp-013-andarse-por-las-ramas",
+        "es-sk:c2:exp-014-hacer-la-vista-gorda",
+        "es-sk:c2:exp-015-poner-el-dedo-en-la-llaga"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "c2-idiom-planned-01",
+          "sense": "dar por sentado (take for granted)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Interpret idiomatic stance, interpersonal risk and deliberate avoidance.) with dar por sentado (take for granted); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-idiom-planned-02",
+          "sense": "pasar por alto (overlook)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Interpret idiomatic stance, interpersonal risk and deliberate avoidance.) with pasar por alto (overlook); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-idiom-planned-03",
+          "sense": "hilar fino (make fine distinctions)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Interpret idiomatic stance, interpersonal risk and deliberate avoidance.) with hilar fino (make fine distinctions); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-idiom-planned-04",
+          "sense": "no dar el brazo a torcer (refuse to yield)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Interpret idiomatic stance, interpersonal risk and deliberate avoidance.) with no dar el brazo a torcer (refuse to yield); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-idiom-planned-05",
+          "sense": "quitar hierro (downplay seriousness)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Interpret idiomatic stance, interpersonal risk and deliberate avoidance.) with quitar hierro (downplay seriousness); qualified level adjudication remains pending."
+        }
+      ]
+    },
+    {
+      "id": "C2-interpretation",
+      "level": "C2",
+      "objective": "Analyze nonliteral evaluation and conflicting attitudes in complex texts.",
+      "topic": "literary and social interpretation",
+      "register": "neutral and formal",
+      "referenceIds": [
+        "pcic-objectives-c1-c2",
+        "cefr-levels"
+      ],
+      "coverageStatus": "partial",
+      "authoredEntryIds": [
+        "es-sk:c2:exp-016-ironia",
+        "es-sk:c2:exp-017-eufemismo",
+        "es-sk:c2:exp-018-sarcasmo",
+        "es-sk:c2:exp-019-ambivalencia"
+      ],
+      "remainingSenseSelections": [
+        {
+          "id": "c2-interpretation-planned-01",
+          "sense": "sutileza (fine distinction)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Analyze nonliteral evaluation and conflicting attitudes in complex texts.) with sutileza (fine distinction); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-interpretation-planned-02",
+          "sense": "doble sentido (double meaning)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Analyze nonliteral evaluation and conflicting attitudes in complex texts.) with doble sentido (double meaning); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-interpretation-planned-03",
+          "sense": "reticencia (rhetorical omission: separate sense)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Analyze nonliteral evaluation and conflicting attitudes in complex texts.) with reticencia (rhetorical omission: separate sense); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-interpretation-planned-04",
+          "sense": "paradoja (apparent contradiction)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Analyze nonliteral evaluation and conflicting attitudes in complex texts.) with paradoja (apparent contradiction); qualified level adjudication remains pending."
+        },
+        {
+          "id": "c2-interpretation-planned-05",
+          "sense": "subtexto (implicit layer)",
+          "status": "planned-not-authored",
+          "placementStatus": "provisional",
+          "levelRationale": "Independent Wordfold selection to extend this objective (Analyze nonliteral evaluation and conflicting attitudes in complex texts.) with subtexto (implicit layer); qualified level adjudication remains pending."
+        }
+      ]
+    }
+  ],
+  "unmappedAreas": [
+    "Full coverage of the20 existing topical PCIC classifications at each level is not yet selected; topic labels do not establish sense difficulty.",
+    "Higher cardinal numbers, fractions, ordinals, demonstratives, clitic pronouns and additional prepositional senses remain incomplete.",
+    "Connected reading/listening, interaction, writing, mediation, grammar practice, pronunciation/prosody and sociocultural competence cannot be completed by vocabulary cards alone.",
+    "Regional lexical variants, register alternatives and nonliteral senses need contextual comparative review, especially C1–C2.",
+    "No inference that all uncommon words belong to C2, or that a phrase first appears only at its proposed practice level."
+  ],
+  "reviewContract": {
+    "requiredPerspectives": [
+      "spanish-ai",
+      "slovak-ai"
+    ],
+    "identity": "Each independent record must bind current content hashes, every entry ID and its reviewed level.",
+    "humanAttestations": "Separate from AI coverage and never populated by owner approval or these inventory files.",
+    "release": "Validated and independently AI-reviewed drafts may be exposed only through development preview; production release remains a separate decision."
+  },
+  "authoringSequence": [
+    "Retain existing500 A1 records and reconcile second-review corrections.",
+    "Author selected185-entry expansion, then independently review every record from Spanish and Slovak perspectives.",
+    "Resolve findings and rerun hash-bound coverage before enabling current preview batches.",
+    "Author the enumerated planned senses in objective-sized batches; investigate legacy duplicates before minting IDs.",
+    "Extend still-unmapped topics and individually adjudicate legacy level placements; do not mark the broad inventory complete until these are resolved."
+  ]
+}

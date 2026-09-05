@@ -1,0 +1,1678 @@
+{
+  "schemaVersion": 1,
+  "reviewerType": "ai",
+  "kind": "slovak",
+  "reviewerId": "expansion-slovak-agent",
+  "reviewedAt": "2026-09-05",
+  "notHumanApproval": true,
+  "batchId": "expansion-2026-09-05",
+  "datasetSha256": "c1de4e30998438fef7213afca6d82503e62fa4ea2378f8b9ca9bfba4f3912591",
+  "scope": "Slovak hint accuracy and alignment with the selected Spanish sense; no audio review.",
+  "entries": [
+    {
+      "entryId": "es-sk:a1:exp-001-ser",
+      "catalogSenseId": "es-sk:a1:exp-001-ser:verb:1",
+      "level": "A1",
+      "entrySha256": "17aee47f91dff58d663de04cb59e9f7f052be8aab7f3a4de019bf3b3d36d2a9c",
+      "decision": "no-issue",
+      "notes": "Identita a vlastnosť pri ser sú primerane odlíšené od polohy; byť funguje pri povolaní sestry.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-002-estar",
+      "catalogSenseId": "es-sk:a1:exp-002-estar:verb:1",
+      "level": "A1",
+      "entrySha256": "3ff85b13f325737ba35082d28ffb6dc527ba25982e383d6d8880eb53141dd544",
+      "decision": "no-issue",
+      "notes": "Byť a nachádzať sa pokrývajú uvedenú polohu knihy aj stavový význam estar.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-003-tener",
+      "catalogSenseId": "es-sk:a1:exp-003-tener:verb:1",
+      "level": "A1",
+      "entrySha256": "d1830d49472e7a98af6661498ccc4869c3d4ed7f754153b1dee3ed6f8eca6a6c",
+      "decision": "no-issue",
+      "notes": "Mať vyjadruje vlastníctvo bicykla bez pridávania nesúvisiaceho významu musieť.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-004-haber",
+      "catalogSenseId": "es-sk:a1:exp-004-haber:verb:1",
+      "level": "A1",
+      "entrySha256": "02b2c75934c453e3ebc985d1a7f7c5e382e890c3909358fdf1dfffa107a9ef05",
+      "decision": "no-issue",
+      "notes": "Byť/existovať s označením hay správne predstavuje neosobnú existenciu lekárne.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-005-ir",
+      "catalogSenseId": "es-sk:a1:exp-005-ir:verb:1",
+      "level": "A1",
+      "entrySha256": "8ce7f51ac79038a2dfe41d32042ef8df0954dee9e9439d1faad02ebc321d96c9",
+      "decision": "no-issue",
+      "notes": "Ísť presne zodpovedá pohybu do supermarketu, nie príchodu k hovoriacemu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-006-hacer",
+      "catalogSenseId": "es-sk:a1:exp-006-hacer:verb:1",
+      "level": "A1",
+      "entrySha256": "218ff95ed05a599fa721265731a137f519c68e1a54afc696f7c8e329dbdb7fdd",
+      "decision": "no-issue",
+      "notes": "Robiť je prirodzený všeobecný ekvivalent činnosti; príprava jedla ilustruje vybraný význam.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-007-poder",
+      "catalogSenseId": "es-sk:a1:exp-007-poder:verb:1",
+      "level": "A1",
+      "entrySha256": "b0f268bd1642dbc5e0c8483025e96436ba5254369120991eadccfadb9c19ab46",
+      "decision": "no-issue",
+      "notes": "Môcť a dokázať zachovávajú možnosť aj schopnosť otvoriť dvere.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-008-saber",
+      "catalogSenseId": "es-sk:a1:exp-008-saber:verb:1",
+      "level": "A1",
+      "entrySha256": "d40161b2fb705f122fdd0e271e019506917702d22b7492bd069740e4b5529731",
+      "decision": "no-issue",
+      "notes": "Vedieť zodpovedá znalosti telefónneho čísla; nejde o zoznámenie sa s osobou.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-009-dar",
+      "catalogSenseId": "es-sk:a1:exp-009-dar:verb:1",
+      "level": "A1",
+      "entrySha256": "207ea32250d96c3e1eb388a03d3a649726bb22edb66e26cd3ab29582c994617e",
+      "decision": "no-issue",
+      "notes": "Dať/dávať vhodne uvádza slovenský vidový pár pre odovzdanie kľúča.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-010-venir",
+      "catalogSenseId": "es-sk:a1:exp-010-venir:verb:1",
+      "level": "A1",
+      "entrySha256": "b05d030b0ca60f4bf645fae6e4392b565b8843ff56690a3b4e18867ee530c41b",
+      "decision": "no-issue",
+      "notes": "Prísť/prichádzať zachováva smer k hovoriacemu a slovenský vidový rozdiel.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-011-ver",
+      "catalogSenseId": "es-sk:a1:exp-011-ver:verb:1",
+      "level": "A1",
+      "entrySha256": "2a09bdfd5fd1169d2229b17bddec535feff72b305c55d2517bf72b266decf442",
+      "decision": "no-issue",
+      "notes": "Vidieť je zmyslové vnímanie očami, presné pre psa v záhrade.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-012-oir",
+      "catalogSenseId": "es-sk:a1:exp-012-oir:verb:1",
+      "level": "A1",
+      "entrySha256": "da776a23d4733bde52fe5f09861cc3131f91a620760668d5a3ceff8a8481b813",
+      "decision": "no-issue",
+      "notes": "Počuť je správne pasívne sluchové vnímanie hudby, nie zámerné počúvanie.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-013-decir",
+      "catalogSenseId": "es-sk:a1:exp-013-decir:verb:1",
+      "level": "A1",
+      "entrySha256": "9413a0599118bb7d2710d4997503f0907f3f0360e58ce62c5c910dd622d979e1",
+      "decision": "no-issue",
+      "notes": "Povedať/hovoriť prirodzene pokrýva vyslovenie mena aj všeobecné verbálne oznámenie.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-014-poner",
+      "catalogSenseId": "es-sk:a1:exp-014-poner:verb:1",
+      "level": "A1",
+      "entrySha256": "a90b02412413c80234e29e3ba055015b0e7a62d58f3d5884c1652232357d293f",
+      "decision": "no-issue",
+      "notes": "Položiť/dať s obmedzením na miesto primerane vystihuje položenie pohára.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-015-dia",
+      "catalogSenseId": "es-sk:a1:exp-015-dia:noun:1",
+      "level": "A1",
+      "entrySha256": "d4754c621cfc90fe6df0e6390ca12f9295c6ef4c1b9c919c2a11fcb547ad8cbf",
+      "decision": "no-issue",
+      "notes": "Deň označuje uvedených dvadsaťštyri hodín; množné dni v príklade je predvídateľné.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-016-semana",
+      "catalogSenseId": "es-sk:a1:exp-016-semana:noun:1",
+      "level": "A1",
+      "entrySha256": "8df5e71c1858db1967ae0a4cc50777805b7468643ffba3aac89f3f12e0f8bb86",
+      "decision": "no-issue",
+      "notes": "Týždeň je presná sedemdňová časová jednotka v rozvrhu vyučovania.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-017-mes",
+      "catalogSenseId": "es-sk:a1:exp-017-mes:noun:1",
+      "level": "A1",
+      "entrySha256": "1ebee8d0f2ec9dfac6f1a26652b9f29a49d4228435ea3a627fbdcda352bfa637",
+      "decision": "no-issue",
+      "notes": "Mesiac s časovou kvalifikáciou zabraňuje zámene s nebeským telesom.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-018-ano",
+      "catalogSenseId": "es-sk:a1:exp-018-ano:noun:1",
+      "level": "A1",
+      "entrySha256": "d2d993d564613546ca57bdf97afc1c21bfd76d98bba54027ae1446b8185d4b45",
+      "decision": "no-issue",
+      "notes": "Rok je správny ekvivalent aj v slovenskom vyjadrení veku dieťaťa.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-019-hora",
+      "catalogSenseId": "es-sk:a1:exp-019-hora:noun:1",
+      "level": "A1",
+      "entrySha256": "9f19a230619f039a14fa7dea082b0bec6c9213eb4e48dace46ba45a4cd391435",
+      "decision": "no-issue",
+      "notes": "Hodina presne zodpovedá šesťdesiatminútovému trvaniu cesty.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-020-hoy",
+      "catalogSenseId": "es-sk:a1:exp-020-hoy:adv:1",
+      "level": "A1",
+      "entrySha256": "a23703fce35750fa5ecc40f0d30b9d7f99e2962079551981a2ea26487a6c6840",
+      "decision": "no-issue",
+      "notes": "Dnes zodpovedá aktuálnemu dňu bez pridaného širšieho významu súčasnosti.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-021-ayer",
+      "catalogSenseId": "es-sk:a1:exp-021-ayer:adv:1",
+      "level": "A1",
+      "entrySha256": "567a8724771c829b88ca15f37fe25adda0f4cab851374b7a8c75c2b9d5932b03",
+      "decision": "no-issue",
+      "notes": "Včera je správny deň pred dneškom; príklad s pondelkom je významovo zhodný.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-022-ahora",
+      "catalogSenseId": "es-sk:a1:exp-022-ahora:adv:1",
+      "level": "A1",
+      "entrySha256": "14f141a334d777236d28147ff473fda24d51a3daabcb439288e5b7f0eb49f4f4",
+      "decision": "no-issue",
+      "notes": "Teraz vystihuje aktuálny okamih, keď je hovoriaci doma.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-023-antes",
+      "catalogSenseId": "es-sk:a1:exp-023-antes:adv:1",
+      "level": "A1",
+      "entrySha256": "44b3399e14b4b874e077e19e1dd213b834f17474daa6f13be5fd2365966bb93e",
+      "decision": "no-issue",
+      "notes": "Predtým/skôr pokrýva relatívnu časovú prednosť; príklad príchodu podporuje skôr.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-024-despues",
+      "catalogSenseId": "es-sk:a1:exp-024-despues:adv:1",
+      "level": "A1",
+      "entrySha256": "0f4757c2208308b5afa3de6117e6443b53f417814a7103d72364e589058328f0",
+      "decision": "no-issue",
+      "notes": "Potom/neskôr zachováva následnosť jedenia a učenia.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-025-cero",
+      "catalogSenseId": "es-sk:a1:exp-025-cero:num:1",
+      "level": "A1",
+      "entrySha256": "cd86fe7a1da45a40546c3871c696ab2a1170e262c818f261f7809938f1dd17c0",
+      "decision": "no-issue",
+      "notes": "Nula je presná číselná hodnota; sedadlový príklad používa číslo ako označenie.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-026-uno",
+      "catalogSenseId": "es-sk:a1:exp-026-uno:num:1",
+      "level": "A1",
+      "entrySha256": "6fe54db7c6145fb4baee05e9e298c6f92a49aa75e054d101cb48dd50c85b37b1",
+      "decision": "no-issue",
+      "notes": "Jeden je primeraný heslový tvar; un/una sú španielske varianty, nie odlišné slovenské významy.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-027-dos",
+      "catalogSenseId": "es-sk:a1:exp-027-dos:num:1",
+      "level": "A1",
+      "entrySha256": "6f680fa96d86b4335e1e7153663d3a45a9952e164552413945319531c41e4700",
+      "decision": "no-issue",
+      "notes": "Dva je štandardný číselný názov; ďalšie slovenské rodové tvary nie sú nutné v krátkej pomôcke.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-028-tres",
+      "catalogSenseId": "es-sk:a1:exp-028-tres:num:1",
+      "level": "A1",
+      "entrySha256": "a5e65944104e5819d793aecd611339b428644cc80cdbfd96eb4ae3e5548c012e",
+      "decision": "no-issue",
+      "notes": "Tri presne zodpovedá hodnote 3 a číslu sedadla.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-029-cuatro",
+      "catalogSenseId": "es-sk:a1:exp-029-cuatro:num:1",
+      "level": "A1",
+      "entrySha256": "b4160d05a978765ddb1251e1bfa2a5ebc31983615956c4fd60a88d118b11c037",
+      "decision": "no-issue",
+      "notes": "Štyri má správny slovenský pravopis a zodpovedá hodnote 4.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-030-cinco",
+      "catalogSenseId": "es-sk:a1:exp-030-cinco:num:1",
+      "level": "A1",
+      "entrySha256": "05a772a63836fde51721ca8fc2d5050ae84c5c9d2df4159c72633890f6fcfe40",
+      "decision": "no-issue",
+      "notes": "Päť zachováva správnu diakritiku aj hodnotu 5.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-031-seis",
+      "catalogSenseId": "es-sk:a1:exp-031-seis:num:1",
+      "level": "A1",
+      "entrySha256": "0b971e9b88fb4cc4080d881b5497cd3b39e7cdd31297f5aaa8edb68fc0b1445d",
+      "decision": "no-issue",
+      "notes": "Šesť je správne slovenské pomenovanie hodnoty 6.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-032-siete",
+      "catalogSenseId": "es-sk:a1:exp-032-siete:num:1",
+      "level": "A1",
+      "entrySha256": "923eff2fb1e3a886de4fc11eee5fa3f7deb64ce17c65fabc0442585085ac8449",
+      "decision": "no-issue",
+      "notes": "Sedem zodpovedá množstvu aj číslu sedadla 7.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-033-ocho",
+      "catalogSenseId": "es-sk:a1:exp-033-ocho:num:1",
+      "level": "A1",
+      "entrySha256": "ba45fb2dfb1925969dda42cf9cc23e3801bffca39bd82d2260b8b14f41fb4f6a",
+      "decision": "no-issue",
+      "notes": "Osem je prirodzený a jednoznačný číselný ekvivalent.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-034-nueve",
+      "catalogSenseId": "es-sk:a1:exp-034-nueve:num:1",
+      "level": "A1",
+      "entrySha256": "b553f1a037e95d18ef51b9caebb2f1fbb0f186dd126b741df183a8b4d73c8dbc",
+      "decision": "no-issue",
+      "notes": "Deväť obsahuje správne ä a ť a presne označuje hodnotu 9.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-035-diez",
+      "catalogSenseId": "es-sk:a1:exp-035-diez:num:1",
+      "level": "A1",
+      "entrySha256": "26e6d95498e3912b14a7a0c4c677e436412145853dbb8b021a343517549ddf3a",
+      "decision": "no-issue",
+      "notes": "Desať je správny ekvivalent číselnej hodnoty 10.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-036-rojo",
+      "catalogSenseId": "es-sk:a1:exp-036-rojo:adj:1",
+      "level": "A1",
+      "entrySha256": "cb9476f87ee976f86ce95c19b0067f940adafc9777681ef0a7d2751aeb574d7d",
+      "decision": "no-issue",
+      "notes": "Červený je štandardný heslový rod; v príklade s tričkom sa slovenský tvar prispôsobí podstatnému menu. Kontrola metadát r2: mužský španielsky heslový tvar a uvedený ženský variant sú v zhode so slovenským prídavným heslom.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-037-azul",
+      "catalogSenseId": "es-sk:a1:exp-037-azul:adj:1",
+      "level": "A1",
+      "entrySha256": "a9f3e73faf37342c137ad1cf8045abe0c31ec790ca3220f5a48644f73c28d08a",
+      "decision": "no-issue",
+      "notes": "Modrý vystihuje farbu jasnej oblohy; nemenlivý španielsky rod nevyžaduje nemenlivý slovenský tvar. Kontrola metadát r2: španielsky tvar je rovnaký pre oba rody; slovenský mužský heslový ekvivalent zostáva správny. Rodová nemennosť neznamená nemenné číslo.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-038-verde",
+      "catalogSenseId": "es-sk:a1:exp-038-verde:adj:1",
+      "level": "A1",
+      "entrySha256": "df9c6ca203a45ffa275738df42719b87daa7fe7100c4fa00a3caa9759ea6d12a",
+      "decision": "no-issue",
+      "notes": "Zelený správne pomenúva farbu listov a trička. Kontrola metadát r2: španielsky tvar je rovnaký pre oba rody; slovenský mužský heslový ekvivalent zostáva správny. Rodová nemennosť neznamená nemenné číslo.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-039-amarillo",
+      "catalogSenseId": "es-sk:a1:exp-039-amarillo:adj:1",
+      "level": "A1",
+      "entrySha256": "bfea4b31554d5f08a661e031d54883f754020c416e4f467021f7c7796f841e82",
+      "decision": "no-issue",
+      "notes": "Žltý zodpovedá farbe zrelého citróna; španielska amarilla je primerane uvedená. Kontrola metadát r2: mužský španielsky heslový tvar a uvedený ženský variant sú v zhode so slovenským prídavným heslom.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-040-blanco",
+      "catalogSenseId": "es-sk:a1:exp-040-blanco:adj:1",
+      "level": "A1",
+      "entrySha256": "023a7039ada0e4be7b2bdb93c890af6c8d8e2cbffb1bff1bbe98f14e1f2639af",
+      "decision": "no-issue",
+      "notes": "Biely je správna farba snehu a má správny slovenský pravopis. Kontrola metadát r2: mužský španielsky heslový tvar a uvedený ženský variant sú v zhode so slovenským prídavným heslom.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-041-negro",
+      "catalogSenseId": "es-sk:a1:exp-041-negro:adj:1",
+      "level": "A1",
+      "entrySha256": "9325165781f6fc68efcfbc6ede40296890823647e62bd17e844a9f1e9bbea2db",
+      "decision": "no-issue",
+      "notes": "Čierny presne zachováva zvolený farebný význam, nie prenesené významy. Kontrola metadát r2: mužský španielsky heslový tvar a uvedený ženský variant sú v zhode so slovenským prídavným heslom.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-042-lunes",
+      "catalogSenseId": "es-sk:a1:exp-042-lunes:noun:1",
+      "level": "A1",
+      "entrySha256": "83d87d6fabac74a9ea7dbc3abf6bfe7f524aa78f87a555a558cd64b40d5569f3",
+      "decision": "no-issue",
+      "notes": "Pondelok je správny ekvivalent dňa medzi nedeľou a utorkom.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-043-martes",
+      "catalogSenseId": "es-sk:a1:exp-043-martes:noun:1",
+      "level": "A1",
+      "entrySha256": "c275b27405b5ed6ca2cdd330b49b3e085b0f9285da38f2acd3a18a251b9849ee",
+      "decision": "no-issue",
+      "notes": "Utorok presne označuje deň po pondelku.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-044-miercoles",
+      "catalogSenseId": "es-sk:a1:exp-044-miercoles:noun:1",
+      "level": "A1",
+      "entrySha256": "b9e8a45fdc6f5147bcfc8529fd79206a0acfa68058c2b00ce9d6e54283c9bae9",
+      "decision": "no-issue",
+      "notes": "Streda označuje správny deň; rozdiel slovenského a španielskeho gramatického rodu nie je chyba.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-045-jueves",
+      "catalogSenseId": "es-sk:a1:exp-045-jueves:noun:1",
+      "level": "A1",
+      "entrySha256": "2d1d59fd187d9ef61cb74fd0123f0f9d2e344ed7fd963129a0aee166b1dcb415",
+      "decision": "no-issue",
+      "notes": "Štvrtok má správnu podobu aj pozíciu medzi stredou a piatkom.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-046-viernes",
+      "catalogSenseId": "es-sk:a1:exp-046-viernes:noun:1",
+      "level": "A1",
+      "entrySha256": "1a300738b23d6c8159a897972314047583cc7f630cad10ca9d526e2210fbad87",
+      "decision": "no-issue",
+      "notes": "Piatok zodpovedá španielskemu viernes bez ortografického problému.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-047-sabado",
+      "catalogSenseId": "es-sk:a1:exp-047-sabado:noun:1",
+      "level": "A1",
+      "entrySha256": "bfdf45264413f82f6648f9b92a0dda870a22c17696b2155aac44381bb646edd7",
+      "decision": "no-issue",
+      "notes": "Sobota je presná; španielske množné sábados nemá vplyv na slovenskú heslovú podobu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-048-domingo",
+      "catalogSenseId": "es-sk:a1:exp-048-domingo:noun:1",
+      "level": "A1",
+      "entrySha256": "f93045f0ca30fc942c98e9628d33ecc10e19131e19d49d0c3844ffb03a1211db",
+      "decision": "no-issue",
+      "notes": "Nedeľa je správne napísaná a zodpovedá dňu pred pondelkom.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-049-enero",
+      "catalogSenseId": "es-sk:a1:exp-049-enero:noun:1",
+      "level": "A1",
+      "entrySha256": "4a027ea36ed1556fec5a42638b718097d7d2c43144b31365f624391e5ddb8dfb",
+      "decision": "no-issue",
+      "notes": "Január správne označuje prvý mesiac a zachováva dĺžeň.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-050-febrero",
+      "catalogSenseId": "es-sk:a1:exp-050-febrero:noun:1",
+      "level": "A1",
+      "entrySha256": "265d29c6a75c04d84797478d4b4a97bcb8242b32b294828e67cb40b5523fe018",
+      "decision": "no-issue",
+      "notes": "Február je správny druhý mesiac.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-051-marzo",
+      "catalogSenseId": "es-sk:a1:exp-051-marzo:noun:1",
+      "level": "A1",
+      "entrySha256": "f09c6989e583810a1c00f6b201b9171e743d3c92d6c9245f7a6549b65947b0f1",
+      "decision": "no-issue",
+      "notes": "Marec je presný slovenský názov tretieho mesiaca.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-052-abril",
+      "catalogSenseId": "es-sk:a1:exp-052-abril:noun:1",
+      "level": "A1",
+      "entrySha256": "e4787f9fe5894fd62c32cf2f697bcd3b2096eb5ca3efebffde253df54e5a6177",
+      "decision": "no-issue",
+      "notes": "Apríl má správny dĺžeň a označuje štvrtý mesiac.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-053-mayo",
+      "catalogSenseId": "es-sk:a1:exp-053-mayo:noun:1",
+      "level": "A1",
+      "entrySha256": "22fe0ad64bd57553acc5fa34be43d4d69f2e6f073409579875e7c5f0c573fd0a",
+      "decision": "no-issue",
+      "notes": "Máj je správny piaty mesiac, nie doslovná napodobenina španielskeho tvaru.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-054-junio",
+      "catalogSenseId": "es-sk:a1:exp-054-junio:noun:1",
+      "level": "A1",
+      "entrySha256": "612a8fd0cc87c2f17e6ec9ad1aa329bfa1f26551015fc51d0d84649079cf3d18",
+      "decision": "no-issue",
+      "notes": "Jún správne označuje šiesty mesiac a odlišuje sa od júla.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-055-julio",
+      "catalogSenseId": "es-sk:a1:exp-055-julio:noun:1",
+      "level": "A1",
+      "entrySha256": "854b92d180c66db2aec6fd7a41cc37bd937b4899310c3ca6743a18174a80b587",
+      "decision": "no-issue",
+      "notes": "Júl správne označuje siedmy mesiac a odlišuje sa od júna.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-056-agosto",
+      "catalogSenseId": "es-sk:a1:exp-056-agosto:noun:1",
+      "level": "A1",
+      "entrySha256": "1d9ea80b8a239c3cccac689403f102cae6c409a7d910d8aa7b6bfdb2d0139003",
+      "decision": "no-issue",
+      "notes": "August je správny slovenský názov ôsmeho mesiaca.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-057-septiembre",
+      "catalogSenseId": "es-sk:a1:exp-057-septiembre:noun:1",
+      "level": "A1",
+      "entrySha256": "6a512e0ab49980e3eabb43c5296b9b23c68d2c317ae7c869d74b455707daaeaf",
+      "decision": "no-issue",
+      "notes": "September správne zodpovedá deviatemu mesiacu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-058-octubre",
+      "catalogSenseId": "es-sk:a1:exp-058-octubre:noun:1",
+      "level": "A1",
+      "entrySha256": "db9109b8f0725260d60512eb0d48379a2732b37c53ee35b132586e13d7f5f79e",
+      "decision": "no-issue",
+      "notes": "Október má správny slovenský dĺžeň a označuje desiaty mesiac.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-059-noviembre",
+      "catalogSenseId": "es-sk:a1:exp-059-noviembre:noun:1",
+      "level": "A1",
+      "entrySha256": "ad5c362dbc5375d67fd5c2cb7e9c18f6516419802b270b7f9d787f595379caf8",
+      "decision": "no-issue",
+      "notes": "November je presný ekvivalent jedenásteho mesiaca.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-060-diciembre",
+      "catalogSenseId": "es-sk:a1:exp-060-diciembre:noun:1",
+      "level": "A1",
+      "entrySha256": "8a1fb745e46f1db34ac1d66a55b342b4abbaf2a4613bf2f8a0a9adf4cb76ef98",
+      "decision": "no-issue",
+      "notes": "December správne označuje dvanásty mesiac.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-061-yo",
+      "catalogSenseId": "es-sk:a1:exp-061-yo:pron:1",
+      "level": "A1",
+      "entrySha256": "dc8aa8b4629ea74f6e9899682bc6da0f4ee101c1ffd9b733314e8b564365aa54",
+      "decision": "no-issue",
+      "notes": "Ja vystihuje hovoriacu osobu; možnosť vynechať zámeno nemení význam pomôcky.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-062-tu",
+      "catalogSenseId": "es-sk:a1:exp-062-tu:pron:1",
+      "level": "A1",
+      "entrySha256": "f0c2615f0cb80d173c1b3a76ca75b30ab3af039642a1df890ea4827e0f7cd2f0",
+      "decision": "no-issue",
+      "notes": "Ty primerane vyjadruje neformálne oslovenie jednej osoby.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-063-usted",
+      "catalogSenseId": "es-sk:a1:exp-063-usted:pron:1",
+      "level": "A1",
+      "entrySha256": "f268fe45e9a77c4147365226f7661038514005f3883b0ab4e27265ab6a63604c",
+      "decision": "no-issue",
+      "notes": "Vy s výslovným upozornením na jednu osobu správne odlišuje zdvorilostné usted od bežného množného čísla.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-064-nosotros",
+      "catalogSenseId": "es-sk:a1:exp-064-nosotros:pron:1",
+      "level": "A1",
+      "entrySha256": "69fe87e1e1c614c945b3fa869a5c63eb1087e34f2474075cb770950dbef055d7",
+      "decision": "no-issue",
+      "notes": "My je správna skupina zahŕňajúca hovoriaceho; španielske nosotras nemá osobitný slovenský rodový ekvivalent.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-065-que",
+      "catalogSenseId": "es-sk:a1:exp-065-que:pron:1",
+      "level": "A1",
+      "entrySha256": "5ecce44d16be6494a4326b93dfb66a24916dc5ff70bb0c60c78396776350a1a7",
+      "decision": "no-issue",
+      "notes": "Čo zodpovedá otázke na vec alebo želanie; diakritika je správna.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-066-quien",
+      "catalogSenseId": "es-sk:a1:exp-066-quien:pron:1",
+      "level": "A1",
+      "entrySha256": "1e878e348cd3c8276c077cf08ab6c8dfc9c7d21952cb2ba9dd2b35f574810ece",
+      "decision": "no-issue",
+      "notes": "Kto označuje otázku na osobu a zodpovedá učiteľke v príklade.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-067-donde",
+      "catalogSenseId": "es-sk:a1:exp-067-donde:adv:1",
+      "level": "A1",
+      "entrySha256": "0a4926f55710269b568e41a57ccd5ba0bf6b96c08b8085ac21a825d4e3d3a332",
+      "decision": "no-issue",
+      "notes": "Kde presne vyjadruje polohu stanice, nie cieľ pohybu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-068-cuando",
+      "catalogSenseId": "es-sk:a1:exp-068-cuando:adv:1",
+      "level": "A1",
+      "entrySha256": "d3966f7115365930b45317db3566376d035d94b896a681b5b099514923859e88",
+      "decision": "no-issue",
+      "notes": "Kedy je správny časový opytovací výraz pri začiatku hodiny.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-069-si",
+      "catalogSenseId": "es-sk:a1:exp-069-si:adv:1",
+      "level": "A1",
+      "entrySha256": "0525f689bd6906d6bd0179434805e22c777a59b6cbb2d24872f38ac0d6da080f",
+      "decision": "no-issue",
+      "notes": "Áno presne zodpovedá kladnej odpovedi sí; prízvuk odlišuje iné španielske si.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-070-no",
+      "catalogSenseId": "es-sk:a1:exp-070-no:adv:1",
+      "level": "A1",
+      "entrySha256": "619e8741e917bdba354d5168b5355f83e3de12b7643b65d78dd95320270f2adb",
+      "decision": "no-issue",
+      "notes": "Nie/ne- užitočne odlišuje samostatnú odpoveď od slovenského slovesného záporu v nemám.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-071-y",
+      "catalogSenseId": "es-sk:a1:exp-071-y:cconj:1",
+      "level": "A1",
+      "entrySha256": "b198ebd80d1442d2dc90e125c565f170d4a7edbbe1457d126b61d1874114a15b",
+      "decision": "no-issue",
+      "notes": "A s označením spojky správne vyjadruje zlučovanie mačky a psa.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-072-o",
+      "catalogSenseId": "es-sk:a1:exp-072-o:cconj:1",
+      "level": "A1",
+      "entrySha256": "c7795528cb32d26cffa4c1f17f1156a3e166b6d55160c811659d010c0ee59709",
+      "decision": "no-issue",
+      "notes": "Alebo správne zachováva alternatívu medzi čajom a kávou.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-073-pero",
+      "catalogSenseId": "es-sk:a1:exp-073-pero:cconj:1",
+      "level": "A1",
+      "entrySha256": "d9637107018f91af02e423db4fd3588293a4e9a433ad8ea3c6352c595047bebe",
+      "decision": "no-issue",
+      "notes": "Ale vystihuje kontrast želania ísť a nedostatku času.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-074-porque",
+      "catalogSenseId": "es-sk:a1:exp-074-porque:sconj:1",
+      "level": "A1",
+      "entrySha256": "9b4770ec81247fa702930c4e6e5bf172b34b4cab79f86a799a4fb4b9470531d2",
+      "decision": "no-issue",
+      "notes": "Pretože/lebo sú oba prirodzené príčinné ekvivalenty smädu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-075-hola",
+      "catalogSenseId": "es-sk:a1:exp-075-hola:intj:1",
+      "level": "A1",
+      "entrySha256": "a47fb8b6ac75a904596506e5fc6165ad631901b94a02a88d1cef57a4a95729d4",
+      "decision": "no-issue",
+      "notes": "Ahoj/dobrý deň s označením pozdravu sú prijateľné pragmatické ekvivalenty hola, nie striktne rovnaký register.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-076-adios",
+      "catalogSenseId": "es-sk:a1:exp-076-adios:intj:1",
+      "level": "A1",
+      "entrySha256": "69b99eacc249369319c04982cde647a7a56de7857eab91d350b0709b907ea1b2",
+      "decision": "no-issue",
+      "notes": "Dovidenia/ahoj s označením lúčenia zabraňuje zámene pozdravového a rozlúčkového použitia.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-077-gracias",
+      "catalogSenseId": "es-sk:a1:exp-077-gracias:intj:1",
+      "level": "A1",
+      "entrySha256": "c0a1412ab2c6fcdb0246fe69d5fc23caa7333469ce8002779331d5979ee19d0c",
+      "decision": "no-issue",
+      "notes": "Ďakujem/vďaka sú prirodzené spôsoby poďakovania za pomoc.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-078-por-favor",
+      "catalogSenseId": "es-sk:a1:exp-078-por-favor:adv:1",
+      "level": "A1",
+      "entrySha256": "03cae51d36e33b164ac7ca69c8ccd90e172d3441d88ad7c5b9b65bc92bb6c813",
+      "decision": "no-issue",
+      "notes": "Prosím presne pokrýva zdvorilú žiadosť o vodu, nie ostatné významy slovenského slova.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-079-de",
+      "catalogSenseId": "es-sk:a1:exp-079-de:adp:1",
+      "level": "A1",
+      "entrySha256": "5b4980666ed4d435f979b5b9e64377b6783d71246176bdb198daaa958468ad0e",
+      "decision": "no-issue",
+      "notes": "Opis privlastnenia a Anina kniha správne vysvetľujú de bez vymýšľania jedinej univerzálnej slovenskej predložky.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-080-en",
+      "catalogSenseId": "es-sk:a1:exp-080-en:adp:1",
+      "level": "A1",
+      "entrySha256": "f862cfe1c08e3a11cba77f1793d5d40aec6665e88bd61cc6e821075ab6b6189e",
+      "decision": "no-issue",
+      "notes": "V/na s označením miesta primerane približujú en; doma v konkrétnom príklade je prirodzená nepredložková realizácia.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a1:exp-081-el",
+      "catalogSenseId": "es-sk:a1:exp-081-el:det:1",
+      "level": "A1",
+      "entrySha256": "56850aa35139dcfc377b525b6e85f3b29d8f59b9c93ff961fa075aaa57ec7d62",
+      "decision": "no-issue",
+      "notes": "Metajazykový opis určitého člena je vhodný, keď slovenčina nemá priamy členový ekvivalent.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-001-retraso",
+      "catalogSenseId": "es-sk:a2:exp-001-retraso:noun:1",
+      "level": "A2",
+      "entrySha256": "480908746dabb72101d2dc5d9e09ba875972b92fd923968f993ca3ee83285d94",
+      "decision": "no-issue",
+      "notes": "Meškanie/oneskorenie správne označuje desaťminútové zdržanie vlaku.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-002-perder",
+      "catalogSenseId": "es-sk:a2:exp-002-perder:verb:1",
+      "level": "A2",
+      "entrySha256": "8d6eb3b4b1dc7a742e5bf8bf73cb50459d6c04babb8895c34447971c4cc794f5",
+      "decision": "no-issue",
+      "notes": "Stratiť je správny dokonavý slovenský význam pre stratené hotelové kľúče.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-003-recoger",
+      "catalogSenseId": "es-sk:a2:exp-003-recoger:verb:1",
+      "level": "A2",
+      "entrySha256": "82a86e3220684832a1190d1a0af783848da78c087da551dc30f57f51f541637d",
+      "decision": "no-issue",
+      "notes": "Vyzdvihnúť presne označuje príchod po batožinu, nie jej zbieranie zo zeme.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-004-alojamiento",
+      "catalogSenseId": "es-sk:a2:exp-004-alojamiento:noun:1",
+      "level": "A2",
+      "entrySha256": "5554e5fb0b973c8c6f94c30f5d8b0c6910ab9b42c353d26a122c4bd3bfbb075c",
+      "decision": "no-issue",
+      "notes": "Ubytovanie prirodzene označuje nocľah počas cesty a zodpovedá hľadaniu pri pláži.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-005-ida-y-vuelta",
+      "catalogSenseId": "es-sk:a2:exp-005-ida-y-vuelta:adj:1",
+      "level": "A2",
+      "entrySha256": "34fa6abfdc6644db150439d0e53e4c6af809f576ae92f588025ed01d31c23ec5",
+      "decision": "no-issue",
+      "notes": "Spiatočný s kvalifikáciou lístok presne vystihuje opravenú prídavnú väzbu de ida y vuelta. Kontrola metadát r2: španielsky tvar je rovnaký pre oba rody; slovenský mužský heslový ekvivalent zostáva správny. Rodová nemennosť neznamená nemenné číslo.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-006-averia",
+      "catalogSenseId": "es-sk:a2:exp-006-averia:noun:1",
+      "level": "A2",
+      "entrySha256": "b1a8d027810ae28d2f1718d2b72017fd6aae51120bbe405cba6bcd58e329a63a",
+      "decision": "no-issue",
+      "notes": "Porucha je správny technický problém autobusu, nie všeobecná nehoda.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-007-soler",
+      "catalogSenseId": "es-sk:a2:exp-007-soler:verb:1",
+      "level": "A2",
+      "entrySha256": "3e27cbce444fb8b436f5dd65d8b8c68acecd272ae18c0d10d59bfd2065ddcf10",
+      "decision": "no-issue",
+      "notes": "Zvyknúť robiť niečo vyjadruje opakovaný zvyk; nejde o zvyknúť si na novú situáciu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-008-acostarse",
+      "catalogSenseId": "es-sk:a2:exp-008-acostarse:verb:1",
+      "level": "A2",
+      "entrySha256": "6b277a60f34933315f67c1748dd136c409851de715a9c87b28d3f55a1b7fc2b8",
+      "decision": "no-issue",
+      "notes": "Ľahnúť si/ísť spať primerane vystihuje uloženie sa do postele, nie iba ľubovoľné ležanie.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-009-despertarse",
+      "catalogSenseId": "es-sk:a2:exp-009-despertarse:verb:1",
+      "level": "A2",
+      "entrySha256": "0645df99e846dc05cdda0077daf77b6a4cfe65bef786e49dc31fee4a07e79c63",
+      "decision": "no-issue",
+      "notes": "Zobudiť sa zachováva zvratnosť aj ukončenie spánku.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-010-almorzar",
+      "catalogSenseId": "es-sk:a2:exp-010-almorzar:verb:1",
+      "level": "A2",
+      "entrySha256": "fe279f09f6faec5e065a1f7b8aa3ee3959acfd517b8f517f648a72e0b63741a7",
+      "decision": "no-issue",
+      "notes": "Obedovať/desiatovať s regionálnou kvalifikáciou poctivo zachováva obe uvedené časové interpretácie almorzar.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-011-pasear",
+      "catalogSenseId": "es-sk:a2:exp-011-pasear:verb:1",
+      "level": "A2",
+      "entrySha256": "09def7a4ca52132656e7d5d6720d30fd952498a9b0f0fc22463ab30f72f62f01",
+      "decision": "no-issue",
+      "notes": "Prechádzať sa je prirodzený slovenský zvratný ekvivalent záujmovej chôdze.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-012-apagar",
+      "catalogSenseId": "es-sk:a2:exp-012-apagar:verb:1",
+      "level": "A2",
+      "entrySha256": "8525c531276e012e0f12b78a4cee8ce17fc690586f4c694a8f76db1bee267a49",
+      "decision": "no-issue",
+      "notes": "Zhasnúť/vypnúť správne pokrýva svetlo aj prístroj; príklad používa zhasnutie svetla.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-013-recibo",
+      "catalogSenseId": "es-sk:a2:exp-013-recibo:noun:1",
+      "level": "A2",
+      "entrySha256": "62a13b03c26c485044b92f52e4fb0339950140e2d516f60307391c6f92ab49c4",
+      "decision": "no-issue",
+      "notes": "Potvrdenka/doklad o zaplatení presne odlišuje recibo od návodu alebo receptu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-014-cajero-automatico",
+      "catalogSenseId": "es-sk:a2:exp-014-cajero-automatico:noun:1",
+      "level": "A2",
+      "entrySha256": "9e144192805ebf2b9ffffa470ba8c39288c33d25fc4028399de97dc95f0c5b5a",
+      "decision": "no-issue",
+      "notes": "Bankomat je prirodzené slovenské jednoslovné pomenovanie celej španielskej frázy.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-015-rellenar",
+      "catalogSenseId": "es-sk:a2:exp-015-rellenar:verb:1",
+      "level": "A2",
+      "entrySha256": "5f588fd3b69cb6dd4b4011c414a0e7007ff1409487718f2314e7b0e4576c9103",
+      "decision": "no-issue",
+      "notes": "Vyplniť presne označuje doplnenie údajov formulára, nie iné druhy napĺňania.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-016-firmar",
+      "catalogSenseId": "es-sk:a2:exp-016-firmar:verb:1",
+      "level": "A2",
+      "entrySha256": "20561b418bcbbbd780993bb738a22005219defbe758d2bf788fe0f842317e718",
+      "decision": "no-issue",
+      "notes": "Podpísať vystihuje identifikačný podpis na zmluve.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-017-cancelar",
+      "catalogSenseId": "es-sk:a2:exp-017-cancelar:verb:1",
+      "level": "A2",
+      "entrySha256": "ca4b89e0ab8a40c392cd9fbd008a072af3987a36e929bb403249031673948cb1",
+      "decision": "no-issue",
+      "notes": "Zrušiť je správne pre plánovanú schôdzku alebo rezerváciu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-018-urgente",
+      "catalogSenseId": "es-sk:a2:exp-018-urgente:adj:1",
+      "level": "A2",
+      "entrySha256": "a2456d4595afe9760e3d486f5624fe152e13b7e153e60c7acf6d3abbac135535",
+      "decision": "no-issue",
+      "notes": "Naliehavý/súrny sú prirodzené synonymá potreby rýchleho vybavenia. Kontrola metadát r2: španielsky tvar je rovnaký pre oba rody; slovenský mužský heslový ekvivalent zostáva správny. Rodová nemennosť neznamená nemenné číslo.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-019-mas",
+      "catalogSenseId": "es-sk:a2:exp-019-mas:adv:1",
+      "level": "A2",
+      "entrySha256": "0eea90690e15d089bcdf970007ad63abf07e62f1c2ba3fddb58e1b4f56b0e3db",
+      "decision": "no-issue",
+      "notes": "Viac a opis vyššej miery vlastnosti pokrývajú kvantitu aj porovnanie; más barato sa po slovensky vyjadrí lacnejší.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-020-menos",
+      "catalogSenseId": "es-sk:a2:exp-020-menos:adv:1",
+      "level": "A2",
+      "entrySha256": "d751bd3005f7f9fbf782918b4036a7048a37b6a86e146df2c327e996eeab88fb",
+      "decision": "no-issue",
+      "notes": "Menej je presný kvantitatívny aj stupňovací ekvivalent.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-021-mejor",
+      "catalogSenseId": "es-sk:a2:exp-021-mejor:adj:1",
+      "level": "A2",
+      "entrySha256": "0b0257faf3d57aa777a1766d7cbc672b1850bb0810e1ab079f1c244849f08b60",
+      "decision": "no-issue",
+      "notes": "Lepší je správny prídavný porovnávací tvar pre kvalitu reštaurácie, nie príslovkové lepšie. Kontrola metadát r2: španielsky tvar je rovnaký pre oba rody; slovenský mužský heslový ekvivalent zostáva správny. Rodová nemennosť neznamená nemenné číslo.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-022-peor",
+      "catalogSenseId": "es-sk:a2:exp-022-peor:adj:1",
+      "level": "A2",
+      "entrySha256": "185608d18cfab7e7705bf6d953dc787488a3d8307b43c9e646908b291477c523",
+      "decision": "no-issue",
+      "notes": "Horší správne zodpovedá prídavnému porovnávaniu kvality izby. Kontrola metadát r2: španielsky tvar je rovnaký pre oba rody; slovenský mužský heslový ekvivalent zostáva správny. Rodová nemennosť neznamená nemenné číslo.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-023-todavia",
+      "catalogSenseId": "es-sk:a2:exp-023-todavia:adv:1",
+      "level": "A2",
+      "entrySha256": "deb478a9cbe637f157119dcb5f987cbcd38092161aa9295fc1c2ee23b2e2f8b7",
+      "decision": "no-issue",
+      "notes": "Ešte/stále presne približujú pokračujúci stav prítomnosti v práci.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:a2:exp-024-ya",
+      "catalogSenseId": "es-sk:a2:exp-024-ya:adv:1",
+      "level": "A2",
+      "entrySha256": "f5d0aeaea917fd5cda70603846a4b15adb3b2ec3d60dc135cf5d55b765dd86c8",
+      "decision": "no-issue",
+      "notes": "Už je správne pri dokončenom kúpení lístkov.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-001-ocurrir",
+      "catalogSenseId": "es-sk:b1:exp-001-ocurrir:verb:1",
+      "level": "B1",
+      "entrySha256": "b14dc450616d88494c8db243d09f01d8c138ed635fa7f7e170dd3f6dc6afaeb0",
+      "decision": "no-issue",
+      "notes": "Stať sa/prihodiť sa vystihuje udalosť nehody; slovenská zvratnosť je správna.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-002-darse-cuenta-de",
+      "catalogSenseId": "es-sk:b1:exp-002-darse-cuenta-de:verb:1",
+      "level": "B1",
+      "entrySha256": "62cbfc41683ac0af38ec5cda9ac04ca69db2124436b1c7d3541018a8201e9f86",
+      "decision": "no-issue",
+      "notes": "Uvedomiť si/všimnúť si primerane pokrýva nové zistenie chýbajúcej batožiny.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-003-de-repente",
+      "catalogSenseId": "es-sk:b1:exp-003-de-repente:adv:1",
+      "level": "B1",
+      "entrySha256": "558b571665a83951049b0b47e23159844d6a34c8a79dc67bdc184cb11a9cf3b5",
+      "decision": "no-issue",
+      "notes": "Zrazu/odrazu zachováva neočakávaný začiatok dažďa.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-004-mientras",
+      "catalogSenseId": "es-sk:b1:exp-004-mientras:sconj:1",
+      "level": "B1",
+      "entrySha256": "8d5f0861ebff85b5abb9971591030ef26db851f104b3a6d74151e8adfbfdbed3",
+      "decision": "no-issue",
+      "notes": "Kým/zatiaľ čo sa dajú časovo použiť pre súčasné počúvanie a varenie; druhá možnosť je jednoznačnejšia.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-005-al-final",
+      "catalogSenseId": "es-sk:b1:exp-005-al-final:adv:1",
+      "level": "B1",
+      "entrySha256": "152baf9f1d1d67250e7df5ffc428b09ce62e93dca3ddd18d338b05d037013530",
+      "decision": "no-issue",
+      "notes": "Nakoniec presne označuje výsledok hľadania kľúčov.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-006-aprovechar",
+      "catalogSenseId": "es-sk:b1:exp-006-aprovechar:verb:1",
+      "level": "B1",
+      "entrySha256": "1e5d956d58f4f76bf20779be4d287dd02787b00675ad42259af8cb1cc0322aa2",
+      "decision": "no-issue",
+      "notes": "Využiť vystihuje účelné využitie cesty na návštevu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-007-queja",
+      "catalogSenseId": "es-sk:b1:exp-007-queja:noun:1",
+      "level": "B1",
+      "entrySha256": "70a413505f6379993f5098a417586a89f9e479daeb41b4198b6ab897084dfabf",
+      "decision": "no-issue",
+      "notes": "Sťažnosť je správny substantívny ekvivalent nespokojnosti s hlukom.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-008-reembolso",
+      "catalogSenseId": "es-sk:b1:exp-008-reembolso:noun:1",
+      "level": "B1",
+      "entrySha256": "e6283745a6143b90c40f83e1cce275af66767bf624dfd8db67cb95a525551ade",
+      "decision": "no-issue",
+      "notes": "Vrátenie peňazí presne vystihuje refundáciu lístka bez zavádzajúceho užšieho termínu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-009-resolver",
+      "catalogSenseId": "es-sk:b1:exp-009-resolver:verb:1",
+      "level": "B1",
+      "entrySha256": "1c85a9636b52be5012fc7dd9965a6bc2844f61fb6e9f7278aa58d013769a3e19",
+      "decision": "no-issue",
+      "notes": "Vyriešiť je prirodzené pri probléme s rezerváciou.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-010-estropearse",
+      "catalogSenseId": "es-sk:b1:exp-010-estropearse:verb:1",
+      "level": "B1",
+      "entrySha256": "fea41a3a3f1a6592a25bbb8ca18c2e58623aae219b5541fdac8f0b116fde4fb5",
+      "decision": "no-issue",
+      "notes": "Pokaziť sa zachováva zmenu stavu práčky aj zvratnosť.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-011-por-si-acaso",
+      "catalogSenseId": "es-sk:b1:exp-011-por-si-acaso:adv:1",
+      "level": "B1",
+      "entrySha256": "4296052703e3d365ed3ae2c60ac6b9b7a0ef3ca02d46b429ba9b2b2db42e4171",
+      "decision": "no-issue",
+      "notes": "Pre istotu je prirodzený slovenský idiomatický ekvivalent preventívnej kópie.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-012-opinar",
+      "catalogSenseId": "es-sk:b1:exp-012-opinar:verb:1",
+      "level": "B1",
+      "entrySha256": "444348cbee102975a5658a13637e82ab8d6597acc8c525d91557ffc4d74880e8",
+      "decision": "no-issue",
+      "notes": "Myslieť si/vyjadriť názor vystihuje opino que a vyjadrenie stanoviska.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-013-estar-de-acuerdo",
+      "catalogSenseId": "es-sk:b1:exp-013-estar-de-acuerdo:verb:1",
+      "level": "B1",
+      "entrySha256": "3ff9b1960f057b929b53bdfa754d08eb76cdfba4fe6459eb406a394c2af2f953",
+      "decision": "no-issue",
+      "notes": "Súhlasiť presne zodpovedá zhode s návrhom.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-014-ventaja",
+      "catalogSenseId": "es-sk:b1:exp-014-ventaja:noun:1",
+      "level": "B1",
+      "entrySha256": "b02f0b5dd4137bf551c98c5299f9ee30b43a644aca654b70a995520cbcdaf906",
+      "decision": "no-issue",
+      "notes": "Výhoda správne pomenúva priaznivý aspekt cesty vlakom.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-015-desventaja",
+      "catalogSenseId": "es-sk:b1:exp-015-desventaja:noun:1",
+      "level": "B1",
+      "entrySha256": "e03540940edeb3dd1b9a97f36024aebb13392943f4670b49635860180023d3b6",
+      "decision": "no-issue",
+      "notes": "Nevýhoda správne označuje nepriaznivý aspekt hluku v byte.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-016-aunque",
+      "catalogSenseId": "es-sk:b1:exp-016-aunque:sconj:1",
+      "level": "B1",
+      "entrySha256": "59a0f491275a62180c37dc46068695e4f5b88a14dce46e1492ea40a353ef8fa3",
+      "decision": "no-issue",
+      "notes": "Hoci/aj keď sú prirodzené prípustkové spojky pre vychádzku napriek dažďu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-017-experiencia",
+      "catalogSenseId": "es-sk:b1:exp-017-experiencia:noun:1",
+      "level": "B1",
+      "entrySha256": "69df587be9c7c5e7a8c547973e221914303f221d22bf030eb7e1bf70e67fffc9",
+      "decision": "no-issue",
+      "notes": "Skúsenosť/prax zachováva praktickú skúsenosť v zákazníckom servise, nie samostatný zážitok.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-018-solicitud",
+      "catalogSenseId": "es-sk:b1:exp-018-solicitud:noun:1",
+      "level": "B1",
+      "entrySha256": "14a5e10e2320dd63d4df5844dbdf37589cbcd3a78fe14e342842e5783aa92571",
+      "decision": "no-issue",
+      "notes": "Žiadosť presne označuje písomnú požiadavku o pracovné miesto.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-019-entrevista",
+      "catalogSenseId": "es-sk:b1:exp-019-entrevista:noun:1",
+      "level": "B1",
+      "entrySha256": "d71111651a585b3480662a018941ceaf3e2fa1a13d9608476441f9fe9915f42f",
+      "decision": "no-issue",
+      "notes": "Pracovný pohovor správne zužuje všeobecné entrevista na vybraný pracovný význam.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-020-plazo",
+      "catalogSenseId": "es-sk:b1:exp-020-plazo:noun:1",
+      "level": "B1",
+      "entrySha256": "0a0baf8a1ff4a27a0381635b9e3d4adf9c117e11d1149b86700ef41575c4b59b",
+      "decision": "no-issue",
+      "notes": "Lehota/termín sú primerané ekvivalenty času na podanie žiadosti; lehota najpresnejšie pomenúva interval.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-021-adjuntar",
+      "catalogSenseId": "es-sk:b1:exp-021-adjuntar:verb:1",
+      "level": "B1",
+      "entrySha256": "3e92854dc07d0361e7db151589529410d43211df4516d25f96275daf9179d1e3",
+      "decision": "no-issue",
+      "notes": "Priložiť správne označuje pridanie životopisu k e-mailu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b1:exp-022-curriculum",
+      "catalogSenseId": "es-sk:b1:exp-022-curriculum:noun:1",
+      "level": "B1",
+      "entrySha256": "ac7c61a503d004a161d68025de414f2ffbeb77b68cbb427102210ae9ae15efd1",
+      "decision": "no-issue",
+      "notes": "Životopis s profesijnou kvalifikáciou presne zodpovedá dokumentu CV, nie literárnemu životopisu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-001-argumento",
+      "catalogSenseId": "es-sk:b2:exp-001-argumento:noun:1",
+      "level": "B2",
+      "entrySha256": "d03252173dbe13565ad5557595aacbef45426ed13f6259266261b30a4880f3b0",
+      "decision": "no-issue",
+      "notes": "Argument/dôvod zachováva podpornú argumentačnú funkciu, nie dej literárneho diela.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-002-sin-embargo",
+      "catalogSenseId": "es-sk:b2:exp-002-sin-embargo:adv:1",
+      "level": "B2",
+      "entrySha256": "d7c5d1975e084793b34b1ec40cbd79d22f71d59bdbecf519df62f3f442215536",
+      "decision": "no-issue",
+      "notes": "Avšak/napriek tomu sú prirodzené kontrastné konektory v uvedenom príklade.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-003-por-lo-tanto",
+      "catalogSenseId": "es-sk:b2:exp-003-por-lo-tanto:adv:1",
+      "level": "B2",
+      "entrySha256": "93e861c9b171b02dd7b8b5dd9dbf25f50dfb75ca07da574cc9745659425cc7f4",
+      "decision": "no-issue",
+      "notes": "Preto/teda správne uvádza dôsledok zvýšených nákladov.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-004-a-pesar-de",
+      "catalogSenseId": "es-sk:b2:exp-004-a-pesar-de:adp:1",
+      "level": "B2",
+      "entrySha256": "5840502c8f19d5ddf4dd3fb01a11f74995a04e7d4160c7a4af41c9105e506ace",
+      "decision": "no-issue",
+      "notes": "Napriek presne zodpovedá prípustkovej predložkovej väzbe a pesar de.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-005-sostener",
+      "catalogSenseId": "es-sk:b2:exp-005-sostener:verb:1",
+      "level": "B2",
+      "entrySha256": "2ed9517e6a184c217b2affcdb301f9daebee542e38473e129526aa36074830ec",
+      "decision": "no-issue",
+      "notes": "Po úprave zastávať názor; tvrdiť sú obe slovenské väzby prirodzené; odstránené neobratné tvrdiť názor.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-006-cuestionar",
+      "catalogSenseId": "es-sk:b2:exp-006-cuestionar:verb:1",
+      "level": "B2",
+      "entrySha256": "5bc1d3f948bb46a49fc8beb6c65768dce6174d8044b3a6abd3a90f7238dd721b",
+      "decision": "no-issue",
+      "notes": "Spochybniť/spochybňovať správne odlišuje dokonavú a nedokonavú podobu pochybovania o účinnosti.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-007-en-cambio",
+      "catalogSenseId": "es-sk:b2:exp-007-en-cambio:adv:1",
+      "level": "B2",
+      "entrySha256": "b9b3740f5db69bcd46b3baabbdbe40b58d13020fc57cf243a44c21b243a051ef",
+      "decision": "no-issue",
+      "notes": "Naopak/zato primerane spájajú protikladné vlastnosti vlaku a autobusu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-008-desigualdad",
+      "catalogSenseId": "es-sk:b2:exp-008-desigualdad:noun:1",
+      "level": "B2",
+      "entrySha256": "538c12c704cc515a07954649841a8b9c32800a4eb26ac28df3959458f2c9c6c5",
+      "decision": "no-issue",
+      "notes": "Nerovnosť je presný sociálny význam rozdielnych podmienok a zdrojov.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-009-sostenible",
+      "catalogSenseId": "es-sk:b2:exp-009-sostenible:adj:1",
+      "level": "B2",
+      "entrySha256": "aaeaaa190e9a143b4e047b0965bfb496f6fa5d029316e38baea5d282496672f7",
+      "decision": "no-issue",
+      "notes": "Udržateľný je ustálený environmentálny ekvivalent dopravnej udržateľnosti. Kontrola metadát r2: španielsky tvar je rovnaký pre oba rody; slovenský mužský heslový ekvivalent zostáva správny. Rodová nemennosť neznamená nemenné číslo.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-010-privacidad",
+      "catalogSenseId": "es-sk:b2:exp-010-privacidad:noun:1",
+      "level": "B2",
+      "entrySha256": "26523aaa81fc702ea98fc6f3e0b4d3d27f3a9b1e04ccabb99b8b952c89573b69",
+      "decision": "no-issue",
+      "notes": "Súkromie správne pomenúva chránenú osobnú oblasť aj kontext údajov aplikácie.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-011-impacto",
+      "catalogSenseId": "es-sk:b2:exp-011-impacto:noun:1",
+      "level": "B2",
+      "entrySha256": "1835ae222174f707d90dc615f29b5917b55c10d37404068aff7116effd6461a1",
+      "decision": "no-issue",
+      "notes": "Vplyv/dosah presne označuje následok turizmu, nie fyzický náraz.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-012-recurso",
+      "catalogSenseId": "es-sk:b2:exp-012-recurso:noun:1",
+      "level": "B2",
+      "entrySha256": "70e77d6fd45355c0c3f477c79ca44f04503f6acbe15724a2f330bc2719b079a0",
+      "decision": "no-issue",
+      "notes": "Zdroj/prostriedok zachováva materiálne aj organizačné prostriedky nemocnice.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-013-concienciar",
+      "catalogSenseId": "es-sk:b2:exp-013-concienciar:verb:1",
+      "level": "B2",
+      "entrySha256": "e5e75bec1ff8611d6572df52cf4c2848096dfddc2a1c040267beced9322a63b7",
+      "decision": "no-issue",
+      "notes": "Zvyšovať povedomie/viesť k uvedomeniu zodpovedá opravenej definícii; nevynucuje uskutočnenú zmenu správania.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-014-negociar",
+      "catalogSenseId": "es-sk:b2:exp-014-negociar:verb:1",
+      "level": "B2",
+      "entrySha256": "ec243bccf8323ca5edaf12c97eb2a444efcc72b218dbeb9e8504c7d1ab97d4c0",
+      "decision": "no-issue",
+      "notes": "Rokovať/vyjednávať sú prirodzené pri dosahovaní dohody o pracovnom čase.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-015-propuesta",
+      "catalogSenseId": "es-sk:b2:exp-015-propuesta:noun:1",
+      "level": "B2",
+      "entrySha256": "0885597035e1bddbb7d2496bb4674c3fb43beecbc6f10c929b3e1fd96d83849d",
+      "decision": "no-issue",
+      "notes": "Návrh presne označuje plán predložený na zváženie.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-016-viable",
+      "catalogSenseId": "es-sk:b2:exp-016-viable:adj:1",
+      "level": "B2",
+      "entrySha256": "316737c3755fd356660788dbcb94c3cf7d364c61b390b4056c70b9780b4c8fd5",
+      "decision": "no-issue",
+      "notes": "Uskutočniteľný/realizovateľný primerane zachováva praktickú možnosť projektu. Kontrola metadát r2: španielsky tvar je rovnaký pre oba rody; slovenský mužský heslový ekvivalent zostáva správny. Rodová nemennosť neznamená nemenné číslo.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-017-presupuesto",
+      "catalogSenseId": "es-sk:b2:exp-017-presupuesto:noun:1",
+      "level": "B2",
+      "entrySha256": "88c539ce1056a5bf7fd2b4833b6b5a12a967d0500ceff016af7346f98d309f10",
+      "decision": "no-issue",
+      "notes": "Rozpočet presne pomenúva finančný plán a limit nákladov.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-018-compromiso",
+      "catalogSenseId": "es-sk:b2:exp-018-compromiso:noun:1",
+      "level": "B2",
+      "entrySha256": "62784d3427c7920c9983583af00b01e80613b0f871415b48d401ddbb5d16230c",
+      "decision": "no-issue",
+      "notes": "Záväzok správne zachováva prijatú povinnosť; nevytvára falošného priateľa kompromis.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:b2:exp-019-llevar-a-cabo",
+      "catalogSenseId": "es-sk:b2:exp-019-llevar-a-cabo:verb:1",
+      "level": "B2",
+      "entrySha256": "94b8d03e8a9a5fad1a155916cc07fab63083a774e65231fcce7db94d57712bbe",
+      "decision": "no-issue",
+      "notes": "Uskutočniť/vykonať je prirodzený ekvivalent celej väzby pri prieskume.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-001-matizar",
+      "catalogSenseId": "es-sk:c1:exp-001-matizar:verb:1",
+      "level": "C1",
+      "entrySha256": "4d35ac566deb33b433eb3bab391e7d231538f68b4a41e87bca57ebb02ad0efad",
+      "decision": "no-issue",
+      "notes": "Spresniť/vniesť významové odtiene zachováva nuance záverov bez zamenenia s ich úplným popretím.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-002-aludir",
+      "catalogSenseId": "es-sk:c1:exp-002-aludir:verb:1",
+      "level": "C1",
+      "entrySha256": "bd994fd308d124776cb0a3a00c9b549caebcbd0b7c4471a12c4075ee0188514e",
+      "decision": "no-issue",
+      "notes": "Narážať na/nepriamo sa zmieniť o zachováva nepriamy odkaz na konflikt aj predložkovú väzbu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-003-subyacer",
+      "catalogSenseId": "es-sk:c1:exp-003-subyacer:verb:1",
+      "level": "C1",
+      "entrySha256": "75eabaa84a6f139d31f43507f82cce7008662e098f470e75a237d40fdd80115c",
+      "decision": "no-issue",
+      "notes": "Byť v pozadí/tvoriť skrytý základ prirodzene vyjadruje latentnú príčinu kritiky.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-004-ambiguedad",
+      "catalogSenseId": "es-sk:c1:exp-004-ambiguedad:noun:1",
+      "level": "C1",
+      "entrySha256": "5899bf8f8be3010574738ed376ea1608eb47108992a146efe86fbf28f55ce8f2",
+      "decision": "no-issue",
+      "notes": "Nejednoznačnosť/dvojznačnosť vystihuje možnosť viacerých interpretácií; druhý ekvivalent zodpovedá dvom čítaniam príkladu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-005-connotacion",
+      "catalogSenseId": "es-sk:c1:exp-005-connotacion:noun:1",
+      "level": "C1",
+      "entrySha256": "07fe04e07dab855216a93be8447c5481b3e05ad42a0a28914278141be52e6737",
+      "decision": "no-issue",
+      "notes": "Konotácia/pridružený význam primerane odlišuje asociatívny význam od doslovného.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-006-salvedad",
+      "catalogSenseId": "es-sk:c1:exp-006-salvedad:noun:1",
+      "level": "C1",
+      "entrySha256": "17087ddaf1424ffd59157fd0d2b9610df59c83382df865fa6649d4b9bc1d0951",
+      "decision": "no-issue",
+      "notes": "Výhrada/výnimka správne označuje obmedzenie súhlasu s návrhom.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-007-si-bien",
+      "catalogSenseId": "es-sk:c1:exp-007-si-bien:sconj:1",
+      "level": "C1",
+      "entrySha256": "5ee50fdf49446e42e1e9092a2a05f6873b7b2cc48c9517e995eafa1edde46733",
+      "decision": "no-issue",
+      "notes": "Hoci/aj keď zachováva prípustkový význam si bien bez doslovného ak dobre.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-008-por-consiguiente",
+      "catalogSenseId": "es-sk:c1:exp-008-por-consiguiente:adv:1",
+      "level": "C1",
+      "entrySha256": "287d4ba688e1e58fb1cc8d3b24486cd3eb2648f1fef50117064ecb714c8cae8d",
+      "decision": "no-issue",
+      "notes": "V dôsledku toho/teda správne signalizuje logický záver z nedosiahnutého minima.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-009-no-obstante",
+      "catalogSenseId": "es-sk:c1:exp-009-no-obstante:adv:1",
+      "level": "C1",
+      "entrySha256": "c35cdc1a550a83880c3ef26b73203c6ea78bdd3f64d100629181a3606f46c966",
+      "decision": "no-issue",
+      "notes": "Napriek tomu/avšak prirodzene prepája malú vzorku s hodnotou výsledkov.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-010-a-grandes-rasgos",
+      "catalogSenseId": "es-sk:c1:exp-010-a-grandes-rasgos:adv:1",
+      "level": "C1",
+      "entrySha256": "0ec607074c5715a9403235d840cbe19cca98a8fb4530b17fc2feda0ede9481c7",
+      "decision": "no-issue",
+      "notes": "V hrubých rysoch/v hlavných črtách sú prirodzené idiomatické ekvivalenty stručného prehľadu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-011-fidedigno",
+      "catalogSenseId": "es-sk:c1:exp-011-fidedigno:adj:1",
+      "level": "C1",
+      "entrySha256": "eb92188e8cd97f2416bcc4a7c088918729f60125db3ec2a83b628f9f45e5c192",
+      "decision": "no-issue",
+      "notes": "Hodnoverný/dôveryhodný presne charakterizuje spoľahlivé svedectvo. Kontrola metadát r2: mužský španielsky heslový tvar a uvedený ženský variant sú v zhode so slovenským prídavným heslom.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-012-sesgo",
+      "catalogSenseId": "es-sk:c1:exp-012-sesgo:noun:1",
+      "level": "C1",
+      "entrySha256": "0378b997ce59011a8676b6785df558454f3ef1e847d937c8cefe56b13cb197dd",
+      "decision": "no-issue",
+      "notes": "Skreslenie/zaujatosť vhodne odlišuje systematický výskumný bias od osobného postoja; prvé sedí príkladu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-013-corroborar",
+      "catalogSenseId": "es-sk:c1:exp-013-corroborar:verb:1",
+      "level": "C1",
+      "entrySha256": "d739be559e04cd8a6204f9ae714061d2773f6d8a1666bd1c82ebba2f1dfa9ac0",
+      "decision": "no-issue",
+      "notes": "Potvrdiť/podložiť dôkazmi správne zachováva dôkazné posilnenie výpovede.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-014-inferir",
+      "catalogSenseId": "es-sk:c1:exp-014-inferir:verb:1",
+      "level": "C1",
+      "entrySha256": "589b9f637fe8f8e409c93575447e0f6ddde08179983e53132787244f4622d3a4",
+      "decision": "no-issue",
+      "notes": "Vyvodiť/usúdiť presne označuje inferenčný záver z indícií.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-015-pertinente",
+      "catalogSenseId": "es-sk:c1:exp-015-pertinente:adj:1",
+      "level": "C1",
+      "entrySha256": "945d1e6d04f24579fe596759a9e554135a2e0065c05bdd58fadc5cab8f3ef409",
+      "decision": "no-issue",
+      "notes": "Po úprave relevantný; týkajúci sa veci presne sedí výberu informácií a neevokuje právnu kompetenciu. Kontrola metadát r2: španielsky tvar je rovnaký pre oba rody; slovenský mužský heslový ekvivalent zostáva správny. Rodová nemennosť neznamená nemenné číslo.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-016-subsanar",
+      "catalogSenseId": "es-sk:c1:exp-016-subsanar:verb:1",
+      "level": "C1",
+      "entrySha256": "01e0a3f6ebe54b711273a1877ca02e8c18ebbed35c8ddd40d6f4905ab39968a0",
+      "decision": "no-issue",
+      "notes": "Odstrániť/napraviť s kvalifikáciou nedostatku presne sedí oprave chyby v žiadosti.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-017-incumbir",
+      "catalogSenseId": "es-sk:c1:exp-017-incumbir:verb:1",
+      "level": "C1",
+      "entrySha256": "81b50fc2f368477d707a64604cd16f4708d6a8e72552682565e6ead45094818d",
+      "decision": "no-issue",
+      "notes": "Po úprave prislúchať; byť v kompetencii prirodzene vyjadruje rozhodovaciu zodpovednosť výboru.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-018-discrepancia",
+      "catalogSenseId": "es-sk:c1:exp-018-discrepancia:noun:1",
+      "level": "C1",
+      "entrySha256": "2c330690cee67a126c438c8d46b65b3c856098b396fd40c699c66e7719892a3b",
+      "decision": "no-issue",
+      "notes": "Nesúlad/rozpor presne zachováva rozdiel nezlučiteľných čísiel.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-019-consenso",
+      "catalogSenseId": "es-sk:c1:exp-019-consenso:noun:1",
+      "level": "C1",
+      "entrySha256": "9444ba36c190896adf632ad4b6c254b99c419826bebd2e3657ebda0611a0d0b9",
+      "decision": "no-issue",
+      "notes": "Konsenzus/spoločná zhoda správne označuje zdieľanú dohodu skupiny.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c1:exp-020-reticencia",
+      "catalogSenseId": "es-sk:c1:exp-020-reticencia:noun:1",
+      "level": "C1",
+      "entrySha256": "fb8a0c72ea097e52cc22444ab8d0d43b8ad695fbf838e69f85bef18e6e31a699",
+      "decision": "no-issue",
+      "notes": "Zdržanlivosť/neochota primerane zachováva rezervovanosť pri zdieľaní údajov.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-001-tergiversar",
+      "catalogSenseId": "es-sk:c2:exp-001-tergiversar:verb:1",
+      "level": "C2",
+      "entrySha256": "f2e4cdfbc91adafaa4412942fdfe991d9fc4df80846f187b7d7f3ef246918ec9",
+      "decision": "no-issue",
+      "notes": "Prekrútiť/skresliť správne vystihuje zavádzajúce podanie výrokov.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-002-soslayar",
+      "catalogSenseId": "es-sk:c2:exp-002-soslayar:verb:1",
+      "level": "C2",
+      "entrySha256": "604c12e5a4c660dc4dcb317b29680f445063ec39be0e0a75c5448b9bc38f53bf",
+      "decision": "no-issue",
+      "notes": "Obísť/vyhnúť sa s kvalifikáciou otázky presne zachováva vyhýbanie sa jadru problému.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-003-desvirtuar",
+      "catalogSenseId": "es-sk:c2:exp-003-desvirtuar:verb:1",
+      "level": "C2",
+      "entrySha256": "c1061a3263841de3b7842b58ea612725cfbcd8f5fc895bc75408aa034e82de4c",
+      "decision": "no-issue",
+      "notes": "Skresliť/znehodnotiť primerane zachováva stratu pôvodného zmyslu eseje.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-004-dirimir",
+      "catalogSenseId": "es-sk:c2:exp-004-dirimir:verb:1",
+      "level": "C2",
+      "entrySha256": "c3d684071d8578baf6cedaf7b136358c35b365061f36bb0929ec4f559ae2d713",
+      "decision": "no-issue",
+      "notes": "Rozhodnúť/vyriešiť s kvalifikáciou sporu presne sedí rozhodnutiu o autorstve.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-005-esgrimir",
+      "catalogSenseId": "es-sk:c2:exp-005-esgrimir:verb:1",
+      "level": "C2",
+      "entrySha256": "48e20cb3797829f714a4dc9a16c04bc09c100de04e037032b356dc239403b399",
+      "decision": "no-issue",
+      "notes": "Uviesť/použiť s kvalifikáciou argumentu presne odlišuje prenesený význam od šermovania.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-006-fehaciente",
+      "catalogSenseId": "es-sk:c2:exp-006-fehaciente:adj:1",
+      "level": "C2",
+      "entrySha256": "0aac68e500cfd6ec2c3ffcebccf489dc9e331c8ec23df7f46439877fd4f9f14c",
+      "decision": "no-issue",
+      "notes": "Presvedčivý doplnené hodnoverne dokazujúci primerane zachováva dôkaznú spoľahlivosť; samostatné presvedčivý by bolo širšie. Kontrola metadát r2: španielsky tvar je rovnaký pre oba rody; slovenský mužský heslový ekvivalent zostáva správny. Rodová nemennosť neznamená nemenné číslo.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-007-tacito",
+      "catalogSenseId": "es-sk:c2:exp-007-tacito:adj:1",
+      "level": "C2",
+      "entrySha256": "9823984cc9d4c3902c861d19e2f711b27393144d0c0f1c314c6a4e5d1b8c8cc5",
+      "decision": "no-issue",
+      "notes": "Nevyslovený/mlčky prijatý správne vyjadruje implicitnú dohodu bez výslovnej formulácie. Kontrola metadát r2: mužský španielsky heslový tvar a uvedený ženský variant sú v zhode so slovenským prídavným heslom.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-008-a-sabiendas",
+      "catalogSenseId": "es-sk:c2:exp-008-a-sabiendas:adv:1",
+      "level": "C2",
+      "entrySha256": "705849a01f00332cca4494d6288b60cff1294d6f97631be8d0270a731f4670c4",
+      "decision": "no-issue",
+      "notes": "Vedome/s plným vedomím presne zachováva znalosť neoverenosti publikovaného údaja.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-009-con-todo",
+      "catalogSenseId": "es-sk:c2:exp-009-con-todo:adv:1",
+      "level": "C2",
+      "entrySha256": "f01b604b244a29c6c8eb1dbd1554fc0495e9b3f9a8329d0cc517fe0086d0c1df",
+      "decision": "no-issue",
+      "notes": "Napriek tomu/predsa len sú primerané prípustkové konektory pre zostávajúce námietky.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-010-en-virtud-de",
+      "catalogSenseId": "es-sk:c2:exp-010-en-virtud-de:adp:1",
+      "level": "C2",
+      "entrySha256": "a2d30ab17835bf79154b1ec682c1bc4a7034ddf3f27d11e9b29fe7dff957c8f5",
+      "decision": "no-issue",
+      "notes": "Na základe/v zmysle prirodzene vyjadruje formálny právny základ konania v dohode.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-011-habida-cuenta-de",
+      "catalogSenseId": "es-sk:c2:exp-011-habida-cuenta-de:adp:1",
+      "level": "C2",
+      "entrySha256": "c37d876ef898ebb296c9900532d6805f08c9ee99ed58e32d1a19ce0d19bd0a7d",
+      "decision": "no-issue",
+      "notes": "Vzhľadom na/berúc do úvahy zachováva zváženie námietok a formálny register.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-012-tomar-el-pelo",
+      "catalogSenseId": "es-sk:c2:exp-012-tomar-el-pelo:verb:1",
+      "level": "C2",
+      "entrySha256": "62f3b9fa67a79514cd1d84a6dd4c2c1ebb2a4131282c73cca0418a44fafada83",
+      "decision": "no-issue",
+      "notes": "Uťahovať si/robiť si žarty z niekoho sú prirodzené nedoslovné ekvivalenty žartovného zavádzania.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-013-andarse-por-las-ramas",
+      "catalogSenseId": "es-sk:c2:exp-013-andarse-por-las-ramas:verb:1",
+      "level": "C2",
+      "entrySha256": "336336ce0fb38a1189467d9607951fceec9f0470ebcc3477f9e6fd1fafd1c2d4",
+      "decision": "no-issue",
+      "notes": "Chodiť okolo horúcej kaše je presný slovenský idiom pre vyhýbanie sa podstate rozhovoru.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-014-hacer-la-vista-gorda",
+      "catalogSenseId": "es-sk:c2:exp-014-hacer-la-vista-gorda:verb:1",
+      "level": "C2",
+      "entrySha256": "5283d2fcf2ecd7d1595de359986d5b3cc77560ae6e914672a6e509518d8ca980",
+      "decision": "no-issue",
+      "notes": "Prižmúriť oko/tváriť sa, že nič nevidí zachováva zámerné prehliadnutie priestupku.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-015-poner-el-dedo-en-la-llaga",
+      "catalogSenseId": "es-sk:c2:exp-015-poner-el-dedo-en-la-llaga:verb:1",
+      "level": "C2",
+      "entrySha256": "c7260083cd77a3de18a244ae69981cefeb1bae2065e58539d3021d2bd368e623",
+      "decision": "no-issue",
+      "notes": "Trafiť do živého/poukázať na citlivé miesto presne vystihuje odhalenie bolestivého jadra problému.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-016-ironia",
+      "catalogSenseId": "es-sk:c2:exp-016-ironia:noun:1",
+      "level": "C2",
+      "entrySha256": "cb1e8413731401a763ed1cd03e11285ad2e63e7ca296f5272bc438fb54590771",
+      "decision": "no-issue",
+      "notes": "Irónia je správny ustálený názov nepriameho protikladného významu poznámky o dochvíľnosti.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-017-eufemismo",
+      "catalogSenseId": "es-sk:c2:exp-017-eufemismo:noun:1",
+      "level": "C2",
+      "entrySha256": "40fc8d0a3d910dce071256a9efc0fc652525f4a8e63c764c4d6ff841e5dab6bd",
+      "decision": "no-issue",
+      "notes": "Eufemizmus/zjemňujúce pomenovanie správne odlišuje zmiernenie výrazu od výsmechu.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-018-sarcasmo",
+      "catalogSenseId": "es-sk:c2:exp-018-sarcasmo:noun:1",
+      "level": "C2",
+      "entrySha256": "565745d70174ccef610795104b9d309fff2572047aa906ce322e9904d8a1d407",
+      "decision": "no-issue",
+      "notes": "Sarkazmus/uštipačný výsmech prirodzene zachováva kritický a zraňujúci tón.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-019-ambivalencia",
+      "catalogSenseId": "es-sk:c2:exp-019-ambivalencia:noun:1",
+      "level": "C2",
+      "entrySha256": "43398f046d301bcfc7765037c5f51ea9331c9a874b00824aa1dbc0e3ec67badf",
+      "decision": "no-issue",
+      "notes": "Ambivalencia/súčasné protichodné pocity presne zachováva simultánnosť protikladných hodnotení, nie iba neurčitosť.",
+      "findings": []
+    }
+  ]
+}

@@ -228,3 +228,14 @@ After the two reviewers complete their separate files, score them with
 files and a resolved adjudication file. Compilation produces a reviewed draft
 promotion candidate, not a runtime release; a separate approved promotion task must
 still integrate it.
+
+## Original multi-level supplemental drafts (2026-09-05)
+
+The owner-approved expansion has a separate original-content draft lane, documented
+in `docs/SPANISH_CATALOG_EXPANSION.md`. It preserves the A1 licensed evidence and
+human-review gates above. Supplemental AI assessments bind every entry and exact
+input hashes; corrections invalidate coverage and require rechecking. Preview
+compilation rejects unresolved, stale or incomplete reports and never emits a
+production release. Existing human decisions are not populated from AI records.
+All six levels have available preview entries but remain partial; the next 138
+enumerated selections and additional unmapped coverage are still unfinished.
