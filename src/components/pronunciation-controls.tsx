@@ -27,9 +27,11 @@ type PronunciationControlsProps = {
   locale: string;
   catalogSenseId: string | null;
   compact?: boolean;
+  active?: boolean;
 };
 
 export function PronunciationControls(props: PronunciationControlsProps) {
+  const active = props.active ?? true;
   const { pronunciationVoicePreference } = useAppData();
   const cacheScope = usePronunciationCacheScope();
   const offlineDownloads = useOfflinePronunciationDownloads();
@@ -50,23 +52,28 @@ export function PronunciationControls(props: PronunciationControlsProps) {
   const naturalKey = `${pronunciationVoicePreference}:${publicEligibility?.catalogSenseId ?? 'none'}:${preferredLocale}`;
   const showDeviceFallback = failedNaturalKey === naturalKey;
 
-  return <View style={styles.controls}>
+  // Keep the same layout on pre-rendered cards; only the current card can play audio.
+  return <View style={styles.controls} pointerEvents={active ? 'auto' : 'none'}
+    aria-hidden={!active} accessibilityElementsHidden={!active} importantForAccessibility={active ? 'auto' : 'no-hide-descendants'}>
     {naturalVoiceAvailable && publicEligibility ? <NeuralControl
       catalogSenseId={publicEligibility.catalogSenseId}
       locale={publicEligibility.locale}
       compact={props.compact}
+      active={active}
       offlineOnly={cacheScope.type !== 'account'}
       availableOffline={offlineDownloads.hasAsset(publicEligibility.catalogSenseId, publicEligibility.locale)}
       onUnavailable={() => setFailedNaturalKey(naturalKey)}
     /> : null}
     {!naturalVoiceAvailable || showDeviceFallback ? <PronunciationButton
       text={props.text}
+      active={active}
       locale={props.locale}
       compact={showDeviceFallback || props.compact}
       idleLabel={showDeviceFallback ? 'Use phone voice instead' : 'Phone voice'}
     /> : null}
     {privateEligibility ? <PrivateControl
       text={privateEligibility.text}
+      active={active}
       locale={privateEligibility.locale}
       compact={props.compact}
     /> : null}
@@ -77,6 +84,7 @@ function NeuralControl({
   catalogSenseId,
   locale,
   compact,
+  active,
   offlineOnly,
   availableOffline,
   onUnavailable,
@@ -84,6 +92,7 @@ function NeuralControl({
   catalogSenseId: string;
   locale: NeuralPronunciationLocale;
   compact?: boolean;
+  active: boolean;
   offlineOnly: boolean;
   availableOffline: boolean;
   onUnavailable(): void;
@@ -92,27 +101,31 @@ function NeuralControl({
     catalogSenseId={catalogSenseId}
     locale={locale}
     compact={compact}
+    active={active}
     offlineOnly={offlineOnly}
     availableOffline={availableOffline}
     onUnavailable={onUnavailable}
   />;
 }
 
-function PrivateControl({ text, locale, compact }: {
+function PrivateControl({ text, locale, compact, active }: {
   text: string;
   locale: PrivateNeuralPronunciationLocale;
   compact?: boolean;
+  active: boolean;
 }) {
   const cacheScope = usePronunciationCacheScope();
   const consent = usePrivatePronunciationConsent();
-  if (cacheScope.type !== 'account'
-    || consent.userId !== cacheScope.userId) return null;
-  if (consent.status === 'loading') return <PrivateControlPlaceholder compact={compact}/>;
+  if (cacheScope.type !== 'account') return null;
+  if (consent.userId !== cacheScope.userId || consent.status === 'loading') {
+    return <PrivateControlPlaceholder compact={compact}/>;
+  }
   return <PrivatePronunciationButton
     text={text}
     locale={locale}
     scope={cacheScope}
     compact={compact}
+    active={active}
     consentEnabled={consent.status === 'enabled'}
     deletionPending={consent.status === 'deletion_pending'}
     onReviewConsent={() => router.push('/private-pronunciation' as never)}

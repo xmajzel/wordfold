@@ -7,8 +7,8 @@
   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script type="text/babel" src="kit.jsx"></script>
-  <script type="text/babel" src="screens.jsx"></script>
+  <script type="text/babel" src="kit.jsx?review=20260905"></script>
+  <script type="text/babel" src="screens.jsx?review=20260905"></script>
   <style>
     * { box-sizing: border-box; }
     body { margin: 0; background: #171426; color: #f8f5ff; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
@@ -23,7 +23,7 @@
 <body>
   <div id="root"></div>
   <script type="text/babel">
-    const { OnboardingEnglish, OnboardingSpanish, SettingsCourse, SpanishLibraryEmpty } = window;
+    const { OnboardingEnglish, OnboardingSpanish, SettingsCourse, SpanishLibraryEmpty, SpanishLibraryPreview } = window;
     const A = ({ label, children }) => <div><p className="artboard-label">{label}</p><div className="device">{children}</div></div>;
     function App() {
       return <main className="canvas">
@@ -34,6 +34,8 @@
           <A label="Onboarding · Spanish selected"><OnboardingSpanish /></A>
           <A label="Settings · switch without data loss"><SettingsCourse /></A>
           <A label="Library · reviewed catalog unavailable"><SpanishLibraryEmpty /></A>
+          <A label="Library · partial preview · illustrative counts"><SpanishLibraryPreview /></A>
+          <A label="Library · all levels present, not complete · illustrative"><SpanishLibraryPreview allLevels /></A>
         </div>
       </main>;
     }

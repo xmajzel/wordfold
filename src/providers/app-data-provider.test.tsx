@@ -66,6 +66,7 @@ jest.mock('@/data/repository', () => ({
   getLearningFilter: jest.fn(async () => 'all'),
   getWord: jest.fn(async () => null),
   saveRating: jest.fn(async () => undefined),
+  resetWord: jest.fn(async () => undefined),
   updateWordTranslation: jest.fn(async () => '2026-07-19T10:00:00.000Z'),
   updateMissingWordTranslations: jest.fn(async (_database, updates: { id: string }[]) => ({
     updatedAt: updates.length ? '2026-07-19T09:00:00.000Z' : null,
@@ -103,6 +104,21 @@ function StopReviewProbe() {
   const { words, rateWord } = useAppData();
   if (!words[0]) return <Text>Loading words</Text>;
   return <Pressable accessibilityRole="button" onPress={() => void rateWord(words[0], 'learned')}><Text>Stop reviews</Text></Pressable>;
+}
+
+function RefreshProbe() {
+  const { words, refresh } = useAppData();
+  return <Pressable accessibilityRole="button" onPress={() => void refresh()}>
+    <Text>{`Refresh words: ${words[0]?.state ?? 'loading'}`}</Text>
+  </Pressable>;
+}
+
+function ResetReviewProbe() {
+  const { words, resetWord } = useAppData();
+  if (!words[0]) return <Text>Loading words</Text>;
+  return <Pressable accessibilityRole="button" onPress={() => void resetWord(words[0].id)}>
+    <Text>{`Reset word: ${words[0].state}`}</Text>
+  </Pressable>;
 }
 
 function TranslationProbe() {
@@ -314,5 +330,61 @@ describe('AppDataProvider', () => {
 
     await waitFor(() => expect(repository.listWords).toHaveBeenCalled());
     expect(mockTranslateEnglishToSlovak).not.toHaveBeenCalled();
+  });
+
+  it('rebuilds pending reminders when refreshed words contain a newly learned word', async () => {
+    let storedWords = [word];
+    (repository.listWords as jest.Mock).mockImplementation(async () => storedWords);
+    const view = await render(<AppDataProvider><RefreshProbe/></AppDataProvider>);
+    const refreshButton = await waitFor(() => view.getByRole('button', { name: 'Refresh words: new' }));
+    await waitFor(() => expect(mockRebuildReminderSchedule).toHaveBeenCalled());
+    mockRebuildReminderSchedule.mockClear();
+
+    const refreshCount = (repository.listWords as jest.Mock).mock.calls.length;
+    await fireEvent.press(refreshButton);
+    await waitFor(() => expect((repository.listWords as jest.Mock).mock.calls.length).toBeGreaterThan(refreshCount));
+    expect(mockRebuildReminderSchedule).not.toHaveBeenCalled();
+
+    storedWords = [{ ...word, state: 'learned', nextReviewAt: null }];
+    await fireEvent.press(refreshButton);
+
+    await waitFor(() => view.getByRole('button', { name: 'Refresh words: learned' }));
+    await waitFor(() => expect(mockRebuildReminderSchedule).toHaveBeenCalledTimes(1));
+    expect(mockRebuildReminderSchedule.mock.calls[0][1]).toEqual([
+      expect.objectContaining({ id: word.id, state: 'learned' }),
+    ]);
+  });
+
+  it('does not duplicate the startup reminder rebuild when the learned baseline loads', async () => {
+    (repository.listWords as jest.Mock).mockResolvedValue([{ ...word, state: 'learned' }]);
+
+    const view = await render(<AppDataProvider><RefreshProbe/></AppDataProvider>);
+
+    await waitFor(() => view.getByRole('button', { name: 'Refresh words: learned' }));
+    await act(async () => {
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+    expect(mockRebuildReminderSchedule).toHaveBeenCalledTimes(1);
+  });
+
+  it('rebuilds pending reminders when a learned word is reset', async () => {
+    let storedWords: Word[] = [{ ...word, state: 'learned' }];
+    (repository.listWords as jest.Mock).mockImplementation(async () => storedWords);
+    (repository.resetWord as jest.Mock).mockImplementation(async () => {
+      storedWords = [word];
+    });
+    const view = await render(<AppDataProvider><ResetReviewProbe/></AppDataProvider>);
+    const resetButton = await waitFor(() => view.getByRole('button', { name: 'Reset word: learned' }));
+    await waitFor(() => expect(mockRebuildReminderSchedule).toHaveBeenCalled());
+    mockRebuildReminderSchedule.mockClear();
+
+    await fireEvent.press(resetButton);
+
+    await waitFor(() => view.getByRole('button', { name: 'Reset word: new' }));
+    await waitFor(() => expect(mockRebuildReminderSchedule).toHaveBeenCalledTimes(1));
+    expect(mockRebuildReminderSchedule.mock.calls[0][1]).toEqual([
+      expect.objectContaining({ id: word.id, state: 'new' }),
+    ]);
   });
 });

@@ -42,20 +42,28 @@ describe('committed Spanish A1 draft assets', () => {
     expect(Math.max(...openings.values())).toBeLessThanOrEqual(5);
   });
 
-  it('pins 497 exact OMW lemma/POS matches and documents all three exceptions', () => {
+  it('grounds all 500 corrected candidates and supplies licensed semantic descriptions for every unique option', () => {
     const evidence = JSON.parse(readFileSync(evidencePath, 'utf8'));
     expect(evidence.coverage).toMatchObject({
       entries: 500,
-      exactLemmaAndPosMatches: 497,
-      exactLemmaAndPosRatio: 0.994,
+      exactLemmaAndPosMatches: 500,
+      exactLemmaAndPosRatio: 1,
       targetRatio: 0.8,
     });
     const exceptions = evidence.entries.filter((entry) => entry.candidateSenses.length === 0);
-    expect(exceptions.map((entry) => entry.term)).toEqual([
-      'tiempo libre',
-      'correo electrónico',
-      'oficina de correos',
-    ]);
-    expect(exceptions.every((entry) => entry.exceptionRationale)).toBe(true);
+    expect(exceptions).toHaveLength(0);
+    const uniqueSynsets = new Set();
+    for (const entry of evidence.entries) {
+      expect(new Set(entry.candidateSenses.map((sense) => sense.synsetId)).size).toBe(entry.candidateSenses.length);
+      for (const sense of entry.candidateSenses) {
+        const reference = sense.semanticReference;
+        expect(reference.english.definition.trim()).not.toBe('');
+        expect(reference.english.members.length).toBeGreaterThan(0);
+        expect(reference.sourceSenseAliases[0].senseId).toBe(sense.senseId);
+        uniqueSynsets.add(sense.synsetId);
+      }
+    }
+    expect(uniqueSynsets.size).toBeGreaterThan(2800);
+    expect(evidence.semanticSource.licenseText).toBe(readFileSync(resolve(root, 'assets/licenses/WORDNET_3_0_LICENSE.txt'), 'utf8'));
   });
 });

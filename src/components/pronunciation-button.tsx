@@ -20,9 +20,10 @@ interface PronunciationButtonProps {
   locale: string;
   compact?: boolean;
   idleLabel?: string;
+  active?: boolean;
 }
 
-export function PronunciationButton({ text, locale, compact = false, idleLabel }: PronunciationButtonProps) {
+export function PronunciationButton({ text, locale, compact = false, idleLabel, active = true }: PronunciationButtonProps) {
   const theme = useAppTheme();
   const cacheScope = usePronunciationCacheScope();
   const [status, setStatus] = useState<PronunciationStatus>('idle');
@@ -32,18 +33,20 @@ export function PronunciationButton({ text, locale, compact = false, idleLabel }
   const languageCode = locale.split(/[-_]/)[0]?.toLocaleLowerCase('en') ?? locale;
   const localeDescription = `${languageLabel(languageCode)} · ${pronunciationLocaleLabel(languageCode, locale)}`;
 
+  if (!active && status !== 'idle') setStatus('idle');
+
   useEffect(() => {
     statusRef.current = status;
   }, [status]);
 
   useEffect(() => {
-    mounted.current = true;
+    mounted.current = active;
     return () => {
       mounted.current = false;
       requestId.current += 1;
       if (statusRef.current !== 'idle') void stopPronunciation();
     };
-  }, []);
+  }, [active]);
 
   const showPlaybackError = useCallback((error: unknown) => {
     const detail = Platform.OS === 'ios'
@@ -56,6 +59,7 @@ export function PronunciationButton({ text, locale, compact = false, idleLabel }
   }, []);
 
   const play = useCallback(async () => {
+    if (!active) return;
     if (status === 'preparing') return;
     if (status === 'speaking') {
       requestId.current += 1;
@@ -112,7 +116,7 @@ export function PronunciationButton({ text, locale, compact = false, idleLabel }
       setStatus('idle');
       showPlaybackError(error);
     }
-  }, [cacheScope, locale, localeDescription, showPlaybackError, status, text]);
+  }, [active, cacheScope, locale, localeDescription, showPlaybackError, status, text]);
 
   const preparing = status === 'preparing';
   const speaking = status === 'speaking';
@@ -121,8 +125,8 @@ export function PronunciationButton({ text, locale, compact = false, idleLabel }
   return <Pressable
     accessibilityRole="button"
     accessibilityLabel={preparing ? `Preparing ${localeDescription} device pronunciation` : actionLabel}
-    accessibilityState={{ busy: preparing, disabled: preparing }}
-    disabled={preparing}
+    accessibilityState={{ busy: preparing, disabled: !active || preparing }}
+    disabled={!active || preparing}
     onPress={() => void play()}
     style={({ pressed }) => [styles.button, compact && styles.compactButton, {
       backgroundColor: theme.primarySoft,

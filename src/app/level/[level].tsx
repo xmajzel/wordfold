@@ -8,7 +8,7 @@ import { EmptyState } from '@/components/empty-state';
 import { FormField } from '@/components/form-field';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
-import { getCourseCatalogEntries, type CourseCatalogEntry } from '@/data/course-catalog';
+import { getCourseCatalogAvailability, getCourseCatalogEntries, type CourseCatalogEntry } from '@/data/course-catalog';
 import { cefrLevelDescriptions, isCefrLevel } from '@/data/cefr-levels';
 import { wordBelongsToCourse } from '@/domain/courses';
 import { languageLabel } from '@/domain/languages';
@@ -30,6 +30,7 @@ export default function CefrLevelScreen() {
     ? 'en-GB'
     : activeCourse.defaultSourcePronunciationLocale;
   const learnedLanguage = languageLabel(activeCourse.sourceLanguageCode);
+  const spanishPreview = getCourseCatalogAvailability(activeCourseId).isPreview;
   const [query, setQuery] = useState('');
   const [busyId, setBusyId] = useState<string | null>(null);
   const validLevel = isCefrLevel(level) ? level : null;
@@ -108,6 +109,7 @@ export default function CefrLevelScreen() {
         ItemSeparatorComponent={() => <View style={styles.separator}/>}
         ListHeaderComponent={<View style={styles.headerContent}>
           <Header title={`${validLevel} ${learnedLanguage}`}/>
+          {spanishPreview ? <AppText testID="spanish-preview-notice" variant="caption" style={{ color: theme.muted }}>Local development preview · {validLevel} · not a production release or a complete level</AppText> : null}
           <View style={styles.intro}>
             <View style={[styles.levelBadge, { backgroundColor: theme.primarySoft }]}><AppText variant="display" style={{ color: theme.primary }}>{validLevel}</AppText></View>
             <View style={styles.introText}><AppText variant="heading">{cefrLevelDescriptions[validLevel]}</AppText><AppText style={{ color: theme.muted }}>{entries.length > 0
@@ -118,7 +120,7 @@ export default function CefrLevelScreen() {
           <FormField label="Search this level" value={query} onChangeText={setQuery} placeholder="Word or meaning" autoCapitalize="none"/>
           <AppText variant="caption" style={{ color: theme.muted }}>{activeCourseId === 'en-sk'
             ? 'CEFR-aligned vocabulary: A1–B2 from CEFR-J 1.6, C1–C2 from Octanove 1.0, with meanings from Open English WordNet 2025.'
-            : 'Instituto Cervantes is used only as an editorial reference. No Cervantes content is bundled; publication waits for an approved source and independent review.'}</AppText>
+            : 'Original Wordfold content structured using the Plan Curricular del Instituto Cervantes (PCIC) as an editorial reference. No Instituto Cervantes certification or endorsement is implied.'}</AppText>
           {normalizedQuery ? <AppText variant="label">{filteredEntries.length.toLocaleString()} results</AppText> : null}
         </View>}
         ListEmptyComponent={<EmptyState
@@ -155,9 +157,14 @@ function CatalogWordCard({ entry, word, loading, disabled, onAdd }: {
   const added = Boolean(word);
   const source = entry.source === 'cefr-j' ? 'CEFR-J' : entry.source === 'octanove' ? 'Octanove' : 'Wordfold original';
   return <View style={[styles.card, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-    <View style={styles.wordHeader}><View style={styles.wordTitle}><AppText variant="heading">{entry.term}</AppText><AppText variant="caption" style={{ color: theme.accent }}>{entry.partOfSpeech}</AppText></View><View style={styles.cardMeta}><AppText variant="caption" style={{ color: theme.muted }}>{source} {entry.sourceVersion}</AppText>{word ? <CatalogProgressBadge state={word.state}/> : null}</View></View>
+    <View style={[styles.wordHeader, entry.courseId === 'es-sk' && styles.spanishWordHeader]}><View style={styles.wordTitle}><AppText variant="heading">{entry.term}</AppText><AppText variant="caption" style={{ color: theme.accent }}>{entry.partOfSpeech}</AppText></View><View style={[styles.cardMeta, entry.courseId === 'es-sk' && styles.spanishCardMeta]}><AppText variant="caption" style={{ color: theme.muted }}>{source} {entry.sourceVersion}</AppText>{word ? <CatalogProgressBadge state={word.state}/> : null}</View></View>
     <AppText>{entry.definition}</AppText>
     {entry.example ? <AppText style={{ color: theme.muted }}>“{entry.example}”</AppText> : null}
+    {entry.courseId === 'es-sk' ? <>
+      <AppText>Slovak hint: {entry.translation}</AppText>
+      {entry.gender ? <AppText variant="caption" style={{ color: theme.muted }}>Gender: {entry.gender}</AppText> : null}
+      {entry.alternativeForms?.length ? <AppText variant="caption" style={{ color: theme.muted }}>Forms: {entry.alternativeForms.map((form) => `${form.form} (${[form.type, form.note].filter(Boolean).join('; ')})`).join('; ')}</AppText> : null}
+    </> : null}
     <PrimaryButton label={added ? 'Added to My words' : 'Add to My words'} variant={added ? 'secondary' : 'primary'} disabled={added || disabled} loading={loading} onPress={onAdd} icon={added ? <Ionicons name="checkmark" color={theme.primary} size={18}/> : <Ionicons name="add" color="#FFFFFF" size={18}/>}/>
   </View>;
 }
@@ -202,4 +209,5 @@ const styles = StyleSheet.create({
   progressPanel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md }, progressHeading: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', gap: spacing.md }, progressBar: { height: 12, flexDirection: 'row', borderRadius: radii.pill, overflow: 'hidden' }, progressGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, progressStat: { width: '48%', flexDirection: 'row', alignItems: 'center', gap: spacing.sm }, progressDot: { width: 10, height: 10, borderRadius: 5 }, progressStatText: { flex: 1 },
   card: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md }, wordHeader: { flexDirection: 'row', justifyContent: 'space-between', gap: spacing.md },
   wordTitle: { flex: 1, gap: 2 }, cardMeta: { alignItems: 'flex-end', gap: spacing.xs }, catalogProgressBadge: { borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.sm, paddingVertical: spacing.xs },
+  spanishWordHeader: { flexDirection: 'column' }, spanishCardMeta: { alignItems: 'flex-start' },
 });

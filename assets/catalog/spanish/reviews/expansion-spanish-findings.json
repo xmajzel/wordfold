@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "reviewerType": "ai",
+  "reviewerId": "expansion-spanish-agent",
+  "notHumanApproval": true,
+  "reviewedAt": "2026-09-05",
+  "initialDatasetSha256": "95f811bd9879ee8038a957d58a47948ec89db0b06da2f691511f50d4c0fc8d0d",
+  "resolvedDatasetSha256": "866f9e478e8134c34bd591bc654d5f72a83187ce052d4a9c8a93be9ff5d0c552",
+  "findings": [
+    {
+      "entryId": "es-sk:a2:exp-005-ida-y-vuelta",
+      "severity": "required",
+      "status": "resolved",
+      "field": "term",
+      "suggestion": "de ida y vuelta",
+      "relatedFields": {
+        "normalizedTerm": "de ida y vuelta",
+        "exampleSurfaceForm": "de ida y vuelta",
+        "displayPartOfSpeech": "locución adjetiva"
+      },
+      "reason": "The selected adjectival ticket-qualifier sense requires the preposition de; bare ida y vuelta is nominal and mismatched with the ADJ definition and hint.",
+      "source": "https://dle.rae.es/ida",
+      "sourceScope": "Underlying noun category; phrase-level correction is editorial grammatical inference from the example."
+    },
+    {
+      "entryId": "es-sk:b2:exp-013-concienciar",
+      "severity": "required",
+      "status": "resolved",
+      "field": "definition",
+      "suggestion": "Ayudar a que una persona comprenda la importancia de un problema.",
+      "reason": "Making someone aware does not entail subsequent action; original y actúe ante él imposed an unwarranted semantic requirement.",
+      "source": "https://www.fundeu.es/consulta/concientizar-2467/"
+    }
+  ]
+}

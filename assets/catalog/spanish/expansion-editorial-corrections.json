@@ -1,0 +1,289 @@
+{
+  "schemaVersion": 1,
+  "batchId": "expansion-2026-09-05",
+  "notHumanReview": true,
+  "authoredBaselineFileSha256": "7142e94dc1548c3b566f182a20a3cc67a20125e039dac2a3e2e04c91761c4309",
+  "finalFileSha256": "efb38afe1a97ddeb34e34aeeb1e20f0fdf80ba586ebd20aa77b1bb52330ddcf4",
+  "changes": [
+    {
+      "entryId": "es-sk:c2:exp-010-en-virtud-de",
+      "source": "structural-validation",
+      "rationale": "Record the exact contracted surface occurring in the example; no learner-facing sentence changed.",
+      "fields": [
+        {
+          "field": "exampleSurfaceForm",
+          "before": "En virtud de",
+          "after": "En virtud del"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:a2:exp-005-ida-y-vuelta",
+      "source": "spanish-ai-review",
+      "rationale": "Use the full adjectival phrase to match the POS, definition and Slovak ticket qualifier; stable IDs are retained.",
+      "fields": [
+        {
+          "field": "term",
+          "before": "ida y vuelta",
+          "after": "de ida y vuelta"
+        },
+        {
+          "field": "normalizedTerm",
+          "before": "ida y vuelta",
+          "after": "de ida y vuelta"
+        },
+        {
+          "field": "displayPartOfSpeech",
+          "before": "adjetivo",
+          "after": "locución adjetiva"
+        },
+        {
+          "field": "exampleSurfaceForm",
+          "before": "ida y vuelta",
+          "after": "de ida y vuelta"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:b2:exp-013-concienciar",
+      "source": "spanish-ai-review",
+      "rationale": "Awareness does not require the person to take subsequent action.",
+      "fields": [
+        {
+          "field": "definition",
+          "before": "Ayudar a que una persona comprenda la importancia de un problema y actúe ante él.",
+          "after": "Ayudar a que una persona comprenda la importancia de un problema."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:b2:exp-005-sostener",
+      "source": "slovak-ai-review",
+      "rationale": "Make the selected opinion sense explicit in natural Slovak.",
+      "fields": [
+        {
+          "field": "translation",
+          "before": "zastávať; tvrdiť (názor)",
+          "after": "zastávať názor; tvrdiť"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c1:exp-015-pertinente",
+      "source": "slovak-ai-review",
+      "rationale": "Avoid a jurisdictional reading in a general relevance sense.",
+      "fields": [
+        {
+          "field": "translation",
+          "before": "relevantný; vecne príslušný",
+          "after": "relevantný; týkajúci sa veci"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c1:exp-017-incumbir",
+      "source": "slovak-ai-review",
+      "rationale": "Use the natural Slovak responsibility/competence construction.",
+      "fields": [
+        {
+          "field": "translation",
+          "before": "prislúchať; patriť do zodpovednosti",
+          "after": "prislúchať; byť v kompetencii"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:a1:exp-036-rojo",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "masculine"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:a1:exp-037-azul",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "invariant"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:a1:exp-038-verde",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "invariant"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:a1:exp-039-amarillo",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "masculine"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:a1:exp-040-blanco",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "masculine"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:a1:exp-041-negro",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "masculine"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:a2:exp-005-ida-y-vuelta",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "invariant"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:a2:exp-018-urgente",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "invariant"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:a2:exp-021-mejor",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "invariant"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:a2:exp-022-peor",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "invariant"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:b2:exp-009-sostenible",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "invariant"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:b2:exp-016-viable",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "invariant"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c1:exp-011-fidedigno",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "masculine"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c1:exp-015-pertinente",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "invariant"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-006-fehaciente",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "invariant"
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-007-tacito",
+      "source": "integrated-self-review-confirmed-by-both-ai-reviewers",
+      "rationale": "Correct adjective citation-form gender; invariant denotes gender, not necessarily number.",
+      "fields": [
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "masculine"
+        }
+      ]
+    }
+  ],
+  "previousReviewedFileSha256": "1a1bc74e583762a455ca79eba9a0dd824f7a67762f22465870265d95e618f7ca"
+}

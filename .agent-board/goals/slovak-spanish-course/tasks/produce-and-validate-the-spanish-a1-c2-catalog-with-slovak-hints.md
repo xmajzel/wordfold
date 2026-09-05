@@ -7,12 +7,12 @@ assignee: "root"
 branch: ""
 skills: []
 specs: ["slovak-native-spanish-course-research-and-implementation-specification", "spanish-a1-500-entry-original-catalog-pilot-specification"]
-depends_on: ["approve-slovak-native-spanish-course-semantics-and-content-source-path", "build-deterministic-spanish-a1-candidate-and-review-pipeline"]
+depends_on: ["approve-slovak-native-spanish-course-semantics-and-content-source-path", "build-deterministic-spanish-a1-candidate-and-review-pipeline", "obtain-and-adjudicate-independent-spanish-a1-reviews"]
 blocks: ["add-spanish-public-private-and-downloadable-neural-pronunciation-parity"]
-blocked_by: ["Requires written bulk-reuse permission or a completed original A1-C2 editorial dataset plus independent Spanish and Slovak reviewer sign-off; neither artifact currently exists.", "PCIC framework permission is recorded. Production remains blocked on creating the original or separately licensed A1-C2 learner-facing dataset and obtaining independent Spanish-content and Slovak-hint reviewer sign-off.", "The original 500-entry A1 draft and review pipeline are complete. Production remains blocked on independent Spanish-content and Slovak-hint review of A1; full A1-C2 completion additionally requires original A2-C2 datasets and their reviews."]
+blocked_by: ["Requires written bulk-reuse permission or a completed original A1-C2 editorial dataset plus independent Spanish and Slovak reviewer sign-off; neither artifact currently exists.", "PCIC framework permission is recorded. Production remains blocked on creating the original or separately licensed A1-C2 learner-facing dataset and obtaining independent Spanish-content and Slovak-hint reviewer sign-off.", "The original 500-entry A1 draft and review pipeline are complete. Production remains blocked on independent Spanish-content and Slovak-hint review of A1; full A1-C2 completion additionally requires original A2-C2 datasets and their reviews.", "Local preview contains 685 draft entries across all six levels, including 185 independently AI-reviewed expansion senses. Production remains separately gated on truthful human review and release approval. Complete curriculum coverage is unfinished: 138 next selections, further unmapped areas, and individual legacy A1 placement adjudication remain."]
 relates_to: ["slovak-native-spanish-course-research-and-implementation-specification"]
 created: "2026-08-27T18:04:44.938Z"
-updated: "2026-08-28T17:07:15.219Z"
+updated: "2026-09-05T13:42:52.324Z"
 verified: ""
 verified_sha: ""
 archived: ""
@@ -72,3 +72,7 @@ PCIC framework permission is recorded. Production remains blocked on creating th
 ## Blocker
 
 The original 500-entry A1 draft and review pipeline are complete. Production remains blocked on independent Spanish-content and Slovak-hint review of A1; full A1-C2 completion additionally requires original A2-C2 datasets and their reviews.
+
+## Blocker
+
+Local preview contains 685 draft entries across all six levels, including 185 independently AI-reviewed expansion senses. Production remains separately gated on truthful human review and release approval. Complete curriculum coverage is unfinished: 138 next selections, further unmapped areas, and individual legacy A1 placement adjudication remain.

@@ -1,9 +1,13 @@
-import { createHash } from 'node:crypto';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { createHash, randomUUID } from 'node:crypto';
+import { closeSync, existsSync, fsyncSync, lstatSync, mkdirSync, openSync, readFileSync, renameSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 export const OMW_ES_2_SHA256 = 'd8450d42885cd51f3db39fe64219a7a003eeb432b4caa00428285fe6ab224303';
+export const OMW_EN_2_SHA256 = '0e09dfb7f096bc3f10b9de68ffecf13839fa22ae46fd9b227cec890d204ca1dc';
+export const WORDNET_3_COPYRIGHT = 'WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.';
+export const WORDNET_3_LICENSE_PATH = 'assets/licenses/WORDNET_3_0_LICENSE.txt';
+export const WORDNET_3_LICENSE_TEXT = readFileSync(new URL('../assets/licenses/WORDNET_3_0_LICENSE.txt', import.meta.url), 'utf8');
 
 export const SPANISH_A1_CATEGORY_QUOTAS = Object.freeze({
   '1': Object.freeze({ label: 'Individuo: dimensión física', count: 30 }),
@@ -94,10 +98,10 @@ function readJson(path) {
   return JSON.parse(readFileSync(resolve(path), 'utf8'));
 }
 
-function writeJson(path, value) {
+function writeJson(path, value, options = {}) {
   const absolutePath = resolve(path);
   mkdirSync(dirname(absolutePath), { recursive: true });
-  writeFileSync(absolutePath, `${JSON.stringify(value, null, 2)}\n`);
+  writeFileSync(absolutePath, `${JSON.stringify(value, null, 2)}\n`, options);
   return absolutePath;
 }
 
@@ -134,6 +138,13 @@ export function validateSourceManifest(manifest) {
   assert(omwSource.url === 'https://github.com/omwn/omw-data/releases/download/v2.0/omw-es-2.0.tar.xz', 'OMW Spanish release URL is not the pinned v2.0 asset.');
   assert(omwSource.sha256 === OMW_ES_2_SHA256, 'OMW Spanish archive SHA-256 does not match the pinned release.');
   assert(/(?:CC BY 3\.0|Creative Commons Attribution 3\.0)/iu.test(omwSource.license), 'OMW Spanish license must be recorded as CC BY 3.0.');
+  const english = manifest.sources.find((source) => source.id === 'omw-en:2.0');
+  assert(english, 'Source manifest must contain the omw-en:2.0 semantic source.');
+  assert(english.version === '2.0' && english.sha256 === OMW_EN_2_SHA256, 'OMW English version/archive SHA-256 is not pinned.');
+  assert(english.url === 'https://github.com/omwn/omw-data/releases/download/v2.0/omw-en-2.0.tar.xz', 'OMW English URL is not pinned.');
+  assert(english.license === 'WordNet 3.0 license' && english.licensePath === WORDNET_3_LICENSE_PATH, 'OMW English full WordNet license metadata is required.');
+  assert(english.copyright === WORDNET_3_COPYRIGHT, 'OMW English copyright notice is required.');
+  assert(/all copies/iu.test(english.redistributionScope) && /disclaimer/iu.test(english.redistributionScope) && /advertising/iu.test(english.redistributionScope), 'OMW English redistribution obligations are incomplete.');
 
   return {
     sourceManifestSha256: sha256Payload(manifest),
@@ -174,6 +185,32 @@ function omwPartOfSpeech(partOfSpeech) {
   return ({ ADJ: 'a', ADV: 'r', NOUN: 'n', VERB: 'v' })[partOfSpeech] ?? null;
 }
 
+function validateSemanticReference(sense, label) {
+  const reference = sense.semanticReference;
+  assert(isPlainObject(reference), `${label}: semanticReference is required.`);
+  const spanishMatch = sense.synsetId.match(/^omw-es-(\d{8})-([navr])$/u);
+  assert(spanishMatch && reference.spanishSynsetId === sense.synsetId, `${label}: invalid Spanish semantic synset identity.`);
+  const suffixes = spanishMatch[2] === 'a' ? ['a', 's'] : [spanishMatch[2]];
+  assert(suffixes.some((pos) => reference.englishSynsetId === `omw-en-${spanishMatch[1]}-${pos}`), `${label}: invalid English offset/POS mapping.`);
+  assert(/^i\d+$/u.test(reference.iliId), `${label}: non-empty ILI is required.`);
+  assert(isPlainObject(reference.spanish) && isPlainObject(reference.english), `${label}: source-language descriptions are required.`);
+  assert(reference.spanish.definition === null || nonEmptyString(reference.spanish.definition), `${label}: Spanish definition must be null or non-empty text.`);
+  assert(nonEmptyString(reference.english.definition), `${label}: English definition is required.`);
+  for (const examples of [reference.spanish.examples, reference.english.examples]) {
+    assert(Array.isArray(examples) && examples.every(nonEmptyString), `${label}: source examples must be arrays of non-empty text.`);
+  }
+  assert(Array.isArray(reference.english.members) && reference.english.members.length > 0 && reference.english.members.every(nonEmptyString), `${label}: English member lemmas are required.`);
+  const aliases = reference.sourceSenseAliases;
+  assert(Array.isArray(aliases) && aliases.length > 0, `${label}: source-sense aliases are required.`);
+  assert(aliases[0].senseId === sense.senseId && aliases[0].lexicalEntryId === sense.lexicalEntryId, `${label}: canonical sense must be the first source-order alias.`);
+  const ids = new Set();
+  for (const alias of aliases) {
+    assert(isPlainObject(alias) && nonEmptyString(alias.senseId) && nonEmptyString(alias.lexicalEntryId), `${label}: incomplete source-sense alias.`);
+    assert(!ids.has(alias.senseId), `${label}: duplicate source-sense alias.`);
+    ids.add(alias.senseId);
+  }
+}
+
 export function validateLexicalEvidenceSidecar(sidecar, dataset, sourceManifest) {
   assert(isPlainObject(sidecar), 'Lexical evidence sidecar must be an object.');
   assert(sidecar.schemaVersion === 1, 'Lexical evidence schemaVersion must be 1.');
@@ -188,6 +225,13 @@ export function validateLexicalEvidenceSidecar(sidecar, dataset, sourceManifest)
   assert(sidecar.source.version === '2.0', 'Lexical evidence source version must be 2.0.');
   assert(sidecar.source.archiveSha256 === OMW_ES_2_SHA256, 'Lexical evidence archive SHA-256 is not pinned to OMW Spanish 2.0.');
   assert(nonEmptyString(sidecar.source.license) && nonEmptyString(sidecar.source.attribution), 'Lexical evidence license and attribution are required.');
+  const englishSource = sourceManifest.sources.find((source) => source.id === 'omw-en:2.0');
+  assert(isPlainObject(sidecar.semanticSource), 'Lexical evidence semantic source metadata is required.');
+  for (const key of ['id', 'version', 'license', 'attribution', 'copyright', 'licensePath']) {
+    assert(sidecar.semanticSource[key] === englishSource[key], `Lexical evidence English ${key} does not match the manifest.`);
+  }
+  assert(sidecar.semanticSource.archiveSha256 === OMW_EN_2_SHA256, 'Lexical evidence English archive hash is not pinned.');
+  assert(sidecar.semanticSource.licenseText === WORDNET_3_LICENSE_TEXT, 'Lexical evidence must include the complete WordNet 3.0 license text.');
   assert(Array.isArray(sidecar.entries), 'Lexical evidence entries must be an array.');
   assert(sidecar.entries.length === dataset.entries.length, `Lexical evidence must contain exactly ${dataset.entries.length} records.`);
 
@@ -204,6 +248,7 @@ export function validateLexicalEvidenceSidecar(sidecar, dataset, sourceManifest)
     assert(Array.isArray(record.candidateSenses), `${record.candidateId}: candidateSenses must be an array.`);
     const expectedOmwPos = omwPartOfSpeech(candidate.partOfSpeech);
     const senseIds = new Set();
+    const synsetIds = new Set();
     for (const sense of record.candidateSenses) {
       assert(isPlainObject(sense), `${record.candidateId}: offered OMW sense must be an object.`);
       for (const key of ['lexicalEntryId', 'writtenForm', 'partOfSpeech', 'senseId', 'synsetId']) {
@@ -212,6 +257,9 @@ export function validateLexicalEvidenceSidecar(sidecar, dataset, sourceManifest)
       assert(normalizeSpanishTerm(sense.writtenForm) === candidate.normalizedTerm, `${record.candidateId}: offered OMW lemma is not an exact normalized match.`);
       assert(expectedOmwPos && sense.partOfSpeech === expectedOmwPos, `${record.candidateId}: offered OMW POS is not compatible.`);
       assert(!senseIds.has(sense.senseId), `${record.candidateId}: duplicate offered OMW sense.`);
+      assert(!synsetIds.has(sense.synsetId), `${record.candidateId}: duplicate presented OMW synset.`);
+      validateSemanticReference(sense, record.candidateId);
+      synsetIds.add(sense.synsetId);
       senseIds.add(sense.senseId);
     }
     if (record.candidateSenses.length > 0) {
@@ -404,6 +452,14 @@ function offeredSenseIds(entry, sidecarValidation) {
   return Array.isArray(evidence?.candidateSenses) ? evidence.candidateSenses.map((sense) => sense.senseId) : [];
 }
 
+function reviewLexicalSource(lexicalEvidence, sourceManifest) {
+  return {
+    ...lexicalEvidence.source,
+    url: findOmwSource(sourceManifest).url,
+    licenseUrl: 'https://creativecommons.org/licenses/by/3.0/',
+  };
+}
+
 function reviewSubjects(dataset, kind, sidecarValidation) {
   return dataset.entries.map((entry) => {
     const common = {
@@ -412,6 +468,8 @@ function reviewSubjects(dataset, kind, sidecarValidation) {
       term: entry.term,
       partOfSpeech: entry.partOfSpeech,
       displayPartOfSpeech: entry.displayPartOfSpeech,
+      gender: entry.gender,
+      alternativeForms: entry.alternativeForms,
       definition: entry.definition,
       example: entry.example,
       pcicClassification: entry.pcicClassification,
@@ -444,6 +502,7 @@ export function createReviewTemplate(dataset, kind, lexicalEvidence = null, sour
     attestation: '',
     reviewedAt: '',
     lexicalEvidenceSha256: sidecarValidation?.sidecarSha256 ?? null,
+    ...(kind === 'spanish' && lexicalEvidence ? { semanticSource: lexicalEvidence.semanticSource, lexicalSource: reviewLexicalSource(lexicalEvidence, sourceManifest) } : {}),
     subjects: reviewSubjects(dataset, kind, sidecarValidation),
     decisions: dataset.entries.map((entry) => ({
       entryId: entry.id,
@@ -462,14 +521,77 @@ export function prepareReviewTemplates({ sourceManifest, candidates, lexicalEvid
   const validation = validateCandidateDataset(candidates, sourceManifest, lexicalEvidence);
   assert(nonEmptyString(spanishOutputPath) && nonEmptyString(slovakOutputPath), 'Both caller-selected review output paths are required.');
   assert(resolve(spanishOutputPath) !== resolve(slovakOutputPath), 'Spanish and Slovak review outputs must be separate files.');
+  assert(!existsSync(resolve(spanishOutputPath)) && !existsSync(resolve(slovakOutputPath)), 'Review output already exists; use refresh-reviews for untouched pending packages.');
   const spanish = createReviewTemplate(candidates, 'spanish', lexicalEvidence, sourceManifest);
   const slovak = createReviewTemplate(candidates, 'slovak', lexicalEvidence, sourceManifest);
   assert(spanish.candidateSha256 === validation.candidateSha256 && slovak.candidateSha256 === validation.candidateSha256, 'Review templates are not bound to the candidate payload.');
   return {
     candidateSha256: validation.candidateSha256,
-    spanishOutputPath: writeJson(spanishOutputPath, spanish),
-    slovakOutputPath: writeJson(slovakOutputPath, slovak),
+    spanishOutputPath: writeJson(spanishOutputPath, spanish, { flag: 'wx', mode: 0o600 }),
+    slovakOutputPath: writeJson(slovakOutputPath, slovak, { flag: 'wx', mode: 0o600 }),
   };
+}
+
+export function refreshPendingReviews({ sourceManifest, candidates, lexicalEvidence, spanishOutputPath, slovakOutputPath }) {
+  const validation = validateCandidateDataset(candidates, sourceManifest, lexicalEvidence);
+  const paths = [spanishOutputPath, slovakOutputPath].map((path) => resolve(path));
+  assert(paths[0] !== paths[1], 'Spanish and Slovak review outputs must be separate files.');
+  const token = randomUUID();
+  const locks = [];
+  const stagedPaths = [];
+  try {
+    // Use the same exclusive lock filename as the review server and hold both
+    // locks until the pair has been checked, backed up, and replaced.
+    for (const path of [...paths].sort()) {
+      assert(lstatSync(path).isFile() && !lstatSync(path).isSymbolicLink(), 'Refresh requires regular review files; symlinks are refused.');
+      const descriptor = openSync(`${path}.lock`, 'wx', 0o600);
+      locks.push({ path, descriptor });
+      writeFileSync(descriptor, `${JSON.stringify({ pid: process.pid, token, createdAt: new Date().toISOString() })}\n`);
+      fsyncSync(descriptor);
+    }
+    const originals = paths.map((path) => readFileSync(path));
+    const packages = originals.map((raw, index) => {
+      const previous = JSON.parse(raw.toString('utf8'));
+      const kind = index === 0 ? 'spanish' : 'slovak';
+      assert(previous.schemaVersion === 1 && previous.courseId === 'es-sk' && previous.level === 'A1' && previous.reviewKind === kind, `Refresh refused: invalid ${kind} package identity.`);
+      assert(sha256Pattern.test(previous.candidateSha256), `Refresh refused: ${kind} candidate hash is missing.`);
+      assert(typeof previous.reviewerId === 'string' && typeof previous.qualification === 'string', `Refresh refused: invalid ${kind} reviewer metadata.`);
+      assert(previous.attestation === '' && previous.reviewedAt === '', `Refresh refused: ${kind} package contains an attestation or completion date.`);
+      assert(Array.isArray(previous.decisions) && previous.decisions.length === candidates.entries.length && Array.isArray(previous.subjects) && previous.subjects.length === candidates.entries.length, `Refresh refused: ${kind} package is incomplete.`);
+      const newIds = new Set(candidates.entries.map((entry) => `${entry.id}|${entry.catalogSenseId}`));
+      const priorIds = new Set();
+      for (const [decisionIndex, decision] of previous.decisions.entries()) {
+        const identity = `${decision.entryId}|${decision.catalogSenseId}`;
+        const subject = previous.subjects[decisionIndex];
+        assert(newIds.has(identity) && !priorIds.has(identity) && subject?.entryId === decision.entryId && subject?.catalogSenseId === decision.catalogSenseId, `Refresh refused: ${kind} review identities changed.`);
+        priorIds.add(identity);
+        assert(decision.decision === 'pending' && decision.notes === '', `Refresh refused: ${kind} package contains human decisions or notes.`);
+        assert(kind !== 'spanish' || (decision.selectedSenseId === null && decision.originalEditorialExceptionApproved === false), 'Refresh refused: Spanish package contains a sense selection or exception approval.');
+        const keys = ['entryId', 'catalogSenseId', 'decision', 'notes', ...(kind === 'spanish' ? ['selectedSenseId', 'originalEditorialExceptionApproved'] : [])];
+        assert(Object.keys(decision).every((key) => keys.includes(key)), `Refresh refused: ${kind} decision contains unrecognized data.`);
+      }
+      return { ...previous, ...createReviewTemplate(candidates, kind, lexicalEvidence, sourceManifest), reviewerId: previous.reviewerId, qualification: previous.qualification };
+    });
+    const backupPaths = paths.map((path) => `${path}.${token}.backup`);
+    for (const [index, path] of paths.entries()) {
+      writeFileSync(backupPaths[index], originals[index], { flag: 'wx', mode: 0o600 });
+      const stagedPath = `${path}.${token}.tmp`;
+      stagedPaths.push(stagedPath);
+      const descriptor = openSync(stagedPath, 'wx', 0o600);
+      try {
+        writeFileSync(descriptor, `${JSON.stringify(packages[index], null, 2)}\n`);
+        fsyncSync(descriptor);
+      } finally { closeSync(descriptor); }
+    }
+    for (const [index, path] of paths.entries()) renameSync(stagedPaths[index], path);
+    return { candidateSha256: validation.candidateSha256, spanishOutputPath: paths[0], slovakOutputPath: paths[1], backupPaths };
+  } finally {
+    for (const path of stagedPaths) { if (existsSync(path)) unlinkSync(path); }
+    for (const { path, descriptor } of locks.reverse()) {
+      closeSync(descriptor);
+      if (JSON.parse(readFileSync(`${path}.lock`, 'utf8')).token === token) unlinkSync(`${path}.lock`);
+    }
+  }
 }
 
 export function validateReview(review, dataset, expectedKind, options = {}) {
@@ -486,6 +608,11 @@ export function validateReview(review, dataset, expectedKind, options = {}) {
     review.lexicalEvidenceSha256 === (sidecarValidation?.sidecarSha256 ?? null),
     `${expectedKind} review has a stale lexical-evidence hash.`,
   );
+  if (expectedKind === 'spanish' && lexicalEvidence) {
+    assert(stableJson(review.semanticSource) === stableJson(lexicalEvidence.semanticSource), 'Spanish review semantic source/license metadata is stale or missing.');
+    assert(stableJson(review.lexicalSource) === stableJson(reviewLexicalSource(lexicalEvidence, sourceManifest)), 'Spanish review lexical source/license metadata is stale or missing.');
+  }
+  assert(stableJson(review.subjects) === stableJson(reviewSubjects(dataset, expectedKind, sidecarValidation)), `${expectedKind} review subjects do not match the immutable candidate and evidence assets.`);
 
   if (allowTemplate) {
     for (const key of ['reviewerId', 'qualification', 'attestation', 'reviewedAt']) {
@@ -715,8 +842,9 @@ export function runCli(argv) {
     process.stdout.write(`Validated ${result.entries} draft Spanish A1 candidates (${result.candidateSha256}).\n`);
     return;
   }
-  if (command === 'prepare-reviews') {
-    const result = prepareReviewTemplates({
+  if (command === 'prepare-reviews' || command === 'refresh-reviews') {
+    const prepare = command === 'refresh-reviews' ? refreshPendingReviews : prepareReviewTemplates;
+    const result = prepare({
       sourceManifest: readJson(requireOption(options, 'sources')),
       candidates: readJson(requireOption(options, 'candidates')),
       lexicalEvidence: options.evidence ? readJson(options.evidence) : null,
@@ -725,6 +853,7 @@ export function runCli(argv) {
     });
     process.stdout.write(`Prepared independent review templates bound to ${result.candidateSha256}.\n`);
     process.stdout.write(`Spanish: ${result.spanishOutputPath}\nSlovak: ${result.slovakOutputPath}\n`);
+    if (result.backupPaths) process.stdout.write(`Backups: ${result.backupPaths.join(', ')}\n`);
     return;
   }
   if (command === 'score') {
@@ -752,7 +881,7 @@ export function runCli(argv) {
     process.stdout.write(`Compiled ${compiled.entries.length} fully approved entries to ${outputPath}.\n`);
     return;
   }
-  throw new Error('Usage: spanish-a1-pipeline.mjs <validate|prepare-reviews|score|compile> [options]');
+  throw new Error('Usage: spanish-a1-pipeline.mjs <validate|prepare-reviews|refresh-reviews|score|compile> [options]');
 }
 
 const invokedPath = process.argv[1] ? pathToFileURL(resolve(process.argv[1])).href : null;

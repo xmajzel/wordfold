@@ -162,7 +162,12 @@
       "translation": "nos",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 1; requires qualified Spanish review.",
       "gender": "feminine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "narices",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -539,7 +544,12 @@
       "translation": "srdce",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 1; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "corazones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -562,7 +572,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Conjunto de filamentos que crecen principalmente en la cabeza.",
+      "definition": "Lo que crece en la cabeza y se corta o se peina.",
       "example": "Ella tiene el pelo largo y negro.",
       "exampleSurfaceForm": "pelo",
       "translation": "vlasy",
@@ -626,7 +636,20 @@
       "translation": "vysoký",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 1; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "alta",
+          "type": "femenino singular"
+        },
+        {
+          "form": "altos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "altas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -655,7 +678,20 @@
       "translation": "nízky",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 1; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "baja",
+          "type": "femenino singular"
+        },
+        {
+          "form": "bajos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "bajas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -684,7 +720,12 @@
       "translation": "mladý",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 1; requires qualified Spanish review.",
       "gender": "invariant",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "jóvenes",
+          "type": "plural; masculino y femenino"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -708,12 +749,17 @@
       "partOfSpeech": "ADJ",
       "displayPartOfSpeech": "adjetivo",
       "definition": "Que tiene más edad que otra persona.",
-      "example": "Mi abuelo es mayor, pero camina cada mañana.",
+      "example": "Mi hermano es mayor que yo.",
       "exampleSurfaceForm": "mayor",
       "translation": "starší",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 1; requires qualified Spanish review.",
       "gender": "invariant",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "mayores",
+          "type": "plural; masculino y femenino"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -739,10 +785,23 @@
       "definition": "Que tiene poca anchura o poca grasa corporal.",
       "example": "Ese gato delgado necesita más comida.",
       "exampleSurfaceForm": "delgado",
-      "translation": "štíhly",
+      "translation": "chudý; štíhly",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 1; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "delgada",
+          "type": "femenino singular"
+        },
+        {
+          "form": "delgados",
+          "type": "masculino plural"
+        },
+        {
+          "form": "delgadas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -765,13 +824,18 @@
       "level": "A1",
       "partOfSpeech": "ADJ",
       "displayPartOfSpeech": "adjetivo",
-      "definition": "Que puede hacer esfuerzo físico con mucha capacidad.",
-      "example": "Esta bolsa es fuerte y no se rompe.",
+      "definition": "Que puede levantar mucho peso o hacer un gran esfuerzo.",
+      "example": "Mi hermano es fuerte y puede levantar esta caja.",
       "exampleSurfaceForm": "fuerte",
       "translation": "silný",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 1; requires qualified Spanish review.",
       "gender": "invariant",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "fuertes",
+          "type": "plural; masculino y femenino"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -852,7 +916,7 @@
       "level": "A1",
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
-      "definition": "Poner el cuerpo sobre una silla u otro apoyo.",
+      "definition": "Ponerse en una silla u otro asiento, sin estar de pie.",
       "example": "Mi amiga prefiere sentarse cerca de la ventana.",
       "exampleSurfaceForm": "sentarse",
       "translation": "sadnúť si",
@@ -916,7 +980,12 @@
       "translation": "veselý",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
       "gender": "invariant",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "alegres",
+          "type": "plural; masculino y femenino"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -945,7 +1014,12 @@
       "translation": "smutný",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
       "gender": "invariant",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "tristes",
+          "type": "plural; masculino y femenino"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -974,7 +1048,20 @@
       "translation": "spokojný",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "contenta",
+          "type": "femenino singular"
+        },
+        {
+          "form": "contentos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "contentas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -1003,7 +1090,20 @@
       "translation": "unavený",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "cansada",
+          "type": "femenino singular"
+        },
+        {
+          "form": "cansados",
+          "type": "masculino plural"
+        },
+        {
+          "form": "cansadas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -1032,7 +1132,20 @@
       "translation": "nervózny",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "nerviosa",
+          "type": "femenino singular"
+        },
+        {
+          "form": "nerviosos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "nerviosas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -1055,13 +1168,26 @@
       "level": "A1",
       "partOfSpeech": "ADJ",
       "displayPartOfSpeech": "adjetivo",
-      "definition": "Que está sin preocupación, ruido ni agitación.",
+      "definition": "Donde hay poco ruido y poca actividad.",
       "example": "El parque está tranquilo por la mañana.",
       "exampleSurfaceForm": "tranquilo",
       "translation": "pokojný",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "tranquila",
+          "type": "femenino singular"
+        },
+        {
+          "form": "tranquilos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "tranquilas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -1090,7 +1216,12 @@
       "translation": "milý",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
       "gender": "invariant",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "amables",
+          "type": "plural; masculino y femenino"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -1119,7 +1250,20 @@
       "translation": "sympatický",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "simpática",
+          "type": "femenino singular"
+        },
+        {
+          "form": "simpáticos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "simpáticas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -1142,13 +1286,26 @@
       "level": "A1",
       "partOfSpeech": "ADJ",
       "displayPartOfSpeech": "adjetivo",
-      "definition": "Que muestra poca alegría o mucha atención.",
+      "definition": "Que habla o actúa sin bromas ni risas.",
       "example": "El médico está serio durante la consulta.",
       "exampleSurfaceForm": "serio",
       "translation": "vážny",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "seria",
+          "type": "femenino singular"
+        },
+        {
+          "form": "serios",
+          "type": "masculino plural"
+        },
+        {
+          "form": "serias",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -1177,7 +1334,20 @@
       "translation": "hanblivý",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "tímida",
+          "type": "femenino singular"
+        },
+        {
+          "form": "tímidos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "tímidas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -1206,7 +1376,12 @@
       "translation": "šťastný",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
       "gender": "invariant",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "felices",
+          "type": "plural; masculino y femenino"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -1235,7 +1410,20 @@
       "translation": "nahnevaný",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "enfadada",
+          "type": "femenino singular"
+        },
+        {
+          "form": "enfadados",
+          "type": "masculino plural"
+        },
+        {
+          "form": "enfadadas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -1293,7 +1481,16 @@
       "translation": "hlad",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
       "gender": "feminine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "el hambre",
+          "type": "con artículo; sustantivo femenino"
+        },
+        {
+          "form": "mucha hambre",
+          "type": "concordancia femenina"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -1375,7 +1572,7 @@
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
       "definition": "Sensación producida por una temperatura alta.",
-      "example": "Hace mucho calor dentro de esta habitación.",
+      "example": "Tengo calor con esta chaqueta.",
       "exampleSurfaceForm": "calor",
       "translation": "teplo",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
@@ -1609,7 +1806,7 @@
       "definition": "Traer de nuevo a la mente una información o experiencia.",
       "example": "Debes recordar la dirección del hotel.",
       "exampleSurfaceForm": "recordar",
-      "translation": "pamätať si",
+      "translation": "pamätať si; spomenúť si",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 2; requires qualified Spanish review.",
       "gender": "not-applicable",
       "alternativeForms": [],
@@ -1664,7 +1861,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Denominación familiar que acompaña al nombre personal.",
+      "definition": "Nombre de familia que una persona lleva después de su nombre.",
       "example": "Mi apellido tiene ocho letras.",
       "exampleSurfaceForm": "apellido",
       "translation": "priezvisko",
@@ -1722,13 +1919,18 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Información que indica dónde vive una persona.",
+      "definition": "Datos que indican dónde está una casa, un edificio o un lugar.",
       "example": "La dirección del hotel está en el mensaje.",
       "exampleSurfaceForm": "dirección",
       "translation": "adresa",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 3; requires qualified Spanish review.",
       "gender": "feminine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "direcciones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -1781,7 +1983,7 @@
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
       "definition": "Signo o conjunto de signos que expresa una cantidad.",
-      "example": "Apunta mi número en tu cuaderno.",
+      "example": "Escribe el número cinco en tu cuaderno.",
       "exampleSurfaceForm": "número",
       "translation": "číslo",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 3; requires qualified Spanish review.",
@@ -1815,7 +2017,12 @@
       "translation": "krajina",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 3; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "países",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -1931,7 +2138,12 @@
       "translation": "povolanie",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 3; requires qualified Spanish review.",
       "gender": "feminine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "profesiones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -2129,7 +2341,7 @@
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
       "definition": "Sistema usado para enviar cartas, paquetes o mensajes.",
-      "example": "El correo llega cada mañana a casa.",
+      "example": "Enviamos la carta por correo.",
       "exampleSurfaceForm": "correo",
       "translation": "pošta",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 3; requires qualified Spanish review.",
@@ -2163,7 +2375,12 @@
       "translation": "mobil",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 3; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "celular",
+          "type": "variante regional; teléfono"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -2331,7 +2548,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Persona que ya ha terminado la etapa infantil.",
+      "definition": "Persona que ya ha pasado la infancia y la adolescencia.",
       "example": "Cada adulto paga diez euros por la entrada.",
       "exampleSurfaceForm": "adulto",
       "translation": "dospelý",
@@ -2360,13 +2577,26 @@
       "level": "A1",
       "partOfSpeech": "ADJ",
       "displayPartOfSpeech": "adjetivo",
-      "definition": "Que no está casado ni tiene matrimonio vigente.",
+      "definition": "Que no está casado.",
       "example": "Mi tío está soltero y vive solo.",
       "exampleSurfaceForm": "soltero",
       "translation": "slobodný",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 3; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "soltera",
+          "type": "femenino singular"
+        },
+        {
+          "form": "solteros",
+          "type": "masculino plural"
+        },
+        {
+          "form": "solteras",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -2389,13 +2619,26 @@
       "level": "A1",
       "partOfSpeech": "ADJ",
       "displayPartOfSpeech": "adjetivo",
-      "definition": "Que ha contraído matrimonio y mantiene ese estado.",
+      "definition": "Que tiene marido o esposa.",
       "example": "El nuevo profesor está casado.",
       "exampleSurfaceForm": "casado",
       "translation": "ženatý",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 3; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "casada",
+          "type": "femenino singular"
+        },
+        {
+          "form": "casados",
+          "type": "masculino plural"
+        },
+        {
+          "form": "casadas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-1",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -2418,10 +2661,10 @@
       "level": "A1",
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
-      "definition": "Tener vida o habitar de forma habitual en un lugar.",
-      "example": "Me gustaría vivir cerca de mi trabajo.",
+      "definition": "Tener la casa o residencia habitual en un lugar.",
+      "example": "Quiero vivir cerca de mi trabajo.",
       "exampleSurfaceForm": "vivir",
-      "translation": "žiť",
+      "translation": "bývať; žiť",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 3; requires qualified Spanish review.",
       "gender": "not-applicable",
       "alternativeForms": [],
@@ -2448,8 +2691,8 @@
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
       "definition": "Tener una persona o cosa un nombre determinado.",
-      "example": "Puedes llamarte como tu abuelo.",
-      "exampleSurfaceForm": "llamarte",
+      "example": "Mi hijo va a llamarse Luis.",
+      "exampleSurfaceForm": "llamarse",
       "translation": "volať sa",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 3; requires qualified Spanish review.",
       "gender": "not-applicable",
@@ -2737,7 +2980,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Persona masculina respecto de sus progenitores.",
+      "definition": "Niño u hombre en relación con su padre o su madre.",
       "example": "Nuestro hijo empieza la escuela este año.",
       "exampleSurfaceForm": "hijo",
       "translation": "syn",
@@ -2766,7 +3009,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Persona femenina respecto de sus progenitores.",
+      "definition": "Niña o mujer en relación con su padre o su madre.",
       "example": "Su hija toca muy bien el piano.",
       "exampleSurfaceForm": "hija",
       "translation": "dcéra",
@@ -2795,7 +3038,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Hombre o niño que comparte uno o ambos progenitores con otra persona.",
+      "definition": "Niño u hombre que tiene el mismo padre o la misma madre que otra persona.",
       "example": "Mi hermano vive en el piso de arriba.",
       "exampleSurfaceForm": "hermano",
       "translation": "brat",
@@ -2824,7 +3067,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Mujer o niña que comparte uno o ambos progenitores con otra persona.",
+      "definition": "Niña o mujer que tiene el mismo padre o la misma madre que otra persona.",
       "example": "Su hermana estudia medicina en la ciudad.",
       "exampleSurfaceForm": "hermana",
       "translation": "sestra",
@@ -2911,10 +3154,10 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Hermano de uno de los progenitores o pareja de ese hermano.",
+      "definition": "Hermano del padre o de la madre, o marido de uno de sus hermanos o hermanas.",
       "example": "Nuestro tío viene a comer el sábado.",
       "exampleSurfaceForm": "tío",
-      "translation": "strýko",
+      "translation": "strýko; ujo",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 4; requires qualified Spanish review.",
       "gender": "masculine",
       "alternativeForms": [],
@@ -2940,7 +3183,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Hermana de uno de los progenitores o pareja de esa hermana.",
+      "definition": "Hermana del padre o de la madre, o esposa de uno de sus hermanos o hermanas.",
       "example": "Su tía tiene una tienda de ropa.",
       "exampleSurfaceForm": "tía",
       "translation": "teta",
@@ -3085,10 +3328,10 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Persona con quien se mantiene una relación afectiva.",
-      "example": "La pareja busca un apartamento pequeño.",
+      "definition": "Persona con quien se tiene una relación de amor.",
+      "example": "Mi pareja busca un apartamento pequeño.",
       "exampleSurfaceForm": "pareja",
-      "translation": "partner",
+      "translation": "partner; partnerka",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 4; requires qualified Spanish review.",
       "gender": "feminine",
       "alternativeForms": [],
@@ -3117,7 +3360,7 @@
       "definition": "Hombre con quien existe una relación de afecto y confianza.",
       "example": "Un amigo me ayuda con la mudanza.",
       "exampleSurfaceForm": "amigo",
-      "translation": "priateľ",
+      "translation": "kamarát; priateľ",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 4; requires qualified Spanish review.",
       "gender": "masculine",
       "alternativeForms": [],
@@ -3146,7 +3389,7 @@
       "definition": "Mujer con quien existe una relación de afecto y confianza.",
       "example": "Mi amiga llama todos los viernes.",
       "exampleSurfaceForm": "amiga",
-      "translation": "priateľka",
+      "translation": "kamarátka; priateľka",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 4; requires qualified Spanish review.",
       "gender": "feminine",
       "alternativeForms": [],
@@ -3201,7 +3444,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Mujer que comparte una actividad, estudio o trabajo con otra persona.",
+      "definition": "Mujer que trabaja con otra persona.",
       "example": "Una compañera comparte conmigo la oficina.",
       "exampleSurfaceForm": "compañera",
       "translation": "kolegyňa",
@@ -3236,7 +3479,12 @@
       "translation": "vzťah",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 4; requires qualified Spanish review.",
       "gender": "feminine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "relaciones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-2",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -3265,7 +3513,12 @@
       "translation": "stretnutie",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 4; requires qualified Spanish review.",
       "gender": "feminine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "reuniones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-2",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -3494,7 +3747,7 @@
       "definition": "Usar, tener o disfrutar algo junto con otras personas.",
       "example": "Los hermanos deben compartir esta habitación.",
       "exampleSurfaceForm": "compartir",
-      "translation": "zdieľať",
+      "translation": "deliť sa o",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 4; requires qualified Spanish review.",
       "gender": "not-applicable",
       "alternativeForms": [],
@@ -3520,13 +3773,26 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Líquido transparente esencial para la vida y sin sabor habitual.",
+      "definition": "Líquido transparente que bebemos y necesitamos para vivir.",
       "example": "Bebo un vaso de agua con la comida.",
       "exampleSurfaceForm": "agua",
       "translation": "voda",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 5; requires qualified Spanish review.",
       "gender": "feminine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "el agua",
+          "type": "con artículo; sustantivo femenino"
+        },
+        {
+          "form": "agua fría",
+          "type": "concordancia femenina"
+        },
+        {
+          "form": "las aguas",
+          "type": "plural; sustantivo femenino"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-2",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -3578,7 +3844,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Bebida preparada dejando hojas o hierbas en agua caliente.",
+      "definition": "Bebida que se prepara con agua caliente y hojas secas de un arbusto, en variedades como la negra y la verde.",
       "example": "Mi abuela toma té con limón por la tarde.",
       "exampleSurfaceForm": "té",
       "translation": "čaj",
@@ -3639,7 +3905,7 @@
       "definition": "Líquido obtenido al exprimir frutas o verduras.",
       "example": "Quiero un zumo de naranja sin azúcar.",
       "exampleSurfaceForm": "zumo",
-      "translation": "džús",
+      "translation": "šťava; džús",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 5; requires qualified Spanish review.",
       "gender": "masculine",
       "alternativeForms": [],
@@ -3810,7 +4076,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Animal acuático preparado para servir como alimento.",
+      "definition": "Pez que se usa como alimento.",
       "example": "El pescado necesita un poco de sal.",
       "exampleSurfaceForm": "pescado",
       "translation": "ryba",
@@ -3839,7 +4105,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Ave doméstica o su carne utilizada como alimento.",
+      "definition": "Carne de un gallo o una gallina jóvenes que se usa como alimento.",
       "example": "Asamos pollo con patatas para la cena.",
       "exampleSurfaceForm": "pollo",
       "translation": "kuracie mäso",
@@ -3984,7 +4250,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Fruto redondo de piel fina y pulpa firme.",
+      "definition": "Fruta redonda que puede ser roja, verde o amarilla y tiene semillas pequeñas en el centro.",
       "example": "Corto una manzana para los niños.",
       "exampleSurfaceForm": "manzana",
       "translation": "jablko",
@@ -4100,7 +4366,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Tubérculo comestible que puede cocinarse de muchas maneras.",
+      "definition": "Alimento que crece bajo tierra, tiene piel fina y se come cocido o frito.",
       "example": "Necesitamos una patata grande para la sopa.",
       "exampleSurfaceForm": "patata",
       "translation": "zemiak",
@@ -4129,7 +4395,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Bulbo comestible de sabor fuerte formado por varias capas.",
+      "definition": "Verdura redonda con varias capas y olor fuerte.",
       "example": "La cebolla está junto al aceite.",
       "exampleSurfaceForm": "cebolla",
       "translation": "cibuľa",
@@ -4274,8 +4540,8 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Alimento preparado o acto de alimentarse a una hora determinada.",
-      "example": "La comida está preparada sobre la mesa.",
+      "definition": "Alimentos que se preparan para comer.",
+      "example": "La comida está lista en la mesa.",
       "exampleSurfaceForm": "comida",
       "translation": "jedlo",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 5; requires qualified Spanish review.",
@@ -4506,7 +4772,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Utensilio con una parte cóncava para tomar alimentos líquidos.",
+      "definition": "Objeto con mango y una parte redondeada y honda para comer sopa u otros alimentos.",
       "example": "Tomo la sopa con una cuchara grande.",
       "exampleSurfaceForm": "cuchara",
       "translation": "lyžica",
@@ -4652,7 +4918,7 @@
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
       "definition": "Lista de platos y bebidas disponibles en un establecimiento.",
-      "example": "El menú incluye sopa, pescado y fruta.",
+      "example": "Leo el menú antes de elegir la comida.",
       "exampleSurfaceForm": "menú",
       "translation": "jedálny lístok",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 5; requires qualified Spanish review.",
@@ -4825,7 +5091,7 @@
       "level": "A1",
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
-      "definition": "Expresar que se desea recibir una cosa o un servicio.",
+      "definition": "Decir qué comida o bebida se quiere tomar en un bar o restaurante.",
       "example": "Quiero pedir una sopa y una ensalada.",
       "exampleSurfaceForm": "pedir",
       "translation": "objednať si",
@@ -4918,7 +5184,20 @@
       "translation": "chutný",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 5; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "rica",
+          "type": "femenino singular"
+        },
+        {
+          "form": "ricos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "ricas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-2",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -4947,7 +5226,12 @@
       "translation": "sladký",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 5; requires qualified Spanish review.",
       "gender": "invariant",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "dulces",
+          "type": "plural; masculino y femenino"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-2",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -5237,7 +5521,12 @@
       "translation": "ceruzka",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 6; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "lápices",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-2",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -5498,7 +5787,12 @@
       "translation": "skúška",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 6; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "exámenes",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-2",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -5553,7 +5847,7 @@
       "definition": "Adquirir conocimientos o habilidades mediante estudio o experiencia.",
       "example": "Quiero aprender diez palabras nuevas esta semana.",
       "exampleSurfaceForm": "aprender",
-      "translation": "učiť sa",
+      "translation": "naučiť sa; učiť sa",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 6; requires qualified Spanish review.",
       "gender": "not-applicable",
       "alternativeForms": [],
@@ -5696,7 +5990,7 @@
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
       "definition": "Actividad realizada para producir algo o recibir dinero.",
-      "example": "Voy al trabajo en autobús cada mañana.",
+      "example": "Mi trabajo consiste en preparar comida.",
       "exampleSurfaceForm": "trabajo",
       "translation": "práca",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 7; requires qualified Spanish review.",
@@ -5988,7 +6282,7 @@
       "definition": "Distribución de actividades según las horas del día.",
       "example": "Mi horario cambia durante el verano.",
       "exampleSurfaceForm": "horario",
-      "translation": "pracovný čas",
+      "translation": "časový rozvrh",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 7; requires qualified Spanish review.",
       "gender": "masculine",
       "alternativeForms": [],
@@ -6072,7 +6366,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Ocupación remunerada que realiza una persona.",
+      "definition": "Trabajo que una persona hace a cambio de dinero.",
       "example": "Busca un empleo cerca de su casa.",
       "exampleSurfaceForm": "empleo",
       "translation": "zamestnanie",
@@ -6273,15 +6567,20 @@
       "term": "tiempo libre",
       "normalizedTerm": "tiempo libre",
       "level": "A1",
-      "partOfSpeech": "X",
-      "displayPartOfSpeech": "expresión",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "locución nominal",
       "definition": "Periodo disponible sin obligaciones de trabajo o estudio.",
       "example": "En mi tiempo libre paseo con el perro.",
       "exampleSurfaceForm": "tiempo libre",
       "translation": "voľný čas",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 8; requires qualified Spanish review.",
-      "gender": "not-applicable",
-      "alternativeForms": [],
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "el tiempo libre",
+          "type": "con artículo"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-3",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -6304,7 +6603,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Arte de combinar sonidos con ritmo y melodía.",
+      "definition": "Sonidos organizados con ritmo o melodía que se escuchan, cantan o tocan.",
       "example": "Escucho música tranquila mientras preparo la cena.",
       "exampleSurfaceForm": "música",
       "translation": "hudba",
@@ -6339,7 +6638,12 @@
       "translation": "pieseň",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 8; requires qualified Spanish review.",
       "gender": "feminine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "canciones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-3",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -6420,8 +6724,8 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Lugar o arte donde actores representan historias ante espectadores.",
-      "example": "Compramos dos entradas para el teatro.",
+      "definition": "Lugar donde los actores representan historias ante el público.",
+      "example": "El teatro está cerca del museo.",
       "exampleSurfaceForm": "teatro",
       "translation": "divadlo",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 8; requires qualified Spanish review.",
@@ -6858,7 +7162,7 @@
       "definition": "Producir música con un instrumento.",
       "example": "Mi hermana quiere tocar la guitarra.",
       "exampleSurfaceForm": "tocar",
-      "translation": "hrať",
+      "translation": "hrať na hudobnom nástroji",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 8; requires qualified Spanish review.",
       "gender": "not-applicable",
       "alternativeForms": [],
@@ -6945,7 +7249,7 @@
       "definition": "Participar en una actividad con reglas para divertirse.",
       "example": "Vamos a jugar una partida antes de dormir.",
       "exampleSurfaceForm": "jugar",
-      "translation": "hrať sa",
+      "translation": "hrať (hru)",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 8; requires qualified Spanish review.",
       "gender": "not-applicable",
       "alternativeForms": [],
@@ -6977,7 +7281,20 @@
       "translation": "zábavný",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 8; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "divertida",
+          "type": "femenino singular"
+        },
+        {
+          "form": "divertidos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "divertidas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-3",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -7088,7 +7405,7 @@
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
       "definition": "Información breve enviada de una persona a otra.",
-      "example": "Te envío un mensaje cuando llegue al hotel.",
+      "example": "Te envío un mensaje desde el hotel.",
       "exampleSurfaceForm": "mensaje",
       "translation": "správa",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 9; requires qualified Spanish review.",
@@ -7143,15 +7460,20 @@
       "term": "correo electrónico",
       "normalizedTerm": "correo electrónico",
       "level": "A1",
-      "partOfSpeech": "X",
-      "displayPartOfSpeech": "expresión",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "locución nominal",
       "definition": "Sistema digital para enviar y recibir mensajes escritos.",
       "example": "Recibí la reserva por correo electrónico.",
       "exampleSurfaceForm": "correo electrónico",
-      "translation": "e-mail",
+      "translation": "elektronická pošta; e-mail",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 9; requires qualified Spanish review.",
-      "gender": "not-applicable",
-      "alternativeForms": [],
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "el correo electrónico",
+          "type": "con artículo"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-3",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -7351,7 +7673,7 @@
       "definition": "Tomar o aceptar algo que otra persona envía.",
       "example": "Espero recibir una respuesta mañana.",
       "exampleSurfaceForm": "recibir",
-      "translation": "prijať",
+      "translation": "dostať",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 9; requires qualified Spanish review.",
       "gender": "not-applicable",
       "alternativeForms": [],
@@ -7378,7 +7700,7 @@
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
       "definition": "Dar una respuesta a una pregunta o mensaje.",
-      "example": "Ahora no puedo contestar el teléfono.",
+      "example": "Ahora no puedo contestar tu mensaje.",
       "exampleSurfaceForm": "contestar",
       "translation": "odpovedať",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 9; requires qualified Spanish review.",
@@ -7412,7 +7734,20 @@
       "translation": "pripojený",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 9; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "conectada",
+          "type": "femenino singular"
+        },
+        {
+          "form": "conectados",
+          "type": "masculino plural"
+        },
+        {
+          "form": "conectadas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-3",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -7496,7 +7831,7 @@
       "definition": "Vivienda independiente normalmente pequeña dentro de un edificio.",
       "example": "El apartamento está en la tercera planta.",
       "exampleSurfaceForm": "apartamento",
-      "translation": "apartmán",
+      "translation": "byt",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 10; requires qualified Spanish review.",
       "gender": "masculine",
       "alternativeForms": [],
@@ -7557,7 +7892,12 @@
       "translation": "izba",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 10; requires qualified Spanish review.",
       "gender": "feminine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "habitaciones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-3",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -7644,7 +7984,12 @@
       "translation": "obývačka",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 10; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "salones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-3",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -7731,7 +8076,12 @@
       "translation": "balkón",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 10; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "balcones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-3",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -7760,7 +8110,12 @@
       "translation": "záhrada",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 10; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "jardines",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-3",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -7813,7 +8168,7 @@
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
       "definition": "Abertura con cristal que deja pasar luz y aire.",
-      "example": "Abro la ventana para que entre aire.",
+      "example": "Abro la ventana porque hace calor.",
       "exampleSurfaceForm": "ventana",
       "translation": "okno",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 10; requires qualified Spanish review.",
@@ -8132,7 +8487,7 @@
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
       "definition": "Instalación que deja caer agua para lavar el cuerpo.",
-      "example": "Prefiero una ducha rápida por la mañana.",
+      "example": "La ducha está al lado de la ventana.",
       "exampleSurfaceForm": "ducha",
       "translation": "sprcha",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 10; requires qualified Spanish review.",
@@ -8192,7 +8547,7 @@
       "definition": "Pago por usar temporalmente una vivienda u otra cosa.",
       "example": "Pagamos el alquiler el primer día del mes.",
       "exampleSurfaceForm": "alquiler",
-      "translation": "nájom",
+      "translation": "nájomné",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 10; requires qualified Spanish review.",
       "gender": "masculine",
       "alternativeForms": [],
@@ -8392,7 +8747,7 @@
       "level": "A1",
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
-      "definition": "Permanecer en reposo con los sentidos temporalmente inactivos.",
+      "definition": "Descansar con los ojos cerrados, normalmente durante la noche.",
       "example": "El bebé necesita dormir después de comer.",
       "exampleSurfaceForm": "dormir",
       "translation": "spať",
@@ -8572,7 +8927,12 @@
       "translation": "stanica",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 11; requires qualified Spanish review.",
       "gender": "feminine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "estaciones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-3",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -8593,15 +8953,20 @@
       "term": "oficina de correos",
       "normalizedTerm": "oficina de correos",
       "level": "A1",
-      "partOfSpeech": "X",
-      "displayPartOfSpeech": "expresión",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "locución nominal",
       "definition": "Lugar público donde se envían cartas y paquetes.",
       "example": "La oficina de correos abre a las nueve.",
       "exampleSurfaceForm": "oficina de correos",
       "translation": "pošta",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 11; requires qualified Spanish review.",
-      "gender": "not-applicable",
-      "alternativeForms": [],
+      "gender": "feminine",
+      "alternativeForms": [
+        {
+          "form": "la oficina de correos",
+          "type": "con artículo"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-3",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -8654,9 +9019,9 @@
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
       "definition": "Institución que administra una ciudad o municipio.",
-      "example": "El ayuntamiento está frente a la plaza.",
+      "example": "El ayuntamiento organiza una fiesta en la plaza.",
       "exampleSurfaceForm": "ayuntamiento",
-      "translation": "mestský úrad",
+      "translation": "mestský úrad; obecný úrad",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 11; requires qualified Spanish review.",
       "gender": "masculine",
       "alternativeForms": [],
@@ -8801,7 +9166,7 @@
       "definition": "Momento asignado a una persona dentro de un orden.",
       "example": "Espero mi turno delante de la ventanilla.",
       "exampleSurfaceForm": "turno",
-      "translation": "poradie",
+      "translation": "rad (na rade)",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 11; requires qualified Spanish review.",
       "gender": "masculine",
       "alternativeForms": [],
@@ -8915,7 +9280,7 @@
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
       "definition": "Permanecer hasta que llegue una persona o suceda algo.",
-      "example": "Tenemos que esperar diez minutos hasta que llegue el autobús.",
+      "example": "Tenemos que esperar diez minutos al autobús.",
       "exampleSurfaceForm": "esperar",
       "translation": "čakať",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 11; requires qualified Spanish review.",
@@ -8943,7 +9308,7 @@
       "level": "A1",
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
-      "definition": "Solicitar información mediante una pregunta.",
+      "definition": "Decir algo a otra persona para obtener información.",
       "example": "Puedes preguntar el horario en recepción.",
       "exampleSurfaceForm": "preguntar",
       "translation": "opýtať sa",
@@ -9149,10 +9514,23 @@
       "definition": "Persona que atiende a los clientes en una tienda.",
       "example": "La dependiente busca otra talla.",
       "exampleSurfaceForm": "dependiente",
-      "translation": "predavač",
+      "translation": "predavač; predavačka",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 12; requires qualified Spanish review.",
       "gender": "common",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "dependienta",
+          "type": "femenino singular"
+        },
+        {
+          "form": "dependientes",
+          "type": "plural"
+        },
+        {
+          "form": "dependientas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-4",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -9291,7 +9669,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Lugar o aparato donde se realizan pagos en una tienda.",
+      "definition": "Lugar de una tienda donde se pagan las compras.",
       "example": "Hay cinco personas esperando en la caja.",
       "exampleSurfaceForm": "caja",
       "translation": "pokladňa",
@@ -9471,7 +9849,12 @@
       "translation": "nohavice",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 12; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "pantalones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-4",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -9523,7 +9906,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Prenda de una sola pieza que cubre el cuerpo.",
+      "definition": "Prenda de una sola pieza que cubre el torso y tiene una parte inferior en forma de falda.",
       "example": "Mi hermana elige un vestido verde.",
       "exampleSurfaceForm": "vestido",
       "translation": "šaty",
@@ -9639,7 +10022,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Propiedad visual producida por la luz reflejada.",
+      "definition": "Característica que vemos en algo, como rojo, azul o verde.",
       "example": "Prefiero el mismo modelo en otro color.",
       "exampleSurfaceForm": "color",
       "translation": "farba",
@@ -9703,7 +10086,20 @@
       "translation": "lacný",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 12; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "barata",
+          "type": "femenino singular"
+        },
+        {
+          "form": "baratos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "baratas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-4",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -9732,7 +10128,20 @@
       "translation": "drahý",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 12; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "cara",
+          "type": "femenino singular"
+        },
+        {
+          "form": "caros",
+          "type": "masculino plural"
+        },
+        {
+          "form": "caras",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-4",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -9871,7 +10280,7 @@
       "level": "A1",
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
-      "definition": "Tener puesta una prenda o transportar algo.",
+      "definition": "Tener puesta una prenda de ropa o un calzado.",
       "example": "Prefiero llevar zapatos cómodos al trabajo.",
       "exampleSurfaceForm": "llevar",
       "translation": "nosiť",
@@ -10022,7 +10431,20 @@
       "translation": "otvorený",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 12; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "abierta",
+          "type": "femenino singular"
+        },
+        {
+          "form": "abiertos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "abiertas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-4",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -10219,7 +10641,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Expulsión rápida de aire por irritación de las vías respiratorias.",
+      "definition": "Salida brusca de aire por la boca, con un sonido, cuando algo molesta en la garganta.",
       "example": "Esta tos no me deja dormir.",
       "exampleSurfaceForm": "tos",
       "translation": "kašeľ",
@@ -10393,7 +10815,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Órgano donde comienza una parte importante de la digestión.",
+      "definition": "Parte del cuerpo donde va la comida después de tragarla.",
       "example": "Siento un dolor fuerte en el estómago.",
       "exampleSurfaceForm": "estómago",
       "translation": "žalúdok",
@@ -10457,7 +10879,12 @@
       "translation": "mydlo",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 13; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "jabones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-4",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -10512,7 +10939,7 @@
       "definition": "Objeto con cerdas usado para limpiar o peinar.",
       "example": "Guardo el cepillo de dientes en el baño.",
       "exampleSurfaceForm": "cepillo",
-      "translation": "kefka",
+      "translation": "kefa; kefka",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 13; requires qualified Spanish review.",
       "gender": "masculine",
       "alternativeForms": [],
@@ -10541,7 +10968,7 @@
       "definition": "Limpiar el propio cuerpo o una parte con agua.",
       "example": "Los niños deben lavarse las manos antes de comer.",
       "exampleSurfaceForm": "lavarse",
-      "translation": "umyť sa",
+      "translation": "umyť sa; umyť si",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 13; requires qualified Spanish review.",
       "gender": "not-applicable",
       "alternativeForms": [],
@@ -10597,7 +11024,7 @@
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
       "definition": "Producir una sensación física desagradable.",
-      "example": "Puede doler un poco después del ejercicio.",
+      "example": "Después de correr, me pueden doler las piernas.",
       "exampleSurfaceForm": "doler",
       "translation": "bolieť",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 13; requires qualified Spanish review.",
@@ -10625,7 +11052,7 @@
       "level": "A1",
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
-      "definition": "Hacer que una enfermedad o herida mejore.",
+      "definition": "Hacer que una persona deje de estar enferma o que una herida sane.",
       "example": "El descanso ayuda a curar una herida pequeña.",
       "exampleSurfaceForm": "curar",
       "translation": "vyliečiť",
@@ -10660,7 +11087,20 @@
       "translation": "chorý",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 13; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "enferma",
+          "type": "femenino singular"
+        },
+        {
+          "form": "enfermos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "enfermas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-4",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -10683,13 +11123,26 @@
       "level": "A1",
       "partOfSpeech": "ADJ",
       "displayPartOfSpeech": "adjetivo",
-      "definition": "Que tiene buena salud o favorece el bienestar.",
-      "example": "Un desayuno sano incluye fruta y leche.",
+      "definition": "Que es bueno para la salud.",
+      "example": "Comer fruta es un hábito sano.",
       "exampleSurfaceForm": "sano",
       "translation": "zdravý",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 13; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "sana",
+          "type": "femenino singular"
+        },
+        {
+          "form": "sanos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "sanas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-4",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -10800,9 +11253,9 @@
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
       "definition": "Hombre que se desplaza de un lugar a otro.",
-      "example": "El viajero pregunta dónde sale el tren.",
+      "example": "El viajero pregunta de dónde sale el tren.",
       "exampleSurfaceForm": "viajero",
-      "translation": "cestovateľ",
+      "translation": "cestujúci; cestovateľ",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 14; requires qualified Spanish review.",
       "gender": "masculine",
       "alternativeForms": [],
@@ -11008,7 +11461,12 @@
       "translation": "recepcia",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 14; requires qualified Spanish review.",
       "gender": "feminine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "recepciones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-4",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -11066,7 +11524,12 @@
       "translation": "lietadlo",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 14; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "aviones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-4",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -11124,7 +11587,12 @@
       "translation": "autobus",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 14; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "autobuses",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-4",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -11385,7 +11853,12 @@
       "translation": "nástupište",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 14; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "andenes",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-4",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -11469,10 +11942,15 @@
       "definition": "Lugar desde el que comienza un desplazamiento.",
       "example": "El billete indica el origen y la hora.",
       "exampleSurfaceForm": "origen",
-      "translation": "východisko",
+      "translation": "miesto odchodu",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 14; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "orígenes",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-4",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -11614,10 +12092,19 @@
       "definition": "Periodo de descanso sin trabajo o clases.",
       "example": "Pasamos las vacaciones cerca del mar.",
       "exampleSurfaceForm": "vacaciones",
-      "translation": "dovolenka",
+      "translation": "dovolenka; prázdniny",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 14; requires qualified Spanish review.",
       "gender": "feminine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "vacación",
+          "type": "singular; se usa normalmente en plural"
+        },
+        {
+          "form": "las vacaciones",
+          "type": "con artículo; femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-4",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -11843,7 +12330,7 @@
       "level": "A1",
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
-      "definition": "Entrar en un medio de transporte o ir hacia arriba.",
+      "definition": "Entrar en un autobús, tren u otro medio de transporte.",
       "example": "Tenemos que subir al autobús por delante.",
       "exampleSurfaceForm": "subir",
       "translation": "nastúpiť",
@@ -11872,7 +12359,7 @@
       "level": "A1",
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
-      "definition": "Salir de un transporte o ir hacia abajo.",
+      "definition": "Salir de un autobús, tren u otro medio de transporte.",
       "example": "Puedes bajar en la siguiente parada.",
       "exampleSurfaceForm": "bajar",
       "translation": "vystúpiť",
@@ -12018,7 +12505,7 @@
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
       "definition": "Actividad de comprar y vender productos o servicios.",
-      "example": "El comercio del barrio abre todos los días.",
+      "example": "El comercio entre estos dos países es importante.",
       "exampleSurfaceForm": "comercio",
       "translation": "obchod",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 15; requires qualified Spanish review.",
@@ -12366,12 +12853,17 @@
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
       "definition": "Dispositivo manual usado para controlar un cursor.",
-      "example": "Mueve el ratón para abrir el programa.",
+      "example": "Haz clic con el ratón para abrir el programa.",
       "exampleSurfaceForm": "ratón",
       "translation": "myš",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 16; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "ratones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-5",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -12481,7 +12973,7 @@
       "level": "A1",
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
-      "definition": "Realizar correctamente un aparato o sistema su actividad.",
+      "definition": "Hacer lo que debe hacer, dicho de un aparato o sistema.",
       "example": "El ascensor vuelve a funcionar esta mañana.",
       "exampleSurfaceForm": "funcionar",
       "translation": "fungovať",
@@ -12568,8 +13060,8 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Persona que dirige un país, organización o reunión.",
-      "example": "El presidente habla hoy en la televisión.",
+      "definition": "Persona que ocupa el cargo de jefe del Estado en una república.",
+      "example": "El presidente de la república habla hoy en la televisión.",
       "exampleSurfaceForm": "presidente",
       "translation": "prezident",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 17; requires qualified Spanish review.",
@@ -12632,7 +13124,20 @@
       "translation": "verejný",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 17; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "pública",
+          "type": "femenino singular"
+        },
+        {
+          "form": "públicos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "públicas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-5",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -12661,7 +13166,12 @@
       "translation": "umenie",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 18; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "las artes",
+          "type": "plural normalmente femenino"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-5",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -12687,7 +13197,7 @@
       "definition": "Persona que crea o interpreta obras artísticas.",
       "example": "La artista pinta flores en el jardín.",
       "exampleSurfaceForm": "artista",
-      "translation": "umelec",
+      "translation": "umelec; umelkyňa",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 18; requires qualified Spanish review.",
       "gender": "common",
       "alternativeForms": [],
@@ -12713,7 +13223,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Obra o actividad realizada aplicando colores sobre una superficie.",
+      "definition": "Imagen hecha con colores sobre papel, tela u otra superficie.",
       "example": "Esta pintura muestra una casa junto al mar.",
       "exampleSurfaceForm": "pintura",
       "translation": "maľba",
@@ -12803,7 +13313,7 @@
       "definition": "Aparato utilizado para obtener imágenes o grabar vídeo.",
       "example": "Llevo la cámara dentro de la mochila.",
       "exampleSurfaceForm": "cámara",
-      "translation": "fotoaparát",
+      "translation": "fotoaparát; kamera",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 18; requires qualified Spanish review.",
       "gender": "feminine",
       "alternativeForms": [],
@@ -12887,7 +13397,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Instrumento de cuerda con caja y mástil.",
+      "definition": "Instrumento musical, normalmente de seis cuerdas, con una caja hueca y un mango largo.",
       "example": "Mi hermano toca la guitarra en casa.",
       "exampleSurfaceForm": "guitarra",
       "translation": "gitara",
@@ -12916,7 +13426,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Instrumento musical con teclas blancas y negras.",
+      "definition": "Instrumento musical que suena al pulsar teclas que hacen golpear sus cuerdas.",
       "example": "El piano está en el salón principal.",
       "exampleSurfaceForm": "piano",
       "translation": "klavír",
@@ -13032,8 +13542,8 @@
       "level": "A1",
       "partOfSpeech": "VERB",
       "displayPartOfSpeech": "verbo",
-      "definition": "Crear imágenes o cubrir superficies aplicando color.",
-      "example": "Vamos a pintar la pared de azul.",
+      "definition": "Hacer una imagen con colores sobre una superficie.",
+      "example": "Vamos a pintar flores de colores.",
       "exampleSurfaceForm": "pintar",
       "translation": "maľovať",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 18; requires qualified Spanish review.",
@@ -13212,7 +13722,20 @@
       "translation": "náboženský",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 19; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "religiosa",
+          "type": "femenino singular"
+        },
+        {
+          "form": "religiosos",
+          "type": "masculino plural"
+        },
+        {
+          "form": "religiosas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-5",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -13264,7 +13787,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Superficie sólida del planeta o material donde crecen plantas.",
+      "definition": "Material del suelo donde crecen las plantas.",
       "example": "Las plantas necesitan agua y buena tierra.",
       "exampleSurfaceForm": "tierra",
       "translation": "zem",
@@ -13293,7 +13816,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Gran extensión de tierra separada por océanos.",
+      "definition": "Una de las grandes partes de tierra del planeta, como Europa o África.",
       "example": "Este continente tiene muchos países y climas.",
       "exampleSurfaceForm": "continente",
       "translation": "kontinent",
@@ -13328,7 +13851,12 @@
       "translation": "región",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 20; requires qualified Spanish review.",
       "gender": "feminine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "regiones",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-5",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -13525,7 +14053,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Terreno fuera de la ciudad usado o cubierto por naturaleza.",
+      "definition": "Zona fuera de las ciudades, con tierras de cultivo o espacios naturales.",
       "example": "Mis abuelos viven en el campo.",
       "exampleSurfaceForm": "campo",
       "translation": "vidiek",
@@ -13728,7 +14256,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Animal doméstico conocido por acompañar a las personas.",
+      "definition": "Animal doméstico que ladra y suele vivir con las personas.",
       "example": "El perro duerme junto a la puerta.",
       "exampleSurfaceForm": "perro",
       "translation": "pes",
@@ -13757,7 +14285,7 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Animal doméstico pequeño con bigotes y uñas.",
+      "definition": "Animal doméstico que maúlla, tiene bigotes y puede sacar las uñas.",
       "example": "Nuestro gato juega debajo de la mesa.",
       "exampleSurfaceForm": "gato",
       "translation": "mačka",
@@ -13815,13 +14343,18 @@
       "level": "A1",
       "partOfSpeech": "NOUN",
       "displayPartOfSpeech": "sustantivo",
-      "definition": "Animal que vive en el agua y respira por branquias.",
+      "definition": "Animal que vive en el agua, tiene aletas y suele tener el cuerpo cubierto de escamas.",
       "example": "El pez naranja nada cerca de la piedra.",
       "exampleSurfaceForm": "pez",
       "translation": "ryba",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 20; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "peces",
+          "type": "plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-5",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -14253,7 +14786,7 @@
       "definition": "Parte del día entre el amanecer y el mediodía.",
       "example": "La mañana está fresca y tranquila.",
       "exampleSurfaceForm": "mañana",
-      "translation": "ráno",
+      "translation": "ráno; dopoludnie",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 20; requires qualified Spanish review.",
       "gender": "feminine",
       "alternativeForms": [],
@@ -14343,7 +14876,20 @@
       "translation": "slnečný",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 20; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "soleada",
+          "type": "femenino singular"
+        },
+        {
+          "form": "soleados",
+          "type": "masculino plural"
+        },
+        {
+          "form": "soleadas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-5",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -14372,7 +14918,20 @@
       "translation": "zamračený",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 20; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "nublada",
+          "type": "femenino singular"
+        },
+        {
+          "form": "nublados",
+          "type": "masculino plural"
+        },
+        {
+          "form": "nubladas",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-5",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -14483,12 +15042,17 @@
       "partOfSpeech": "ADJ",
       "displayPartOfSpeech": "adjetivo",
       "definition": "Que procede de la naturaleza y no ha sido creado artificialmente.",
-      "example": "Este zumo tiene un sabor natural.",
+      "example": "La lana es un material natural.",
       "exampleSurfaceForm": "natural",
       "translation": "prírodný",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 20; requires qualified Spanish review.",
       "gender": "invariant",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "naturales",
+          "type": "plural; masculino y femenino"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-5",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",
@@ -14517,7 +15081,20 @@
       "translation": "čistý",
       "levelRationale": "Independent Wordfold A1 placement for basic communication in curriculum category 20; requires qualified Spanish review.",
       "gender": "masculine",
-      "alternativeForms": [],
+      "alternativeForms": [
+        {
+          "form": "limpia",
+          "type": "femenino singular"
+        },
+        {
+          "form": "limpios",
+          "type": "masculino plural"
+        },
+        {
+          "form": "limpias",
+          "type": "femenino plural"
+        }
+      ],
       "lexicalEvidence": null,
       "authoringBatch": "batch-5",
       "sourceVersion": "wordfold-spanish-a1-draft-2026-08-28",

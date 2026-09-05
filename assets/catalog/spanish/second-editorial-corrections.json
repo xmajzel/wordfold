@@ -1,0 +1,1212 @@
+{
+  "schemaVersion": 1,
+  "courseId": "es-sk",
+  "date": "2026-09-05",
+  "approval": "Owner approved reconciliation within the A1-C2 expansion scope. This records AI editorial decisions, not either registered native reviewer's attestation.",
+  "notHumanReview": true,
+  "levelValidation": "not-performed",
+  "audioValidation": "not-performed",
+  "previousLedger": "assets/catalog/spanish/a1-editorial-corrections.json",
+  "assets": [
+    {
+      "path": "assets/catalog/spanish/a1-candidates.json",
+      "fileBeforeSha256": "a23799039cb1eb6d89646e666e4d12aac1eacf7e1d5d725c59483070ab4beb5d",
+      "payloadBeforeSha256": "a50d66a91a8291378bf7706465ef30e6b8baadabd72385356b7a772bbbc84b0b",
+      "entryCount": 500,
+      "fileAfterSha256": "42d58ee78835842449bd5e01fcbd17f7b3b9cb1779f17f94d8c86e2838a722fd",
+      "payloadAfterSha256": "a402040a032ff12ae0a3a2e98f79e3aa1027a49671f279c228fd151206f391b7"
+    },
+    {
+      "path": "assets/catalog/spanish/cefr-pilot.json",
+      "fileBeforeSha256": "163be6d924444b040f016e49b78ae09c546643e9279a6b948401aadfaad23f0e",
+      "payloadBeforeSha256": "a5890d55f709f1cb0d8666112e18be0ed52e4b6e29ad7547ce8bb42fc6a44b4b",
+      "entryCount": 6,
+      "fileAfterSha256": "a1257db279df0952d79f1036d5c2458fbfa68e8a355a678a91d0a70aa96d6668",
+      "payloadAfterSha256": "d2fcef5a1603c293e72bfadf56ea9351cc5b0a66b8b8a503d460b306e1b47a73"
+    }
+  ],
+  "reports": [
+    {
+      "language": "Spanish",
+      "path": ".artifacts/spanish-all-level-review-2026-09-05/spanish/findings.json",
+      "sha256": "af77a943a0ed59c85325466a811fec45cc12b52c401a6726323ef607fe9ec51c",
+      "findings": 18
+    },
+    {
+      "language": "Slovak",
+      "path": ".artifacts/spanish-all-level-review-2026-09-05/slovak/findings.json",
+      "sha256": "a7ea3d5ce124bd66da5c69cac1b72099da40e03b643cef3c19c84563ae41883e",
+      "findings": 18
+    }
+  ],
+  "counts": {
+    "reportFindings": 36,
+    "appliedFindings": 30,
+    "retainedWithRationale": 6,
+    "changedEntries": 30
+  },
+  "findings": [
+    {
+      "findingId": "spanish:ES-001",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:458-continente",
+      "severity": "required-fix",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Remove the false necessary ocean boundary while retaining the geographic sense; original learner wording checked against DLE.",
+      "sourceFinding": {
+        "key": "ES-001",
+        "term": "continente",
+        "kind": "required-fix",
+        "field": "definition",
+        "issue": "An ocean boundary is made a necessary property of every continent; this incorrectly excludes the conventional Europe–Asia distinction.",
+        "proposal": "Replace with original wording such as: «Una de las grandes partes de tierra del planeta, como Europa o África.»",
+        "sources": [
+          "https://dle.rae.es/continente"
+        ],
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:458-continente",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-002",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:436-arte",
+      "severity": "required-fix",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Retain masculine canonical singular and explicitly teach the normally feminine plural, as confirmed in DPD; do not imply that masculine plural is the default.",
+      "sourceFinding": {
+        "key": "ES-002",
+        "term": "arte",
+        "kind": "required-fix",
+        "field": "alternativeForms",
+        "issue": "The masculine singular label is acceptable but hides the important usual feminine plural, unlike the explicit exceptional-form treatment elsewhere.",
+        "proposal": "Keep masculine canonical singular; add «las artes» with a clearly labelled normally-feminine plural note. Do not automatically infer «los artes».",
+        "sources": [
+          "https://www.rae.es/dpd/arte"
+        ],
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:436-arte",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-003",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:189-examen",
+      "severity": "required-fix",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Expose the stress-preserving written accent in the plural without changing the singular headword.",
+      "sourceFinding": {
+        "key": "ES-003",
+        "term": "examen",
+        "kind": "required-fix",
+        "field": "alternativeForms",
+        "issue": "The stress-preserving plural requires an accent absent from the singular and is not recorded.",
+        "proposal": "Add «exámenes» as plural to the editorial forms.",
+        "sources": [],
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:189-examen",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-004",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:395-origen",
+      "severity": "required-fix",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Expose the stress-preserving written accent in the plural without changing the singular headword.",
+      "sourceFinding": {
+        "key": "ES-004",
+        "term": "origen",
+        "kind": "required-fix",
+        "field": "alternativeForms",
+        "issue": "The stress-preserving plural requires an accent absent from the singular and is not recorded.",
+        "proposal": "Add «orígenes» as plural to the editorial forms.",
+        "sources": [],
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:395-origen",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-005",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:029-sentarse",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Replace unnatural posture language with an ordinary sitting action; no required back position is implied.",
+      "sourceFinding": {
+        "key": "ES-005",
+        "term": "sentarse",
+        "kind": "refinement",
+        "field": "definition",
+        "issue": "«Con la espalda levantada» is unnatural as a description of sitting and unnecessarily prescribes posture.",
+        "proposal": "Use simple original wording such as «Ponerse en una silla u otro asiento, sin estar de pie.»",
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:029-sentarse",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-006",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:123-te",
+      "severity": "refinement",
+      "disposition": "retained-with-rationale",
+      "humanDecision": null,
+      "rationale": "Retain the existing non-circular botanical distinction. The offered shorter wording defines té using té; a generic leaves-and-water definition would also include other infusions.",
+      "sourceFinding": {
+        "key": "ES-006",
+        "term": "té",
+        "kind": "refinement",
+        "field": "definition",
+        "issue": "Sense precision improved, but the botanical detail and varieties produce a long explanation for this learner card.",
+        "proposal": "Shorten while retaining tea-plant specificity, e.g. «Bebida preparada con agua caliente y hojas de la planta del té.»",
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:123-te",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-007",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:081-soltero",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Use ordinary relationship-status wording, not legal vocabulary. Detailed civil-status distinctions are not taught by this card, and no legal definition is asserted.",
+      "sourceFinding": {
+        "key": "ES-007",
+        "term": "soltero",
+        "kind": "refinement",
+        "field": "definition",
+        "issue": "«Ni tiene matrimonio vigente» adds legal register without helping a beginner distinguish the sense.",
+        "proposal": "Use concise ordinary wording and decide explicitly whether legal civil-status distinctions with divorced/widowed are taught.",
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:081-soltero",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-008",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:082-casado",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Use familiar spouse vocabulary without imposing an opposite-sex restriction on the person described.",
+      "sourceFinding": {
+        "key": "ES-008",
+        "term": "casado",
+        "kind": "refinement",
+        "field": "definition",
+        "issue": "«Ha contraído matrimonio y mantiene ese estado» is unnecessarily formal for a beginner explanation.",
+        "proposal": "Consider «Que tiene marido o esposa.» while retaining the inclusive person/partner scope.",
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:082-casado",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-009",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:160-menu",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Use reading and choosing from a list to disambiguate the selected menu-list sense from a fixed meal.",
+      "sourceFinding": {
+        "key": "ES-009",
+        "term": "menú",
+        "kind": "refinement",
+        "field": "example",
+        "issue": "The listed fixed sequence of food can suggest a set-meal sense while the definition selects the list-of-offerings sense; both are valid Spain usage but the example is not maximally discriminating.",
+        "proposal": "For the current definition consider «Leo el menú antes de elegir la comida.» If selecting a set-menu sense instead, update definition and source selection together.",
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:160-menu",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-010",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:328-vestido",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Add the skirt-shaped lower part to distinguish this dress sense from a jumpsuit or coat.",
+      "sourceFinding": {
+        "key": "ES-010",
+        "term": "vestido",
+        "kind": "refinement",
+        "field": "definition",
+        "issue": "A one-piece garment covering the body is too broad to distinguish a dress from a jumpsuit or coat.",
+        "proposal": "Add the skirt-shaped lower part using learner-friendly wording; keep the current example.",
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:328-vestido",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-011",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:352-tos",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Replace medical metalanguage with an everyday physical description while preserving the cough sense.",
+      "sourceFinding": {
+        "key": "ES-011",
+        "term": "tos",
+        "kind": "refinement",
+        "field": "definition",
+        "issue": "The medical description is correct enough but «expulsión» and «vías respiratorias» impose avoidable vocabulary load.",
+        "proposal": "Use an original everyday description, e.g. «Salida brusca de aire por la boca, con un sonido, cuando algo molesta en la garganta.»",
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:352-tos",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-012",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:444-guitarra",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Replace finger-only playing with typical structural features; normalmente avoids asserting a mandatory six-string count.",
+      "sourceFinding": {
+        "key": "ES-012",
+        "term": "guitarra",
+        "kind": "refinement",
+        "field": "definition",
+        "issue": "Finger-only playing is a needless restriction; a pick is also usual.",
+        "proposal": "Omit the restriction or allow fingers/a pick without making the explanation longer than needed.",
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:444-guitarra",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-013",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:401-norte",
+      "severity": "refinement",
+      "disposition": "retained-with-rationale",
+      "humanDecision": null,
+      "rationale": "Retain the correct paired-direction wording for now. A compass or joint visual-side teaching aid is a separate learning presentation change, not safely solved by an equally unfamiliar synonym. Slovak hints remain available.",
+      "sourceFinding": {
+        "key": "ES-013",
+        "term": "norte",
+        "kind": "refinement",
+        "field": "definition",
+        "issue": "The definition depends entirely on another direction; a learner who knows neither term gets no distinguishing cue.",
+        "proposal": "Present a small compass/direction reference or cross-link the pair; do not merely swap to an equally unknown synonym.",
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:401-norte",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-014",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:402-sur",
+      "severity": "refinement",
+      "disposition": "retained-with-rationale",
+      "humanDecision": null,
+      "rationale": "Retain the correct paired-direction wording for now. A compass or joint visual-side teaching aid is a separate learning presentation change, not safely solved by an equally unfamiliar synonym. Slovak hints remain available.",
+      "sourceFinding": {
+        "key": "ES-014",
+        "term": "sur",
+        "kind": "refinement",
+        "field": "definition",
+        "issue": "The definition depends entirely on another direction; a learner who knows neither term gets no distinguishing cue.",
+        "proposal": "Present a small compass/direction reference or cross-link the pair.",
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:402-sur",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-015",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:403-izquierda",
+      "severity": "refinement",
+      "disposition": "retained-with-rationale",
+      "humanDecision": null,
+      "rationale": "Retain the correct paired-direction wording for now. A compass or joint visual-side teaching aid is a separate learning presentation change, not safely solved by an equally unfamiliar synonym. Slovak hints remain available.",
+      "sourceFinding": {
+        "key": "ES-015",
+        "term": "izquierda",
+        "kind": "refinement",
+        "field": "definition",
+        "issue": "The opposite-side definition is grammatical but depends on knowing the other side first.",
+        "proposal": "Prefer a visual side cue or a joint direction presentation; retain correct feminine noun usage.",
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:403-izquierda",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-016",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:404-derecha",
+      "severity": "refinement",
+      "disposition": "retained-with-rationale",
+      "humanDecision": null,
+      "rationale": "Retain the correct paired-direction wording for now. A compass or joint visual-side teaching aid is a separate learning presentation change, not safely solved by an equally unfamiliar synonym. Slovak hints remain available.",
+      "sourceFinding": {
+        "key": "ES-016",
+        "term": "derecha",
+        "kind": "refinement",
+        "field": "definition",
+        "issue": "The opposite-side definition is grammatical but depends on knowing the other side first.",
+        "proposal": "Prefer a visual side cue or a joint direction presentation; retain correct feminine noun usage.",
+        "asset": "assets/catalog/spanish/a1-candidates.json",
+        "entryId": "es-sk:a1:404-derecha",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-017",
+      "asset": "assets/catalog/spanish/cefr-pilot.json",
+      "entryId": "es-sk:pilot:c2:aquiescencia",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Narrow the presentation explicitly to the example's wordless-consent context, retaining the valid Slovak tichý súhlas rather than broadening into an unreviewed sense.",
+      "sourceFinding": {
+        "key": "ES-017",
+        "term": "aquiescencia",
+        "asset": "assets/catalog/spanish/cefr-pilot.json",
+        "kind": "refinement",
+        "field": "definition",
+        "issue": "Passivity or absence of explicit opposition is presented as necessary although the general noun also covers consent expressed positively. The current example deliberately illustrates tacit consent.",
+        "proposal": "Either label this contextual tacit-consent presentation explicitly, or broaden the Spanish definition to acceptance/consent and have the Slovak reviewer recheck the hint for that broader sense.",
+        "sources": [
+          "https://dle.rae.es/aquiescencia"
+        ],
+        "entryId": "es-sk:pilot:c2:aquiescencia",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "spanish:ES-018",
+      "asset": "assets/catalog/spanish/cefr-pilot.json",
+      "entryId": "es-sk:pilot:b2:plantear",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Align the example to presenting a problem, already supported by the definition and Slovak nastoliť; no broader solution-proposal sense is added.",
+      "sourceFinding": {
+        "key": "ES-018",
+        "term": "plantear",
+        "asset": "assets/catalog/spanish/cefr-pilot.json",
+        "kind": "refinement",
+        "field": "definition/example",
+        "issue": "The example presents solutions while the definition enumerates an issue, question or problem; broadly related, but a review card benefits from closer alignment.",
+        "proposal": "Change the example to «El informe plantea un problema importante.» or explicitly include proposals in the chosen sense definition.",
+        "entryId": "es-sk:pilot:b2:plantear",
+        "reviewType": "AI-editorial-finding",
+        "humanDecision": null
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-01",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:025-delgado",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Štíhly is natural for a slim build, but the underfed cat example favors chudý. Keep both if the Spanish entry deliberately retains both body-description nuances.",
+      "sourceFinding": {
+        "id": "sk-refinement-01",
+        "entryId": "es-sk:a1:025-delgado",
+        "level": "A1",
+        "term": "delgado",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "štíhly",
+        "proposed": "chudý; štíhly",
+        "category": "register",
+        "rationale": "Štíhly is natural for a slim build, but the underfed cat example favors chudý. Keep both if the Spanish entry deliberately retains both body-description nuances.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-02",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:055-recordar",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "The current hint fits remembering the hotel address. The definition describes bringing information back to mind, for which spomenúť si makes the recall reading clearer.",
+      "sourceFinding": {
+        "id": "sk-refinement-02",
+        "entryId": "es-sk:a1:055-recordar",
+        "level": "A1",
+        "term": "recordar",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "pamätať si",
+        "proposed": "pamätať si; spomenúť si",
+        "category": "aspect-and-sense",
+        "rationale": "The current hint fits remembering the hotel address. The definition describes bringing information back to mind, for which spomenúť si makes the recall reading clearer.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-03",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:083-vivir",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "The selected definition explicitly concerns habitual residence. Bývať leads directly to that sense; žiť remains possible in the example and is not an error.",
+      "sourceFinding": {
+        "id": "sk-refinement-03",
+        "entryId": "es-sk:a1:083-vivir",
+        "level": "A1",
+        "term": "vivir",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "žiť",
+        "proposed": "bývať; žiť",
+        "category": "sense-specificity",
+        "rationale": "The selected definition explicitly concerns habitual residence. Bývať leads directly to that sense; žiť remains possible in the example and is not an error.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-04",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:107-amigo",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Priateľ is standard but can also mean a romantic partner. Leading with kamarát separates this friendship entry from pareja without declaring priateľ incorrect.",
+      "sourceFinding": {
+        "id": "sk-refinement-04",
+        "entryId": "es-sk:a1:107-amigo",
+        "level": "A1",
+        "term": "amigo",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "priateľ",
+        "proposed": "kamarát; priateľ",
+        "category": "ambiguity",
+        "rationale": "Priateľ is standard but can also mean a romantic partner. Leading with kamarát separates this friendship entry from pareja without declaring priateľ incorrect.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-05",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:108-amiga",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Priateľka is standard but can mean girlfriend. Leading with kamarátka helps a beginner distinguish ordinary friendship from pareja.",
+      "sourceFinding": {
+        "id": "sk-refinement-05",
+        "entryId": "es-sk:a1:108-amiga",
+        "level": "A1",
+        "term": "amiga",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "priateľka",
+        "proposed": "kamarátka; priateľka",
+        "category": "ambiguity",
+        "rationale": "Priateľka is standard but can mean girlfriend. Leading with kamarátka helps a beginner distinguish ordinary friendship from pareja.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-06",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:125-zumo",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "The definition includes freshly squeezed fruit and vegetable juice. Šťava covers that range transparently; džús remains a natural everyday translation.",
+      "sourceFinding": {
+        "id": "sk-refinement-06",
+        "entryId": "es-sk:a1:125-zumo",
+        "level": "A1",
+        "term": "zumo",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "džús",
+        "proposed": "šťava; džús",
+        "category": "sense-specificity",
+        "rationale": "The definition includes freshly squeezed fruit and vegetable juice. Šťava covers that range transparently; džús remains a natural everyday translation.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-07",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:191-aprender",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "The bounded example of learning ten new words this week naturally favors naučiť sa. Učiť sa remains correct for the broader learning activity; Spanish infinitives do not encode the same aspect distinction.",
+      "sourceFinding": {
+        "id": "sk-refinement-07",
+        "entryId": "es-sk:a1:191-aprender",
+        "level": "A1",
+        "term": "aprender",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "učiť sa",
+        "proposed": "naučiť sa; učiť sa",
+        "category": "aspect",
+        "rationale": "The bounded example of learning ten new words this week naturally favors naučiť sa. Učiť sa remains correct for the broader learning activity; Spanish infinitives do not encode the same aspect distinction.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-08",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:246-correo-electronico",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "The selected definition is the system for sending messages, not one message. Leading with elektronická pošta makes that explicit; e-mail is widely understandable.",
+      "sourceFinding": {
+        "id": "sk-refinement-08",
+        "entryId": "es-sk:a1:246-correo-electronico",
+        "level": "A1",
+        "term": "correo electrónico",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "e-mail",
+        "proposed": "elektronická pošta; e-mail",
+        "category": "sense-specificity",
+        "rationale": "The selected definition is the system for sending messages, not one message. Leading with elektronická pošta makes that explicit; e-mail is widely understandable.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-09",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:282-alquiler",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "The definition and example select the payment. Nájomné is the more precise noun for this amount; colloquial platiť nájom is understandable and does not require rejection.",
+      "sourceFinding": {
+        "id": "sk-refinement-09",
+        "entryId": "es-sk:a1:282-alquiler",
+        "level": "A1",
+        "term": "alquiler",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "nájom",
+        "proposed": "nájomné",
+        "category": "sense-specificity",
+        "rationale": "The definition and example select the payment. Nájomné is the more precise noun for this amount; colloquial platiť nájom is understandable and does not require rejection.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-10",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:298-ayuntamiento",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "The definition covers both a city and a municipality. Adding obecný úrad avoids suggesting that the institution only exists in cities.",
+      "sourceFinding": {
+        "id": "sk-refinement-10",
+        "entryId": "es-sk:a1:298-ayuntamiento",
+        "level": "A1",
+        "term": "ayuntamiento",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "mestský úrad",
+        "proposed": "mestský úrad; obecný úrad",
+        "category": "scope",
+        "rationale": "The definition covers both a city and a municipality. Adding obecný úrad avoids suggesting that the institution only exists in cities.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-11",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:303-turno",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "The current poradie describes ordering, while the example is waiting for one's turn. A hint based on rad supports the natural Slovak paraphrase Čakám, kým prídem na rad. Retain contextual parentheses so the bare noun is not confused with a queue.",
+      "sourceFinding": {
+        "id": "sk-refinement-11",
+        "entryId": "es-sk:a1:303-turno",
+        "level": "A1",
+        "term": "turno",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "poradie",
+        "proposed": "rad (na rade)",
+        "category": "idiom",
+        "rationale": "The current poradie describes ordering, while the example is waiting for one's turn. A hint based on rad supports the natural Slovak paraphrase Čakám, kým prídem na rad. Retain contextual parentheses so the bare noun is not confused with a queue.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-12",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:315-dependiente",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "The definition is gender-neutral and the example uses la dependiente. The current masculine canonical hint is conventional; adding the feminine counterpart helps the learner read that actual example.",
+      "sourceFinding": {
+        "id": "sk-refinement-12",
+        "entryId": "es-sk:a1:315-dependiente",
+        "level": "A1",
+        "term": "dependiente",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "predavač",
+        "proposed": "predavač; predavačka",
+        "category": "gender-presentation",
+        "rationale": "The definition is gender-neutral and the example uses la dependiente. The current masculine canonical hint is conventional; adding the feminine counterpart helps the learner read that actual example.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-13",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:363-lavarse",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Umyť sa fits washing oneself, but the example with hands requires umyť si ruky. Add the si construction without replacing the valid whole-body sa construction.",
+      "sourceFinding": {
+        "id": "sk-refinement-13",
+        "entryId": "es-sk:a1:363-lavarse",
+        "level": "A1",
+        "term": "lavarse",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "umyť sa",
+        "proposed": "umyť sa; umyť si",
+        "category": "reflexive-valency",
+        "rationale": "Umyť sa fits washing oneself, but the example with hands requires umyť si ruky. Add the si construction without replacing the valid whole-body sa construction.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-14",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:372-viajero",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "Cestovateľ often foregrounds travel as an activity or pursuit, while this example asks where a train departs. Adding cestujúci covers that ordinary travel context; cestovateľ remains possible.",
+      "sourceFinding": {
+        "id": "sk-refinement-14",
+        "entryId": "es-sk:a1:372-viajero",
+        "level": "A1",
+        "term": "viajero",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "cestovateľ",
+        "proposed": "cestujúci; cestovateľ",
+        "category": "register",
+        "rationale": "Cestovateľ often foregrounds travel as an activity or pursuit, while this example asks where a train departs. Adding cestujúci covers that ordinary travel context; cestovateľ remains possible.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-15",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:437-artista",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "The headword supports both genders and the example uses la artista. Adding umelkyňa helps with the concrete feminine example; generic umelec is not a lexical error.",
+      "sourceFinding": {
+        "id": "sk-refinement-15",
+        "entryId": "es-sk:a1:437-artista",
+        "level": "A1",
+        "term": "artista",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "umelec",
+        "proposed": "umelec; umelkyňa",
+        "category": "gender-presentation",
+        "rationale": "The headword supports both genders and the example uses la artista. Adding umelkyňa helps with the concrete feminine example; generic umelec is not a lexical error.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-16",
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:441-camara",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "The definition explicitly covers still images and video. A dual hint mirrors that stated range; fotoaparát alone is adequate if the Spanish author instead narrows the definition to the still-camera sense.",
+      "sourceFinding": {
+        "id": "sk-refinement-16",
+        "entryId": "es-sk:a1:441-camara",
+        "level": "A1",
+        "term": "cámara",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "fotoaparát",
+        "proposed": "fotoaparát; kamera",
+        "category": "scope",
+        "rationale": "The definition explicitly covers still images and video. A dual hint mirrors that stated range; fotoaparát alone is adequate if the Spanish author instead narrows the definition to the still-camera sense.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-17",
+      "asset": "assets/catalog/spanish/cefr-pilot.json",
+      "entryId": "es-sk:pilot:a2:cuidar",
+      "severity": "refinement",
+      "disposition": "applied",
+      "humanDecision": null,
+      "rationale": "The present starať sa is correct. Including o exposes the natural Slovak complement used with the children in the example: starať sa o deti.",
+      "sourceFinding": {
+        "id": "sk-refinement-17",
+        "entryId": "es-sk:pilot:a2:cuidar",
+        "level": "A2",
+        "term": "cuidar",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "starať sa",
+        "proposed": "starať sa o",
+        "category": "valency",
+        "rationale": "The present starať sa is correct. Including o exposes the natural Slovak complement used with the children in the example: starať sa o deti.",
+        "mandatory": false
+      }
+    },
+    {
+      "findingId": "slovak:sk-refinement-18",
+      "asset": "assets/catalog/spanish/cefr-pilot.json",
+      "entryId": "es-sk:pilot:b2:plantear",
+      "severity": "refinement",
+      "disposition": "retained-with-rationale",
+      "humanDecision": null,
+      "rationale": "Retain nastoliť because ES-018 now uses a problem rather than solutions; the narrowed example, definition and hint align without adding an unnecessary second sense.",
+      "sourceFinding": {
+        "id": "sk-refinement-18",
+        "entryId": "es-sk:pilot:b2:plantear",
+        "level": "B2",
+        "term": "plantear",
+        "severity": "refinement",
+        "field": "translation",
+        "current": "nastoliť",
+        "proposed": "predložiť; nastoliť",
+        "category": "collocation",
+        "rationale": "Nastoliť fits an issue or question in the definition; the example is presenting possible solutions, naturally predložiť riešenia. A dual hint covers both supplied contexts.",
+        "mandatory": false
+      }
+    }
+  ],
+  "changes": [
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:025-delgado",
+      "catalogSenseId": "es-sk:a1:025-delgado:adjective:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "štíhly",
+          "after": "chudý; štíhly"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:029-sentarse",
+      "catalogSenseId": "es-sk:a1:029-sentarse:verb:1",
+      "changes": [
+        {
+          "field": "definition",
+          "before": "Colocar el cuerpo con la espalda levantada y apoyarlo en una silla u otro asiento.",
+          "after": "Ponerse en una silla u otro asiento, sin estar de pie."
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:055-recordar",
+      "catalogSenseId": "es-sk:a1:055-recordar:verb:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "pamätať si",
+          "after": "pamätať si; spomenúť si"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:081-soltero",
+      "catalogSenseId": "es-sk:a1:081-soltero:adjective:1",
+      "changes": [
+        {
+          "field": "definition",
+          "before": "Que no está casado ni tiene matrimonio vigente.",
+          "after": "Que no está casado."
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:082-casado",
+      "catalogSenseId": "es-sk:a1:082-casado:adjective:1",
+      "changes": [
+        {
+          "field": "definition",
+          "before": "Que ha contraído matrimonio y mantiene ese estado.",
+          "after": "Que tiene marido o esposa."
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:083-vivir",
+      "catalogSenseId": "es-sk:a1:083-vivir:verb:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "žiť",
+          "after": "bývať; žiť"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:107-amigo",
+      "catalogSenseId": "es-sk:a1:107-amigo:noun:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "priateľ",
+          "after": "kamarát; priateľ"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:108-amiga",
+      "catalogSenseId": "es-sk:a1:108-amiga:noun:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "priateľka",
+          "after": "kamarátka; priateľka"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:125-zumo",
+      "catalogSenseId": "es-sk:a1:125-zumo:noun:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "džús",
+          "after": "šťava; džús"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:160-menu",
+      "catalogSenseId": "es-sk:a1:160-menu:noun:1",
+      "changes": [
+        {
+          "field": "example",
+          "before": "El menú incluye sopa, pescado y fruta.",
+          "after": "Leo el menú antes de elegir la comida."
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:189-examen",
+      "catalogSenseId": "es-sk:a1:189-examen:noun:1",
+      "changes": [
+        {
+          "field": "alternativeForms",
+          "before": [],
+          "after": [
+            {
+              "form": "exámenes",
+              "type": "plural"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:191-aprender",
+      "catalogSenseId": "es-sk:a1:191-aprender:verb:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "učiť sa",
+          "after": "naučiť sa; učiť sa"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:246-correo-electronico",
+      "catalogSenseId": "es-sk:a1:246-correo-electronico:phrase:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "e-mail",
+          "after": "elektronická pošta; e-mail"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:282-alquiler",
+      "catalogSenseId": "es-sk:a1:282-alquiler:noun:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "nájom",
+          "after": "nájomné"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:298-ayuntamiento",
+      "catalogSenseId": "es-sk:a1:298-ayuntamiento:noun:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "mestský úrad",
+          "after": "mestský úrad; obecný úrad"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:303-turno",
+      "catalogSenseId": "es-sk:a1:303-turno:noun:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "poradie",
+          "after": "rad (na rade)"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:315-dependiente",
+      "catalogSenseId": "es-sk:a1:315-dependiente:noun:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "predavač",
+          "after": "predavač; predavačka"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:328-vestido",
+      "catalogSenseId": "es-sk:a1:328-vestido:noun:1",
+      "changes": [
+        {
+          "field": "definition",
+          "before": "Prenda de una sola pieza que cubre el cuerpo.",
+          "after": "Prenda de una sola pieza que cubre el torso y tiene una parte inferior en forma de falda."
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:352-tos",
+      "catalogSenseId": "es-sk:a1:352-tos:noun:1",
+      "changes": [
+        {
+          "field": "definition",
+          "before": "Expulsión rápida de aire por irritación de las vías respiratorias.",
+          "after": "Salida brusca de aire por la boca, con un sonido, cuando algo molesta en la garganta."
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:363-lavarse",
+      "catalogSenseId": "es-sk:a1:363-lavarse:verb:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "umyť sa",
+          "after": "umyť sa; umyť si"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:372-viajero",
+      "catalogSenseId": "es-sk:a1:372-viajero:noun:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "cestovateľ",
+          "after": "cestujúci; cestovateľ"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:395-origen",
+      "catalogSenseId": "es-sk:a1:395-origen:noun:1",
+      "changes": [
+        {
+          "field": "alternativeForms",
+          "before": [],
+          "after": [
+            {
+              "form": "orígenes",
+              "type": "plural"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:436-arte",
+      "catalogSenseId": "es-sk:a1:436-arte:noun:1",
+      "changes": [
+        {
+          "field": "alternativeForms",
+          "before": [],
+          "after": [
+            {
+              "form": "las artes",
+              "type": "plural normalmente femenino"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:437-artista",
+      "catalogSenseId": "es-sk:a1:437-artista:noun:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "umelec",
+          "after": "umelec; umelkyňa"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:441-camara",
+      "catalogSenseId": "es-sk:a1:441-camara:noun:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "fotoaparát",
+          "after": "fotoaparát; kamera"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:444-guitarra",
+      "catalogSenseId": "es-sk:a1:444-guitarra:noun:1",
+      "changes": [
+        {
+          "field": "definition",
+          "before": "Instrumento musical con cuerdas que se tocan con los dedos.",
+          "after": "Instrumento musical, normalmente de seis cuerdas, con una caja hueca y un mango largo."
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/a1-candidates.json",
+      "entryId": "es-sk:a1:458-continente",
+      "catalogSenseId": "es-sk:a1:458-continente:noun:1",
+      "changes": [
+        {
+          "field": "definition",
+          "before": "Gran extensión de tierra separada por océanos.",
+          "after": "Una de las grandes partes de tierra del planeta, como Europa o África."
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/cefr-pilot.json",
+      "entryId": "es-sk:pilot:a2:cuidar",
+      "catalogSenseId": "es-sk:pilot:a2:cuidar:verb:1",
+      "changes": [
+        {
+          "field": "translation",
+          "before": "starať sa",
+          "after": "starať sa o"
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/cefr-pilot.json",
+      "entryId": "es-sk:pilot:b2:plantear",
+      "catalogSenseId": "es-sk:pilot:b2:plantear:verb:1",
+      "changes": [
+        {
+          "field": "example",
+          "before": "El informe plantea varias soluciones posibles.",
+          "after": "El informe plantea un problema importante."
+        }
+      ]
+    },
+    {
+      "asset": "assets/catalog/spanish/cefr-pilot.json",
+      "entryId": "es-sk:pilot:c2:aquiescencia",
+      "catalogSenseId": "es-sk:pilot:c2:aquiescencia:noun:1",
+      "changes": [
+        {
+          "field": "definition",
+          "before": "Aceptación pasiva o consentimiento sin una oposición expresa.",
+          "after": "En este contexto, consentimiento que se comunica sin palabras, por ejemplo mediante el silencio."
+        }
+      ]
+    }
+  ]
+}

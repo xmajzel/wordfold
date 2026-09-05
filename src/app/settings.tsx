@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Alert, Linking, Platform, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 
 import { AppText } from '@/components/app-text';
 import { AppSwitch } from '@/components/app-switch';
+import { describeCatalogAvailability } from '@/components/catalog-availability';
 import { CourseSelector } from '@/components/course-selector';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
+import { getCourseCatalogAvailability } from '@/data/course-catalog';
+import { getCourseDefinition, type CourseId } from '@/domain/courses';
 import type { ReminderSettings } from '@/domain/types';
 import { topicOptions } from '@/features/recommendations/selector';
 import { neuralPreviewFeatureEnabled } from '@/features/pronunciation/cloud';
@@ -33,6 +36,24 @@ export default function SettingsScreen() {
   const [draft, setDraft] = useState<ReminderSettings>(() => reminderSettings ?? ({ enabled: false, countPerDay: 1, windowStartMinutes: 600, windowEndMinutes: 1200, timeZoneId: 'local' }));
   const [saving, setSaving] = useState(false);
   const [switchingCourse, setSwitchingCourse] = useState(false);
+  const [courseChoice, setCourseChoice] = useState<{ activeId: CourseId; selectedId: CourseId } | null>(null);
+  const pendingCourseId = courseChoice?.activeId === activeCourseId ? courseChoice.selectedId : activeCourseId;
+  const switchInFlight = useRef(false);
+  const confirmCourse = async () => {
+    if (switchInFlight.current || pendingCourseId === activeCourseId) return;
+    switchInFlight.current = true;
+    setSwitchingCourse(true);
+    try {
+      await switchActiveCourse(pendingCourseId);
+      setCourseChoice(null);
+    } catch (error) {
+      setCourseChoice(null);
+      Alert.alert('Could not switch course', error instanceof Error ? error.message : 'Please try again.');
+    } finally {
+      switchInFlight.current = false;
+      setSwitchingCourse(false);
+    }
+  };
   const [scheduledCount, setScheduledCount] = useState<number | null>(null);
   const toggleEnabled = async (enabled: boolean) => {
     if (!enabled) { setDraft({ ...draft, enabled: false }); return; }
@@ -87,17 +108,26 @@ export default function SettingsScreen() {
         <View>
           <AppText variant="heading">Learning language</AppText>
           <AppText style={{ color: theme.muted }}>Each course keeps its own levels, filter, voice, and progress. The global reminder rhythm and widget always select words from the active course.</AppText>
+          <AppText variant="caption" style={{ color: theme.muted }}>Switching never removes either library or its progress.</AppText>
+          <AppText variant="label">Active course: {activeCourse.directionLabel}</AppText>
         </View>
         <CourseSelector
-          value={activeCourseId}
+          value={pendingCourseId}
           disabled={switchingCourse}
-          onChange={(courseId) => {
-            setSwitchingCourse(true);
-            void switchActiveCourse(courseId)
-              .catch((error) => Alert.alert('Could not switch course', error instanceof Error ? error.message : 'Please try again.'))
-              .finally(() => setSwitchingCourse(false));
+          onChange={(selectedId) => setCourseChoice({ activeId: activeCourseId, selectedId })}
+          descriptions={{
+            'en-sk': describeCatalogAvailability(getCourseCatalogAvailability('en-sk')),
+            'es-sk': describeCatalogAvailability(getCourseCatalogAvailability('es-sk')),
           }}
         />
+        <PrimaryButton
+          testID="course-switch-confirm"
+          label={`Use ${getCourseDefinition(pendingCourseId).sourceLanguageCode === 'es' ? 'Spanish' : 'English'} course`}
+          disabled={pendingCourseId === activeCourseId}
+          loading={switchingCourse}
+          onPress={() => void confirmCourse()}
+        />
+        <AppText variant="caption" style={{ color: theme.muted }}>Select a course, then confirm. Closing Settings leaves an unconfirmed choice unchanged.</AppText>
       </View>
       <Pressable
         accessibilityRole="button"
@@ -146,7 +176,7 @@ export default function SettingsScreen() {
         {activeCourseId === 'en-sk' ? <>
           <InfoRow icon="book-outline" title="Open English WordNet 2025" body="Definitions under CC BY 4.0."/>
           <InfoRow icon="list-outline" title="NGSL discovery packs" body="Spoken, Business, and Academic lists under CC BY-SA 4.0."/>
-        </> : <InfoRow icon="shield-checkmark-outline" title="Spanish catalog quality gate" body="Instituto Cervantes guides level design only. No Cervantes text is bundled; reviewed original Spanish catalog content will appear after licensing and editorial approval."/>}
+        </> : <InfoRow icon="shield-checkmark-outline" title="Spanish catalog quality gate" body="Original Spanish learning content uses the Plan Curricular del Instituto Cervantes (PCIC) as a reference framework. No certification or endorsement is implied. Local draft previews are not production releases."/>}
       </View>
       <Pressable testID="privacy-policy-link" accessibilityRole="link" accessibilityLabel="Open privacy policy" onPress={() => void Linking.openURL(PRIVACY_POLICY_URL)} style={[styles.preferenceCard, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="shield-checkmark-outline" color={theme.primary} size={24}/></View><View style={styles.flex}><AppText variant="heading">Privacy policy</AppText><AppText variant="caption" style={{ color: theme.muted }}>What Wordfold stores locally and when cloud services are used</AppText></View><Ionicons name="open-outline" color={theme.primary} size={20}/></Pressable>
       <Pressable testID="account-deletion-link" accessibilityRole="link" accessibilityLabel="Open account deletion information" onPress={() => void Linking.openURL(ACCOUNT_DELETION_URL)} style={[styles.preferenceCard, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="trash-outline" color={theme.primary} size={24}/></View><View style={styles.flex}><AppText variant="heading">Account deletion</AppText><AppText variant="caption" style={{ color: theme.muted }}>Delete in the app or request deletion after uninstalling</AppText></View><Ionicons name="open-outline" color={theme.primary} size={20}/></Pressable>

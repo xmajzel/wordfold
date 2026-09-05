@@ -100,6 +100,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     return buildNotificationLearningSession(activeWords, notificationWordId, new Date());
   });
   const [sessionFeed, setSessionFeed] = useState<Word[]>(initialSession.feed);
+  const [sessionWordIds, setSessionWordIds] = useState(() => new Set(initialSession.feed.map((word) => word.id)));
   const [notificationReviewWord, setNotificationReviewWord] = useState<Word | null>(initialSession.reviewWord);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [sessionComplete, setSessionComplete] = useState(false);
@@ -125,10 +126,10 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     ?? sessionFeed[currentIndex];
   const continuedSessionFeed = useMemo(() => buildContinuedLearningFeed(
     activeWords,
-    sessionFeed.map((word) => word.id),
+    sessionWordIds,
     new Date(),
     filter,
-  ), [activeWords, filter, sessionFeed]);
+  ), [activeWords, filter, sessionWordIds]);
   const recommendationPreview = useMemo(() => activeCourse.capabilities.recommendations ? buildRecommendations(
     learningPreferences,
     activeWords.map((word) => word.normalizedTerm),
@@ -217,6 +218,10 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     if (continuedSessionFeed.length === 0) return;
     viewedIds.current.clear();
     submittedRatings.current.clear();
+    setSessionWordIds((current) => new Set([
+      ...current,
+      ...continuedSessionFeed.map((word) => word.id),
+    ]));
     sessionFeedLengthRef.current = continuedSessionFeed.length;
     setSessionFeed(continuedSessionFeed);
     setCurrentIndex(0);
@@ -294,6 +299,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     <Screen style={styles.screen}>
       <Header filter={filter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={onSelectFilter}/>
       <FlatList
+        testID="today-words-list"
         ref={listRef}
         data={sessionFeed}
         extraData={currentWords}
@@ -311,7 +317,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
             && isOnDeviceTranslationPairSupported(currentWord.sourceLanguageCode, currentWord.targetLanguageCode)
             ? translationStates[currentWord.id] ?? 'loading'
             : undefined;
-          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><SwipeableWordCard word={currentWord} active={index === currentIndex} disabled={sessionRating !== undefined} onSwipe={(rating) => handleRating(currentWord, rating)}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} sessionRating={sessionRating} showPronunciation={index === currentIndex} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={sessionRating === undefined ? (rating) => handleRating(currentWord, rating) : undefined}/></SwipeableWordCard></View>;
+          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><SwipeableWordCard word={currentWord} active={index === currentIndex} disabled={sessionRating !== undefined} onSwipe={(rating) => handleRating(currentWord, rating)}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} sessionRating={sessionRating} showPronunciation pronunciationActive={index === currentIndex} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={sessionRating === undefined ? (rating) => handleRating(currentWord, rating) : undefined}/></SwipeableWordCard></View>;
         }}
       />
       <AppText variant="caption" style={[styles.position, { color: theme.muted }]}>{Math.min(currentIndex + 1, sessionFeed.length)} of {sessionFeed.length} due now · scroll to skip</AppText>

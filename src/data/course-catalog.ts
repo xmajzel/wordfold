@@ -3,6 +3,7 @@ import spanishPilotJson from '../../assets/catalog/spanish/cefr-pilot.json';
 import type { CourseId } from '@/domain/courses';
 import type { CefrCatalogEntry, CefrLevel } from '@/domain/types';
 import { normalizeTermForLanguage } from '@/domain/normalize-term';
+import { spanishA1PreviewEnabled } from '@/domain/spanish-preview';
 
 import {
   getCefrEntries,
@@ -10,6 +11,7 @@ import {
   getCefrEntryForNormalizedTerm,
   getCefrTranslation,
 } from './cefr-catalog';
+import { cefrLevels } from './cefr-levels';
 
 export type CatalogPublicationStatus = 'draft' | 'production';
 export type CatalogReviewStatus = 'draft' | 'approved';
@@ -22,6 +24,8 @@ export interface CourseCatalogEntry extends CefrCatalogEntry {
   learnerContentReviewStatus: CatalogReviewStatus;
   hintReviewStatus: CatalogReviewStatus;
   levelEvidence: string;
+  gender?: string;
+  alternativeForms?: { form: string; type: string; note?: string }[];
 }
 
 interface SpanishPilotEntry extends CefrCatalogEntry {
@@ -152,7 +156,36 @@ export function validateSpanishCatalogAsset(asset: SpanishCatalogAsset) {
 
 validateSpanishCatalogAsset(spanishPilot);
 
-const spanishEntries = spanishPilot.entries.map(spanishEntry);
+// Import only original learner fields; licensed reviewer glosses and review
+// packages are not part of this development preview or the learner model.
+const spanishEntries: CourseCatalogEntry[] = spanishA1PreviewEnabled
+  ? [
+      ...(require('../../assets/catalog/spanish/a1-candidates.json') as typeof import('../../assets/catalog/spanish/a1-candidates.json')).entries,
+      ...(require('../../assets/catalog/spanish/expansion-preview.json') as typeof import('../../assets/catalog/spanish/expansion-preview.json')).entries,
+    ].map((entry) => ({
+      id: entry.id,
+      catalogSenseId: entry.catalogSenseId,
+      term: entry.term,
+      normalizedTerm: entry.normalizedTerm,
+      level: entry.level as CefrLevel,
+      partOfSpeech: entry.displayPartOfSpeech,
+      sourcePartOfSpeech: [entry.partOfSpeech],
+      definition: entry.definition,
+      example: entry.example,
+      translation: entry.translation,
+      source: 'wordfold-original-spanish',
+      sourceVersion: entry.sourceVersion,
+      courseId: 'es-sk',
+      sourceLanguageCode: 'es',
+      targetLanguageCode: 'sk',
+      publicationStatus: 'draft',
+      learnerContentReviewStatus: 'draft',
+      hintReviewStatus: 'draft',
+      levelEvidence: entry.levelRationale,
+      gender: entry.gender,
+      alternativeForms: entry.alternativeForms,
+    }))
+  : spanishPilot.entries.map(spanishEntry);
 const spanishBySense = new Map(spanishEntries.map((entry) => [entry.catalogSenseId, entry]));
 const spanishByTerm = new Map<string, CourseCatalogEntry[]>();
 for (const entry of spanishEntries) {
@@ -160,7 +193,7 @@ for (const entry of spanishEntries) {
 }
 
 function isAvailable(entry: CourseCatalogEntry, includeDraft: boolean) {
-  return includeDraft || entry.publicationStatus === 'production';
+  return includeDraft || spanishA1PreviewEnabled || entry.publicationStatus === 'production';
 }
 
 export function getCourseCatalogEntries(
@@ -170,6 +203,19 @@ export function getCourseCatalogEntries(
 ) {
   if (courseId === 'en-sk') return getCefrEntries(level).map(englishEntry);
   return spanishEntries.filter((entry) => entry.level === level && isAvailable(entry, options.includeDraft ?? false));
+}
+
+/** Availability is not curriculum completeness or a content-review attestation. */
+export function getCourseCatalogAvailability(courseId: CourseId): {
+  total: number;
+  counts: Record<CefrLevel, number>;
+  isPreview: boolean;
+  state: 'unavailable' | 'preview' | 'available';
+} {
+  const counts = Object.fromEntries(cefrLevels.map((level) => [level, getCourseCatalogEntries(courseId, level).length])) as Record<CefrLevel, number>;
+  const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
+  const isPreview = courseId === 'es-sk' && spanishA1PreviewEnabled;
+  return { total, counts, isPreview, state: total === 0 ? 'unavailable' : isPreview ? 'preview' : 'available' };
 }
 
 export function getCourseCatalogEntry(

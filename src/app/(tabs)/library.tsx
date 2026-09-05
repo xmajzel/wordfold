@@ -4,12 +4,13 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 
 import { AppText } from '@/components/app-text';
+import { describeCatalogAvailability } from '@/components/catalog-availability';
 import { EmptyState } from '@/components/empty-state';
 import { FormField } from '@/components/form-field';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import { WordCard } from '@/components/word-card';
-import { getCourseCatalogEntries } from '@/data/course-catalog';
+import { getCourseCatalogAvailability, getCourseCatalogEntries } from '@/data/course-catalog';
 import { cefrLevelDescriptions, cefrLevels } from '@/data/cefr-levels';
 import { getCourseForWord, wordBelongsToCourse } from '@/domain/courses';
 import { languageLabel } from '@/domain/languages';
@@ -40,6 +41,8 @@ export default function LibraryScreen() {
     : selectedCollection === 'all' ? activeWords : activeWords.filter((word) => word.collectionId === selectedCollection), [activeWords, otherWords, selectedCollection]);
   const collectionNames = useMemo(() => Object.fromEntries(collections.map((item) => [item.id, item.name])), [collections]);
   const learnedLanguage = languageLabel(activeCourse.sourceLanguageCode);
+  const catalogAvailability = getCourseCatalogAvailability(activeCourseId);
+  const spanishPreview = catalogAvailability.isPreview;
   const cefrLevelSummaries = useMemo(() => cefrLevels.map((level) => {
     const entries = getCourseCatalogEntries(activeCourseId, level);
     return {
@@ -111,12 +114,15 @@ export default function LibraryScreen() {
               {otherWords.length > 0 ? <FilterChip label={`Other vocabulary (${otherWords.length})`} selected={selectedCollection === 'other-vocabulary'} onPress={() => setSelectedCollection('other-vocabulary')}/> : null}
             </ScrollView> : null}
           </> : <>
-            <View style={styles.sectionHeader}><View style={styles.sectionCopy}><AppText variant="heading">{learnedLanguage} levels</AppText><AppText variant="caption" style={{ color: theme.muted }}>{activeCourse.capabilities.bundledCatalog
+            <View style={styles.sectionHeader}><View style={styles.sectionCopy}><AppText variant="heading">{learnedLanguage} levels</AppText><AppText variant="caption" style={{ color: theme.muted }}>{spanishPreview
+              ? describeCatalogAvailability(catalogAvailability)
+              : catalogAvailability.total > 0
               ? 'Browse the built-in CEFR-aligned catalog and see how far you have come.'
-              : 'A1–C2 are ready for organization. The Spanish catalog stays unavailable until licensing and independent editorial review are complete.'}</AppText></View></View>
+              : 'A1–C2 are ready for organization. Spanish catalog content is not released yet; manual words and imports remain available.'}</AppText></View></View>
             <View style={styles.levelGrid}>
               {cefrLevelSummaries.map((item) => <Pressable
                 key={item.level}
+                testID={`catalog-level-${item.level}`}
                 accessibilityRole="button"
                 accessibilityLabel={`Browse ${learnedLanguage} level ${item.level}. ${item.progress.known} known, ${item.progress.learning} learning, ${item.progress.addedNotStarted} added but not started, ${item.progress.notAdded} not added.`}
                 onPress={() => router.push({ pathname: '/level/[level]', params: { level: item.level } } as never)}
@@ -129,6 +135,8 @@ export default function LibraryScreen() {
         </View>}
         ListEmptyComponent={libraryView === 'my-words' ? <View style={styles.empty}><EmptyState title={selectedCollection === 'other-vocabulary' ? 'No other vocabulary' : `No ${learnedLanguage.toLowerCase()} words here yet`} message={selectedCollection === 'other-vocabulary'
           ? 'Words outside the supported English → Slovak and Spanish → Slovak courses appear here.'
+          : spanishPreview
+          ? 'Open Discover and choose a level with entries to add Spanish words, then practice them here.'
           : activeCourse.capabilities.recommendations
           ? 'Add a word here, or switch to Discover for recommendations.'
           : 'Add a Spanish word manually or bulk paste your own reviewed vocabulary.'}/></View> : null}
@@ -139,7 +147,7 @@ export default function LibraryScreen() {
         ListFooterComponent={libraryView === 'discover' ? <View style={styles.footer}>
           <View style={styles.sectionHeader}><View style={styles.sectionCopy}><AppText variant="heading">{activeCourse.capabilities.recommendations ? 'Recommended for you' : 'Spanish catalog status'}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{activeCourse.capabilities.recommendations ? 'Small batches shaped by your level and interests.' : 'Manual and imported Spanish words are fully available now.'}</AppText></View></View>
           {!activeCourse.capabilities.recommendations ? <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-            <View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="shield-checkmark-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">Reviewed A1–C2 content is not bundled yet</AppText><AppText variant="caption" style={{ color: theme.muted }}>Instituto Cervantes informs the editorial structure only. Its content is not copied or packaged without permission.</AppText></View></View>
+            <View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="shield-checkmark-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">{spanishPreview ? 'Spanish preview is ready for local testing' : catalogAvailability.total > 0 ? 'Spanish catalog entries are available' : 'Reviewed A1–C2 content is not bundled yet'}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{spanishPreview ? 'Browse a level with entries above and add words to My words. This development preview is not a production release or a complete curriculum.' : 'Instituto Cervantes informs the editorial structure only. No certification or endorsement is implied.'}</AppText></View></View>
             <View style={styles.actionRow}><View style={styles.action}><PrimaryButton label="Add Spanish word" onPress={() => router.push('/word/new')} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/></View><View style={styles.action}><PrimaryButton label="Import" variant="secondary" onPress={() => router.push('/import')} icon={<Ionicons name="clipboard-outline" color={theme.primary} size={18}/>}/></View></View>
           </View> : hasPreferences ? <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
             <View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="sparkles-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">{learningPreferences.levels.join(', ')} {learnedLanguage}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{topicOptions.filter((topic) => learningPreferences.topics.includes(topic.id)).map((topic) => topic.title).join(' · ')}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Edit learning preferences" onPress={() => router.push('/preferences' as never)} style={styles.editPreferences}><AppText variant="label" style={{ color: theme.primary }}>Edit</AppText></Pressable></View>

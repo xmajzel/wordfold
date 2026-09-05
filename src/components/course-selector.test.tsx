@@ -14,4 +14,13 @@ describe('CourseSelector', () => {
 
     expect(onChange).toHaveBeenCalledWith('es-sk');
   });
+
+  it('keeps stable targets and disables both choices during confirmation', async () => {
+    const onChange = jest.fn();
+    const screen = await render(<CourseSelector value="es-sk" onChange={onChange} disabled/>);
+    expect(screen.getByTestId('course-selector')).toBeTruthy();
+    expect(screen.getByTestId('course-option-es-sk').props.accessibilityState).toEqual({ checked: true, disabled: true });
+    await fireEvent.press(screen.getByTestId('course-option-en-sk'));
+    expect(onChange).not.toHaveBeenCalled();
+  });
 });
