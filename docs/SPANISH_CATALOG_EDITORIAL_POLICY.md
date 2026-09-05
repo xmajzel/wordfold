@@ -186,6 +186,32 @@ attestations, completion dates, changed entry identities, or an active save lock
 Never clear human work to bypass this check; completed or partially reviewed content
 requires explicit adjudication and fresh review of the changed payload.
 
+Each reviewer starts a separate local process for only their assigned package. The
+server binds to `127.0.0.1`, validates the committed source/candidate/evidence assets
+and package hashes before serving, and prints the local URL. Start the Spanish review:
+
+```sh
+pnpm spanish:a1:review --review .artifacts/spanish-a1/reviews/spanish-review.json
+```
+
+After stopping that process, start the Slovak review separately:
+
+```sh
+pnpm spanish:a1:review --review .artifacts/spanish-a1/reviews/slovak-review.json
+```
+
+Use the page to search or filter subjects, choose decisions, enter required notes,
+and save. Before navigation or a search/filter change, the page automatically saves
+unsaved input and proceeds only after success; validation or revision conflicts leave
+the reviewer on the same subject with the error visible. Every save is atomic,
+revision-checked, and guarded by a package-specific cross-process lock; a stale browser
+must refresh instead of overwriting newer work.
+Spanish approval requires one offered OMW sense,
+or explicit approval of the documented original-editorial exception when no sense is
+offered. When no decisions remain pending, the reviewer enters their own truthful
+attestation and finalizes. Finalization records a server-generated ISO completion
+time, but does not score, compile, publish, or promote the catalog.
+
 Each Spanish source option now carries a readable English WordNet definition,
 member lemmas and any examples, plus Spanish descriptions when the pinned Spanish
 source supplies them. Source languages are labelled; reference text is not

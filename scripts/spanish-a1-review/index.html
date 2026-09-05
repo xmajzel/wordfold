@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Wordfold Spanish A1 review</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#review-card">Skip to review</a>
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">Wordfold · independent review</p>
+        <h1>Spanish A1 editorial review</h1>
+        <p class="lede">A local, hash-bound workspace for one registered reviewer. Your decisions stay in the selected package on this computer.</p>
+      </div>
+      <span class="local-badge"><span aria-hidden="true">●</span> 127.0.0.1 only</span>
+    </header>
+
+    <main class="page-shell" hidden id="workspace">
+      <section class="session-bar panel" aria-label="Review session">
+        <div>
+          <p class="eyebrow" id="review-kind">Loading review</p>
+          <p class="session-name" id="reviewer"></p>
+          <p class="qualification" id="qualification"></p>
+        </div>
+        <div class="session-progress" aria-live="polite">
+          <strong id="progress-count">0 / 0 decided</strong>
+          <span id="save-status">Loading…</span>
+        </div>
+      </section>
+
+      <section class="filter-bar panel" aria-label="Find review subjects">
+        <label>Search
+          <input id="search" type="search" placeholder="Term, definition, example, hint…" autocomplete="off">
+        </label>
+        <label>Status
+          <select id="status-filter">
+            <option value="all">All decisions</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="changes-requested">Changes requested</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </label>
+        <label>PCIC category
+          <select id="category-filter"><option value="all">All categories</option></select>
+        </label>
+        <button class="button secondary" id="next-pending" type="button">Next pending</button>
+      </section>
+
+      <div class="review-layout">
+        <article class="review-card panel" id="review-card" tabindex="-1">
+          <div class="subject-meta">
+            <span class="category-chip" id="category"></span>
+            <span id="position"></span>
+          </div>
+
+          <div class="subject-heading">
+            <p class="eyebrow" id="part-of-speech"></p>
+            <h2 id="term"></h2>
+          </div>
+
+          <dl class="content-grid">
+            <div><dt>Definition</dt><dd id="definition"></dd></div>
+            <div><dt>Example</dt><dd id="example"></dd></div>
+            <div id="gender-row" hidden><dt>Gender</dt><dd id="gender"></dd></div>
+            <div id="forms-row" hidden><dt>Alternative forms</dt><dd id="forms"></dd></div>
+            <div id="translation-row" hidden><dt>Slovak hint</dt><dd id="translation"></dd></div>
+            <div id="rationale-row" hidden><dt>A1 rationale</dt><dd id="rationale"></dd></div>
+          </dl>
+
+          <fieldset class="sense-panel" id="sense-panel" hidden>
+            <legend>Lexical evidence</legend>
+            <p class="field-help">Select the source meaning that matches the Wordfold definition and example. Licensed Spanish and English source descriptions support sense selection; they are not learner content.</p>
+            <details class="source-license" id="source-license" hidden>
+              <summary>Source attribution and license</summary>
+              <p id="source-attribution"></p>
+              <p>Spanish source license: <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>.</p>
+              <p id="source-license-text"></p>
+            </details>
+            <div id="sense-options"></div>
+            <label class="exception-option" id="exception-row" hidden>
+              <input id="exception-approved" type="checkbox">
+              Approve the documented original-editorial exception
+            </label>
+            <p class="exception-rationale" id="exception-rationale" hidden></p>
+          </fieldset>
+
+          <fieldset class="decision-panel">
+            <legend>Decision</legend>
+            <div class="decision-grid">
+              <button class="decision-button approve" data-decision="approved" type="button"><kbd>1</kbd><span><strong>Approve</strong><small>Content is ready</small></span></button>
+              <button class="decision-button change" data-decision="changes-requested" type="button"><kbd>2</kbd><span><strong>Request changes</strong><small>Revision is needed</small></span></button>
+              <button class="decision-button reject" data-decision="rejected" type="button"><kbd>3</kbd><span><strong>Reject</strong><small>Not suitable for this catalog</small></span></button>
+            </div>
+          </fieldset>
+
+          <label class="notes-label" for="notes">Reviewer notes <span id="notes-requirement">optional for approval</span></label>
+          <textarea id="notes" maxlength="2000" placeholder="Record a precise reason or suggested correction."></textarea>
+          <div class="notes-footer"><span id="notes-count">0 / 2000</span><span>Changes and rejections require notes.</span></div>
+
+          <div class="action-row">
+            <button class="button secondary" id="previous" type="button">← Previous</button>
+            <button class="button primary" id="save" type="button">Save decision</button>
+            <button class="button secondary" id="next" type="button">Next →</button>
+          </div>
+        </article>
+
+        <aside class="side-panel panel">
+          <h2>Progress</h2>
+          <div class="progress-track" aria-hidden="true"><div id="progress-fill"></div></div>
+          <dl class="counts">
+            <div><dt>Pending</dt><dd id="pending-count">0</dd></div>
+            <div><dt>Approved</dt><dd id="approved-count">0</dd></div>
+            <div><dt>Changes</dt><dd id="changes-count">0</dd></div>
+            <div><dt>Rejected</dt><dd id="rejected-count">0</dd></div>
+          </dl>
+          <div class="shortcut-guide">
+            <h3>Keyboard</h3>
+            <p><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> choose · <kbd>←</kbd> <kbd>→</kbd> navigate · <kbd>⌘/Ctrl Enter</kbd> save</p>
+          </div>
+          <p class="independence-note"><strong>Stay independent.</strong> Complete this review without seeing or discussing the other reviewer’s decisions.</p>
+        </aside>
+      </div>
+
+      <section class="finalize-card panel" id="finalize-card" hidden>
+        <div>
+          <p class="eyebrow">Final step</p>
+          <h2>Finalize this independent review</h2>
+          <p>Finalization records your words and the server’s completion time. It does not compile or publish catalog content.</p>
+        </div>
+        <label for="attestation">Your attestation</label>
+        <textarea id="attestation" maxlength="1000" placeholder="Describe what you personally reviewed and attest that the decisions are your own."></textarea>
+        <label class="confirmation"><input type="checkbox" id="attestation-confirmed"> I confirm this statement is truthful and entered by me.</label>
+        <button class="button primary" id="finalize" type="button">Finalize review</button>
+      </section>
+    </main>
+
+    <p class="fatal-error" id="fatal-error" role="alert" hidden></p>
+  </body>
+</html>
