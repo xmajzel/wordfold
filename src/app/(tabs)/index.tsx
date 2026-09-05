@@ -299,6 +299,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     <Screen style={styles.screen}>
       <Header filter={filter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={onSelectFilter}/>
       <FlatList
+        testID="today-words-list"
         ref={listRef}
         data={sessionFeed}
         extraData={currentWords}
@@ -316,7 +317,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
             && isOnDeviceTranslationPairSupported(currentWord.sourceLanguageCode, currentWord.targetLanguageCode)
             ? translationStates[currentWord.id] ?? 'loading'
             : undefined;
-          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><SwipeableWordCard word={currentWord} active={index === currentIndex} disabled={sessionRating !== undefined} onSwipe={(rating) => handleRating(currentWord, rating)}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} sessionRating={sessionRating} showPronunciation={index === currentIndex} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={sessionRating === undefined ? (rating) => handleRating(currentWord, rating) : undefined}/></SwipeableWordCard></View>;
+          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><SwipeableWordCard word={currentWord} active={index === currentIndex} disabled={sessionRating !== undefined} onSwipe={(rating) => handleRating(currentWord, rating)}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} sessionRating={sessionRating} showPronunciation pronunciationActive={index === currentIndex} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={sessionRating === undefined ? (rating) => handleRating(currentWord, rating) : undefined}/></SwipeableWordCard></View>;
         }}
       />
       <AppText variant="caption" style={[styles.position, { color: theme.muted }]}>{Math.min(currentIndex + 1, sessionFeed.length)} of {sessionFeed.length} due now · scroll to skip</AppText>

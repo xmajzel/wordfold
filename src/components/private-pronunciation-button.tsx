@@ -25,6 +25,7 @@ type PrivatePronunciationButtonProps = {
   consentEnabled: boolean;
   deletionPending?: boolean;
   compact?: boolean;
+  active?: boolean;
   onReviewConsent(): void;
 };
 
@@ -35,6 +36,7 @@ export function PrivatePronunciationButton({
   consentEnabled,
   deletionPending = false,
   compact = false,
+  active = true,
   onReviewConsent,
 }: PrivatePronunciationButtonProps) {
   const theme = useAppTheme();
@@ -46,12 +48,14 @@ export function PrivatePronunciationButton({
   const localeDescription = `${languageLabel(languageCode)} · `
     + pronunciationLocaleLabel(languageCode, locale);
 
+  if (!active && status !== 'idle') setStatus('idle');
+
   useEffect(() => {
     statusRef.current = status;
   }, [status]);
 
   useEffect(() => {
-    mounted.current = true;
+    mounted.current = active;
     return () => {
       mounted.current = false;
       requestId.current += 1;
@@ -59,7 +63,7 @@ export function PrivatePronunciationButton({
         void stopPronunciation();
       }
     };
-  }, []);
+  }, [active]);
 
   const showPlaybackError = useCallback((error: unknown) => {
     const message = error instanceof PrivateNeuralPronunciationError
@@ -72,6 +76,7 @@ export function PrivatePronunciationButton({
   }, []);
 
   const play = useCallback(async () => {
+    if (!active) return;
     if (!consentEnabled) {
       onReviewConsent();
       return;
@@ -112,7 +117,7 @@ export function PrivatePronunciationButton({
       setStatus('idle');
       showPlaybackError(error);
     }
-  }, [consentEnabled, locale, onReviewConsent, scope, showPlaybackError, status, text]);
+  }, [active, consentEnabled, locale, onReviewConsent, scope, showPlaybackError, status, text]);
 
   const preparing = status === 'preparing';
   const pending = status === 'pending';
@@ -128,8 +133,8 @@ export function PrivatePronunciationButton({
   return <Pressable
     accessibilityRole="button"
     accessibilityLabel={preparing ? `Preparing ${localeDescription} private neural pronunciation` : actionLabel}
-    accessibilityState={{ busy: preparing, disabled: preparing }}
-    disabled={preparing}
+    accessibilityState={{ busy: preparing, disabled: !active || preparing }}
+    disabled={!active || preparing}
     onPress={() => void play()}
     style={({ pressed }) => [styles.button, compact && styles.compactButton, {
       backgroundColor: theme.raised,

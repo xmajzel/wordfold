@@ -1,9 +1,10 @@
-import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
+import { act, fireEvent, render, waitFor, within } from '@testing-library/react-native';
 import { Alert, StyleSheet } from 'react-native';
 
 import LearnScreen from '@/app/(tabs)';
 import type { LearningFilter, LearningPreferences, LearningRating, Word } from '@/domain/types';
 import type { Recommendation } from '@/features/recommendations/selector';
+import { spacing } from '@/theme/tokens';
 
 const mockBuildLearningFeed = jest.fn<Word[], unknown[]>();
 const mockBuildContinuedLearningFeed = jest.fn<Word[], unknown[]>();
@@ -178,6 +179,32 @@ describe('continued learning session', () => {
     expect(view.getByTestId('swipe-wrapper-next').props.accessibilityState).toEqual({ disabled: false });
     expect(view.getAllByRole('button', { name: /I know this/ })).toHaveLength(1);
     await act(async () => finishRating());
+  });
+
+  it.each([450, 600])('renders pronunciation before scrolling settles in a %ipx feed', async (height) => {
+    mockBuildLearningFeed.mockReturnValue([mockFirstWord, mockNextWord]);
+    const view = await render(<LearnScreen/>);
+    const list = view.getByTestId('today-words-list');
+    await fireEvent(list, 'layout', { nativeEvent: { layout: { height } } });
+    const nextCard = within(view.getByTestId('swipe-wrapper-next'));
+    const pronunciation = nextCard.getByRole('button', {
+      name: /Play .* device pronunciation for focus/,
+      includeHiddenElements: true,
+    });
+    expect(pronunciation).toBeDisabled();
+    expect(nextCard.queryByRole('button', { name: /device pronunciation/ })).toBeNull();
+
+    await fireEvent(list, 'momentumScrollEnd', {
+      nativeEvent: { contentOffset: { y: height + spacing.md } },
+    });
+
+    expect(view.getByText(/^2 of 2 due now/)).toBeTruthy();
+    expect(nextCard.getByRole('button', { name: /Play .* device pronunciation for focus/ })).toBe(pronunciation);
+    expect(pronunciation).toBeEnabled();
+    expect(within(view.getByTestId('swipe-wrapper-first')).getByRole('button', {
+      name: /device pronunciation/,
+      includeHiddenElements: true,
+    })).toBeDisabled();
   });
 
   it('accepts rapid ratings while earlier saves are still pending', async () => {

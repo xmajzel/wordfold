@@ -178,6 +178,12 @@ describe('PronunciationControls', () => {
     const transitioning = await render(<PronunciationControls {...manual}/>);
     expect(transitioning.queryByLabelText('private-enabled')).toBeNull();
     expect(transitioning.queryByLabelText('private-disabled')).toBeNull();
+    expect(transitioning.getByLabelText('Checking cloud pronunciation')).toBeTruthy();
+
+    mockConsentUserId = 'next-reader';
+    await transitioning.rerender(<PronunciationControls {...manual}/>);
+    expect(transitioning.queryByLabelText('Checking cloud pronunciation')).toBeNull();
+    expect(transitioning.getByLabelText('private-enabled')).toBeTruthy();
   });
 
   it.each([

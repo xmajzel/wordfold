@@ -22,6 +22,7 @@ type NeuralPronunciationButtonProps = {
   catalogSenseId: string;
   locale: NeuralPronunciationLocale;
   compact?: boolean;
+  active?: boolean;
   offlineOnly?: boolean;
   availableOffline?: boolean;
   onUnavailable?(): void;
@@ -31,6 +32,7 @@ export function NeuralPronunciationButton({
   catalogSenseId,
   locale,
   compact = false,
+  active = true,
   offlineOnly = false,
   availableOffline = false,
   onUnavailable,
@@ -43,12 +45,14 @@ export function NeuralPronunciationButton({
   const localeDescription = `${languageLabel('en')} · ${pronunciationLocaleLabel('en', locale)}`;
   const voiceLabel = neuralVoiceLabel(locale);
 
+  if (!active && status !== 'idle') setStatus('idle');
+
   useEffect(() => {
     statusRef.current = status;
   }, [status]);
 
   useEffect(() => {
-    mounted.current = true;
+    mounted.current = active;
     return () => {
       mounted.current = false;
       requestId.current += 1;
@@ -56,7 +60,7 @@ export function NeuralPronunciationButton({
         void stopPronunciation();
       }
     };
-  }, []);
+  }, [active]);
 
   const showPlaybackError = useCallback((error: unknown) => {
     const message = offlineOnly
@@ -71,6 +75,7 @@ export function NeuralPronunciationButton({
   }, [offlineOnly, voiceLabel]);
 
   const play = useCallback(async () => {
+    if (!active) return;
     if (status === 'preparing') return;
     if (status === 'speaking') {
       requestId.current += 1;
@@ -109,7 +114,7 @@ export function NeuralPronunciationButton({
       onUnavailable?.();
       showPlaybackError(error);
     }
-  }, [catalogSenseId, locale, offlineOnly, onUnavailable, showPlaybackError, status]);
+  }, [active, catalogSenseId, locale, offlineOnly, onUnavailable, showPlaybackError, status]);
 
   const preparing = status === 'preparing';
   const pending = status === 'pending';
@@ -121,8 +126,8 @@ export function NeuralPronunciationButton({
   return <Pressable
     accessibilityRole="button"
     accessibilityLabel={preparing ? `Preparing ${voiceLabel} pronunciation` : actionLabel}
-    accessibilityState={{ busy: preparing, disabled: preparing }}
-    disabled={preparing}
+    accessibilityState={{ busy: preparing, disabled: !active || preparing }}
+    disabled={!active || preparing}
     onPress={() => void play()}
     style={({ pressed }) => [styles.button, compact && styles.compactButton, {
       backgroundColor: theme.raised,
