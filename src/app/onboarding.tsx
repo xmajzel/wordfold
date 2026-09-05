@@ -7,12 +7,14 @@ import Animated, { FadeInLeft, FadeInRight, ReduceMotion } from 'react-native-re
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AppText } from '@/components/app-text';
+import { describeCatalogAvailability } from '@/components/catalog-availability';
 import { CourseSelector } from '@/components/course-selector';
 import { LevelSelection, TopicSelection } from '@/components/preference-cards';
 import { PrimaryButton } from '@/components/primary-button';
 import { PronunciationVoicePicker } from '@/components/pronunciation-voice-picker';
 import { Screen } from '@/components/screen';
 import { cefrLevelDescriptions } from '@/data/cefr-levels';
+import { getCourseCatalogAvailability } from '@/data/course-catalog';
 import { wordBelongsToCourse, type CourseDefinition, type CourseId } from '@/domain/courses';
 import type { CefrLevel, ContentPackId, LearningPreferences, PronunciationVoicePreference } from '@/domain/types';
 import { neuralPreviewFeatureEnabled, neuralVoiceLabel } from '@/features/pronunciation/cloud';
@@ -160,7 +162,7 @@ export default function OnboardingScreen() {
             <LevelSelection selected={levels} onToggle={toggleLevel}/>
             <AppText variant="caption" style={{ color: theme.muted }}>{activeCourse.capabilities.recommendations
               ? 'Levels set the difficulty boundary for every recommendation.'
-              : 'Levels organize your Spanish learning now and will filter the reviewed catalog when it is ready.'}</AppText>
+              : describeCatalogAvailability(getCourseCatalogAvailability(activeCourseId))}</AppText>
           </View> : null}
           {interestsStep >= 0 && step === interestsStep ? <View style={styles.section}>
             <StepHeading eyebrow="YOUR INTERESTS" title={`What will you use ${activeCourse.sourceLanguageCode === 'en' ? 'English' : 'Spanish'} for?`} body="Pick every area that matters. We will prioritize words that match."/>
@@ -188,7 +190,7 @@ export default function OnboardingScreen() {
           icon={<Ionicons name="arrow-back" color={theme.primary} size={18}/>}
         /></View>
         <View style={styles.continueButton}><PrimaryButton
-          label={step === stepCount - 1 ? 'Create my set' : 'Continue'}
+          label={step === stepCount - 1 ? activeCourse.capabilities.recommendations ? 'Create my set' : 'Save my preferences' : 'Continue'}
           disabled={!canContinue}
           loading={busy}
           onPress={() => void continueFlow()}
@@ -205,7 +207,7 @@ function LanguageStep({ value, onChange, disabled }: { value: CourseId; onChange
     <View style={styles.heroMark}><LinearGradient colors={theme.primaryGradient} style={styles.heroGradient}><AppText variant="title" style={styles.heroLetter}>W</AppText></LinearGradient></View>
     <StepHeading eyebrow="WELCOME" title="Keep useful words close." body="Build a small vocabulary practice around your level, work, studies, and everyday life." centered/>
     <CourseSelector value={value} onChange={onChange} disabled={disabled}/>
-    <View style={[styles.privacyRow, { backgroundColor: theme.primarySoft }]}><Ionicons name="phone-portrait-outline" color={theme.primary} size={19}/><AppText variant="caption" style={styles.flex}>Your words and progress stay on this device.</AppText></View>
+    <View style={[styles.privacyRow, { backgroundColor: theme.primarySoft }]}><Ionicons name="library-outline" color={theme.primary} size={19}/><AppText variant="caption" style={styles.flex}>Switch courses any time. Neither library nor its progress is removed.</AppText></View>
   </View>;
 }
 
@@ -226,10 +228,13 @@ function ReviewStep({ preferences, preview, voicePreference, course }: {
 }) {
   const theme = useAppTheme();
   const topicNames = topicOptions.filter((topic) => preferences.topics.includes(topic.id)).map((topic) => topic.title);
+  const availability = getCourseCatalogAvailability(course.id);
   return <View style={styles.section}>
     <StepHeading eyebrow="YOUR PLAN" title="A focused start, made for you." body={course.capabilities.recommendations
       ? 'We will add a small starter set now. Your choices can be edited at any time.'
-      : 'Your Spanish course is ready for manual and imported words. Your choices can be edited at any time.'}/>
+      : availability.total > 0
+        ? 'Choose Spanish words from the library to start practicing. No catalog words are added automatically.'
+        : 'Your Spanish course is ready for manual and imported words. Your choices can be edited at any time.'}/>
     <View style={[styles.summaryCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
       <SummaryRow icon="language-outline" label="Language" value={course.directionLabel}/>
       <View style={[styles.divider, { backgroundColor: theme.border }]}/>
@@ -252,7 +257,9 @@ function ReviewStep({ preferences, preview, voicePreference, course }: {
         ? 'These words will be added to your library.'
         : course.capabilities.recommendations
           ? 'Your current library is full. Unlock unlimited words later to add recommendations.'
-          : 'Add Spanish words manually or import them. The built-in A1–C2 catalog stays hidden until every entry has approved provenance and independent editorial review.'}</AppText>
+          : availability.total > 0
+            ? `Browse Library → Discover and choose a level with entries. ${describeCatalogAvailability(availability)} Words are added only when you choose them.`
+            : 'Add Spanish words manually or import them. The built-in A1–C2 catalog stays hidden until every entry has approved provenance and independent editorial review.'}</AppText>
     </View>
     {voicePreference === 'device' || preview.length === 0 ? null : <View style={[styles.note, { backgroundColor: theme.primarySoft }]}>
       <Ionicons name="cloud-download-outline" color={theme.primary} size={20}/>

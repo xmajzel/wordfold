@@ -10,21 +10,26 @@ export function CourseSelector({
   value,
   onChange,
   disabled = false,
+  descriptions,
 }: {
   value: CourseId;
   onChange(courseId: CourseId): void;
   disabled?: boolean;
+  descriptions?: Partial<Record<CourseId, string>>;
 }) {
   const theme = useAppTheme();
-  return <View accessibilityRole="radiogroup" style={styles.list}>
+  return <View testID="course-selector" accessibilityRole="radiogroup" accessibilityLabel="Learning course" style={styles.list}>
     {courseDefinitions.map((course) => {
       const selected = course.id === value;
       return <Pressable
         key={course.id}
+        testID={`course-option-${course.id}`}
         accessibilityRole="radio"
         accessibilityLabel={course.directionLabel}
-        accessibilityHint={course.description}
+        accessibilityHint={descriptions?.[course.id] ?? course.description}
         accessibilityState={{ checked: selected, disabled }}
+        aria-checked={selected}
+        aria-disabled={disabled}
         disabled={disabled}
         onPress={() => onChange(course.id)}
         style={({ pressed }) => [styles.card, {
@@ -33,12 +38,12 @@ export function CourseSelector({
           opacity: disabled ? 0.55 : pressed ? 0.78 : 1,
         }]}
       >
-        <View style={[styles.icon, { backgroundColor: selected ? theme.primary : theme.raised }]}>
-          <Ionicons name="language-outline" color={selected ? '#FFFFFF' : theme.primary} size={24}/>
+        <View accessible={false} aria-hidden accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={[styles.icon, { backgroundColor: theme.surface }]}>
+          <AppText style={styles.flag}>{course.id === 'es-sk' ? '🇪🇸' : '🇬🇧'}</AppText>
         </View>
         <View style={styles.text}>
           <AppText variant="heading">{course.directionLabel}</AppText>
-          <AppText variant="caption" style={{ color: theme.muted }}>{course.description}</AppText>
+          <AppText variant="caption" style={{ color: selected ? theme.text : theme.muted }}>{descriptions?.[course.id] ?? course.description}</AppText>
         </View>
         <Ionicons
           name={selected ? 'radio-button-on' : 'radio-button-off'}
@@ -62,5 +67,6 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   icon: { width: 48, height: 48, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
-  text: { flex: 1, gap: 2 },
+  text: { flex: 1, minWidth: 0, gap: 2 },
+  flag: { fontSize: 28, lineHeight: 34 },
 });

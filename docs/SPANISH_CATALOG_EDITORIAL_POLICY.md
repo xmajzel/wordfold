@@ -151,6 +151,35 @@ adjudications.
 
 ## Local A1 pilot workflow
 
+### In-app development preview
+
+The owner approved local testing of the corrected 500-word A1 dataset on 2026-09-05.
+To enable it, put `EXPO_PUBLIC_SPANISH_A1_PREVIEW_ENABLED=true` in ignored
+`.env.local`, then restart the Expo development server. This workspace has that
+local opt-in enabled. The flag also requires `__DEV__`; release-mode catalog
+lookups remain gated even when the environment flag is true.
+
+Select **Slovak → Spanish** in Settings (or onboarding), then open
+**Library → Discover → A1**. Browse/search the 500 words, add chosen entries to
+**My words**, and practice them in **Learn** with Spanish definitions/examples,
+Slovak hints and the existing Spanish–Spain device pronunciation control. A1 cards
+also show grammatical gender and available alternative forms. Words are not
+automatically added during onboarding. A2–C2 and Spanish recommendations remain
+unavailable; the English recommendation engine is not reused for Spanish.
+
+This preview does not mutate reviewer files or claim native-reviewer approval.
+Added words use the existing library storage and account-sync behavior; use a guest
+or test account for disposable native-device tests. Web preview word state is
+in-memory and resets on page reload. No database migration or cloud build is needed.
+
+Verification: 90 suites / 482 tests passed, including preview-enabled/disabled and
+release-mode gates plus adding Spanish identities/hints/locales. Live web QA verified
+Library → A1 → add `cabeza` → Learn → reveal `hlava`. Mobile word titles were measured
+and fixed to remain one line at 375px; back/add controls measured 44/50px high and
+search text 16px. Desktop practice had no page overflow at 1280px. Native-device
+audio was not reverified. Expo Doctor still reports the existing five dependency
+advisories described in `SPANISH_A1_IMPLEMENTATION_VERIFICATION.md`.
+
 ### Editorial source preparation
 
 Download and extract the pinned `omw-es-2.0.tar.xz` and `omw-en-2.0.tar.xz` releases

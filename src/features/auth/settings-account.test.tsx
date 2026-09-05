@@ -1,10 +1,11 @@
-import { fireEvent, render } from '@testing-library/react-native';
-import { Linking } from 'react-native';
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
+import { Alert, Linking } from 'react-native';
 
 import SettingsScreen from '@/app/settings';
 import { ACCOUNT_DELETION_URL, PRIVACY_POLICY_URL } from '@/features/legal/urls';
 
 const mockPush = jest.fn();
+const mockSwitchCourse = jest.fn(async (_courseId: string) => undefined);
 let mockPrivateConsentStatus: 'disabled' | 'enabled' | 'deletion_pending' = 'disabled';
 
 jest.mock('expo-router', () => ({ router: { back: jest.fn(), push: (...args: unknown[]) => mockPush(...args) } }));
@@ -24,7 +25,7 @@ jest.mock('@/providers/app-data-provider', () => ({
       capabilities: { recommendations: true, offlinePronunciation: true, privateNeuralPronunciation: true },
     },
     learningPreferences: { levels: [], topics: [] },
-    switchActiveCourse: jest.fn(async () => undefined),
+    switchActiveCourse: mockSwitchCourse,
     updateReminderSettings: jest.fn(async () => 0),
   }),
 }));
@@ -58,6 +59,7 @@ describe('Settings account entry', () => {
     jest.clearAllMocks();
     delete process.env.EXPO_PUBLIC_PRONUNCIATION_PRIVATE_PREVIEW_ENABLED;
     mockPrivateConsentStatus = 'disabled';
+    mockSwitchCourse.mockResolvedValue(undefined);
   });
 
   it('shows the signed-in PowerSync connection without claiming vocabulary import', async () => {
@@ -95,5 +97,38 @@ describe('Settings account entry', () => {
 
     expect(openUrl).toHaveBeenNthCalledWith(1, PRIVACY_POLICY_URL);
     expect(openUrl).toHaveBeenNthCalledWith(2, ACCOUNT_DELETION_URL);
+  });
+
+  it('stages a course choice and leaves the active course unchanged until confirmation', async () => {
+    const view = await render(<SettingsScreen/>);
+    await fireEvent.press(view.getByRole('radio', { name: 'Slovak → Spanish' }));
+    expect(mockSwitchCourse).not.toHaveBeenCalled();
+    expect(view.getByText('Active course: Slovak → English')).toBeTruthy();
+    await fireEvent.press(view.getByTestId('course-switch-confirm'));
+    expect(mockSwitchCourse).toHaveBeenCalledTimes(1);
+    expect(mockSwitchCourse).toHaveBeenCalledWith('es-sk');
+  });
+
+  it('discards an unconfirmed choice when Settings is closed', async () => {
+    const view = await render(<SettingsScreen/>);
+    await fireEvent.press(view.getByRole('radio', { name: 'Slovak → Spanish' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Close' }));
+    expect(mockSwitchCourse).not.toHaveBeenCalled();
+  });
+
+  it('blocks duplicate submissions and preserves the real course after a failure', async () => {
+    let rejectSwitch!: (reason: Error) => void;
+    mockSwitchCourse.mockImplementationOnce(() => new Promise((_, reject) => { rejectSwitch = reject; }));
+    const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
+    const view = await render(<SettingsScreen/>);
+    await fireEvent.press(view.getByRole('radio', { name: 'Slovak → Spanish' }));
+    await fireEvent.press(view.getByTestId('course-switch-confirm'));
+    await fireEvent.press(view.getByTestId('course-switch-confirm'));
+    expect(mockSwitchCourse).toHaveBeenCalledTimes(1);
+    await act(() => rejectSwitch(new Error('Storage unavailable')));
+    await waitFor(() => expect(alert).toHaveBeenCalledWith('Could not switch course', 'Storage unavailable'));
+    expect(view.getByText('Active course: Slovak → English')).toBeTruthy();
+    expect(view.getByRole('radio', { name: 'Slovak → English' }).props.accessibilityState.checked).toBe(true);
+    alert.mockRestore();
   });
 });

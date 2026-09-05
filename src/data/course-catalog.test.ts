@@ -8,6 +8,10 @@ import {
   validateSpanishCatalogAsset,
 } from './course-catalog';
 
+// These cases exercise the normal/release-gated catalog. Local .env preview
+// opt-ins must not change their scenario; spanish-preview.test covers both modes.
+jest.mock('@/domain/spanish-preview', () => ({ spanishA1PreviewEnabled: false }));
+
 describe('course-aware catalog', () => {
   it('preserves the complete English catalog behind the course boundary', () => {
     const entries = cefrLevels.flatMap((level) => getCourseCatalogEntries('en-sk', level));
