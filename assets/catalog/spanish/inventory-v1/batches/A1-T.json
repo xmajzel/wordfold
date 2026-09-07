@@ -1,0 +1,5147 @@
+{
+  "schemaVersion": 1,
+  "batchId": "A1-T",
+  "courseId": "es-sk",
+  "level": "A1",
+  "package": "T",
+  "status": "proposed",
+  "author": "picker_implementation AI sense-selection worker",
+  "levelMeaning": "recommended-sense-introduction",
+  "references": [
+    {
+      "id": "pcic-specific",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions: 11 services and 14 travel/accommodation/transport; A1/A2 columns checked 2026-09-05",
+      "use": "Framework only; original Wordfold sense selection and placement, not official word-level assignment, copied learner text or endorsement."
+    },
+    {
+      "id": "pcic-general",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/08_nociones_generales_inventario_a1-a2.htm",
+      "section": "8 general notions: existence, quantity, location/movement and time; A1/A2 columns",
+      "use": "Prerequisite framework only; do not count topic reuse as new meanings."
+    },
+    {
+      "id": "pcic-functions",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/05_funciones_inventario_a1-a2.htm",
+      "section": "5 functions: information questions and immediate requests; A1/A2 columns",
+      "use": "Scenario framework, not copied dialogue or certification."
+    },
+    {
+      "id": "pcic-pronunciation",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/03_pronunciacion_inventario_a1-a2.htm",
+      "section": "3 pronunciation/prosody: stress, syllables and sound contrasts; A1/A2",
+      "use": "Written risk planning only; no claim of listening or native-speaker approval."
+    },
+    {
+      "id": "fundeu-campin",
+      "url": "https://www.fundeu.es/recomendacion/campin-adaptacion-al-espanol-de-camping-1029/",
+      "section": "Adapted spelling and plural of campin; checked 2026-09-05",
+      "use": "Orthographic cross-check only; no copied definition or learner text."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "A1-T-find-services",
+      "description": "Identify and locate a public, financial or community service.",
+      "frameworkSections": [
+        "PCIC9 specific notions 11.3 financial,11.4 healthcare,11.5 educational,11.6 safety,11.7 social services; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Recognize where to request immediate assistance, not the full institution or entitlement system."
+    },
+    {
+      "id": "A1-T-post",
+      "description": "Identify basic postal items and ask where a simple item can be sent.",
+      "frameworkSections": [
+        "PCIC9 specific notions 11.1 postal service; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Concrete counter and item recognition; parcel tracking and forms remain later work."
+    },
+    {
+      "id": "A1-T-money",
+      "description": "Recognize a basic payment, withdrawal or currency-exchange service.",
+      "frameworkSections": [
+        "PCIC9 specific notions 11.3 financial services; 12.4 payments; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Everyday service identification without financial advice or account-product comparison."
+    },
+    {
+      "id": "A1-T-help",
+      "description": "Ask for immediate practical help and recognize an urgent situation.",
+      "frameworkSections": [
+        "PCIC9 specific notions 11.4 healthcare; 11.6 protection and safety; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Minimal help language and service names, not diagnostic or legal reporting guidance."
+    },
+    {
+      "id": "A1-T-tickets",
+      "description": "Buy or identify a basic transport/admission ticket and its journey type.",
+      "frameworkSections": [
+        "PCIC9 specific notions 14.1.1 travel objects/documents; 14.3 transport; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Mode, destination, quantity and one-way/return contrasts support a short transaction."
+    },
+    {
+      "id": "A1-T-places",
+      "description": "Identify transport stops, stations and terminal access points.",
+      "frameworkSections": [
+        "PCIC9 specific notions 14.3.1 transport network; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Named access points are distinguished from the vehicles themselves."
+    },
+    {
+      "id": "A1-T-modes",
+      "description": "Choose a familiar land, sea or air transport mode.",
+      "frameworkSections": [
+        "PCIC9 specific notions 14.3.2 types of transport; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "A bounded ordinary mode set, not a catalogue of specialist vehicles."
+    },
+    {
+      "id": "A1-T-signs",
+      "description": "Understand short entry/exit, opening and queue messages.",
+      "frameworkSections": [
+        "PCIC9 specific notions 14.3.1 transport network; 11 service locations; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Immediate sign comprehension depends on F time and state vocabulary."
+    },
+    {
+      "id": "A1-T-route",
+      "description": "Locate a destination using a short route or landmark exchange.",
+      "frameworkSections": [
+        "PCIC9 specific notions14.3.1 transport network; A1/A2 columns",
+        "PCIC8 general notions3 location,movement and direction; A1/A2 columns"
+      ],
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general"
+      ],
+      "disposition": "selected",
+      "rationale": "Left/right, cardinal orientation and concrete landmarks, not complex rerouting."
+    },
+    {
+      "id": "A1-T-journey",
+      "description": "Name a trip, its participants, destination and luggage.",
+      "frameworkSections": [
+        "PCIC9 specific notions 14.1.1 travel items; 14.1.2 trips; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Simple travel identification; narrative experience is later."
+    },
+    {
+      "id": "A1-T-stay",
+      "description": "Identify a lodging place, a room type and an existing booking.",
+      "frameworkSections": [
+        "PCIC9 specific notions 14.2 accommodation; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Basic arrival and immediate room needs; negotiated booking conditions are later."
+    },
+    {
+      "id": "A1-T-identity",
+      "description": "Show or recognize personal identification requested in a simple service exchange.",
+      "frameworkSections": [
+        "PCIC9 specific notions 14.1.1 documents; 3.2 personal documentation; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Reuse P documents without teaching legal validity requirements."
+    },
+    {
+      "id": "A1-T-shared-functions",
+      "description": "Use shared location, time, quantity and request prerequisites.",
+      "frameworkSections": [
+        "PCIC8 general notions1-4; PCIC5 functions information and requests"
+      ],
+      "referenceIds": [
+        "pcic-general",
+        "pcic-functions"
+      ],
+      "disposition": "selected",
+      "rationale": "F/D own the lexical prerequisites, reused rather than counted again per travel scenario."
+    },
+    {
+      "id": "A1-T-later-boundaries",
+      "description": "Account explicitly for later routine service changes and disruption remedies.",
+      "frameworkSections": [
+        "PCIC9 specific notions 11.1 postal; 11.3 financial; 14.1 travel and 14.2 accommodation; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Keep later inputs visible and preserve identities without changing current learner data."
+    },
+    {
+      "id": "A1-T-legal-administration",
+      "description": "Handle residence permits, formal complaints or detailed administrative procedures.",
+      "frameworkSections": [
+        "PCIC9 specific notions 11.6 safety; 11.7 social services; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "Handle residence permits, formal complaints or detailed administrative procedures. exceeds the approved A1 immediate identification/transaction scenario; belongs to later T work, not an unfinished A1 core objective."
+    },
+    {
+      "id": "A1-T-vehicle-repair",
+      "description": "Explain vehicle faults and repair or maintenance procedures.",
+      "frameworkSections": [
+        "PCIC9 specific notions 14.3.3 driving: maintenance; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "Explain vehicle faults and repair or maintenance procedures. exceeds the approved A1 immediate identification/transaction scenario; belongs to later T work, not an unfinished A1 core objective."
+    },
+    {
+      "id": "A1-T-utility-procedures",
+      "description": "Set up utility contracts or dispute a service bill.",
+      "frameworkSections": [
+        "PCIC9 specific notions 11.8 public supply services; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "Set up utility contracts or dispute a service bill. exceeds the approved A1 immediate identification/transaction scenario; belongs to later T work, not an unfinished A1 core objective."
+    },
+    {
+      "id": "A1-T-booking-disputes",
+      "description": "Explain missed connections and negotiate compensation or changes.",
+      "frameworkSections": [
+        "PCIC9 specific notions 14.1 trips; 14.2 accommodation; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "Explain missed connections and negotiate compensation or changes. exceeds the approved A1 immediate identification/transaction scenario; belongs to later T work, not an unfinished A1 core objective."
+    }
+  ],
+  "selections": [
+    {
+      "id": "A1-T-001",
+      "term": "banco",
+      "partOfSpeech": "NOUN",
+      "sense": "bank providing financial services",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:291-banco"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-money"
+      ],
+      "levelRationale": "Identify the service institution when asking where to obtain money services.",
+      "lowerLevelContrast": "Institution sense, not a bench or necessarily the physical building.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; bancos; branch location is contextual reference, not silent sense replacement.",
+      "pronunciationNotes": "Initial stress; n assimilates naturally before c.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-002",
+      "term": "farmacia",
+      "partOfSpeech": "NOUN",
+      "sense": "pharmacy establishment",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:292-farmacia"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-find-services"
+      ],
+      "levelRationale": "Locate a place selling medicines when asking for help.",
+      "lowerLevelContrast": "Place, not pharmaceutical science; P owns health needs.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; farmacias.",
+      "pronunciationNotes": "Penultimate stress; ci dialect variation and final ia sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-003",
+      "term": "hospital",
+      "partOfSpeech": "NOUN",
+      "sense": "hospital healthcare centre",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:293-hospital"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-help"
+      ],
+      "levelRationale": "Name an immediate destination for medical assistance.",
+      "lowerLevelContrast": "Facility identification does not teach diagnosis or treatment.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; hospitales.",
+      "pronunciationNotes": "Silent h; final singular stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-004",
+      "term": "policía",
+      "partOfSpeech": "NOUN",
+      "sense": "police institution",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:294-policia"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-help"
+      ],
+      "levelRationale": "Identify the public service to contact in danger.",
+      "lowerLevelContrast": "Institution is feminine; an individual officer requires separate sense review.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine la policía; collective institution, not personal gender forms.",
+      "pronunciationNotes": "Stressed í creates hiatus with a.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-005",
+      "term": "estación",
+      "partOfSpeech": "NOUN",
+      "sense": "station used by transport services",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:295-estacion"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-places"
+      ],
+      "levelRationale": "Locate the access point for a train or metro journey.",
+      "lowerLevelContrast": "Station place, not season of the year.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; estaciones; transport modifier is compositional.",
+      "pronunciationNotes": "Final singular stress marked by ó; ci dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-006",
+      "term": "oficina de correos",
+      "partOfSpeech": "NOUN",
+      "sense": "post office place",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:296-oficina-de-correos"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-post"
+      ],
+      "levelRationale": "Ask where to take a letter or postal item.",
+      "lowerLevelContrast": "Service place, not the postal system in the abstract.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine phrase; oficinas de correos; head oficina governs gender.",
+      "pronunciationNotes": "Stress oficina and correos; maintain eo vowel sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-007",
+      "term": "biblioteca",
+      "partOfSpeech": "NOUN",
+      "sense": "library place lending or keeping books",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:297-biblioteca"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-find-services"
+      ],
+      "levelRationale": "Recognize a community service destination.",
+      "lowerLevelContrast": "Library, not a bookshop; W/C reuse the same location.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; bibliotecas.",
+      "pronunciationNotes": "Penultimate stress; preserve bl sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-008",
+      "term": "ayuntamiento",
+      "partOfSpeech": "NOUN",
+      "sense": "municipal administration institution",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:298-ayuntamiento"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-find-services"
+      ],
+      "levelRationale": "Identify the local authority when a simple service question names it.",
+      "lowerLevelContrast": "Institution, not automatically town-hall building or government generally.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; ayuntamientos; physical destination may be contextual metonymy.",
+      "pronunciationNotes": "Penultimate stress; y articulation varies.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-009",
+      "term": "centro",
+      "partOfSpeech": "NOUN",
+      "sense": "centre providing a type of service or activity",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:299-centro"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-find-services"
+      ],
+      "levelRationale": "Recognize a service-centre label with a familiar modifier.",
+      "lowerLevelContrast": "Existing facility sense, not geographical middle of town.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; centros; centro de plus service type.",
+      "pronunciationNotes": "Initial stress; preserve ntr group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-010",
+      "term": "servicio",
+      "partOfSpeech": "NOUN",
+      "sense": "service meeting another person's need",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:300-servicio"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-find-services"
+      ],
+      "levelRationale": "Understand a generic service label before locating the provider.",
+      "lowerLevelContrast": "Activity sense, not toilets or military service.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; servicios; select practical provision only.",
+      "pronunciationNotes": "Penultimate stress; final cio and dialect c.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-011",
+      "term": "ayuda",
+      "partOfSpeech": "NOUN",
+      "sense": "help with a practical need",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:301-ayuda"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-help"
+      ],
+      "levelRationale": "Make a short request for assistance.",
+      "lowerLevelContrast": "Help noun, not automatically subsidy or state benefit.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; ayuda commonly singular for immediate request.",
+      "pronunciationNotes": "Penultimate stress; y pronunciation varies.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-012",
+      "term": "cita",
+      "partOfSpeech": "NOUN",
+      "sense": "appointment arranged for a time",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:302-cita"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 coordinates a service appointment beyond asking where a service is.",
+      "lowerLevelContrast": "Not a quotation or romantic date by default; align with P appointment proposal.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; citas; tener/pedir una cita.",
+      "pronunciationNotes": "Initial stress; ci distinction/seseo.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Propose A2 introduction rather than legacy A1; adjudicate placement and preserve stable ID before any runtime decision."
+      ]
+    },
+    {
+      "id": "A1-T-013",
+      "term": "turno",
+      "partOfSpeech": "NOUN",
+      "sense": "allocated turn in a sequence",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:303-turno"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Recognize when it is one's turn at a counter.",
+      "lowerLevelContrast": "Queue position, not an employee work shift.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; turnos; mi turno uses F possessive.",
+      "pronunciationNotes": "Initial stress; keep rn sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-014",
+      "term": "entrada",
+      "partOfSpeech": "NOUN",
+      "sense": "ticket allowing admission to a venue",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:304-entrada"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-tickets"
+      ],
+      "levelRationale": "Buy or show a basic admission ticket.",
+      "lowerLevelContrast": "Existing ticket meaning is not physical entrance.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; entradas; de plus event need not create new sense.",
+      "pronunciationNotes": "Penultimate stress; tr cluster.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-015",
+      "term": "billete",
+      "partOfSpeech": "NOUN",
+      "sense": "transport ticket",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:305-billete"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-tickets"
+      ],
+      "levelRationale": "Request the item needed to travel on a service.",
+      "lowerLevelContrast": "Different from banknote billete selected by H; no silent identity reuse.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; billetes; boleto/pasaje regional alternatives need labels.",
+      "pronunciationNotes": "Penultimate stress; ll yeísmo.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-016",
+      "term": "reservar",
+      "partOfSpeech": "VERB",
+      "sense": "reserve a place or service beforehand",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:306-reservar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "Recognize or make a short basic reservation request.",
+      "lowerLevelContrast": "Same existing reservation meaning also applies to a table; conditions and changes are later.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Regular -ar; reservar algo; reservo.",
+      "pronunciationNotes": "Final stress; initial r strong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-017",
+      "term": "esperar",
+      "partOfSpeech": "VERB",
+      "sense": "wait for someone or something",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:307-esperar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Follow a brief instruction to wait for a vehicle or service.",
+      "lowerLevelContrast": "Waiting, not hoping for a desired outcome.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Espero; esperar a alguien or esperar un servicio according to object.",
+      "pronunciationNotes": "Final infinitive stress; retain sp without prothetic extra syllable.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-018",
+      "term": "preguntar",
+      "partOfSpeech": "VERB",
+      "sense": "ask for information",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:308-preguntar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-shared-functions"
+      ],
+      "levelRationale": "Ask a simple service-location or travel question.",
+      "lowerLevelContrast": "General information request, not a new travel-specific verb.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Preguntar algo/a alguien; regular -ar.",
+      "pronunciationNotes": "Final infinitive stress; pr and nt sequences.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-019",
+      "term": "indicar",
+      "partOfSpeech": "VERB",
+      "sense": "give a direction or instruction",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:309-indicar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 can explicitly describe providing directions rather than simply follow a short answer.",
+      "lowerLevelContrast": "Metacommunicative indication is additional to naming a destination.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Indicar algo/a alguien; indico; indiqué spelling change.",
+      "pronunciationNotes": "Final infinitive stress; hard c maintained in qué form.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Propose A2 introduction rather than legacy A1; adjudicate placement and preserve stable ID before any runtime decision."
+      ]
+    },
+    {
+      "id": "A1-T-020",
+      "term": "necesitar",
+      "partOfSpeech": "VERB",
+      "sense": "need something important",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:310-necesitar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-help"
+      ],
+      "levelRationale": "State an immediate need for assistance or a service.",
+      "lowerLevelContrast": "General need reused from F/P/H, not a separate tourist need.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Necesito; necesitar algo or infinitive.",
+      "pronunciationNotes": "Final infinitive stress; ce dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-021",
+      "term": "viaje",
+      "partOfSpeech": "NOUN",
+      "sense": "journey between places",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:371-viaje"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-journey"
+      ],
+      "levelRationale": "Name a basic trip in an immediate travel exchange.",
+      "lowerLevelContrast": "Journey event, not holiday period itself.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; viajes.",
+      "pronunciationNotes": "Penultimate stress; j fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-022",
+      "term": "viajero",
+      "partOfSpeech": "NOUN",
+      "sense": "person who travels",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:372-viajero"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-journey"
+      ],
+      "levelRationale": "Identify a traveller in a simple service exchange.",
+      "lowerLevelContrast": "Traveller role broader than tourist or passenger on one vehicle.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Viajero/viajera and plurals; gender counterparts are forms of role.",
+      "pronunciationNotes": "Penultimate stress; j fricative and r tap.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-023",
+      "term": "turista",
+      "partOfSpeech": "NOUN",
+      "sense": "visitor travelling for leisure",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:373-turista"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-journey"
+      ],
+      "levelRationale": "Identify oneself as a tourist needing information.",
+      "lowerLevelContrast": "Tourist distinct from every traveller or resident.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "El/la turista; plural turistas; common gender.",
+      "pronunciationNotes": "Penultimate stress; preserve st sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-024",
+      "term": "maleta",
+      "partOfSpeech": "NOUN",
+      "sense": "suitcase for travel belongings",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:374-maleta"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-journey"
+      ],
+      "levelRationale": "Identify luggage when locating a bag or requesting space.",
+      "lowerLevelContrast": "Suitcase, not all baggage collectively.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; maletas.",
+      "pronunciationNotes": "Penultimate stress with clear e.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-025",
+      "term": "mochila",
+      "partOfSpeech": "NOUN",
+      "sense": "backpack carried on the back",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:375-mochila"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-journey"
+      ],
+      "levelRationale": "Identify an ordinary travel bag.",
+      "lowerLevelContrast": "Object sense distinct from a suitcase or person carrying it.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; mochilas.",
+      "pronunciationNotes": "Penultimate stress; ch affricate.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-026",
+      "term": "mapa",
+      "partOfSpeech": "NOUN",
+      "sense": "map representing territory and places",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:376-mapa"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Use a map to locate a destination.",
+      "lowerLevelContrast": "Representation, not a schedule or geographic territory itself.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine el mapa despite final a; mapas.",
+      "pronunciationNotes": "Initial stress and unaspirated p.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-027",
+      "term": "hotel",
+      "partOfSpeech": "NOUN",
+      "sense": "hotel lodging establishment",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:377-hotel"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "Identify a common place to stay.",
+      "lowerLevelContrast": "Establishment, not one hotel room.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; hoteles.",
+      "pronunciationNotes": "Silent h; final singular stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-028",
+      "term": "reserva",
+      "partOfSpeech": "NOUN",
+      "sense": "advance booking agreement",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:378-reserva"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "State that a booking exists on arrival.",
+      "lowerLevelContrast": "Noun agreement, not physical reserve stock or the act reservar.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; reservas; tener una reserva.",
+      "pronunciationNotes": "Penultimate stress; initial strong r.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-029",
+      "term": "recepción",
+      "partOfSpeech": "NOUN",
+      "sense": "reception area of an establishment",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:379-recepcion"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "Locate the desk or area serving arrivals.",
+      "lowerLevelContrast": "Place sense, not a formal reception event or receiving process.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; recepciones.",
+      "pronunciationNotes": "Final singular stress marked by ó; pc consonant sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-030",
+      "term": "aeropuerto",
+      "partOfSpeech": "NOUN",
+      "sense": "airport place",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:380-aeropuerto"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-places"
+      ],
+      "levelRationale": "Locate the air-travel departure or arrival facility.",
+      "lowerLevelContrast": "Facility distinct from aircraft or flight.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; aeropuertos.",
+      "pronunciationNotes": "Penultimate stress; preserve a-e sequence and ue diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-031",
+      "term": "avión",
+      "partOfSpeech": "NOUN",
+      "sense": "aircraft carrying passengers",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:381-avion"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-modes"
+      ],
+      "levelRationale": "Choose air travel in a basic mode statement.",
+      "lowerLevelContrast": "Vehicle, not the particular flight service.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; aviones.",
+      "pronunciationNotes": "Final stress marked by ó; io diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-032",
+      "term": "tren",
+      "partOfSpeech": "NOUN",
+      "sense": "train vehicle or connected carriages",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:382-tren"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-modes"
+      ],
+      "levelRationale": "Identify the rail vehicle needed for a journey.",
+      "lowerLevelContrast": "Train is distinct from the station and specific rail route.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; trenes.",
+      "pronunciationNotes": "One syllable; tr cluster, not added vowel.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-033",
+      "term": "autobús",
+      "partOfSpeech": "NOUN",
+      "sense": "bus vehicle",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:383-autobus"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-modes"
+      ],
+      "levelRationale": "Identify the common road public-transport mode.",
+      "lowerLevelContrast": "Vehicle distinct from its stop.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; autobuses; regional autobús/bus/colectivo labels require policy.",
+      "pronunciationNotes": "Final singular stress marked by ú; au diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-034",
+      "term": "metro",
+      "partOfSpeech": "NOUN",
+      "sense": "urban rapid-transit rail system or train",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:384-metro"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-modes"
+      ],
+      "levelRationale": "Choose the metro for a city trip.",
+      "lowerLevelContrast": "Existing transit meaning is not metre measurement in F.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; metros if count needed; en metro for mode.",
+      "pronunciationNotes": "Initial stress; tr cluster.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-035",
+      "term": "taxi",
+      "partOfSpeech": "NOUN",
+      "sense": "taxi vehicle and paid ride service",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:385-taxi"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-modes"
+      ],
+      "levelRationale": "Identify a taxi for an immediate destination request.",
+      "lowerLevelContrast": "Taxi, not every car or the driver role taxista.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; taxis.",
+      "pronunciationNotes": "Initial stress; x commonly ks.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-036",
+      "term": "coche",
+      "partOfSpeech": "NOUN",
+      "sense": "passenger car",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:386-coche"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-modes"
+      ],
+      "levelRationale": "State a simple journey by car.",
+      "lowerLevelContrast": "Vehicle, not railway carriage; carro/auto vary regionally.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; coches; es-ES core label.",
+      "pronunciationNotes": "Initial stress; ch affricate.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-037",
+      "term": "carretera",
+      "partOfSpeech": "NOUN",
+      "sense": "road between places",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:387-carretera"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Identify the road on a simple destination route.",
+      "lowerLevelContrast": "Interurban roadway contrasts with an urban street.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; carreteras.",
+      "pronunciationNotes": "Penultimate stress; rr strong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-038",
+      "term": "calle",
+      "partOfSpeech": "NOUN",
+      "sense": "urban street",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:388-calle"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Name a location in an address or short direction.",
+      "lowerLevelContrast": "Street, not postal address as a whole.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; calles.",
+      "pronunciationNotes": "Initial stress; ll dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-039",
+      "term": "plaza",
+      "partOfSpeech": "NOUN",
+      "sense": "urban square",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:389-plaza"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Use an open square as a landmark.",
+      "lowerLevelContrast": "Physical square, not seat/place availability or employment vacancy.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; plazas.",
+      "pronunciationNotes": "Initial stress; z distinction/seseo.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-040",
+      "term": "semáforo",
+      "partOfSpeech": "NOUN",
+      "sense": "traffic-light signal",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:390-semaforo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Use a recognisable crossing landmark in directions.",
+      "lowerLevelContrast": "Signal identification, not a lesson asserting road-law rules.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; semáforos.",
+      "pronunciationNotes": "Antepenultimate stress marked by á.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-041",
+      "term": "parada",
+      "partOfSpeech": "NOUN",
+      "sense": "public-transport stop",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:391-parada"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-places"
+      ],
+      "levelRationale": "Ask where a bus or taxi can be boarded.",
+      "lowerLevelContrast": "Place, not the act of stopping or a strike.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; paradas; de plus transport type.",
+      "pronunciationNotes": "Penultimate stress; single r tap.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-042",
+      "term": "andén",
+      "partOfSpeech": "NOUN",
+      "sense": "platform beside a transport track",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:392-anden"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-places"
+      ],
+      "levelRationale": "Identify where to wait for a train.",
+      "lowerLevelContrast": "Platform, not a street pavement in this scoped usage.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; andenes; regional uses need labeling.",
+      "pronunciationNotes": "Final stress marked by é; nd group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-043",
+      "term": "llegada",
+      "partOfSpeech": "NOUN",
+      "sense": "arrival at a destination",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:393-llegada"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Recognize arrival information on a short travel display.",
+      "lowerLevelContrast": "Existing event/time meaning; arrivals-area signage is a contextual use.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; llegadas; plural on displays need not mint another sense.",
+      "pronunciationNotes": "Penultimate stress; initial ll varies.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-044",
+      "term": "destino",
+      "partOfSpeech": "NOUN",
+      "sense": "destination place of travel",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:394-destino"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-journey"
+      ],
+      "levelRationale": "Specify where a ticket or vehicle should take the traveller.",
+      "lowerLevelContrast": "Destination, not fate or purpose generally.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; destinos.",
+      "pronunciationNotes": "Penultimate stress; preserve st sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-045",
+      "term": "origen",
+      "partOfSpeech": "NOUN",
+      "sense": "starting place of a journey",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:395-origen"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-journey"
+      ],
+      "levelRationale": "Identify the origin on a basic ticket or route.",
+      "lowerLevelContrast": "Starting place, not ancestry or abstract cause.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; orígenes adds accent to retain stress.",
+      "pronunciationNotes": "Penultimate singular stress; g before e fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-046",
+      "term": "ruta",
+      "partOfSpeech": "NOUN",
+      "sense": "planned route to a destination",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:396-ruta"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Identify the path or line of travel needed.",
+      "lowerLevelContrast": "Route, not all possible streets separately.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; rutas.",
+      "pronunciationNotes": "Initial stress and strong initial r.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-047",
+      "term": "asiento",
+      "partOfSpeech": "NOUN",
+      "sense": "place for a person to sit",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:397-asiento"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-tickets"
+      ],
+      "levelRationale": "Find the assigned or requested seat.",
+      "lowerLevelContrast": "Seat place, not necessarily a chair object or bookkeeping entry.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; asientos.",
+      "pronunciationNotes": "Penultimate stress; ie diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-048",
+      "term": "pasajero",
+      "partOfSpeech": "NOUN",
+      "sense": "passenger carried by transport",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:398-pasajero"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-journey"
+      ],
+      "levelRationale": "Identify the traveller using a vehicle without driving.",
+      "lowerLevelContrast": "Passenger role differs from driver and leisure tourist.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Pasajero/pasajera and plurals.",
+      "pronunciationNotes": "Penultimate stress; j fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-049",
+      "term": "equipaje",
+      "partOfSpeech": "NOUN",
+      "sense": "luggage collectively",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:399-equipaje"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-journey"
+      ],
+      "levelRationale": "Ask where to put or retrieve travel belongings.",
+      "lowerLevelContrast": "Collective luggage differs from one suitcase.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine mass/collective noun; equipajes for sets when needed.",
+      "pronunciationNotes": "Penultimate stress; qu silent u and j fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-050",
+      "term": "vacaciones",
+      "partOfSpeech": "NOUN",
+      "sense": "holiday time away from work or study",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:400-vacaciones"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-journey"
+      ],
+      "levelRationale": "State a simple reason for a trip.",
+      "lowerLevelContrast": "Period of leave, not each trip during it.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine plural vacaciones; de vacaciones fixed plural usage.",
+      "pronunciationNotes": "Penultimate stress; ci dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-051",
+      "term": "norte",
+      "partOfSpeech": "NOUN",
+      "sense": "north direction",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:401-norte"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Use a basic compass direction on a map.",
+      "lowerLevelContrast": "Direction, not northern region as separate named place.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; el norte; al norte de.",
+      "pronunciationNotes": "Initial stress; retain rt group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-052",
+      "term": "sur",
+      "partOfSpeech": "NOUN",
+      "sense": "south direction",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:402-sur"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Contrast the opposite map direction.",
+      "lowerLevelContrast": "Direction, not an unrestricted political or cultural region.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Masculine; el sur; al sur de.",
+      "pronunciationNotes": "One syllable; final r.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-053",
+      "term": "izquierda",
+      "partOfSpeech": "NOUN",
+      "sense": "left-hand side",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:403-izquierda"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Follow a short left/right direction.",
+      "lowerLevelContrast": "Concrete side, not political affiliation.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; la izquierda; a la izquierda de.",
+      "pronunciationNotes": "Penultimate stress; qu silent u and ie diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-054",
+      "term": "derecha",
+      "partOfSpeech": "NOUN",
+      "sense": "right-hand side",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:404-derecha"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Follow the contrasting short direction to the right.",
+      "lowerLevelContrast": "Side noun, not entitlement or legal adjective derecho.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Feminine; la derecha; a la derecha de.",
+      "pronunciationNotes": "Penultimate stress; ch affricate.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-055",
+      "term": "viajar",
+      "partOfSpeech": "VERB",
+      "sense": "travel between places",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:405-viajar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-journey"
+      ],
+      "levelRationale": "State an ordinary means or purpose of travel.",
+      "lowerLevelContrast": "Travel action, not a detailed narrated experience.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Viajo; viajar a/en plus destination/mode.",
+      "pronunciationNotes": "Final infinitive stress; j fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-056",
+      "term": "llegar",
+      "partOfSpeech": "VERB",
+      "sense": "arrive at a place",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:406-llegar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-journey"
+      ],
+      "levelRationale": "Say when one reaches a destination.",
+      "lowerLevelContrast": "Arrival action contrasts with leaving.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Llego; llegar a un lugar; llegué spelling change.",
+      "pronunciationNotes": "Final infinitive stress; ll dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-057",
+      "term": "conducir",
+      "partOfSpeech": "VERB",
+      "sense": "drive a vehicle",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:407-conducir"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 extends travel identification to describing the driver's action.",
+      "lowerLevelContrast": "A1 chooses a mode or driver; operating a vehicle is a distinct action.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Conduzco/conduce; irregular -zco; conducir algo.",
+      "pronunciationNotes": "Final stress; c/z dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Propose A2 introduction rather than legacy A1; adjudicate placement and preserve stable ID before any runtime decision."
+      ]
+    },
+    {
+      "id": "A1-T-058",
+      "term": "subir",
+      "partOfSpeech": "VERB",
+      "sense": "get on a transport vehicle",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:408-subir"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-tickets"
+      ],
+      "levelRationale": "Understand a short boarding instruction.",
+      "lowerLevelContrast": "Existing boarding sense is not moving upwards in a building.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Subir al autobús; subo; transport destination uses a.",
+      "pronunciationNotes": "Final infinitive stress; b/v phoneme shared.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-059",
+      "term": "bajar",
+      "partOfSpeech": "VERB",
+      "sense": "get off a transport vehicle",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:409-bajar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-tickets"
+      ],
+      "levelRationale": "Understand the paired instruction at the desired stop.",
+      "lowerLevelContrast": "Existing disembarking sense is not moving down stairs.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Bajar del autobús; bajo; de plus vehicle.",
+      "pronunciationNotes": "Final infinitive stress; j fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-060",
+      "term": "recto",
+      "partOfSpeech": "ADV",
+      "sense": "straight ahead without turning",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:410-recto"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Follow the simplest route continuation.",
+      "lowerLevelContrast": "Adverbial direction, not adjective describing a straight object or an upright person.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning unless the form note specifies es-ES usage; es-ES pronunciation target",
+      "formNotes": "Invariant directional recto; seguir/todo recto; no feminine agreement here.",
+      "pronunciationNotes": "Initial stress; ct consonant sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-061",
+      "term": "salida",
+      "partOfSpeech": "NOUN",
+      "sense": "physical exit from a place",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Recognize the route out of a station or public building.",
+      "lowerLevelContrast": "Exit location differs from a scheduled transport departure.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Feminine; salidas; salida de emergencia is a compositional sign label.",
+      "pronunciationNotes": "Penultimate stress; l remains clear.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-062",
+      "term": "salida",
+      "partOfSpeech": "NOUN",
+      "sense": "departure of a transport service",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Read the departure side of a simple travel display.",
+      "lowerLevelContrast": "Event/time meaning distinct from the physical exit sense.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Feminine; salidas on timetables; time and destination are complements.",
+      "pronunciationNotes": "Penultimate stress; same sound does not make exit and departure identical.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-063",
+      "term": "entrada",
+      "partOfSpeech": "NOUN",
+      "sense": "physical entrance to a place",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:304-entrada"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Recognize the point for entering a station or public service.",
+      "lowerLevelContrast": "Different from existing admission-ticket entrada.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Feminine; entradas; door itself is puerta.",
+      "pronunciationNotes": "Penultimate stress and tr cluster.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed different meaning from es-sk:a1:304-entrada; confirm sense granularity and preserve the existing ID."
+      ]
+    },
+    {
+      "id": "A1-T-064",
+      "term": "emergencia",
+      "partOfSpeech": "NOUN",
+      "sense": "urgent dangerous situation requiring help",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-help"
+      ],
+      "levelRationale": "Recognize an urgent need to seek assistance.",
+      "lowerLevelContrast": "Situation noun, not a medical diagnosis or every inconvenience.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Feminine; emergencias; de emergencia modifies services or exits.",
+      "pronunciationNotes": "Penultimate stress; g before e and final cia need checking.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-065",
+      "term": "puente",
+      "partOfSpeech": "NOUN",
+      "sense": "bridge crossing an obstacle",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Use a visible crossing structure as a short-route landmark.",
+      "lowerLevelContrast": "Physical structure, not a long holiday weekend.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Masculine; puentes.",
+      "pronunciationNotes": "Initial stress; ue diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-066",
+      "term": "esquina",
+      "partOfSpeech": "NOUN",
+      "sense": "street corner",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Locate a turn or meeting point at intersecting streets.",
+      "lowerLevelContrast": "Street corner, not every edge of an object.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Feminine; esquinas; en/a la esquina vary with relation.",
+      "pronunciationNotes": "Penultimate stress; qu silent u.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-067",
+      "term": "puerto",
+      "partOfSpeech": "NOUN",
+      "sense": "harbour for boats",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-places"
+      ],
+      "levelRationale": "Identify the departure place for a sea journey.",
+      "lowerLevelContrast": "Harbour, not mountain pass or computer port.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Masculine; puertos.",
+      "pronunciationNotes": "Initial stress; ue diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-068",
+      "term": "barco",
+      "partOfSpeech": "NOUN",
+      "sense": "boat or ship used for travel",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-modes"
+      ],
+      "levelRationale": "Name ordinary water transport in a mode choice.",
+      "lowerLevelContrast": "Vehicle, not dock or ferry service as a commercial product.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Masculine; barcos; size subclasses not enumerated here.",
+      "pronunciationNotes": "Initial stress; retain rc group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-069",
+      "term": "vuelo",
+      "partOfSpeech": "NOUN",
+      "sense": "scheduled air journey",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-journey"
+      ],
+      "levelRationale": "Identify a flight on a ticket or airport display.",
+      "lowerLevelContrast": "Travel service, not the aircraft itself or flying as a physical ability.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Masculine; vuelos; flight numbers are data, not new senses.",
+      "pronunciationNotes": "Initial stress and ue diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-070",
+      "term": "taquilla",
+      "partOfSpeech": "NOUN",
+      "sense": "counter where tickets are sold",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-tickets"
+      ],
+      "levelRationale": "Locate the place to buy a travel or admission ticket.",
+      "lowerLevelContrast": "Counter sense, not locker or box-office earnings.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Feminine; taquillas; regional boletería/ventanilla usage needs labels.",
+      "pronunciationNotes": "Penultimate stress; qu silent u and ll yeísmo.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-071",
+      "term": "ventanilla",
+      "partOfSpeech": "NOUN",
+      "sense": "public-service counter window",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-find-services"
+      ],
+      "levelRationale": "Identify where to ask or present a simple document.",
+      "lowerLevelContrast": "Counter window differs from a vehicle's small window.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Feminine; ventanillas; specify service-counter use.",
+      "pronunciationNotes": "Penultimate stress; ll varies.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-072",
+      "term": "terminal",
+      "partOfSpeech": "NOUN",
+      "sense": "transport terminal building or facility",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-places"
+      ],
+      "levelRationale": "Recognize which major airport or bus facility is needed.",
+      "lowerLevelContrast": "Facility noun, not adjective meaning final or a computer terminal.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Feminine in the selected transport-station use; terminales.",
+      "pronunciationNotes": "Final stress; three syllables ter-mi-nal.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-073",
+      "term": "puerta de embarque",
+      "partOfSpeech": "NOUN",
+      "sense": "airport boarding gate",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-places"
+      ],
+      "levelRationale": "Identify the numbered access point printed on a boarding display.",
+      "lowerLevelContrast": "Phrase is more specific than a physical door; granularity needs review.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Feminine head puerta; puertas de embarque; gate number remains data.",
+      "pronunciationNotes": "Stress puerta and embarque; qu silent u.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-074",
+      "term": "de ida",
+      "partOfSpeech": "ADJ",
+      "sense": "valid for an outward journey without return",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-tickets"
+      ],
+      "levelRationale": "Request the non-return alternative in a basic ticket purchase.",
+      "lowerLevelContrast": "Pairs with existing de ida y vuelta; not all movement away from speaker.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Invariant adjectival phrase modifying billete; solo ida is a sign variant to compare.",
+      "pronunciationNotes": "De is weak; i in ida is stressed.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-075",
+      "term": "aparcamiento",
+      "partOfSpeech": "NOUN",
+      "sense": "place for parking vehicles",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-places"
+      ],
+      "levelRationale": "Locate parking near a destination.",
+      "lowerLevelContrast": "Place, not the action of parking or a legal permission claim.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Masculine; aparcamientos; estacionamiento is regional alternative.",
+      "pronunciationNotes": "Penultimate stress and ie diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-076",
+      "term": "gasolinera",
+      "partOfSpeech": "NOUN",
+      "sense": "vehicle-fuel service station",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-find-services"
+      ],
+      "levelRationale": "Ask where fuel can be obtained during a basic road journey.",
+      "lowerLevelContrast": "Place, not fuel type or a maintenance workshop.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Feminine; gasolineras; regional estación de servicio label.",
+      "pronunciationNotes": "Penultimate stress; initial g hard.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-077",
+      "term": "moto",
+      "partOfSpeech": "NOUN",
+      "sense": "motorcycle vehicle",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-modes"
+      ],
+      "levelRationale": "Name a familiar two-wheeled motor transport mode.",
+      "lowerLevelContrast": "Motorcycle differs from bicycle; shortened and full motocicleta forms do not create two meanings.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Feminine; motos; shortening of motocicleta is a form relation.",
+      "pronunciationNotes": "Initial stress; two syllables.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-078",
+      "term": "campin",
+      "partOfSpeech": "NOUN",
+      "sense": "campsite for temporary stays",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "Recognize a basic lodging alternative to a hotel.",
+      "lowerLevelContrast": "Site, not every act of camping or a tent.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Masculine; accepted adapted plurals cámpins and cámpines; camping spelling/style alternative must follow the eventual variant policy.",
+      "pronunciationNotes": "Final n spelling makes penultimate stress regular; plural accent preserves it.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation",
+        "fundeu-campin"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-079",
+      "term": "recepcionista",
+      "partOfSpeech": "NOUN",
+      "sense": "staff member serving an establishment's reception",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "Identify whom to approach on arrival.",
+      "lowerLevelContrast": "Person differs from reception area; W occupation ownership may overlap.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "El/la recepcionista; recepcionistas; common gender.",
+      "pronunciationNotes": "Penultimate stress; pc and ci sequences.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-080",
+      "term": "individual",
+      "partOfSpeech": "ADJ",
+      "sense": "intended for one person in accommodation",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "Request a single room in a minimal lodging exchange.",
+      "lowerLevelContrast": "Occupancy meaning, not separate or personal in all domains.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Habitación individual; gender invariant; individuales plural.",
+      "pronunciationNotes": "Final stress; du-al hiatus or natural realization needs audio check.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-081",
+      "term": "doble",
+      "partOfSpeech": "ADJ",
+      "sense": "intended for two occupants in accommodation",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "Request a double room with a clear two-person use.",
+      "lowerLevelContrast": "Room label does not guarantee one shared bed rather than twin beds.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Gender invariant; dobles plural; bed configuration must be asked separately.",
+      "pronunciationNotes": "Initial stress; bl cluster.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-082",
+      "term": "libre",
+      "partOfSpeech": "ADJ",
+      "sense": "available because not occupied",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "Ask whether a seat or room is available now.",
+      "lowerLevelContrast": "Availability meaning, not political freedom or free of charge.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Libre/libres; gender invariant; asiento/habitación libre.",
+      "pronunciationNotes": "Initial stress; br cluster.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-083",
+      "term": "ocupado",
+      "partOfSpeech": "ADJ",
+      "sense": "currently in use by someone",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "Recognize that a seat or room is unavailable.",
+      "lowerLevelContrast": "Occupied item, not a busy person in every context.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Ocupado/ocupada and plurals; noun agreement.",
+      "pronunciationNotes": "Penultimate stress; d may be softened.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-084",
+      "term": "aseo",
+      "partOfSpeech": "NOUN",
+      "sense": "toilet or washroom facility",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Recognize a common es-ES public-facility sign.",
+      "lowerLevelContrast": "Facility sense differs from cleaning/hygiene activity.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Masculine; aseos often used on signs; regional baño/servicio variants need review.",
+      "pronunciationNotes": "Separate e and o vowels; penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-085",
+      "term": "policía",
+      "partOfSpeech": "NOUN",
+      "sense": "individual police officer",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:294-policia"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-help"
+      ],
+      "levelRationale": "Identify a person to approach for urgent practical help.",
+      "lowerLevelContrast": "Different from existing feminine police institution.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "El/la policía; policías; common-gender person noun.",
+      "pronunciationNotes": "Stressed í creates hiatus, same pronunciation as institution.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed different meaning from es-sk:a1:294-policia; confirm sense granularity and preserve the existing ID.",
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-086",
+      "term": "bombero",
+      "partOfSpeech": "NOUN",
+      "sense": "firefighter person",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-help"
+      ],
+      "levelRationale": "Identify a responder associated with fire emergencies.",
+      "lowerLevelContrast": "Occupation role, not the whole emergency service system.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Bombero/bombera and plurals; W occupation overlap.",
+      "pronunciationNotes": "Penultimate stress; b sound on both spellings.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-087",
+      "term": "ambulancia",
+      "partOfSpeech": "NOUN",
+      "sense": "emergency medical transport vehicle",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-help"
+      ],
+      "levelRationale": "Name the urgent vehicle when asking for immediate help.",
+      "lowerLevelContrast": "Vehicle identification is not a claim about dispatch procedures.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Feminine; ambulancias.",
+      "pronunciationNotes": "Penultimate stress; cia final syllable.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-088",
+      "term": "comisaría",
+      "partOfSpeech": "NOUN",
+      "sense": "police station place",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-find-services"
+      ],
+      "levelRationale": "Locate the place to seek basic police assistance.",
+      "lowerLevelContrast": "Building/service point, not the institution or officer.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Feminine; comisarías; regional police-station labels vary.",
+      "pronunciationNotes": "Stressed í creates hiatus with a.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-089",
+      "term": "socorro",
+      "partOfSpeech": "INTJ",
+      "sense": "urgent call for help",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-help"
+      ],
+      "levelRationale": "Recognize or give a short emergency attention call.",
+      "lowerLevelContrast": "Formula differs from detailed reporting or support-payment noun sense.",
+      "register": "urgent call; not a routine polite request",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Invariant interjection in this selected call; D formula ownership.",
+      "pronunciationNotes": "Penultimate stress; rr strong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-090",
+      "term": "sobre",
+      "partOfSpeech": "NOUN",
+      "sense": "postal envelope",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-post"
+      ],
+      "levelRationale": "Identify the container for a simple letter.",
+      "lowerLevelContrast": "Noun envelope, not preposition meaning on/about.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Masculine; sobres.",
+      "pronunciationNotes": "Initial stress; br cluster.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-091",
+      "term": "sello",
+      "partOfSpeech": "NOUN",
+      "sense": "postage stamp",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-post"
+      ],
+      "levelRationale": "Identify the item attached to pay postage.",
+      "lowerLevelContrast": "Postage sense, not official seal or printing impression.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Masculine; sellos; C postal-media selection may overlap.",
+      "pronunciationNotes": "Initial stress; ll yeísmo.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-092",
+      "term": "postal",
+      "partOfSpeech": "NOUN",
+      "sense": "postcard for a message",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-post"
+      ],
+      "levelRationale": "Identify a small card sent from a trip.",
+      "lowerLevelContrast": "Noun postcard, not adjective postal or generic payment card.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Feminine; postales; tarjeta postal is full phrase.",
+      "pronunciationNotes": "Final singular stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-093",
+      "term": "buzón",
+      "partOfSpeech": "NOUN",
+      "sense": "letter box for depositing or receiving post",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-post"
+      ],
+      "levelRationale": "Locate a physical place to put a letter.",
+      "lowerLevelContrast": "Posting box versus recipient mailbox requires contextual granularity review; not email inbox.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Masculine; buzones.",
+      "pronunciationNotes": "Final stress marked by ó; z dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-094",
+      "term": "código postal",
+      "partOfSpeech": "NOUN",
+      "sense": "postal code identifying a delivery area",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-post"
+      ],
+      "levelRationale": "Read or provide the delivery-code part of an address.",
+      "lowerLevelContrast": "Code is not a street number; individual code values are not lexical senses.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Masculine head código; códigos postales.",
+      "pronunciationNotes": "Written accent on có; final stress in postal.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-095",
+      "term": "enviar",
+      "partOfSpeech": "VERB",
+      "sense": "send an item to another place",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:252-enviar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-post"
+      ],
+      "levelRationale": "Make a simple request to send a letter.",
+      "lowerLevelContrast": "Reuses existing sending meaning; postal context does not create another verb.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Envío/envía; stress marks hiatus in some forms; enviar algo a alguien.",
+      "pronunciationNotes": "Infinitive final stress; envío has stressed í.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-096",
+      "term": "parar",
+      "partOfSpeech": "VERB",
+      "sense": "stop movement",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Understand a short request to stop at a destination.",
+      "lowerLevelContrast": "Movement stopping, not wait or finish an activity generally.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Paro; parar en un lugar; regular -ar.",
+      "pronunciationNotes": "Final infinitive stress; single r tap.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-T-097",
+      "term": "cruzar",
+      "partOfSpeech": "VERB",
+      "sense": "cross from one side to another",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Follow a short direction across a street or bridge.",
+      "lowerLevelContrast": "Spatial crossing, not crossing out text or breeding animals.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Cruzo; cruzar la calle; crucé spelling change.",
+      "pronunciationNotes": "Final stress; cr cluster and z/c dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-098",
+      "term": "girar",
+      "partOfSpeech": "VERB",
+      "sense": "turn to another direction",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Follow a left/right instruction at a corner.",
+      "lowerLevelContrast": "Direction change, not spin an object continuously or money transfer.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Giro; girar a la derecha/izquierda.",
+      "pronunciationNotes": "Final stress; g before i is fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-099",
+      "term": "seguir",
+      "partOfSpeech": "VERB",
+      "sense": "continue along a route",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Understand an instruction to continue straight.",
+      "lowerLevelContrast": "Route continuation, not following a person socially or online.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Sigo/sigue; e to i and spelling alternation; seguir recto.",
+      "pronunciationNotes": "Final stress; gu has silent u.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-100",
+      "term": "tomar",
+      "partOfSpeech": "VERB",
+      "sense": "take a transport service",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-modes"
+      ],
+      "levelRationale": "Use a common verb for selecting a bus, train or taxi ride.",
+      "lowerLevelContrast": "Different from planned beverage tomar; do not link the drink ID as the same sense.",
+      "register": "neutral",
+      "region": "pan-Hispanic core meaning with es-ES/region notes where specified; es-ES pronunciation target",
+      "formNotes": "Tomo; tomar un taxi/el tren; regional preference versus coger varies.",
+      "pronunciationNotes": "Final infinitive stress; clear unstressed o in tomo.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-101",
+      "term": "coger",
+      "partOfSpeech": "VERB",
+      "sense": "take or catch a transport service",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-modes"
+      ],
+      "levelRationale": "Recognize the ordinary es-ES boarding-choice verb.",
+      "lowerLevelContrast": "Regional sexual sense makes blanket pan-Hispanic production inappropriate.",
+      "register": "neutral",
+      "region": "es-ES neutral transport use; regional sexual senses require explicit warning",
+      "formNotes": "Cojo/coge; g/j spelling; es-ES target, tomar often safer cross-region alternative.",
+      "pronunciationNotes": "Final infinitive stress; g/j fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm cross-cell ownership, regional usage or lexical granularity described in notes; this proposal is not a net-new accepted count."
+      ]
+    },
+    {
+      "id": "A1-T-102",
+      "term": "dirección",
+      "partOfSpeech": "NOUN",
+      "sense": "postal or residential address",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:059-direccion"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-identity"
+      ],
+      "levelRationale": "Give the address identifying a service destination or traveller.",
+      "lowerLevelContrast": "Reuse the P address meaning, not direction of movement.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; direcciones; street and number are components.",
+      "pronunciationNotes": "Final stress marked by ó; cc/ci sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-103",
+      "term": "nombre",
+      "partOfSpeech": "NOUN",
+      "sense": "name identifying a person or thing",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:056-nombre"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-identity"
+      ],
+      "levelRationale": "Provide a name at a ticket or reception counter.",
+      "lowerLevelContrast": "Same general naming meaning as P identity.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; nombres; nombre y apellido are separate labels.",
+      "pronunciationNotes": "Initial stress; mbr cluster.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-104",
+      "term": "apellido",
+      "partOfSpeech": "NOUN",
+      "sense": "family surname",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:057-apellido"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-identity"
+      ],
+      "levelRationale": "Recognize the surname field in a basic identification exchange.",
+      "lowerLevelContrast": "Surname is not another given name by assumption.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; apellidos; naming conventions vary.",
+      "pronunciationNotes": "Penultimate stress; ll yeísmo.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-105",
+      "term": "documento",
+      "partOfSpeech": "NOUN",
+      "sense": "document proving personal information",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:068-documento"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-identity"
+      ],
+      "levelRationale": "Show the identification requested at a counter.",
+      "lowerLevelContrast": "Not every written document; reuse P identity proof.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; documentos; avoid claims about legal validity.",
+      "pronunciationNotes": "Penultimate stress; four syllables.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-106",
+      "term": "pasaporte",
+      "partOfSpeech": "NOUN",
+      "sense": "passport for international travel",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:069-pasaporte"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-identity"
+      ],
+      "levelRationale": "Recognize one's passport when asked to show it.",
+      "lowerLevelContrast": "Same P travel-document sense; not a new country-specific passport meaning.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; pasaportes.",
+      "pronunciationNotes": "Penultimate stress; preserve rt group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-107",
+      "term": "tarjeta",
+      "partOfSpeech": "NOUN",
+      "sense": "small card bearing information or a function",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:070-tarjeta"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-money"
+      ],
+      "levelRationale": "Recognize a card as a payment or service item without redefining it.",
+      "lowerLevelContrast": "Generic card is not automatically credit, debit or identity card.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; tarjetas; subtype phrases require global sense/usage decision.",
+      "pronunciationNotes": "Penultimate stress; j fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-108",
+      "term": "teléfono",
+      "partOfSpeech": "NOUN",
+      "sense": "telephone device",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:060-telefono"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-help"
+      ],
+      "levelRationale": "Identify a device for contacting a service or help.",
+      "lowerLevelContrast": "Device sense, not telephone number or call event.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; teléfonos.",
+      "pronunciationNotes": "Antepenultimate stress marked by é.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-109",
+      "term": "número",
+      "partOfSpeech": "NOUN",
+      "sense": "number representing a quantity",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:061-numero"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-shared-functions"
+      ],
+      "levelRationale": "Read a room, route or queue number using P/F identity.",
+      "lowerLevelContrast": "Numeric labels use the same number concept, not each value as a word.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; números; F owns bounded number composition.",
+      "pronunciationNotes": "First stress marked by ú.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-110",
+      "term": "pagar",
+      "partOfSpeech": "VERB",
+      "sense": "pay for goods or services",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:167-pagar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-money"
+      ],
+      "levelRationale": "Complete the payment for a ticket or room.",
+      "lowerLevelContrast": "Same H payment meaning, not a travel-only verb.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Pago; pagar con tarjeta/en efectivo; pagué spelling change.",
+      "pronunciationNotes": "Final infinitive stress; hard g in forms.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-111",
+      "term": "precio",
+      "partOfSpeech": "NOUN",
+      "sense": "price to buy something",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:317-precio"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-money"
+      ],
+      "levelRationale": "Ask what a ticket or simple stay costs.",
+      "lowerLevelContrast": "Price, not fare conditions or total refund.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; precios.",
+      "pronunciationNotes": "Initial stress; cio syllable.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-112",
+      "term": "dinero",
+      "partOfSpeech": "NOUN",
+      "sense": "money used to pay",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:318-dinero"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-money"
+      ],
+      "levelRationale": "Identify the means needed for a basic transaction.",
+      "lowerLevelContrast": "Money, not only physical cash.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine mass noun; dinero.",
+      "pronunciationNotes": "Penultimate stress; single r tap.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-113",
+      "term": "euro",
+      "partOfSpeech": "NOUN",
+      "sense": "euro currency unit",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:319-euro"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-money"
+      ],
+      "levelRationale": "Read ordinary euro prices at a service counter.",
+      "lowerLevelContrast": "Unit rather than each fare amount.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; euros; exact rates are not taught as constants.",
+      "pronunciationNotes": "Initial eu diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-114",
+      "term": "comprar",
+      "partOfSpeech": "VERB",
+      "sense": "buy something",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:336-comprar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-tickets"
+      ],
+      "levelRationale": "Buy a basic ticket using the existing H purchase action.",
+      "lowerLevelContrast": "Ticket object does not create a new buying sense.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Compro; comprar un billete; regular -ar.",
+      "pronunciationNotes": "Final stress; mpr group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-115",
+      "term": "efectivo",
+      "partOfSpeech": "NOUN",
+      "sense": "cash in coins and notes",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:343-efectivo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-money"
+      ],
+      "levelRationale": "Choose cash when a ticket seller asks payment method.",
+      "lowerLevelContrast": "Cash differs from money generally or a card.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine mass noun; en efectivo.",
+      "pronunciationNotes": "Penultimate stress and ct sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-116",
+      "term": "abierto",
+      "partOfSpeech": "ADJ",
+      "sense": "open for business",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:345-abierto"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Understand whether a service is operating now.",
+      "lowerLevelContrast": "Exact H operating-state meaning, not physical door position.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Abierto/abierta and plurals; service noun agreement.",
+      "pronunciationNotes": "Penultimate stress; ie diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-117",
+      "term": "horario",
+      "partOfSpeech": "NOUN",
+      "sense": "schedule allocating activities to times",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:206-horario"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Read a service's opening hours or a basic timetable.",
+      "lowerLevelContrast": "Same scheduling sense as W, not each displayed departure time as a new meaning.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; horarios; horario de apertura contextual use.",
+      "pronunciationNotes": "Silent h; penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-118",
+      "term": "carta",
+      "partOfSpeech": "NOUN",
+      "sense": "written letter sent to another person",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:245-carta"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-post"
+      ],
+      "levelRationale": "Identify a letter for postal service.",
+      "lowerLevelContrast": "Same C correspondence meaning, not H restaurant menu carta.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; cartas.",
+      "pronunciationNotes": "Initial stress; r tap.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-119",
+      "term": "información",
+      "partOfSpeech": "NOUN",
+      "sense": "information allowing knowledge of something",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:249-informacion"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-find-services"
+      ],
+      "levelRationale": "Ask for information at a visitor counter.",
+      "lowerLevelContrast": "Información sign may identify a desk by ellipsis; no new desk noun forced.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine mass noun; información; informaciones only contextual.",
+      "pronunciationNotes": "Final stress marked by ó.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-120",
+      "term": "llamar",
+      "partOfSpeech": "VERB",
+      "sense": "make a telephone call",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:251-llamar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-help"
+      ],
+      "levelRationale": "Ask to call a service using the existing communication verb.",
+      "lowerLevelContrast": "Telephone call, not naming someone or shouting for them.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Llamo; llamar a alguien/a un servicio.",
+      "pronunciationNotes": "Final infinitive stress; ll varies.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-121",
+      "term": "escuela",
+      "partOfSpeech": "NOUN",
+      "sense": "school institution/place",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:171-escuela"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-find-services"
+      ],
+      "levelRationale": "Locate a basic educational service without repeating W inventory.",
+      "lowerLevelContrast": "Existing school sense, not every level of education.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; escuelas.",
+      "pronunciationNotes": "Penultimate stress; ue diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-122",
+      "term": "médico",
+      "partOfSpeech": "NOUN",
+      "sense": "male medical doctor",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:348-medico"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-help"
+      ],
+      "levelRationale": "Identify a healthcare person already covered by P/W.",
+      "lowerLevelContrast": "Role counterpart coverage must align with existing médica rather than duplicate both as new.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Médico/médica; existing counterpart IDs preserved pending counting policy.",
+      "pronunciationNotes": "First stress marked by é.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-123",
+      "term": "enfermera",
+      "partOfSpeech": "NOUN",
+      "sense": "female nurse",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:349-enfermera"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-help"
+      ],
+      "levelRationale": "Identify the person providing immediate healthcare assistance.",
+      "lowerLevelContrast": "Existing gendered role reused, not a new service-only occupation.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Enfermera/enfermero; existing selection remains feminine.",
+      "pronunciationNotes": "Penultimate stress; r tap.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-124",
+      "term": "habitación",
+      "partOfSpeech": "NOUN",
+      "sense": "room within a dwelling",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:260-habitacion"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "Reuse the room concept when identifying sleeping accommodation.",
+      "lowerLevelContrast": "Existing dwelling-room wording needs scope review before treating every hotel room as exact identity.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; habitaciones; hotel modifier alone does not prove a distinct sense.",
+      "pronunciationNotes": "Final singular stress marked by ó.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-125",
+      "term": "baño",
+      "partOfSpeech": "NOUN",
+      "sense": "bathroom room",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:262-bano"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "Ask where the bathroom is at lodging.",
+      "lowerLevelContrast": "Same H room meaning, not the bath activity.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; baños; room versus public aseos overlap needs adjudication.",
+      "pronunciationNotes": "Initial stress; ñ.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-126",
+      "term": "cama",
+      "partOfSpeech": "NOUN",
+      "sense": "bed furniture",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:273-cama"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "Identify the needed sleeping furniture in a room.",
+      "lowerLevelContrast": "Same H furniture, not an accommodation product per bed.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; camas.",
+      "pronunciationNotes": "Initial stress; clear final a.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-127",
+      "term": "llave",
+      "partOfSpeech": "NOUN",
+      "sense": "lock key",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:281-llave"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "Ask for the object needed to enter a room.",
+      "lowerLevelContrast": "Same physical H key, not the key card unless scope decided.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; llaves.",
+      "pronunciationNotes": "Initial stress; ll variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-128",
+      "term": "conductor",
+      "partOfSpeech": "NOUN",
+      "sense": "driver controlling a vehicle",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:204-conductor"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-modes"
+      ],
+      "levelRationale": "Identify the person driving the selected transport.",
+      "lowerLevelContrast": "Occupation or participant role is shared with W, not duplicated by bus/car.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Conductor/conductora and plurals.",
+      "pronunciationNotes": "Final masculine stress; ct group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-129",
+      "term": "bicicleta",
+      "partOfSpeech": "NOUN",
+      "sense": "bicycle vehicle",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:234-bicicleta"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-modes"
+      ],
+      "levelRationale": "Name a familiar non-motor travel mode.",
+      "lowerLevelContrast": "Same C bicycle object, not a new commuting bicycle sense.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; bicicletas.",
+      "pronunciationNotes": "Penultimate stress; cl group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-130",
+      "term": "estar",
+      "partOfSpeech": "VERB",
+      "sense": "be at a location or in a current state",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-002-estar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-shared-functions"
+      ],
+      "levelRationale": "Ask where a station or service is located.",
+      "lowerLevelContrast": "Location/state predicate differs from identity ser.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Está/están; estar en; estoy irregular.",
+      "pronunciationNotes": "Written final stress in está/están.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-131",
+      "term": "haber",
+      "partOfSpeech": "VERB",
+      "sense": "express that something exists using hay",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-004-haber"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-shared-functions"
+      ],
+      "levelRationale": "Ask if a needed service or room is present.",
+      "lowerLevelContrast": "Existence differs from locating an already known item.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Impersonal hay with singular/plural; no plural hayan for this present use.",
+      "pronunciationNotes": "Silent h; hay one syllable.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-132",
+      "term": "ir",
+      "partOfSpeech": "VERB",
+      "sense": "go toward another place",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-005-ir"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-shared-functions"
+      ],
+      "levelRationale": "State the destination of an immediate journey.",
+      "lowerLevelContrast": "Go away from current point contrasts with venir.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Voy/va; ir a plus place; al contraction.",
+      "pronunciationNotes": "Final infinitive r; voy monosyllabic.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-133",
+      "term": "hora",
+      "partOfSpeech": "NOUN",
+      "sense": "hour as sixty-minute unit",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-019-hora"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Interpret a simple duration or clock-time question.",
+      "lowerLevelContrast": "Unit, not an entire timetable or every time value.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; horas; clock conventions belong to F.",
+      "pronunciationNotes": "Silent h; initial stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-134",
+      "term": "hoy",
+      "partOfSpeech": "ADV",
+      "sense": "today",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-020-hoy"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Specify the current day for a ticket or service.",
+      "lowerLevelContrast": "Date anchor, not a named weekday.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Invariant adverb hoy.",
+      "pronunciationNotes": "One syllable; h silent.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-135",
+      "term": "ahora",
+      "partOfSpeech": "ADV",
+      "sense": "now",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-022-ahora"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Check immediate service or departure timing.",
+      "lowerLevelContrast": "Present moment rather than an exact clock value.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Invariant adverb ahora.",
+      "pronunciationNotes": "Silent h; three syllables a-ho-ra in careful speech.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-136",
+      "term": "uno",
+      "partOfSpeech": "NUM",
+      "sense": "quantity one",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-026-uno"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-tickets"
+      ],
+      "levelRationale": "Request one ticket using existing F quantity.",
+      "lowerLevelContrast": "Not separate meanings for one ticket, one night or one bag.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Uno/un/una as governed by context; un billete, una entrada.",
+      "pronunciationNotes": "Initial stress in uno; un often weak before noun.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-137",
+      "term": "dos",
+      "partOfSpeech": "NUM",
+      "sense": "quantity two",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-027-dos"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-tickets"
+      ],
+      "levelRationale": "Request two tickets or identify a two-person group.",
+      "lowerLevelContrast": "No new transport-specific number sense.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Invariant dos with plural nouns.",
+      "pronunciationNotes": "One syllable and final s.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-138",
+      "term": "dónde",
+      "partOfSpeech": "ADV",
+      "sense": "ask where something is",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-067-donde"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-shared-functions"
+      ],
+      "levelRationale": "Ask where a destination or service can be found.",
+      "lowerLevelContrast": "Interrogative dónde differs from unstressed relative donde.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Invariant interrogative; written accent in direct/indirect questions.",
+      "pronunciationNotes": "Initial stress marked by ó.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-139",
+      "term": "cuándo",
+      "partOfSpeech": "ADV",
+      "sense": "ask when something happens",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-068-cuando"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Ask when the next service or arrival occurs.",
+      "lowerLevelContrast": "Time question, not every answer word or relative cuando.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Invariant interrogative cuándo with accent.",
+      "pronunciationNotes": "Initial stress; ua diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-140",
+      "term": "por favor",
+      "partOfSpeech": "ADV",
+      "sense": "polite request marker",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-078-por-favor"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-shared-functions"
+      ],
+      "levelRationale": "Make a short ticket or help request courteously.",
+      "lowerLevelContrast": "D formula used across situations, not an extra travel formula.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Fixed por favor; no inflection.",
+      "pronunciationNotes": "Natural phrase grouping; final stress on favor.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-141",
+      "term": "en",
+      "partOfSpeech": "ADP",
+      "sense": "in or at a location",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-080-en"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-shared-functions"
+      ],
+      "levelRationale": "State a service location or where luggage is.",
+      "lowerLevelContrast": "Exact F location relation; mode-of-transport use of en needs separate usage matching.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Invariant preposition en plus noun phrase.",
+      "pronunciationNotes": "Normally unstressed; link to next word.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm owning F/P/H/W/C/D cell and precise shared meaning; cross-topic reuse is not net-new vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-142",
+      "term": "retraso",
+      "partOfSpeech": "NOUN",
+      "sense": "delay relative to expected time",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a2:exp-001-retraso"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 interprets a predictable service delay beyond reading a departure time.",
+      "lowerLevelContrast": "Not every late clock time is a delay event.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Masculine; retrasos; con retraso phrase.",
+      "pronunciationNotes": "Penultimate stress; initial r strong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A2 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-143",
+      "term": "perder",
+      "partOfSpeech": "VERB",
+      "sense": "lose an object and not know its location",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a2:exp-002-perder"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 can report lost luggage or documents.",
+      "lowerLevelContrast": "Existing object-loss meaning is not missing a departing train.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Pierdo/pierde; e to ie; perder algo.",
+      "pronunciationNotes": "Final infinitive stress; ie present.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A2 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-144",
+      "term": "recoger",
+      "partOfSpeech": "VERB",
+      "sense": "go to collect someone or something",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a2:exp-003-recoger"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 can arrange collection of luggage or a person.",
+      "lowerLevelContrast": "Not simply receive an item or gather scattered things in every context.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Recojo/recoge; recoger algo/a alguien.",
+      "pronunciationNotes": "Final stress; g/j fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A2 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-145",
+      "term": "alojamiento",
+      "partOfSpeech": "NOUN",
+      "sense": "temporary lodging place during travel",
+      "proposedLevel": "A1",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a2:exp-004-alojamiento"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-stay"
+      ],
+      "levelRationale": "Recognize the generic lodging category alongside hotel in a simple search.",
+      "lowerLevelContrast": "Category noun is broader than a hotel; no complex conditions implied.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Masculine; alojamientos.",
+      "pronunciationNotes": "Penultimate stress; j fricative and ie diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 to A1 introduction change requires global adjudication; preserve original identity and do not rewrite runtime placement."
+      ]
+    },
+    {
+      "id": "A1-T-146",
+      "term": "de ida y vuelta",
+      "partOfSpeech": "ADJ",
+      "sense": "valid for outward and return travel",
+      "proposedLevel": "A1",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a2:exp-005-ida-y-vuelta"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-tickets"
+      ],
+      "levelRationale": "Choose the return-ticket alternative in an immediate purchase.",
+      "lowerLevelContrast": "Exact existing adjectival phrase, not a new noun or replacement ID.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Invariant phrase modifying billete; return date is a separate parameter.",
+      "pronunciationNotes": "Group ida y vuelta; ue diphthong in vuelta.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 to A1 introduction change requires global adjudication; preserve original identity and do not rewrite runtime placement."
+      ]
+    },
+    {
+      "id": "A1-T-147",
+      "term": "avería",
+      "partOfSpeech": "NOUN",
+      "sense": "fault preventing a machine or vehicle working",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a2:exp-006-averia"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 interprets a basic breakdown explanation.",
+      "lowerLevelContrast": "Vehicle or appliance naming precedes fault diagnosis.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Feminine; averías.",
+      "pronunciationNotes": "Written í marks hiatus.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A2 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-148",
+      "term": "recibo",
+      "partOfSpeech": "NOUN",
+      "sense": "proof of completed payment",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a2:exp-013-recibo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 distinguishes proof of payment during service follow-up.",
+      "lowerLevelContrast": "Not a transport ticket and not bill cuenta before payment.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Masculine; recibos.",
+      "pronunciationNotes": "Penultimate stress; ci dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A2 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-149",
+      "term": "cajero automático",
+      "partOfSpeech": "NOUN",
+      "sense": "ATM for withdrawing money",
+      "proposedLevel": "A1",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a2:exp-014-cajero-automatico"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-money"
+      ],
+      "levelRationale": "Locate a familiar self-service source of cash.",
+      "lowerLevelContrast": "Identifying the machine is simpler than discussing banking products.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Masculine; cajeros automáticos; adjective agreement.",
+      "pronunciationNotes": "Stress cajero and antepenultimate má in automático.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 to A1 introduction change requires global adjudication; preserve original identity and do not rewrite runtime placement."
+      ]
+    },
+    {
+      "id": "A1-T-150",
+      "term": "rellenar",
+      "partOfSpeech": "VERB",
+      "sense": "fill missing information on a form",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a2:exp-015-rellenar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 handles completing a simple service document.",
+      "lowerLevelContrast": "Not physical filling a suitcase or stuffing food.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Relleno; rellenar un formulario; no pronoun required.",
+      "pronunciationNotes": "Final stress; initial r strong and ll varies.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A2 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-151",
+      "term": "firmar",
+      "partOfSpeech": "VERB",
+      "sense": "sign a document with one's name or mark",
+      "proposedLevel": "A1",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a2:exp-016-firmar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-identity"
+      ],
+      "levelRationale": "Recognize an immediate signature instruction with P's same proposal.",
+      "lowerLevelContrast": "Signing action alone does not teach contract comprehension.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Firmo; firmar un documento; regular -ar.",
+      "pronunciationNotes": "Final stress; both r positions need practice.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 to A1 introduction change requires global adjudication; preserve original identity and do not rewrite runtime placement."
+      ]
+    },
+    {
+      "id": "A1-T-152",
+      "term": "cancelar",
+      "partOfSpeech": "VERB",
+      "sense": "cancel a planned service or reservation",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a2:exp-017-cancelar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 changes an existing booking in a predictable transaction.",
+      "lowerLevelContrast": "Not initial booking or every act of deleting data.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Cancelo; cancelar una reserva.",
+      "pronunciationNotes": "Final stress; ce distinction/seseo.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A2 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-153",
+      "term": "urgente",
+      "partOfSpeech": "ADJ",
+      "sense": "requiring prompt attention",
+      "proposedLevel": "A1",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a2:exp-018-urgente"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-help"
+      ],
+      "levelRationale": "Recognize a basic urgency label or describe an immediate need.",
+      "lowerLevelContrast": "Urgency adjective is not proof of clinical severity.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Gender invariant; urgentes plural.",
+      "pronunciationNotes": "Penultimate stress; g before e fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 to A1 introduction change requires global adjudication; preserve original identity and do not rewrite runtime placement."
+      ]
+    },
+    {
+      "id": "A1-T-154",
+      "term": "queja",
+      "partOfSpeech": "NOUN",
+      "sense": "expression of dissatisfaction",
+      "proposedLevel": "B1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:b1:exp-007-queja"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "B1 develops an explicit service complaint.",
+      "lowerLevelContrast": "A1 can ask or decline without narrating a grievance.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Feminine; quejas.",
+      "pronunciationNotes": "Initial stress; qu silent u and j fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later B1 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-155",
+      "term": "reembolso",
+      "partOfSpeech": "NOUN",
+      "sense": "return of money already paid",
+      "proposedLevel": "B1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:b1:exp-008-reembolso"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "B1 requests a refund as a remedy for a service problem.",
+      "lowerLevelContrast": "Refund differs from change after a cash purchase.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Masculine; reembolsos.",
+      "pronunciationNotes": "Penultimate stress; preserve ee sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later B1 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-156",
+      "term": "solicitud",
+      "partOfSpeech": "NOUN",
+      "sense": "request submitted for something",
+      "proposedLevel": "B1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:b1:exp-018-solicitud"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "B1 formal service exchanges identify a submitted request.",
+      "lowerLevelContrast": "Not a bare spoken question or every form itself.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Feminine; solicitudes; solicitud de plus object.",
+      "pronunciationNotes": "Final stress; final d may weaken.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later B1 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-157",
+      "term": "plazo",
+      "partOfSpeech": "NOUN",
+      "sense": "time allowed to complete an obligation",
+      "proposedLevel": "B1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:b1:exp-020-plazo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "B1 administrative tasks discuss a deadline or allotted period.",
+      "lowerLevelContrast": "Not departure time or ordinary duration alone.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Masculine; plazos; dentro de un plazo.",
+      "pronunciationNotes": "Initial stress; z dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later B1 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-158",
+      "term": "transbordo",
+      "partOfSpeech": "NOUN",
+      "sense": "change between transport vehicles",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a2-travel-repair-planned-01"
+      ],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 follows a journey requiring a vehicle change.",
+      "lowerLevelContrast": "A1 selects a direct simple route first.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Masculine; transbordos; trasbordo variant needs policy.",
+      "pronunciationNotes": "Penultimate stress; nsb group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A2 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-159",
+      "term": "retrasarse",
+      "partOfSpeech": "VERB",
+      "sense": "run later than expected",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a2-travel-repair-planned-02"
+      ],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 explains that a service or traveller is delayed.",
+      "lowerLevelContrast": "Change relative to plan, not merely reading a late time.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Me retraso; se retrasa; pronominal regular -ar.",
+      "pronunciationNotes": "Penultimate clitic-infinitive stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A2 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-160",
+      "term": "disponible",
+      "partOfSpeech": "ADJ",
+      "sense": "available for use",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a2-travel-repair-planned-03"
+      ],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 checks broader service availability or alternatives.",
+      "lowerLevelContrast": "A1 libre covers a concrete unoccupied seat or room; possible synonym overlap requires review.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Gender invariant; disponibles.",
+      "pronunciationNotes": "Penultimate stress; bl group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A2 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-161",
+      "term": "confirmar",
+      "partOfSpeech": "VERB",
+      "sense": "confirm a booking arrangement",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a2-travel-repair-planned-04"
+      ],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 checks that a prior reservation is settled.",
+      "lowerLevelContrast": "Different from initially requesting a room or ticket.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Confirmo; confirmar una reserva.",
+      "pronunciationNotes": "Final stress; rm group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A2 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-162",
+      "term": "facturar",
+      "partOfSpeech": "VERB",
+      "sense": "check luggage in for transport",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a2-travel-repair-planned-05"
+      ],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 handles the dedicated luggage check-in procedure.",
+      "lowerLevelContrast": "Not issuing an invoice or simply buying a ticket.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Facturo; facturar equipaje; object controls sense.",
+      "pronunciationNotes": "Final stress; ct sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A2 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-163",
+      "term": "formulario",
+      "partOfSpeech": "NOUN",
+      "sense": "form with fields to complete",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a2-services-planned-01"
+      ],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 identifies the structured document needed for a routine service.",
+      "lowerLevelContrast": "Not identity proof documento or every written request.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Masculine; formularios.",
+      "pronunciationNotes": "Penultimate stress; final rio sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A2 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-164",
+      "term": "cambio",
+      "partOfSpeech": "NOUN",
+      "sense": "cash returned after payment",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a2-services-planned-02"
+      ],
+      "objectiveIds": [
+        "A1-T-money"
+      ],
+      "levelRationale": "Recognize change after buying a ticket with cash.",
+      "lowerLevelContrast": "Different from currency conversion; align with H's earlier-introduction proposal.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Masculine; el cambio commonly singular.",
+      "pronunciationNotes": "Initial stress; io diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 to A1 introduction change requires global adjudication; preserve original identity and do not rewrite runtime placement."
+      ]
+    },
+    {
+      "id": "A1-T-165",
+      "term": "pedir cita",
+      "partOfSpeech": "VERB",
+      "sense": "request an appointment",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a2-services-planned-04"
+      ],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 coordinates a time with a service provider.",
+      "lowerLevelContrast": "Beyond identifying a service; lexical phrase status needs review.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Pido cita; e to i in pedir; cita noun fixed to selected request.",
+      "pronunciationNotes": "Stress pedir/cita according to conjugated phrase.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A2 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-166",
+      "term": "a",
+      "partOfSpeech": "ADP",
+      "sense": "towards a destination",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-function-words-planned-01"
+      ],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Name the destination of a short journey.",
+      "lowerLevelContrast": "F owns destination relation; not all uses of a.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Invariant; a plus el contracts to al.",
+      "pronunciationNotes": "Usually unstressed; link to next noun.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A1 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-167",
+      "term": "cuánto",
+      "partOfSpeech": "DET",
+      "sense": "ask the quantity of an explicitly named noun",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-function-words-planned-05"
+      ],
+      "objectiveIds": [
+        "A1-T-tickets"
+      ],
+      "levelRationale": "Ask how many tickets or how much luggage is involved using a noun-linked quantity question.",
+      "lowerLevelContrast": "DET use modifies an overt noun such as billetes; it must not silently cover the bare cost question cuánto cuesta.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Cuánto/cuánta/cuántos/cuántas agree with the explicitly named noun; coordinate with A1-F-037.",
+      "pronunciationNotes": "Written stress on á; ua diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A1 coverage; confirm owning cell, lexical granularity and level before any accepted unique total.",
+        "The broad a1-function-words-planned-05 input includes more than one grammatical construction; noun-linked DET and bare-cost ADV rows require exact granularity adjudication."
+      ]
+    },
+    {
+      "id": "A1-T-168",
+      "term": "minuto",
+      "partOfSpeech": "NOUN",
+      "sense": "minute unit of time",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-time-planned-01"
+      ],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Interpret a short waiting time for a vehicle.",
+      "lowerLevelContrast": "F time unit, not every countdown value.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Masculine; minutos.",
+      "pronunciationNotes": "Penultimate stress; three syllables.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A1 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-169",
+      "term": "fecha",
+      "partOfSpeech": "NOUN",
+      "sense": "calendar date",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-time-planned-03"
+      ],
+      "objectiveIds": [
+        "A1-T-tickets"
+      ],
+      "levelRationale": "Identify the travel date needed on a ticket or booking.",
+      "lowerLevelContrast": "Date, not only a weekday or an elapsed duration.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Feminine; fechas; date formatting depends on context.",
+      "pronunciationNotes": "Initial stress; ch affricate.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A1 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-170",
+      "term": "tarde",
+      "partOfSpeech": "ADV",
+      "sense": "later than expected or suitable",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-time-planned-05"
+      ],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Recognize a simple late-arrival statement.",
+      "lowerLevelContrast": "Different POS/meaning from existing afternoon noun tarde.",
+      "register": "neutral",
+      "region": "pan-Hispanic with form-level regional notes; es-ES pronunciation target",
+      "formNotes": "Invariant adverb; do not link afternoon as the exact sense.",
+      "pronunciationNotes": "Initial stress; rt group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Input belongs to shared/later A1 coverage; confirm owning cell, lexical granularity and level before any accepted unique total."
+      ]
+    },
+    {
+      "id": "A1-T-171",
+      "term": "cerrado",
+      "partOfSpeech": "ADJ",
+      "sense": "closed for business",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Recognize the unavailable-service alternative to abierto.",
+      "lowerLevelContrast": "Same proposed H closed-business sense; do not create a second accepted meaning.",
+      "register": "neutral; prohibition is impersonal sign register where applicable",
+      "region": "pan-Hispanic; local transport labels may vary; es-ES pronunciation target",
+      "formNotes": "Cerrado/cerrada and plurals; estar cerrado.",
+      "pronunciationNotes": "Penultimate stress; rr strong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm F/H/T ownership and exact sense/phrase granularity; shared proposals do not imply net-new accepted vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-172",
+      "term": "prohibido",
+      "partOfSpeech": "ADJ",
+      "sense": "not allowed in the stated context",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-signs"
+      ],
+      "levelRationale": "Recognize a simple prohibition on a public sign.",
+      "lowerLevelContrast": "Language recognition is not legal guidance or an exhaustive rule inventory.",
+      "register": "neutral; prohibition is impersonal sign register where applicable",
+      "region": "pan-Hispanic; local transport labels may vary; es-ES pronunciation target",
+      "formNotes": "Prohibido/prohibida and plurals; prohibited action/context supplied separately.",
+      "pronunciationNotes": "Silent h; preserve vowel sequence and penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm F/H/T ownership and exact sense/phrase granularity; shared proposals do not imply net-new accepted vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-173",
+      "term": "gratis",
+      "partOfSpeech": "ADJ",
+      "sense": "requiring no payment",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-money"
+      ],
+      "levelRationale": "Recognize a free admission or service offer.",
+      "lowerLevelContrast": "Free of charge differs from available libre.",
+      "register": "neutral; prohibition is impersonal sign register where applicable",
+      "region": "pan-Hispanic; local transport labels may vary; es-ES pronunciation target",
+      "formNotes": "Invariant adjective with a service/admission noun; adverbial use requires POS review separately.",
+      "pronunciationNotes": "Initial stress; gr cluster.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm F/H/T ownership and exact sense/phrase granularity; shared proposals do not imply net-new accepted vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-174",
+      "term": "centro",
+      "partOfSpeech": "NOUN",
+      "sense": "central part of a town or city",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:299-centro"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-route"
+      ],
+      "levelRationale": "Identify a common destination in a short urban journey.",
+      "lowerLevelContrast": "Different from existing service-facility centro.",
+      "register": "neutral; prohibition is impersonal sign register where applicable",
+      "region": "pan-Hispanic; local transport labels may vary; es-ES pronunciation target",
+      "formNotes": "Masculine; el centro; centro de la ciudad clarifies sense.",
+      "pronunciationNotes": "Initial stress; ntr group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm F/H/T ownership and exact sense/phrase granularity; shared proposals do not imply net-new accepted vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-175",
+      "term": "línea",
+      "partOfSpeech": "NOUN",
+      "sense": "public-transport route or service line",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-tickets"
+      ],
+      "levelRationale": "Choose the numbered service needed for a simple journey.",
+      "lowerLevelContrast": "Not geometric line, phone line or written row.",
+      "register": "neutral; prohibition is impersonal sign register where applicable",
+      "region": "pan-Hispanic; local transport labels may vary; es-ES pronunciation target",
+      "formNotes": "Feminine; líneas; service numbers remain data.",
+      "pronunciationNotes": "First stress marked by í; preserve e-a sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm F/H/T ownership and exact sense/phrase granularity; shared proposals do not imply net-new accepted vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-176",
+      "term": "oficina de turismo",
+      "partOfSpeech": "NOUN",
+      "sense": "visitor-information office",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-find-services"
+      ],
+      "levelRationale": "Locate a place that can provide basic maps and destination information.",
+      "lowerLevelContrast": "Service place, not the information itself or all offices.",
+      "register": "neutral; prohibition is impersonal sign register where applicable",
+      "region": "pan-Hispanic; local transport labels may vary; es-ES pronunciation target",
+      "formNotes": "Feminine head oficina; oficinas de turismo; extended information-office labels are variants.",
+      "pronunciationNotes": "Stress oficina and turismo; no inserted vowel in sm group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm F/H/T ownership and exact sense/phrase granularity; shared proposals do not imply net-new accepted vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-177",
+      "term": "cambiar dinero",
+      "partOfSpeech": "VERB",
+      "sense": "exchange one currency for another",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:341-cambiar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-money"
+      ],
+      "levelRationale": "Recognize a basic currency-exchange request when locating a financial service.",
+      "lowerLevelContrast": "Specialization of existing replace cambiar needs adjudication; not cash change returned after payment.",
+      "register": "neutral; prohibition is impersonal sign register where applicable",
+      "region": "pan-Hispanic; local transport labels may vary; es-ES pronunciation target",
+      "formNotes": "Cambio dinero; regular -ar; currency names complement the phrase.",
+      "pronunciationNotes": "Stress the conjugated verb and dinero as separate lexical words.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Confirm F/H/T ownership and exact sense/phrase granularity; shared proposals do not imply net-new accepted vocabulary."
+      ]
+    },
+    {
+      "id": "A1-T-178",
+      "term": "perder",
+      "partOfSpeech": "VERB",
+      "sense": "miss a scheduled transport departure",
+      "proposedLevel": "A2",
+      "action": "exclude",
+      "existingEntryIds": [
+        "es-sk:a2:exp-002-perder"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-T-later-boundaries"
+      ],
+      "levelRationale": "A2 explains missing a train or plane in a travel disruption.",
+      "lowerLevelContrast": "Different from existing losing-an-object sense; cannot relabel lost-luggage ID as missed train.",
+      "register": "neutral; prohibition is impersonal sign register where applicable",
+      "region": "pan-Hispanic; local transport labels may vary; es-ES pronunciation target",
+      "formNotes": "Pierdo/pierde; perder el tren/el avión; e to ie.",
+      "pronunciationNotes": "Final infinitive stress; ie in present.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Excluded from A1 introduction proposal and recommended for A2-T; distinct meaning and old-ID compatibility need adjudication."
+      ]
+    },
+    {
+      "id": "A1-T-179",
+      "term": "cuánto",
+      "partOfSpeech": "ADV",
+      "sense": "ask the monetary amount something costs in a bare cost question",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-function-words-planned-05"
+      ],
+      "objectiveIds": [
+        "A1-T-tickets",
+        "A1-T-money"
+      ],
+      "levelRationale": "Ask a ticket or service price through the narrow bare cuánto cuesta construction.",
+      "lowerLevelContrast": "Unlike noun-linked cuántos billetes, the bare cost question has no overt quantified noun; align with A1-F-297, not DET A1-F-037.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Invariant cuánto in the selected cost question; cuesta/cuestan agrees with the priced item. Do not generalize this analysis to all standalone interrogatives.",
+      "pronunciationNotes": "Stressed cuán syllable with ua diphthong; rising or falling question contour depends on variety and context.",
+      "referenceIds": [
+        "pcic-functions",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "A1-F-297 proposes ownership of the same narrow bare-price use. The shared broad planned ID also links DET quantity; adjudicate split coverage without counting the same planned record twice."
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "subject": "Every timetable value, flight number, route number and place name",
+      "reason": "These are compositional data or open proper-name sets, not separate lexical meanings for every combination.",
+      "objectiveIds": [
+        "A1-T-tickets",
+        "A1-T-route"
+      ]
+    },
+    {
+      "subject": "Every possible vehicle, ticket product or accommodation service tier",
+      "reason": "Enumerate ordinary bounded scenarios; specialist products and complex conditions require later selection, not arbitrary padding.",
+      "objectiveIds": [
+        "A1-T-modes",
+        "A1-T-booking-disputes"
+      ]
+    }
+  ],
+  "coverageNotes": [
+    "All60 primary legacy T entries (20 services,40 travel/transport) are individually reconciled. Row totals include links, alternative meanings and later exclusions; they are not a final unique inventory or net additions.",
+    "Scenarios enumerated: locate postal/financial/health/educational/safety services; identify ordinary postal items; request immediate help; read entry/exit/opening/queue and travel-time messages; buy basic admission/transport tickets; choose familiar modes; locate a destination with landmarks; identify luggage and arrive at simple lodging. Independent omission review remains required.",
+    "F owns full numbers, clock/calendar systems, demonstratives, general spatial relations and politeness/function prerequisites. Named A1-F-location, A1-F-time-anchor, A1-F-cardinals and A1-F-questions cover these dependencies; T links representative exact baseline/planned inputs without duplicating every time or route value.",
+    "P owns identity documents and personal data; H owns payment and room/furniture uses. Shared proposal context checked in A1-P/A1-H/A1-F: passport/address, generic card, reservations, firmar, bill versus receipt versus transport ticket, and left/right orientation. Overlap does not grant a new published ID.",
+    "Later A2 inputs retain form completion, appointments, collection, cancellation, delays and transfers as boundary work. Formal reports, utility procedures, repair explanation and compensation negotiations are not required by the approved immediate A1 scenarios; no required objective is marked deferred-core.",
+    "Proposed level changes are independent Wordfold meaning-introduction decisions, not automatic PCIC column copying: legacy cita/indicar/conducir to A2; authored alojamiento/de ida y vuelta/cajero automático/firmar/urgente to A1; planned cambio earlier in line with H. Original IDs and current learner levels remain untouched.",
+    "Resolve exit versus departure; entrance versus admission ticket; banknote versus transport ticket; police institution versus officer; place-centre versus city centre; boarding versus upward/downward movement; lost object versus missed departure. Generic room/card and currency-exchange specializations need scope review.",
+    "Regional notes preserve es-ES target speech while flagging boleto/pasaje, bus labels, coche/car equivalents, aparcamiento/estacionamiento, aseos and coger. Campin plural alternatives checked. Actual audio remains unlistened and unapproved.",
+    "All inventory glosses and rationale are original planning text. PCIC is an acknowledged framework only: no bulk copied learner content, certification, native signoff, audio attestation, production eligibility or final exact-inventory acceptance is claimed.",
+    "Quantity-question refinement follows controller-reviewed F proposals: noun-linked DET cuánto aligns with A1-F-037; narrow bare-cost ADV cuánto aligns with A1-F-297. Both reference the same broad planned input without claiming two automatically accepted new words."
+  ],
+  "counts": {
+    "selections": 179,
+    "objectives": 18
+  }
+}

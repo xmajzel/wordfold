@@ -1,0 +1,3029 @@
+{
+  "schemaVersion": 1,
+  "batchId": "A1-D",
+  "courseId": "es-sk",
+  "level": "A1",
+  "package": "D",
+  "status": "proposed",
+  "author": "expansion-spanish-review (AI)",
+  "levelMeaning": "recommended-sense-introduction",
+  "references": [
+    {
+      "id": "pcic-functions-basic",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/05_funciones_inventario_a1-a2.htm",
+      "section": "Functions 1–6; A1/A2 columns checked 2026-09-05",
+      "use": "Framework scope and functional comparisons only; original Wordfold meanings, not copied inventories or certified word placements."
+    },
+    {
+      "id": "pcic-pragmatics-basic",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/06_tacticas_pragmaticas_inventario_a1-a2.htm",
+      "section": "Discourse construction 1.1–1.7, modalization 2, courtesy 3.1",
+      "use": "Checked functional force, person forms, connectors and intonation; no reproduced learner examples."
+    },
+    {
+      "id": "pcic-pronunciation-basic",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/03_pronunciacion_inventario_a1-a2.htm",
+      "section": "Intonation 2, stress 3, rhythm/pauses 4 and sounds/linking 5",
+      "use": "Written pronunciation risk planning; no audio approval or listening claim."
+    },
+    {
+      "id": "pcic-general-basic",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/08_nociones_generales_inventario_a1-a2.htm",
+      "section": "General notions 4 time, 6 evaluation, 7 mental notions; A1/A2",
+      "use": "F crosslinks and level comparison; no automatic minimum introduction inferred from a thematic appearance."
+    },
+    {
+      "id": "rae-valer",
+      "url": "https://dle.rae.es/valer",
+      "section": "vale interjection under valer",
+      "use": "Checked 2026-09-05 for acknowledgment sense/POS, not proficiency level or an exclusivity claim about geography."
+    },
+    {
+      "id": "rae-coger",
+      "url": "https://dle.rae.es/coger",
+      "section": "Ordinary taking/transport meanings and geographically marked vulgar sexual meaning",
+      "use": "Checked 2026-09-05 for context-sensitive regional warning; do not generalize one marked meaning to every American variety or every use."
+    },
+    {
+      "id": "pcic-grammar-basic",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/02_gramatica_inventario_a1-a2.htm",
+      "section": "Grammar 7.1.4 se and 7.3 interrogatives; A1/A2 comparison",
+      "use": "Checked 2026-09-05: the A1 se treatment is reflexive, not evidence that the classroom naming frame already has an impersonal/passive prerequisite. No blanket productive-grammar placement inferred."
+    },
+    {
+      "id": "rae-se",
+      "url": "https://www.rae.es/dpd/se",
+      "section": "DPD se 2.1–2.2: impersonal and passive-reflexive constructions",
+      "use": "Checked 2026-09-05 for nonreflexive construction and agreement distinctions; grammatical evidence only, not an A1 proficiency assignment."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "A1-D-identify",
+      "description": "Identify self, another person and a familiar referent; answer identity checks.",
+      "frameworkSections": [
+        "Functions 1.1, 1.2, 1.3, 5.4, 6.3"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Personal, demonstrative and copular meanings support names, origin, occupation and face-to-face identification; P/F supply the open slot vocabulary."
+    },
+    {
+      "id": "A1-D-information",
+      "description": "Ask and answer person, thing, place, origin, time, quantity, reason and manner questions.",
+      "frameworkSections": [
+        "Functions 1.2, 1.2.1, 1.3; pragmatics 1.4.1"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Close each question contrast with lexical interrogatives plus F quantity/time and P/H/T/W/C/S topic prerequisites; alternative choice uses o. Narrow bare price questions explicitly depend on ADV A1-F-297, not DET A1-D-081/A1-F-037: cuánto is invariable while cuesta/cuestan agrees with the priced subject. Retain F-297's scenario-specific A1 proposal versus the framework's broader A2 adverbial treatment; no claim of unrestricted amount/degree-question coverage."
+    },
+    {
+      "id": "A1-D-confirmation",
+      "description": "Confirm, correct, contradict and seek a short confirmation.",
+      "frameworkSections": [
+        "Functions 1.3.1, 1.4, 1.5, 2.9–2.10; pragmatics 1.7.1"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Yes/no with appropriate scope and repetition suffice for basic correction; tag use requires a distinct discourse decision."
+    },
+    {
+      "id": "A1-D-description",
+      "description": "Describe a familiar person, object, place and immediate routine.",
+      "frameworkSections": [
+        "Functions 1.6, 1.7"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "prerequisite",
+      "rationale": "Prerequisite: P personal descriptions, H objects, T location, W study/work, C preferences and F copulas/quality/time. A1 short descriptions and present sequences are included; extended connected past narration is not claimed."
+    },
+    {
+      "id": "A1-D-opinion",
+      "description": "State a basic belief, ask a minimal opinion and express tentative knowledge.",
+      "frameworkSections": [
+        "Functions 2.1–2.2, 2.11–2.14"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Belief and no-knowledge constructions cover modest stance without adding each sentence as a lexical MWE; complex argument is outside A1."
+    },
+    {
+      "id": "A1-D-evaluation",
+      "description": "Ask for and give a basic positive, negative or middling evaluation.",
+      "frameworkSections": [
+        "Functions 2.3–2.5"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Satisfactory/unsatisfactory/so-so contrasts are covered; F adjectives and degree supply richer evaluations."
+    },
+    {
+      "id": "A1-D-agreement",
+      "description": "Add a matching positive or negative fact and make a short contrasting response.",
+      "frameworkSections": [
+        "Functions 2.9–2.10, 2.12; pragmatics 1.2.1, 1.2.4"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "F también/tampoco remain prerequisites alongside D yes/no and pero; shared-opinion MWE is separately proposed A2, not silently upgraded by a simple acknowledgment."
+    },
+    {
+      "id": "A1-D-possibility",
+      "description": "Express uncertainty or possibility without proving a conclusion.",
+      "frameworkSections": [
+        "Functions 2.14, 2.16"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "prerequisite",
+      "rationale": "Prerequisite: F A1-F-259 quizá/quizás and A1-F-260 ser posible, plus D creer. These original sense proposals need global form-versus-construction adjudication, not duplicate D rows."
+    },
+    {
+      "id": "A1-D-knowledge",
+      "description": "Ask whether someone knows information, a person/place or a learned skill.",
+      "frameworkSections": [
+        "Functions 2.19–2.23"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Keep factual saber, acquaintance conocer and F A1-F-261 learned-skill saber distinct; inability and ignorance are ordinary negated practice, not new words. F A1-F-261 learned-skill saber remains a prerequisite, not duplicated into another new D row."
+    },
+    {
+      "id": "A1-D-likes",
+      "description": "State liking/disliking, a preference and a want; offer a simple choice.",
+      "frameworkSections": [
+        "Functions 3.2, 3.4–3.5, 3.8, 4.14"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Liking, preferring and wanting each need a meaning decision. Questions about interest are A2 in 3.1 but minimal offers and alternatives occur at A1; do not infer a universal minimum from one function."
+    },
+    {
+      "id": "A1-D-plans",
+      "description": "Ask and state immediate plans using familiar activities and times.",
+      "frameworkSections": [
+        "Functions 3.9–3.10"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "prerequisite",
+      "rationale": "Prerequisite: F present-tense/calendar/time system and P/H/T/W/C action senses; present with a future time is practice material. Pragmatics 2.5 locates a richer future-present treatment at A2; preserve this framework granularity rather than invent a new ir meaning."
+    },
+    {
+      "id": "A1-D-feelings",
+      "description": "Handle a brief well-being answer and signal an immediate physical need.",
+      "frameworkSections": [
+        "Functions 3.11–3.30; specific notions 2, 13"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "prerequisite",
+      "rationale": "Prerequisite: P differentiated affect/body/health inventory and its explicit A1 emergency/need exceptions versus A2 thematic recommendations; bien/mal crosslinks here. No blanket early introduction of all feelings or all health words."
+    },
+    {
+      "id": "A1-D-instructions",
+      "description": "Understand short classroom requests and ask for slower/repeated speech.",
+      "frameworkSections": [
+        "Functions 4.1, 6.23"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Repetition, understanding and silence need lexical coverage. Prerequisite F A1-F-189 despacio, quantity más and W classroom actions; no separate word for every imperative or full request."
+    },
+    {
+      "id": "A1-D-request",
+      "description": "Request an object or immediate assistance and accept or refuse.",
+      "frameworkSections": [
+        "Functions 4.3–4.4, 4.7.1, 4.7.3"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Object plus courtesy marker and yes/no response close A1; explicit urgent-help exception links T. Indirect favours and strategic evasion are later, not required to name every act."
+    },
+    {
+      "id": "A1-D-permission",
+      "description": "Grant/deny permission and make a bounded classroom/service permission request.",
+      "frameworkSections": [
+        "Functions 4.8–4.10"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Grant/refusal are A1 in the checked function columns; asking permission is A2 there. Propose only immediate permission as a visible A1 extension with an independent modal meaning, not a runtime change."
+    },
+    {
+      "id": "A1-D-offer",
+      "description": "Offer a familiar item and accept or decline courteously.",
+      "frameworkSections": [
+        "Functions 4.14, 4.16–4.17"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Wanting, familiar object labels, yes/no and thanks suffice; detailed invitations and commitments remain later comparisons."
+    },
+    {
+      "id": "A1-D-greeting",
+      "description": "Greet and answer in morning, later daytime and night contexts.",
+      "frameworkSections": [
+        "Functions 5.1–5.2, 6.2"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Bound greetings by time/social function, not every possible person-name combination."
+    },
+    {
+      "id": "A1-D-address",
+      "description": "Attract attention and choose an appropriate address form.",
+      "frameworkSections": [
+        "Functions 5.3, 6.1; pragmatics 3.1"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Courtesy marker, brief interjection and F tú/usted are selected. Prerequisite P A1-P-165/166 señor/señora form-family adjudication; neither age nor nationality mechanically determines address."
+    },
+    {
+      "id": "A1-D-introduction",
+      "description": "Respond to meeting a person and exchange names.",
+      "frameworkSections": [
+        "Functions 5.4–5.5"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "A conventional pleasure formula differs from ordinary happiness; personal introductions depend on P names and F identity forms."
+    },
+    {
+      "id": "A1-D-apology",
+      "description": "Apologize briefly, express sympathy and acknowledge an apology.",
+      "frameworkSections": [
+        "Functions 5.10–5.11, 5.14; 4.10"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Apology, regret/sympathy and acknowledgment are distinct contrasts; source placements and any earlier extension are visible per selection."
+    },
+    {
+      "id": "A1-D-thanks",
+      "description": "Thank someone and acknowledge thanks.",
+      "frameworkSections": [
+        "Functions 5.12–5.13"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "All five planned social identities are reconciled; response formula has an explicit A1 proposal despite the function inventory's A2 column."
+    },
+    {
+      "id": "A1-D-celebration",
+      "description": "Use a brief congratulation and a toast without assuming a religious occasion.",
+      "frameworkSections": [
+        "Functions 5.15–5.16"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Conventional celebratory meanings differ from health/happiness nouns; P/C/S provide occasion vocabulary without copying an exhaustive holiday list."
+    },
+    {
+      "id": "A1-D-farewell",
+      "description": "End a brief exchange and acknowledge the other speaker's departure.",
+      "frameworkSections": [
+        "Functions 5.21, 6.31"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "General, tomorrow-bound and later-encounter farewells are covered; variable day slots belong to F calendar practice."
+    },
+    {
+      "id": "A1-D-contact",
+      "description": "Signal attention, keep listening and request a person in a face-to-face exchange.",
+      "frameworkSections": [
+        "Functions 6.1, 6.3, 6.9"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "A greeting, an interested sí and name/title request suffice; telephone technology and conversational transfer are not equivalent lexical senses."
+    },
+    {
+      "id": "A1-D-connection",
+      "description": "Connect additions, alternatives, contrasts, causes and an example.",
+      "frameworkSections": [
+        "Functions 6.13; pragmatics 1.2.1, 1.2.4"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Core connectors plus a lexical example marker close short discourse; rhetorical concessions and multi-point argument belong later."
+    },
+    {
+      "id": "A1-D-sequence",
+      "description": "Put two or three familiar actions into temporal order.",
+      "frameworkSections": [
+        "Functions 6.12, 6.26; pragmatics 1.2.2"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "selected",
+      "rationale": "Reuse temporal antes/después and F ordinal/time prerequisites. Explicit rhetorical ordering is A2 in pragmatics; short A1 chronological practice is a bounded proposal, not proof all ordering markers are A1."
+    },
+    {
+      "id": "A1-D-repair",
+      "description": "Signal non-understanding, request a word, repetition, spelling or changed delivery.",
+      "frameworkSections": [
+        "Functions 1.2, 4.1; pronunciation 2–4"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-grammar-basic",
+        "rae-se"
+      ],
+      "disposition": "selected",
+      "rationale": "The three planning sentence seeds are compositional usage frames. W supplies palabra/frase/letra/deletrear; F supplies cómo/otra/quantity and slower pace; D keeps explicit speech-volume senses. Unresolved prerequisite: the bounded naming frame cómo se dice requires nonreflexive se analysis and an explicit early-use teaching decision. A1-F-030 covers reflexive/pronominal routines and does not supply this use. Its classroom-frame introduction, agreement with a named expression and any extension to productive impersonal/passive constructions must be adjudicated with F/W before learner authoring; lexical coverage does not discharge that grammar dependency."
+    },
+    {
+      "id": "A1-D-register",
+      "description": "Control person forms, polite force and region-sensitive choices.",
+      "frameworkSections": [
+        "Pragmatics 3.1; pronunciation 2.3–2.4"
+      ],
+      "referenceIds": [
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic",
+        "rae-coger"
+      ],
+      "disposition": "prerequisite",
+      "rationale": "Prerequisite F/P tú, usted, ustedes, vosotros and clitics plus W alphabet/letter-name paradigm. Compare es-ES default with valid regional forms including vos, without demanding productive mastery of every paradigm. T A1-T-101 coger needs a regional usage warning; native/audio checks remain later."
+    },
+    {
+      "id": "A1-D-pronunciation",
+      "description": "Distinguish a statement, yes/no question, information question, vocative and polite request.",
+      "frameworkSections": [
+        "Pronunciation 2.1–2.4, 3.2, 4.2; pragmatics 2.4"
+      ],
+      "referenceIds": [
+        "pcic-pronunciation-basic"
+      ],
+      "disposition": "prerequisite",
+      "rationale": "Prerequisite physical playback QA and independent listening: lexical stress, vowel linking, meaningful pauses, polite versus curt delivery and question types. A rise is a useful default for some total questions, not a universal Spanish-question rule. Slovak fixed initial stress must not be transferred."
+    },
+    {
+      "id": "A1-D-spelling-number",
+      "description": "Spell names and give a number, date or time without minting every combination.",
+      "frameworkSections": [
+        "Functions 1.2; W spelling objective; F number/time objectives"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "prerequisite",
+      "rationale": "Prerequisite W Spanish 27-letter alphabet including ñ, ch/ll digraphs, recommended letter names plus valid regional ye/i griega and uve/ve-type variants; F bounded numeral and calendar paradigms. Letter spelling and verbal pronunciation are different skills."
+    },
+    {
+      "id": "A1-D-nonverbal",
+      "description": "Use eye contact, pointing, turn-yielding and a visible closing cue.",
+      "frameworkSections": [
+        "Functions 6.1, 6.28; 2.4–2.5"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "Applicable to course practice but not lexical-sense enumeration: nonverbal acts are explicitly accounted for and require later accessible multimodal practice, not fabricated word entries."
+    },
+    {
+      "id": "A1-D-later-stance",
+      "description": "Reserve explicit viewpoint positioning, recall and elaborated feeling/attitude work for later comparison.",
+      "frameworkSections": [
+        "Functions 1.2.2; 2.6–2.8, 2.17–2.18, 2.24–2.26; 3.1, 3.3, 3.7, 3.11–3.30"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "These checked A1 columns are blank or covered only by simpler functions. P/F own recall, obligation and feelings with exceptions; A2-D owns developed positioning and emotion exchanges. Later placement is a recommendation, not a ban on simple utterances containing the same senses."
+    },
+    {
+      "id": "A1-D-later-influence",
+      "description": "Reserve developed favours, suggestions, advice, warning and offer-to-help routines.",
+      "frameworkSections": [
+        "Functions 4.2, 4.7.2, 4.13, 4.15, 4.18–4.19, 4.23"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "Checked A1 columns are blank. A1 lexical help and a safety recognition prerequisite T do not claim coverage of all indirect requests, warning strategies, suggestions or advice; routine development belongs A2-D."
+    },
+    {
+      "id": "A1-D-later-social",
+      "description": "Reserve elaborate welcome/wishes and written social correspondence.",
+      "frameworkSections": [
+        "Functions 5.8–5.9, 5.17–5.18; written A2 portions of 5.1 and 5.21"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "A1 greetings/thanks can participate in these events but do not require every welcome, wish, holiday formula or letter closing as a lexical selection. Later A2-D handles the finite conventional families."
+    },
+    {
+      "id": "A1-D-later-discourse",
+      "description": "Reserve telephone routing, message-taking and extended story management.",
+      "frameworkSections": [
+        "Functions 6.3 A2, 6.4–6.5, 6.7–6.8, 6.12, 6.21, 6.26"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "C/T own devices, messages and accommodation, while A2-D supplies transfers, call errors, story openings and interruptions. A1 lexical repair is retained; richer discourse-function occurrence does not force its base words later."
+    },
+    {
+      "id": "A1-D-empty-slots",
+      "description": "Account for explicitly unpopulated A1/A2 functional headings.",
+      "frameworkSections": [
+        "Functions 2.15; 3.6, 3.16, 3.20, 3.22–3.26; 4.5–4.6, 4.11–4.12, 4.20–4.22; 5.6–5.7, 5.19–5.20; 6.6, 6.10–6.11, 6.14–6.20, 6.22, 6.24–6.25, 6.27, 6.29–6.30"
+      ],
+      "referenceIds": [
+        "pcic-functions-basic"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "These framework placeholders are not missing Wordfold word lists. No invented quota or claim that a placeholder prohibits incidental communication; later inventories must inspect their own populated headings."
+    }
+  ],
+  "selections": [
+    {
+      "id": "A1-D-001",
+      "term": "ser",
+      "partOfSpeech": "VERB",
+      "sense": "identify a person or state a characteristic",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-001-ser"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-identify"
+      ],
+      "levelRationale": "Identity statements are the starting point for introductions and factual answers.",
+      "lowerLevelContrast": "Reuse F/P identity meaning; location is estar, not a second sense of ser here.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Soy/eres/es and plural agreement are forms; pronouns may be omitted.",
+      "pronunciationNotes": "One-syllable soy/es; keep the short identifying statement's final fall.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-002",
+      "term": "estar",
+      "partOfSpeech": "VERB",
+      "sense": "be in a location or current situation",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-002-estar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-identify",
+        "A1-D-information",
+        "A1-D-feelings"
+      ],
+      "levelRationale": "Locating a person and a brief state answer are immediate exchange needs.",
+      "lowerLevelContrast": "Existing broad location/state scope must align with F/P; no claim all estar constructions are one approved sense.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Estoy/estás/está; location and adjective agreement practice are not separate inflections-as-words.",
+      "pronunciationNotes": "Written accents in estás/está and connected vowel boundaries need playback.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-003",
+      "term": "poder",
+      "partOfSpeech": "VERB",
+      "sense": "have the ability or possibility to do something",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-007-poder"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-instructions",
+        "A1-D-request"
+      ],
+      "levelRationale": "A bounded repetition request can draw on ability/possibility; functions 4.1 explicitly includes such A1 repair.",
+      "lowerLevelContrast": "Permission is a separately proposed use below; F A1 possibility proposal versus A2 general ability treatment remains visible.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Puedo/puedes/puede plus infinitive; usted takes third-person morphology.",
+      "pronunciationNotes": "Preserve ue diphthong and gentle request contour; not all questions simply rise.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-004",
+      "term": "saber",
+      "partOfSpeech": "VERB",
+      "sense": "know a fact or piece of information",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-008-saber"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-knowledge",
+        "A1-D-opinion"
+      ],
+      "levelRationale": "Knowledge and lack of knowledge directly support asking and answering basic information.",
+      "lowerLevelContrast": "Not F A1-F-261 learned skill and not P recordar retrieval of earlier experience.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Sé is irregular and accented; saber que/si depends on F grammar.",
+      "pronunciationNotes": "Sé is one stressed syllable; no sé may be ignorance or a hesitant response depending on contour.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-005",
+      "term": "dar",
+      "partOfSpeech": "VERB",
+      "sense": "transfer an object to another person",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-009-dar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-request"
+      ],
+      "levelRationale": "Handing over an object underlies immediate classroom/service cooperation.",
+      "lowerLevelContrast": "Reuse F concrete transfer; indirect requesting with me das is a later functional practice comparison, not new transfer meaning.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Doy/das/da; dar a alguien; object and recipient clitics are forms.",
+      "pronunciationNotes": "Keep dar final r and clitic linking in any later request recording.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-006",
+      "term": "decir",
+      "partOfSpeech": "VERB",
+      "sense": "say words or convey information aloud",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-013-decir"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-repair",
+        "A1-D-information"
+      ],
+      "levelRationale": "Naming a word and asking how it is said require the speech meaning.",
+      "lowerLevelContrast": "The planning seed cómo se dice is a construction of this verb, not a separate lexical word.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Digo/dices/dice. The proposed classroom naming frame uses nonreflexive se, not the reflexive/pronominal se in A1-F-030. Distinguish impersonal third-singular analysis from passive-reflexive analysis with patient-subject agreement; a quoted or singular expression does not by itself establish one analysis for every open slot. Bound initial practice to one named expression, and require a later explicit agreement/generality decision rather than teach invariant dice for every plural subject. No new verb or sentence-word for each form.",
+      "pronunciationNotes": "Check c before i under the selected es-ES voice, final r in infinitive and clear stress in dice. Unstressed se links to dice; tonic cómo carries question prominence, without making se reflexive or treating every information question as rising.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic",
+        "pcic-grammar-basic",
+        "rae-se"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word.",
+        "The classroom naming frame is an explicit bounded A1 proposal, not covered by reflexive A1-F-030. PCIC grammar 7.1.4 A1 supplies reflexive se, while RAE DPD se distinguishes impersonal and passive-reflexive syntax without assigning a learner level. Global adjudication must decide the frame's analysis, slot/agreement limits and introduction separately from unrestricted productive se grammar; this unresolved dependency blocks freeze."
+      ]
+    },
+    {
+      "id": "A1-D-007",
+      "term": "hora",
+      "partOfSpeech": "NOUN",
+      "sense": "a duration of sixty minutes",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-019-hora"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-information"
+      ],
+      "levelRationale": "Hour vocabulary supports time questions but the baseline duration sense must be preserved.",
+      "lowerLevelContrast": "Clock reading is F contextual practice; global adjudication must not silently equate every time-of-day use with a duration.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Feminine hora/horas; time answers combine numerals and articles.",
+      "pronunciationNotes": "Silent h; keep open o and vowel linking in an hour answer.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-008",
+      "term": "hoy",
+      "partOfSpeech": "ADV",
+      "sense": "on the present day",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-020-hoy"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-plans",
+        "A1-D-information"
+      ],
+      "levelRationale": "A deictic day lets a beginner identify an immediate plan without tense expansion.",
+      "lowerLevelContrast": "Reuse F current-day reference; not an extra future tense sense.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Invariable; present with a scheduled activity is a practice frame.",
+      "pronunciationNotes": "One syllable with silent h and final glide.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-009",
+      "term": "ahora",
+      "partOfSpeech": "ADV",
+      "sense": "at the present moment",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-022-ahora"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-contact",
+        "A1-D-information"
+      ],
+      "levelRationale": "Current availability and an immediate timing answer use the same short time reference.",
+      "lowerLevelContrast": "Not a request for waiting or an adversative discourse marker.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Invariable adverb; attention to its position is usage practice.",
+      "pronunciationNotes": "Silent h; preserve a-o sequence and stress on ho in careful speech.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-010",
+      "term": "antes",
+      "partOfSpeech": "ADV",
+      "sense": "at a time earlier than another",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-023-antes"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-sequence"
+      ],
+      "levelRationale": "A before/after contrast orders a short familiar routine.",
+      "lowerLevelContrast": "F A1 temporal proposal; pragmatics places developed temporal/discourse use at A2, so sequence usage is not official A1 word certification.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Invariable; antes de complement is not automatically the same lexical unit.",
+      "pronunciationNotes": "Penultimate stress and final s linking to the following word.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-011",
+      "term": "después",
+      "partOfSpeech": "ADV",
+      "sense": "at a time later than another",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-024-despues"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-sequence"
+      ],
+      "levelRationale": "A following action can be placed after another in a two-step routine.",
+      "lowerLevelContrast": "A1 chronological proposal must be distinguished from A2 structured narrative ordering in pragmatics 1.2.2.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Invariable; preserve spelling después; después de needs its own construction boundary.",
+      "pronunciationNotes": "Final stressed diphthong és; do not transfer Slovak initial stress.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-012",
+      "term": "yo",
+      "partOfSpeech": "PRON",
+      "sense": "refer to the person currently speaking",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-061-yo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-identify",
+        "A1-D-opinion",
+        "A1-D-agreement"
+      ],
+      "levelRationale": "Self-identification and contrastive matching replies need speaker reference.",
+      "lowerLevelContrast": "F supplies subject omission and emphatic contrast; not a new sense for each social formula.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Tonic subject pronoun; gender-invariant; first-person verb agreement.",
+      "pronunciationNotes": "A single syllable; the y realization varies by voice/region, not an error by default.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-013",
+      "term": "tú",
+      "partOfSpeech": "PRON",
+      "sense": "address one person using familiar second-person reference",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-062-tu"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-address",
+        "A1-D-opinion"
+      ],
+      "levelRationale": "Choosing familiar address is a basic interactional decision.",
+      "lowerLevelContrast": "Do not equate all strangers with usted or all peers with tú; F/P own paradigm.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Tú has an accent unlike possessive tu; agreement second singular.",
+      "pronunciationNotes": "One stressed syllable; short turn-return question must sound invitational rather than accusatory.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-014",
+      "term": "usted",
+      "partOfSpeech": "PRON",
+      "sense": "address one person with respectful or socially distant reference",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-063-usted"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-address",
+        "A1-D-permission"
+      ],
+      "levelRationale": "A formal request and introduction require an explicit address alternative.",
+      "lowerLevelContrast": "Formal versus familiar is contextual; not every country's usted expresses the same distance.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Uses third singular verb forms; plural ustedes differs from vosotros by region.",
+      "pronunciationNotes": "Final stress and natural final d vary in speech; avoid first-syllable stress.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-015",
+      "term": "nosotros",
+      "partOfSpeech": "PRON",
+      "sense": "refer to a group including the speaker",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-064-nosotros"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-identify",
+        "A1-D-plans"
+      ],
+      "levelRationale": "A short group introduction or shared plan needs inclusive speaker-group reference.",
+      "lowerLevelContrast": "Reuse F group-person distinction; not automatically inclusive of the listener.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Nosotros/nosotras are a form family with plural agreement.",
+      "pronunciationNotes": "Stress on so; preserve consonant clusters and plural ending.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-016",
+      "term": "qué",
+      "partOfSpeech": "PRON",
+      "sense": "ask for a thing or piece of information",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-065-que"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-information",
+        "A1-D-repair"
+      ],
+      "levelRationale": "A basic identification or word-repair question needs an interrogative contrasting with person/place.",
+      "lowerLevelContrast": "Different from F unstressed complementizer que and relative que.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Qué is accented in direct/indirect questions; not gender-inflected.",
+      "pronunciationNotes": "Tonic qué; a word question's intonation depends on whether it asks information or repeats in surprise.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-017",
+      "term": "quién",
+      "partOfSpeech": "PRON",
+      "sense": "ask which person is meant",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-066-quien"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-information",
+        "A1-D-contact"
+      ],
+      "levelRationale": "Identifying an interlocutor or intended person is a closed question contrast.",
+      "lowerLevelContrast": "Not qué for a thing and not relative quien in more elaborate descriptions.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Quién/quiénes; number form is not another lexical sense.",
+      "pronunciationNotes": "Maintain ie diphthong and stressed monosyllabic quién; plural adds a syllable.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-018",
+      "term": "dónde",
+      "partOfSpeech": "ADV",
+      "sense": "ask for a location",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-067-donde"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-information"
+      ],
+      "levelRationale": "Location questions connect all topical service and person scenarios.",
+      "lowerLevelContrast": "F destination adónde/a dónde and origin de dónde are construction contrasts, not new device/location nouns.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Accented dónde; preposition may specify origin or destination.",
+      "pronunciationNotes": "Penultimate stress; information-question cadence differs from echo-question cadence.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-019",
+      "term": "cuándo",
+      "partOfSpeech": "ADV",
+      "sense": "ask for the time of an event",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-068-cuando"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-information",
+        "A1-D-plans"
+      ],
+      "levelRationale": "Timing a lesson, outing or meeting is a basic information contrast.",
+      "lowerLevelContrast": "Not a temporal subordinating conjunction; F calendar supplies answer slots.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Accented cuándo, invariable interrogative.",
+      "pronunciationNotes": "Keep ua diphthong and initial stress; do not require rising intonation in every information question.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-020",
+      "term": "sí",
+      "partOfSpeech": "ADV",
+      "sense": "affirm or express agreement",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-069-si"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-confirmation",
+        "A1-D-agreement",
+        "A1-D-request",
+        "A1-D-permission",
+        "A1-D-offer",
+        "A1-D-contact"
+      ],
+      "levelRationale": "Yes closes basic confirmation, acceptance and permission responses.",
+      "lowerLevelContrast": "Backchannel interest can use the same surface without committing to agreement; separate function notes rather than automatic new sense.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Sí accented versus conditional si; affirmative and repeated response forms remain one lexical decision.",
+      "pronunciationNotes": "Scope-changing pauses and affirmation versus questioning/backchannel contours require separate audio cases.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-021",
+      "term": "no",
+      "partOfSpeech": "ADV",
+      "sense": "negate a statement or give a negative response",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-070-no"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-confirmation",
+        "A1-D-agreement",
+        "A1-D-request",
+        "A1-D-permission",
+        "A1-D-offer"
+      ],
+      "levelRationale": "No supports correction, refusal and disagreement without requiring elaborate justification.",
+      "lowerLevelContrast": "A confirmation-seeking tag is a separately proposed discourse use, not automatically ordinary negation.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Negative particle precedes a finite verb; repeated no can respond and negate separately.",
+      "pronunciationNotes": "Pause after response no distinguishes refusal from the following proposition; keep polite rather than sharp delivery where intended.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-022",
+      "term": "y",
+      "partOfSpeech": "CCONJ",
+      "sense": "link an additional item or proposition",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-071-y"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-connection",
+        "A1-D-agreement"
+      ],
+      "levelRationale": "Additive linkage joins two simple facts and supports returning a question.",
+      "lowerLevelContrast": "Not a new word for each yo también or y tú frame.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Variant e before appropriate /i/ sound; preserve phonological exceptions through F.",
+      "pronunciationNotes": "Usually unstressed /i/ linked to its neighbors; do not voice every conjunction as a separate emphatic item.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-023",
+      "term": "o",
+      "partOfSpeech": "CCONJ",
+      "sense": "present alternatives",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-072-o"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-information",
+        "A1-D-likes",
+        "A1-D-connection"
+      ],
+      "levelRationale": "Choice questions cover requested objects and preferences before developed argument.",
+      "lowerLevelContrast": "Contrast additive y; no separate inventory row for every two-item offer.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Variant u before /o/ sound; not each written o/u a sense.",
+      "pronunciationNotes": "In an alternative question contrast the two choices; final-choice contour differs from a simple yes/no rise.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-024",
+      "term": "pero",
+      "partOfSpeech": "CCONJ",
+      "sense": "introduce a contrast with the preceding idea",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-073-pero"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-connection",
+        "A1-D-agreement",
+        "A1-D-opinion"
+      ],
+      "levelRationale": "A short contradictory or qualified answer is a basic stance function.",
+      "lowerLevelContrast": "Not advanced concession aunque or formal sin embargo merely because the learner gives an opinion.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Invariable coordinator; clause linkage is practice, not each sentence a MWE.",
+      "pronunciationNotes": "Single tap r, not perro trill; retain a useful boundary before a contrasting clause.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-025",
+      "term": "porque",
+      "partOfSpeech": "SCONJ",
+      "sense": "introduce a cause or reason",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-074-porque"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-connection",
+        "A1-D-information"
+      ],
+      "levelRationale": "A short reason completes a basic why question or preference statement.",
+      "lowerLevelContrast": "Contrast interrogative por qué; developed causation does not force this core sense later.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Single word because; F governs simple finite reason clauses.",
+      "pronunciationNotes": "Usually non-emphatic linking; distinguish prosodically from tonic interrogative por qué.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-026",
+      "term": "hola",
+      "partOfSpeech": "INTJ",
+      "sense": "greet someone",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:exp-075-hola"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-greeting",
+        "A1-D-address",
+        "A1-D-introduction",
+        "A1-D-contact"
+      ],
+      "levelRationale": "A compact social opening is directly usable on first contact.",
+      "lowerLevelContrast": "Attention and greeting applications need usage context but not automatically separate published senses.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Invariable interjection; adding a name is ordinary vocative practice.",
+      "pronunciationNotes": "Silent h, two syllables, initial stress; warm contour rather than abrupt summons.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-027",
+      "term": "adiós",
+      "partOfSpeech": "INTJ",
+      "sense": "say farewell",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:exp-076-adios"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-farewell"
+      ],
+      "levelRationale": "A general closing works without assuming another meeting.",
+      "lowerLevelContrast": "Contrast a tomorrow-bound farewell and later-encounter formula.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Invariable with written accent; not the noun adiós as a separate proposed item.",
+      "pronunciationNotes": "Final stress and io diphthong; keep the phrase-ending contour natural.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-028",
+      "term": "gracias",
+      "partOfSpeech": "INTJ",
+      "sense": "express thanks",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:exp-077-gracias"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-thanks",
+        "A1-D-offer",
+        "A1-D-celebration"
+      ],
+      "levelRationale": "Thanks closes help and object exchanges and accepts or declines an offer with yes/no.",
+      "lowerLevelContrast": "Many thanks is an intensification, not a new sense; reply-to-thanks is separately selected.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Fixed plural interjection; muchas agreement, not singular gracia in this meaning.",
+      "pronunciationNotes": "Initial stress; es-ES c pronunciation checked by voice, final s retained according to chosen variety.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-029",
+      "term": "por favor",
+      "partOfSpeech": "ADV",
+      "sense": "mark a request as courteous",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:exp-078-por-favor"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-request",
+        "A1-D-address",
+        "A1-D-instructions",
+        "A1-D-permission"
+      ],
+      "levelRationale": "The courtesy marker supports object requests, repair and help across scenes.",
+      "lowerLevelContrast": "Attention-getting and request position are usage choices; no inference that adding it neutralizes every rude command.",
+      "register": "neutral; contextual politeness and turn function matter",
+      "region": "pan-Hispanic meaning; es-ES default audio with regional variation respected",
+      "formNotes": "Fixed adverbial expression; not plural/gender inflected.",
+      "pronunciationNotes": "Light por and final stress in favor; phrase placement and pause affect politeness.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global ownership and sense boundary must be adjudicated with F/P and the relevant topical cell; this row is not an additional published word."
+      ]
+    },
+    {
+      "id": "A1-D-030",
+      "term": "gustar",
+      "partOfSpeech": "VERB",
+      "sense": "be pleasing to someone",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:050-gustar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-likes"
+      ],
+      "levelRationale": "Positive and negative liking are immediately useful in meals, leisure and activities; functions 3.2 supports this contrast.",
+      "lowerLevelContrast": "P/H/C share this meaning; an A2 question placement in 3.1 does not prove the liking sense starts later.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Gusta/gustan agrees with the liked thing; me/te/le identify experiencer.",
+      "pronunciationNotes": "Initial g stays hard; plural ending and unstressed clitic must be audible.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-031",
+      "term": "querer",
+      "partOfSpeech": "VERB",
+      "sense": "want to obtain something or do an action",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:051-querer"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-likes",
+        "A1-D-offer"
+      ],
+      "levelRationale": "Wanting supports a direct need, an activity choice and a simple offered item.",
+      "lowerLevelContrast": "Not affection querer; polite desire with gustaría is a different form/function progression.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Quiero/quieres/quiere; object or infinitive complement.",
+      "pronunciationNotes": "Maintain ie diphthong; request contour should not become an unintended demand.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-032",
+      "term": "sentir",
+      "partOfSpeech": "VERB",
+      "sense": "experience an emotion or physical sensation",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:052-sentir"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-feelings"
+      ],
+      "levelRationale": "P proposes A2 for the general experiencing meaning against the later thematic feeling inventory; D does not silently change it through a regret formula.",
+      "lowerLevelContrast": "The same experiencing sense can occur in short utterances; lo siento is a conventional regret function, not proof this general verb must be A1.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Siento/sientes/siente; ordinary object complement versus pronominal sentirse must remain distinct.",
+      "pronunciationNotes": "Ie diphthong and single-r ending; compare stress with a fixed regret recording.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Proposed later introduction or relevel requires global adjudication; same sense can occur in a short/simple utterance and runtime remains unchanged."
+      ]
+    },
+    {
+      "id": "A1-D-033",
+      "term": "pensar",
+      "partOfSpeech": "VERB",
+      "sense": "form ideas or consider something mentally",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:053-pensar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-opinion"
+      ],
+      "levelRationale": "Mental consideration is a basic stance resource but this baseline is not specifically giving an opinion.",
+      "lowerLevelContrast": "Reuse F/P mental-process meaning; creo que is the narrower beginner stance frame, not a replacement ID.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Pienso/piensas/piensa; pensar en versus pensar que are complement distinctions.",
+      "pronunciationNotes": "Ie diphthong and final r; avoid treating an unsure contour as a new lexical meaning.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-034",
+      "term": "creer",
+      "partOfSpeech": "VERB",
+      "sense": "accept something as true without complete certainty",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:054-creer"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-opinion"
+      ],
+      "levelRationale": "A basic belief provides an original short opinion or hedged factual answer.",
+      "lowerLevelContrast": "Checked A1 functional belief is compatible with this sense; religious belief is not automatically included.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Creo/crees/cree; affirmative creo que; negative opinion constructions need later grammar decisions.",
+      "pronunciationNotes": "Preserve adjacent e vowels in careful forms and stress; complementizer que stays light.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-035",
+      "term": "recordar",
+      "partOfSpeech": "VERB",
+      "sense": "bring information or experience back to mind",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:055-recordar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-knowledge"
+      ],
+      "levelRationale": "Retain P/W's uncertain A2 proposal for deliberate recall; checked basic functions place accordarse-type recall at A2.",
+      "lowerLevelContrast": "A simple recall utterance is possible; later thematic occurrence or a richer example is not minimum-level proof. Factual saber differs.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Recuerdo/recuerdas; direct object, unlike acordarse de.",
+      "pronunciationNotes": "Ue diphthong and final r; preserve the r/d consonant sequence in infinitive.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Proposed later introduction or relevel requires global adjudication; same sense can occur in a short/simple utterance and runtime remains unchanged."
+      ]
+    },
+    {
+      "id": "A1-D-036",
+      "term": "nombre",
+      "partOfSpeech": "NOUN",
+      "sense": "the name used to identify a person or thing",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:056-nombre"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-identify",
+        "A1-D-repair"
+      ],
+      "levelRationale": "Exchanging and spelling a name is a basic introduction/repair scenario.",
+      "lowerLevelContrast": "P owns naming; not every proper name becomes a new Wordfold word.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Masculine nombre/nombres; personal-name slot remains open.",
+      "pronunciationNotes": "Stress nom; maintain mbr cluster without an extra vowel.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-037",
+      "term": "llamarse",
+      "partOfSpeech": "VERB",
+      "sense": "have a specified name",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:084-llamarse"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-identify",
+        "A1-D-introduction"
+      ],
+      "levelRationale": "Self-introduction directly needs the named-person construction.",
+      "lowerLevelContrast": "Different from legacy llamar by telephone and from summoning someone.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Me llamo/te llamas/se llama; address-dependent clitic and agreement.",
+      "pronunciationNotes": "Ll realization follows chosen voice; clitic links to verb without losing word stress.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-038",
+      "term": "hablar",
+      "partOfSpeech": "VERB",
+      "sense": "express ideas through spoken words",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:086-hablar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-repair",
+        "A1-D-contact"
+      ],
+      "levelRationale": "Basic communication and asking for slower speech depend on speaking.",
+      "lowerLevelContrast": "Not telephone-specific llamar or saying a particular expression decir.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Hablo/hablas/habla; hablar con and language objects are practice.",
+      "pronunciationNotes": "Silent h and final r; keep vowel clarity in slower-speech recordings.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-039",
+      "term": "presentar",
+      "partOfSpeech": "VERB",
+      "sense": "introduce a person or thing to others",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:090-presentar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-introduction"
+      ],
+      "levelRationale": "P's A2 lexical recommendation aligns with explicit introducing-with-presentar in functions 5.4 A2; A1 introduction still works with identity forms.",
+      "lowerLevelContrast": "Same introduction sense can appear in a very short phrase; the framework placement is evidence for a proposal, not a grammatical impossibility.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Presento/presentas; presentar a a person; te/le distinction in later formula practice.",
+      "pronunciationNotes": "Stress final tar in infinitive; clitic plus presento keeps sen stress.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Proposed later introduction or relevel requires global adjudication; same sense can occur in a short/simple utterance and runtime remains unchanged."
+      ]
+    },
+    {
+      "id": "A1-D-040",
+      "term": "invitar",
+      "partOfSpeech": "VERB",
+      "sense": "ask someone to join an occasion or activity",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:116-invitar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-offer"
+      ],
+      "levelRationale": "P/C later invitation recommendation differs from A1 offering an item with querer or a bare noun.",
+      "lowerLevelContrast": "Short invitations are possible; the A2 function treatment of explicit invitar is the comparison, not sentence length.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Invitar a alguien a an event/infinitive; not necessarily pay for someone.",
+      "pronunciationNotes": "Final stress; link a without swallowing the boundary between recipient and activity.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Proposed later introduction or relevel requires global adjudication; same sense can occur in a short/simple utterance and runtime remains unchanged."
+      ]
+    },
+    {
+      "id": "A1-D-041",
+      "term": "ayudar",
+      "partOfSpeech": "VERB",
+      "sense": "make another person's task easier",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:118-ayudar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-request"
+      ],
+      "levelRationale": "Immediate assistance merits the shared A1 proposal even though developed help questions appear A2 in 4.4/4.23.",
+      "lowerLevelContrast": "P/T emergency exception is visible; do not claim all indirect favour strategies are A1.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Ayudar a alguien; infinitive or con complement according to task; clitics checked by function.",
+      "pronunciationNotes": "Y sound and final stress; urgent versus courteous requests need separate pragmatic recordings.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-042",
+      "term": "pregunta",
+      "partOfSpeech": "NOUN",
+      "sense": "an utterance seeking information or an answer",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:186-pregunta"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-information",
+        "A1-D-repair"
+      ],
+      "levelRationale": "A learner must identify the item they need repeated or answered.",
+      "lowerLevelContrast": "W owns the classroom noun; asking verb preguntar is a distinct lexical role.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Feminine pregunta/preguntas; not a third-person verb form here.",
+      "pronunciationNotes": "Stress gun; retain nt cluster and plural s where present.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-043",
+      "term": "respuesta",
+      "partOfSpeech": "NOUN",
+      "sense": "information supplied in reply to a question",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:187-respuesta"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-information",
+        "A1-D-repair"
+      ],
+      "levelRationale": "Answer versus question is a useful classroom/repair contrast.",
+      "lowerLevelContrast": "W owns result-of-question meaning; not automatic consent or legal response.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Feminine respuesta/respuestas.",
+      "pronunciationNotes": "Ue diphthong, initial r trill and stress pues; avoid Slovak initial stress.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-044",
+      "term": "repetir",
+      "partOfSpeech": "VERB",
+      "sense": "say or do something again",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:194-repetir"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-instructions",
+        "A1-D-repair"
+      ],
+      "levelRationale": "Repetition is the clearest bounded A1 speech-repair action in checked functions 4.1.",
+      "lowerLevelContrast": "Puede repetir is ordinary modal-plus-infinitive usage; do not mint it as another word.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Repito/repites; repetir versus repeat imperative repite/repita are forms.",
+      "pronunciationNotes": "Initial trill; infinitive final stress versus repito middle stress.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-045",
+      "term": "entender",
+      "partOfSpeech": "VERB",
+      "sense": "understand a meaning or how something works",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:195-entender"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-repair",
+        "A1-D-knowledge"
+      ],
+      "levelRationale": "Understanding and its negation let the learner stop a failed exchange.",
+      "lowerLevelContrast": "No entiendo is a compositional practice seed; W comprender proposal requires global synonym selection, not merger by English gloss alone.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Entiendo/entiendes/entiende; direct object or clause complement.",
+      "pronunciationNotes": "Ie diphthong; negative frame must retain a clear boundary and neutral help-seeking tone.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-046",
+      "term": "mensaje",
+      "partOfSpeech": "NOUN",
+      "sense": "a short communication sent or left for someone",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:244-mensaje"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-contact"
+      ],
+      "levelRationale": "C's communication vocabulary supports recognizing a simple received message.",
+      "lowerLevelContrast": "Taking/relaying a telephone message is a later discourse scenario, not a reason to postpone all mensaje meanings.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Masculine mensaje/mensajes.",
+      "pronunciationNotes": "J fricative and stress sa; final e not silent.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-047",
+      "term": "llamar",
+      "partOfSpeech": "VERB",
+      "sense": "use a telephone to speak to someone",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:251-llamar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-contact"
+      ],
+      "levelRationale": "C/T basic telephone action is shared vocabulary for establishing a channel.",
+      "lowerLevelContrast": "Not naming oneself llamarse or summoning a person; advanced call routing remains A2-D.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Llamar a a person; finite forms agree with caller.",
+      "pronunciationNotes": "Ll region-dependent realization; final r and intervocalic links need voice QA.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-048",
+      "term": "contestar",
+      "partOfSpeech": "VERB",
+      "sense": "reply to a question or message",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:254-contestar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-information",
+        "A1-D-contact"
+      ],
+      "levelRationale": "A response action supports the basic question-answer exchange and simple messages.",
+      "lowerLevelContrast": "C/W share meaning; replying does not inherently mean agreeing.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Contestar una pregunta or a alguien; do not mechanically add a to every object.",
+      "pronunciationNotes": "Final stress and nt cluster; pause before a response differs from stress within the word.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-049",
+      "term": "preguntar",
+      "partOfSpeech": "VERB",
+      "sense": "ask someone for information",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:308-preguntar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-information",
+        "A1-D-repair"
+      ],
+      "levelRationale": "Basic information gaps require asking rather than only naming the noun pregunta.",
+      "lowerLevelContrast": "T services and W classroom share this action; not pedir an object.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Preguntar algo a alguien; preguntar por another referent changes complement, not automatically sense.",
+      "pronunciationNotes": "Final stress and clear gun syllable; actual question intonation belongs to utterance QA.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-050",
+      "term": "necesitar",
+      "partOfSpeech": "VERB",
+      "sense": "lack something important that is required",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:310-necesitar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-request",
+        "A1-D-feelings"
+      ],
+      "levelRationale": "Stating a concrete need enables assistance without a developed indirect request.",
+      "lowerLevelContrast": "Not F obligation tener que; ordinary need can remain A1 while advice strategies are later.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Necesitar noun/infinitive; negative no necesito is lack of need, not a prohibition.",
+      "pronunciationNotes": "C before e and stressed tar; preserve all vowels for Slovak learners.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-051",
+      "term": "mal",
+      "partOfSpeech": "ADV",
+      "sense": "in an unsatisfactory or incorrect way",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:369-mal"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-evaluation",
+        "A1-D-feelings"
+      ],
+      "levelRationale": "Negative evaluation contrasts directly with bien in a brief answer.",
+      "lowerLevelContrast": "F/P broad meaning; physical discomfort needs explicit usage context, not an adjective malo substitution.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Invariable adverb; not gender-inflected.",
+      "pronunciationNotes": "One syllable with final l; falling versus hesitant response contour affects force.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-052",
+      "term": "bien",
+      "partOfSpeech": "ADV",
+      "sense": "in a satisfactory or correct way",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:370-bien"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-evaluation",
+        "A1-D-feelings"
+      ],
+      "levelRationale": "Positive evaluation and a brief state answer are high-utility basic functions.",
+      "lowerLevelContrast": "F/P shared adverb; not adjective bueno and not all health states in one sense.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Invariable; muy intensification is practice.",
+      "pronunciationNotes": "Ie diphthong in one syllable; thanks-following pause should sound natural.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared topical/F ownership and final sense scope remain for global adjudication; not an extra published identity."
+      ]
+    },
+    {
+      "id": "A1-D-053",
+      "term": "estar de acuerdo",
+      "partOfSpeech": "VERB",
+      "sense": "share another person's opinion about something",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:b1:exp-013-estar-de-acuerdo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-agreement"
+      ],
+      "levelRationale": "Checked functions 2.6–2.7 use the shared-opinion construction at A2; propose earlier than its current B1 label.",
+      "lowerLevelContrast": "A bare acknowledgment and ordinary sí are not automatically this opinion predicate; same short meaning can be practiced earlier pending adjudication.",
+      "register": "neutral; directness depends on construction and context",
+      "region": "pan-Hispanic sense; es-ES audio with regional variation respected",
+      "formNotes": "Estar de acuerdo con someone/something; estar conjugates, acuerdo does not agree in gender.",
+      "pronunciationNotes": "Keep vowel links within de acuerdo and stress cuer; polite dissent needs contrasting audio later.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Proposed later introduction or relevel requires global adjudication; same sense can occur in a short/simple utterance and runtime remains unchanged."
+      ]
+    },
+    {
+      "id": "A1-D-054",
+      "term": "perdón",
+      "partOfSpeech": "INTJ",
+      "sense": "a brief apology for an inconvenience",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-social-planned-01"
+      ],
+      "objectiveIds": [
+        "A1-D-apology"
+      ],
+      "levelRationale": "An apology is a compact conventional response directly present at A1 in functions 5.10.",
+      "lowerLevelContrast": "This is the apology formula, not the abstract noun forgiveness; A2 attention-getting/interruption uses are later function practice.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Fixed singular formula; perdona/perdone are verbal forms, not its plural.",
+      "pronunciationNotes": "Final stress; keep n and avoid a flat dismissive apology.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-D-055",
+      "term": "lo siento",
+      "partOfSpeech": "INTJ",
+      "sense": "a conventional expression of regret or sympathy",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-social-planned-02"
+      ],
+      "objectiveIds": [
+        "A1-D-apology"
+      ],
+      "levelRationale": "A brief sympathy formula occurs at A1 in 5.14 and mitigates denial in 4.10; bounded regret is useful for immediate social repair.",
+      "lowerLevelContrast": "A2 expanded apology patterns do not make all uses A2; distinguish conventional regret from baseline sentir physical experience.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Fixed lo plus first-person siento; expressive INTJ analysis is proposed, with VERB construction analysis an adjudication alternative.",
+      "pronunciationNotes": "Link lo lightly to siento, keep ie and sympathetic rather than brisk contour.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "POS and lexicalized-formula granularity require adjudication against P planned crosslink; no replacement of general sentir."
+      ]
+    },
+    {
+      "id": "A1-D-056",
+      "term": "de nada",
+      "partOfSpeech": "INTJ",
+      "sense": "a conventional response that acknowledges thanks",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-social-planned-03"
+      ],
+      "objectiveIds": [
+        "A1-D-thanks"
+      ],
+      "levelRationale": "Propose this short reciprocal routine at introduction so a thanks exchange has both turns.",
+      "lowerLevelContrast": "Functions 5.13 places it A2; this is an explicit Wordfold early-use exception, not a claim of official A1 placement.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Fixed two-word expression; not every negative de plus noun phrase is this formula.",
+      "pronunciationNotes": "Light de, stress na and continuous phrase rhythm.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Proposed A1 versus checked A2 functional placement requires global approval; compare P planned crosslink."
+      ]
+    },
+    {
+      "id": "A1-D-057",
+      "term": "buenos días",
+      "partOfSpeech": "INTJ",
+      "sense": "a conventional morning greeting",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-social-planned-04"
+      ],
+      "objectiveIds": [
+        "A1-D-greeting"
+      ],
+      "levelRationale": "Morning greeting is one of the bounded time-sensitive opening choices.",
+      "lowerLevelContrast": "Distinct from counting good days or a noun referring to daylight; other greeting times are lexical substitutions, not gender forms of día.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Fixed masculine plural greeting; día retains accent.",
+      "pronunciationNotes": "Keep días hiatus and buenos ue; greet as one phrase.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-D-058",
+      "term": "buenas tardes",
+      "partOfSpeech": "INTJ",
+      "sense": "a conventional greeting for the later daytime period",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-greeting"
+      ],
+      "levelRationale": "The later-day counterpart closes the greeting-time contrast beyond the morning seed.",
+      "lowerLevelContrast": "Boundary between afternoon and evening is local/social, not a universal clock hour.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Fixed feminine plural; tardes is not a gender form of días.",
+      "pronunciationNotes": "Tardes stress tar and single tap r; link buenas without unnatural word pauses.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global decision whether timed greetings are separate lexical formulas or one indexed formula family."
+      ]
+    },
+    {
+      "id": "A1-D-059",
+      "term": "buenas noches",
+      "partOfSpeech": "INTJ",
+      "sense": "a conventional night-time greeting or farewell",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-greeting",
+        "A1-D-farewell"
+      ],
+      "levelRationale": "Night greeting and departure complete the daily social contrast.",
+      "lowerLevelContrast": "Greeting/farewell applications share a conventional formula here; do not duplicate solely by speech act.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Fixed feminine plural; no singular buena noche as default greeting entry.",
+      "pronunciationNotes": "Ch affricate and plural endings; farewell cadence can differ from the greeting.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global formula-family and greeting-versus-farewell scope decision; no automatic extra sense count."
+      ]
+    },
+    {
+      "id": "A1-D-060",
+      "term": "hasta luego",
+      "partOfSpeech": "INTJ",
+      "sense": "a conventional farewell suggesting a later encounter",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-social-planned-05"
+      ],
+      "objectiveIds": [
+        "A1-D-farewell"
+      ],
+      "levelRationale": "Propose an everyday short closing without requiring a precise next meeting time.",
+      "lowerLevelContrast": "Functions 5.21 places this at A2 while other farewells are A1; an explicit early-use proposal is justified by the bounded routine.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Fixed formula; literal hasta plus a time slot is a separate compositional pattern.",
+      "pronunciationNotes": "Silent h, luego ue; smooth phrase rather than separate dictionary-word delivery.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "A1 proposal versus A2 checked function and P crosslink remains unresolved."
+      ]
+    },
+    {
+      "id": "A1-D-061",
+      "term": "hasta mañana",
+      "partOfSpeech": "INTJ",
+      "sense": "a conventional farewell anticipating the following day",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-farewell"
+      ],
+      "levelRationale": "A next-day closing has a clear scenario boundary and is supported by A1 functions 5.21.",
+      "lowerLevelContrast": "Not automatically every hasta plus date as a lexical MWE; variable weekdays remain F practice.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Fixed tomorrow formula; mañana is not the morning noun in this use.",
+      "pronunciationNotes": "Silent h and palatal ñ; keep stress ña and natural phrase linking.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Adjudicate fixed formula versus productive temporal farewell family before unique count."
+      ]
+    },
+    {
+      "id": "A1-D-062",
+      "term": "chao",
+      "partOfSpeech": "INTJ",
+      "sense": "an informal farewell",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-farewell"
+      ],
+      "levelRationale": "A short informal alternative provides recognition beyond a single neutral closing.",
+      "lowerLevelContrast": "Not an obligatory replacement for adiós; regional ciao/chau-type variants need separate editorial policy.",
+      "register": "informal conversational",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Invariable interjection; keep selected Spanish spelling chao in lemma proposal.",
+      "pronunciationNotes": "Ch affricate and ao vowel sequence; actual regional realization needs listening.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Regional distribution and variant display require native editorial check; no claim universal use."
+      ]
+    },
+    {
+      "id": "A1-D-063",
+      "term": "encantado",
+      "partOfSpeech": "ADJ",
+      "sense": "pleased to meet someone, used as a conventional introduction response",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-introduction"
+      ],
+      "levelRationale": "A conventional response completes a first introduction, rather than only opening it.",
+      "lowerLevelContrast": "General delighted or enchanted meanings are not selected by this introduction formula.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Encantado/encantada follows the speaker, not the person being greeted; plural forms only if context warrants.",
+      "pronunciationNotes": "Stress ta and clear final vowel; soft final d in some speech is not missing morphology.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Adjective versus formula packaging and form-family count require global adjudication."
+      ]
+    },
+    {
+      "id": "A1-D-064",
+      "term": "qué tal",
+      "partOfSpeech": "INTJ",
+      "sense": "a conventional brief social inquiry or greeting",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-greeting",
+        "A1-D-introduction",
+        "A1-D-contact"
+      ],
+      "levelRationale": "Pragmatics 1.6.1 and introduction response 5.5 provide A1 support for the formula.",
+      "lowerLevelContrast": "Expanded greetings/well-being questions occur at A2 elsewhere; the formula is not productive qué tal plus every event narrative prompt.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Fixed accented qué plus tal; interrogative punctuation in practice, not a lemma with every sentence ending.",
+      "pronunciationNotes": "Tonic qué and natural inquiry contour; not automatically the same force as a repeated surprised qué.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "INTJ/formula analysis and boundary from compositional interrogative usage remain explicit."
+      ]
+    },
+    {
+      "id": "A1-D-065",
+      "term": "vale",
+      "partOfSpeech": "INTJ",
+      "sense": "acknowledgment or acceptance of what was said",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-apology",
+        "A1-D-request",
+        "A1-D-offer",
+        "A1-D-contact"
+      ],
+      "levelRationale": "Propose a bounded informal acknowledgment for the es-ES-oriented course; RAE valer lists this interjection.",
+      "lowerLevelContrast": "PCIC request acceptance and apology reply place it A2; voucher noun and valer price/sufficiency meanings are not this sense.",
+      "register": "informal conversational",
+      "region": "Common in Spain; not claimed exclusive; es-ES recording target",
+      "formNotes": "Fixed interjection, not a conjugation paradigm to count as new forms.",
+      "pronunciationNotes": "Initial stress; b/v are not contrasting phonemes; rising vale may seek agreement instead of giving it.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic",
+        "rae-valer"
+      ],
+      "uncertainties": [
+        "A1 early-use proposal and region/register label require global/native adjudication. Focus common Spain use without claiming absence elsewhere."
+      ]
+    },
+    {
+      "id": "A1-D-066",
+      "term": "eh",
+      "partOfSpeech": "INTJ",
+      "sense": "a brief call for another person's attention",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-address",
+        "A1-D-contact"
+      ],
+      "levelRationale": "Functions 6.1 includes an A1 attention interjection; it supplies recognition of an unadorned summons.",
+      "lowerLevelContrast": "Not the same as an insulting call or confirmation tag; courtesy marker remains safer for many stranger exchanges.",
+      "register": "informal; potentially abrupt when used as a summons",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Invariable; exclamation punctuation and vocative placement are usage.",
+      "pronunciationNotes": "Pronounced vowel e with silent h; loudness can make it abrupt or rude.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Separate attention versus contact-tag use must be adjudicated; teach contextual caution, not universal politeness."
+      ]
+    },
+    {
+      "id": "A1-D-067",
+      "term": "no",
+      "partOfSpeech": "PART",
+      "sense": "a short tag seeking confirmation of the preceding statement",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:exp-070-no"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-confirmation",
+        "A1-D-opinion"
+      ],
+      "levelRationale": "Functions 1.4 and pragmatics 1.2.5 support this basic contact-confirmation use.",
+      "lowerLevelContrast": "Different communicative contribution from baseline negative assertion; could ultimately be a usage subentry, not a separate published sense.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Normally detached after a proposition; surrounding question marks belong to usage.",
+      "pronunciationNotes": "Brief final tag with a confirming contour and boundary; do not negate the proposition by removing the pause.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Global sense-versus-usage split required; existing negation ID linked as a contrast, not replacement."
+      ]
+    },
+    {
+      "id": "A1-D-068",
+      "term": "salud",
+      "partOfSpeech": "INTJ",
+      "sense": "a conventional wish used when making a toast",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:346-salud"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-celebration"
+      ],
+      "levelRationale": "A1 functions 5.15 includes a toast; select the social formula independently of the health noun.",
+      "lowerLevelContrast": "Not medical health, nor automatic coverage of the sneeze-response convention or every religious blessing.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Fixed interjection; not noun gender/plural practice.",
+      "pronunciationNotes": "Final stress and final d variant; a celebratory contour differs from a clinical noun recording.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Distinct POS/sense from health noun; global linking and occasion guidance required."
+      ]
+    },
+    {
+      "id": "A1-D-069",
+      "term": "felicidades",
+      "partOfSpeech": "INTJ",
+      "sense": "a conventional congratulation",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-celebration"
+      ],
+      "levelRationale": "A brief congratulations covers an immediate celebratory response without enumerating all occasions.",
+      "lowerLevelContrast": "Not the abstract noun happiness; specific holiday/birthday sentence frames need later scenario materials.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Fixed plural interjection; no new count for muchas felicidades.",
+      "pronunciationNotes": "Stress da and es-ES c consonants; final s and congratulatory contour need recording QA.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Formula/noun-derived POS and occasion scope require editorial adjudication."
+      ]
+    },
+    {
+      "id": "A1-D-070",
+      "term": "silencio",
+      "partOfSpeech": "NOUN",
+      "sense": "absence of audible speech or noise",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-instructions"
+      ],
+      "levelRationale": "A concrete quiet/no-speech meaning supports a classroom request and the A1 silence function.",
+      "lowerLevelContrast": "The full silencio por favor is compositional; abstract secrecy meanings are excluded.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Masculine singular normally mass-like here; standalone request is noun used as directive.",
+      "pronunciationNotes": "Stress len and final io diphthong; avoid a needlessly harsh classroom directive.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "W/F overlap and lexical noun versus directive use need global check."
+      ]
+    },
+    {
+      "id": "A1-D-071",
+      "term": "así así",
+      "partOfSpeech": "ADV",
+      "sense": "neither especially well nor especially badly",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-evaluation"
+      ],
+      "levelRationale": "A middling evaluation closes the gap between bien and mal and is supported by A1 functions 2.4.",
+      "lowerLevelContrast": "F regular is another lexical choice; do not merge synonyms automatically or select every degree expression.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Fixed repeated adverb; both así retain accents.",
+      "pronunciationNotes": "Two final-stressed units with meaningful rhythm; not a hurried repeated filler.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Usage frequency and choice alongside F regular require native editorial review."
+      ]
+    },
+    {
+      "id": "A1-D-072",
+      "term": "preferir",
+      "partOfSpeech": "VERB",
+      "sense": "choose one alternative as more desirable than another",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-likes"
+      ],
+      "levelRationale": "A first preference contrasts with simple liking and can choose between two immediate alternatives; functions 3.5 supports A1.",
+      "lowerLevelContrast": "A2 fuller preference questions do not prove the lexical preference sense begins later.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Prefiero/prefieres/prefiere plus noun/infinitive; preferir X a Y in later expanded comparison.",
+      "pronunciationNotes": "Ie diphthong and final stress in infinitive; compare prefiero middle stress.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared P/H/C ownership and coverage breadth require adjudication."
+      ]
+    },
+    {
+      "id": "A1-D-073",
+      "term": "por ejemplo",
+      "partOfSpeech": "ADV",
+      "sense": "introduce a concrete instance of what is being discussed",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-connection"
+      ],
+      "levelRationale": "A lexical example marker lets a beginner clarify a category with one familiar instance; pragmatics 1.2.4 supports A1.",
+      "lowerLevelContrast": "Not a list of every full example sentence or advanced evidential argument.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Fixed adverbial phrase; example slot remains open.",
+      "pronunciationNotes": "Light por and stress jem; j fricative, linked r-e boundary.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-D-074",
+      "term": "poder",
+      "partOfSpeech": "VERB",
+      "sense": "be permitted to perform an action",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:exp-007-poder"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-permission"
+      ],
+      "levelRationale": "Propose bounded classroom/service permission so the learner can initiate the exchange, not only say yes or no.",
+      "lowerLevelContrast": "Checked functions 4.8 and pragmatics 1.6 place permission questions A2; explicit early-use exception is not entailed by baseline ability.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Puedo/puede plus infinitive; finite agreement follows requester, usted form differs when asking another to act.",
+      "pronunciationNotes": "Ue diphthong; permission versus request-for-action must be audibly and contextually distinct.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Permission/ability sense split and proposed A1 extension need global adjudication; runtime unchanged."
+      ]
+    },
+    {
+      "id": "A1-D-075",
+      "term": "alto",
+      "partOfSpeech": "ADV",
+      "sense": "at a high speaking volume",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-repair",
+        "A1-D-instructions"
+      ],
+      "levelRationale": "Speech-volume repair needs a louder counterpart to slower delivery.",
+      "lowerLevelContrast": "Different POS/meaning from tall adjective; selected for immediate audibility, not shouting strategies.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Invariable adverb after hablar; más alto is a compositional degree phrase.",
+      "pronunciationNotes": "Initial stress and lt cluster; actual louder request should still be courteously voiced.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Sense/POS boundary from predicative adjective alto requires adjudication."
+      ]
+    },
+    {
+      "id": "A1-D-076",
+      "term": "bajo",
+      "partOfSpeech": "ADV",
+      "sense": "at a low speaking volume",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-repair",
+        "A1-D-instructions"
+      ],
+      "levelRationale": "A quieter-speaking contrast permits classroom regulation without expanding into specialist acoustics.",
+      "lowerLevelContrast": "Different from short/low-height adjective and from the preposition under.",
+      "register": "neutral conventional use; social context matters",
+      "region": "pan-Hispanic or widely intelligible proposal; regional preference requires later checking",
+      "formNotes": "Invariable adverb after hablar; más bajo uses F degree.",
+      "pronunciationNotes": "Initial stress and j fricative; quiet audio must remain intelligible for accessibility.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Proposed speech-volume A1 choice, POS boundary and topical ownership need review."
+      ]
+    },
+    {
+      "id": "A1-D-077",
+      "term": "a",
+      "partOfSpeech": "ADP",
+      "sense": "introduce a destination",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-function-words-planned-01"
+      ],
+      "objectiveIds": [
+        "A1-D-information"
+      ],
+      "levelRationale": "A destination answer contrasts with static location and origin in basic information exchange.",
+      "lowerLevelContrast": "F/T own movement direction; personal a before a human object is not this selected meaning.",
+      "register": "neutral",
+      "region": "pan-Hispanic sense; es-ES pronunciation target",
+      "formNotes": "Uninflected; a + el contracts to al where grammatical conditions apply.",
+      "pronunciationNotes": "Short unstressed a links to destination without a forced pause.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic"
+      ],
+      "uncertainties": [
+        "Global F ownership and final sense/POS boundaries remain unresolved; this crosslink adds no published identity."
+      ]
+    },
+    {
+      "id": "A1-D-078",
+      "term": "con",
+      "partOfSpeech": "ADP",
+      "sense": "indicate accompaniment",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-function-words-planned-02"
+      ],
+      "objectiveIds": [
+        "A1-D-information",
+        "A1-D-plans"
+      ],
+      "levelRationale": "A companion answer identifies who joins a simple plan.",
+      "lowerLevelContrast": "F/P accompaniment differs from instrument or manner con; do not bundle all prepositional meanings.",
+      "register": "neutral",
+      "region": "pan-Hispanic sense; es-ES pronunciation target",
+      "formNotes": "Conmigo/contigo forms and con + personal reference require F paradigm decisions.",
+      "pronunciationNotes": "Preserve final n assimilation naturally; linked con plus name is one phrase.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic"
+      ],
+      "uncertainties": [
+        "Global F ownership and final sense/POS boundaries remain unresolved; this crosslink adds no published identity."
+      ]
+    },
+    {
+      "id": "A1-D-079",
+      "term": "para",
+      "partOfSpeech": "ADP",
+      "sense": "introduce the purpose of an action",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-function-words-planned-03"
+      ],
+      "objectiveIds": [
+        "A1-D-information",
+        "A1-D-connection"
+      ],
+      "levelRationale": "A short purpose answer adds a useful why-for contrast; functions 1.3 includes basic purpose.",
+      "lowerLevelContrast": "F purpose differs from recipient/destination and from porque factual cause.",
+      "register": "neutral",
+      "region": "pan-Hispanic sense; es-ES pronunciation target",
+      "formNotes": "Para plus infinitive in bounded A1 purpose practice; not para que subjunctive by default.",
+      "pronunciationNotes": "Usually light two-syllable preposition with single tap r.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic"
+      ],
+      "uncertainties": [
+        "Global F ownership and final sense/POS boundaries remain unresolved; this crosslink adds no published identity."
+      ]
+    },
+    {
+      "id": "A1-D-080",
+      "term": "cómo",
+      "partOfSpeech": "ADV",
+      "sense": "ask the manner of an action or the state of someone",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-function-words-planned-04"
+      ],
+      "objectiveIds": [
+        "A1-D-information",
+        "A1-D-repair"
+      ],
+      "levelRationale": "Manner questions support word repair and simple personal-information frames.",
+      "lowerLevelContrast": "F A1-F-035 owns the broad interrogative; fixed qué tal and relative como are not automatically identical.",
+      "register": "neutral",
+      "region": "pan-Hispanic sense; es-ES pronunciation target",
+      "formNotes": "Accented cómo; invariable; cómo se dice uses the existing speech verb and bounded se construction.",
+      "pronunciationNotes": "Initial stress; typical neutral information question differs from a surprised echo.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic"
+      ],
+      "uncertainties": [
+        "Global F ownership and final sense/POS boundaries remain unresolved; this crosslink adds no published identity."
+      ]
+    },
+    {
+      "id": "A1-D-081",
+      "term": "cuánto",
+      "partOfSpeech": "DET",
+      "sense": "ask the amount of a named thing",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-function-words-planned-05"
+      ],
+      "objectiveIds": [
+        "A1-D-information"
+      ],
+      "levelRationale": "A quantity question with its noun closes information requests for objects or time units.",
+      "lowerLevelContrast": "F A1-F-037 versus bare monetary interrogative A1-F-297 must not collapse merely because the lemma matches.",
+      "register": "neutral",
+      "region": "pan-Hispanic sense; es-ES pronunciation target",
+      "formNotes": "Cuánto/cuánta/cuántos/cuántas agree with noun; forms not separate meanings.",
+      "pronunciationNotes": "Ua diphthong; keep written accent and audible agreement endings.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pragmatics-basic"
+      ],
+      "uncertainties": [
+        "Global F ownership and final sense/POS boundaries remain unresolved; this crosslink adds no published identity."
+      ]
+    },
+    {
+      "id": "A1-D-082",
+      "term": "conocer",
+      "partOfSpeech": "VERB",
+      "sense": "be acquainted with a person or familiar with a place",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:089-conocer"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-knowledge"
+      ],
+      "levelRationale": "Knowing a person or place is a separate basic question contrast in functions 2.19–2.21.",
+      "lowerLevelContrast": "Not factual saber or deliberate recall recordar; P owns acquaintance and T familiarity with places.",
+      "register": "neutral",
+      "region": "pan-Hispanic sense; es-ES pronunciation target",
+      "formNotes": "Conozco/conoces/conoce; personal a with an identified human object.",
+      "pronunciationNotes": "C before e and zc in conozco need the selected es-ES pronunciation; word stress changes by finite form.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared F/P sense ownership remains a global adjudication prerequisite; no new published identity."
+      ]
+    },
+    {
+      "id": "A1-D-083",
+      "term": "oír",
+      "partOfSpeech": "VERB",
+      "sense": "perceive sound through hearing",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-012-oir"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-D-repair"
+      ],
+      "levelRationale": "Repair must distinguish failing to hear the sound from failing to understand its meaning.",
+      "lowerLevelContrast": "F/P hearing sense differs from attentive escuchar and semantic entender; a quieter/louder request is practice, not a new hearing sense.",
+      "register": "neutral",
+      "region": "pan-Hispanic sense; es-ES pronunciation target",
+      "formNotes": "Oigo/oyes/oye; no oigo versus no entiendo are compositional diagnostic contrasts.",
+      "pronunciationNotes": "Written accent marks o-ír hiatus; finite oye has different syllable structure and initial stress.",
+      "referenceIds": [
+        "pcic-functions-basic",
+        "pcic-pronunciation-basic"
+      ],
+      "uncertainties": [
+        "Shared F/P sense ownership remains a global adjudication prerequisite; no new published identity."
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "subject": "Planning seed ¿Cómo se dice…? as a separate word",
+      "reason": "Exclude a new full-sentence lexical entry, not the required classroom frame. Cómo plus nonreflexive se plus decir and one named-expression slot is proposed as bounded A1 practice. F supplies the interrogative, but A1-F-030 explicitly covers only reflexive/pronominal se and cannot satisfy this construction. RAE DPD se 2.1–2.2 distinguishes impersonal syntax from passive-reflexive subject agreement; checked PCIC grammar 7.1.4 gives no A1 nonreflexive-se coverage here. An explicit F/W/D dependency must settle early frame introduction, grammatical analysis and plural-slot agreement before learner authoring; unrestricted impersonal/passive grammar is not thereby introduced. W supplies palabra/language names. Direct and polite question prosody remains later authoring work.",
+      "objectiveIds": [
+        "A1-D-repair"
+      ]
+    },
+    {
+      "subject": "Planning seed ¿Puede repetir? and its tú/usted/plural variants as separate words",
+      "reason": "Exclude sentence/per-person duplication. Existing poder and repetir plus F agreement supply the bounded polite repetition request. Compare puede/puedes and address explicitly; optional object and por favor are practice, not extra senses.",
+      "objectiveIds": [
+        "A1-D-instructions",
+        "A1-D-repair",
+        "A1-D-register"
+      ]
+    },
+    {
+      "subject": "Planning seed no entiendo and affirmative/negative understanding frames as separate words",
+      "reason": "Exclude compositional negation plus entender inflection. Practice must contrast genuine non-understanding, request for a slower delivery and uncertainty about facts, with intelligible not accusatory prosody.",
+      "objectiveIds": [
+        "A1-D-repair",
+        "A1-D-knowledge"
+      ]
+    },
+    {
+      "subject": "Every information-question and answer sentence",
+      "reason": "Do not mint dónde + estar, cómo + llamarse, cuánto + costar, noun-plus-o choice, de dónde origin, por qué reason, para + infinitive purpose or a + destination as whole lexical MWEs. Their lexical prerequisites and constructions are explicitly covered; isolated native-like sounding sentences are not a sense count.",
+      "objectiveIds": [
+        "A1-D-information",
+        "A1-D-identify"
+      ]
+    },
+    {
+      "subject": "Every short opinion/confirmation/offer/refusal formula",
+      "reason": "Creer + que, no + saber, yo + también/tampoco, sí + pero, querer + item, item + por favor, sí/no + gracias and no + lo siento are productive practice frames. Keep selected lexical components and the genuinely conventional social formulas, not every combination as a word.",
+      "objectiveIds": [
+        "A1-D-opinion",
+        "A1-D-agreement",
+        "A1-D-offer",
+        "A1-D-confirmation",
+        "A1-D-request"
+      ]
+    },
+    {
+      "subject": "Every permission question and every imperative form",
+      "reason": "Poder permission is an explicit proposed meaning; ¿Puedo + infinitive? is not an extra MWE. W basic instructions use finite forms of selected actions. Do not duplicate tú/usted/ustedes/vosotros forms as senses or accidentally present permission as obligation.",
+      "objectiveIds": [
+        "A1-D-permission",
+        "A1-D-instructions",
+        "A1-D-register"
+      ]
+    },
+    {
+      "subject": "All possible greetings, named vocatives and day-specific farewells",
+      "reason": "Select bounded conventional families; do not enumerate every person name, honorific combination or hasta + weekday/date as a new lexical sense. F calendar and P address forms provide productive slots. Named-person and greeting/time-formula granularity remains adjudication work.",
+      "objectiveIds": [
+        "A1-D-greeting",
+        "A1-D-address",
+        "A1-D-farewell"
+      ]
+    },
+    {
+      "subject": "Shushing sound spelling as an ordinary word",
+      "reason": "A1 quiet-request practice may include nonlexical shushing, but competing sh/ss/ch transcriptions are not new Spanish lexical senses. Select silencio and require intelligible multimodal/audio practice rather than counting a sound effect.",
+      "objectiveIds": [
+        "A1-D-instructions",
+        "A1-D-nonverbal"
+      ]
+    },
+    {
+      "subject": "Advanced argument, concession, irony and idiom repertoire",
+      "reason": "Screened later supplemental argument/stance/discourse entries; their meanings are not required to close this A1 cell. Existing B1 opinar, aunque, por si acaso and later B2–C2 argument markers remain later-cell responsibilities, not excluded from the complete course. The shared-opinion estar de acuerdo collision is explicitly recorded here.",
+      "objectiveIds": [
+        "A1-D-later-stance",
+        "A1-D-later-discourse"
+      ]
+    },
+    {
+      "subject": "Unbounded courtesy alternatives and every regional acknowledgment",
+      "reason": "No attempt to inventory all regional equivalents of vale or all welcome, wish and letter-closing formulas at A1. Neutral yes/thanks/greeting choices remain available; A2-D must explicitly adjudicate welcome, wish, apology response and more developed conversational families.",
+      "objectiveIds": [
+        "A1-D-later-social",
+        "A1-D-register"
+      ]
+    },
+    {
+      "subject": "Coger taboo meaning as an A1 learning target",
+      "reason": "The vulgar sexual meaning is not selected here. Prerequisite T A1-T-101 transport coger retains its ordinary Spain use, with a source-checked warning that another meaning is vulgar in named American regions. Offer context-appropriate tomar for travel; never claim all American speakers or every coger utterance are taboo.",
+      "objectiveIds": [
+        "A1-D-register"
+      ]
+    },
+    {
+      "subject": "Specialist health or emotional taxonomy from a repair/help need",
+      "reason": "A request for urgent help does not justify automatically promoting every body part, psychological state or clinical term. P/T explicitly own immediate need and emergency exceptions; their same-sense early/later decisions stay unresolved at global adjudication.",
+      "objectiveIds": [
+        "A1-D-feelings",
+        "A1-D-request"
+      ]
+    }
+  ],
+  "coverageNotes": [
+    "Proposed enumeration only, checked 2026-09-05. No full learner definitions/examples, native approval, audio listening signoff, production import or new global IDs. Source framework alignment does not imply certification, endorsement or reproduction rights.",
+    "D has zero primary legacy category ownership. All 685 baseline identities were screened at term/meaning level for D relevance; all 81 A1 supplemental definitions were reread. This manifest directly adjudicates 30 relevant A1 expansion identities, 25 legacy identities and one B1 expansion identity, including the health-noun contrast linked to social salud. Other topical meanings remain in their primary cells, not duplicated to inflate D counts.",
+    "Of the 81 A1 expansions, unlinked lexical prerequisites are explicit: 003 possession, 004 existence, 005/010 motion, 006 activity, 011 visual perception, 014 placement, 015–018 calendar units, 021 yesterday, 025–035 numerals, 036–041 colors, 042–060 weekdays/months, 079 possession de, 080 static en and 081 definite el belong to F and topic-slot practice. They are not missing greetings/discourse senses; their exact baseline identities stay in F/P/H/T/W/C/S manifests.",
+    "Exactly five A1 social planned identities are directly selected here, with P A1-P-277–281 treated as crosslinks to these same proposals. Five A1 function-word planned identities are direct D cross-references. The identity, listening/looking/bringing/searching/drinking, time and quantity planned families are F/P/W/H/T/C prerequisites, not new D outcomes or silent deletions.",
+    "Cross-cell prerequisite closure: F A1-F-253 complementizer que, -257 también, -258 tampoco, -259 quizá/quizás, -260 ser posible, -261 learned-skill saber, -189 despacio, -205 regular and -136 momento. P names/address/people/body/health supply introduction and need slots. H meal-order pedir and object nouns, T urgent socorro and travel coger, W classroom words/spelling, and C phone/media/activity meanings remain primary-cell lexical responsibilities.",
+    "All six functional sections are mapped through objectives, including unpopulated placeholders, later A2 comparisons and applicable nonlexical/nonverbal practice. No blanket claim that every function requires a new word or that a later thematic occurrence fixes minimum introduction. No deferred-core objective is used to disguise missing A1 lexical contrasts.",
+    "Formula granularity remains open: fixed social formulas versus productive clauses, timed greetings as a family, INTJ analysis for lo siento/qué tal, ADJ introduction encantado, no confirmation tag versus negation, and permission poder versus ability. Counts are rows only; shared references and synonyms are not automatically net additions.",
+    "Sequence boundary: temporal before/after and F ordinal/time dependencies allow two or three familiar chronological steps. PCIC pragmatic rhetorical ordering is A2; longer narrative ordering, por último and extended story management remain A2-D decisions rather than extra A1 words.",
+    "Register/pronunciation closure is a prerequisite, not an attestation: es-ES default playback must cover tú/usted contrasts, valid regional pronouns and letter names, question versus statement versus vocative contours, linked formula rhythm, word stress and courteous/abrupt force. Regional vale/coger notes need native editorial review. No statement that all Spanish questions rise, all Latin America uses one form, or Slovak spelling predicts Spanish stress.",
+    "Finite closure test for later adjudication: demonstrate openings/replies, identification and each question contrast, belief/evaluation and matching/opposing response, want/like/prefer, immediate needs/requests and permission, offers/acceptance/refusal, apology/sympathy/thanks/replies, congratulations/toast/farewell, attention/backchannel, addition/alternative/contrast/reason/example, brief chronological sequence and repair of word/repetition/pace/volume/spelling. New synonyms are admitted only for a missing sense/register/region contrast, not an arbitrary quota.",
+    "Controller correction: bare price-question coverage is a prerequisite crosslink to ADV A1-F-297, distinct from DET A1-D-081/A1-F-037. Retain the shared planned ID and the unresolved narrow-A1/general-A2 introduction distinction; no new D row is counted.",
+    "Controller correction: excluding the whole classroom naming question as a word does not remove its required nonreflexive-se construction. A1-F-030 does not cover it. D repair and decir now record the unresolved F/W/D introduction, impersonal-versus-passive analysis, expression-slot and agreement dependency with checked PCIC grammar and RAE DPD evidence. This is a bounded frame proposal, not proof that productive impersonal/passive se is an A1 prerequisite already delivered.",
+    "Remaining uncertainty is deliberate and blocks global freeze: cell acceptance approves enumeration work only; placements, grammar dependencies and shared-sense ownership still need cross-level adjudication and independent language review."
+  ],
+  "counts": {
+    "selections": 83,
+    "objectives": 36
+  }
+}

@@ -1,0 +1,2304 @@
+{
+  "schemaVersion": 1,
+  "batchId": "B2-H",
+  "courseId": "es-sk",
+  "level": "B2",
+  "package": "H",
+  "status": "proposed",
+  "author": "AI expansion-spanish-review",
+  "levelMeaning": "recommended-sense-introduction",
+  "references": [
+    {
+      "id": "pcic-food",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_b1-b2.htm",
+      "section": "5.1–5.7 food/nutrition, drinks, ingredients, recipes, dishes, tools and restaurants; B1/B2 comparison, especially B2",
+      "use": "Checked framework and column comparison; original selections, not certified word levels or copied learner text."
+    },
+    {
+      "id": "pcic-housing",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_b1-b2.htm",
+      "section": "10.1.1–10.4.2 construction, tenure, occupation, type, parts, people, condition, chores, decoration and appliances; B1/B2 comparison, especially B2",
+      "use": "Checked framework and column comparison; original selections, not certified word levels or copied learner text."
+    },
+    {
+      "id": "pcic-buying",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_b1-b2.htm",
+      "section": "12.1–12.4 shopping, clothing, food retail and payments; B1/B2 comparison, especially B2",
+      "use": "Checked framework and column comparison; original selections, not certified word levels or copied learner text."
+    },
+    {
+      "id": "pcic-general",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/08_nociones_generales_inventario_b1-b2.htm",
+      "section": "general notions quantity, qualities, evaluation and relations; B1/B2 comparison, especially B2",
+      "use": "Checked framework and column comparison; original selections, not certified word levels or copied learner text."
+    },
+    {
+      "id": "pcic-functions",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/05_funciones_inventario_b1-b2.htm",
+      "section": "Functions 1,2,4,6 information, evaluation, influence and discourse; B1/B2 comparison, especially B2",
+      "use": "Checked framework and column comparison; original selections, not certified word levels or copied learner text."
+    },
+    {
+      "id": "pcic-pronunciation",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/03_pronunciacion_inventario_b1-b2.htm",
+      "section": "Pronunciation 2–5 intonation, syllables/stress, grouping and segment variants; B1/B2 comparison, especially B2",
+      "use": "Checked framework and column comparison; original selections, not certified word levels or copied learner text."
+    },
+    {
+      "id": "pcic-earlier",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "Specific notions5/10/12 A1/A2 earlier prerequisites",
+      "use": "Compare selected earlier meanings; later contexts do not create new senses."
+    },
+    {
+      "id": "pcic-later",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_c1-c2.htm",
+      "section": "Specific notions5/10/12 C1/C2 comparison and later boundary",
+      "use": "Name actual later occurrences while allowing explicitly uncertain independent earlier proposals."
+    },
+    {
+      "id": "rae-aislar",
+      "url": "https://www.fundeu.es/dudas/palabra-clave/aislar/",
+      "section": "aislar root-stressed forms",
+      "use": "Check aísla/aislamiento stress; no audio claim."
+    },
+    {
+      "id": "rae-organic",
+      "url": "https://www.fundeu.es/consulta/biologico-ecologico-organico-1680/",
+      "section": "biológico/ecológico/orgánico distinction",
+      "use": "Avoid treating environment, living-origin and production-label senses as identical."
+    },
+    {
+      "id": "rae-azucarar",
+      "url": "https://dle.rae.es/azucarar",
+      "section": "Literal sweetening with sugar and participle",
+      "use": "Distinguish sugar-added result from generally sweet taste."
+    },
+    {
+      "id": "rae-pudrir",
+      "url": "https://www.rae.es/dpd/pudrir",
+      "section": "pudrir(se) regional paradigm and podrido participle",
+      "use": "Written morphology check, not audio or food safety."
+    },
+    {
+      "id": "rae-bufe",
+      "url": "https://www.rae.es/dpd/buf%C3%A9",
+      "section": "bufé/bufet forms",
+      "use": "Regional/spelling family and plural check."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "B2-H-nutrition",
+      "description": "Explain a food-choice rationale using nutritional composition and balance, not prescribe a diet.",
+      "frameworkSections": [
+        "Specific notions 5.1/12.3"
+      ],
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-labels",
+      "description": "Read and question product-label contents, descriptors, serving basis and packaging information.",
+      "frameworkSections": [
+        "Specific notions 5.1/5.3/12.3"
+      ],
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-restrictions",
+      "description": "Explain a known food restriction and ask whether an ingredient or substitute is present.",
+      "frameworkSections": [
+        "Specific notions 5.1/5.3"
+      ],
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-drinks",
+      "description": "Compare beverage composition, sweetness and serving/container properties without a specialist wine catalogue.",
+      "frameworkSections": [
+        "Specific notions 5.2"
+      ],
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-ingredients",
+      "description": "Identify useful additional ingredient groups and preparation-specific food parts.",
+      "frameworkSections": [
+        "Specific notions 5.3"
+      ],
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-preparation",
+      "description": "Explain contrasting cooking/preparation methods and stages beyond the earlier recipe core.",
+      "frameworkSections": [
+        "Specific notions 5.4"
+      ],
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-method",
+      "description": "Distinguish heat method, coating, consistency and desired outcome in an ordinary recipe account.",
+      "frameworkSections": [
+        "Specific notions 5.4"
+      ],
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-condition",
+      "description": "Describe food condition, deterioration and preservation without certifying safety.",
+      "frameworkSections": [
+        "Specific notions 5.1/5.4/12.3"
+      ],
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-sensory",
+      "description": "Justify a literal food review by taste, texture and cooking result.",
+      "frameworkSections": [
+        "Specific notions 5.5"
+      ],
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-tools",
+      "description": "Identify the necessary ordinary tool or appliance by function during recipe discussion.",
+      "frameworkSections": [
+        "Specific notions 5.6/10.4.2"
+      ],
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-restaurant",
+      "description": "Explain restaurant format, ordering/service expectations and a reasoned complaint.",
+      "frameworkSections": [
+        "Specific notions 5.7"
+      ],
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-construction",
+      "description": "Describe ordinary renovation work, trades and materials when comparing housing options.",
+      "frameworkSections": [
+        "Specific notions 10.1.1"
+      ],
+      "referenceIds": [
+        "pcic-housing"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-tenure",
+      "description": "Understand ordinary rental/purchase arrangements, payment conditions and who is responsible.",
+      "frameworkSections": [
+        "Specific notions 10.1.2"
+      ],
+      "referenceIds": [
+        "pcic-housing"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-occupation",
+      "description": "Explain a move, occupancy duration and shared use of a dwelling.",
+      "frameworkSections": [
+        "Specific notions 10.1.3"
+      ],
+      "referenceIds": [
+        "pcic-housing"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-type",
+      "description": "Compare dwelling types and relevant layout or access features.",
+      "frameworkSections": [
+        "Specific notions 10.2.1/10.2.2"
+      ],
+      "referenceIds": [
+        "pcic-housing"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-roles",
+      "description": "Identify building management and resident roles relevant to a problem.",
+      "frameworkSections": [
+        "Specific notions 10.2.3"
+      ],
+      "referenceIds": [
+        "pcic-housing"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-conditions",
+      "description": "Evaluate space, orientation, noise/heat insulation and suitability without an engineering assessment.",
+      "frameworkSections": [
+        "Specific notions 10.2.4"
+      ],
+      "referenceIds": [
+        "pcic-housing"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-chores",
+      "description": "Explain allocation and results of cleaning or laundry using ordinary products/tools.",
+      "frameworkSections": [
+        "Specific notions 10.3.1"
+      ],
+      "referenceIds": [
+        "pcic-housing"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-decoration",
+      "description": "Explain furnishing, lighting and decorative choices in a room.",
+      "frameworkSections": [
+        "Specific notions 10.3.2/10.4.1"
+      ],
+      "referenceIds": [
+        "pcic-housing"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-appliances",
+      "description": "Describe device function, controls, energy use and a reported malfunction.",
+      "frameworkSections": [
+        "Specific notions 10.4.2"
+      ],
+      "referenceIds": [
+        "pcic-housing"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-fault",
+      "description": "State a household defect, its practical effects and a requested repair while leaving diagnosis to professionals.",
+      "frameworkSections": [
+        "Specific notions 10.1.1/10.4.2"
+      ],
+      "referenceIds": [
+        "pcic-housing"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-utilities",
+      "description": "Clarify a supply arrangement, activation, interruption and appointment.",
+      "frameworkSections": [
+        "Specific notions 10.1.2/11.8"
+      ],
+      "referenceIds": [
+        "pcic-housing"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-channel",
+      "description": "Compare retail channels and explain delivery/availability issues.",
+      "frameworkSections": [
+        "Specific notions 12.1"
+      ],
+      "referenceIds": [
+        "pcic-buying"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-clothing",
+      "description": "Describe pattern, construction, fit and purpose of garments without an exhaustive fashion catalogue.",
+      "frameworkSections": [
+        "Specific notions 12.2"
+      ],
+      "referenceIds": [
+        "pcic-buying"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-care",
+      "description": "Explain garment-care changes and request a bounded alteration or replacement.",
+      "frameworkSections": [
+        "Specific notions 12.2/10.3.1"
+      ],
+      "referenceIds": [
+        "pcic-buying"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-product",
+      "description": "Compare product specifications, quality claims, packaging and identifying details.",
+      "frameworkSections": [
+        "Specific notions 12.1/12.3"
+      ],
+      "referenceIds": [
+        "pcic-buying"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-payment",
+      "description": "Clarify total price, instalments, charges and payment documentation without financial advice.",
+      "frameworkSections": [
+        "Specific notions 12.4"
+      ],
+      "referenceIds": [
+        "pcic-buying"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-complaint",
+      "description": "Support a consumer complaint with facts and distinguish request, remedy and result.",
+      "frameworkSections": [
+        "Specific notions 12.1/12.4"
+      ],
+      "referenceIds": [
+        "pcic-buying"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-remedy",
+      "description": "Negotiate ordinary repair, replacement, refund or compensation with explicit conditions.",
+      "frameworkSections": [
+        "Specific notions 12.1/12.4"
+      ],
+      "referenceIds": [
+        "pcic-buying"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-tradeoff",
+      "description": "Explain resource, accessibility and long-term-use tradeoffs in a household purchase.",
+      "frameworkSections": [
+        "Specific notions 12.1/12.4; general6 evaluation"
+      ],
+      "referenceIds": [
+        "pcic-buying"
+      ],
+      "disposition": "deferred-core",
+      "rationale": "Checkpoint: core enumeration and scenario contrasts are still in progress."
+    },
+    {
+      "id": "B2-H-foundations",
+      "description": "Reuse A1–B1 foods, homes, clothes, money, forms and measurement meaning proposals.",
+      "frameworkSections": [
+        "Specific notions A1/A2/B1 H and F/P/T/W"
+      ],
+      "referenceIds": [
+        "pcic-earlier"
+      ],
+      "disposition": "prerequisite",
+      "rationale": "Earlier individually enumerated proposals and later grammar/audio gates remain explicit dependencies; no new lexical count or completion claim follows from reuse."
+    },
+    {
+      "id": "B2-H-grammar",
+      "description": "Use F/D tense, modality, conditional, clitic and nonreflexive-se constructions in explanations and requests.",
+      "frameworkSections": [
+        "Specific notions Functions1,2,4,6; grammar prerequisites"
+      ],
+      "referenceIds": [
+        "pcic-functions"
+      ],
+      "disposition": "prerequisite",
+      "rationale": "Earlier individually enumerated proposals and later grammar/audio gates remain explicit dependencies; no new lexical count or completion claim follows from reuse."
+    },
+    {
+      "id": "B2-H-specialist",
+      "description": "Exclude exhaustive clinical, culinary, property-law and technical repair systems.",
+      "frameworkSections": [
+        "Specific notions C1/C2 specific5/10/12 comparisons"
+      ],
+      "referenceIds": [
+        "pcic-later"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "General-audience reporting and choice are in scope; specialist procedures, legal entitlements and medical advice are not."
+    },
+    {
+      "id": "B2-H-audio",
+      "description": "Keep written stress/form review separate from physical es-ES listening and native language review.",
+      "frameworkSections": [
+        "Specific notions Pronunciation2–5"
+      ],
+      "referenceIds": [
+        "pcic-pronunciation"
+      ],
+      "disposition": "prerequisite",
+      "rationale": "Earlier individually enumerated proposals and later grammar/audio gates remain explicit dependencies; no new lexical count or completion claim follows from reuse."
+    }
+  ],
+  "selections": [
+    {
+      "id": "B2-H-001",
+      "term": "etiquetado",
+      "partOfSpeech": "NOUN",
+      "sense": "the written or graphic product information presented with goods",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-labels"
+      ],
+      "levelRationale": "Discussing whether supplied information is clear or complete requires the information system, beyond naming a tag in A2-H118/B1-H207.",
+      "lowerLevelContrast": "A2 etiqueta is the attached label; this result/information meaning may share a parent but is not automatically its physical object.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Masculine mass; el etiquetado de un producto; process of attaching labels not separately selected.",
+      "pronunciationNotes": "e-ti-que-TA-do; qu=/k/, silent u.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Granularity between collective label information and etiqueta requires global review; framework12.1 names etiqueta rather than this exact noun."
+      ]
+    },
+    {
+      "id": "B2-H-002",
+      "term": "porción",
+      "partOfSpeech": "NOUN",
+      "sense": "an amount of food separated or allocated for serving",
+      "proposedLevel": "B1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-labels"
+      ],
+      "levelRationale": "Retain B1-H026 serving-amount proposal despite B2 illustrative seed: comparing labels does not create a new portion sense.",
+      "lowerLevelContrast": "B1-H026 and A2-H177/B1-H244 ración overlap; do not count every numerical portion.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Feminine; porciones loses written accent; una porción de.",
+      "pronunciationNotes": "por-CIÓN, por-CIO-nes; io glide, c /θ/ in reference es-ES.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Same-sense B1 proposal versus B2 planning seed; ración synonym/granularity remains unresolved."
+      ]
+    },
+    {
+      "id": "B2-H-003",
+      "term": "aislamiento",
+      "partOfSpeech": "NOUN",
+      "sense": "a building's protection against transmission of heat or sound",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-conditions"
+      ],
+      "levelRationale": "Compare dwelling performance and explain a comfort problem using the barrier property rather than simply cold/noisy.",
+      "lowerLevelContrast": "B1-H100/101 noise and H073 moisture describe observed states; this identifies a protective system/property, not social isolation.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Masculine; aislamiento térmico/acústico; count material/system variants only if later adjudicated.",
+      "pronunciationNotes": "ais-la-MIEN-to; ai and ie glides in ordinary pronunciation; aísla has stressed í hiatus.",
+      "referenceIds": [
+        "pcic-housing",
+        "rae-aislar"
+      ],
+      "uncertainties": [
+        "Independent building-use nomination, not a literal PCIC B2 headword claim; thermal/acoustic implementations are proposed one insulation meaning."
+      ]
+    },
+    {
+      "id": "B2-H-004",
+      "term": "incidencia",
+      "partOfSpeech": "NOUN",
+      "sense": "an unexpected problem affecting the normal course of a service",
+      "proposedLevel": "B1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-fault"
+      ],
+      "levelRationale": "Reuse B1-T028 service-problem recommendation for a housing incident report; topic shift is not later introduction.",
+      "lowerLevelContrast": "B1-T028 already names this service disruption; distinguish statistical incidence or a neutral event if selected later.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Feminine; incidencias; comunicar/registrar una incidencia.",
+      "pronunciationNotes": "in-ci-DEN-cia; final ia glide, c /θ/ under distinction.",
+      "referenceIds": [
+        "pcic-housing",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "B2 seed conflicts with actual B1 peer; fault versus broad service-event granularity needs adjudication."
+      ]
+    },
+    {
+      "id": "B2-H-005",
+      "term": "nutrición",
+      "partOfSpeech": "NOUN",
+      "sense": "the process by which a body obtains and uses nourishment",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-nutrition"
+      ],
+      "levelRationale": "Allows a general explanation of food choices in terms of nourishment, not a clinical mechanism or prescribed diet.",
+      "lowerLevelContrast": "B1-H008 nutriente names a component; this names the overall bodily process, distinct alimentación selection below.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Feminine normally mass; nutrición; adjective nutricional is a linked form-family proposal, not another counted sense.",
+      "pronunciationNotes": "nu-tri-CIÓN; tr cluster and io glide.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Original general-audience selection; a heading called diet/nutrition does not certify the word's introduction."
+      ]
+    },
+    {
+      "id": "B2-H-006",
+      "term": "alimentación",
+      "partOfSpeech": "NOUN",
+      "sense": "the habitual provision and intake of food",
+      "proposedLevel": "B1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-nutrition"
+      ],
+      "levelRationale": "Propose B1 for the dietary-practice noun supported by specific5.1 B1, not move it later because the discussion is justified.",
+      "lowerLevelContrast": "Earlier comer food intake and B1-Hfood components support the habit; no earlier exact noun saved in inspected peers.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Feminine; una alimentación equilibrada; mass practice, not electrical power supply.",
+      "pronunciationNotes": "a-li-men-ta-CIÓN; final stress and io glide.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Independent B1 placement, awaiting P/H/F ownership and global introduction review."
+      ]
+    },
+    {
+      "id": "B2-H-007",
+      "term": "equilibrado",
+      "partOfSpeech": "ADJ",
+      "sense": "having appropriately proportioned components in the selected diet or arrangement",
+      "proposedLevel": "B1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-nutrition"
+      ],
+      "levelRationale": "Specific5.1 B1 balanced eating supports this qualitative relation before B2 dietary argument.",
+      "lowerLevelContrast": "B1-H components plus enough/too much support the concept; no prior exact adjective saved. Not merely physically stable.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "equilibrado/equilibrada and plurals; agreeing adjective; equilibrar verb not automatically selected.",
+      "pronunciationNotes": "e-qui-li-BRA-do; silent u in qui, br cluster.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed B1 first introduction; nutrition and broader proportion sense may share one meaning with F."
+      ]
+    },
+    {
+      "id": "B2-H-008",
+      "term": "nutritivo",
+      "partOfSpeech": "ADJ",
+      "sense": "providing nourishment as food",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-nutrition"
+      ],
+      "levelRationale": "Distinguish nourishment from taste or an asserted overall health benefit; specific12.3 B2 supplies this food property.",
+      "lowerLevelContrast": "A1 rico tastes pleasant; B1 nutriente names component. Checked later5.1/13.1 C1 also has this adjective, not proof of a C1 minimum.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "nutritivo/nutritiva; alimentos nutritivos; no automatic nutritional-health guarantee.",
+      "pronunciationNotes": "nu-tri-TI-vo; tr cluster and /b/ for v.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "B2 shopping column versus C1 diet/health occurrence; scope is food nourishment, not medical efficacy."
+      ]
+    },
+    {
+      "id": "B2-H-009",
+      "term": "alimenticio",
+      "partOfSpeech": "ADJ",
+      "sense": "intended for or relating to food and nourishment",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-labels"
+      ],
+      "levelRationale": "Supports distinguishing a food product or additive from a visually similar nonfood product; specific5.1/12.3 B2.",
+      "lowerLevelContrast": "Earlier alimento/ingrediente component names do not themselves supply this relational classification.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "alimenticio/alimenticia; producto alimenticio; avoid making all relational adjective inflections separate.",
+      "pronunciationNotes": "a-li-men-TI-cio; final io glide and c /θ/ under distinction.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Relational versus nourishing uses can overlap nutritivo; keep selected classification narrow."
+      ]
+    },
+    {
+      "id": "B2-H-010",
+      "term": "conservante",
+      "partOfSpeech": "NOUN",
+      "sense": "a substance added to help preserve a food product",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-labels"
+      ],
+      "levelRationale": "Name the additive category when reading or querying contents, following specific5.1/12.3 B2.",
+      "lowerLevelContrast": "B1-H014 contener plus sin permits composition; preserved is not the same as frozen, fresh or clinically safe.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Masculine count/mass; conservantes; sin conservantes is compositional, not another word.",
+      "pronunciationNotes": "con-ser-VAN-te; final e audible.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "No assertion that absence is healthier or that presence guarantees safety."
+      ]
+    },
+    {
+      "id": "B2-H-011",
+      "term": "colorante",
+      "partOfSpeech": "NOUN",
+      "sense": "a substance used to give colour to a product",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-labels"
+      ],
+      "levelRationale": "Differentiate colouring from preserving when comparing declared additives; specific5.1 B2.",
+      "lowerLevelContrast": "Earlier color names appearance, not a substance deliberately added; same noun can cover nonfood products.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Masculine; colorantes; colorante alimenticio; nonfood use shares core unless evidence demands a split.",
+      "pronunciationNotes": "co-lo-RAN-te; single r tap.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Shared food/material meaning proposed; no automatic nutrition judgment."
+      ]
+    },
+    {
+      "id": "B2-H-012",
+      "term": "aditivo",
+      "partOfSpeech": "NOUN",
+      "sense": "a substance added to a product to modify a property",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-labels"
+      ],
+      "levelRationale": "Supplies the broader category joining preservative and colouring in a consumer question rather than an exhaustive chemistry list.",
+      "lowerLevelContrast": "B1 ingrediente can be any recipe component; aditivo selects a functional addition.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Masculine; aditivos; aditivo de/en un producto; adjective use not separately selected.",
+      "pronunciationNotes": "a-di-TI-vo; /b/ for v and clear initial a.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Original label-scenario nomination, not an official PCIC lexical assignment."
+      ]
+    },
+    {
+      "id": "B2-H-013",
+      "term": "bajo",
+      "partOfSpeech": "ADJ",
+      "sense": "containing a relatively small amount of a specified component",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-labels"
+      ],
+      "levelRationale": "Specific5.1/12.3 B2 low-in descriptors support comparisons of named constituents without importing legal numerical thresholds.",
+      "lowerLevelContrast": "A1-F184 vertical low and A1-D076 low voice are distinct uses; quantity language is an earlier prerequisite.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "bajo/baja en + component; agree with product, not component; alto en is comparison construction requiring F review.",
+      "pronunciationNotes": "BA-jo; j velar/regionally glottal; en is unstressed.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Degree sense may share F general low amount; product-label use does not establish regulated eligibility."
+      ]
+    },
+    {
+      "id": "B2-H-014",
+      "term": "rico",
+      "partOfSpeech": "ADJ",
+      "sense": "containing a relatively large amount of a specified component",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:169-rico"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-labels"
+      ],
+      "levelRationale": "Specific5.1/12.3 B2 rich-in framing distinguishes constituent abundance from pleasant taste.",
+      "lowerLevelContrast": "Baseline/A1-H049 means tasty; A2-S044 wealthy is another meaning; retain IDs only as different-sense links.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Regular agreeing adjective rico/rica and plurals; rico en + component; no irregular adjective morphology.",
+      "pronunciationNotes": "RI-co; initial strong r, c=/k/.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Sense split from taste and wealth proposed; label claims are reported, not certified."
+      ]
+    },
+    {
+      "id": "B2-H-015",
+      "term": "integral",
+      "partOfSpeech": "ADJ",
+      "sense": "made using the whole grain rather than only a refined part",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-ingredients"
+      ],
+      "levelRationale": "Recognize the grain-processing contrast in product comparison, supported by specific5.3 B2 bread context.",
+      "lowerLevelContrast": "Earlier pan names food and B1 fibra a component; wholegrain is not identical to fibre content or health-promoting.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Gender invariant integral; integrales; pan/harina integral.",
+      "pronunciationNotes": "in-te-GRAL; gr cluster, final l.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Not every general complete/integrated sense included; earlier practical introduction remains possible."
+      ]
+    },
+    {
+      "id": "B2-H-016",
+      "term": "desnatado",
+      "partOfSpeech": "ADJ",
+      "sense": "having the cream or much of the milk fat removed",
+      "proposedLevel": "B1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-ingredients"
+      ],
+      "levelRationale": "Specific5.3 B1 dairy descriptors support an earlier product-choice introduction.",
+      "lowerLevelContrast": "B1-H010 grasa names component; the adjective labels processing, not lactose-free status.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "desnatado/desnatada; semidesnatado linked contrast needs final form/sense policy; descremado regional lexical variant.",
+      "pronunciationNotes": "des-na-TA-do; maintain initial des; descreMAdo variant stress.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed B1. Semidesnatado explicitly indicates partial removal and should not be silently treated as identical; final form/sense policy must resolve that product contrast."
+      ]
+    },
+    {
+      "id": "B2-H-017",
+      "term": "orgánico",
+      "partOfSpeech": "ADJ",
+      "sense": "produced under the agricultural practices denoted by organic food labelling",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-labels"
+      ],
+      "levelRationale": "Specific5.1 B2 product descriptor supports interpreting a production-method claim, not judging medical benefit.",
+      "lowerLevelContrast": "B1-W157 derived-from-living-matter is a different selected sense; ecological impact and label certification are not interchangeable.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "orgánico/orgánica; orgánicos; ecológico/bio vary in usage and jurisdiction, not automatic exact variants.",
+      "pronunciationNotes": "or-GÁ-ni-co; written accent, four syllables; both g and c velar stops.",
+      "referenceIds": [
+        "pcic-food",
+        "rae-organic"
+      ],
+      "uncertainties": [
+        "Production-label scope must not imply universally identical rules or healthier food; original lexical gloss only."
+      ]
+    },
+    {
+      "id": "B2-H-018",
+      "term": "procesado",
+      "partOfSpeech": "ADJ",
+      "sense": "changed from its raw form by preparation or industrial treatment",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-labels"
+      ],
+      "levelRationale": "Allows a consumer to distinguish processing from freshness or additive presence when explaining a food choice.",
+      "lowerLevelContrast": "B1-H028 casero describes origin/style; frozen and cooked are specific processes, not exhaustive equivalents.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "procesado/procesada; alimento procesado; process verb and ultra- subtype not automatically separate.",
+      "pronunciationNotes": "pro-ce-SA-do; pro cluster, c /θ/ in es-ES.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Original food-choice nomination; no medical ranking of degrees of processing."
+      ]
+    },
+    {
+      "id": "B2-H-019",
+      "term": "azucarado",
+      "partOfSpeech": "ADJ",
+      "sense": "sweetened by adding sugar",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-drinks"
+      ],
+      "levelRationale": "Explain a beverage preference by sweetening rather than taste alone, complementing B2 component descriptors.",
+      "lowerLevelContrast": "A1 dulce is perceived sweetness, which can occur without added sugar; selected adjective must keep that distinction.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Agreeing result adjective azucarado/azucarada from azucarar in its literal sugar-sweetening use; broader sugary-tasting and figurative flattering uses excluded.",
+      "pronunciationNotes": "a-zu-ca-RA-do; z /θ/ reference, c /k/.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation",
+        "rae-azucarar"
+      ],
+      "uncertainties": [
+        "Selected sugar-added participial/result scope is supported by RAE azucarar; do not infer this process from sweet taste alone. Form-derived adjective versus verb-family counting remains open."
+      ]
+    },
+    {
+      "id": "B2-H-020",
+      "term": "digestión",
+      "partOfSpeech": "NOUN",
+      "sense": "the bodily process of breaking down ingested food",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-nutrition"
+      ],
+      "levelRationale": "Specific5.1 B2 supports describing an ordinary food experience without a medical mechanism or diagnosis.",
+      "lowerLevelContrast": "B1 restriction/intolerance reports are not the process itself; no earlier exact noun saved.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Feminine; hacer la digestión; digestiones for episodes, not plural as new sense.",
+      "pronunciationNotes": "di-ges-TIÓN; g before e fricative, io glide.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Shared P physiological-process ownership; no safety instructions about timing or swimming."
+      ]
+    },
+    {
+      "id": "B2-H-021",
+      "term": "digerir",
+      "partOfSpeech": "VERB",
+      "sense": "break down ingested food through digestion",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-nutrition"
+      ],
+      "levelRationale": "Specific5.1 B2 provides the action needed to report ease/difficulty processing a food.",
+      "lowerLevelContrast": "digestión nominal process and earlier comer ingestion are related but not identical lexemes.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "e→ie in digiero/digiere; e→i digirió/digiriendo; digerir un alimento.",
+      "pronunciationNotes": "di-ge-RIR; g fricative; di-GIE-ro keeps consonantal g plus ie glide.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Literal digestion only; accepting disturbing news is a different figurative sense."
+      ]
+    },
+    {
+      "id": "B2-H-022",
+      "term": "indigesto",
+      "partOfSpeech": "ADJ",
+      "sense": "perceived as difficult to digest",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-nutrition"
+      ],
+      "levelRationale": "Specific5.1 B2 names a digestive-effect evaluation distinct from bad taste or spoilage.",
+      "lowerLevelContrast": "No earlier saved pesado food sense was found: B1-F139 is physical weight. This batch separately proposes food-effect pesado at B1; indigesto is the more explicit overlapping digestive adjective.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "indigesto/indigesta; resultar indigesto; avoid equating with poisonous.",
+      "pronunciationNotes": "in-di-GES-to; g fricative before e.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Selected literal report; figurative dull/tedious uses deferred to their discourse context."
+      ]
+    },
+    {
+      "id": "B2-H-023",
+      "term": "ayunar",
+      "partOfSpeech": "VERB",
+      "sense": "refrain from eating for a period",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-nutrition"
+      ],
+      "levelRationale": "Specific5.1 B2 supports reporting a fasting practice or instruction one has received without recommending it.",
+      "lowerLevelContrast": "Not simply missing a meal accidentally; earlier no comer can paraphrase but does not replace this lexical action.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Regular -ar; ayunar; en ayunas is related expression requiring separate counting decision later.",
+      "pronunciationNotes": "a-yu-NAR; y consonant, no forced vowel hiatus.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "No fasting regimen, medical necessity or religious generalization."
+      ]
+    },
+    {
+      "id": "B2-H-024",
+      "term": "podrido",
+      "partOfSpeech": "ADJ",
+      "sense": "decayed through rotting as organic matter",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-condition"
+      ],
+      "levelRationale": "Specific5.1 B2 distinguishes decay from a passed label date or unwanted taste.",
+      "lowerLevelContrast": "B1-H042 en mal estado is broader; A2 caducado concerns date, not observed decomposition.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "podrido/podrida; irregular participle/adjective family of pudrir/podrir; no safety conclusion from appearance.",
+      "pronunciationNotes": "po-DRI-do; dr cluster.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Same decay property may be S organic matter; final dedup must not make food-only duplicate."
+      ]
+    },
+    {
+      "id": "B2-H-025",
+      "term": "pudrirse",
+      "partOfSpeech": "VERB",
+      "sense": "undergo rotting or organic decay",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-condition"
+      ],
+      "levelRationale": "Specific5.1 B2 supplies the change process rather than only the resulting rotten state.",
+      "lowerLevelContrast": "Earlier estropearse is broader malfunction/damage; physical decay is a distinct mechanism meaning, not any broken appliance.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Pronominal change; es-ES pudrirse, se pudre, se pudrió and participle podrido. RAE admits selected podri- variants in much American usage; do not impose es-ES forms universally.",
+      "pronunciationNotes": "pu-DRIR-se; dr cluster; po-DRI-do participle.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation",
+        "rae-pudrir"
+      ],
+      "uncertainties": [
+        "Shared organic-decay meaning with S; regional paradigm is documented rather than unresolved. No storage or safety guidance."
+      ]
+    },
+    {
+      "id": "B2-H-026",
+      "term": "comestible",
+      "partOfSpeech": "ADJ",
+      "sense": "suitable to be eaten in the ordinary categorical meaning",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-sensory"
+      ],
+      "levelRationale": "Specific5.5 B2 contrasts edible category with pleasant flavour in a food discussion.",
+      "lowerLevelContrast": "A1 rico is tasty; the adjective does not validate a particular unidentified mushroom or spoiled product.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Gender invariant; comestibles; in- negative is a linked contrast needing form policy.",
+      "pronunciationNotes": "co-mes-TI-ble; bl cluster and final e.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Never use this label to certify a real item's safety; not specialist toxicology."
+      ]
+    },
+    {
+      "id": "B2-H-027",
+      "term": "sabroso",
+      "partOfSpeech": "ADJ",
+      "sense": "having a noticeable pleasant flavour",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-sensory"
+      ],
+      "levelRationale": "Specific5.5 B2 adds a flavour-focused evaluative alternative in a review.",
+      "lowerLevelContrast": "A1 rico already evaluates taste; this is an added lexical form with flavour emphasis, not an unavailable earlier concept.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "sabroso/sabrosa and plurals; no automatic noun sabor duplication.",
+      "pronunciationNotes": "sa-BRO-so; br cluster, both s /s/.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Earlier introduction plausible; B2 nomination relies on source/form expansion, not a longer review sentence."
+      ]
+    },
+    {
+      "id": "B2-H-028",
+      "term": "textura",
+      "partOfSpeech": "NOUN",
+      "sense": "the felt surface or internal consistency of a material or food",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-sensory"
+      ],
+      "levelRationale": "Provides a general sensory dimension for explaining crisp versus smooth food or fabric feel.",
+      "lowerLevelContrast": "Earlier duro/blando and B1 suave name values, not the dimension; food/material contexts may share the noun. Exact B2-F119 textura proposes the same material-feel parent at B2.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Feminine; textura de; texturas for types.",
+      "pronunciationNotes": "tex-TU-ra; x usually /ks/, avoid inserted vowel.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Original sensory-comparison nomination; F/P material perception shares one meaning."
+      ]
+    },
+    {
+      "id": "B2-H-029",
+      "term": "crujiente",
+      "partOfSpeech": "ADJ",
+      "sense": "making a crisp cracking sound when bitten or pressed",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-sensory"
+      ],
+      "levelRationale": "Distinguishes a crisp cooking result from mere hardness in an ordinary food review.",
+      "lowerLevelContrast": "Earlier duro is resistance, not sound/texture; crunching paper may share the same property.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Gender invariant; crujientes; crujir is linked verb not automatically selected.",
+      "pronunciationNotes": "cru-JIEN-te; j fricative, ie glide, cr cluster.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Original texture contrast; not a PCIC B2 headword certification."
+      ]
+    },
+    {
+      "id": "B2-H-030",
+      "term": "jugoso",
+      "partOfSpeech": "ADJ",
+      "sense": "containing enough juice or moisture to feel succulent",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-sensory"
+      ],
+      "levelRationale": "Describe a cooking result that is moist inside without confusing rawness or added sauce.",
+      "lowerLevelContrast": "Earlier A2-H116 mojado means having water or another liquid on the surface, while broader wetness descriptions need not be restricted to a film on the surface. Juicy internal food texture is the selected contrast, not a claim that all wet things lack internal moisture.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "jugoso/jugosa; food use only, not profitable or newsworthy figurative use.",
+      "pronunciationNotes": "ju-GO-so; initial j fricative, g before o stop/approximant.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Original food-result nomination; adjective does not indicate safe cooking."
+      ]
+    },
+    {
+      "id": "B2-H-031",
+      "term": "seco",
+      "partOfSpeech": "ADJ",
+      "sense": "having little perceived sweetness as a wine style",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-drinks"
+      ],
+      "levelRationale": "Specific5.2 B2 dry-versus-sweet wine contrast supports a precise ordinary menu choice.",
+      "lowerLevelContrast": "A1-S097/A2-H115/F137 moisture meanings are different: wine can be liquid and seco.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "seco/seca; vino seco; style term rather than claim of literally zero sugar.",
+      "pronunciationNotes": "SE-co; c /k/.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Preserve earlier moisture IDs as different-meaning links, not a relevel or universal chemical threshold."
+      ]
+    },
+    {
+      "id": "B2-H-032",
+      "term": "concentrado",
+      "partOfSpeech": "ADJ",
+      "sense": "having a relatively high proportion of a specified substance in a mixture",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-labels"
+      ],
+      "levelRationale": "Allows discussion of a concentrated product and dilution instructions without a technical chemistry catalogue.",
+      "lowerLevelContrast": "Earlier fuerte/intenso can describe taste but not the amount-to-liquid relation.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "concentrado/concentrada; zumo/detergente concentrado; attention-state meaning excluded. No previous dilution-reduction process is required: concentration describes the resulting proportion.",
+      "pronunciationNotes": "con-cen-TRA-do; tr cluster; c before e /θ/.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Food and cleaning-product concentration proposed same core; independently selected B2."
+      ]
+    },
+    {
+      "id": "B2-H-033",
+      "term": "graduación",
+      "partOfSpeech": "NOUN",
+      "sense": "the stated alcoholic strength of a beverage",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-drinks"
+      ],
+      "levelRationale": "Supports comparing drinks by their indicated strength rather than volume alone.",
+      "lowerLevelContrast": "Earlier alcohol names substance; F percentages provide numeric prerequisite, not a second alcohol sense.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Feminine; graduación alcohólica; not school graduation or optical prescription.",
+      "pronunciationNotes": "gra-dua-CIÓN; ua/io usual glides, clear gr.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Independent beverage-label nomination; regional syllabification variation acceptable, no drinking guidance."
+      ]
+    },
+    {
+      "id": "B2-H-034",
+      "term": "tapón",
+      "partOfSpeech": "NOUN",
+      "sense": "a stopper that closes the opening of a bottle or similar container",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-drinks"
+      ],
+      "levelRationale": "Specific5.2 B2 names a closure relevant to a damaged packaging or opening problem.",
+      "lowerLevelContrast": "A2-H085 tapa is a snack, not a lid; no earlier saved tapa lid meaning was found in the peer audit. Tapón is a stopper for an opening rather than every covering.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Masculine; tapones loses accent; tapón de botella; earplug/traffic blockage excluded.",
+      "pronunciationNotes": "ta-PÓN, ta-PO-nes; same stressed stem vowel, tilde disappears.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Bounded closure type, not automatic whole bottle-part inventory."
+      ]
+    },
+    {
+      "id": "B2-H-035",
+      "term": "sacacorchos",
+      "partOfSpeech": "NOUN",
+      "sense": "a tool for pulling a cork stopper from a bottle",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-tools"
+      ],
+      "levelRationale": "Specific5.2/5.6 B2 supports asking for the right opener by its specific function.",
+      "lowerLevelContrast": "Earlier cuchillo/abrelatas are not substitutes; compound is a lexical tool, not every instruction as word.",
+      "register": "neutral; descriptive consumer use, not professional instruction",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Masculine invariable singular/plural; el/los sacacorchos.",
+      "pronunciationNotes": "sa-ca-COR-chos; ch affricate, c /k/.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Tool naming only; not instructions for unsafe opening."
+      ]
+    },
+    {
+      "id": "B2-H-036",
+      "term": "dorar",
+      "partOfSpeech": "VERB",
+      "sense": "brown the surface of food during cooking",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-preparation"
+      ],
+      "levelRationale": "Specific5.4 B2 supports distinguishing surface browning from burning or simply heating.",
+      "lowerLevelContrast": "A2-H071 quemado is unwanted damage; this intended colour change is not equivalent.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Regular -ar; dorar algo; dorarse change without agent.",
+      "pronunciationNotes": "do-RAR; single r tap then final r.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "No heating temperatures or safe-doneness claim."
+      ]
+    },
+    {
+      "id": "B2-H-037",
+      "term": "rebozar",
+      "partOfSpeech": "VERB",
+      "sense": "coat food in flour or batter before cooking",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-preparation"
+      ],
+      "levelRationale": "Specific5.4 B2 contrasts coating with the later cooking action.",
+      "lowerLevelContrast": "Earlier freír method does not specify a coating; empanar selects breadcrumbs.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Regular -ar; rebozar algo en harina; rebocé/reboce z→c.",
+      "pronunciationNotes": "re-bo-ZAR; initial strong r, z /θ/ reference.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Coating conventions vary by recipe; no universal egg/flour sequence prescribed."
+      ]
+    },
+    {
+      "id": "B2-H-038",
+      "term": "empanar",
+      "partOfSpeech": "VERB",
+      "sense": "cover food with breadcrumbs before cooking",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-preparation"
+      ],
+      "levelRationale": "Specific5.4 B2 supplies a coating contrast useful in ingredient questions.",
+      "lowerLevelContrast": "Different from putting a filling inside bread; compare rebozar broader coating.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Regular -ar; empanar algo; empanado agrees as result adjective.",
+      "pronunciationNotes": "em-pa-NAR; clear initial em.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Not every compound dish name is selected."
+      ]
+    },
+    {
+      "id": "B2-H-039",
+      "term": "guisar",
+      "partOfSpeech": "VERB",
+      "sense": "prepare food by cooking it with ingredients and liquid as a stew",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-preparation"
+      ],
+      "levelRationale": "Specific5.4 B2 guisada supports describing this method versus dry roasting.",
+      "lowerLevelContrast": "B1-H031 asar and A2-H066 cocer already cover heat; selected stewing use is narrower than generic cooking.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Regular -ar; guisar carne; guisado result form, not another word.",
+      "pronunciationNotes": "gui-SAR; gu before i has silent u and /g/.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Broad regional guisar=cook usage needs final note; intended stewing sense is selected."
+      ]
+    },
+    {
+      "id": "B2-H-040",
+      "term": "trocear",
+      "partOfSpeech": "VERB",
+      "sense": "cut or divide something into pieces",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-preparation"
+      ],
+      "levelRationale": "Specific5.4 B2 names portioning action without specifying thin slicing or fine chopping.",
+      "lowerLevelContrast": "A2-H060 cortar is broader; B1-H035 picar suggests small pieces. This is lexical refinement, not a new concept unavailable earlier.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Regular -ear; trocear algo; troceado.",
+      "pronunciationNotes": "tro-ce-AR; e-a hiatus, tr cluster.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Potential parent with generic divide/cut requires granularity review, not automatic duplicate."
+      ]
+    },
+    {
+      "id": "B2-H-041",
+      "term": "amasar",
+      "partOfSpeech": "VERB",
+      "sense": "work a dough by pressing and folding it",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-preparation"
+      ],
+      "levelRationale": "Original bounded bread/pastry method fills the manual dough-work contrast beyond mixing and beating.",
+      "lowerLevelContrast": "A2 mezclar combines ingredients; B1 batir beats a mixture rather than kneading cohesive dough.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Regular -ar; amasar masa; figurative accumulating wealth excluded.",
+      "pronunciationNotes": "a-ma-SAR; final stress.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Independent recipe nomination, not literal B2 list assignment."
+      ]
+    },
+    {
+      "id": "B2-H-042",
+      "term": "remover",
+      "partOfSpeech": "VERB",
+      "sense": "move food or liquid around repeatedly to mix it while preparing it",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-preparation"
+      ],
+      "levelRationale": "Original ordinary recipe instruction distinguishes stirring from adding, beating or removing an item.",
+      "lowerLevelContrast": "A2-H062 mezclar names combination; selected repeated in-container motion narrows method, not English remove.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "o→ue remuevo/remueve; regular removido; remover algo.",
+      "pronunciationNotes": "re-mo-VER; initial strong r; re-MUE-ve diphthong.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Generic physical displacement and figurative stirring feelings excluded."
+      ]
+    },
+    {
+      "id": "B2-H-043",
+      "term": "verter",
+      "partOfSpeech": "VERB",
+      "sense": "pour a liquid from one container or place into another",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-preparation"
+      ],
+      "levelRationale": "Original recipe transfer action adds the liquid-flow method beyond putting or serving.",
+      "lowerLevelContrast": "Earlier poner/servir do not specify pouring; checked beverage5.2 C2 lists the verb, so B2 is an explicit earlier practical proposal.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "e→ie vierto/vierte; vertió not virtió; vertido; verter algo en/sobre.",
+      "pronunciationNotes": "ver-TER; /b/ for v; VIER-te.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-later"
+      ],
+      "uncertainties": [
+        "Actual C2 beverage occurrence preserved; does not prove a C2 minimum for literal pouring."
+      ]
+    },
+    {
+      "id": "B2-H-044",
+      "term": "triturar",
+      "partOfSpeech": "VERB",
+      "sense": "break food into very small particles by crushing or mechanical action",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-preparation"
+      ],
+      "levelRationale": "Original blender-result scenario needs finer breakdown than chopping or grating.",
+      "lowerLevelContrast": "B1-H034 rallar makes shreds; checked5.4 C2 lists triturar, earlier B2 practical extension is proposed.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Regular -ar; triturar algo; triturado.",
+      "pronunciationNotes": "tri-tu-RAR; initial tr, final stress.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-later"
+      ],
+      "uncertainties": [
+        "C2 framework occurrence versus independent B2 proposal; no claim specialist texture mastery."
+      ]
+    },
+    {
+      "id": "B2-H-045",
+      "term": "al baño María",
+      "partOfSpeech": "ADV",
+      "sense": "using a water bath as the cooking or heating method",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-method"
+      ],
+      "levelRationale": "Specific5.4 B2 provides a conventional named method, unlike any transparent temperature phrase.",
+      "lowerLevelContrast": "A2 hervir and B1 al vapor/a fuego lento are different heat-transfer methods.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "al contracts a+el; baño María fixed conventional method; avoid separate every-inflected sentence card.",
+      "pronunciationNotes": "al BA-ño ma-RÍ-a; ñ palatal, í-a hiatus.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Method naming only, not operating/safety instructions."
+      ]
+    },
+    {
+      "id": "B2-H-046",
+      "term": "a la brasa",
+      "partOfSpeech": "ADV",
+      "sense": "cooked over embers as a stated method",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-method"
+      ],
+      "levelRationale": "Specific5.4 B2 distinguishes ember cooking from pan or oven method.",
+      "lowerLevelContrast": "B1 asar broader; a la plancha uses a hot flat surface, not synonymous.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "a la brasa; plural a las brasas is a regional conventional variant requiring voice-consistent wording.",
+      "pronunciationNotes": "a la BRA-sa; br cluster, unstressed function words.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Variant and broader asar granularity need adjudication."
+      ]
+    },
+    {
+      "id": "B2-H-047",
+      "term": "masa",
+      "partOfSpeech": "NOUN",
+      "sense": "a cohesive mixture of ingredients prepared for bread or pastry",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-ingredients"
+      ],
+      "levelRationale": "Kneading and shaping require identifying the dough, not just its individual ingredients.",
+      "lowerLevelContrast": "Physical mass/amount and crowd meanings are different; no earlier exact food noun saved.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Feminine; masa de pan; masas for preparations.",
+      "pronunciationNotes": "MA-sa; both vowels unaccented but initial stress.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Ordinary cooking noun might be introduced earlier; B2 nomination is bounded scenario choice."
+      ]
+    },
+    {
+      "id": "B2-H-048",
+      "term": "almendra",
+      "partOfSpeech": "NOUN",
+      "sense": "the edible almond seed used in food",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-ingredients"
+      ],
+      "levelRationale": "An original chosen nut exemplar supports ingredient substitution and known-restriction questions; specific5.3 B2.",
+      "lowerLevelContrast": "B1-H017 fruto seco provides class, not the distinct ingredient; not every nut is required.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Feminine; almendras; adjective forms not separate.",
+      "pronunciationNotes": "al-MEN-dra; dr cluster.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "No allergy cross-reactivity assertion; small seed-category exemplar, not exhaustive tree-nut coverage."
+      ]
+    },
+    {
+      "id": "B2-H-049",
+      "term": "mejillón",
+      "partOfSpeech": "NOUN",
+      "sense": "a mussel used as food",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-ingredients"
+      ],
+      "levelRationale": "Chosen shellfish exemplar distinguishes a common bivalve ingredient; specific5.3 B2.",
+      "lowerLevelContrast": "B1 marisco category does not identify the ingredient; live-animal S sense may share physical identity.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Masculine; mejillones removes written accent.",
+      "pronunciationNotes": "me-ji-LLÓN; j fricative, ll regional/yeísta; plural same stressed stem.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Food/animal identity and earlier introduction require global adjudication."
+      ]
+    },
+    {
+      "id": "B2-H-050",
+      "term": "orégano",
+      "partOfSpeech": "NOUN",
+      "sense": "oregano used as an aromatic herb in food",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-ingredients"
+      ],
+      "levelRationale": "Chosen herb exemplar gives seasoning contrast beyond salt, pepper and generic spice; specific5.3 B2.",
+      "lowerLevelContrast": "B1 condiment/aromatic category can be paraphrased but is not this named ingredient.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Masculine mass; orégano seco/fresco; not all herbs automatically selected.",
+      "pronunciationNotes": "o-RÉ-ga-no; four syllables, written accent.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Bounded herb nomination; no botanical/medicinal claims."
+      ]
+    },
+    {
+      "id": "B2-H-051",
+      "term": "marinar",
+      "partOfSpeech": "VERB",
+      "sense": "leave food in a seasoned liquid to affect its flavour before further preparation",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-preparation"
+      ],
+      "levelRationale": "Original ordinary recipe stage complements immediate seasoning and heat methods.",
+      "lowerLevelContrast": "B1-H030 aliñar can be immediate dressing; selected soaking/preparation process is not all seasoning.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Regular -ar; marinar algo en/con; marinada result agrees.",
+      "pronunciationNotes": "ma-ri-NAR; final stress.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Independent practical nomination; no food preservation or safety guarantee."
+      ]
+    },
+    {
+      "id": "B2-H-052",
+      "term": "en conserva",
+      "partOfSpeech": "ADJ",
+      "sense": "preserved and packaged for storage as a food product",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-condition"
+      ],
+      "levelRationale": "Original product-format contrast helps compare fresh/frozen/preserved options.",
+      "lowerLevelContrast": "B1 congelado is one state; checked5.1/12.3 C1 en conserva is actual later evidence, not ignored.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Invariable phrase; productos en conserva; conservation method not specified by phrase alone.",
+      "pronunciationNotes": "en con-SER-va; /b/ for v; no forced internal pause.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-later"
+      ],
+      "uncertainties": [
+        "C1 occurrence versus B2 independent product-choice proposal; no shelf-life claim."
+      ]
+    },
+    {
+      "id": "B2-H-053",
+      "term": "sobras",
+      "partOfSpeech": "NOUN",
+      "sense": "food left uneaten after a meal or preparation",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-condition"
+      ],
+      "levelRationale": "Original leftovers scenario adds remaining prepared food, distinct household waste.",
+      "lowerLevelContrast": "Earlier resto general remainder may be parent; not every leftover is discarded or safe.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Feminine usually plural; las sobras; singular sobra for remainder elsewhere not separately selected.",
+      "pronunciationNotes": "SO-bras; br cluster and plural s.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "F remainder overlap requires exact peer audit; no reuse/storage advice."
+      ]
+    },
+    {
+      "id": "B2-H-054",
+      "term": "batidora",
+      "partOfSpeech": "NOUN",
+      "sense": "an appliance used to beat or blend food",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-tools"
+      ],
+      "levelRationale": "Specific10.4.2 B2 gives tool needed for beating/blending versus manual grater or cooking pan.",
+      "lowerLevelContrast": "B1-H032 batir action and H083 electrodoméstico category are prerequisites.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Feminine; batidoras; hand/stand variants remain one broad tool proposal.",
+      "pronunciationNotes": "ba-ti-DO-ra; single r tap.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Regional licuadora may emphasize different device/function; not an automatic exact synonym."
+      ]
+    },
+    {
+      "id": "B2-H-055",
+      "term": "abrelatas",
+      "partOfSpeech": "NOUN",
+      "sense": "a tool used to open food cans",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-tools"
+      ],
+      "levelRationale": "Specific5.6 B2 supplies the can-opening tool distinct from cork removal.",
+      "lowerLevelContrast": "A1 lata container and sacacorchos object complete different closure tasks.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Masculine invariable; el/los abrelatas.",
+      "pronunciationNotes": "a-bre-LA-tas; br cluster.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "No operating or sharp-edge safety instruction."
+      ]
+    },
+    {
+      "id": "B2-H-056",
+      "term": "fuente",
+      "partOfSpeech": "NOUN",
+      "sense": "a broad serving dish used to present food",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-tools"
+      ],
+      "levelRationale": "Specific5.6 B2 adds communal serving vessel beyond individual plate and bowl.",
+      "lowerLevelContrast": "B1-C004 information source and W102 typeface are different senses; preserve both peer distinctions.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Feminine; fuentes; fuente de servir; not water fountain.",
+      "pronunciationNotes": "FUEN-te; ue glide.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Dish versus more general vessel may need form granularity; never overwrite source meanings."
+      ]
+    },
+    {
+      "id": "B2-H-057",
+      "term": "cazuela",
+      "partOfSpeech": "NOUN",
+      "sense": "a cooking vessel typically wider and shallower than a deep pot",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-tools"
+      ],
+      "levelRationale": "Specific5.6 B2 supports distinguishing a casserole-type vessel from saucepan and deep pot.",
+      "lowerLevelContrast": "A2-H076 olla and B1-H049 cazo are earlier alternatives; regional vessel boundaries vary.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Feminine; cazuelas; de barro is a material phrase, not mandatory definition.",
+      "pronunciationNotes": "ca-ZUE-la; ue glide, z /θ/ reference.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Dish cooked in the vessel is metonymy not automatically selected."
+      ]
+    },
+    {
+      "id": "B2-H-058",
+      "term": "tazón",
+      "partOfSpeech": "NOUN",
+      "sense": "a large cup or bowl for a drink or food serving",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-tools"
+      ],
+      "levelRationale": "Specific5.6 B2 offers a size/function contrast when requesting tableware.",
+      "lowerLevelContrast": "A1 taza and A2 bol precede; not every bowl shape produces a new global sense.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Masculine; tazones loses written accent; handle presence varies by region/type.",
+      "pronunciationNotes": "ta-ZÓN, ta-ZO-nes; z /θ/ reference.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Tazón/cuenco/bol regional overlap needs adjudication; no forced universal handle distinction."
+      ]
+    },
+    {
+      "id": "B2-H-059",
+      "term": "bufé",
+      "partOfSpeech": "NOUN",
+      "sense": "a meal service where prepared food is displayed for diners to choose",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-restaurant"
+      ],
+      "levelRationale": "Specific5.7 B2 distinguishes self-selected service format from a set menu or à-la-carte order.",
+      "lowerLevelContrast": "A2 menú is fixed meal; this concerns how food is offered, not one recipe.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Masculine; bufés; bufet also admitted variant pending preferred house style.",
+      "pronunciationNotes": "bu-FÉ; final written accent; avoid English stress.",
+      "referenceIds": [
+        "pcic-food",
+        "rae-bufe"
+      ],
+      "uncertainties": [
+        "Regional spelling variation and sideboard furniture sense excluded."
+      ]
+    },
+    {
+      "id": "B2-H-060",
+      "term": "a la carta",
+      "partOfSpeech": "ADV",
+      "sense": "by selecting separate dishes from the menu rather than a fixed meal",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-restaurant"
+      ],
+      "levelRationale": "Specific5.7 B2 supplies a conventional ordering contrast for comparing restaurant options.",
+      "lowerLevelContrast": "A1-H146 carta physical/list meaning and A2 set menú remain earlier.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Fixed phrase; comer/pedir a la carta; not every request sentence a lexical entry.",
+      "pronunciationNotes": "a la CAR-ta; final noun carries main phrase stress.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Earlier ordering use plausible; source/form extension not new concept caused by longer discussion."
+      ]
+    },
+    {
+      "id": "B2-H-061",
+      "term": "autoservicio",
+      "partOfSpeech": "NOUN",
+      "sense": "a service arrangement where customers serve themselves",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-restaurant"
+      ],
+      "levelRationale": "Specific5.7 B2 supports explaining who obtains the food or completes a service action.",
+      "lowerLevelContrast": "Different from buffet display: self-service is broader arrangement and may occur in other retail.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Masculine; autoservicios for establishments/types; de autoservicio relational phrase.",
+      "pronunciationNotes": "au-to-ser-VI-cio; au and io glides, c /θ/ reference.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Service arrangement/establishment metonymy remains one narrowed selection."
+      ]
+    },
+    {
+      "id": "B2-H-062",
+      "term": "barra",
+      "partOfSpeech": "NOUN",
+      "sense": "the counter at which drinks or food are served in a bar",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-restaurant"
+      ],
+      "levelRationale": "Specific5.7 B2 lets a diner specify counter service rather than seated table service.",
+      "lowerLevelContrast": "Earlier bar names establishment; B1 generic counter may overlap but no exact barra peer saved.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Feminine; barras; en la barra; chocolate bar or rod excluded.",
+      "pronunciationNotes": "BA-rra; rr strong trill.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Retail mostrador may share general counter parent; final sense granularity open."
+      ]
+    },
+    {
+      "id": "B2-H-063",
+      "term": "retirar",
+      "partOfSpeech": "VERB",
+      "sense": "take an item away from where it has been placed or offered",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-restaurant"
+      ],
+      "levelRationale": "Specific5.7 B2 clearing course supports a removal verb also useful for taking a defective item out of use.",
+      "lowerLevelContrast": "Earlier recoger collection may overlap; not retrieving cash or retiring from work.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Regular -ar; retirar algo de un lugar; retirada/result noun not automatically selected.",
+      "pronunciationNotes": "re-ti-RAR; initial strong r, final stress.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Core removal versus clearing plates/product withdrawal needs global granularity; no automatic technical recall sense."
+      ]
+    },
+    {
+      "id": "B2-H-064",
+      "term": "atender",
+      "partOfSpeech": "VERB",
+      "sense": "assist a customer or respond to their service needs",
+      "proposedLevel": "A2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-restaurant"
+      ],
+      "levelRationale": "Retain exact A2-W096/B1-T136 customer-assistance recommendation; specific5.7 B2 restaurant practice is not new introduction.",
+      "lowerLevelContrast": "A2-W096 and B1-T136 already select dealing with a person's request or needs at A2; restaurant assistance is same core, not a new B2 sense.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "e→ie atiendo/atiende; atender a alguien with personal a; atendido.",
+      "pronunciationNotes": "a-ten-DER; a-TIEN-de ie glide.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Earlier A2 shared-service proposal retained; no restaurant-only identity. Wider attention-to-information uses remain distinct."
+      ]
+    },
+    {
+      "id": "B2-H-065",
+      "term": "alimentarse",
+      "partOfSpeech": "VERB",
+      "sense": "obtain nourishment by eating food",
+      "proposedLevel": "B1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-nutrition"
+      ],
+      "levelRationale": "Specific5.1 B1 supports this earlier intake/nourishment verb family.",
+      "lowerLevelContrast": "Earlier comer ingestion is plainer; this lexical addition does not require B2 arguments to exist.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Pronominal; alimentarse de/con; alimentar a alguien is causative family needing separate scope decision.",
+      "pronunciationNotes": "a-li-men-TAR-se; final stress before clitic.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Proposed B1; action, causative feeding and nutrition process granularity need P/H review."
+      ]
+    },
+    {
+      "id": "B2-H-066",
+      "term": "saciar",
+      "partOfSpeech": "VERB",
+      "sense": "satisfy hunger or thirst",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-nutrition"
+      ],
+      "levelRationale": "Original food-effect explanation adds satisfying a bodily need beyond merely consuming.",
+      "lowerLevelContrast": "Earlier comer/beber/hambre/sed suffice for basics; checked5.2 C2 saciar la sed makes this explicit earlier B2 proposal.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "Regular -ar; saciar el hambre/la sed; saciarse experiencer family.",
+      "pronunciationNotes": "sa-CIAR; ia glide in ordinary infinitive; c /θ/ reference.",
+      "referenceIds": [
+        "pcic-food",
+        "pcic-later"
+      ],
+      "uncertainties": [
+        "C2 phrase occurrence preserved; not an appetite or portion recommendation."
+      ]
+    },
+    {
+      "id": "B2-H-067",
+      "term": "pesado",
+      "partOfSpeech": "ADJ",
+      "sense": "experienced as difficult to digest as a meal or food",
+      "proposedLevel": "B1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-nutrition"
+      ],
+      "levelRationale": "Specific5.1 B1 supports dietary-effect meaning before advanced explanation.",
+      "lowerLevelContrast": "B1-F139 considerable physical weight is distinct. This is a food-experience meaning, not merely a heavier plate; compare B2 indigesto.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "pesado/pesada; comida pesada; no literal mass inference.",
+      "pronunciationNotes": "pe-SA-do; single s.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Earlier B1 selected meaning; cross-synonym and physical-weight separation requires adjudication."
+      ]
+    },
+    {
+      "id": "B2-H-068",
+      "term": "ligero",
+      "partOfSpeech": "ADJ",
+      "sense": "experienced as easy to digest or not burdensome as food",
+      "proposedLevel": "B1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-nutrition"
+      ],
+      "levelRationale": "Specific5.1 B1 supplies contrasting food experience to pesado.",
+      "lowerLevelContrast": "B1-F140 little physical weight is distinct. This digestive-experience use is not necessarily low calorie or a legally defined light product.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "ligero/ligera; comida ligera; avoid importing every meaning of light.",
+      "pronunciationNotes": "li-GE-ro; g fricative before e.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "B1 proposal; digestive experience and small meal amount must be kept distinct or deliberately scoped."
+      ]
+    },
+    {
+      "id": "B2-H-069",
+      "term": "sobrecocido",
+      "partOfSpeech": "ADJ",
+      "sense": "cooked beyond the desired point",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-sensory"
+      ],
+      "levelRationale": "Original food-result complaint distinguishes overcooking from a burned surface or unsafe rawness.",
+      "lowerLevelContrast": "A2 quemado is heat damage; this can be soft/dry without burning.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "sobrecocido/sobrecocida; transparent derivative may become practice form rather than separate sense after review.",
+      "pronunciationNotes": "so-bre-co-CI-do; br cluster and c /θ/.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "Lexicalization/count policy open; result preference, not safety assessment."
+      ]
+    },
+    {
+      "id": "B2-H-070",
+      "term": "espeso",
+      "partOfSpeech": "ADJ",
+      "sense": "thick in consistency rather than flowing easily as a liquid or mixture",
+      "proposedLevel": "B2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "B2-H-sensory"
+      ],
+      "levelRationale": "Original sauce/mixture comparison supplies viscosity-like ordinary property beyond solid hardness.",
+      "lowerLevelContrast": "B1 quantity and thick spatial dimensions are not this flowing consistency. Exact current B2-F117 espeso selects this same thick consistency at B2.",
+      "register": "neutral unless usage notes narrow the context",
+      "region": "Pan-Hispanic unless a form note narrows usage; es-ES audio target",
+      "formNotes": "espeso/espesa; salsa espesa; no numerical viscosity claim.",
+      "pronunciationNotes": "es-PE-so; three syllables, clear initial es.",
+      "referenceIds": [
+        "pcic-food"
+      ],
+      "uncertainties": [
+        "F general-quality overlap pending current peer audit; no distinct food-only sense if identical."
+      ]
+    }
+  ],
+  "exclusions": [],
+  "coverageNotes": [
+    "Work in progress: deferred core objectives remain. Original meaning proposals only; no runtime, learner text, global adjudication or native/audio approval."
+  ],
+  "counts": {
+    "selections": 70,
+    "objectives": 34
+  }
+}
