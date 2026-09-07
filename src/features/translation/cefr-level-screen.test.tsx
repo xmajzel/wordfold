@@ -1,4 +1,5 @@
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { Dimensions } from 'react-native';
 
 import CefrLevelScreen from '@/app/level/[level]';
 import type { CefrCatalogEntry, CefrLevel } from '@/domain/types';
@@ -80,19 +81,30 @@ jest.mock('@/providers/app-data-provider', () => ({
 describe('CEFR catalog word translation', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.spyOn(Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 1, fontScale: 1 });
     mockSpanishPreview = false;
     mockLevel = 'A1';
   });
 
   afterEach(() => jest.restoreAllMocks());
 
+  it('uses a compact complete pair at 320px and 2x font scale while retaining the full accessible meaning', async () => {
+    jest.spyOn(Dimensions, 'get').mockReturnValue({ width: 320, height: 640, scale: 1, fontScale: 2 });
+    const view = await render(<CefrLevelScreen/>);
+    view.getByText('0 Not started');
+    expect(view.queryByText('0 Added, not started')).toBeNull();
+    view.getByLabelText('0 known, 0 learning, 0 added but not started, 1 not added, out of 1 words');
+  });
+
   it('saves the bundled Slovak translation when adding the word', async () => {
     const view = await render(<CefrLevelScreen/>);
 
     view.getByText('Your progress');
     view.getByText('0 of 1 known');
-    view.getByText('1', { exact: true });
-    view.getByText('Not added');
+    view.getByText('0 Known');
+    view.getByText('0 Learning');
+    view.getByText('0 Added, not started');
+    view.getByText('1 Not added');
     await fireEvent.press(view.getByRole('button', { name: 'Add to My words' }));
 
     await waitFor(() => expect(mockCreateWord).toHaveBeenCalledWith(expect.objectContaining({

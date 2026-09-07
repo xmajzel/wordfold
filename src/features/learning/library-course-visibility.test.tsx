@@ -1,4 +1,5 @@
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 import LibraryScreen from '@/app/(tabs)/library';
 import type { Word } from '@/domain/types';
@@ -60,6 +61,20 @@ jest.mock('@/providers/app-data-provider', () => ({
 }));
 
 describe('library course visibility', () => {
+  beforeEach(() => {
+    jest.spyOn(Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 1, fontScale: 1 });
+  });
+  afterEach(() => jest.restoreAllMocks());
+
+  it('allows one full-width tile at 320px and 2x font scale without reducing its text', async () => {
+    jest.spyOn(Dimensions, 'get').mockReturnValue({ width: 320, height: 640, scale: 1, fontScale: 2 });
+    const screen = await render(<LibraryScreen/>);
+    const tile = screen.getByTestId('catalog-level-A1');
+    expect(StyleSheet.flatten(tile.props.style).minWidth).toBe(288);
+    expect(StyleSheet.flatten(tile.props.style).flexGrow).toBe(1);
+    expect(screen.getByTestId('library-progress-A1-known').props.numberOfLines).toBeUndefined();
+    expect(screen.getByTestId('library-progress-A1-known').props.adjustsFontSizeToFit).toBeUndefined();
+  });
   it('keeps pre-existing words outside registered courses accessible', async () => {
     const screen = await render(<LibraryScreen/>);
 
@@ -77,7 +92,9 @@ describe('library course visibility', () => {
     expect(screen.getByRole('tab', { name: 'Show Discover' }).props.accessibilityState).toEqual({ selected: true });
     expect(screen.getByRole('tab', { name: 'Show My words' }).props.accessibilityState).toEqual({ selected: false });
     screen.getByText('English levels');
-    expect(screen.getAllByText('0 known · 0 learning')).toHaveLength(6);
+    expect(screen.getAllByText('0 known')).toHaveLength(6);
+    expect(screen.getAllByText('0 learning')).toHaveLength(6);
+    expect(screen.getAllByText('0 added')).toHaveLength(6);
     expect(screen.queryByText('Baum')).toBeNull();
   });
 });

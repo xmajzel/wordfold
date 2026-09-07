@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Alert, FlatList, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 
@@ -8,6 +8,7 @@ import { describeCatalogAvailability } from '@/components/catalog-availability';
 import { EmptyState } from '@/components/empty-state';
 import { FormField } from '@/components/form-field';
 import { PrimaryButton } from '@/components/primary-button';
+import { ProgressCountLabel } from '@/components/progress-count-label';
 import { Screen } from '@/components/screen';
 import { WordCard } from '@/components/word-card';
 import { getCourseCatalogAvailability, getCourseCatalogEntries } from '@/data/course-catalog';
@@ -25,6 +26,7 @@ type LibraryView = 'discover' | 'my-words';
 
 export default function LibraryScreen() {
   const theme = useAppTheme();
+  const { width, fontScale } = useWindowDimensions();
   const {
     words, collections, activeCourse, activeCourseId, learningPreferences,
     createCollection, addRecommendedWords, wordCapacity,
@@ -126,9 +128,9 @@ export default function LibraryScreen() {
                 accessibilityRole="button"
                 accessibilityLabel={`Browse ${learnedLanguage} level ${item.level}. ${item.progress.known} known, ${item.progress.learning} learning, ${item.progress.addedNotStarted} added but not started, ${item.progress.notAdded} not added.`}
                 onPress={() => router.push({ pathname: '/level/[level]', params: { level: item.level } } as never)}
-                style={[styles.levelCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+                style={[styles.levelCard, { backgroundColor: theme.surface, borderColor: theme.border, minWidth: Math.min(160 * fontScale, width - spacing.lg * 2) }]}>
                 <View style={styles.levelTopRow}><View style={[styles.levelBadge, { backgroundColor: theme.primarySoft }]}><AppText variant="heading" style={{ color: theme.primary }}>{item.level}</AppText></View><Ionicons name="chevron-forward" color={theme.primary} size={18}/></View>
-                <View style={styles.levelText}><AppText variant="label">{item.description}</AppText>{item.count > 0 ? <><LevelProgressBar progress={item.progress}/><AppText variant="caption" style={{ color: theme.muted }}>{item.progress.known.toLocaleString()} known · {item.progress.learning.toLocaleString()} learning</AppText><AppText variant="caption" style={{ color: theme.muted }}>{item.progress.addedNotStarted.toLocaleString()} added · {item.progress.notAdded.toLocaleString()} not added</AppText></> : <AppText variant="caption" style={{ color: theme.muted }}>Catalog pending review</AppText>}</View>
+                <View style={styles.levelText}><AppText variant="label">{item.description}</AppText>{item.count > 0 ? <><LevelProgressBar progress={item.progress}/><View style={styles.progressPairs}><ProgressCountLabel value={item.progress.known} label="known" testID={`library-progress-${item.level}-known`}/><ProgressCountLabel value={item.progress.learning} label="learning" testID={`library-progress-${item.level}-learning`}/><ProgressCountLabel value={item.progress.addedNotStarted} label="added" testID={`library-progress-${item.level}-added`}/><ProgressCountLabel value={item.progress.notAdded} label="not added" testID={`library-progress-${item.level}-not-added`}/></View></> : <AppText variant="caption" style={{ color: theme.muted }}>Catalog pending review</AppText>}</View>
               </Pressable>)}
             </View>
           </>}
@@ -190,6 +192,7 @@ const styles = StyleSheet.create({
   panel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.lg }, empty: { minHeight: 220 },
   packText: { flex: 1, gap: 2 }, recommendationHeading: { flexDirection: 'row', alignItems: 'center', gap: spacing.md }, recommendationIcon: { width: 44, height: 44, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' }, editPreferences: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }, recommendationWords: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, recommendationWord: { minHeight: 48, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderRadius: radii.control, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   capacityNotice: { minHeight: 76, borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
-  levelGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, levelCard: { width: '48.5%', minHeight: 178, borderWidth: 1, borderRadius: radii.card, padding: spacing.md, gap: spacing.sm }, levelTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
+  levelGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, levelCard: { width: '48.5%', flexGrow: 1, minHeight: 178, borderWidth: 1, borderRadius: radii.card, padding: spacing.md, gap: spacing.sm }, levelTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
+  progressPairs: { flexDirection: 'row', flexWrap: 'wrap', columnGap: spacing.sm, rowGap: spacing.xs },
   levelBadge: { width: 52, height: 52, borderRadius: 18, alignItems: 'center', justifyContent: 'center' }, levelText: { flex: 1, gap: spacing.xs }, levelProgress: { height: 8, flexDirection: 'row', borderRadius: radii.pill, overflow: 'hidden', marginTop: spacing.xs },
 });

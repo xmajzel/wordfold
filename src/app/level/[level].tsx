@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Alert, FlatList, Pressable, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useLocalSearchParams } from 'expo-router';
 
@@ -7,6 +7,7 @@ import { AppText } from '@/components/app-text';
 import { EmptyState } from '@/components/empty-state';
 import { FormField } from '@/components/form-field';
 import { PrimaryButton } from '@/components/primary-button';
+import { ProgressCountLabel } from '@/components/progress-count-label';
 import { Screen } from '@/components/screen';
 import { getCourseCatalogAvailability, getCourseCatalogEntries, type CourseCatalogEntry } from '@/data/course-catalog';
 import { cefrLevelDescriptions, isCefrLevel } from '@/data/cefr-levels';
@@ -171,6 +172,7 @@ function CatalogWordCard({ entry, word, loading, disabled, onAdd }: {
 
 function LevelProgressSummary({ progress }: { progress: CefrProgress }) {
   const theme = useAppTheme();
+  const { fontScale } = useWindowDimensions();
   return <View accessible accessibilityRole="summary" accessibilityLabel={`${progress.known} known, ${progress.learning} learning, ${progress.addedNotStarted} added but not started, ${progress.notAdded} not added, out of ${progress.total} words`} style={[styles.progressPanel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
     <View style={styles.progressHeading}><AppText variant="heading">Your progress</AppText><AppText variant="label" style={{ color: theme.primary }}>{progress.known.toLocaleString()} of {progress.total.toLocaleString()} known</AppText></View>
     <View style={[styles.progressBar, { backgroundColor: theme.raised }]}>
@@ -182,15 +184,14 @@ function LevelProgressSummary({ progress }: { progress: CefrProgress }) {
     <View style={styles.progressGrid}>
       <ProgressStat label="Known" value={progress.known} color={stateColors.learned}/>
       <ProgressStat label="Learning" value={progress.learning} color={stateColors.understood}/>
-      <ProgressStat label="Added, not started" value={progress.addedNotStarted} color={stateColors.new}/>
+      <ProgressStat label={fontScale >= 1.5 ? 'Not started' : 'Added, not started'} value={progress.addedNotStarted} color={stateColors.new} testID="progress-pair-added-not-started"/>
       <ProgressStat label="Not added" value={progress.notAdded} color={theme.muted}/>
     </View>
   </View>;
 }
 
-function ProgressStat({ label, value, color }: { label: string; value: number; color: string }) {
-  const theme = useAppTheme();
-  return <View style={styles.progressStat}><View style={[styles.progressDot, { backgroundColor: color }]}/><View style={styles.progressStatText}><AppText variant="label">{value.toLocaleString()}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{label}</AppText></View></View>;
+function ProgressStat({ label, value, color, testID }: { label: string; value: number; color: string; testID?: string }) {
+  return <View style={styles.progressStat}><View style={[styles.progressDot, { backgroundColor: color }]}/><ProgressCountLabel value={value} label={label} emphasizeValue testID={testID ?? `progress-pair-${label.toLowerCase().replace(/[^a-z]+/gu, '-')}`}/></View>;
 }
 
 function CatalogProgressBadge({ state }: { state: Word['state'] }) {
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
   headerContent: { gap: spacing.lg, marginBottom: spacing.lg }, header: { minHeight: 68, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   back: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' }, intro: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg },
   levelBadge: { width: 82, height: 82, borderRadius: 26, alignItems: 'center', justifyContent: 'center' }, introText: { flex: 1, gap: spacing.xs },
-  progressPanel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md }, progressHeading: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', gap: spacing.md }, progressBar: { height: 12, flexDirection: 'row', borderRadius: radii.pill, overflow: 'hidden' }, progressGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, progressStat: { width: '48%', flexDirection: 'row', alignItems: 'center', gap: spacing.sm }, progressDot: { width: 10, height: 10, borderRadius: 5 }, progressStatText: { flex: 1 },
+  progressPanel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md }, progressHeading: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: spacing.md }, progressBar: { height: 12, flexDirection: 'row', borderRadius: radii.pill, overflow: 'hidden' }, progressGrid: { flexDirection: 'row', flexWrap: 'wrap', columnGap: spacing.lg, rowGap: spacing.sm }, progressStat: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, flexShrink: 0 }, progressDot: { width: 10, height: 10, borderRadius: 5 },
   card: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md }, wordHeader: { flexDirection: 'row', justifyContent: 'space-between', gap: spacing.md },
   wordTitle: { flex: 1, gap: 2 }, cardMeta: { alignItems: 'flex-end', gap: spacing.xs }, catalogProgressBadge: { borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.sm, paddingVertical: spacing.xs },
   spanishWordHeader: { flexDirection: 'column' }, spanishCardMeta: { alignItems: 'flex-start' },
