@@ -23,16 +23,100 @@ commercial digital language-learning application.
 `assets/catalog/spanish/cefr-pilot.json` contains six original Wordfold draft records
 created solely to validate the course-aware catalog schema and level code paths. They
 are explicitly excluded from production catalog APIs and recommendations until
-independent Spanish and Slovak review is recorded. The editorial and promotion rules
-are documented in `docs/SPANISH_CATALOG_EDITORIAL_POLICY.md`.
+the applicable Spanish automated-QA and Slovak owner-review gates are recorded. The
+Spanish checks are not human or native-speaker review. The editorial and promotion
+rules are documented in `docs/SPANISH_CATALOG_EDITORIAL_POLICY.md`.
+
+### ELELex Spanish CEFR level source
+
+Spanish headwords, parts of speech, and CEFR level assignments are adapted from ELELex,
+a CEFR-graded lexical resource developed as part of the CEFRLex project at
+UCLouvain/CENTAL.
+
+- Project: https://cental.uclouvain.be/cefrlex/
+- Pinned asset: `assets/catalog/sources/elelex-freeling-2020-12-04.tsv`
+- Download URL: https://cental.uclouvain.be/cefrlex/static/resources/es/ELELex.tsv
+- Revision: server `Last-Modified` 4 December 2020 09:48:08 GMT; ETag
+  `1607075288.0-1442791-870521007`; retrieved 6 September 2026
+- SHA-256: `87a28dc6d3c5c2344883698f7bc77e259bd42212446ac2b52761a3fc8f5f26cf`
+- Published license: Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+  International (CC BY-NC-SA 4.0)
+- Commercial authorization: UCLouvain/CENTAL granted Wordfold written permission on
+  6 September 2026 to use and integrate ELELex lexical entries, CEFR-level information,
+  and associated frequency data within its commercial language-learning application,
+  and to process, transform, and integrate that data into Wordfold's own database. The
+  authorization supersedes the NonCommercial restriction of CC BY-NC-SA 4.0 for these
+  uses. Evidence: `docs/legal/UCLOUVAIN_ELELEX_PERMISSION.md`
+- Required acknowledgement: “Spanish vocabulary level data is based in part on ELELex,
+  a CEFR-graded lexical resource developed as part of the CEFRLex project at
+  UCLouvain/CENTAL.”
+- Level coverage: A1-C1. ELELex does not publish a C2 column, so the first Spanish
+  release is scoped to A1-C1 and C2 is gated as not yet available. No C2 entries are
+  synthesized from the C1 tail.
+- Unresolved: see the paired ShareAlike legal-review items below.
+- Restrictions: the authorization does not imply endorsement, certification, or
+  validation of Wordfold by UCLouvain.
+
+### ShareAlike items for legal review
+
+Review these two items together whenever the Spanish course licensing posture receives
+legal review:
+
+1. **ELELex:** UCLouvain/CENTAL's written authorization expressly supersedes the
+   NonCommercial restriction but does not address the CC BY-NC-SA 4.0 ShareAlike term.
+   Clarification has been requested. Until a written answer is recorded, the
+   ShareAlike obligation for Wordfold's derived Spanish catalog remains unresolved.
+2. **Spanish Wiktionary QA reference:** a pinned Kaikki/Wiktextract extraction of
+   Spanish Wiktionary is read only for internal QA under Wiktionary's CC BY-SA 4.0 / GFDL
+   terms. The raw archive and extracted sense text remain in ignored `.artifacts`, are
+   never bundled, and are not used to generate or adapt learner content. Reports retain
+   verdicts, ranks, source revisions, and hashes but no Wiktionary glosses. This
+   QA-only, attribution-preserving separation is Wordfold's current cautious posture,
+   not a legal conclusion about ShareAlike; it must be reviewed alongside the ELELex
+   question.
+
+Changes made by Wordfold: the pinned ELELex distribution is verified by SHA-256, lemmas
+are NFKC-normalized and lowercased for Spanish, FreeLing parts of speech are mapped to
+the WordNet noun/verb/adjective/adverb categories, and entries are joined to Open
+Multilingual Wordnet Spanish on normalized lemma plus compatible part of speech. Entries
+without a compatible OMW sense are excluded from the frozen membership. ELELex's
+document counts are aggregated independently at each level for each normalized lemma
+and mapped part of speech. An entry is attested when an aggregate reaches two documents,
+and is assigned the first A1-C1 level that does so. Entries that never reach two
+documents remain in the frozen membership as unattested, have no assigned level, and
+are excluded from courses and learner-content generation without a fallback level.
+Source-native FreeLing `NP0` and `NP*` proper names and nonlexical term shapes are also
+retained frozen but excluded from courses. A targeted audit of title-cased OMW lemmas
+and WordNet named instances excludes six additional person/place-name misses while
+retaining useful common homographs. The approved modern headwords `solo` and `guion`
+replace source spellings `sólo` and `guión` only after the source-form OMW join; stable
+membership IDs, original source forms and rows, and all OMW senses remain recorded.
+Attested multiword lexical units are included unless another course filter applies; no
+multi-POS filter is used. This replaces ELELex's single-document first-occurrence
+interpretation without model scoring, external evidence, or frequency re-ranking.
+Evidence tiers, the threshold rule, first-occurrence comparison, course filters, source
+rows, orthography rules, revision, hashes, counts, and every exclusion are retained in
+the Spanish source manifest.
+
+Regional variants are temporarily retained as independent entries with their unchanged
+ELELex-derived levels. Entries whose selected OMW senses resolve to the same WordNet
+synset/ILI may be grouped at the sense level without an external regional source: there
+is no global canonical entry, the course teaches the shared concept once, and every
+member form remains available for recognition and search. This grouping also covers
+ordinary synonym clusters and is approved for the translation/presentation stage.
+Only regional labelling and locale-preferred primary-form selection remain deferred
+pending a licensed regional source; GEOLEXI and Wiktionary/Wiktextract are not used for
+catalog membership, CEFR level, sense selection, regional labels, or learner-content
+generation. The later QA-only use of Wiktionary/Wiktextract is described below.
 
 ### Spanish A1 lexical evidence
 
-The original 500-entry Spanish A1 editorial pilot uses the Spanish module from Open
+The ELELex-derived Spanish A1 course catalog uses the Spanish module from Open
 Multilingual Wordnet 2.0 for lemma, part-of-speech, and candidate sense identifiers.
 The module packages the Spanish data from Multilingual Central Repository 3.0 release
-2016. It does not supply Wordfold's level decisions, learner definitions, examples, or
-Slovak hints.
+2016. It does not determine Wordfold's catalog membership or CEFR levels and does not
+supply Wordfold's learner definitions, examples, or Slovak hints. PCIC classifications,
+when present, are metadata only and do not affect membership, level, or sense selection.
 
 - Source release: https://github.com/omwn/omw-data/releases/tag/v2.0
 - Pinned asset: `omw-es-2.0.tar.xz`
@@ -45,10 +129,11 @@ Slovak hints.
   for the same synset are grouped with aliases retained. Source descriptions are
   review evidence, not learner content.
 
-The separately licensed English module from the MCR package is not ingested. Every
-Spanish definition and example and every Slovak hint in the pilot is original draft
-Wordfold content and remains excluded from runtime APIs until independent Spanish and
-Slovak review is complete.
+The separately licensed English module from the MCR package is ingested only to bridge
+each supplied Spanish OMW sense to its WordNet 3.0 English synset as generation and
+review evidence. Every Spanish definition and example and every Slovak hint in the
+pilot is original draft Wordfold content and remains excluded from runtime APIs until
+the applicable validation and review gates are complete.
 
 ### WordNet 3.0 semantic references for Spanish review
 

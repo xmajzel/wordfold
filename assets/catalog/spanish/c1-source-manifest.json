@@ -1,9 +1,10 @@
 {
   "schemaVersion": 1,
+  "notHumanReview": true,
   "courseId": "es-sk",
-  "level": "A1",
+  "level": "C1",
   "publicationStatus": "draft",
-  "createdAt": "2026-08-28",
+  "createdAt": "2026-09-09",
   "contentPolicy": "docs/SPANISH_CATALOG_EDITORIAL_POLICY.md",
   "attribution": "Spanish learning content structured according to the Plan Curricular del Instituto Cervantes (PCIC), A1-C2. Wordfold's vocabulary, definitions, examples, and Slovak learning hints are original content. Wordfold is not certified, accredited, or endorsed by Instituto Cervantes.",
   "sources": [
@@ -53,16 +54,16 @@
       ]
     },
     {
-      "id": "wordfold-original-spanish-a1",
-      "version": "draft-2026-08-28",
+      "id": "wordfold-original-spanish-c1",
+      "version": "draft-2026-09-09",
       "url": "docs/SPANISH_CATALOG_EDITORIAL_POLICY.md",
-      "sha256": "178fea98c92a0c588fc4878f127dbf2e31b2b236d39fc4744a40ca0f631e4a15",
+      "sha256": "c54db59e251ebdb37378c6eff912818718ddbc95ed6e7e0654046d708ac5c8e7",
       "license": "Wordfold-owned original content",
       "attribution": "Wordfold",
-      "redistributionScope": "Original candidate selection, level decisions, definitions, examples, and Slovak learning hints. Draft content requires independent review before release.",
+      "redistributionScope": "Original sense selection, definitions, examples, and Slovak learning hints. Draft content requires the applicable automated QA, AI cross-review, and Slovak owner-review gates before release.",
       "transformations": [
-        "Retain the legacy 500-entry editorial pilot for historical comparison only.",
-        "Do not use legacy editorial candidates to determine membership or level in the ELELex-derived course.",
+        "Use only the frozen ELELex-derived C1 membership and level assignments.",
+        "Do not use model judgment to change membership or CEFR level.",
         "Keep original learner prose outside production until the applicable review gates pass."
       ]
     }

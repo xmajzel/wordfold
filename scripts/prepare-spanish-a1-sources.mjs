@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
-import { readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { validateSourceManifest, WORDNET_3_LICENSE_TEXT } from './spanish-a1-pipeline.mjs';
@@ -18,15 +18,17 @@ const posToOmw = new Map([
 
 function parseArgs(argv) {
   const options = {
-    candidatesPath: resolve('assets/catalog/spanish/a1-candidates.json'),
+    level: 'A1',
+    catalogPath: resolve('assets/catalog/spanish/cefr-course-catalog.json'),
     manifestPath: resolve('assets/catalog/spanish/a1-source-manifest.json'),
-    outputPath: resolve('assets/catalog/spanish/a1-lexical-evidence.json'),
+    outputPath: null,
     archivePath: null,
     omwPath: null,
   };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
-    if (argument === '--candidates') options.candidatesPath = resolve(argv[++index]);
+    if (argument === '--level') options.level = argv[++index].toUpperCase();
+    else if (argument === '--catalog') options.catalogPath = resolve(argv[++index]);
     else if (argument === '--manifest') options.manifestPath = resolve(argv[++index]);
     else if (argument === '--output') options.outputPath = resolve(argv[++index]);
     else if (argument === '--archive') options.archivePath = resolve(argv[++index]);
@@ -38,6 +40,8 @@ function parseArgs(argv) {
   if (!options.archivePath || !options.omwPath || !options.englishArchivePath || !options.englishOmwPath) {
     throw new Error('--archive, --omw, --english-archive and --english-omw are required so both pinned sources can be verified.');
   }
+  if (!['A1', 'A2', 'B1', 'B2', 'C1'].includes(options.level)) throw new Error('--level must be A1, A2, B1, B2, or C1.');
+  options.outputPath ??= resolve(`assets/catalog/spanish/${options.level.toLowerCase()}-lexical-evidence.json`);
   return options;
 }
 
@@ -49,7 +53,14 @@ function canonicalJson(value) {
   return `${JSON.stringify(value, null, 2)}\n`;
 }
 
-function normalizeSpanish(value) {
+function writeJsonAtomic(path, value) {
+  mkdirSync(dirname(path), { recursive: true });
+  const temporaryPath = `${path}.tmp-${process.pid}`;
+  writeFileSync(temporaryPath, canonicalJson(value));
+  renameSync(temporaryPath, path);
+}
+
+export function normalizeSpanish(value) {
   return value.normalize('NFKC').trim().replace(/\s+/g, ' ').toLocaleLowerCase('es');
 }
 
@@ -151,26 +162,46 @@ export function groupSemanticSenses(rawSenses, spanish, english) {
 
 export function runSourcePreparation(argv) {
   const options = parseArgs(argv);
-  const candidates = JSON.parse(readFileSync(options.candidatesPath, 'utf8'));
-  const manifest = JSON.parse(readFileSync(options.manifestPath, 'utf8'));
+  const catalogText = readFileSync(options.catalogPath);
+  const catalog = JSON.parse(catalogText);
+  const sourceManifestText = readFileSync(options.manifestPath);
+  const manifest = JSON.parse(sourceManifestText);
   validateSourceManifest(manifest);
+  if (manifest.level !== options.level) throw new Error(`Source manifest level ${manifest.level} does not match requested ${options.level}.`);
   const omwSource = manifest.sources?.find((source) => source.id === 'omw-es:2.0');
   const englishSource = manifest.sources?.find((source) => source.id === 'omw-en:2.0');
   const omwXml = verifiedXml(options.archivePath, options.omwPath, omwSource, 'es');
   const englishXml = verifiedXml(options.englishArchivePath, options.englishOmwPath, englishSource, 'en');
 
   if (!omwSource) throw new Error('Source manifest is missing omw-es:2.0.');
-  if (!Array.isArray(candidates.entries)) throw new Error('Candidate asset requires an entries array.');
+  if (!Array.isArray(catalog.entries)) throw new Error('CEFR course catalog requires an entries array.');
 
-  const candidatesSha256 = sha256(Buffer.from(canonicalJson(candidates)));
+  const catalogSha256 = sha256(catalogText);
+  const levelEntries = catalog.entries.filter((entry) => entry.level === options.level);
+  if (catalog.counts?.[options.level] !== levelEntries.length) {
+    throw new Error(`CEFR course catalog ${options.level} count mismatch: header ${catalog.counts?.[options.level]}, entries ${levelEntries.length}.`);
+  }
   const spanish = parseOmw(omwXml, 'es');
   const english = parseOmw(englishXml, 'en');
   let matchedEntries = 0;
-  const evidenceEntries = candidates.entries.map((candidate) => {
-    const omwPos = posToOmw.get(candidate.partOfSpeech) ?? null;
-    const matches = omwPos
-      ? spanish.entriesByKey.get(`${normalizeSpanish(candidate.term)}\u0000${omwPos}`) ?? []
-      : [];
+  const evidenceEntries = levelEntries.map((entry) => {
+    if (entry.courseEligibility?.included !== true || entry.evidenceTier !== 'attested') {
+      throw new Error(`${entry.id}: ${options.level} course entry is not an eligible attested member.`);
+    }
+    const normalizedTerm = normalizeSpanish(entry.term);
+    if (normalizedTerm !== entry.normalizedTerm) {
+      throw new Error(`${entry.id}: catalog normalizedTerm does not match NFKC Spanish normalization.`);
+    }
+    const joinNormalizedTerms = entry.omw?.joinNormalizedTerms ?? [entry.sourceNormalizedTerm ?? normalizedTerm];
+    if (!Array.isArray(joinNormalizedTerms) || joinNormalizedTerms.length === 0
+      || joinNormalizedTerms.some((term) => normalizeSpanish(term) !== term)) {
+      throw new Error(`${entry.id}: catalog OMW join terms are invalid.`);
+    }
+    const omwPos = posToOmw.get(entry.partOfSpeech) ?? null;
+    if (!omwPos) throw new Error(`${entry.id}: unsupported catalog POS ${entry.partOfSpeech}.`);
+    const matches = joinNormalizedTerms.flatMap((joinTerm) => (
+      spanish.entriesByKey.get(`${joinTerm}\u0000${omwPos}`) ?? []
+    ));
     const rawSenses = matches.flatMap((entry) => entry.senses.map((sense) => ({
       lexicalEntryId: entry.lexicalEntryId,
       writtenForm: entry.writtenForm,
@@ -178,30 +209,57 @@ export function runSourcePreparation(argv) {
       ...sense,
     })));
     const senses = groupSemanticSenses(rawSenses, spanish, english);
-    if (senses.length > 0) matchedEntries += 1;
+    if (senses.length === 0) {
+      throw new Error(`${entry.id}: fixed A1 member has no exact normalized lemma + compatible POS OMW sense.`);
+    }
+    const expectedSenseIds = new Set(entry.omw?.senseIds ?? []);
+    const actualSenseIds = new Set(rawSenses.map((sense) => sense.senseId));
+    if (expectedSenseIds.size !== actualSenseIds.size
+      || [...expectedSenseIds].some((senseId) => !actualSenseIds.has(senseId))) {
+      throw new Error(`${entry.id}: recomputed OMW sense IDs differ from the frozen catalog join.`);
+    }
+    matchedEntries += 1;
     return {
-      candidateId: candidate.id,
-      catalogSenseId: candidate.catalogSenseId,
-      term: candidate.term,
-      normalizedTerm: candidate.normalizedTerm,
-      candidatePartOfSpeech: candidate.partOfSpeech,
-      sourceId: senses.length > 0 ? 'omw-es:2.0' : 'wordfold-original-spanish-a1',
-      sourceVersion: senses.length > 0 ? omwSource.version : 'draft-2026-08-28',
-      selectedSenseId: null,
+      entryId: entry.id,
+      term: entry.term,
+      normalizedTerm: entry.normalizedTerm,
+      level: entry.level,
+      partOfSpeech: entry.partOfSpeech,
+      membershipSource: entry.source,
+      membershipSourceVersion: entry.sourceVersion,
+      membershipSourceRows: entry.sourceRows,
+      sourceNormalizedTerm: entry.sourceNormalizedTerm ?? entry.normalizedTerm,
+      omwJoinNormalizedTerms: joinNormalizedTerms,
+      pcicClassification: null,
       candidateSenses: senses,
       requiresSpanishSenseSelection: senses.length > 1,
-      exceptionRationale: senses.length === 0
-        ? 'No exact compatible OMW Spanish lemma/POS match; requires explicit editorial evidence and Spanish review.'
-        : null,
     };
   });
 
   const payload = {
-    schemaVersion: 1,
+    schemaVersion: 2,
     courseId: 'es-sk',
-    level: 'A1',
+    level: options.level,
     publicationStatus: 'draft',
-    candidatesSha256,
+    catalog: {
+      path: 'assets/catalog/spanish/cefr-course-catalog.json',
+      sha256: catalogSha256,
+      entries: catalog.entries.length,
+      levelEntries: levelEntries.length,
+      membershipAndLevelSource: 'elelex',
+    },
+    sourceManifest: {
+      path: options.manifestPath,
+      sha256: sha256(sourceManifestText),
+    },
+    normalization: {
+      id: 'spanish-omw-lemma-pos-v1',
+      unicode: 'NFKC',
+      whitespace: 'trim-and-collapse',
+      case: 'toLocaleLowerCase(es)',
+      joinKey: 'normalizedLemma + U+0000 + mapped POS',
+      posMap: { noun: 'n', verb: 'v', adjective: 'a', adverb: 'r' },
+    },
     source: {
       id: omwSource.id,
       version: omwSource.version,
@@ -219,14 +277,13 @@ export function runSourcePreparation(argv) {
       entries: evidenceEntries.length,
       exactLemmaAndPosMatches: matchedEntries,
       exactLemmaAndPosRatio: evidenceEntries.length === 0 ? 0 : matchedEntries / evidenceEntries.length,
-      targetRatio: 0.8,
     },
     entries: evidenceEntries,
   };
 
-  writeFileSync(options.outputPath, canonicalJson(payload));
-  console.log(`Prepared OMW evidence for ${matchedEntries}/${evidenceEntries.length} candidates.`);
-  console.log(`Candidate SHA-256: ${candidatesSha256}`);
+  writeJsonAtomic(options.outputPath, payload);
+  console.log(`Prepared OMW evidence for ${matchedEntries}/${evidenceEntries.length} fixed ${options.level} members.`);
+  console.log(`Catalog SHA-256: ${catalogSha256}`);
   console.log(`Output: ${options.outputPath}`);
 }
 
