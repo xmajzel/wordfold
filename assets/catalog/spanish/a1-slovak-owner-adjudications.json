@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "notHumanReview": true,
+  "status": "in-progress",
+  "courseId": "es-sk",
+  "level": "A1",
+  "supersedesSha256": "eab8ed747c1a3d59b5938193c431e6f0ec5bd0ff3d9d215d9d27e7bf903e73c3",
+  "reviewerRole": "native-Slovak-speaking owner",
+  "sourceReviewPacket": {
+    "path": ".artifacts/spanish-a1-slovak-translations/pilot/owner-review-30-groups.tsv",
+    "sha256": "3f0d9373205ab33a38ea7b930f06e0302ede74ae07148cc3537988aa22d4d14b",
+    "groups": 30
+  },
+  "coverage": {
+    "productionConcepts": 1599,
+    "verdictsRecorded": 35,
+    "acceptedWithoutChange": 33,
+    "memberOverrides": 1,
+    "sharedHintReplacements": 1,
+    "verdictsNotSupplied": 1564
+  },
+  "defaultVerdict": "Every group in the original 30-row packet not listed in entries was accepted without change. No default applies outside that packet.",
+  "entries": [
+    {
+      "groupId": "es-sk:a1:i75105",
+      "entryId": "es-cefr:9190f93c9408e40c",
+      "term": "ocasión",
+      "decision": "memberOverride",
+      "originalSharedHint": "raz",
+      "replacementSlovakHint": "príležitosť",
+      "rationale": "The owner identified that the shared hint raz fits vez but not the preferred Slovak lexicalization of ocasión."
+    },
+    {
+      "groupId": "es-sk:a1:i20231",
+      "terms": [
+        "quizás",
+        "quizá"
+      ],
+      "decision": "acceptedSharedHint",
+      "slovakHint": "možno",
+      "rationale": "Both Spanish variants express the same possibility meaning and share the natural Slovak hint možno. Their presentation relationship remains deferred variant work."
+    },
+    {
+      "groupId": "es-sk:a1:i25740",
+      "terms": [
+        "contestar",
+        "responder"
+      ],
+      "decision": "acceptedSharedHint",
+      "slovakHint": "odpovedať",
+      "rationale": "Both selected Spanish senses map naturally to the same Slovak verb odpovedať."
+    },
+    {
+      "groupId": "es-sk:a1:i51496",
+      "terms": [
+        "carro",
+        "coche"
+      ],
+      "decision": "acceptedSharedHint",
+      "slovakHint": "auto",
+      "rationale": "The Spanish definitions differ in wording and regional usage, but both selected senses map naturally to the same Slovak hint auto."
+    },
+    {
+      "groupId": "es-sk:a1:i43203",
+      "terms": [
+        "pájaro",
+        "ave"
+      ],
+      "decision": "acceptedSharedHint",
+      "slovakHint": "vták",
+      "rationale": "Both selected senses denote a bird and share the natural Slovak hint vták; splitting them would introduce a distinction absent from the selected senses."
+    },
+    {
+      "groupId": "es-sk:a1:i55760",
+      "terms": [
+        "salón",
+        "sala"
+      ],
+      "decision": "sharedHintReplacement",
+      "originalSharedHint": "obývacia izba",
+      "replacementSlovakHint": "obývačka",
+      "rationale": "Both selected definitions specifically denote a living room. The concise shared hint obývačka fits both; sála or generic miestnosť would describe different senses."
+    }
+  ],
+  "deferredVariantWork": [
+    {
+      "terms": [
+        "quizás",
+        "quizá"
+      ],
+      "alongside": [
+        "solo",
+        "sólo"
+      ],
+      "status": "deferred",
+      "instruction": "Do not merge identities or change learner presentation in the A1 release preparation."
+    }
+  ],
+  "gate": "In progress. The native-Slovak-speaking owner has supplied 35 of 1,599 concept verdicts; 1,564 remain for full production review."
+}
