@@ -53,7 +53,7 @@ export default function PreferencesScreen() {
         <View style={styles.section}><View><AppText variant="heading">{learnedLanguage} levels</AppText><AppText style={{ color: theme.muted }}>{activeCourse.capabilities.recommendations ? 'Recommendations always stay inside these levels.' : 'Study filters stay inside these levels when your words have CEFR labels.'}</AppText></View><LevelSelection selected={levels} onToggle={toggleLevel}/></View>
         {activeCourse.capabilities.recommendations ? <View style={styles.section}><View><AppText variant="heading">Your interests</AppText><AppText style={{ color: theme.muted }}>We prioritize matching words where the catalog has them.</AppText></View><TopicSelection selected={topics} onToggle={toggleTopic}/></View> : <View style={styles.section}>
           <AppText variant="heading">Spanish recommendations are gated</AppText>
-          <AppText style={{ color: theme.muted }}>The planned A1–C2 catalog will use original or licensed content with independent level, definition, example, and Slovak-hint review. Instituto Cervantes remains a qualitative reference only.</AppText>
+          <AppText style={{ color: theme.muted }}>The planned A1–C2 catalog will use original or licensed content with automated Spanish reference QA and AI cross-review. These are not native-speaker reviews; Slovak translations will be reviewed separately by the native-speaking owner. Instituto Cervantes remains a qualitative reference only.</AppText>
         </View>}
         <AppText variant="caption" style={{ color: theme.muted }}>Changing these choices never removes words or learning history already in your library.</AppText>
       </ScrollView>

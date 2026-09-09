@@ -160,6 +160,88 @@ Google Books Ngram Spanish corpus `googlebooks-spa-20200217` may be used as an o
 aggregate ranking signal over the 2000-2019 window. It never determines a CEFR level or
 sense, and raw n-gram rows are not bundled.
 
+### Spanish A1 automated quality checks
+
+The immutable 1,707-entry A1 learner-content run (content SHA-256
+`5383a7a98cd218c707c850bdf88f20b943522c0782f4389418acc6cb304f3f1a`) received two
+independent automated checks. Every manifest and summary is marked `notHumanReview`.
+There was no native-Spanish review, and neither check may be described as one.
+
+- **External-reference validity sample:** 300 entries were selected reproducibly and
+  proportionally from the 353 Spanish-gloss and 1,354 English-bridge-only strata (62 and
+  238 respectively). Against the Spanish Wiktionary extraction dated 1 September 2026,
+  reference coverage was 294/300 (98%). There were 293 definitive outcomes: 10/300
+  definitions were strict non-correspondences, 283/293 definitive judgments
+  corresponded, and 7 were uncertain (including 6 without a compatible reference
+  entry). Among the 283 valid correspondences, the source sense index had median 1,
+  p90 3, p95 4, and maximum 9;
+  the within-part-of-speech rank had median 1, p90 2, p95 4, and maximum 9. High rank is
+  only a suspicion because Wiktionary ordering is editorial rather than corpus-based.
+  This check measures whether a definition expresses a listed real Spanish sense, not
+  whether it is the right sense to teach at A1, and is not an overall quality rate.
+- **Blinded AI cross-review:** `gpt-6-astra` independently reviewed the existing
+  200-item packet without OMW glosses, selected senses, generation confidence, flags,
+  or adjudications. Content disagreement was 15/200 (7.5%): 0 wrong-sense verdicts,
+  14 material-definition disagreements, and 1 material-example disagreement. Level
+  disagreement was separately 82/200 (41%). Dimensions overlap. This is an AI
+  cross-review disagreement rate, not a measured error rate.
+
+### Spanish A2 automated quality checks
+
+The immutable 1,847-entry A2 learner-content run (content SHA-256
+`25da85d0a9942771fbab766f4aa47470b6e1a910a21fbd05956d25077e9a23b4`) is also
+marked `notHumanReview`. A deterministic WordNet-hypernym classifier identified 98
+A2 entries in the food, clothing, sport, and leisure risk domains. This deliberately
+targeted cohort is not a probability sample: Wiktionary covered 93/98 entries, and 9/98
+were strict non-correspondences. The same classifier applied to A1 found 109 entries;
+coverage was 109/109 and 2/109 (1.83%) were strict non-correspondences. A2's 9.18% is
+7.35 percentage points, or 5.00 times, higher in this like-for-like targeted comparison.
+Neither result is a level-wide quality rate.
+
+A separate blinded 200-entry `gpt-6-astra` cross-review found content disagreement in
+23/200 entries (11.5%): 4 wrong-sense verdicts, 19 material-definition disagreements,
+and 7 material-example disagreements. Level disagreement was separately 57/200 (28.5%).
+Dimensions overlap. Compared with A1, the observed content-disagreement rate increased
+by 4 percentage points, or 53% relative; the intervals overlap, so this is not presented
+as a statistically significant difference. This is an AI cross-review disagreement
+rate, not a measured error rate. The model's level judgments do not alter any ELELex
+assignment.
+
+ELELex minority-POS targeting evaluates 6,171 single-word catalog entries. There are
+257 distinct source lemma/POS risks below 50%, expanding to 258 catalog entries because
+the independently generated `solo` and normalized `sólo` A1 adverbs share one display
+lemma/POS. The entry counts are A1 63, A2 96, B1 55, B2 23, and C1 21; 155 are below
+25% and 69 below 10%. In the complete A1/A2 targeted cohorts, external-reference
+coverage was 60/63 and 83/96, with strict non-correspondence of 5/63 (7.94%) and 17/96
+(17.71%). Blinded AI content disagreement was 9/63 (14.29%) and 16/96 (16.67%); level
+disagreement was separately 24/63 and 32/96. These risk-cohort findings are excluded
+from probability-sample denominators.
+
+The Slovak translation packet was not part of either check. Slovak translations use
+level-specific owner review: all A1 concepts require a verdict from Wordfold's
+native-Slovak-speaking owner; A2-C1 use a reproducible probability sample plus
+separately reported targeted findings. The probability-sample gates are at most 2%
+critical error and at most 5% material error. Crossing either bound escalates the level
+to a larger sample or full review. Targeted findings are excluded from those denominators.
+The Slovak owner-disagreement baseline comes from the full A1 review and remains pending;
+the 3.33% A1 Spanish external-reference non-correspondence rate is a different metric.
+
+Any product summary of Slovak review coverage must preserve the level distinction:
+
+> A1 Slovak hints reviewed by a native speaker; A2-C1 sampled.
+
+For the frozen ELELex-derived Spanish course levels, the owner approved automated
+external-reference QA plus independent AI cross-review plus explicit owner risk acceptance as the
+Spanish production-review standard on 8 September 2026. Neither pass is human or
+native-speaker review. Product source disclosures must include this exact line:
+
+> Definitions are generated and automatically verified against reference sources.
+> They have not been reviewed by native speakers.
+
+This review-policy decision does not clear the unresolved ELELex ShareAlike question.
+No distributable Spanish course artifact may be compiled or bundled until that legal
+blocker is resolved.
+
 ## Open English WordNet 2025
 
 Definitions, examples, parts of speech, and sense data are adapted from Open English WordNet 2025 by the Global WordNet Association.

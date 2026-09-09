@@ -259,7 +259,7 @@ function ReviewStep({ preferences, preview, voicePreference, course }: {
           ? 'Your current library is full. Unlock unlimited words later to add recommendations.'
           : availability.total > 0
             ? `Browse Library → Discover and choose a level with entries. ${describeCatalogAvailability(availability)} Words are added only when you choose them.`
-            : 'Add Spanish words manually or import them. The built-in A1–C2 catalog stays hidden until every entry has approved provenance and independent editorial review.'}</AppText>
+            : 'Add Spanish words manually or import them. The built-in A1–C2 catalog stays hidden until its provenance, automated Spanish QA, AI cross-review, and separately reviewed Slovak translations meet the release gates. Automated Spanish checks are not native-speaker review.'}</AppText>
     </View>
     {voicePreference === 'device' || preview.length === 0 ? null : <View style={[styles.note, { backgroundColor: theme.primarySoft }]}>
       <Ionicons name="cloud-download-outline" color={theme.primary} size={20}/>

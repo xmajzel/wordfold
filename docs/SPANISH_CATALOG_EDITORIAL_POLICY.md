@@ -100,7 +100,70 @@ Owner approval authorizes these draft edits. It does not write native-speaker
 decisions or attestations. The original reports remain unchanged; after candidate
 edits, their old hashes document the reviewed baseline rather than the new payload.
 
+The A2 correction layer is
+`assets/catalog/spanish/a2-ai-cross-review-adjudications.json`. Its 23 unique content
+findings comprise 19 material-definition findings, including all four wrong-sense
+findings, plus four example-only findings. Only `solar` and `querido` remain semantic
+exceptions. Their generated OMW sense is explicitly rejected and the corresponding
+Slovak hint is stale; repaired entries must pass post-correction external-reference
+QA before compilation.
+
+`assets/catalog/spanish/external-qa-adjudications.json` records the three-way
+adjudication of the 63 unique A1, A2, and B1 external-reference non-correspondences.
+Bucket A is a learner-content defect and carries a correction overlay, bucket B is a
+provenance-only semantic exception, and bucket R is a Wiktionary coverage or
+sense-granularity miss where the generated definition and selected OMW record agree.
+The recorded split is A=10, B=2, R=51. External-reference results must always be
+reported with this split; a raw non-correspondence rate is not a content-quality rate.
+
+The same policy applies to the later-level sidecars. The B2 adjudication records
+A=4, B=0, R=19, and the C1 adjudication records A=2, B=0, R=21. B2 and C1 add no
+semantic exceptions. Their bucket-A overlays were carried into Slovak grouping;
+post-correction external QA confirmed both C1 replacements and three of four B2
+replacements directly. The remaining B2 item, `biblia`, is an externally recorded
+case/coverage miss: its learner-facing repair is capitalization of the example, not
+a newly unsupported meaning.
+
+`assets/catalog/spanish/b1-post-translation-content-corrections.json` removes the
+US-specific framing left in the initial `hispano` repair. Its existing general Slovak
+hint remains applicable, the owner-review queue shows the corrected Spanish text,
+and a one-entry post-correction external check confirmed correspondence at sense rank
+2. The immutable historical translation run is not rewritten.
+
+`assets/catalog/spanish/course-entry-merges.json` merges the post-normalization A1
+`solo`/`sólo` adverb duplicate for course presentation. The unaccented entry survives,
+while both ELELex source rows, source forms, OMW aliases, immutable generated records,
+and the retired entry ID remain recorded as provenance. The source catalog and ELELex
+level assignment are not rewritten.
+
 ## Production promotion gate
+
+### ELELex A1 production-review amendment (2026-09-08)
+
+For the frozen ELELex-derived A1 course, the owner approved automated external-reference
+QA plus an independent AI cross-review plus explicit owner risk acceptance as the
+production review standard for Spanish learner content. This supersedes the qualified
+Spanish-reviewer requirement below for that release only. It does not turn either
+automated pass into human or native-speaker review. Every generated manifest and
+summary remains marked `notHumanReview`, and every product source disclosure must say:
+
+> Definitions are generated and automatically verified against reference sources.
+> They have not been reviewed by native speakers.
+
+Every A1 Slovak shared-sense concept requires a verdict from the
+native-Slovak-speaking owner. A2-C1 use a 300-concept probability sample per level plus
+all divergence-gate findings, with targeted rows excluded from the probability
+denominator unless independently sampled. A critical-error rate above 2% or a
+material-error rate above 5% escalates that level to a larger sample or complete
+review. Product copy must keep these standards distinct: “A1 Slovak hints reviewed by
+a native speaker; A2-C1 sampled.” Distribution remains blocked until the unresolved
+ELELex ShareAlike position is cleared.
+
+For B2 and C1, external-reference QA uses one deterministic probability sample per
+level plus the complete minority-POS cohort. It does not separately add the
+everyday-life cohort because the measured external check produced approximately five
+reference misses for every content defect and these levels have the cleanest measured
+category and minority-POS indicators. The blinded Astra cross-review remains separate.
 
 An asset may change from `draft` to `production` only when:
 
@@ -108,8 +171,8 @@ An asset may change from `draft` to `production` only when:
    version, checksum, attribution, and redistribution scope;
 2. every entry has namespaced unique identity, valid normalized term, CEFR evidence,
    POS, original Spanish definition/example, and Slovak hint;
-3. a qualified Spanish reviewer approves the lemma, sense, level, definition, and
-   example, and a qualified Slovak reviewer approves the hint for that exact sense;
+3. the applicable approved Spanish review standard is satisfied, and a qualified
+   Slovak reviewer approves the hint for that exact sense;
 4. disagreements are adjudicated and recorded rather than silently overwritten;
 5. deterministic validation passes and each manifest count matches the entries; and
 6. release QA confirms the product labels the catalog CEFR-aligned and displays all
