@@ -8,7 +8,7 @@
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel" src="kit.jsx?review=20260905"></script>
-  <script type="text/babel" src="screens.jsx?review=20260905"></script>
+  <script type="text/babel" src="screens.jsx?review=inline-progress-large-20260905"></script>
   <style>
     * { box-sizing: border-box; }
     body { margin: 0; background: #171426; color: #f8f5ff; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
@@ -23,8 +23,8 @@
 <body>
   <div id="root"></div>
   <script type="text/babel">
-    const { OnboardingEnglish, OnboardingSpanish, SettingsCourse, SpanishLibraryEmpty, SpanishLibraryPreview } = window;
-    const A = ({ label, children }) => <div><p className="artboard-label">{label}</p><div className="device">{children}</div></div>;
+    const { OnboardingEnglish, OnboardingSpanish, SettingsCourse, SpanishLibraryEmpty, SpanishLibraryPreview, InlineProgress, EnlargedProgress } = window;
+    const A = ({ label, children, width=390 }) => <div><p className="artboard-label">{label}</p><div className="device" style={{width}}>{children}</div></div>;
     function App() {
       return <main className="canvas">
         <h1 className="section-title">Spanish course selection · approved feature spec</h1>
@@ -36,6 +36,8 @@
           <A label="Library · reviewed catalog unavailable"><SpanishLibraryEmpty /></A>
           <A label="Library · partial preview · illustrative counts"><SpanishLibraryPreview /></A>
           <A label="Library · all levels present, not complete · illustrative"><SpanishLibraryPreview allLevels /></A>
+          <A label="Inline progress · whole count-label pairs wrap"><InlineProgress /></A>
+          <A label="Inline progress · simulated 2× text · 320 px" width={320}><EnlargedProgress /></A>
         </div>
       </main>;
     }

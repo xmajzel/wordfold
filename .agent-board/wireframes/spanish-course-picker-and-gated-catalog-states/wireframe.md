@@ -52,6 +52,16 @@ local HTTP preview, inspected screenshots and measured each at 390x844 with equa
 client/scroll bounds. Main approved the extension for implementation. Actual data
 counts, draft notices and manual/import actions must remain truthful in all states.
 
+## Inline progress design gate — 2026-09-05
+
+Added the seventh artboard for the approved `keep-progress-count-label-pairs-inline`
+task only. The main agent rendered and inspected it before application edits:
+eight pairs remained inside their containers, `nowrap`, inline baseline, 4px
+internal gap; detail text 14px (maximum pair width 134.23px) and tile text 12px
+(maximum pair width 97.5px). Whole pairs wrap to the next row. Counts are explicit
+illustrations. Main approved implementation with existing application dots and
+colors preserved; the mockup's omission of dots does not authorize removing them.
+
 ## Implemented checkpoint — 2026-09-05
 
 The earlier audit gaps are now resolved: flag radio cards, explicit Settings
@@ -65,3 +75,12 @@ The final preview contains 685 entries across A1-C2, with every level explicitly
 partial. Main measured the final six-level count text at 390px and 1280px with no
 clipping or document overflow, and verified a C2 entry through search/add/study/hint.
 Native large-text and audio validation remain separate outstanding checks.
+
+## Enlarged inline progress follow-up — 2026-09-05
+
+Eighth artboard: 320px device with simulated 2x type. Root inspected the screenshot
+and measured the compact 8,300 Not started stress pair: 201.98px text width inside
+a 254px row, plus 10px dot and 8px gap; no overflow. Visible copy is compact at
+fontScale >= 1.5 while the full accessible summary remains unchanged. This is
+browser simulation, not native text-scale signoff. Final app verification is in
+docs/SPANISH_INLINE_PROGRESS_VERIFICATION.md.
