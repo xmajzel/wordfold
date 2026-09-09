@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "notHumanReview": true,
+  "courseId": "es-sk",
+  "level": "A1",
+  "sourceRunIdentitySha256": "2cbb9d66a85503dcbf7f0dae04ab6fcd95f5ac53c893f3eaca69ea7091d1a483",
+  "sourceContentSha256": "5383a7a98cd218c707c850bdf88f20b943522c0782f4389418acc6cb304f3f1a",
+  "sourceAiSummarySha256": "8b612c1c49b7b962015d2f9a310df5f84601de8256cd23563b8691a2b77b3565",
+  "policy": "These are AI cross-review adjudications, not human or native-speaker review. Repairs overlay the immutable generated content without changing its source files, selected senses, catalog membership, or ELELex level assignments.",
+  "counts": {
+    "reviewed": 14,
+    "keep": 2,
+    "repair": 12,
+    "drop": 0
+  },
+  "futureQualityTargeting": {
+    "observation": "The actionable definition repairs cluster in modern everyday vocabulary, especially food, clothing, sport, and leisure. The clearest concrete cases are sushi, camiseta, pollo, bañador, partido, senderismo, and cava.",
+    "action": "For A2-C1, supplement broad QA with a deterministic targeted sample from these domains rather than relying on a purely random sample.",
+    "limitation": "This pattern is a targeting signal from 14 AI-flagged A1 definitions, not a measured domain error rate."
+  },
+  "entries": [
+    {
+      "entryId": "es-cefr:559454e294d9332f",
+      "term": "sushi",
+      "selectedSenseId": "omw-es-sushi-07879450-n",
+      "decision": "repair",
+      "originalDefinition": "Comida de arroz y pescado envuelta en algas.",
+      "replacementDefinition": "Comida japonesa hecha con arroz condimentado y otros ingredientes.",
+      "rationale": "The source synset is narrower than contemporary Spanish usage: sushi need not contain fish or be wrapped in seaweed."
+    },
+    {
+      "entryId": "es-cefr:85bf43898af75b81",
+      "term": "camiseta",
+      "selectedSenseId": "omw-es-camiseta-03595614-n",
+      "decision": "repair",
+      "originalDefinition": "Prenda ajustada sin abertura frontal que cubre la parte superior del cuerpo.",
+      "replacementDefinition": "Prenda para la parte superior del cuerpo, normalmente sin botones y de manga corta.",
+      "rationale": "A camiseta need not be close-fitting."
+    },
+    {
+      "entryId": "es-cefr:d53f928d992beb44",
+      "term": "traer",
+      "selectedSenseId": "omw-es-traer-02077656-v",
+      "decision": "repair",
+      "originalDefinition": "Llevar algo o a alguien hasta un lugar.",
+      "replacementDefinition": "Llevar algo o a alguien hacia quien habla o hacia un lugar de referencia.",
+      "rationale": "The direction toward the speaker or contextual reference point distinguishes traer from llevar."
+    },
+    {
+      "entryId": "es-cefr:5d3711771a75a625",
+      "term": "pollo",
+      "selectedSenseId": "omw-es-pollo-07644967-n",
+      "decision": "repair",
+      "originalDefinition": "Carne de gallina usada como alimento.",
+      "replacementDefinition": "Carne de un ave doméstica criada como alimento.",
+      "rationale": "The selected sense is specifically chicken meat. The bird meanings are separate supplied senses, so this entry remains meat-only; gallina was incorrectly narrower than pollo."
+    },
+    {
+      "entryId": "es-cefr:df7aa8293a477f1f",
+      "term": "bañador",
+      "selectedSenseId": "omw-es-bañador-04371563-n",
+      "decision": "repair",
+      "originalDefinition": "Prenda ajustada que se lleva para nadar.",
+      "replacementDefinition": "Prenda que se lleva para nadar o bañarse.",
+      "rationale": "Spanish bañador also covers loose swimwear."
+    },
+    {
+      "entryId": "es-cefr:fd707f4ceb890b48",
+      "term": "municipio",
+      "selectedSenseId": "omw-es-municipio-08626283-n",
+      "decision": "repair",
+      "originalDefinition": "Territorio urbano con gobierno local propio.",
+      "replacementDefinition": "Territorio administrado por un gobierno local propio.",
+      "rationale": "A municipio can include rural as well as urban territory."
+    },
+    {
+      "entryId": "es-cefr:a8870683df28c85a",
+      "term": "especialidad",
+      "selectedSenseId": "omw-es-especialidad-00583461-n",
+      "decision": "keep",
+      "originalDefinition": "Área concreta de trabajo elegida como profesión.",
+      "replacementDefinition": null,
+      "rationale": "The definition accurately expresses the selected career-specialization sense; broader senses of especialidad do not invalidate it."
+    },
+    {
+      "entryId": "es-cefr:cb28bc50ca72dcab",
+      "term": "ciencia",
+      "selectedSenseId": "omw-es-ciencia-05999797-n",
+      "decision": "repair",
+      "originalDefinition": "Rama concreta del conocimiento científico.",
+      "replacementDefinition": "Rama del conocimiento basada en el estudio sistemático de una parte de la realidad.",
+      "rationale": "The replacement removes the circular dependence on científico while preserving the selected disciplinary sense."
+    },
+    {
+      "entryId": "es-cefr:7036f3d5dca78c86",
+      "term": "partido",
+      "selectedSenseId": "omw-es-partido-07470671-n",
+      "decision": "repair",
+      "originalDefinition": "Competición formal entre dos personas o equipos.",
+      "replacementDefinition": "Competición deportiva entre dos personas o equipos.",
+      "rationale": "The ordinary intended sense is a sports or game match and need not be formally organized."
+    },
+    {
+      "entryId": "es-cefr:c4c9ec675eb14036",
+      "term": "senderismo",
+      "selectedSenseId": "omw-es-senderismo-00288970-n",
+      "decision": "repair",
+      "originalDefinition": "Actividad de dar largos paseos por ejercicio o placer.",
+      "replacementDefinition": "Actividad de caminar por rutas o senderos en entornos naturales.",
+      "rationale": "The route and natural-environment component distinguishes senderismo from an ordinary long walk."
+    },
+    {
+      "entryId": "es-cefr:42b302556e227740",
+      "term": "industria",
+      "selectedSenseId": "omw-es-industria-00923444-n",
+      "decision": "repair",
+      "originalDefinition": "Actividad organizada para producir bienes y servicios destinados a la venta.",
+      "replacementDefinition": "Actividad económica organizada para fabricar o transformar productos.",
+      "rationale": "The selected manufacture sense requires a production or transformation component rather than commercial activity generally."
+    },
+    {
+      "entryId": "es-cefr:e152dcf7e8d2253c",
+      "term": "amante",
+      "selectedSenseId": "omw-es-amante-09622302-n",
+      "decision": "repair",
+      "originalDefinition": "Persona que ama a alguien o recibe su amor.",
+      "replacementDefinition": "Persona que mantiene una relación amorosa con otra.",
+      "rationale": "Merely receiving love does not establish the contemporary noun sense; the relationship must be explicit."
+    },
+    {
+      "entryId": "es-cefr:8ae65a19e0cb0ef5",
+      "term": "cava",
+      "selectedSenseId": "omw-es-cava-07893642-n",
+      "decision": "repair",
+      "originalDefinition": "Vino blanco con burbujas parecido al champán.",
+      "replacementDefinition": "Vino espumoso parecido al champán y elaborado principalmente en España.",
+      "rationale": "Cava can be white or rosé, so color is not defining."
+    },
+    {
+      "entryId": "es-cefr:d6e458113b925992",
+      "term": "mar",
+      "selectedSenseId": "omw-es-mar-09426788-n",
+      "decision": "keep",
+      "originalDefinition": "Gran extensión de agua salada, parcialmente rodeada de tierra.",
+      "replacementDefinition": null,
+      "rationale": "Partial enclosure accurately describes the selected sea sense and distinguishes it from the separate ocean sense."
+    }
+  ]
+}

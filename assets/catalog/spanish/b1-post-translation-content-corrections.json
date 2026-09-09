@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "notHumanReview": true,
+  "level": "B1",
+  "policy": "Post-translation learner-content refinements. Apply after external-qa-adjudications.json without regenerating a still-valid Slovak hint.",
+  "entries": [
+    {
+      "entryId": "es-cefr:df21f1cbc03a1087",
+      "groupId": "es-sk:b1:i93176",
+      "term": "hispano",
+      "replacementDefinition": "Persona de un país de habla española o relacionada con su cultura.",
+      "replacementExample": "El autor hispano participó en el encuentro cultural.",
+      "affectsSlovakHint": false,
+      "rationale": "Removes the US-specific framing that the bucket-A repair was intended to correct; the existing general Slovak hint Hispánec remains applicable."
+    }
+  ]
+}
