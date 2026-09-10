@@ -12,6 +12,9 @@ test('stages the current frozen A1 membership as shared-sense concepts', () => {
     ownerPendingConcepts: 1564,
   });
   assert.equal(catalog.status, 'non-distributable-staging');
+  assert.equal(catalog.levels.A1, 'blocked-pending-owner-review');
+  assert.match(catalog.distributionBlocker, /1,564 A1 Slovak concepts/);
+  assert.doesNotMatch(catalog.distributionBlocker, /ShareAlike|licen[cs]e/iu);
   assert.equal(catalog.pronunciationEnabled, false);
   assert.equal(catalog.concepts.every((concept, index) => concept.courseOrder === index + 1), true);
   assert.equal(catalog.concepts.some((concept) => concept.members.some((member) => member.entryId === 'es-cefr:4816e47d42b7fc7e')), false);

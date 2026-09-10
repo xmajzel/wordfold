@@ -3,7 +3,7 @@ import type { CefrCatalogEntry, CefrLevel } from '@/domain/types';
 export const SPANISH_DEFINITION_REVIEW_DISCLOSURE = 'Definitions are generated and automatically verified against reference sources. They have not been reviewed by native speakers.';
 
 export type SpanishCourseLevelState =
-  | 'blocked-pending-license-and-owner-review'
+  | 'blocked-pending-owner-review'
   | 'available'
   | 'not-generated'
   | 'unavailable-no-elelex-source-level';
@@ -80,7 +80,7 @@ export function validateSpanishCourseAsset(asset: SpanishCourseAsset) {
   assert(asset.status !== 'production' || !asset.distributionBlocker, 'A production Spanish course cannot retain a distribution blocker.');
   assert(asset.reviewDisclosure === SPANISH_DEFINITION_REVIEW_DISCLOSURE, 'Spanish review disclosure must use the approved wording.');
   assert(asset.pronunciationEnabled === false, 'Spanish pronunciation must remain disabled for the initial A1 release.');
-  assert(asset.levels.A1 === (asset.status === 'production' ? 'available' : 'blocked-pending-license-and-owner-review'), 'A1 availability does not match the asset status.');
+  assert(asset.levels.A1 === (asset.status === 'production' ? 'available' : 'blocked-pending-owner-review'), 'A1 availability does not match the asset status.');
   assert(asset.levels.C2 === 'unavailable-no-elelex-source-level', 'Spanish C2 must remain unavailable without a source level.');
 
   const conceptIds = new Set<string>();

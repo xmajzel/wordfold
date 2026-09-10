@@ -74,7 +74,7 @@ function writeFileAtomic(path, value) {
 
 function assertIgnoredArtifactDirectory(outputDirectory) {
   const artifactsRoot = resolve('.artifacts');
-  assert(outputDirectory.startsWith(`${artifactsRoot}${sep}`), 'ShareAlike blocker: staging output must stay under ignored .artifacts.');
+  assert(outputDirectory.startsWith(`${artifactsRoot}${sep}`), 'Owner-review staging output must stay under ignored .artifacts.');
 }
 
 function readJson(path) {
@@ -231,7 +231,7 @@ export function buildStagedSpanishA1() {
     schemaVersion: 1,
     notHumanReview: true,
     status: 'non-distributable-staging',
-    distributionBlocker: 'ELELex ShareAlike position unresolved; this artifact must remain under ignored .artifacts and must not be bundled.',
+    distributionBlocker: '1,564 A1 Slovak concepts still require native-Slovak owner verdicts; this artifact must remain under ignored .artifacts and must not be bundled.',
     courseId: 'es-sk',
     sourceLanguageCode: 'es',
     targetLanguageCode: 'sk',
@@ -245,7 +245,7 @@ export function buildStagedSpanishA1() {
       ownerPendingConcepts: concepts.length - reviewedConcepts,
     },
     levels: {
-      A1: 'blocked-pending-license-and-owner-review',
+      A1: 'blocked-pending-owner-review',
       A2: 'not-generated',
       B1: 'not-generated',
       B2: 'not-generated',
@@ -351,7 +351,6 @@ export function stageCourse(outputDirectory) {
     status: 'blocked-non-distributable-staging',
     distributionAllowed: false,
     blockers: [
-      'ELELex ShareAlike position unresolved.',
       `${catalog.counts.ownerPendingConcepts} Slovak concepts still require owner verdicts.`,
     ],
     catalog: { path: catalogPath, sha256: sha256(catalogText), counts: catalog.counts },

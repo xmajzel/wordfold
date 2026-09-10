@@ -10,7 +10,7 @@ function fixture(status: SpanishCourseAsset['status'] = 'production'): SpanishCo
     schemaVersion: 1,
     notHumanReview: true,
     status,
-    ...(status === 'production' ? {} : { distributionBlocker: 'ShareAlike unresolved.' }),
+    ...(status === 'production' ? {} : { distributionBlocker: 'A1 Slovak owner review incomplete.' }),
     courseId: 'es-sk',
     sourceLanguageCode: 'es',
     targetLanguageCode: 'sk',
@@ -19,7 +19,7 @@ function fixture(status: SpanishCourseAsset['status'] = 'production'): SpanishCo
     pronunciationEnabled: false,
     counts: { concepts: 2, terms: 3, ownerReviewedConcepts: 2, ownerPendingConcepts: 0 },
     levels: {
-      A1: status === 'production' ? 'available' : 'blocked-pending-license-and-owner-review',
+      A1: status === 'production' ? 'available' : 'blocked-pending-owner-review',
       A2: 'not-generated', B1: 'not-generated', B2: 'not-generated', C1: 'not-generated',
       C2: 'unavailable-no-elelex-source-level',
     },
@@ -54,13 +54,13 @@ test('uses one catalog identity for shared members while preserving searched pre
 
 test('keeps all entries inaccessible while a staged asset is distribution-blocked', () => {
   const runtime = createSpanishCourseRuntime(fixture('non-distributable-staging'));
-  expect(runtime.levelState('A1')).toBe('blocked-pending-license-and-owner-review');
+  expect(runtime.levelState('A1')).toBe('blocked-pending-owner-review');
   expect(runtime.entries('A1')).toEqual([]);
   expect(runtime.entriesForNormalizedTerm('coche')).toEqual([]);
 });
 
 test('rejects production assets that retain a distribution blocker', () => {
-  const asset = { ...fixture(), distributionBlocker: 'ShareAlike unresolved.' };
+  const asset = { ...fixture(), distributionBlocker: 'A1 Slovak owner review incomplete.' };
   expect(() => validateSpanishCourseAsset(asset)).toThrow('cannot retain a distribution blocker');
 });
 
