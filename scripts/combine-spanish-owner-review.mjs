@@ -199,9 +199,10 @@ export function combineOwnerReview() {
     a1OnlyReleasePath: {
       pendingA1RowsRequired: 1564,
       priorA1VerdictsAlreadyAccepted: 35,
-      shareAlikeClearanceRequired: true,
+      shareAlikeClearanceRequired: false,
+      shareAlikeClearanceStatus: 'cleared-for-described-wordfold-use',
       rowsRequiredFromA2ThroughC1: 0,
-      statement: 'An A1-only release requires verdicts for exactly the 1,564 pending A1 rows plus ShareAlike clearance, and nothing from A2-C1.',
+      statement: 'The ELELex licensing gate is cleared. An A1-only release requires verdicts for exactly the 1,564 pending A1 rows and nothing from A2-C1.',
     },
     sittings: sittingRanges(rows),
     sources: {
@@ -211,7 +212,7 @@ export function combineOwnerReview() {
       b1ContentAmendment: { path: AMENDMENT_PATH, sha256: sha256(later.amendmentText) },
     },
     output: { path: OUTPUT_PATH, sha256: sha256(tsv) },
-    distributionBlocker: 'ELELex ShareAlike position unresolved; this ignored review artifact must not be bundled or distributed.',
+    distributionBlocker: 'The 1,564 pending A1 native-Slovak owner verdicts are the only remaining content gate for an A1-only release; this review-workflow artifact must not be bundled.',
   };
   writeAtomic(MANIFEST_PATH, canonicalJson(manifest));
   return { outputPath: OUTPUT_PATH, manifestPath: MANIFEST_PATH, manifest };
