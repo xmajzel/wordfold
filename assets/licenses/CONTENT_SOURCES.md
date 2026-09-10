@@ -41,31 +41,37 @@ UCLouvain/CENTAL.
 - SHA-256: `87a28dc6d3c5c2344883698f7bc77e259bd42212446ac2b52761a3fc8f5f26cf`
 - Published license: Creative Commons Attribution-NonCommercial-ShareAlike 4.0
   International (CC BY-NC-SA 4.0)
-- Commercial authorization: UCLouvain/CENTAL granted Wordfold written permission on
+- Wordfold-specific authorization: UCLouvain/CENTAL granted Wordfold written permission on
   6 September 2026 to use and integrate ELELex lexical entries, CEFR-level information,
   and associated frequency data within its commercial language-learning application,
-  and to process, transform, and integrate that data into Wordfold's own database. The
-  authorization supersedes the NonCommercial restriction of CC BY-NC-SA 4.0 for these
-  uses. Evidence: `docs/legal/UCLOUVAIN_ELELEX_PERMISSION.md`
+  and to process, transform, and integrate that data into Wordfold's own database. A
+  follow-up clarification recorded on 9 September 2026 confirms that both the
+  NonCommercial and ShareAlike restrictions of CC BY-NC-SA 4.0 do not apply to the
+  described Wordfold use. Evidence: `docs/legal/UCLOUVAIN_ELELEX_PERMISSION.md`
 - Required acknowledgement: “Spanish vocabulary level data is based in part on ELELex,
   a CEFR-graded lexical resource developed as part of the CEFRLex project at
   UCLouvain/CENTAL.”
 - Level coverage: A1-C1. ELELex does not publish a C2 column, so the first Spanish
   release is scoped to A1-C1 and C2 is gated as not yet available. No C2 entries are
   synthesized from the C1 tail.
-- Unresolved: see the paired ShareAlike legal-review items below.
+- ShareAlike status: resolved for the described Wordfold use; see the consolidated
+  ShareAlike legal-review records below.
 - Restrictions: the authorization does not imply endorsement, certification, or
   validation of Wordfold by UCLouvain.
 
-### ShareAlike items for legal review
+### ShareAlike records for legal review
 
-Review these two items together whenever the Spanish course licensing posture receives
+Review these three items together whenever the Spanish course licensing posture receives
 legal review:
 
-1. **ELELex:** UCLouvain/CENTAL's written authorization expressly supersedes the
-   NonCommercial restriction but does not address the CC BY-NC-SA 4.0 ShareAlike term.
-   Clarification has been requested. Until a written answer is recorded, the
-   ShareAlike obligation for Wordfold's derived Spanish catalog remains unresolved.
+1. **ELELex — resolved for the described Wordfold use:** UCLouvain/CENTAL's
+   follow-up clarification says that the NonCommercial and ShareAlike restrictions
+   of CC BY-NC-SA 4.0 do not apply to Wordfold's use as described in the
+   correspondence. Wordfold may distribute the described ELELex-derived data under
+   its own terms, including commercially, provided that the agreed attribution is
+   retained. All other authorization conditions remain unchanged. The repository
+   records when the owner supplied the follow-up, but not the original email date or
+   headers; retain those in the legal archive.
 2. **Spanish Wiktionary QA reference:** a pinned Kaikki/Wiktextract extraction of
    Spanish Wiktionary is read only for internal QA under Wiktionary's CC BY-SA 4.0 / GFDL
    terms. The raw archive and extracted sense text remain in ignored `.artifacts`, are
@@ -74,6 +80,34 @@ legal review:
    QA-only, attribution-preserving separation is Wordfold's current cautious posture,
    not a legal conclusion about ShareAlike; it must be reviewed alongside the ELELex
    question.
+3. **Open Multilingual Wordnet Slovak 2.0 QA reference:** the pinned `omw-sk:2.0`
+   archive is read only for internal Spanish-to-Slovak correspondence QA under CC
+   BY-SA 3.0. The raw archive, ILI joins, and listed Slovak lemmas remain in ignored
+   `.artifacts`, are never bundled, and are not used to generate or adapt product
+   hints. An exact proposed-hint match may pass verification and a mismatch may flag
+   a row, but a listed `omw-sk` lemma must never be copied or substituted as a
+   correction. Corrections come from the owner's Slovak judgment or an independent
+   Astra review, never from this reference. This QA-only separation is Wordfold's
+   current cautious posture, not a legal conclusion about ShareAlike.
+
+### Spanish-to-Slovak hint correspondence review
+
+Spanish-to-Slovak hint correspondence is checked deterministically against linked
+lexical references where coverage allows and by two isolated, blinded `gpt-6-astra`
+cross-review passes elsewhere. MADLAD and other machine-translation models are not
+judges. Only agreement between the two Astra passes counts as AI evidence; inter-pass
+disagreement and every non-unanimous dimension are review flags. These are AI
+cross-review disagreement rates, not measured error rates, and every output remains
+marked `notHumanReview`.
+
+The native-Slovak owner queue is limited to Slovak naturalness and wording. It does not
+ask the owner to certify bilingual correspondence to a selected Spanish sense. Product
+copy must state: “Spanish definitions are generated and automatically verified against
+reference sources. They have not been reviewed by native Spanish speakers. Slovak hints
+are checked against linked lexical references where available and independently AI
+cross-reviewed elsewhere. A native Slovak speaker reviews the wording of flagged hints;
+Spanish–Slovak sense correspondence has not been verified by a native bilingual
+reviewer.”
 
 Changes made by Wordfold: the pinned ELELex distribution is verified by SHA-256, lemmas
 are NFKC-normalized and lowercased for Spanish, FreeLing parts of speech are mapped to
@@ -238,9 +272,10 @@ native-speaker review. Product source disclosures must include this exact line:
 > Definitions are generated and automatically verified against reference sources.
 > They have not been reviewed by native speakers.
 
-This review-policy decision does not clear the unresolved ELELex ShareAlike question.
-No distributable Spanish course artifact may be compiled or bundled until that legal
-blocker is resolved.
+The ELELex licensing distribution blocker is resolved by the follow-up authorization.
+The A1 course still may not be compiled or bundled as a distributable artifact until
+all 1,599 Slovak concepts have native-Slovak owner verdicts; 35 are recorded and
+1,564 remain pending. No A2-C1 verdict is required for an A1-only release.
 
 ## Open English WordNet 2025
 

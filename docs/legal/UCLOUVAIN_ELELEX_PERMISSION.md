@@ -55,8 +55,10 @@
 This permission authorizes commercial use of ELELex lexical entries, CEFR-level
 information, and associated frequency data inside Wordfold, and authorizes
 processing, transforming, and integrating that data into Wordfold's own database
-for use in a commercial product. It supersedes the NonCommercial restriction of
-CC BY-NC-SA 4.0 for those uses.
+for use in a commercial product. The initial permission superseded the
+NonCommercial restriction of CC BY-NC-SA 4.0 for those uses. The follow-up
+clarification recorded below also relieves the described derived vocabulary
+catalog from ShareAlike.
 
 Wordfold must:
 
@@ -68,23 +70,44 @@ Wordfold must:
   the Spanish source manifest so the bundled data is traceable to the authorized
   source.
 
-## Unresolved: the ShareAlike term
+## Follow-up clarification: ShareAlike resolved
 
-CC BY-NC-SA 4.0 carries three obligations: Attribution, NonCommercial, and
-ShareAlike. This authorization names and supersedes **NonCommercial**. It does
-not address **ShareAlike**.
+The Wordfold owner supplied the following follow-up correspondence for the
+repository on 9 September 2026. The message as supplied did not include its
+original email date or headers; retain those with the original correspondence in
+the legal archive.
 
-Read literally, an unwaived ShareAlike term would require Wordfold's derived
-Spanish catalog to be offered under CC BY-NC-SA 4.0, which would reimpose the
-NonCommercial restriction the authorization just removed. The letter's statement
-that Wordfold "may process, transform and integrate the ELELex data into its own
-database and may use the resulting data as part of its commercial product"
-indicates the opposite intent.
+> Dear Mr. Majzel,
+>
+> Thank you for your message and for the detailed information regarding your use
+> and attribution of ELELex.
+>
+> We confirm that our authorization for Wordfold also relieves the derived
+> vocabulary catalog described in your email from the ShareAlike requirement of
+> the CC BY-NC-SA 4.0 licence.
+>
+> Accordingly, Wordfold may integrate, adapt, and distribute the ELELex-derived
+> data described in your email as part of the Wordfold application under its own
+> terms, including for commercial purposes, provided that the agreed attribution
+> to ELELex, CEFRLex, and UCLouvain/CENTAL is retained.
+>
+> The NonCommercial and ShareAlike restrictions of the standard CC BY-NC-SA 4.0
+> licence therefore do not apply to Wordfold’s use as described in our
+> correspondence. All other conditions of our authorization remain unchanged.
+>
+> We appreciate your careful attribution and traceability of the source data, and
+> we would be pleased to see the finished course once it is available.
+>
+> Kind regards,
+>
+> CENTAL
+> UCLouvain
 
-Clarification has been requested from UCLouvain/CENTAL. Until a written answer is
-recorded in this file, treat the ShareAlike obligation for Wordfold's derived
-Spanish catalog as unresolved, and do not rely on the derived catalog being
-distributable under proprietary terms.
+For the Wordfold use described in the correspondence, the published licence's
+NonCommercial and ShareAlike restrictions therefore do not apply. The required
+attribution and every other condition of the authorization remain in force. This
+clears the ELELex licensing distribution blocker; it does not clear content-review
+or release-readiness gates.
 
 ## Level coverage
 

@@ -589,8 +589,8 @@ export function runSpanishCefrBuild(argv) {
         sha256: ELELEX_SHA256,
         publishedLicense: 'CC BY-NC-SA 4.0',
         permissionEvidencePath: 'docs/legal/UCLOUVAIN_ELELEX_PERMISSION.md',
-        commercialPermission: 'Written permission supersedes the NonCommercial restriction for the authorized Wordfold uses.',
-        shareAlikeStatus: 'The permission does not address ShareAlike; clarification is pending.',
+        commercialPermission: 'Written permission confirms that the NonCommercial restriction does not apply to the authorized Wordfold uses.',
+        shareAlikeStatus: 'Resolved by follow-up permission: the ShareAlike restriction does not apply to Wordfold\'s use as described in the correspondence; agreed attribution and all other authorization conditions remain in force.',
         attribution: ATTRIBUTION,
       },
       {
