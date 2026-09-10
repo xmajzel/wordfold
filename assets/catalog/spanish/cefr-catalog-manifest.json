@@ -260,6 +260,17 @@
     "nativeOrHumanSpanishReview": false,
     "requiredDisclosure": "Definitions are generated and automatically verified against reference sources. They have not been reviewed by native speakers.",
     "claimRestriction": "No product, manifest, report, or attribution copy may describe the Spanish content as native-reviewed or human-reviewed.",
+    "spanishSlovakCorrespondence": {
+      "notHumanReview": true,
+      "status": "two-pass-cross-review-approved",
+      "tier1": "Exact proposed-hint matches to listed omw-sk 2.0 lemmas on the selected ILI pass deterministically. Wiktextract Slovak translation pairs remain QA evidence where their editorial sense index cannot be joined deterministically to the selected ILI.",
+      "tier2": "Rows not passed by tier 1 receive two isolated, blinded gpt-6-astra reviews of correct Slovak, selected-sense correspondence, natural everyday equivalence, and register. Only inter-pass agreement counts as evidence; every inter-pass or non-unanimous dimension is flagged.",
+      "reporting": "Report the ILI-present/hint-not-listed and ILI-absent cohorts separately. These are AI cross-review disagreement rates, never measured error rates or human review.",
+      "ownerScope": "The native-Slovak owner reviews naturalness and wording on attention-marked and machine-flagged rows; the owner does not certify bilingual selected-sense correspondence.",
+      "machineTranslationJudge": false,
+      "correctionNonDerivationRule": "omw-sk lemmas may only pass or flag verification. Never copy or substitute an omw-sk lemma as a corrected product hint. Corrections must come from the owner's judgment or Astra, never from the reference.",
+      "productDisclosure": "Spanish definitions are generated and automatically verified against reference sources. They have not been reviewed by native Spanish speakers. Slovak hints are checked against linked lexical references where available and independently AI cross-reviewed elsewhere. A native Slovak speaker reviews the wording of flagged hints; Spanish–Slovak sense correspondence has not been verified by a native bilingual reviewer."
+    },
     "slovakHintStandard": {
       "A1": "100% native-Slovak owner review across all production concepts.",
       "A2ThroughC1": "A reproducible probability sample per level, plus separately reported targeted findings excluded from the probability denominator.",
@@ -284,7 +295,14 @@
       "targetedOverlapInProbabilitySample": 1,
       "a1SlovakOwnerDisagreementBaseline": "pending"
     },
-    "distributionBlocker": "Do not compile or bundle any distributable Spanish course artifact until the unresolved ELELex ShareAlike position is cleared."
+    "distributionBlocker": "Do not compile or bundle the A1 course as a distributable artifact until all 1,599 A1 Slovak concepts have native-Slovak owner verdicts; 35 are recorded and 1,564 remain pending. No A2-C1 verdict is required for an A1-only release.",
+    "licensingGate": {
+      "status": "cleared-for-described-wordfold-use",
+      "recordedInRepository": "2026-09-09",
+      "evidencePath": "docs/legal/UCLOUVAIN_ELELEX_PERMISSION.md",
+      "scope": "UCLouvain/CENTAL confirms that the NonCommercial and ShareAlike restrictions of CC BY-NC-SA 4.0 do not apply to Wordfold's use as described in the correspondence; agreed attribution and all other authorization conditions remain in force.",
+      "evidenceMetadata": "The owner supplied the follow-up text without its original email date or headers; retain those with the original correspondence in the legal archive."
+    }
   },
   "courseFilters": {
     "attestation": "Require at least 2 ELELex documents at one published level.",
@@ -378,8 +396,8 @@
       "sha256": "87a28dc6d3c5c2344883698f7bc77e259bd42212446ac2b52761a3fc8f5f26cf",
       "publishedLicense": "CC BY-NC-SA 4.0",
       "permissionEvidencePath": "docs/legal/UCLOUVAIN_ELELEX_PERMISSION.md",
-      "commercialPermission": "Written permission supersedes the NonCommercial restriction for the authorized Wordfold uses.",
-      "shareAlikeStatus": "The permission does not address ShareAlike; clarification is pending.",
+      "commercialPermission": "Written permission confirms that the NonCommercial restriction does not apply to the authorized Wordfold uses.",
+      "shareAlikeStatus": "Resolved by follow-up permission: the ShareAlike restriction does not apply to Wordfold's use as described in the correspondence; agreed attribution and all other authorization conditions remain in force.",
       "attribution": "Spanish vocabulary level data is based in part on ELELex, a CEFR-graded lexical resource developed as part of the CEFRLex project at UCLouvain/CENTAL."
     },
     {
