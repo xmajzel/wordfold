@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { normalizeSpanishTerm, sha256Payload } from './spanish-a1-pipeline.mjs';
+import { normalizeSpanishTerm, sha256Payload } from './spanish-catalog-utils.mjs';
 
 export const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 const partsOfSpeech = new Set(['ADJ', 'ADP', 'ADV', 'AUX', 'CCONJ', 'DET', 'INTJ', 'NOUN', 'NUM', 'PART', 'PRON', 'PROPN', 'SCONJ', 'VERB', 'X']);

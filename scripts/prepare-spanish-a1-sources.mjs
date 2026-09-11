@@ -3,7 +3,7 @@ import { mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
-import { validateSourceManifest, WORDNET_3_LICENSE_TEXT } from './spanish-a1-pipeline.mjs';
+import { validateSourceManifest, WORDNET_3_LICENSE_TEXT } from './spanish-catalog-utils.mjs';
 
 const posToOmw = new Map([
   ['noun', 'n'],
