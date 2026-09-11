@@ -253,49 +253,127 @@
       "scaleExpectation": "Expect proportionally more false positives at later levels and report them without presenting the flag rate as a translation defect rate."
     }
   },
+  "retiredEditorialWorkflows": {
+    "a1QuotaPilot500": {
+      "status": "retired-superseded",
+      "retiredOn": "2026-09-10",
+      "releaseGate": false,
+      "notHumanReview": true,
+      "reason": "The schema-v1, quota-bound 500-entry candidate pipeline and bespoke local review server were superseded by the 6,185-entry ELELex-derived catalog, schema-v2 lexical evidence, current learner-content QA, and flagged-row TSV owner-adjudication workflow. The active schema-v2 evidence covers 1,705 A1 entries and must not be passed through or gated by the retired schema-v1 validator.",
+      "replacement": {
+        "catalogEntries": 6185,
+        "a1LexicalEvidenceEntries": 1705,
+        "lexicalEvidenceSchemaVersion": 2,
+        "ownerVerdictWorkflow": "Flagged-row TSV correspondence QA with AI-assisted, owner-accepted verdicts."
+      },
+      "historicalAssetsRetainedInPlace": [
+        "assets/catalog/spanish/a1-candidates.json",
+        "assets/catalog/spanish/a1-editorial-corrections.json",
+        "A1 portions of assets/catalog/spanish/second-editorial-corrections.json",
+        "docs/SPANISH_A1_IMPLEMENTATION_VERIFICATION.md"
+      ],
+      "historicalAssetPolicy": "Retained as non-gating evidence. These records confer no production, human-review, native-review, or release status.",
+      "retiredQualityRulesEvaluation": {
+        "evaluatedGeneratedExamples": 6737,
+        "metaLinguisticTemplateRegex": {
+          "matches": 28,
+          "assessment": "Almost all matches were false positives because terms such as usamos and aparece are ordinary Spanish in current examples.",
+          "decision": "Not carried forward."
+        },
+        "fourWordOpeningDiversity": {
+          "openingsRepeatedMoreThanFiveTimes": 5,
+          "maximumRepetition": 8,
+          "assessment": "Current opening diversity is acceptable.",
+          "decision": "Not carried forward as a release rule."
+        },
+        "exampleSurfaceFormContainment": {
+          "assessment": "Already enforced by the current learner-content validator.",
+          "decision": "The duplicate pilot assertion was not carried forward."
+        }
+      }
+    }
+  },
   "productionReviewPolicy": {
     "notHumanReview": true,
     "status": "owner-approved-2026-09-08",
     "spanishContentStandard": "Automated external-reference QA plus an independent AI cross-review plus explicit owner risk acceptance.",
     "nativeOrHumanSpanishReview": false,
-    "requiredDisclosure": "Definitions are generated and automatically verified against reference sources. They have not been reviewed by native speakers.",
-    "claimRestriction": "No product, manifest, report, or attribution copy may describe the Spanish content as native-reviewed or human-reviewed.",
+    "requiredDisclosure": "Spanish definitions are generated and automatically verified against reference sources; they have not been reviewed by native Spanish speakers. Slovak hints are checked against linked lexical references where available and independently AI cross-reviewed; they have not been reviewed by native Slovak speakers. Flagged A1 hints carry AI-assisted, owner-accepted verdicts. Spanish–Slovak sense correspondence has not been verified by a native bilingual reviewer.",
+    "claimRestriction": "No product, manifest, report, or attribution copy may describe the Spanish definitions or Slovak wording as native-reviewed or human-reviewed.",
     "spanishSlovakCorrespondence": {
       "notHumanReview": true,
       "status": "two-pass-cross-review-approved",
       "tier1": "Exact proposed-hint matches to listed omw-sk 2.0 lemmas on the selected ILI pass deterministically. Wiktextract Slovak translation pairs remain QA evidence where their editorial sense index cannot be joined deterministically to the selected ILI.",
       "tier2": "Rows not passed by tier 1 receive two isolated, blinded gpt-6-astra reviews of correct Slovak, selected-sense correspondence, natural everyday equivalence, and register. Only inter-pass agreement counts as evidence; every inter-pass or non-unanimous dimension is flagged.",
       "reporting": "Report the ILI-present/hint-not-listed and ILI-absent cohorts separately. These are AI cross-review disagreement rates, never measured error rates or human review.",
-      "ownerScope": "The native-Slovak owner reviews naturalness and wording on attention-marked and machine-flagged rows; the owner does not certify bilingual selected-sense correspondence.",
+      "ownerScope": "Only machine-flagged rows require owner verdicts. A1 verdicts are AI-assisted and owner-accepted; they are not native-speaker verdicts and do not certify bilingual selected-sense correspondence.",
       "machineTranslationJudge": false,
       "correctionNonDerivationRule": "omw-sk lemmas may only pass or flag verification. Never copy or substitute an omw-sk lemma as a corrected product hint. Corrections must come from the owner's judgment or Astra, never from the reference.",
-      "productDisclosure": "Spanish definitions are generated and automatically verified against reference sources. They have not been reviewed by native Spanish speakers. Slovak hints are checked against linked lexical references where available and independently AI cross-reviewed elsewhere. A native Slovak speaker reviews the wording of flagged hints; Spanish–Slovak sense correspondence has not been verified by a native bilingual reviewer."
+      "productDisclosure": "Spanish definitions are generated and automatically verified against reference sources; they have not been reviewed by native Spanish speakers. Slovak hints are checked against linked lexical references where available and independently AI cross-reviewed; they have not been reviewed by native Slovak speakers. Flagged A1 hints carry AI-assisted, owner-accepted verdicts. Spanish–Slovak sense correspondence has not been verified by a native bilingual reviewer."
     },
     "slovakHintStandard": {
-      "A1": "100% native-Slovak owner review across all production concepts.",
-      "A2ThroughC1": "A reproducible probability sample per level, plus separately reported targeted findings excluded from the probability denominator.",
+      "A1": "Deterministic lexical-reference checks and two-pass AI cross-review cover the A1 review population; only the 47 flagged concepts require AI-assisted, owner-accepted verdicts.",
+      "A2ThroughC1": "A reproducible probability sample per level plus separately reported targeted findings are AI cross-reviewed; only the 70 flagged rows require owner verdicts, and those rows do not gate an A1-only release.",
       "criticalErrorMaximumRate": 0.02,
       "materialErrorMaximumRate": 0.05,
       "escalation": "If either probability-sample bound is crossed, expand the sample or require 100% owner review for that level.",
-      "baseline": "The Slovak owner-disagreement baseline comes from the full A1 owner review and remains pending until those verdicts are complete; A1's 3.33% Spanish external-reference rate is a different metric.",
-      "productCopy": "A1 Slovak hints reviewed by a native speaker; A2-C1 sampled."
+      "baseline": "The narrowed policy does not produce a native-speaker disagreement baseline. AI disagreement rates and owner-accepted outcomes must not be presented as measured human error rates.",
+      "productCopy": "Slovak hints are AI cross-reviewed and not natively reviewed; all 47 flagged A1 hints have AI-assisted, owner-accepted verdicts."
     },
     "slovakReviewProgress": {
       "productionConcepts": 1599,
-      "reviewedConcepts": 35,
-      "pendingConcepts": 1564,
+      "historicalOwnerVerdicts": 35,
+      "policyRequiredFlaggedConcepts": 47,
+      "resolvedRequiredConcepts": 47,
+      "pendingRequiredConcepts": 0,
+      "verdictProvenance": "ai-assisted-owner-accepted",
+      "definitiveCorrectSlovakVerdicts": [
+        {
+          "reviewItemId": "SK-A1-F-0234",
+          "terms": ["foto", "fotografía"],
+          "verdictProvenance": "ai-assisted-owner-accepted"
+        },
+        {
+          "reviewItemId": "SK-A1-F-0479",
+          "terms": ["enamorar"],
+          "verdictProvenance": "ai-assisted-owner-accepted"
+        },
+        {
+          "reviewItemId": "SK-A1-F-1161",
+          "terms": ["acostumbrar"],
+          "verdictProvenance": "ai-assisted-owner-accepted"
+        }
+      ],
       "level": "A1"
     },
     "a2SlovakSampleReview": {
       "notHumanReview": true,
-      "status": "awaiting-native-owner-review",
+      "status": "awaiting-ai-assisted-owner-verdicts-for-flagged-rows",
       "productionConcepts": 1786,
       "probabilitySampleRows": 300,
       "additionalTargetedRows": 22,
       "targetedOverlapInProbabilitySample": 1,
-      "a1SlovakOwnerDisagreementBaseline": "pending"
+      "a1SlovakOwnerDisagreementBaseline": "not-produced-under-narrowed-policy"
     },
-    "distributionBlocker": "Do not compile or bundle the A1 course as a distributable artifact until all 1,599 A1 Slovak concepts have native-Slovak owner verdicts; 35 are recorded and 1,564 remain pending. No A2-C1 verdict is required for an A1-only release.",
+    "laterLevelSlovakVerdicts": {
+      "notHumanReview": true,
+      "status": "pending-nonblocking-for-a1",
+      "pendingFlaggedRows": 70,
+      "countsByLevel": {
+        "A2": 19,
+        "B1": 12,
+        "B2": 20,
+        "C1": 19
+      }
+    },
+    "distributionGate": {
+      "status": "cleared-for-a1-only-release",
+      "requiredFlaggedConcepts": 47,
+      "resolvedRequiredConcepts": 47,
+      "pendingRequiredConcepts": 0,
+      "laterLevelPendingRows": 70,
+      "laterLevelRowsGateA1": false
+    },
     "licensingGate": {
       "status": "cleared-for-described-wordfold-use",
       "recordedInRepository": "2026-09-09",
