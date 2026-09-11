@@ -100,14 +100,15 @@ disagreement and every non-unanimous dimension are review flags. These are AI
 cross-review disagreement rates, not measured error rates, and every output remains
 marked `notHumanReview`.
 
-The native-Slovak owner queue is limited to Slovak naturalness and wording. It does not
-ask the owner to certify bilingual correspondence to a selected Spanish sense. Product
-copy must state: “Spanish definitions are generated and automatically verified against
-reference sources. They have not been reviewed by native Spanish speakers. Slovak hints
-are checked against linked lexical references where available and independently AI
-cross-reviewed elsewhere. A native Slovak speaker reviews the wording of flagged hints;
-Spanish–Slovak sense correspondence has not been verified by a native bilingual
-reviewer.”
+Only machine-flagged rows require owner verdicts. The A1 verdicts are AI-assisted and
+owner-accepted; they are not native-speaker review and do not certify bilingual
+correspondence to a selected Spanish sense. Product copy must state: “Spanish
+definitions are generated and automatically verified against reference sources; they
+have not been reviewed by native Spanish speakers. Slovak hints are checked against
+linked lexical references where available and independently AI cross-reviewed; they
+have not been reviewed by native Slovak speakers. Flagged A1 hints carry AI-assisted,
+owner-accepted verdicts. Spanish–Slovak sense correspondence has not been verified by a
+native bilingual reviewer.”
 
 Changes made by Wordfold: the pinned ELELex distribution is verified by SHA-256, lemmas
 are NFKC-normalized and lowercased for Spanish, FreeLing parts of speech are mapped to
@@ -251,31 +252,32 @@ coverage was 60/63 and 83/96, with strict non-correspondence of 5/63 (7.94%) and
 disagreement was separately 24/63 and 32/96. These risk-cohort findings are excluded
 from probability-sample denominators.
 
-The Slovak translation packet was not part of either check. Slovak translations use
-level-specific owner review: all A1 concepts require a verdict from Wordfold's
-native-Slovak-speaking owner; A2-C1 use a reproducible probability sample plus
-separately reported targeted findings. The probability-sample gates are at most 2%
-critical error and at most 5% material error. Crossing either bound escalates the level
-to a larger sample or full review. Targeted findings are excluded from those denominators.
-The Slovak owner-disagreement baseline comes from the full A1 review and remains pending;
-the 3.33% A1 Spanish external-reference non-correspondence rate is a different metric.
+The Slovak translation packet was not part of either check. Under the narrowed policy,
+deterministic lexical-reference checks and two-pass AI cross-review identify the rows
+that require owner verdicts. All 47 flagged A1 concepts now have AI-assisted,
+owner-accepted verdicts; the earlier 35 owner verdicts remain historical metadata only.
+For A2-C1, reproducible probability samples plus separately reported targeted findings
+produced 70 flagged rows that remain unresolved and do not gate an A1-only release. The
+probability-sample gates are at most 2% critical error and at most 5% material error.
+Targeted findings are excluded from those denominators. This policy does not produce a
+native-speaker disagreement baseline, and AI disagreement rates are not measured error
+rates.
 
 Any product summary of Slovak review coverage must preserve the level distinction:
 
-> A1 Slovak hints reviewed by a native speaker; A2-C1 sampled.
+> Slovak hints are AI cross-reviewed and not natively reviewed; all 47 flagged A1 hints
+> have AI-assisted, owner-accepted verdicts.
 
 For the frozen ELELex-derived Spanish course levels, the owner approved automated
 external-reference QA plus independent AI cross-review plus explicit owner risk acceptance as the
 Spanish production-review standard on 8 September 2026. Neither pass is human or
-native-speaker review. Product source disclosures must include this exact line:
-
-> Definitions are generated and automatically verified against reference sources.
-> They have not been reviewed by native speakers.
+native-speaker review. Product source disclosures must use the complete approved
+wording quoted in the Spanish-to-Slovak correspondence section above.
 
 The ELELex licensing distribution blocker is resolved by the follow-up authorization.
-The A1 course still may not be compiled or bundled as a distributable artifact until
-all 1,599 Slovak concepts have native-Slovak owner verdicts; 35 are recorded and
-1,564 remain pending. No A2-C1 verdict is required for an A1-only release.
+The A1 content distribution gate is clear: all 47 policy-required flagged concepts have
+AI-assisted, owner-accepted verdicts and none remain pending. The 70 unresolved A2-C1
+flagged rows do not gate an A1-only release.
 
 ## Open English WordNet 2025
 
