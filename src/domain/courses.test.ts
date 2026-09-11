@@ -18,7 +18,9 @@ describe('course registry', () => {
       defaultSourcePronunciationLocale: 'es-ES',
       defaultTargetPronunciationLocale: 'sk-SK',
       catalogId: 'spanish-cefr',
+      capabilities: { devicePronunciation: false },
     });
+    expect(getCourseDefinition('en-sk').capabilities.devicePronunciation).toBe(true);
   });
 
   it('derives course identity from both language fields', () => {

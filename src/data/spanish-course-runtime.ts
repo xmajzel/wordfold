@@ -1,6 +1,6 @@
 import type { CefrCatalogEntry, CefrLevel } from '@/domain/types';
 
-export const SPANISH_DEFINITION_REVIEW_DISCLOSURE = 'Definitions are generated and automatically verified against reference sources. They have not been reviewed by native speakers.';
+export const SPANISH_DEFINITION_REVIEW_DISCLOSURE = 'Spanish definitions are generated and automatically verified against reference sources; they have not been reviewed by native Spanish speakers. Slovak hints are checked against linked lexical references where available and independently AI cross-reviewed; they have not been reviewed by native Slovak speakers. Flagged A1 hints carry AI-assisted, owner-accepted verdicts. Spanish–Slovak sense correspondence has not been verified by a native bilingual reviewer.';
 
 export type SpanishCourseLevelState =
   | 'blocked-pending-owner-review'
@@ -39,6 +39,8 @@ export interface SpanishCourseConcept {
   review: {
     spanish: string;
     slovakOwnerVerdict: string | null;
+    slovakOwnerVerdictProvenance: 'historical-owner-accepted' | 'ai-assisted-owner-accepted' | null;
+    slovakOwnerVerdictRequired: boolean;
   };
 }
 
@@ -57,6 +59,8 @@ export interface SpanishCourseAsset {
     concepts: number;
     terms: number;
     ownerReviewedConcepts: number;
+    ownerVerdictRequiredConcepts: number;
+    ownerResolvedRequiredConcepts: number;
     ownerPendingConcepts: number;
   };
   levels: Record<CefrLevel, SpanishCourseLevelState>;
@@ -88,6 +92,8 @@ export function validateSpanishCourseAsset(asset: SpanishCourseAsset) {
   let previousOrder = 0;
   let termCount = 0;
   let reviewedCount = 0;
+  let requiredCount = 0;
+  let resolvedRequiredCount = 0;
   for (const concept of asset.concepts) {
     assert(!conceptIds.has(concept.id), `Duplicate Spanish concept ID: ${concept.id}`);
     assert(concept.notHumanReview === true && concept.level === 'A1', `${concept.id}: invalid review or level metadata.`);
@@ -96,6 +102,12 @@ export function validateSpanishCourseAsset(asset: SpanishCourseAsset) {
     conceptIds.add(concept.id);
     previousOrder = concept.courseOrder;
     if (concept.review.slovakOwnerVerdict) reviewedCount += 1;
+    if (concept.review.slovakOwnerVerdictRequired) {
+      requiredCount += 1;
+      assert(concept.review.slovakOwnerVerdictProvenance === 'ai-assisted-owner-accepted',
+        `${concept.id}: required Slovak verdict must retain AI-assisted provenance.`);
+      if (concept.review.slovakOwnerVerdict) resolvedRequiredCount += 1;
+    }
     for (const member of concept.members) {
       assert(!memberIds.has(member.entryId), `Duplicate Spanish member ID: ${member.entryId}`);
       assert(member.partOfSpeech === concept.partOfSpeech, `${member.entryId}: member POS differs from its concept.`);
@@ -107,8 +119,10 @@ export function validateSpanishCourseAsset(asset: SpanishCourseAsset) {
   assert(asset.counts.concepts === asset.concepts.length, 'Spanish concept count does not match the manifest.');
   assert(asset.counts.terms === termCount, 'Spanish term count does not match the manifest.');
   assert(asset.counts.ownerReviewedConcepts === reviewedCount, 'Spanish owner-review count does not match the concepts.');
-  assert(asset.counts.ownerPendingConcepts === asset.concepts.length - reviewedCount, 'Spanish pending-review count does not match the concepts.');
-  assert(asset.status !== 'production' || asset.counts.ownerPendingConcepts === 0, 'A production Spanish course requires an owner verdict for every Slovak concept.');
+  assert(asset.counts.ownerVerdictRequiredConcepts === requiredCount, 'Spanish required-verdict count does not match the concepts.');
+  assert(asset.counts.ownerResolvedRequiredConcepts === resolvedRequiredCount, 'Spanish resolved-verdict count does not match the concepts.');
+  assert(asset.counts.ownerPendingConcepts === requiredCount - resolvedRequiredCount, 'Spanish pending-review count does not match required flagged concepts.');
+  assert(asset.status !== 'production' || asset.counts.ownerPendingConcepts === 0, 'A production Spanish course requires a verdict for every flagged Slovak concept.');
 }
 
 function presentation(concept: SpanishCourseConcept, member: SpanishCourseMember): SpanishRuntimeCatalogEntry {

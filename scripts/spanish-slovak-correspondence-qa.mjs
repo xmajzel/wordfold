@@ -389,7 +389,7 @@ async function prepare(options) {
   assert(existsSync(options.wiktextractPath), `Missing Wiktextract archive: ${options.wiktextractPath}`);
   const queue = parseTsv(options.queuePath);
   const queueManifest = JSON.parse(readFileSync(options.queueManifestPath, 'utf8'));
-  assert(queueManifest.notHumanReview === true && queueManifest.totalOutstandingRows === EXPECTED.queue, 'Invalid consolidated owner-review manifest.');
+  assert(queueManifest.notHumanReview === true && queueManifest.totalQaInputRows === EXPECTED.queue, 'Invalid consolidated owner-review manifest.');
   const lemmasByIli = loadOmwSlovak(options.omwArchivePath);
   const tier1 = classifyTier1(queue.rows, lemmasByIli);
   const counts = cohortCounts(tier1);
@@ -461,7 +461,7 @@ async function prepare(options) {
       narrowedQueue: 'All 305 attention-marked rows plus every tier-1 near-miss and every tier-2 row with a non-unanimous dimension. The 416 near-miss rows sort first.',
       ownerScope: 'Monolingual Slovak naturalness and wording only; the owner is not asked to certify bilingual selected-sense correspondence.',
     },
-    productDisclosure: 'Spanish definitions are generated and automatically verified against reference sources. They have not been reviewed by native Spanish speakers. Slovak hints are checked against linked lexical references where available and independently AI cross-reviewed elsewhere. A native Slovak speaker reviews the wording of flagged hints; Spanish–Slovak sense correspondence has not been verified by a native bilingual reviewer.',
+    productDisclosure: 'Spanish definitions are generated and automatically verified against reference sources; they have not been reviewed by native Spanish speakers. Slovak hints are checked against linked lexical references where available and independently AI cross-reviewed; they have not been reviewed by native Slovak speakers. Flagged A1 hints carry AI-assisted, owner-accepted verdicts. Spanish–Slovak sense correspondence has not been verified by a native bilingual reviewer.',
   };
   manifest.runIdentitySha256 = sha256(canonicalJson(manifest));
   writeAtomic(resolve(options.outputDirectory, 'manifest.json'), canonicalJson(manifest));
@@ -1032,7 +1032,7 @@ function analyze(options) {
       excludedUnflaggedAttentionRows: EXPECTED.attention - analysis.flaggedAttention,
       selectionPolicy: 'Include every flagged row with its proposed correction. Preserve inter-pass split and flagged-attention markers; exclude unflagged format-attention rows.',
       attentionConclusion: 'Format-based attention selection did not predict defects; unflagged attention rows have clean wording and are excluded.',
-      ownerScope: 'The owner definitively certifies Slovak wording only for correctSlovak-flagged rows. All other correction-wording verdicts are advisory and never certify bilingual selected-sense correspondence.',
+      ownerScope: 'The correctSlovak dimension marks definitive AI wording findings, including three A1 rows. Owner verdicts based on this queue are AI-assisted and must never be described as native-speaker review or native bilingual selected-sense certification.',
     },
     correctionNonDerivationRule: manifest.tier1.correctionNonDerivationRule,
     productDisclosure: manifest.productDisclosure,

@@ -44,7 +44,7 @@ describe('local Spanish multi-level preview', () => {
       expect(catalog.getCourseCatalogEntriesForNormalizedTerm('es-sk', 'cabeza')).toEqual([cabeza]);
       expect(catalog.getCourseCatalogTranslation('es-sk', cabeza.catalogSenseId)).toBe('hlava');
       expect(catalog.getCourseCatalogTranslation('es-sk', null, 'cabeza')).toBe('hlava');
-      expect(courses.getCourseDefinition('es-sk').capabilities).toMatchObject({ bundledCatalog: true, recommendations: false, devicePronunciation: true });
+      expect(courses.getCourseDefinition('es-sk').capabilities).toMatchObject({ bundledCatalog: true, recommendations: false, devicePronunciation: false });
       expect(courses.getCourseDefinition('es-sk').defaultSourcePronunciationLocale).toBe('es-ES');
       expect(entries.some((entry) => 'semanticReference' in entry || 'lexicalEvidence' in entry)).toBe(false);
       expect(catalog.getCourseCatalogEntryForNormalizedTerm('en-sk', 'pie')?.sourceLanguageCode).toBe('en');

@@ -16,7 +16,7 @@ const SOURCE_HEADER = HEADER.slice(2, 12);
 const OUTPUT_DIRECTORY = resolve('.artifacts/spanish-owner-review');
 const OUTPUT_PATH = resolve(OUTPUT_DIRECTORY, 'outstanding-owner-review-queue.tsv');
 const MANIFEST_PATH = resolve(OUTPUT_DIRECTORY, 'manifest.json');
-const A1_OWNER_MANIFEST_PATH = resolve('.artifacts/spanish-a1-owner-review/manifest.json');
+const A1_OWNER_ADJUDICATIONS_PATH = resolve('assets/catalog/spanish/a1-slovak-owner-adjudications.json');
 const CATALOG_MANIFEST_PATH = resolve('assets/catalog/spanish/cefr-catalog-manifest.json');
 const AMENDMENT_PATH = resolve('assets/catalog/spanish/b1-post-translation-content-corrections.json');
 
@@ -64,15 +64,15 @@ export function attentionMarker(spanishTerm, proposedSlovakHint) {
 }
 
 function a1Rows() {
-  const catalog = buildStagedSpanishA1();
-  const pending = catalog.concepts.filter((concept) => !concept.review.slovakOwnerVerdict);
-  assert(pending.length === EXPECTED_COUNTS.A1, `A1 pending count changed: ${pending.length}.`);
-  return pending.map((concept) => {
+  const catalog = buildStagedSpanishA1({ applyAiAssistedVerdicts: false });
+  const historicalQaInput = catalog.concepts.filter((concept) => concept.review.slovakOwnerVerdictProvenance !== 'historical-owner-accepted');
+  assert(historicalQaInput.length === EXPECTED_COUNTS.A1, `A1 historical QA input count changed: ${historicalQaInput.length}.`);
+  return historicalQaInput.map((concept) => {
     const term = concept.members.map((member) => member.term).join(' / ');
     const definition = concept.members.map((member) => `${member.term}: ${member.definition}`).join(' | ');
     const hint = concept.members.map((member) => `${member.term}: ${member.slovakHint}`).join(' | ');
     return [
-      'A1', 'full-population-pending', `SK-A1-F-${String(concept.courseOrder).padStart(4, '0')}`,
+      'A1', 'historical-full-population', `SK-A1-F-${String(concept.courseOrder).padStart(4, '0')}`,
       concept.id, term, concept.partOfSpeech, definition, hint, '', '', '', '',
       attentionMarker(term, hint),
     ];
@@ -142,10 +142,13 @@ function sittingRanges(rows) {
 }
 
 export function combineOwnerReview() {
-  const a1OwnerManifestText = readFileSync(A1_OWNER_MANIFEST_PATH, 'utf8');
-  const a1OwnerManifest = JSON.parse(a1OwnerManifestText);
-  assert(a1OwnerManifest.notHumanReview === true && a1OwnerManifest.counts.previouslyReviewedConcepts === 35
-    && a1OwnerManifest.counts.verdictsPending === EXPECTED_COUNTS.A1, 'A1 owner-review baseline changed.');
+  const a1OwnerAdjudicationsText = readFileSync(A1_OWNER_ADJUDICATIONS_PATH, 'utf8');
+  const a1OwnerAdjudications = JSON.parse(a1OwnerAdjudicationsText);
+  assert(a1OwnerAdjudications.notHumanReview === true
+    && a1OwnerAdjudications.coverage.policyRequiredFlaggedConcepts === 47
+    && a1OwnerAdjudications.coverage.policyRequiredVerdictsRecorded === 47
+    && a1OwnerAdjudications.coverage.policyRequiredVerdictsPending === 0,
+  'A1 narrowed-policy verdict coverage changed.');
   const catalogManifestText = readFileSync(CATALOG_MANIFEST_PATH, 'utf8');
   const catalogManifest = JSON.parse(catalogManifestText);
   assert(catalogManifest.notHumanReview === true, 'Catalog manifest must remain notHumanReview.');
@@ -153,28 +156,28 @@ export function combineOwnerReview() {
   const a1 = a1Rows();
   const later = laterRows();
   const rows = [...a1, ...later.rows].map((row) => row.map(tsvCell));
-  assert(rows.length === 2804, `Expected 2,804 outstanding owner-review rows; found ${rows.length}.`);
+  assert(rows.length === 2804, `Expected 2,804 correspondence-QA input rows; found ${rows.length}.`);
   assert(rows.every((row) => row.length === HEADER.length), 'Every consolidated row must have 13 columns.');
   assert(new Set(rows.map((row) => `${row[0]}\u0000${row[3]}`)).size === rows.length, 'Duplicate level/group rows reached the queue.');
 
   const countsByLevel = Object.fromEntries(LEVELS.map((level) => {
     const levelRows = rows.filter((row) => row[0] === level);
     return [level, {
-      totalOutstandingRows: levelRows.length,
-      fullPopulationPendingRows: levelRows.filter((row) => row[1] === 'full-population-pending').length,
+      totalQaInputRows: levelRows.length,
+      historicalFullPopulationRows: levelRows.filter((row) => row[1] === 'historical-full-population').length,
       probabilityRows: levelRows.filter((row) => row[1] === 'probability').length,
       additionalTargetedRows: levelRows.filter((row) => row[1] === 'targeted').length,
       attention: attentionCounts(levelRows),
     }];
   }));
-  for (const level of LEVELS) assert(countsByLevel[level].totalOutstandingRows === EXPECTED_COUNTS[level], `${level}: count mismatch.`);
+  for (const level of LEVELS) assert(countsByLevel[level].totalQaInputRows === EXPECTED_COUNTS[level], `${level}: count mismatch.`);
 
   const tsv = `${[HEADER, ...rows].map((row) => row.join('\t')).join('\n')}\n`;
   writeAtomic(OUTPUT_PATH, tsv);
   const manifest = {
     schemaVersion: 1,
     notHumanReview: true,
-    status: 'awaiting-native-slovak-owner-review',
+    status: 'historical-a1-and-later-levels-prepared-for-ai-correspondence-qa',
     courseId: 'es-sk',
     ordering: 'Level A1-C1; within A1, immutable course order; within sampled levels, probability rows followed by non-overlapping targeted rows in their existing deterministic order.',
     schema: { columns: HEADER, columnCount: HEADER.length },
@@ -186,33 +189,33 @@ export function combineOwnerReview() {
       phrase: 'A singleton Slovak hint contains at least three whitespace-delimited words.',
       empty: 'No listed marker applies; normally an ordinary one- or two-word equivalent.',
     },
-    totalOutstandingRows: rows.length,
+    totalQaInputRows: rows.length,
     countsByLevel,
-    excludedPriorVerdicts: { A1: 35, A2: 0, B1: 0, B2: 0, C1: 0 },
+    historicalOwnerVerdictsExcluded: { A1: 35, A2: 0, B1: 0, B2: 0, C1: 0 },
     samplingPolicy: {
-      A1: 'Complete concept census; only the 1,564 still-pending rows are included.',
+      A1: 'Historical complete-concept correspondence-QA input after excluding the 35 earlier owner verdicts. The resulting 47 flags are now resolved and this population is no longer an A1 release gate.',
       A2ThroughC1: '300-row probability sample per level plus non-overlapping targeted divergence-gate rows.',
       targetedRowsExcludedFromProbabilityDenominator: true,
       criticalErrorMaximumRate: 0.02,
       materialErrorMaximumRate: 0.05,
     },
     a1OnlyReleasePath: {
-      pendingA1RowsRequired: 1564,
-      priorA1VerdictsAlreadyAccepted: 35,
+      historicalA1RowsEnteredCorrespondenceQa: 1564,
+      historicalOwnerVerdicts: 35,
       shareAlikeClearanceRequired: false,
       shareAlikeClearanceStatus: 'cleared-for-described-wordfold-use',
       rowsRequiredFromA2ThroughC1: 0,
-      statement: 'The ELELex licensing gate is cleared. An A1-only release requires verdicts for exactly the 1,564 pending A1 rows and nothing from A2-C1.',
+      statement: 'The ELELex licensing gate and all 47 policy-required A1 verdicts are clear. The 70 unresolved A2-C1 flagged rows do not gate an A1-only release.',
     },
     sittings: sittingRanges(rows),
     sources: {
-      a1OwnerManifest: { path: A1_OWNER_MANIFEST_PATH, sha256: sha256(a1OwnerManifestText) },
+      a1OwnerAdjudications: { path: A1_OWNER_ADJUDICATIONS_PATH, sha256: sha256(a1OwnerAdjudicationsText) },
       catalogManifest: { path: CATALOG_MANIFEST_PATH, sha256: sha256(catalogManifestText) },
       laterQueues: later.sources,
       b1ContentAmendment: { path: AMENDMENT_PATH, sha256: sha256(later.amendmentText) },
     },
     output: { path: OUTPUT_PATH, sha256: sha256(tsv) },
-    distributionBlocker: 'The 1,564 pending A1 native-Slovak owner verdicts are the only remaining content gate for an A1-only release; this review-workflow artifact must not be bundled.',
+    workflowRestriction: 'This ignored full-population QA input is an intermediate review artifact and must not be bundled.',
   };
   writeAtomic(MANIFEST_PATH, canonicalJson(manifest));
   return { outputPath: OUTPUT_PATH, manifestPath: MANIFEST_PATH, manifest };
@@ -223,7 +226,7 @@ if (process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.m
   console.log(canonicalJson({
     outputPath: result.outputPath,
     manifestPath: result.manifestPath,
-    totalOutstandingRows: result.manifest.totalOutstandingRows,
+    totalQaInputRows: result.manifest.totalQaInputRows,
     countsByLevel: result.manifest.countsByLevel,
   }));
 }

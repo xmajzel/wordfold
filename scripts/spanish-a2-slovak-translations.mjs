@@ -610,18 +610,18 @@ function prepareOwnerReview(records, manifest, outputDirectory) {
   const reviewManifest = {
     schemaVersion: 1,
     notHumanReview: true,
-    status: 'awaiting-native-owner-review',
+    status: 'prepared-for-ai-correspondence-qa',
     level: manifest.level,
     sourceTranslationRunIdentitySha256: manifest.runIdentitySha256,
     policy: {
-      A1: '100% native-owner review.',
-      A2ThroughC1: 'Probability sample plus separately reported targeted findings.',
-      productCopy: 'A1 Slovak hints reviewed by a native speaker; A2-C1 sampled.',
+      A1: 'Only machine-flagged rows require AI-assisted owner verdicts.',
+      A2ThroughC1: 'Probability sample plus separately reported targeted findings; only subsequently flagged rows require owner verdicts.',
+      productCopy: 'Slovak hints are AI cross-reviewed and not natively reviewed; flagged rows require AI-assisted owner verdicts.',
       criticalErrorMaximumRate: 0.02,
       materialErrorMaximumRate: 0.05,
       denominator: 'The 300-row probability sample only. Targeted findings are excluded unless independently selected into the probability sample.',
       escalation: `If either bound is crossed, expand the probability sample or require 100% review for ${manifest.level}.`,
-      a1SlovakOwnerDisagreementBaseline: 'pending-completion-of-full-A1-owner-review',
+      a1SlovakOwnerDisagreementBaseline: 'not-produced-under-narrowed-policy',
       unrelatedMetric: 'The A1 3.33% Spanish external-reference non-correspondence rate is not a Slovak owner-disagreement baseline.',
     },
     probabilitySample: {

@@ -502,9 +502,13 @@ function prepare(options) {
 }
 
 function validateOwnerAdjudications(owner, ownerPath) {
-  assert(owner.schemaVersion === 1 && owner.notHumanReview === true && owner.status === 'in-progress', 'Owner-review adjudications must remain in progress until all 1,599 concepts have verdicts.');
-  assert(owner.coverage.productionConcepts === 1599 && owner.coverage.verdictsRecorded === 35
-    && owner.coverage.verdictsNotSupplied === 1564, 'Unexpected owner-review coverage.');
+  assert(owner.schemaVersion === 2 && owner.notHumanReview === true && owner.status === 'complete-for-a1-release',
+    'Owner adjudications must record completion under the narrowed flagged-row policy.');
+  assert(owner.coverage.productionConcepts === 1599 && owner.coverage.historicalOwnerVerdicts === 35
+    && owner.coverage.policyRequiredFlaggedConcepts === 47
+    && owner.coverage.policyRequiredVerdictsRecorded === 47
+    && owner.coverage.policyRequiredVerdictsPending === 0,
+  'Unexpected owner-review coverage.');
   assert(owner.coverage.acceptedWithoutChange === 33 && owner.coverage.memberOverrides === 1
     && owner.coverage.sharedHintReplacements === 1, 'Unexpected owner verdict counts.');
   assert(sha256File(resolve(owner.sourceReviewPacket.path)) === owner.sourceReviewPacket.sha256, 'Owner review packet hash changed.');
@@ -522,6 +526,13 @@ function validateOwnerAdjudications(owner, ownerPath) {
   }
   const livingRoom = owner.entries.find((entry) => entry.groupId === 'es-sk:a1:i55760');
   assert(livingRoom?.decision === 'sharedHintReplacement' && livingRoom.replacementSlovakHint === 'obývačka', 'Missing approved salón/sala shared-hint replacement.');
+  const aiAssisted = owner.aiAssistedOwnerAcceptedVerdicts;
+  assert(aiAssisted.notHumanReview === true && aiAssisted.verdictProvenance === 'ai-assisted-owner-accepted'
+    && aiAssisted.entries.length === 47 && aiAssisted.counts.resolvedRows === 47
+    && aiAssisted.counts.acceptedProposedCorrections === 40 && aiAssisted.counts.ownerOverrides === 7,
+  'AI-assisted A1 verdict coverage changed.');
+  assert(aiAssisted.definitiveCorrectSlovakReviewItemIds.join(',') === 'SK-A1-F-0234,SK-A1-F-0479,SK-A1-F-1161',
+    'Definitive correctSlovak verdict provenance changed.');
   return { path: ownerPath, sha256: sha256File(ownerPath) };
 }
 
@@ -771,8 +782,8 @@ function prepareOwnerReview(manifest, records, outputDirectory) {
   const reviewManifest = {
     schemaVersion: 1,
     notHumanReview: true,
-    status: 'awaiting-native-slovak-owner-review',
-    reviewerRole: 'native-Slovak-speaking owner',
+    status: 'awaiting-owner-verdicts',
+    reviewerRole: 'owner',
     sourceRunIdentitySha256: manifest.runIdentitySha256,
     selection: {
       size: REVIEW_GROUPS,
@@ -823,7 +834,7 @@ function analyze(options) {
       measuredLinearProjectionTokens: Math.round(measuredPerGroup * EXPECTED_GROUPS),
       measuredToApprovedProjectionRatio: (measuredPerGroup * EXPECTED_GROUPS) / FULL_PROJECTION_TOKENS,
     },
-    gate: 'Stop after preparing the 30-group owner packet. Do not generate the remaining A1 groups until native-Slovak owner judgments are returned.',
+    gate: 'Stop after preparing the 30-group owner packet. Do not generate the remaining A1 groups until owner verdicts are returned.',
   };
   const summaryPath = resolve(options.outputDirectory, 'pilot-summary.json');
   writeFileAtomic(summaryPath, canonicalJson(summary));

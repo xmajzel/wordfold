@@ -56,7 +56,7 @@ const countsByLevel = Object.fromEntries(levels.map((level) => [level, {
 const manifest = {
   schemaVersion: 1,
   notHumanReview: true,
-  status: 'awaiting-native-owner-review',
+  status: 'prepared-for-ai-correspondence-qa',
   courseId: 'es-sk',
   levels,
   policy: {
@@ -65,8 +65,8 @@ const manifest = {
     criticalErrorMaximumRate: 0.02,
     materialErrorMaximumRate: 0.05,
     escalation: 'If either bound is crossed within a level probability sample, expand that level sample or require 100% review.',
-    productCopy: 'A1 Slovak hints reviewed by a native speaker; A2-C1 sampled.',
-    a1SlovakOwnerDisagreementBaseline: 'pending-completion-of-full-A1-owner-review',
+    productCopy: 'Slovak hints are AI cross-reviewed and not natively reviewed; flagged rows require AI-assisted owner verdicts.',
+    a1SlovakOwnerDisagreementBaseline: 'not-produced-under-narrowed-policy',
   },
   countsByLevel,
   totalRows: rows.length,

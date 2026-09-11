@@ -22,7 +22,7 @@ const EXPECTED_SOURCE_ENTRIES = 1689;
 const EXPECTED_STAGED_CONCEPTS = 1599;
 const EXPECTED_STAGED_TERMS = 1687;
 const OWNER_REVIEW_CHUNK_SIZE = 300;
-const REVIEW_DISCLOSURE = 'Definitions are generated and automatically verified against reference sources. They have not been reviewed by native speakers.';
+const REVIEW_DISCLOSURE = 'Spanish definitions are generated and automatically verified against reference sources; they have not been reviewed by native Spanish speakers. Slovak hints are checked against linked lexical references where available and independently AI cross-reviewed; they have not been reviewed by native Slovak speakers. Flagged A1 hints carry AI-assisted, owner-accepted verdicts. Spanish–Slovak sense correspondence has not been verified by a native bilingual reviewer.';
 
 const paths = Object.freeze({
   learnerManifest: resolve('.artifacts/spanish-a1-learner-content/full/manifest.json'),
@@ -97,11 +97,14 @@ function readTranslationRecords(manifestPath) {
 }
 
 function ownerVerdicts(owner) {
-  return new Map(owner.entries.map((entry) => [entry.groupId, entry]));
+  return new Map([
+    ...owner.entries,
+    ...owner.aiAssistedOwnerAcceptedVerdicts.entries,
+  ].map((entry) => [entry.groupId, entry]));
 }
 
-function resolvedTranslation(record, ownerEntry) {
-  const sharedHint = ownerEntry?.decision === 'sharedHintReplacement'
+function resolvedTranslation(record, ownerEntry, applyAiAssistedVerdicts) {
+  let sharedHint = ownerEntry?.decision === 'sharedHintReplacement'
     ? ownerEntry.replacementSlovakHint
     : record.output.slovakHint;
   const memberOverrides = new Map(record.output.memberOverrides.map((entry) => [entry.entryId, {
@@ -112,9 +115,24 @@ function resolvedTranslation(record, ownerEntry) {
   if (ownerEntry?.decision === 'memberOverride') {
     memberOverrides.set(ownerEntry.entryId, {
       slovakHint: ownerEntry.replacementSlovakHint,
-      source: 'native-slovak-owner-member-override',
+      source: 'historical-owner-member-override',
       rationale: ownerEntry.rationale,
     });
+  }
+  if (ownerEntry?.resolvedHints && applyAiAssistedVerdicts) {
+    const resolvedHints = Object.entries(ownerEntry.resolvedHints);
+    assert(resolvedHints.length > 0, `${ownerEntry.groupId}: resolved hints are empty.`);
+    for (const member of record.input.members) {
+      const slovakHint = ownerEntry.resolvedHints[member.term];
+      assert(typeof slovakHint === 'string' && slovakHint.trim(), `${ownerEntry.groupId}: missing resolved hint for ${member.term}.`);
+      memberOverrides.set(member.entryId, {
+        slovakHint,
+        source: 'ai-assisted-owner-accepted',
+        rationale: ownerEntry.resolution,
+      });
+    }
+    const uniqueHints = new Set(resolvedHints.map(([, hint]) => hint));
+    if (uniqueHints.size === 1) sharedHint = resolvedHints[0][1];
   }
   return { sharedHint, memberOverrides };
 }
@@ -126,7 +144,7 @@ function priorOwnerReviewGroupIds() {
   return new Set(manifest.selection.groupIds);
 }
 
-export function buildStagedSpanishA1() {
+export function buildStagedSpanishA1({ applyAiAssistedVerdicts = true } = {}) {
   assert(sha256File(paths.courseCatalog) === COURSE_CATALOG_SHA256, 'Frozen Spanish course catalog hash changed.');
   assert(sha256File(paths.courseOrder) === COURSE_ORDER_SHA256, 'Spanish course order hash changed.');
   const source = buildTranslationGroups(paths.learnerManifest, paths.releaseAdjudications, paths.crossReviewAdjudications);
@@ -160,7 +178,12 @@ export function buildStagedSpanishA1() {
   assert(merge.survivingEntryId === 'es-cefr:8b8ab9d45013c38a' && retiredEntryIds.has('es-cefr:c882e187b6181abf'), 'Unexpected course-entry merge.');
 
   const owner = readJson(paths.ownerAdjudications);
-  assert(owner.notHumanReview === true && owner.coverage.productionConcepts === EXPECTED_STAGED_CONCEPTS, 'Owner adjudications do not target the current production population.');
+  assert(owner.schemaVersion === 2 && owner.notHumanReview === true && owner.status === 'complete-for-a1-release'
+    && owner.coverage.productionConcepts === EXPECTED_STAGED_CONCEPTS
+    && owner.coverage.policyRequiredFlaggedConcepts === 47
+    && owner.coverage.policyRequiredVerdictsRecorded === 47
+    && owner.coverage.policyRequiredVerdictsPending === 0,
+  'Owner adjudications do not satisfy the narrowed A1 release policy.');
   const ownerByGroupId = ownerVerdicts(owner);
   const initialReviewIds = priorOwnerReviewGroupIds();
 
@@ -170,7 +193,7 @@ export function buildStagedSpanishA1() {
     const members = sourceGroup.members.filter((member) => currentById.has(member.entryId) && !retiredEntryIds.has(member.entryId));
     if (members.length === 0) return null;
     const ownerEntry = ownerByGroupId.get(sourceGroup.groupId);
-    const translation = resolvedTranslation(record, ownerEntry);
+    const translation = resolvedTranslation(record, ownerEntry, applyAiAssistedVerdicts);
     const orderedMembers = members.map((member) => {
       const catalogEntry = currentById.get(member.entryId);
       const override = translation.memberOverrides.get(member.entryId);
@@ -192,7 +215,7 @@ export function buildStagedSpanishA1() {
         selectedSenseId: member.selectedSenseId,
         slovakHint: override?.slovakHint ?? translation.sharedHint,
         hintSource: override?.source ?? (ownerEntry?.decision === 'sharedHintReplacement'
-          ? 'native-slovak-owner-shared-replacement'
+          ? 'historical-owner-shared-replacement'
           : 'generated-shared-hint'),
         staleSlovakHint: Boolean(externalRepair?.staleSlovakHint),
         courseOrder: rankByEntryId.get(member.entryId),
@@ -200,8 +223,11 @@ export function buildStagedSpanishA1() {
       };
     }).sort((left, right) => left.courseOrder - right.courseOrder || left.entryId.localeCompare(right.entryId));
     const ownerVerdict = ownerEntry
-      ? ownerEntry.decision
+      ? ownerEntry.resolution ?? ownerEntry.decision
       : initialReviewIds.has(sourceGroup.groupId) ? 'acceptedSharedHint' : null;
+    const ownerVerdictProvenance = ownerEntry?.resolvedHints
+      ? owner.aiAssistedOwnerAcceptedVerdicts.verdictProvenance
+      : ownerVerdict ? 'historical-owner-accepted' : null;
     return {
       id: sourceGroup.groupId,
       notHumanReview: true,
@@ -213,6 +239,8 @@ export function buildStagedSpanishA1() {
       review: {
         spanish: 'owner-approved-automated-reference-qa-plus-independent-ai-cross-review',
         slovakOwnerVerdict: ownerVerdict,
+        slovakOwnerVerdictProvenance: ownerVerdictProvenance,
+        slovakOwnerVerdictRequired: Boolean(ownerEntry?.resolvedHints),
       },
     };
   }).filter(Boolean).sort((left, right) => left.courseOrder - right.courseOrder || left.id.localeCompare(right.id));
@@ -222,30 +250,40 @@ export function buildStagedSpanishA1() {
   assert(concepts.reduce((sum, concept) => sum + concept.members.length, 0) === EXPECTED_STAGED_TERMS, 'Expected 1,687 staged A1 terms after the solo/sólo merge.');
   assert(!concepts.some((concept) => concept.members.some((member) => member.entryId === 'es-cefr:4816e47d42b7fc7e')), 'Excluded Mediterranean named instance reached staging.');
   const reviewedConcepts = concepts.filter((concept) => concept.review.slovakOwnerVerdict).length;
-  assert(reviewedConcepts === owner.coverage.verdictsRecorded, 'Owner verdict count does not match the adjudication coverage.');
-  assert(concepts.length - reviewedConcepts === owner.coverage.verdictsNotSupplied, 'Pending owner verdict count does not match the adjudication coverage.');
+  const requiredConcepts = concepts.filter((concept) => concept.review.slovakOwnerVerdictRequired).length;
+  const resolvedRequiredConcepts = concepts.filter((concept) => concept.review.slovakOwnerVerdictRequired
+    && concept.review.slovakOwnerVerdict).length;
+  const pendingRequiredConcepts = requiredConcepts - resolvedRequiredConcepts;
+  assert(reviewedConcepts === owner.coverage.historicalOwnerVerdicts + owner.coverage.policyRequiredVerdictsRecorded,
+    'Recorded owner verdict count does not match the adjudication coverage.');
+  assert(requiredConcepts === owner.coverage.policyRequiredFlaggedConcepts
+    && resolvedRequiredConcepts === owner.coverage.policyRequiredVerdictsRecorded
+    && pendingRequiredConcepts === owner.coverage.policyRequiredVerdictsPending,
+  'Policy-required owner verdict count does not match the adjudication coverage.');
 
   const catalogManifest = readJson(paths.catalogManifest);
-  assert(catalogManifest.productionReviewPolicy.requiredDisclosure === REVIEW_DISCLOSURE, 'Spanish review disclosure changed.');
+  assert(catalogManifest.productionReviewPolicy.spanishSlovakCorrespondence.productDisclosure === REVIEW_DISCLOSURE,
+    'Spanish review disclosure changed.');
   return {
     schemaVersion: 1,
     notHumanReview: true,
-    status: 'non-distributable-staging',
-    distributionBlocker: '1,564 A1 Slovak concepts still require native-Slovak owner verdicts; this artifact must remain under ignored .artifacts and must not be bundled.',
+    status: 'production',
     courseId: 'es-sk',
     sourceLanguageCode: 'es',
     targetLanguageCode: 'sk',
-    title: 'Wordfold Spanish A1 non-distributable staging catalog',
+    title: 'Wordfold Spanish A1 catalog',
     reviewDisclosure: REVIEW_DISCLOSURE,
     pronunciationEnabled: false,
     counts: {
       concepts: concepts.length,
       terms: concepts.reduce((sum, concept) => sum + concept.members.length, 0),
       ownerReviewedConcepts: reviewedConcepts,
-      ownerPendingConcepts: concepts.length - reviewedConcepts,
+      ownerVerdictRequiredConcepts: requiredConcepts,
+      ownerResolvedRequiredConcepts: resolvedRequiredConcepts,
+      ownerPendingConcepts: pendingRequiredConcepts,
     },
     levels: {
-      A1: 'blocked-pending-owner-review',
+      A1: 'available',
       A2: 'not-generated',
       B1: 'not-generated',
       B2: 'not-generated',
@@ -281,9 +319,11 @@ export function prepareOwnerReview(outputDirectory) {
   assertIgnoredArtifactDirectory(outputDirectory);
   const catalog = buildStagedSpanishA1();
   const ownerByGroupId = ownerVerdicts(readJson(paths.ownerAdjudications));
+  const pendingConcepts = catalog.concepts.filter((concept) => concept.review.slovakOwnerVerdictRequired
+    && !concept.review.slovakOwnerVerdict);
   const chunks = [];
-  for (let offset = 0; offset < catalog.concepts.length; offset += OWNER_REVIEW_CHUNK_SIZE) {
-    const concepts = catalog.concepts.slice(offset, offset + OWNER_REVIEW_CHUNK_SIZE);
+  for (let offset = 0; offset < pendingConcepts.length; offset += OWNER_REVIEW_CHUNK_SIZE) {
+    const concepts = pendingConcepts.slice(offset, offset + OWNER_REVIEW_CHUNK_SIZE);
     const rows = [['Spanish term', 'POS', 'Spanish definition', 'Proposed Slovak hint', 'Owner verdict']];
     for (const concept of concepts) {
       rows.push([
@@ -307,24 +347,26 @@ export function prepareOwnerReview(outputDirectory) {
       sha256: sha256(text),
     });
   }
-  assert(chunks.length === 6 && chunks.at(-1).conceptCount === 99, 'Expected owner-review chunks of 300/300/300/300/300/99.');
+  assert(chunks.length === 0, 'All policy-required A1 verdicts are already resolved.');
   const manifest = {
     schemaVersion: 1,
     notHumanReview: true,
-    status: 'awaiting-native-slovak-owner-review',
+    status: 'complete-no-verdicts-pending',
     courseId: 'es-sk',
     level: 'A1',
-    reviewerRole: 'native-Slovak-speaking owner',
+    reviewerRole: 'owner using AI-assisted evidence',
     ordering: 'Level, then deterministic ELELex document-count course order; A1 is the only generated level.',
     format: 'TSV; one row per shared-sense concept after the header.',
     counts: {
       concepts: catalog.counts.concepts,
       terms: catalog.counts.terms,
-      previouslyReviewedConcepts: catalog.counts.ownerReviewedConcepts,
+      recordedOwnerVerdicts: catalog.counts.ownerReviewedConcepts,
+      requiredFlaggedConcepts: catalog.counts.ownerVerdictRequiredConcepts,
+      resolvedRequiredConcepts: catalog.counts.ownerResolvedRequiredConcepts,
       verdictsPending: catalog.counts.ownerPendingConcepts,
       chunks: chunks.length,
     },
-    verdictInstructions: 'Keep the prefilled accepted verdicts unless correcting them. For blank rows, record accepted, a corrected shared hint, member-specific overrides, or drop with a concise rationale.',
+    verdictInstructions: 'No A1 verdicts remain pending under the narrowed flagged-row policy.',
     sourceHashes: sourceHashes(),
     chunks,
   };
@@ -348,11 +390,9 @@ export function stageCourse(outputDirectory) {
   const manifest = {
     schemaVersion: 1,
     notHumanReview: true,
-    status: 'blocked-non-distributable-staging',
-    distributionAllowed: false,
-    blockers: [
-      `${catalog.counts.ownerPendingConcepts} Slovak concepts still require owner verdicts.`,
-    ],
+    status: 'release-candidate-staging',
+    distributionAllowed: true,
+    blockers: [],
     catalog: { path: catalogPath, sha256: sha256(catalogText), counts: catalog.counts },
     sourceHashes: sourceHashes(),
   };

@@ -65,7 +65,7 @@ export const courseDefinitions: readonly CourseDefinition[] = [
       bundledCatalog: spanishA1PreviewEnabled,
       recommendations: false,
       onDeviceTranslation: true,
-      devicePronunciation: true,
+      devicePronunciation: false,
       publicNeuralPronunciation: false,
       privateNeuralPronunciation: false,
       offlinePronunciation: false,
