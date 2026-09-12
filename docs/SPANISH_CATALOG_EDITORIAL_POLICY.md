@@ -6,9 +6,11 @@ The Spanish course teaches Spanish to Slovak-native learners. Runtime identity i
 `es-sk`: Spanish is the learned, defined, example, and pronounced language; Slovak is
 the revealable hint language.
 
-`assets/catalog/spanish/cefr-pilot.json` is original Wordfold draft content used only
-to exercise the six-level data pipeline. Normal catalog APIs exclude it. It must not
-be represented as reviewed, production-ready, or an official CEFR vocabulary list.
+`assets/catalog/spanish/cefr-pilot.json` is original Wordfold draft content retained
+as historical, non-gating evidence for the retired six-entry pilot. Normal catalog
+APIs exclude it. The runtime imports the promoted A1-only production asset at
+`assets/catalog/spanish/a1-course.json`; A2-C1 remain not yet available and C2 is
+unsupported by the current ELELex source.
 
 ## Instituto Cervantes reference boundary
 
@@ -163,6 +165,11 @@ unresolved and do not gate A1. A critical-error rate above 2% or a material-erro
 above 5% escalates that later level to a larger sample or complete review. The ELELex
 licensing gate and the A1 flagged-row verdict gate are both clear.
 
+The approved A1 asset is promoted to `assets/catalog/spanish/a1-course.json`; its
+catalog and source-input hashes are recorded in the adjacent small release manifest.
+Neither the Spanish editorial manifest nor the cross-course CEFR catalog manifest is
+runtime-imported. Only A1 is bundled.
+
 For B2 and C1, external-reference QA uses one deterministic probability sample per
 level plus the complete minority-POS cohort. It does not separately add the
 everyday-life cohort because the measured external check produced approximately five
@@ -220,6 +227,6 @@ in `docs/SPANISH_CATALOG_EXPANSION.md`. It is not part of the retired quota-pilo
 review workflow. Supplemental AI assessments bind every entry and exact input hashes;
 corrections invalidate coverage and require rechecking. Preview
 compilation rejects unresolved, stale or incomplete reports and never emits a
-production release. Existing human decisions are not populated from AI records.
-All six levels have available preview entries but remain partial; the next 138
-enumerated selections and additional unmapped coverage are still unfinished.
+production release. Existing human decisions are not populated from AI records. The
+historical preview contains entries across all six levels but is not runtime-imported;
+the next 138 enumerated selections and additional unmapped coverage remain unfinished.

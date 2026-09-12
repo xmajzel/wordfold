@@ -20,12 +20,12 @@ commercial digital language-learning application.
   or official validation and does not use the Instituto Cervantes logo as a
   promotional mark.
 
-`assets/catalog/spanish/cefr-pilot.json` contains six original Wordfold draft records
-created solely to validate the course-aware catalog schema and level code paths. They
-are explicitly excluded from production catalog APIs and recommendations until
-the applicable Spanish automated-QA and Slovak owner-review gates are recorded. The
-Spanish checks are not human or native-speaker review. The editorial and promotion
-rules are documented in `docs/SPANISH_CATALOG_EDITORIAL_POLICY.md`.
+`assets/catalog/spanish/cefr-pilot.json` retains six original Wordfold draft records as
+historical, non-gating evidence for the retired pilot workflow. Runtime catalog APIs
+instead load the promoted A1-only production asset at
+`assets/catalog/spanish/a1-course.json`. The Spanish checks are not human or
+native-speaker review. The editorial and promotion rules are documented in
+`docs/SPANISH_CATALOG_EDITORIAL_POLICY.md`.
 
 ### ELELex Spanish CEFR level source
 
@@ -51,9 +51,9 @@ UCLouvain/CENTAL.
 - Required acknowledgement: “Spanish vocabulary level data is based in part on ELELex,
   a CEFR-graded lexical resource developed as part of the CEFRLex project at
   UCLouvain/CENTAL.”
-- Level coverage: A1-C1. ELELex does not publish a C2 column, so the first Spanish
-  release is scoped to A1-C1 and C2 is gated as not yet available. No C2 entries are
-  synthesized from the C1 tail.
+- Level coverage: A1-C1. The current release bundles A1 only; A2-C1 are not yet
+  available. ELELex does not publish a C2 column, so C2 is unsupported by the current
+  source and no C2 entries are synthesized from the C1 tail.
 - ShareAlike status: resolved for the described Wordfold use; see the consolidated
   ShareAlike legal-review records below.
 - Restrictions: the authorization does not imply endorsement, certification, or
@@ -377,7 +377,8 @@ with original Spanish definitions/examples and Slovak hints. No PCIC learner-fac
 prose or bulk publisher word list is reproduced. The per-sense framework references,
 provisional placements, objective coverage and gaps are in `a1-c2-inventory.json`.
 
-The learner preview in `expansion-preview.json` contains only original learner
+The retired learner preview in `expansion-preview.json` remains historical,
+non-gating evidence and is not runtime-imported. It contains only original learner
 fields and audit hashes; licensed OMW/WordNet reviewer glosses are not included.
 Both independent AI assessments and their prior revisions are retained under
 `assets/catalog/spanish/reviews/`. These assessments are not native attestations,

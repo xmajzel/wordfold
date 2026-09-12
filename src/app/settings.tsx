@@ -140,7 +140,7 @@ export default function SettingsScreen() {
           <AppText variant="caption" style={{ color: theme.muted }}>{learningPreferences.levels.length > 0
             ? activeCourse.capabilities.recommendations
               ? `${learningPreferences.levels.join(', ')} · ${topicOptions.filter((topic) => learningPreferences.topics.includes(topic.id)).map((topic) => topic.title).join(', ') || 'Choose interests'}`
-              : `${learningPreferences.levels.join(', ')} · device pronunciation`
+              : `${learningPreferences.levels.join(', ')} · Spanish catalog browsing`
             : activeCourse.capabilities.recommendations ? 'Choose levels and interests for recommendations' : 'Choose Spanish levels for your manual vocabulary'}</AppText>
         </View>
         <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
@@ -173,11 +173,8 @@ export default function SettingsScreen() {
       <AppText variant="heading">Content and privacy</AppText>
       <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
         <InfoRow icon="phone-portrait-outline" title="Offline-first vocabulary" body={dataSource === 'synced' ? 'Account vocabulary stays on this device and synchronizes when connected.' : 'Device vocabulary stays local until account import and reconciliation finish.'}/>
-        {activeCourseId === 'en-sk' ? <>
-          <InfoRow icon="book-outline" title="Open English WordNet 2025" body="Definitions under CC BY 4.0."/>
-          <InfoRow icon="list-outline" title="NGSL discovery packs" body="Spoken, Business, and Academic lists under CC BY-SA 4.0."/>
-        </> : <InfoRow icon="shield-checkmark-outline" title="Spanish catalog quality gate" body="Original Spanish learning content uses the Plan Curricular del Instituto Cervantes (PCIC) as a reference framework. No certification or endorsement is implied. Local draft previews are not production releases."/>}
       </View>
+      <Pressable accessibilityRole="button" accessibilityLabel="Open content sources" onPress={() => router.push('/sources' as never)} style={({ pressed }) => [styles.preferenceCard, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.76 : 1 }]}><View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="book-outline" color={theme.primary} size={24}/></View><View style={styles.flex}><AppText variant="heading">Content sources</AppText><AppText variant="caption" style={{ color: theme.muted }}>Attributions, licences, and review disclosures for both courses</AppText></View><Ionicons name="chevron-forward" color={theme.primary} size={20}/></Pressable>
       <Pressable testID="privacy-policy-link" accessibilityRole="link" accessibilityLabel="Open privacy policy" onPress={() => void Linking.openURL(PRIVACY_POLICY_URL)} style={[styles.preferenceCard, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="shield-checkmark-outline" color={theme.primary} size={24}/></View><View style={styles.flex}><AppText variant="heading">Privacy policy</AppText><AppText variant="caption" style={{ color: theme.muted }}>What Wordfold stores locally and when cloud services are used</AppText></View><Ionicons name="open-outline" color={theme.primary} size={20}/></Pressable>
       <Pressable testID="account-deletion-link" accessibilityRole="link" accessibilityLabel="Open account deletion information" onPress={() => void Linking.openURL(ACCOUNT_DELETION_URL)} style={[styles.preferenceCard, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="trash-outline" color={theme.primary} size={24}/></View><View style={styles.flex}><AppText variant="heading">Account deletion</AppText><AppText variant="caption" style={{ color: theme.muted }}>Delete in the app or request deletion after uninstalling</AppText></View><Ionicons name="open-outline" color={theme.primary} size={20}/></Pressable>
       <AppText variant="caption" style={{ color: theme.muted }}>Wordfold reminders and learning preferences remain device-only.</AppText>
