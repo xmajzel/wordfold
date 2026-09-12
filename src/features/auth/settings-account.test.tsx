@@ -99,6 +99,14 @@ describe('Settings account entry', () => {
     expect(openUrl).toHaveBeenNthCalledWith(2, ACCOUNT_DELETION_URL);
   });
 
+  it('moves course attributions to the combined Sources screen', async () => {
+    const view = await render(<SettingsScreen/>);
+    expect(view.queryByText('Open English WordNet 2025')).toBeNull();
+    expect(view.queryByText('NGSL discovery packs')).toBeNull();
+    await fireEvent.press(view.getByRole('button', { name: 'Open content sources' }));
+    expect(mockPush).toHaveBeenCalledWith('/sources');
+  });
+
   it('stages a course choice and leaves the active course unchanged until confirmation', async () => {
     const view = await render(<SettingsScreen/>);
     await fireEvent.press(view.getByRole('radio', { name: 'Slovak → Spanish' }));

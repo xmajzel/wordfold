@@ -13,6 +13,7 @@ const mockOtherWord: Word = {
   understoodStreak: 0, lapseCount: 0, viewCount: 0, lastViewedAt: null, lastRatedAt: null,
   nextReviewAt: null, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z',
 };
+let mockActiveCourseId: 'en-sk' | 'es-sk' = 'en-sk';
 
 jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
 jest.mock('expo-haptics', () => ({ selectionAsync: jest.fn(async () => undefined) }));
@@ -48,10 +49,11 @@ jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     words: [mockOtherWord],
     collections: [{ id: 'my-words', name: 'My words' }],
-    activeCourseId: 'en-sk',
+    activeCourseId: mockActiveCourseId,
     activeCourse: {
-      id: 'en-sk', sourceLanguageCode: 'en', targetLanguageCode: 'sk',
-      capabilities: { bundledCatalog: true, recommendations: true },
+      id: mockActiveCourseId,
+      sourceLanguageCode: mockActiveCourseId === 'es-sk' ? 'es' : 'en', targetLanguageCode: 'sk',
+      capabilities: { bundledCatalog: true, recommendations: mockActiveCourseId === 'en-sk' },
     },
     learningPreferences: { levels: [], topics: [] },
     wordCapacity: { remaining: 99, shouldShowNotice: false },
@@ -62,6 +64,7 @@ jest.mock('@/providers/app-data-provider', () => ({
 
 describe('library course visibility', () => {
   beforeEach(() => {
+    mockActiveCourseId = 'en-sk';
     jest.spyOn(Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 1, fontScale: 1 });
   });
   afterEach(() => jest.restoreAllMocks());
@@ -96,5 +99,17 @@ describe('library course visibility', () => {
     expect(screen.getAllByText('0 learning')).toHaveLength(6);
     expect(screen.getAllByText('0 added')).toHaveLength(6);
     expect(screen.queryByText('Baum')).toBeNull();
+  });
+
+  it('enables Spanish A1 while visibly gating later levels', async () => {
+    mockActiveCourseId = 'es-sk';
+    const screen = await render(<LibraryScreen/>);
+
+    expect(screen.getByTestId('catalog-level-A1').props.accessibilityState).toEqual({ disabled: false });
+    expect(screen.getByTestId('catalog-level-A2').props.accessibilityState).toEqual({ disabled: true });
+    expect(screen.getByTestId('catalog-level-C2').props.accessibilityState).toEqual({ disabled: true });
+    screen.getAllByText('Not yet available');
+    screen.getByText('Unsupported by the current source');
+    screen.getByText('Spanish A1 catalog is available');
   });
 });

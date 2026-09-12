@@ -39,11 +39,13 @@ beforeEach(() => { jest.clearAllMocks(); mockCourseId = 'es-sk'; });
 it('saves Spanish preferences without promising an automatically created starter set', async () => {
   const view = await render(<OnboardingScreen/>);
   await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
-  await fireEvent.press(view.getByTestId('level-C2'));
+  expect(view.getByTestId('level-A2').props.accessibilityState).toMatchObject({ disabled: true });
+  expect(view.getByTestId('level-C2').props.accessibilityState).toMatchObject({ disabled: true });
+  await fireEvent.press(view.getByTestId('level-A1'));
   await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
   expect(view.queryByRole('button', { name: 'Create my set' })).toBeNull();
   await fireEvent.press(view.getByRole('button', { name: 'Save my preferences' }));
-  await waitFor(() => expect(mockComplete).toHaveBeenCalledWith(expect.objectContaining({ levels: ['C2'] }), 'device'));
+  await waitFor(() => expect(mockComplete).toHaveBeenCalledWith(expect.objectContaining({ levels: ['A1'] }), 'device'));
   expect(mockReplace).toHaveBeenCalledWith({ pathname: '/onboarding-ready', params: { count: '0' } });
 });
 

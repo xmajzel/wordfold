@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 import test from 'node:test';
@@ -96,4 +97,19 @@ test('writes a distribution-allowed release candidate after the narrowed gate cl
   } finally {
     rmSync(outputDirectory, { recursive: true, force: true });
   }
+});
+
+test('records the committed A1 asset hash without runtime-importing editorial manifests', () => {
+  const release = JSON.parse(readFileSync(resolve('assets/catalog/spanish/a1-course-release-manifest.json'), 'utf8'));
+  const catalogBytes = readFileSync(resolve(release.catalog.path));
+  assert.equal(createHash('sha256').update(catalogBytes).digest('hex'), release.catalog.sha256);
+  assert.equal(catalogBytes.byteLength, release.catalog.bytes);
+  assert.equal(release.catalog.sha256, '04c34da6fd8770637f4131f84430278627d7cbaf209cde8d17286a6f6d4d4641');
+  assert.equal(release.bundlePolicy.includedLevels.join(','), 'A1');
+  assert.equal(release.bundlePolicy.editorialManifestRuntimeImported, false);
+
+  const runtimeSource = readFileSync(resolve('src/data/course-catalog.ts'), 'utf8');
+  assert.equal(runtimeSource.includes('cefr-catalog-manifest.json'), false);
+  assert.equal(runtimeSource.includes('a1-course-release-manifest.json'), false);
+  assert.equal(runtimeSource.includes('cefr-course-catalog.json'), false);
 });
