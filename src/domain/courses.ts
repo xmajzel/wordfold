@@ -99,6 +99,28 @@ export function getCourseForWord(word: Pick<Word, 'sourceLanguageCode' | 'target
   return getCourseForLanguagePair(word.sourceLanguageCode, word.targetLanguageCode);
 }
 
+export function courseSupportsPronunciation(course: CourseDefinition) {
+  const capabilities = course.capabilities;
+  return capabilities.devicePronunciation
+    || capabilities.publicNeuralPronunciation
+    || capabilities.privateNeuralPronunciation
+    || capabilities.offlinePronunciation;
+}
+
+export function languagePairSupportsPronunciation(
+  sourceLanguageCode: string,
+  targetLanguageCode: string,
+) {
+  const course = getCourseForLanguagePair(sourceLanguageCode, targetLanguageCode);
+  return course ? courseSupportsPronunciation(course) : true;
+}
+
+export function wordSupportsPronunciation(
+  word: Pick<Word, 'sourceLanguageCode' | 'targetLanguageCode'>,
+) {
+  return languagePairSupportsPronunciation(word.sourceLanguageCode, word.targetLanguageCode);
+}
+
 export function wordBelongsToCourse(
   word: Pick<Word, 'sourceLanguageCode' | 'targetLanguageCode'>,
   courseId: CourseId,
