@@ -33,6 +33,8 @@ const paths = Object.freeze({
   courseCatalog: resolve('assets/catalog/spanish/cefr-course-catalog.json'),
   courseOrder: resolve('assets/catalog/spanish/cefr-course-order.json'),
   catalogManifest: resolve('assets/catalog/spanish/cefr-catalog-manifest.json'),
+  bundledCatalog: resolve('assets/catalog/spanish/a1-course.json'),
+  bundledReleaseManifest: resolve('assets/catalog/spanish/a1-course-release-manifest.json'),
   entryMerges: resolve('assets/catalog/spanish/course-entry-merges.json'),
   pilotManifest: resolve('.artifacts/spanish-a1-slovak-translations/pilot/manifest.json'),
   remainingManifest: resolve('.artifacts/spanish-a1-slovak-translations/remaining/manifest.json'),
@@ -375,7 +377,9 @@ export function prepareOwnerReview(outputDirectory) {
 }
 
 function sourceHashes() {
-  return Object.fromEntries(Object.entries(paths).map(([name, path]) => [name, {
+  return Object.fromEntries(Object.entries(paths)
+    .filter(([name]) => name !== 'bundledCatalog' && name !== 'bundledReleaseManifest')
+    .map(([name, path]) => [name, {
     path: relative(resolve('.'), path),
     sha256: sha256File(path),
   }]));
@@ -400,6 +404,58 @@ export function stageCourse(outputDirectory) {
   return manifest;
 }
 
+export function promoteCourse() {
+  const catalog = buildStagedSpanishA1();
+  const catalogText = canonicalJson(catalog);
+  const catalogSha256 = sha256(catalogText);
+  const catalogBytes = Buffer.byteLength(catalogText);
+  const catalogPath = relative(resolve('.'), paths.bundledCatalog);
+  const releaseManifestPath = relative(resolve('.'), paths.bundledReleaseManifest);
+  const editorialManifest = readJson(paths.catalogManifest);
+  editorialManifest.productionReviewPolicy.bundledRelease = {
+    status: 'promoted-a1-only',
+    level: 'A1',
+    catalogPath,
+    catalogSha256,
+    catalogBytes,
+    counts: catalog.counts,
+    releaseManifestPath,
+    bundleScope: 'A1 only; A2-C1 remain non-blocking editorial data outside the application bundle, and C2 is unsupported by ELELex.',
+    bundleSizeConclusion: 'Negligible: 1.68 MB raw is approximately 4% of the roughly 45 MB of catalog assets already bundled by the app.',
+  };
+  writeFileAtomic(paths.catalogManifest, canonicalJson(editorialManifest));
+  writeFileAtomic(paths.bundledCatalog, catalogText);
+
+  const releaseManifest = {
+    schemaVersion: 1,
+    notHumanReview: true,
+    status: 'bundled-production-a1',
+    courseId: 'es-sk',
+    level: 'A1',
+    catalog: {
+      path: catalogPath,
+      sha256: catalogSha256,
+      bytes: catalogBytes,
+      counts: catalog.counts,
+    },
+    reviewDisclosureSha256: sha256(catalog.reviewDisclosure),
+    sourceHashes: sourceHashes(),
+    editorialManifest: {
+      path: relative(resolve('.'), paths.catalogManifest),
+      sha256: sha256File(paths.catalogManifest),
+      runtimeImported: false,
+    },
+    bundlePolicy: {
+      includedLevels: ['A1'],
+      excludedLevels: ['A2', 'B1', 'B2', 'C1'],
+      unsupportedLevels: ['C2'],
+      editorialManifestRuntimeImported: false,
+    },
+  };
+  writeFileAtomic(paths.bundledReleaseManifest, canonicalJson(releaseManifest));
+  return releaseManifest;
+}
+
 function parseArgs(argv) {
   const command = argv[0];
   const defaultDirectory = command === 'owner-review'
@@ -410,7 +466,7 @@ function parseArgs(argv) {
     if (argv[index] === '--output-dir') outputDirectory = resolve(argv[++index]);
     else throw new Error(`Unknown argument: ${argv[index]}`);
   }
-  assert(['stage', 'owner-review', 'validate'].includes(command), 'Usage: stage-spanish-a1-course.mjs stage|owner-review|validate [--output-dir PATH]');
+  assert(['stage', 'owner-review', 'validate', 'promote'].includes(command), 'Usage: stage-spanish-a1-course.mjs stage|owner-review|validate|promote [--output-dir PATH]');
   return { command, outputDirectory };
 }
 
@@ -421,6 +477,8 @@ if (process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.m
       ? stageCourse(options.outputDirectory)
       : options.command === 'owner-review'
         ? prepareOwnerReview(options.outputDirectory)
+        : options.command === 'promote'
+          ? promoteCourse()
         : { status: 'valid', counts: buildStagedSpanishA1().counts };
     console.log(canonicalJson(result));
   } catch (error) {

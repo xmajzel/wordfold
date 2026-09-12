@@ -103,6 +103,7 @@
     "spanish:a1:slovak:generate-remaining": "node scripts/spanish-a1-slovak-translations.mjs generate --output-dir .artifacts/spanish-a1-slovak-translations/remaining",
     "spanish:a1:slovak:analyze-remaining": "node scripts/spanish-a1-slovak-translations.mjs analyze-remaining --output-dir .artifacts/spanish-a1-slovak-translations/remaining",
     "spanish:a1:stage-course": "node scripts/stage-spanish-a1-course.mjs stage",
+    "spanish:a1:promote-course": "node scripts/stage-spanish-a1-course.mjs promote",
     "spanish:a1:owner-review": "node scripts/stage-spanish-a1-course.mjs owner-review",
     "spanish:a1:stage-validate": "node scripts/stage-spanish-a1-course.mjs validate",
     "spanish:a2:sources": "node scripts/prepare-spanish-a1-sources.mjs --level A2",

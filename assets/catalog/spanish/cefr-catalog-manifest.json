@@ -221,29 +221,68 @@
       },
       "externalReference": {
         "A1": {
-          "coverage": { "count": 60, "total": 63 },
-          "strictNonCorrespondence": { "count": 5, "total": 63, "rate": 0.07936507936507936 }
+          "coverage": {
+            "count": 60,
+            "total": 63
+          },
+          "strictNonCorrespondence": {
+            "count": 5,
+            "total": 63,
+            "rate": 0.07936507936507936
+          }
         },
         "A2": {
-          "coverage": { "count": 83, "total": 96 },
-          "strictNonCorrespondence": { "count": 17, "total": 96, "rate": 0.17708333333333334 }
+          "coverage": {
+            "count": 83,
+            "total": 96
+          },
+          "strictNonCorrespondence": {
+            "count": 17,
+            "total": 96,
+            "rate": 0.17708333333333334
+          }
         },
         "interpretation": "A2 is 9.77 percentage points and 2.23 times higher than A1 in this targeted risk cohort. Cohort findings are excluded from probability-sample denominators."
       },
       "overlapWithEverydayLifeCohort": {
         "A1": {
           "count": 1,
-          "terms": ["dulce"]
+          "terms": [
+            "dulce"
+          ]
         },
         "A2": {
           "count": 2,
-          "terms": ["mundial", "poncho"]
+          "terms": [
+            "mundial",
+            "poncho"
+          ]
         }
       },
       "aiCrossReview": {
         "label": "Targeted AI cross-review disagreement rate; not a measured error rate and not human or native-speaker review.",
-        "A1": { "contentDisagreement": { "count": 9, "total": 63 }, "levelDisagreement": { "count": 24, "total": 63 }, "wrongSense": 1 },
-        "A2": { "contentDisagreement": { "count": 16, "total": 96 }, "levelDisagreement": { "count": 32, "total": 96 }, "wrongSense": 4 }
+        "A1": {
+          "contentDisagreement": {
+            "count": 9,
+            "total": 63
+          },
+          "levelDisagreement": {
+            "count": 24,
+            "total": 63
+          },
+          "wrongSense": 1
+        },
+        "A2": {
+          "contentDisagreement": {
+            "count": 16,
+            "total": 96
+          },
+          "levelDisagreement": {
+            "count": 32,
+            "total": 96
+          },
+          "wrongSense": 4
+        }
       }
     },
     "sharedSlovakHintGate": {
@@ -330,17 +369,24 @@
       "definitiveCorrectSlovakVerdicts": [
         {
           "reviewItemId": "SK-A1-F-0234",
-          "terms": ["foto", "fotografía"],
+          "terms": [
+            "foto",
+            "fotografía"
+          ],
           "verdictProvenance": "ai-assisted-owner-accepted"
         },
         {
           "reviewItemId": "SK-A1-F-0479",
-          "terms": ["enamorar"],
+          "terms": [
+            "enamorar"
+          ],
           "verdictProvenance": "ai-assisted-owner-accepted"
         },
         {
           "reviewItemId": "SK-A1-F-1161",
-          "terms": ["acostumbrar"],
+          "terms": [
+            "acostumbrar"
+          ],
           "verdictProvenance": "ai-assisted-owner-accepted"
         }
       ],
@@ -380,6 +426,24 @@
       "evidencePath": "docs/legal/UCLOUVAIN_ELELEX_PERMISSION.md",
       "scope": "UCLouvain/CENTAL confirms that the NonCommercial and ShareAlike restrictions of CC BY-NC-SA 4.0 do not apply to Wordfold's use as described in the correspondence; agreed attribution and all other authorization conditions remain in force.",
       "evidenceMetadata": "The owner supplied the follow-up text without its original email date or headers; retain those with the original correspondence in the legal archive."
+    },
+    "bundledRelease": {
+      "status": "promoted-a1-only",
+      "level": "A1",
+      "catalogPath": "assets/catalog/spanish/a1-course.json",
+      "catalogSha256": "04c34da6fd8770637f4131f84430278627d7cbaf209cde8d17286a6f6d4d4641",
+      "catalogBytes": 1685645,
+      "counts": {
+        "concepts": 1599,
+        "terms": 1687,
+        "ownerReviewedConcepts": 82,
+        "ownerVerdictRequiredConcepts": 47,
+        "ownerResolvedRequiredConcepts": 47,
+        "ownerPendingConcepts": 0
+      },
+      "releaseManifestPath": "assets/catalog/spanish/a1-course-release-manifest.json",
+      "bundleScope": "A1 only; A2-C1 remain non-blocking editorial data outside the application bundle, and C2 is unsupported by ELELex.",
+      "bundleSizeConclusion": "Negligible: 1.68 MB raw is approximately 4% of the roughly 45 MB of catalog assets already bundled by the app."
     }
   },
   "courseFilters": {
