@@ -1,5 +1,4 @@
 import type { Word } from './types';
-import { spanishA1PreviewEnabled } from './spanish-preview';
 
 export type CourseId = 'en-sk' | 'es-sk';
 
@@ -62,7 +61,7 @@ export const courseDefinitions: readonly CourseDefinition[] = [
     defaultTargetPronunciationLocale: 'sk-SK',
     catalogId: 'spanish-cefr',
     capabilities: {
-      bundledCatalog: spanishA1PreviewEnabled,
+      bundledCatalog: true,
       recommendations: false,
       onDeviceTranslation: true,
       devicePronunciation: false,

@@ -50,18 +50,17 @@ draft`, and labels curriculum coverage `partial`. It cannot produce native signo
 or a production release. Reviewed preview artifacts are checked into the catalog
 with their exact AI review evidence; tests reproduce the output deterministically.
 
-## Local use
+## Runtime boundary
 
-Keep `EXPO_PUBLIC_SPANISH_A1_PREVIEW_ENABLED=true` in ignored `.env.local` and restart
-Expo after changing the flag. The legacy flag name now covers the original A1 pilot
-and reviewed supplemental levels. It has no effect when `__DEV__` is false.
+The development preview switch has been retired. The checked-in preview assets remain
+historical, non-gating editorial evidence and are not imported by runtime code.
 
 Choose **Slovak → Spanish** in Settings, press **Use Spanish course**, then open
-Library → Discover. Counts come from the catalog rather than a fixed A1-only
-message. Add selected entries to your own library; no batch is automatically added
-to your study queue. English words and progress are retained when switching.
-Device pronunciation continues to request `es-ES`; these content reviews do not
-establish native-device audio quality. Neural/offline Spanish audio is unchanged.
+Library → Discover. The bundled production catalog exposes A1 only. A2-C1 are shown as
+not yet available and C2 as unsupported by the current source. No batch is
+automatically added to the study queue, and English words and progress are retained
+when switching. Spanish pronunciation is disabled because pronunciation validation is
+outside this catalog release.
 
 ## Verification
 
