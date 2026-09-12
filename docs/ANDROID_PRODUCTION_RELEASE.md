@@ -95,3 +95,17 @@ pnpm powersync:validate
 ```
 
 Then run a local Android build and physical-device checks. Actual billing requires a Google Play internal-track installation. Do not run `eas build`, `eas submit`, or another quota-consuming remote build without explicit approval immediately before the command.
+
+### Accepted Expo Doctor posture for the Spanish A1 release
+
+On 11 September 2026, Expo Doctor passed 17 of 22 checks. The owner reviewed and
+accepted the five reported checks for this release as consequences of 15 Expo SDK 56
+packages being one patch version behind the currently recommended SDK 56 set. No
+affected defect has been observed in Wordfold's validated flows. Updating now would
+change the lockfile and require another native rebuild, so dependency alignment is
+deliberately deferred rather than mixed into the Spanish A1 release candidate.
+
+Run `pnpm exec expo install --check` before the next SDK bump, then align and
+native-validate the Expo packages as one deliberate dependency update. This acceptance
+does not waive new Doctor findings or regressions found during release-candidate
+validation.
