@@ -15,7 +15,7 @@ jest.mock('@/components/pronunciation-voice-picker', () => ({ PronunciationVoice
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     words: [], onboardingComplete: false, activeCourseId: mockCourseId,
-    activeCourse: { id: mockCourseId, directionLabel: mockCourseId === 'es-sk' ? 'Slovak → Spanish' : 'Slovak → English', sourceLanguageCode: mockCourseId === 'es-sk' ? 'es' : 'en', capabilities: { recommendations: mockCourseId === 'en-sk', offlinePronunciation: false } },
+    activeCourse: { id: mockCourseId, directionLabel: mockCourseId === 'es-sk' ? 'Slovak → Spanish' : 'Slovak → English', sourceLanguageCode: mockCourseId === 'es-sk' ? 'es' : 'en', capabilities: { recommendations: mockCourseId === 'en-sk', devicePronunciation: mockCourseId === 'en-sk', publicNeuralPronunciation: false, privateNeuralPronunciation: false, offlinePronunciation: false } },
     switchActiveCourse: jest.fn(), completePersonalizedOnboarding: mockComplete,
     wordCapacity: { remaining: 100 },
   }),
@@ -43,6 +43,8 @@ it('saves Spanish preferences without promising an automatically created starter
   expect(view.getByTestId('level-C2').props.accessibilityState).toMatchObject({ disabled: true });
   await fireEvent.press(view.getByTestId('level-A1'));
   await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
+  expect(view.queryByText('Preferred voice')).toBeNull();
+  expect(view.queryByText('Phone voice')).toBeNull();
   expect(view.queryByRole('button', { name: 'Create my set' })).toBeNull();
   await fireEvent.press(view.getByRole('button', { name: 'Save my preferences' }));
   await waitFor(() => expect(mockComplete).toHaveBeenCalledWith(expect.objectContaining({ levels: ['A1'] }), 'device'));
@@ -57,6 +59,7 @@ it('keeps the English starter-set action', async () => {
   await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
   await fireEvent.press(view.getByTestId('topic-spoken'));
   await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
+  expect(view.getByText('Preferred voice')).toBeTruthy();
   expect(view.getByRole('button', { name: 'Create my set' })).toBeTruthy();
   expect(view.queryByRole('button', { name: 'Save my preferences' })).toBeNull();
 });

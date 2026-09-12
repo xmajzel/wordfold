@@ -15,7 +15,7 @@ import { PronunciationVoicePicker } from '@/components/pronunciation-voice-picke
 import { Screen } from '@/components/screen';
 import { cefrLevelDescriptions } from '@/data/cefr-levels';
 import { getCourseCatalogAvailability } from '@/data/course-catalog';
-import { wordBelongsToCourse, type CourseDefinition, type CourseId } from '@/domain/courses';
+import { courseSupportsPronunciation, wordBelongsToCourse, type CourseDefinition, type CourseId } from '@/domain/courses';
 import type { CefrLevel, ContentPackId, LearningPreferences, PronunciationVoicePreference } from '@/domain/types';
 import { neuralPreviewFeatureEnabled, neuralVoiceLabel } from '@/features/pronunciation/cloud';
 import { buildRecommendations, normalizeLearningPreferences, topicOptions } from '@/features/recommendations/selector';
@@ -238,13 +238,15 @@ function ReviewStep({ preferences, preview, voicePreference, course }: {
         : 'Your Spanish course is ready for manual and imported words. Your choices can be edited at any time.'}/>
     <View style={[styles.summaryCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
       <SummaryRow icon="language-outline" label="Language" value={course.directionLabel}/>
-      <View style={[styles.divider, { backgroundColor: theme.border }]}/>
-      <SummaryRow
-        icon="volume-high-outline"
-        label="Preferred voice"
-        value={voicePreference === 'neural-en-US' ? neuralVoiceLabel('en-US')
-          : voicePreference === 'neural-en-GB' ? neuralVoiceLabel('en-GB') : 'Phone voice'}
-      />
+      {courseSupportsPronunciation(course) ? <>
+        <View style={[styles.divider, { backgroundColor: theme.border }]}/>
+        <SummaryRow
+          icon="volume-high-outline"
+          label="Preferred voice"
+          value={voicePreference === 'neural-en-US' ? neuralVoiceLabel('en-US')
+            : voicePreference === 'neural-en-GB' ? neuralVoiceLabel('en-GB') : 'Phone voice'}
+        />
+      </> : null}
       <View style={[styles.divider, { backgroundColor: theme.border }]}/>
       <SummaryRow icon="speedometer-outline" label="Levels" value={preferences.levels.map((level) => `${level} · ${cefrLevelDescriptions[level]}`).join('\n')}/>
       {course.capabilities.recommendations ? <>
