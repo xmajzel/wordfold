@@ -9,7 +9,12 @@ import { FormField } from '@/components/form-field';
 import { PrimaryButton } from '@/components/primary-button';
 import { ProgressCountLabel } from '@/components/progress-count-label';
 import { Screen } from '@/components/screen';
-import { getCourseCatalogAvailability, getCourseCatalogEntries, type CourseCatalogEntry } from '@/data/course-catalog';
+import {
+  getCourseCatalogEntries,
+  getCourseCatalogEntriesForNormalizedTerm,
+  getCourseCatalogLevelState,
+  type CourseCatalogEntry,
+} from '@/data/course-catalog';
 import { cefrLevelDescriptions, isCefrLevel } from '@/data/cefr-levels';
 import { wordBelongsToCourse } from '@/domain/courses';
 import { languageLabel } from '@/domain/languages';
@@ -31,17 +36,24 @@ export default function CefrLevelScreen() {
     ? 'en-GB'
     : activeCourse.defaultSourcePronunciationLocale;
   const learnedLanguage = languageLabel(activeCourse.sourceLanguageCode);
-  const spanishPreview = getCourseCatalogAvailability(activeCourseId).isPreview;
   const [query, setQuery] = useState('');
   const [busyId, setBusyId] = useState<string | null>(null);
   const validLevel = isCefrLevel(level) ? level : null;
+  const levelState = validLevel ? getCourseCatalogLevelState(activeCourseId, validLevel) : null;
   const entries = useMemo(() => validLevel ? getCourseCatalogEntries(activeCourseId, validLevel) : [], [activeCourseId, validLevel]);
   const activeWords = useMemo(() => words.filter((word) => wordBelongsToCourse(word, activeCourseId)), [activeCourseId, words]);
   const progress = useMemo(() => calculateCefrProgress(entries, activeWords), [activeWords, entries]);
-  const normalizedQuery = normalizeTerm(query);
-  const filteredEntries = useMemo(() => normalizedQuery
-    ? entries.filter((entry) => entry.normalizedTerm.includes(normalizedQuery) || normalizeTerm(entry.definition).includes(normalizedQuery))
-    : entries, [entries, normalizedQuery]);
+  const normalizedQuery = normalizeTerm(query, activeCourse.sourceLanguageCode);
+  const filteredEntries = useMemo(() => {
+    if (!normalizedQuery) return entries;
+    const directMatches = new Map(getCourseCatalogEntriesForNormalizedTerm(activeCourseId, normalizedQuery)
+      .map((entry) => [entry.catalogSenseId, entry]));
+    return entries
+      .filter((entry) => entry.normalizedTerm.includes(normalizedQuery)
+        || entry.alternativeTerms?.some((term) => normalizeTerm(term, activeCourse.sourceLanguageCode).includes(normalizedQuery))
+        || normalizeTerm(entry.definition, activeCourse.sourceLanguageCode).includes(normalizedQuery))
+      .map((entry) => directMatches.get(entry.catalogSenseId) ?? entry);
+  }, [activeCourse.sourceLanguageCode, activeCourseId, entries, normalizedQuery]);
   const wordsByTerm = useMemo(() => new Map(activeWords.flatMap((word) => (
     word.catalogSenseId === null ? [[word.normalizedTerm, word] as const] : []
   ))), [activeWords]);
@@ -96,6 +108,17 @@ export default function CefrLevelScreen() {
     return <Screen><Header title={`${learnedLanguage} levels`}/><EmptyState title="Level not available" message="Choose a level from A1 through C2." actionLabel="Back to the library" onAction={() => router.replace('/(tabs)/library')}/></Screen>;
   }
 
+  if (levelState !== 'available') {
+    return <Screen><Header title={`${validLevel} ${learnedLanguage}`}/><EmptyState
+      title={levelState === 'unsupported-by-source' ? 'Level unsupported by the current source' : 'Level not yet available'}
+      message={levelState === 'unsupported-by-source'
+        ? 'ELELex does not provide a C2 source level, so Wordfold does not synthesize one.'
+        : 'This Spanish level remains outside the app until its editorial review is complete.'}
+      actionLabel="Back to the library"
+      onAction={() => router.replace('/(tabs)/library')}
+    /></Screen>;
+  }
+
   return (
     <Screen style={styles.screen}>
       <FlatList
@@ -110,7 +133,6 @@ export default function CefrLevelScreen() {
         ItemSeparatorComponent={() => <View style={styles.separator}/>}
         ListHeaderComponent={<View style={styles.headerContent}>
           <Header title={`${validLevel} ${learnedLanguage}`}/>
-          {spanishPreview ? <AppText testID="spanish-preview-notice" variant="caption" style={{ color: theme.muted }}>Local development preview · {validLevel} · not a production release or a complete level</AppText> : null}
           <View style={styles.intro}>
             <View style={[styles.levelBadge, { backgroundColor: theme.primarySoft }]}><AppText variant="display" style={{ color: theme.primary }}>{validLevel}</AppText></View>
             <View style={styles.introText}><AppText variant="heading">{cefrLevelDescriptions[validLevel]}</AppText><AppText style={{ color: theme.muted }}>{entries.length > 0

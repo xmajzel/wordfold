@@ -8,9 +8,10 @@ import { topicOptions } from '@/features/recommendations/selector';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { radii, spacing } from '@/theme/tokens';
 
-export function LevelSelection({ selected, onToggle }: {
+export function LevelSelection({ selected, onToggle, disabledLevels = {} }: {
   selected: CefrLevel[];
   onToggle(level: CefrLevel): void;
+  disabledLevels?: Partial<Record<CefrLevel, string>>;
 }) {
   return (
     <View style={styles.levelGrid}>
@@ -20,6 +21,8 @@ export function LevelSelection({ selected, onToggle }: {
         description={cefrLevelDescriptions[level]}
         selected={selected.includes(level)}
         onPress={() => onToggle(level)}
+        disabled={Boolean(disabledLevels[level])}
+        status={disabledLevels[level]}
         testID={`level-${level}`}
         compact
       />)}
@@ -46,7 +49,7 @@ export function TopicSelection({ selected, onToggle }: {
   );
 }
 
-function PreferenceCard({ title, description, icon, selected, onPress, testID, compact = false }: {
+function PreferenceCard({ title, description, icon, selected, onPress, testID, compact = false, disabled = false, status }: {
   title: string;
   description: string;
   icon?: keyof typeof Ionicons.glyphMap;
@@ -54,13 +57,16 @@ function PreferenceCard({ title, description, icon, selected, onPress, testID, c
   onPress(): void;
   testID: string;
   compact?: boolean;
+  disabled?: boolean;
+  status?: string;
 }) {
   const theme = useAppTheme();
   return (
     <Pressable
       accessibilityRole="checkbox"
-      accessibilityLabel={`${title}. ${description}`}
-      accessibilityState={{ checked: selected }}
+      accessibilityLabel={`${title}. ${description}${status ? `. ${status}` : ''}`}
+      accessibilityState={{ checked: selected, ...(disabled ? { disabled: true } : {}) }}
+      disabled={disabled || undefined}
       onPress={onPress}
       testID={testID}
       style={({ pressed }) => [
@@ -69,7 +75,7 @@ function PreferenceCard({ title, description, icon, selected, onPress, testID, c
         {
           backgroundColor: selected ? theme.primarySoft : theme.surface,
           borderColor: selected ? theme.primary : theme.border,
-          opacity: pressed ? 0.78 : 1,
+          opacity: disabled ? 0.5 : pressed ? 0.78 : 1,
         },
       ]}>
       <View style={styles.cardHeader}>
@@ -79,6 +85,7 @@ function PreferenceCard({ title, description, icon, selected, onPress, testID, c
         <View style={styles.cardText}>
           <AppText variant={compact ? 'heading' : 'label'} style={{ color: selected ? theme.primary : theme.text }}>{title}</AppText>
           <AppText variant="caption" style={{ color: theme.muted }}>{description}</AppText>
+          {status ? <AppText variant="caption" style={{ color: theme.muted }}>{status}</AppText> : null}
         </View>
         <View style={[styles.check, { backgroundColor: selected ? theme.primary : 'transparent', borderColor: selected ? theme.primary : theme.border }]}>
           {selected ? <Ionicons name="checkmark" color="#FFFFFF" size={15}/> : null}

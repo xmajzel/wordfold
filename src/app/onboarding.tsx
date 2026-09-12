@@ -41,6 +41,7 @@ export default function OnboardingScreen() {
   const [switchingCourse, setSwitchingCourse] = useState(false);
   const showVoiceStep = activeCourse.capabilities.offlinePronunciation && Platform.OS !== 'web' && neuralPreviewFeatureEnabled();
   const showInterestsStep = activeCourse.capabilities.recommendations;
+  const catalogAvailability = getCourseCatalogAvailability(activeCourseId);
   const stepNames: readonly string[] = [
     'Language',
     ...(showVoiceStep ? ['Voice'] as const : []),
@@ -159,7 +160,7 @@ export default function OnboardingScreen() {
           </View> : null}
           {step === levelStep ? <View style={styles.section}>
             <StepHeading eyebrow="YOUR STARTING POINT" title="Which levels feel right?" body="Choose one level or combine a few. You can change this later."/>
-            <LevelSelection selected={levels} onToggle={toggleLevel}/>
+            <LevelSelection selected={levels} onToggle={toggleLevel} disabledLevels={Object.fromEntries(Object.entries(catalogAvailability.levels).flatMap(([level, state]) => state === 'available' ? [] : [[level, state === 'unsupported-by-source' ? 'Unsupported by the current source' : 'Not yet available']]))}/>
             <AppText variant="caption" style={{ color: theme.muted }}>{activeCourse.capabilities.recommendations
               ? 'Levels set the difficulty boundary for every recommendation.'
               : describeCatalogAvailability(getCourseCatalogAvailability(activeCourseId))}</AppText>
