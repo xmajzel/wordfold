@@ -1,5 +1,5 @@
 import { act, fireEvent, render, waitFor, within } from '@testing-library/react-native';
-import { Alert, FlatList, StyleSheet } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 
 import LearnScreen from '@/app/(tabs)';
 import type { LearningFilter, LearningPreferences, LearningRating, Word } from '@/domain/types';
@@ -70,6 +70,7 @@ jest.mock('expo-haptics', () => ({
 }));
 
 jest.mock('react-native-reanimated', () => {
+  const React = jest.requireActual('react');
   const { View } = jest.requireActual('react-native');
   const transition = {
     damping: () => transition,
@@ -84,10 +85,12 @@ jest.mock('react-native-reanimated', () => {
     FadeInDown: transition,
     FadeOut: transition,
     ReduceMotion: { System: 'system' },
+    useReducedMotion: () => false,
+    runOnUI: (callback: () => void) => callback,
     cancelAnimation: jest.fn(),
     interpolate: (_value: number, _input: number[], output: number[]) => output[0],
     useAnimatedStyle: (factory: () => object) => factory(),
-    useSharedValue: (value: unknown) => ({ value, set(next: unknown) { this.value = next; } }),
+    useSharedValue: (value: unknown) => React.useRef({ value, get() { return this.value; }, set(next: unknown) { this.value = next; } }).current,
     withRepeat: (value: unknown) => value,
     withSpring: (value: unknown) => value,
     withTiming: (value: unknown) => value,
@@ -119,16 +122,16 @@ jest.mock('@/components/swipeable-word-card', () => {
   const React = jest.requireActual('react');
   const { View } = jest.requireActual('react-native');
   return {
-    SwipeableWordCard: ({ children, disabled, word, onSwipe, inViewport }: {
+    SwipeableWordCard: ({ children, disabled, word, onSwipe, onNavigate }: {
       children: (onRate: (rating: LearningRating) => void) => React.ReactNode;
       onSwipe: (rating: LearningRating) => void;
-      inViewport: boolean;
+      onNavigate: (direction: 'next' | 'previous') => void;
       disabled: boolean;
-      word: { id: string };
+      word?: { id: string };
     }) => React.createElement(View, {
       accessibilityState: { disabled },
-      inViewport,
-      testID: `swipe-wrapper-${word.id}`,
+      onNavigate,
+      testID: word ? `swipe-wrapper-${word.id}` : 'batch-end-gesture',
     }, children(onSwipe)),
   };
 });
@@ -179,19 +182,21 @@ describe('continued learning session', () => {
 
     await fireEvent.press(view.getAllByRole('button', { name: /I know this/ })[0]);
 
+    await fireEvent.press(view.getByRole('button', { name: 'Previous word' }));
     await waitFor(() => view.getByLabelText('Rated this session. Reviews stopped.'));
     expect(view.getByTestId('swipe-wrapper-first').props.accessibilityState).toEqual({ disabled: true });
-    expect(view.getByTestId('swipe-wrapper-next').props.accessibilityState).toEqual({ disabled: false });
-    expect(view.getAllByRole('button', { name: /I know this/ })).toHaveLength(1);
+    expect(view.getByTestId('swipe-wrapper-next', { includeHiddenElements: true }).props.accessibilityState).toEqual({ disabled: false });
+    expect(view.queryByRole('button', { name: /I know this/ })).toBeNull();
     await act(async () => finishRating());
   });
 
-  it.each([450, 600])('renders pronunciation before scrolling settles in a %ipx feed', async (height) => {
+  it.each([450, 600])('promotes the same mounted pronunciation controls in a %ipx feed', async (height) => {
     mockBuildLearningFeed.mockReturnValue([mockFirstWord, mockNextWord]);
     const view = await render(<LearnScreen/>);
-    const list = view.getByTestId('today-words-list');
-    await fireEvent(list, 'layout', { nativeEvent: { layout: { height } } });
-    const nextCard = within(view.getByTestId('swipe-wrapper-next'));
+    const stack = view.getByTestId('today-words-stack');
+    await fireEvent(stack, 'layout', { nativeEvent: { layout: { height } } });
+    expect(StyleSheet.flatten(stack.props.style).marginHorizontal).toBe(-spacing.lg);
+    const nextCard = within(view.getByTestId('swipe-wrapper-next', { includeHiddenElements: true }));
     const pronunciation = nextCard.getByRole('button', {
       name: /Play .* device pronunciation for focus/,
       includeHiddenElements: true,
@@ -199,14 +204,12 @@ describe('continued learning session', () => {
     expect(pronunciation).toBeDisabled();
     expect(nextCard.queryByRole('button', { name: /device pronunciation/ })).toBeNull();
 
-    await fireEvent(list, 'momentumScrollEnd', {
-      nativeEvent: { contentOffset: { y: height + spacing.md } },
-    });
+    await fireEvent.press(view.getByRole('button', { name: 'Skip word' }));
 
-    expect(view.getByText(/^2 of 2 due now/)).toBeTruthy();
+    expect(view.getByText(/^2 of 2/ )).toBeTruthy();
     expect(nextCard.getByRole('button', { name: /Play .* device pronunciation for focus/ })).toBe(pronunciation);
     expect(pronunciation).toBeEnabled();
-    expect(within(view.getByTestId('swipe-wrapper-first')).getByRole('button', {
+    expect(within(view.getByTestId('swipe-wrapper-first', { includeHiddenElements: true })).getByRole('button', {
       name: /device pronunciation/,
       includeHiddenElements: true,
     })).toBeDisabled();
@@ -221,14 +224,12 @@ describe('continued learning session', () => {
     }));
     const view = await render(<LearnScreen/>);
 
-    const knowButtons = view.getAllByRole('button', { name: /I know this/ });
-    await fireEvent.press(knowButtons[0]);
-    await waitFor(() => view.getByText(/^2 of 3 due now/));
-    expect(knowButtons[1].props.disabled).toBeFalsy();
-    await fireEvent.press(knowButtons[1]);
-    await waitFor(() => view.getByText(/^3 of 3 due now/));
-    await fireEvent.press(knowButtons[2]);
-    await waitFor(() => view.getByText('Session complete'));
+    await fireEvent.press(view.getByRole('button', { name: /I know this/ }));
+    await waitFor(() => view.getByText(/^2 of 3/));
+    await fireEvent.press(view.getByRole('button', { name: /I know this/ }));
+    await waitFor(() => view.getByText(/^3 of 3/));
+    await fireEvent.press(view.getByRole('button', { name: /I know this/ }));
+    await waitFor(() => view.getByText('End of batch'));
 
     expect(mockRateWord).toHaveBeenCalledTimes(1);
     await act(async () => finishFirstRating());
@@ -240,33 +241,90 @@ describe('continued learning session', () => {
     ]);
   });
 
-  it('advances ratings without vertical animation and preserves scrolling to skip', async () => {
-    const scroll = jest.spyOn(FlatList.prototype, 'scrollToIndex').mockImplementation(() => undefined);
-    mockBuildLearningFeed.mockReturnValue([mockFirstWord, mockNextWord, mockThirdWord]);
+  it('skips through the last card and returns from the end without changing ratings', async () => {
+    mockBuildLearningFeed.mockReturnValue([mockFirstWord, mockNextWord]);
     const view = await render(<LearnScreen/>);
-    await fireEvent(view.getByTestId('today-words-list'), 'layout', {
-      nativeEvent: { layout: { height: 600 } },
-    });
-    await fireEvent.press(within(view.getByTestId('swipe-wrapper-first'))
-      .getByRole('button', { name: /I know this/ }));
-    expect(scroll).toHaveBeenLastCalledWith({ index: 1, animated: false });
-    expect(view.getByTestId('swipe-wrapper-first').props.inViewport).toBe(true);
-    await fireEvent(view.getByTestId('today-words-list'), 'scroll', {
-      nativeEvent: { contentOffset: { x: 0, y: 600 + spacing.md },
-        layoutMeasurement: { width: 300, height: 600 },
-        contentSize: { width: 300, height: 3 * (600 + spacing.md) } },
-    });
-    expect(view.getByTestId('swipe-wrapper-first').props.inViewport).toBe(false);
-    expect(view.getByTestId('swipe-wrapper-next').props.inViewport).toBe(true);
-    await fireEvent(view.getByTestId('today-words-list'), 'momentumScrollEnd', {
-      nativeEvent: { contentOffset: { y: 2 * (600 + spacing.md) } },
-    });
-    expect(view.getByText(/^3 of 3 due now/)).toBeTruthy();
-    await fireEvent.press(within(view.getByTestId('swipe-wrapper-third'))
-      .getByRole('button', { name: /Keep learning/ }));
+    await fireEvent(view.getByTestId('swipe-wrapper-first'), 'navigate', 'next');
+    await fireEvent(view.getByTestId('swipe-wrapper-next'), 'navigate', 'next');
+    view.getByText('End of batch');
+    await fireEvent(view.getByTestId('batch-end-gesture'), 'navigate', 'previous');
+    view.getByText('focus');
+    await fireEvent(view.getByTestId('swipe-wrapper-next'), 'navigate', 'previous');
+    view.getByText('scope');
+    expect(view.getByRole('button', { name: 'Previous word' })).toBeDisabled();
+    expect(mockRateWord).not.toHaveBeenCalled();
+  });
+
+  it('can skip a one-word batch and start fresh without rating the skipped word', async () => {
+    const view = await render(<LearnScreen/>);
+    await fireEvent.press(view.getByRole('button', { name: 'Skip word' }));
+    view.getByText('End of batch');
+    await fireEvent.press(view.getByRole('button', { name: 'Continue learning' }));
+    view.getByText('focus');
+    expect(view.getByRole('button', { name: 'Previous word' })).toBeDisabled();
+    expect(mockRateWord).not.toHaveBeenCalled();
+  });
+
+  it('offers Add 10 words at the end even when existing words could continue', async () => {
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch);
+    mockBuildContinuedLearningFeed.mockReturnValue([mockNextWord]);
+    const view = await render(<LearnScreen/>);
+    await fireEvent.press(view.getByRole('button', { name: 'Skip word' }));
+    view.getByText('Start a fresh batch');
+    expect(view.queryByRole('button', { name: 'Continue learning' })).toBeNull();
+    await fireEvent.press(view.getByRole('button', { name: 'Add 10 words & start learning' }));
+    expect(mockAddRecommendedWords).toHaveBeenCalledWith(10);
+    expect(mockRateWord).not.toHaveBeenCalled();
+  });
+
+  it('limits the end-card add action to remaining word capacity', async () => {
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch);
+    mockWordCapacity = { ...mockWordCapacity, remaining: 3 };
+    const view = await render(<LearnScreen/>);
+    await fireEvent.press(view.getByRole('button', { name: 'Skip word' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Add 3 words & start learning' }));
+    expect(mockAddRecommendedWords).toHaveBeenCalledWith(3);
+  });
+
+  it('explains the full library at batch end without adding words beyond capacity', async () => {
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch);
+    mockBuildContinuedLearningFeed.mockReturnValue([]);
+    mockWordCapacity = { ...mockWordCapacity, count: 100, remaining: 0 };
+    const view = await render(<LearnScreen/>);
+    await fireEvent.press(view.getByRole('button', { name: 'Skip word' }));
+    view.getByText('Free library full');
+    expect(view.queryByRole('button', { name: 'Browse library' })).toBeNull();
+    await fireEvent.press(view.getByRole('button', { name: 'Unlock unlimited words' }));
+    expect(mockRouterPush).toHaveBeenCalledWith('/upgrade');
+    expect(mockAddRecommendedWords).not.toHaveBeenCalled();
+  });
+
+  it('keeps only neighboring cards mounted and rejects stale navigation callbacks', async () => {
+    mockBuildLearningFeed.mockReturnValue([mockFirstWord, mockNextWord, mockThirdWord, mockRecommendedWord]);
+    const view = await render(<LearnScreen/>);
+    const first = view.getByTestId('swipe-wrapper-first');
+    await fireEvent(first, 'navigate', 'next');
+    expect(view.getAllByTestId(/word-stack-layer-/, { includeHiddenElements: true })).toHaveLength(3);
+    await fireEvent(first, 'navigate', 'next');
+    view.getByText(/^2 of 4/);
+    await fireEvent(view.getByTestId('swipe-wrapper-next'), 'navigate', 'next');
+    view.getByText(/^3 of 4/);
+    expect(view.queryByTestId('swipe-wrapper-first', { includeHiddenElements: true })).toBeNull();
+  });
+
+  it('returns a failed final rating from the end card for retry', async () => {
+    let fail!: (reason: Error) => void;
+    jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
+    mockRateWord.mockImplementationOnce(() => new Promise<void>((_resolve, reject) => { fail = reject; }));
+    const view = await render(<LearnScreen/>);
+    await fireEvent.press(view.getByRole('button', { name: /Keep learning/ }));
+    view.getByText('End of batch');
+    await act(() => fail(new Error('offline')));
+    await waitFor(() => view.getByRole('button', { name: /Keep learning/ }));
+    view.getByText(/^2 of 2/);
+    await fireEvent.press(view.getByRole('button', { name: /Keep learning/ }));
     await waitFor(() => expect(mockRateWord).toHaveBeenCalledTimes(2));
-    expect(mockRateWord.mock.calls.map(([word]) => word.id)).toEqual(['first', 'third']);
-    scroll.mockRestore();
+    view.getByText('End of batch');
   });
 
   it('returns a failed rating at the end of the current session', async () => {
@@ -277,18 +335,18 @@ describe('continued learning session', () => {
     const view = await render(<LearnScreen/>);
 
     await fireEvent.press(view.getAllByRole('button', { name: /Keep learning/ })[0]);
-    await waitFor(() => view.getByText(/^2 of 3 due now/));
+    await waitFor(() => view.getByText(/^2 of 3/));
     expect(view.queryByLabelText('Rated this session. Kept in learning.')).toBeNull();
     expect(alert).toHaveBeenCalledWith(
       'Progress was not saved',
       'scope was returned to this session. Please try again.',
     );
 
-    await fireEvent.press(view.getAllByRole('button', { name: /Keep learning/ })[1]);
-    await waitFor(() => view.getByText(/^3 of 3 due now/));
+    await fireEvent.press(view.getByRole('button', { name: /Keep learning/ }));
+    await waitFor(() => view.getByText(/^3 of 3/));
     const retryButtons = view.getAllByRole('button', { name: /Keep learning/ });
     await fireEvent.press(retryButtons[retryButtons.length - 1]);
-    await waitFor(() => view.getByText('Session complete'));
+    await waitFor(() => view.getByText('End of batch'));
     expect(mockRateWord.mock.calls.map(([word]) => word.id)).toEqual(['first', 'next', 'first']);
   });
 
@@ -302,7 +360,7 @@ describe('continued learning session', () => {
     await fireEvent.press(continueButton);
 
     await waitFor(() => view.getByText('focus'));
-    expect(view.getByText(/^1 of 1 due now/)).toBeTruthy();
+    expect(view.getByText(/^1 of 1/)).toBeTruthy();
     expect(mockRouterPush).not.toHaveBeenCalled();
   });
 
@@ -406,7 +464,7 @@ describe('continued learning session', () => {
     expect(view.queryByText('Recommended for you')).toBeNull();
     view.getByText('B2 English');
     view.getByText('Work and business · 10 words');
-    expect(view.getAllByText(/^recommended [1-3]$/)).toHaveLength(3);
+    expect(view.getAllByText(/^recommended \d+$/)).toHaveLength(10);
     expect(view.queryByRole('button', { name: 'Browse library' })).toBeNull();
 
     await fireEvent.press(view.getByRole('button', { name: 'Add 10 words & start learning' }));
@@ -415,7 +473,7 @@ describe('continued learning session', () => {
     expect(mockUpdateLearningFilter).toHaveBeenCalledWith('all');
     view.rerender(<LearnScreen/>);
     await waitFor(() => view.getByText('negotiate'));
-    view.getByText(/^1 of 1 due now/);
+    view.getByText(/^1 of 1/);
   });
 
   it('falls back to the compact library action when the free library is full', async () => {
@@ -445,11 +503,11 @@ describe('continued learning session', () => {
     mockSearchParams = { notificationWordId: mockNextWord.id };
     const view = await render(<LearnScreen/>);
 
-    expect(view.getAllByTestId(/swipe-wrapper-/).map((node) => node.props.testID)).toEqual([
+    expect(view.getAllByTestId(/swipe-wrapper-/, { includeHiddenElements: true }).map((node) => node.props.testID)).toEqual([
       'swipe-wrapper-next',
       'swipe-wrapper-first',
     ]);
-    view.getByText(/^1 of 2 due now/);
+    view.getByText(/^1 of 2/);
   });
 
   it('shows a completed notification word read-only when Today is complete', async () => {

@@ -7,27 +7,24 @@ import type { Word } from '@/domain/types';
 import {
   getSwipeRating,
   SWIPE_ACTIVE_OFFSET,
-  SWIPE_VERTICAL_FAILURE_OFFSET,
   SwipeableWordCard,
 } from './swipeable-word-card';
 
 interface MockPan {
   enabled: jest.Mock<MockPan>;
-  activeOffsetX: jest.Mock<MockPan>;
-  failOffsetY: jest.Mock<MockPan>;
+  minDistance: jest.Mock<MockPan>;
   onBegin: jest.Mock<MockPan>;
-  onUpdate: jest.Mock<MockPan>;
-  onEnd: jest.Mock<MockPan, [(event: { translationX: number; velocityX: number }) => void]>;
+  onUpdate: jest.Mock<MockPan, [(event: { translationX: number; translationY: number }) => void]>;
+  onEnd: jest.Mock<MockPan, [(event: { translationX: number; velocityX: number; translationY?: number; velocityY?: number }) => void]>;
   onFinalize: jest.Mock<MockPan>;
 }
 
 const mockPan = {} as MockPan;
 mockPan.enabled = jest.fn(() => mockPan);
-mockPan.activeOffsetX = jest.fn(() => mockPan);
-mockPan.failOffsetY = jest.fn(() => mockPan);
+mockPan.minDistance = jest.fn(() => mockPan);
 mockPan.onBegin = jest.fn(() => mockPan);
-mockPan.onUpdate = jest.fn(() => mockPan);
-mockPan.onEnd = jest.fn<MockPan, [(event: { translationX: number; velocityX: number }) => void]>(() => mockPan);
+mockPan.onUpdate = jest.fn<MockPan, [(event: { translationX: number; translationY: number }) => void]>(() => mockPan);
+mockPan.onEnd = jest.fn<MockPan, [(event: { translationX: number; velocityX: number; translationY?: number; velocityY?: number }) => void]>(() => mockPan);
 mockPan.onFinalize = jest.fn(() => mockPan);
 
 jest.mock('react-native-gesture-handler', () => {
@@ -54,10 +51,10 @@ jest.mock('react-native-reanimated', () => {
     runOnUI: jest.fn((callback: (...args: unknown[]) => unknown) => callback),
     useAnimatedStyle: jest.fn((factory: () => object) => factory()),
     useReducedMotion: jest.fn(() => false),
-    useSharedValue: jest.fn((initialValue: number | boolean) => React.useRef({
+    useSharedValue: jest.fn((initialValue: unknown) => React.useRef({
       value: initialValue,
       get() { return this.value; },
-      set(nextValue: number | boolean) { this.value = nextValue; },
+      set(nextValue: unknown) { this.value = nextValue; },
     }).current),
     withSpring: jest.fn((value: number) => value),
     withTiming: jest.fn((value: number) => value),
@@ -95,19 +92,15 @@ describe('SwipeableWordCard', () => {
     jest.mocked(useReducedMotion).mockReturnValue(reducedMotion);
     const onSwipe = jest.fn();
     const screen = await render(
-      <SwipeableWordCard word={word} active disabled={false} onSwipe={onSwipe}
-        nextCard={<Text>Next word</Text>}>
+      <SwipeableWordCard word={word} active disabled={false} onSwipe={onSwipe}>
         <Text>Current word</Text>
       </SwipeableWordCard>,
     );
     await fireEvent(screen.getByTestId(`swipe-card-${word.id}`), 'layout', {
-      nativeEvent: { layout: { width: 300 } },
+      nativeEvent: { layout: { width: 300, height: 600 } },
     });
-    const preview = screen.getByTestId('next-word-preview', { includeHiddenElements: true });
-    expect(preview.props.pointerEvents).toBe('none');
-    expect(screen.queryByText('Next word')).toBeNull();
     const end = mockPan.onEnd.mock.lastCall![0] as unknown as
-      (event: { translationX: number; velocityX: number }) => void;
+      (event: { translationX: number; velocityX: number; translationY?: number; velocityY?: number }) => void;
     await act(() => end({ translationX, velocityX: 0 }));
     expect(onSwipe).not.toHaveBeenCalled();
     expect(jest.mocked(withTiming).mock.lastCall![1]?.duration).toBe(reducedMotion ? 70 : 140);
@@ -135,7 +128,7 @@ describe('SwipeableWordCard', () => {
       </SwipeableWordCard>,
     );
     await fireEvent.press(screen.getByRole('button'));
-    expect(withTiming).toHaveBeenCalledWith(0,
+    expect(withTiming).toHaveBeenCalledWith(expect.objectContaining({ x: 0, y: 0, opacity: 0 }),
       { duration: reducedMotion ? 70 : 220, reduceMotion: 'system' }, expect.any(Function));
     expect(onSwipe).not.toHaveBeenCalled();
     await fireEvent.press(screen.getByRole('button'));
@@ -147,46 +140,71 @@ describe('SwipeableWordCard', () => {
     // Completing the fade must not restore the outgoing card before the handoff.
     const cardStyle = jest.mocked(useAnimatedStyle).mock.calls.at(-3)![0]();
     expect(cardStyle).toEqual({
-      opacity: 0,
-      transform: [{ translateX: 0 }, { rotate: '0deg' }],
+      zIndex: 0, opacity: 0,
+      transform: [{ translateX: 0 }, { translateY: 0 }, { rotate: '0deg' }],
     });
   });
 
-  it.each(['tap', 'swipe'] as const)('holds a completed %s and its preview until the native viewport moves', async (input) => {
-    jest.mocked(useReducedMotion).mockReturnValue(false);
+  it.each([
+    [-220, 'next'], [220, 'previous'],
+  ] as const)('navigates vertically without rating (%i → %s), even on a rated card', async (translationY, direction) => {
     const onSwipe = jest.fn();
-    const card = (active: boolean, inViewport: boolean) => (
-      <SwipeableWordCard word={word} active={active} inViewport={inViewport}
-        disabled={!active} onSwipe={onSwipe} nextCard={<Text>Next word</Text>}>
-        {(animateRating) => <Pressable accessibilityRole="button" onPress={() => animateRating('understood')}>
-          <Text>Rate</Text>
-        </Pressable>}
-      </SwipeableWordCard>
-    );
-    const screen = await render(card(true, true));
-    await fireEvent(screen.getByTestId(`swipe-card-${word.id}`), 'layout', {
-      nativeEvent: { layout: { width: 300 } },
+    const onNavigate = jest.fn();
+    const screen = await render(<SwipeableWordCard word={word} active disabled canGoBack canGoNext
+      onSwipe={onSwipe} onNavigate={onNavigate}><Text>Word</Text></SwipeableWordCard>);
+    await fireEvent(screen.getByTestId('swipe-card-word'), 'layout', {
+      nativeEvent: { layout: { width: 300, height: 600 } },
     });
-    if (input === 'tap') await fireEvent.press(screen.getByRole('button'));
-    else await act(() => mockPan.onEnd.mock.lastCall![0]({ translationX: -110, velocityX: 0 }));
+    await act(() => mockPan.onEnd.mock.lastCall![0]({ translationX: 20, velocityX: 0, translationY, velocityY: 0 }));
+    expect(onNavigate).not.toHaveBeenCalled();
     await act(() => jest.mocked(withTiming).mock.lastCall![2]!(true));
-    const completedStyle = jest.mocked(useAnimatedStyle).mock.calls.at(-3)![0]();
-
-    // React has selected the next word, but the native list is still on this row.
-    await screen.rerender(card(false, true));
-    expect(screen.getByTestId('next-word-preview', { includeHiddenElements: true })).toBeTruthy();
-    expect(jest.mocked(useAnimatedStyle).mock.calls.at(-3)![0]()).toEqual(completedStyle);
-
-    // Once the native list reaches the next row, this card may reset for revisiting.
-    await screen.rerender(card(false, false));
-    expect(screen.queryByTestId('next-word-preview', { includeHiddenElements: true })).toBeNull();
-    expect(jest.mocked(useAnimatedStyle).mock.calls.at(-3)![0]()).toEqual({
-      opacity: 1, transform: [{ translateX: 0 }, { rotate: '0deg' }],
-    });
-    expect(onSwipe).toHaveBeenCalledTimes(1);
+    expect(onNavigate).toHaveBeenCalledWith(direction);
+    expect(onSwipe).not.toHaveBeenCalled();
   });
 
-  it('shows matching overlays and yields vertical movement to the list', async () => {
+  it.each([-30, 220])('springs back for a short skip or a back gesture on the first card (%i)', async (translationY) => {
+    const onNavigate = jest.fn();
+    const screen = await render(<SwipeableWordCard word={word} active disabled={false} canGoNext
+      onSwipe={jest.fn()} onNavigate={onNavigate}><Text>Word</Text></SwipeableWordCard>);
+    await fireEvent(screen.getByTestId('swipe-card-word'), 'layout', {
+      nativeEvent: { layout: { width: 300, height: 600 } },
+    });
+    await act(() => mockPan.onEnd.mock.lastCall![0]({ translationX: 0, velocityX: 0, translationY, velocityY: 0 }));
+    expect(onNavigate).not.toHaveBeenCalled();
+    expect(withTiming).not.toHaveBeenCalled();
+  });
+
+  it('locks a diagonal gesture to its initial vertical axis and never rates it', async () => {
+    const onSwipe = jest.fn();
+    const onNavigate = jest.fn();
+    const screen = await render(<SwipeableWordCard word={word} active disabled={false} canGoNext
+      onSwipe={onSwipe} onNavigate={onNavigate}><Text>Word</Text></SwipeableWordCard>);
+    await fireEvent(screen.getByTestId('swipe-card-word'), 'layout', {
+      nativeEvent: { layout: { width: 300, height: 600 } },
+    });
+    await act(() => mockPan.onUpdate.mock.lastCall![0]({ translationX: 5, translationY: -25 }));
+    await act(() => mockPan.onEnd.mock.lastCall![0]({ translationX: 280, velocityX: 1200, translationY: -220, velocityY: -900 }));
+    await act(() => jest.mocked(withTiming).mock.lastCall![2]!(true));
+    expect(onNavigate).toHaveBeenCalledWith('next');
+    expect(onSwipe).not.toHaveBeenCalled();
+  });
+
+  it('allows the end card to go back and ignores a cancelled completion', async () => {
+    const onNavigate = jest.fn();
+    const screen = await render(<SwipeableWordCard active disabled canGoBack
+      onSwipe={jest.fn()} onNavigate={onNavigate}><Text>End of batch</Text></SwipeableWordCard>);
+    await fireEvent(screen.getByTestId('swipe-card-end'), 'layout', {
+      nativeEvent: { layout: { width: 300, height: 600 } },
+    });
+    await act(() => mockPan.onEnd.mock.lastCall![0]({ translationX: 0, velocityX: 0, translationY: 220, velocityY: 0 }));
+    const finish = jest.mocked(withTiming).mock.lastCall![2]!;
+    await act(() => finish(false));
+    expect(onNavigate).not.toHaveBeenCalled();
+    await act(() => finish(true));
+    expect(onNavigate).toHaveBeenCalledWith('previous');
+  });
+
+  it('shows matching overlays and accepts gestures in both axes', async () => {
     const screen = await render(
       <SwipeableWordCard word={word} active disabled={false} onSwipe={jest.fn()}>
         <Text>Word content</Text>
@@ -197,7 +215,6 @@ describe('SwipeableWordCard', () => {
     screen.getByText('Review in 3–5 days', { includeHiddenElements: true });
     screen.getByText('I KNOW THIS', { includeHiddenElements: true });
     screen.getByText('Stop reviews', { includeHiddenElements: true });
-    expect(mockPan.activeOffsetX).toHaveBeenCalledWith([-SWIPE_ACTIVE_OFFSET, SWIPE_ACTIVE_OFFSET]);
-    expect(mockPan.failOffsetY).toHaveBeenCalledWith([-SWIPE_VERTICAL_FAILURE_OFFSET, SWIPE_VERTICAL_FAILURE_OFFSET]);
+    expect(mockPan.minDistance).toHaveBeenCalledWith(SWIPE_ACTIVE_OFFSET);
   });
 });

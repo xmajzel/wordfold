@@ -28,8 +28,8 @@ jest.mock('@/components/swipeable-word-card', () => {
   const { View } = jest.requireActual('react-native');
 
   return {
-    SwipeableWordCard: ({ children }: { children: ReactNode }) =>
-      React.createElement(View, null, children),
+    SwipeableWordCard: ({ children }: { children: ReactNode | ((rate: () => void) => ReactNode) }) =>
+      React.createElement(View, null, typeof children === 'function' ? children(() => undefined) : children),
   };
 });
 
@@ -44,6 +44,7 @@ jest.mock('@/features/pronunciation/offline-downloads-provider', () => ({
 }));
 
 jest.mock('react-native-reanimated', () => {
+  const React = jest.requireActual('react');
   const { View } = jest.requireActual('react-native');
   const transition = {
     damping: () => transition,
@@ -58,10 +59,12 @@ jest.mock('react-native-reanimated', () => {
     FadeInDown: transition,
     FadeOut: transition,
     ReduceMotion: { System: 'system' },
+    useReducedMotion: () => false,
+    runOnUI: (callback: () => void) => callback,
     cancelAnimation: jest.fn(),
     interpolate: (_value: number, _input: number[], output: number[]) => output[0],
     useAnimatedStyle: (factory: () => object) => factory(),
-    useSharedValue: (value: unknown) => ({ value, set(next: unknown) { this.value = next; } }),
+    useSharedValue: (value: unknown) => React.useRef({ value, get() { return this.value; }, set(next: unknown) { this.value = next; } }).current,
     withRepeat: (value: unknown) => value,
     withTiming: (value: unknown) => value,
   };

@@ -14,8 +14,10 @@ import Animated, {
   useSharedValue,
   withSpring,
   withTiming,
+  type SharedValue,
 } from 'react-native-reanimated';
 
+import { getCardLayerStyle, restingCardMotion, type CardStackMotion } from '@/components/card-stack-motion';
 import { AppText } from '@/components/app-text';
 import type { LearningRating, Word } from '@/domain/types';
 import { getNextReviewIntervalRange } from '@/features/learning/algorithm';
@@ -23,7 +25,6 @@ import { useAppTheme } from '@/hooks/use-app-theme';
 import { radii, spacing } from '@/theme/tokens';
 
 export const SWIPE_ACTIVE_OFFSET = 16;
-export const SWIPE_VERTICAL_FAILURE_OFFSET = 12;
 export const SWIPE_DISTANCE_RATIO = 0.35;
 export const SWIPE_FLING_DISTANCE_RATIO = 0.2;
 export const SWIPE_FLING_VELOCITY = 900;
@@ -48,30 +49,36 @@ export function getSwipeRating(
 export function SwipeableWordCard({
   word,
   active,
-  inViewport = active,
   disabled,
   onSwipe,
   children,
-  nextCard,
+  onNavigate,
+  canGoBack = false,
+  canGoNext = false,
+  stackMotion,
+  cardIndex = 0,
 }: {
-  word: Word;
+  word?: Word;
   active: boolean;
-  inViewport?: boolean;
   disabled: boolean;
   onSwipe(rating: LearningRating): void;
-  nextCard?: ReactNode;
+  onNavigate?(direction: 'next' | 'previous'): void;
+  canGoBack?: boolean;
+  canGoNext?: boolean;
+  stackMotion?: SharedValue<CardStackMotion>;
+  cardIndex?: number;
   children: ReactNode | ((animateRating: (rating: LearningRating) => void) => ReactNode);
 }) {
   const theme = useAppTheme();
   const reduceMotion = useReducedMotion();
   const screenReaderEnabled = useScreenReaderEnabled();
-  const [cardWidth, setCardWidth] = useState(0);
-  const translationX = useSharedValue(0);
-  const opacity = useSharedValue(1);
+  const localMotion = useSharedValue(restingCardMotion(cardIndex));
+  const motion = stackMotion ?? localMotion;
+  const axis = useSharedValue<'x' | 'y' | null>(null);
   const committed = useSharedValue(false);
   const thresholdHapticSent = useSharedValue(false);
-  const nextReviewRange = getNextReviewIntervalRange(word);
-  const gestureEnabled = active && !disabled && !screenReaderEnabled;
+  const nextReviewRange = word ? getNextReviewIntervalRange(word) : null;
+  const gestureEnabled = active && !screenReaderEnabled;
 
   const triggerThresholdHaptic = useCallback(() => {
     void Haptics.selectionAsync();
@@ -82,72 +89,108 @@ export function SwipeableWordCard({
   }, [onSwipe]);
 
   useEffect(() => {
-    // React can advance before the native list scroll reaches the next row.
-    // Preserve the completed exit and its underlay until this row is offscreen.
-    if (active || inViewport) return;
-    translationX.set(0);
-    opacity.set(1);
+    if (active) return;
+    // Per-card gesture bookkeeping must not reset the shared visible layers.
     committed.set(false);
+    axis.set(null);
     thresholdHapticSent.set(false);
-  }, [active, committed, inViewport, opacity, thresholdHapticSent, translationX]);
+  }, [active, axis, committed, thresholdHapticSent]);
+
+  const promote = (targetIndex: number) => {
+    'worklet';
+    const current = motion.get();
+    motion.set(restingCardMotion(targetIndex, current.width, current.height));
+  };
 
   const animateRating = (rating: LearningRating, fade = false) => {
     'worklet';
-    if (!active || disabled || committed.get()) return;
+    const current = motion.get();
+    if (!active || disabled || !word || committed.get() || current.index !== cardIndex) return;
     committed.set(true);
-    if (fade) {
-      translationX.set(0);
-      opacity.set(withTiming(0, {
-        duration: reduceMotion ? 70 : 220,
-        reduceMotion: ReduceMotion.System,
-      }, (finished) => {
-        if (finished) runOnJS(finishSwipe)(rating);
-      }));
-      return;
-    }
     const direction = rating === 'understood' ? -1 : 1;
-    const exitDistance = Math.max(cardWidth + 100, 420);
-    translationX.set(withTiming(direction * exitDistance, {
-      duration: reduceMotion ? 70 : 140,
+    motion.set(withTiming({ ...current,
+      x: fade ? 0 : direction * Math.max(current.width + 100, 420),
+      y: 0, opacity: fade ? 0 : 1,
+    }, {
+      duration: reduceMotion ? 70 : fade ? 220 : 140,
       reduceMotion: ReduceMotion.System,
     }, (finished) => {
-      if (finished) runOnJS(finishSwipe)(rating);
+      if (!finished) return;
+      promote(cardIndex + 1);
+      runOnJS(finishSwipe)(rating);
     }));
   };
 
-  // Serialize taps with gestures on the UI thread so only the first action commits.
   const animateButtonRating = (rating: LearningRating) => {
     runOnUI(animateRating)(rating, true);
   };
 
+  const springBack = () => {
+    'worklet';
+    const current = motion.get();
+    motion.set(withSpring(restingCardMotion(cardIndex, current.width, current.height), {
+      damping: 18, stiffness: 240, reduceMotion: ReduceMotion.System,
+    }));
+  };
+
+  const navigate = (direction: 'next' | 'previous') => {
+    onNavigate?.(direction);
+  };
+
   const pan = Gesture.Pan()
     .enabled(gestureEnabled)
-    .activeOffsetX([-SWIPE_ACTIVE_OFFSET, SWIPE_ACTIVE_OFFSET])
-    .failOffsetY([-SWIPE_VERTICAL_FAILURE_OFFSET, SWIPE_VERTICAL_FAILURE_OFFSET])
+    .minDistance(SWIPE_ACTIVE_OFFSET)
     .onBegin(() => {
       if (committed.get()) return;
+      axis.set(null);
       thresholdHapticSent.set(false);
     })
     .onUpdate((event) => {
-      if (committed.get()) return;
-      translationX.set(event.translationX);
-      const threshold = cardWidth * SWIPE_DISTANCE_RATIO;
-      if (!thresholdHapticSent.get() && threshold > 0 && Math.abs(event.translationX) >= threshold) {
-        thresholdHapticSent.set(true);
-        runOnJS(triggerThresholdHaptic)();
+      const current = motion.get();
+      if (committed.get() || current.index !== cardIndex) return;
+      if (!axis.get()) {
+        if (Math.max(Math.abs(event.translationX), Math.abs(event.translationY)) < SWIPE_ACTIVE_OFFSET) return;
+        axis.set(Math.abs(event.translationX) > Math.abs(event.translationY) ? 'x' : 'y');
+      }
+      if (axis.get() === 'y') {
+        const backward = event.translationY > 0;
+        const allowed = backward ? canGoBack : canGoNext;
+        // Positive Y pulls the previous layer down; the current layer stays still.
+        motion.set({ ...current, x: 0, y: allowed ? event.translationY : 0 });
+      } else {
+        motion.set({ ...current, x: disabled ? event.translationX * 0.15 : event.translationX, y: 0 });
+        const threshold = current.width * SWIPE_DISTANCE_RATIO;
+        if (!disabled && !thresholdHapticSent.get() && threshold > 0 && Math.abs(event.translationX) >= threshold) {
+          thresholdHapticSent.set(true);
+          runOnJS(triggerThresholdHaptic)();
+        }
       }
     })
     .onEnd((event) => {
-      if (committed.get()) return;
-      const rating = getSwipeRating(event.translationX, event.velocityX, cardWidth);
-      if (!rating) {
-        translationX.set(withSpring(0, {
-          damping: 18,
-          stiffness: 240,
+      const current = motion.get();
+      if (committed.get() || current.index !== cardIndex) return;
+      const vertical = axis.get() === 'y' || (axis.get() === null && Math.abs(event.translationY) > Math.abs(event.translationX));
+      if (vertical) {
+        const direction = event.translationY < 0 ? 'next' : 'previous';
+        const allowed = direction === 'next' ? canGoNext : canGoBack;
+        const deliberate = getSwipeRating(event.translationY, event.velocityY, current.height);
+        if (!allowed || !deliberate || !onNavigate) { springBack(); return; }
+        committed.set(true);
+        runOnJS(triggerThresholdHaptic)();
+        motion.set(withTiming({ ...current, x: 0,
+          y: (direction === 'next' ? -1 : 1) * (current.height + 100),
+        }, {
+          duration: reduceMotion ? 70 : 180,
           reduceMotion: ReduceMotion.System,
+        }, (finished) => {
+          if (!finished) return;
+          promote(cardIndex + (direction === 'next' ? 1 : -1));
+          runOnJS(navigate)(direction);
         }));
         return;
       }
+      const rating = getSwipeRating(event.translationX, event.velocityX, current.width);
+      if (disabled || !rating) { springBack(); return; }
       if (!thresholdHapticSent.get()) {
         thresholdHapticSent.set(true);
         runOnJS(triggerThresholdHaptic)();
@@ -155,27 +198,15 @@ export function SwipeableWordCard({
       animateRating(rating);
     })
     .onFinalize((_event, success) => {
-      if (!success && !committed.get()) {
-        translationX.set(withSpring(0, {
-          damping: 18,
-          stiffness: 240,
-          reduceMotion: ReduceMotion.System,
-        }));
-      }
+      if (!success && !committed.get() && motion.get().index === cardIndex) springBack();
     });
 
-  const cardStyle = useAnimatedStyle(() => {
-    const width = Math.max(cardWidth, 280);
-    const rotation = reduceMotion
-      ? 0
-      : interpolate(translationX.value, [-width, 0, width], [-5, 0, 5], Extrapolation.CLAMP);
-    return { opacity: opacity.value, transform: [{ translateX: translationX.value }, { rotate: `${rotation}deg` }] };
-  });
+  const cardStyle = useAnimatedStyle(() => stackMotion ? {} : getCardLayerStyle(cardIndex, motion.value, reduceMotion));
   const keepLearningStyle = useAnimatedStyle(() => {
-    const threshold = Math.max(cardWidth * SWIPE_DISTANCE_RATIO, 96);
+    const threshold = Math.max(motion.value.width * SWIPE_DISTANCE_RATIO, 96);
     return {
       opacity: interpolate(
-        translationX.value,
+        motion.value.index === cardIndex ? motion.value.x : 0,
         [-threshold, -SWIPE_ACTIVE_OFFSET, 0],
         [1, 0, 0],
         Extrapolation.CLAMP,
@@ -183,10 +214,10 @@ export function SwipeableWordCard({
     };
   });
   const knowThisStyle = useAnimatedStyle(() => {
-    const threshold = Math.max(cardWidth * SWIPE_DISTANCE_RATIO, 96);
+    const threshold = Math.max(motion.value.width * SWIPE_DISTANCE_RATIO, 96);
     return {
       opacity: interpolate(
-        translationX.value,
+        motion.value.index === cardIndex ? motion.value.x : 0,
         [0, SWIPE_ACTIVE_OFFSET, threshold],
         [0, 0, 1],
         Extrapolation.CLAMP,
@@ -195,44 +226,41 @@ export function SwipeableWordCard({
   });
 
   return (
-    <View style={styles.card}>
-      {(active || inViewport) && nextCard ? <View
-        style={StyleSheet.absoluteFill}
-        pointerEvents="none"
-        accessibilityElementsHidden
-        importantForAccessibility="no-hide-descendants"
-        aria-hidden
-        testID="next-word-preview">
-        {nextCard}
-      </View> : null}
-      <GestureDetector gesture={pan}>
-        <Animated.View
-          needsOffscreenAlphaCompositing
-          onLayout={(event) => setCardWidth(Math.round(event.nativeEvent.layout.width))}
-          style={[styles.card, cardStyle]}
-          testID={`swipe-card-${word.id}`}>
-          {typeof children === 'function' ? children(animateButtonRating) : children}
-          <SwipeOverlay
-            align="right"
-            color={theme.primary}
-            detail={`Review in ${nextReviewRange.minDays}–${nextReviewRange.maxDays} days`}
-            icon="calendar-outline"
-            label="Keep learning"
-            style={keepLearningStyle}
-            testID="keep-learning-swipe-overlay"
-          />
-          <SwipeOverlay
-            align="left"
-            color={theme.success}
-            detail="Stop reviews"
-            icon="checkmark-circle-outline"
-            label="I know this"
-            style={knowThisStyle}
-            testID="know-this-swipe-overlay"
-          />
-        </Animated.View>
-      </GestureDetector>
-    </View>
+    <GestureDetector gesture={pan}>
+      <Animated.View
+        needsOffscreenAlphaCompositing
+        onLayout={(event) => {
+          const width = Math.round(event.nativeEvent.layout.width);
+          const height = Math.round(event.nativeEvent.layout.height);
+          runOnUI(() => {
+            'worklet';
+            const current = motion.get();
+            if (current.width !== width || current.height !== height) motion.set({ ...current, width, height });
+          })();
+        }}
+        style={[styles.card, cardStyle]}
+        testID={`swipe-card-${word?.id ?? 'end'}`}>
+        {typeof children === 'function' ? children(animateButtonRating) : children}
+        {nextReviewRange ? <><SwipeOverlay
+          align="right"
+          color={theme.primary}
+          detail={`Review in ${nextReviewRange.minDays}–${nextReviewRange.maxDays} days`}
+          icon="calendar-outline"
+          label="Keep learning"
+          style={keepLearningStyle}
+          testID="keep-learning-swipe-overlay"
+        />
+        <SwipeOverlay
+          align="left"
+          color={theme.success}
+          detail="Stop reviews"
+          icon="checkmark-circle-outline"
+          label="I know this"
+          style={knowThisStyle}
+          testID="know-this-swipe-overlay"
+        /></> : null}
+      </Animated.View>
+    </GestureDetector>
   );
 }
 
