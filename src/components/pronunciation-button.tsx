@@ -13,7 +13,7 @@ import { usePronunciationCacheScope } from '@/features/pronunciation/cache-scope
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { radii, spacing } from '@/theme/tokens';
 
-type PronunciationStatus = 'idle' | 'preparing' | 'speaking';
+export type PronunciationStatus = 'idle' | 'preparing' | 'speaking' | 'stopping';
 
 interface PronunciationButtonProps {
   text: string;
@@ -21,15 +21,23 @@ interface PronunciationButtonProps {
   compact?: boolean;
   idleLabel?: string;
   active?: boolean;
+  disabled?: boolean;
+  align?: 'center' | 'flex-start';
+  onStatusChange?(status: PronunciationStatus): void;
 }
 
-export function PronunciationButton({ text, locale, compact = false, idleLabel, active = true }: PronunciationButtonProps) {
+export function PronunciationButton({ text, locale, compact = false, idleLabel, active = true, disabled = false, align = 'center', onStatusChange }: PronunciationButtonProps) {
   const theme = useAppTheme();
   const cacheScope = usePronunciationCacheScope();
   const [status, setStatus] = useState<PronunciationStatus>('idle');
   const statusRef = useRef<PronunciationStatus>('idle');
   const requestId = useRef(0);
   const mounted = useRef(true);
+  const changeStatus = useCallback((next: PronunciationStatus) => {
+    statusRef.current = next;
+    setStatus(next);
+    onStatusChange?.(next);
+  }, [onStatusChange]);
   const languageCode = locale.split(/[-_]/)[0]?.toLocaleLowerCase('en') ?? locale;
   const localeDescription = `${languageLabel(languageCode)} · ${pronunciationLocaleLabel(languageCode, locale)}`;
 
@@ -59,38 +67,44 @@ export function PronunciationButton({ text, locale, compact = false, idleLabel, 
   }, []);
 
   const play = useCallback(async () => {
-    if (!active) return;
-    if (status === 'preparing') return;
+    if (!active || disabled) return;
+    if (statusRef.current === 'preparing' || statusRef.current === 'stopping') return;
     if (status === 'speaking') {
       requestId.current += 1;
-      setStatus('idle');
-      await stopPronunciation();
+      changeStatus('stopping');
+      try {
+        await stopPronunciation();
+      } catch (error) {
+        if (mounted.current) showPlaybackError(error);
+      } finally {
+        if (mounted.current) changeStatus('idle');
+      }
       return;
     }
 
     const currentRequest = requestId.current + 1;
     requestId.current = currentRequest;
-    setStatus('preparing');
+    changeStatus('preparing');
     try {
       const result = await startPronunciation(text, locale, cacheScope, {
         onStart: () => {
-          if (mounted.current && requestId.current === currentRequest) setStatus('speaking');
+          if (mounted.current && requestId.current === currentRequest) changeStatus('speaking');
         },
         onDone: () => {
-          if (mounted.current && requestId.current === currentRequest) setStatus('idle');
+          if (mounted.current && requestId.current === currentRequest) changeStatus('idle');
         },
         onStopped: () => {
-          if (mounted.current && requestId.current === currentRequest) setStatus('idle');
+          if (mounted.current && requestId.current === currentRequest) changeStatus('idle');
         },
         onError: (error) => {
           if (!mounted.current || requestId.current !== currentRequest) return;
-          setStatus('idle');
+          changeStatus('idle');
           showPlaybackError(error);
         },
       });
       if (!mounted.current || requestId.current !== currentRequest) return;
       if (result.status === 'missing_voice') {
-        setStatus('idle');
+        changeStatus('idle');
         showMissingVoice(localeDescription, () => {
           void openAndroidVoiceInstaller().then(async (opened) => {
             if (!mounted.current) return;
@@ -113,11 +127,12 @@ export function PronunciationButton({ text, locale, compact = false, idleLabel, 
       }
     } catch (error) {
       if (!mounted.current || requestId.current !== currentRequest) return;
-      setStatus('idle');
+      changeStatus('idle');
       showPlaybackError(error);
     }
-  }, [active, cacheScope, locale, localeDescription, showPlaybackError, status, text]);
+  }, [active, disabled, changeStatus, cacheScope, locale, localeDescription, showPlaybackError, status, text]);
 
+  const stopping = status === 'stopping';
   const preparing = status === 'preparing';
   const speaking = status === 'speaking';
   const actionLabel = speaking ? `Stop ${localeDescription} device pronunciation` : `Play ${localeDescription} device pronunciation for ${text.trim()}`;
@@ -125,13 +140,14 @@ export function PronunciationButton({ text, locale, compact = false, idleLabel, 
   return <Pressable
     accessibilityRole="button"
     accessibilityLabel={preparing ? `Preparing ${localeDescription} device pronunciation` : actionLabel}
-    accessibilityState={{ busy: preparing, disabled: !active || preparing }}
-    disabled={!active || preparing}
+    accessibilityState={{ busy: preparing || stopping, disabled: disabled || !active || preparing || stopping }}
+    disabled={disabled || !active || preparing || stopping}
     onPress={() => void play()}
     style={({ pressed }) => [styles.button, compact && styles.compactButton, {
+      alignSelf: align,
       backgroundColor: theme.primarySoft,
       borderColor: theme.primary,
-      opacity: preparing ? 0.65 : pressed ? 0.78 : 1,
+      opacity: disabled || !active || preparing || stopping ? 0.65 : pressed ? 0.78 : 1,
     }]}
   >
     <View style={[styles.icon, compact && styles.compactIcon, { backgroundColor: theme.surface }]}>
@@ -143,7 +159,7 @@ export function PronunciationButton({ text, locale, compact = false, idleLabel, 
     </View>
     <View style={styles.text}>
       <AppText variant="label" style={{ color: theme.primary }}>
-        {preparing ? 'Preparing voice…' : speaking ? 'Playing device voice…' : idleLabel ?? '≈ Device voice'}
+        {stopping ? 'Stopping…' : preparing ? 'Preparing voice…' : speaking ? 'Playing device voice…' : idleLabel ?? '≈ Device voice'}
       </AppText>
       {!compact ? <AppText variant="caption" style={{ color: theme.muted }}>{localeDescription}</AppText> : null}
     </View>
