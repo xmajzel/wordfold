@@ -1,0 +1,1155 @@
+{
+  "schemaVersion": 1,
+  "reviewerType": "ai",
+  "kind": "spanish",
+  "reviewerId": "c2-spanish-independent-ai",
+  "reviewedAt": "2026-09-13T15:02:36.654Z",
+  "notHumanApproval": true,
+  "batchId": "c2-pilot-2026-09-13",
+  "datasetSha256": "ca530fc3d11a039947585566b9f0e1c22049dec04b8029bc372ccc31ad569dc9",
+  "scope": "Spanish sense, definition, example, morphology, register and provisional placement; no audio review.",
+  "entries": [
+    {
+      "entryId": "es-sk:c2:exp-pilot-001-aquilatar",
+      "catalogSenseId": "es-sk:c2:exp-pilot-001-aquilatar:verb:1",
+      "level": "C2",
+      "entrySha256": "0fb9021eee224db0d3312a78cd3364be88d49bdbd5bd4b205af854f2f75f33a6",
+      "decision": "no-issue",
+      "notes": "Accurate careful-appraisal sense; testimony example is idiomatic. B2 evaluar already covers broad assessment, but aquilatar adds formal rigorous calibration of evidential worth; make that contrast explicit rather than comparing only with considerar.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/aquilatar",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE senses 2 and 4 support rigorous appraisal and precise analysis."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-002-dirimir",
+      "catalogSenseId": "es-sk:c2:exp-pilot-002-dirimir:verb:1",
+      "level": "C2",
+      "entrySha256": "d47a65da347186051576e74a8b5b85eb0c3d98e9e07f589835e5ad7106820db2",
+      "decision": "changes-requested",
+      "notes": "Definition selects resolution of a controversy correctly, but the example reads as determining whether a question is procedural or substantive, with no clearly disputed claim being settled.",
+      "findings": [
+        {
+          "category": "example",
+          "severity": "substantive",
+          "message": "Replace generic dirimir si with explicit resolution of a controversy between parties."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/dirimir",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE sense 2 concerns settling a controversy; Fundéu warns against generic deciding."
+        },
+        {
+          "url": "https://www.fundeu.es/recomendacion/dirimir-uso-adecuado/",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE sense 2 concerns settling a controversy; Fundéu warns against generic deciding."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-003-deslindar",
+      "catalogSenseId": "es-sk:c2:exp-pilot-003-deslindar:verb:1",
+      "level": "C2",
+      "entrySha256": "60080744245ba2c07a43b23eb14da6ffc994ab56eb50fddaddc876ab8c0a848d",
+      "decision": "no-issue",
+      "notes": "Conceptual boundaries between kinds of responsibility are natural and preserve the distinction from exonerating oneself. B2 delimitar physical/spatial bounds are a prerequisite, not a duplicate of this explicit clarification use.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/deslindar",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE sense 2 concerns removing conceptual confusion."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-004-colegir",
+      "catalogSenseId": "es-sk:c2:exp-pilot-004-colegir:verb:1",
+      "level": "C2",
+      "entrySha256": "964cd122d1059c15ec7ba413a21fcc64d22ce715685cfa84aefb5dacd6addcfe",
+      "decision": "no-issue",
+      "notes": "The negated inference example is natural and accurately avoids equating inference with proof. Citation infinitive and spelling are correct; irregular colijo/coligiendo can be optional forms, not required for this infinitive example.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/colegir",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE sense 2 supports inferential consequence; conjugation is irregular."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-005-soslayar",
+      "catalogSenseId": "es-sk:c2:exp-pilot-005-soslayar:verb:1",
+      "level": "C2",
+      "entrySha256": "cbcaffeca3fc05f553572a121dcb08422afe4d1212ffbd22894b79178969369f",
+      "decision": "changes-requested",
+      "notes": "The avoidance sense and evasive-answer example repeat production C1 eludir: avoiding an obligation, question or issue. Formal synonym substitution alone does not add the proposed new sense.",
+      "findings": [
+        {
+          "category": "duplicate",
+          "severity": "substantive",
+          "message": "Replace: production C1 eludir already has this sense and evasive questioning context."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/soslayar",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE first sense supports leaving an issue or difficulty aside."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-006-salvedad",
+      "catalogSenseId": "es-sk:c2:exp-pilot-006-salvedad:noun:1",
+      "level": "C2",
+      "entrySha256": "fdd4bb7e0097e6c9fff53c69a177243564c46ad9c96754c4e130c1a469a64178",
+      "decision": "no-issue",
+      "notes": "Reservation limiting acceptance is accurate; con la salvedad de que is grammatical. Production reserva is a booking sense, so no duplicate. Provisional practice focuses qualified assent, potentially learned at C1.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/salvedad",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE first sense supports a qualification restricting what is said or done."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-007-sin-ambages",
+      "catalogSenseId": "es-sk:c2:exp-pilot-007-sin-ambages:adv:1",
+      "level": "C2",
+      "entrySha256": "b93a79103c5ec281c6635e2673f7b8f3782e34c643889908fcfcf6833e116928",
+      "decision": "no-issue",
+      "notes": "Plural ambages and sin construction are correct; directness does not entail aggression. The DLE example supports this combination although its headword is a noun, not a separately labeled locution.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/ambages",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE ambages is plural circumlocution; sin construction is directly exemplified."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-008-hilar-fino",
+      "catalogSenseId": "es-sk:c2:exp-pilot-008-hilar-fino:verb:1",
+      "level": "C2",
+      "entrySha256": "6e8c0c520d1b7187014bffd652d79de8aea09143c326205944a1cadf791c2c6b",
+      "decision": "no-issue",
+      "notes": "Analysis of subtle distinctions is accurate and the infinitive example is natural. Colloquial is a reasonable pedagogical register judgment, not an explicit DLE restriction.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/hilar",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE hilar fino concerns subtle reasoning or exact care."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-009-rizar-el-rizo",
+      "catalogSenseId": "es-sk:c2:exp-pilot-009-rizar-el-rizo:verb:1",
+      "level": "C2",
+      "entrySha256": "c26e4d70d3d4950e10f20f45430cb9cfb97be49c02fbe4096ad54fec0e7615b9",
+      "decision": "changes-requested",
+      "notes": "Example and rationale criticize needless complication, whereas the definition also allows a neutral or positive refinement. Separate the selected negative sense from DLE senses about virtuosity.",
+      "findings": [
+        {
+          "category": "sense-boundary",
+          "severity": "substantive",
+          "message": "Define selected negative sense explicitly as complicating more than necessary."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/rizar",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE rizar el rizo sense 3 is unnecessary complication; other senses differ."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-010-dar-con-la-horma-de-su-zapato",
+      "catalogSenseId": "es-sk:c2:exp-pilot-010-dar-con-la-horma-de-su-zapato:verb:1",
+      "level": "C2",
+      "entrySha256": "3b2c94e177fdfae5af279054f86c7ac3a556d9025677b221c54a7439457f645f",
+      "decision": "changes-requested",
+      "notes": "The resistance-to-domination sense fits the example. DLE lists encontrar/hallar la horma de su zapato; dar con is a plausible variant but supplied primary evidence does not attest that citation form.",
+      "findings": [
+        {
+          "category": "citation-form",
+          "severity": "substantive",
+          "message": "Use primary-attested encontrar la horma de su zapato, or attach primary evidence for dar con variant."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/horma",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE horma lists encontrar/hallar with resistance and compatibility as separate senses."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-011-no-dar-puntada-sin-hilo",
+      "catalogSenseId": "es-sk:c2:exp-pilot-011-no-dar-puntada-sin-hilo:verb:1",
+      "level": "C2",
+      "entrySha256": "549f820eec9c8a2d7bf762127c61967a199e588188e9895ee229e6372f8d855f",
+      "decision": "changes-requested",
+      "notes": "Calculated intention is accurate, but the definition omits pursuit of personal benefit, retained by DLE and the example. Tighten it to avoid teaching any purposeful act as this idiom.",
+      "findings": [
+        {
+          "category": "definition",
+          "severity": "substantive",
+          "message": "Include calculated pursuit of personal benefit."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/puntada",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE phrase includes calculated action for personal advantage."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-012-nadar-y-guardar-la-ropa",
+      "catalogSenseId": "es-sk:c2:exp-pilot-012-nadar-y-guardar-la-ropa:verb:1",
+      "level": "C2",
+      "entrySha256": "7c11f453cbb7ed243696591ac6aa85719f42df8e7714a6c19b085bb716af3c37",
+      "decision": "no-issue",
+      "notes": "The selected self-protective strategy is natural. DLE supports precaution and retaining protection on failure; criticism is contextual, not invariably part of the idiom.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/ropa",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE ropa phrase concerns precautions retaining protection if an undertaking fails."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-013-arrimar-el-ascua-a-su-sardina",
+      "catalogSenseId": "es-sk:c2:exp-pilot-013-arrimar-el-ascua-a-su-sardina:verb:1",
+      "level": "C2",
+      "entrySha256": "c3e0b18a69c2aaeae46b8c88154387946ac3b524666e6c7d5e439eaccfa483da",
+      "decision": "no-issue",
+      "notes": "Self-interested use of an opportunity is correctly illustrated with departmental budget advocacy. Possessive su tracks each department; collective construction is natural.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/ascua",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE ascua phrase concerns taking an opportunity for personal interest."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-014-a-toro-pasado",
+      "catalogSenseId": "es-sk:c2:exp-pilot-014-a-toro-pasado:adv:1",
+      "level": "C2",
+      "entrySha256": "06ea81f34d58bd7c02abec70557152815a58f45375e464fb49eddba397868831",
+      "decision": "changes-requested",
+      "notes": "Hindsight reading is natural, but DLE explicitly centers the lost or passed opportunity; the definition makes knowledge of results the whole meaning. Include the closed opportunity for action.",
+      "findings": [
+        {
+          "category": "definition",
+          "severity": "substantive",
+          "message": "Include the opportunity for action having already passed."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/toro",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE phrase centers the opportunity already being past."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-015-a-fuer-de",
+      "catalogSenseId": "es-sk:c2:exp-pilot-015-a-fuer-de:adp:1",
+      "level": "C2",
+      "entrySha256": "177493fa3994003df48fc42431dc59ced0f2d269139068846528a42acb5d9b5b",
+      "decision": "no-issue",
+      "notes": "Literary causal a fuer de plus adjective is grammatical; prudence leading to lost opportunity is coherent. No implication that this phrase always expresses an adverse outcome.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/fuero",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE fuer locution supports causal or capacity-based interpretation."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-016-en-aras-de",
+      "catalogSenseId": "es-sk:c2:exp-pilot-016-en-aras-de:adp:1",
+      "level": "C2",
+      "entrySha256": "0f76f6fee14a58bb374ac46c20c503de92660dbe1e1fab4dded9ac9988c5b89c",
+      "decision": "no-issue",
+      "notes": "The example contains an actual cost to reputation, consistent with Fundéu guidance on sacrifice for an interest. Fixed plural aras and de are correct.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/ara",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE ara supports interest/honor; Fundéu supplies sacrifice-related usage guidance."
+        },
+        {
+          "url": "https://www.fundeu.es/recomendacion/en-aras-de-155/",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE ara supports interest/honor; Fundéu supplies sacrifice-related usage guidance."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-017-habida-cuenta-de",
+      "catalogSenseId": "es-sk:c2:exp-pilot-017-habida-cuenta-de:adp:1",
+      "level": "C2",
+      "entrySha256": "db7501c0c7e8c75fe9e5c69527c7a08c790cb46e43560ae44c82722a0f30499f",
+      "decision": "no-issue",
+      "notes": "De que is correctly preserved and habida is invariant here. DLE labels the whole expression verbally, whereas RAE grammar indexes prepositional/conjunctive treatment, so the pedagogical ADP classification is defensible with a grammar reference.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/cuenta",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE cuenta records the formula; RAE grammar index supports alternate grammatical categorization."
+        },
+        {
+          "url": "https://www.rae.es/sites/default/files/indice_de_materias_gramatica.pdf",
+          "status": "primary-search-excerpt-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE cuenta records the formula; RAE grammar index supports alternate grammatical categorization."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-018-a-mayor-abundamiento",
+      "catalogSenseId": "es-sk:c2:exp-pilot-018-a-mayor-abundamiento:adv:1",
+      "level": "C2",
+      "entrySha256": "3a974dd9f3ef36bf36e7ca3861fd7035a2d5390ed1bffe0efb255a560e562d9d",
+      "decision": "no-issue",
+      "notes": "Reinforcing formal connective is accurately defined and exemplified; the unsigned act and date mismatch supply genuinely separate reasons.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/abundamiento",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE abundamiento records an additional strengthening reason."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-019-valga-la-redundancia",
+      "catalogSenseId": "es-sk:c2:exp-pilot-019-valga-la-redundancia:x:1",
+      "level": "C2",
+      "entrySha256": "6f302e2495bedc00f042aec7da3a31fc6047a50196fb04e69fd57484949479a1",
+      "decision": "changes-requested",
+      "notes": "The metalinguistic recognition of semantic repetition is appropriate and consenso compartido is a clear example. DLE redundancia alone does not verify the complete formula; Dominican Academy does.",
+      "findings": [
+        {
+          "category": "reference",
+          "severity": "substantive",
+          "message": "Use full-form Dominican Academy source; DLE redundancia alone is insufficient."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/redundancia",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE lacks complete formula; Dominican Academy explains excusing repetition of words or concepts."
+        },
+        {
+          "url": "https://academia.org.do/2013/04/08/valga-la-redundancia/",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE lacks complete formula; Dominican Academy explains excusing repetition of words or concepts."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-020-con-la-venia",
+      "catalogSenseId": "es-sk:c2:exp-pilot-020-con-la-venia:adv:1",
+      "level": "C2",
+      "entrySha256": "4a834bbfa3d9ed78d6f0656199b4999cfdb958981609aa16989945ac8c25f75e",
+      "decision": "changes-requested",
+      "notes": "The permission formula is correct; the example is highly formal. DPEJ explicitly confirms courtroom use, whereas DLE venia only supplies the underlying permission noun.",
+      "findings": [
+        {
+          "category": "reference",
+          "severity": "substantive",
+          "message": "Attach DPEJ full-form source and courtroom register note."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/venia",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE noun is permission; DPEJ records the ritual court permission formula."
+        },
+        {
+          "url": "https://dpej.rae.es/lema/con-la-venia/boe",
+          "status": "primary-search-excerpt-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE noun is permission; DPEJ records the ritual court permission formula."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-021-decir-con-la-boca-pequena",
+      "catalogSenseId": "es-sk:c2:exp-pilot-021-decir-con-la-boca-pequena:verb:1",
+      "level": "C2",
+      "entrySha256": "968a22ea2dcb92ebc35488bcf731c25a9759859e1280a3671aa72df73cccfc5d",
+      "decision": "changes-requested",
+      "notes": "Uncommitted assent is natural. DLE anchors this idiom in a perfunctory offer; use a perfunctory offer/support commitment or obtain primary support for the broader statement-without-conviction sense.",
+      "findings": [
+        {
+          "category": "sense-boundary",
+          "severity": "substantive",
+          "message": "Align definition/example to perfunctory offer of support, or provide primary evidence for broader mere assertion."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/boca",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE boca phrase concerns an offer made merely to fulfill social expectations."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-022-tirar-la-piedra-y-esconder-la-mano",
+      "catalogSenseId": "es-sk:c2:exp-pilot-022-tirar-la-piedra-y-esconder-la-mano:verb:1",
+      "level": "C2",
+      "entrySha256": "db9b317712c8bc42368724e1668110347cd7642bbd1f6deed8bee562ebfc3998",
+      "decision": "no-issue",
+      "notes": "The example combines causing reputational harm by rumor with concealed agency. Literal stone and hand senses are correctly excluded; no pronunciation review.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/piedra",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE piedra phrase combines harm with concealed agency."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-023-donde-dije-digo-digo-diego",
+      "catalogSenseId": "es-sk:c2:exp-pilot-023-donde-dije-digo-digo-diego:x:1",
+      "level": "C2",
+      "entrySha256": "d4c1a294b3e3496eb0038494170e52281804c457c8524d38b6252a8daea8308c",
+      "decision": "changes-requested",
+      "notes": "Fixed wordplay is correctly preserved while applied to third parties. Cervantes confirms retraction and public criticism in context; DLE decir does not contain the whole proverb.",
+      "findings": [
+        {
+          "category": "reference",
+          "severity": "substantive",
+          "message": "Use Cervantes proverb entry; DLE decir does not attest it."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/digo",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE decir did not contain phrase; Cervantes records self-correction/retraction and public critical context."
+        },
+        {
+          "url": "https://cvc.cervantes.es/lengua/refranero/ficha.aspx?Lng=0&Par=58538",
+          "status": "primary-search-excerpt-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE decir did not contain phrase; Cervantes records self-correction/retraction and public critical context."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-024-a-buen-entendedor-pocas-palabras-bastan",
+      "catalogSenseId": "es-sk:c2:exp-pilot-024-a-buen-entendedor-pocas-palabras-bastan:x:1",
+      "level": "C2",
+      "entrySha256": "8035fee18d2c6bfbcb321779ec9bbcbb5fbbf8f02eaddd9b158ec8f88fe8a9c2",
+      "decision": "changes-requested",
+      "notes": "Cervantes confirms indirect warning and omitted explicit mention. The workplace power context permits a threat reading without asserting that the proverb is inherently threatening.",
+      "findings": [
+        {
+          "category": "reference",
+          "severity": "substantive",
+          "message": "Use Cervantes proverb entry; DLE entendedor does not attest it."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/entendedor",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE entendedor did not contain proverb; Cervantes records indirect warning use."
+        },
+        {
+          "url": "https://cvc.cervantes.es/lengua/refranero/ficha.aspx?Lng=0&Par=58037",
+          "status": "primary-search-excerpt-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE entendedor did not contain proverb; Cervantes records indirect warning use."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-025-como-quien-no-quiere-la-cosa",
+      "catalogSenseId": "es-sk:c2:exp-pilot-025-como-quien-no-quiere-la-cosa:adv:1",
+      "level": "C2",
+      "entrySha256": "01ce7161df277e770911141fd017d08db3190e2eff438e11457258f5116a78db",
+      "decision": "no-issue",
+      "notes": "Casual appearance concealing intent matches the DLE dissimulation sense; the vacancy question illustrates it naturally.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/querer",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE cosa phrase is dissimulation."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-026-por-no-decir",
+      "catalogSenseId": "es-sk:c2:exp-pilot-026-por-no-decir:x:1",
+      "level": "C2",
+      "entrySha256": "c97544d974e4cb4603711f5484573173cbf9747ddfa855f116a9aa13ffa4a880",
+      "decision": "changes-requested",
+      "notes": "Scalar escalation from incomplete to misleading is correct. This is not confined to colloquial speech, and DLE decir does not list it; needs a suitable pragmatic source and neutral register.",
+      "findings": [
+        {
+          "category": "reference-register",
+          "severity": "substantive",
+          "message": "Attach primary pragmatic evidence and use neutral rather than colloquial-only register."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/decir",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE decir did not contain phrase; Cervantes C2 examiner material illustrates it in precision of nuances, without assigning an exclusive lexical level."
+        },
+        {
+          "url": "https://formacion.icervantes.org/pluginfile.php/2524639/mod_forum/attachment/784375/C2.%20Taller%20de%20calificaci%C3%B3n.%20Muestra%201.%20Informe%20ALEX.pdf?forcedownload=1",
+          "status": "primary-search-excerpt-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE decir did not contain phrase; Cervantes C2 examiner material illustrates it in precision of nuances, without assigning an exclusive lexical level."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-027-hacer-de-tripas-corazon",
+      "catalogSenseId": "es-sk:c2:exp-pilot-027-hacer-de-tripas-corazon:verb:1",
+      "level": "C2",
+      "entrySha256": "d63f3adcd876a07938aea09b6c2ff17eee24c251c714d50d71c00842e7ff40e0",
+      "decision": "changes-requested",
+      "notes": "Overcoming disappointment to congratulate a rival is a natural extension of self-command in adversity. DLE explicitly labels the idiom colloquial, conflicting with neutral metadata.",
+      "findings": [
+        {
+          "category": "register",
+          "severity": "substantive",
+          "message": "Change register to colloquial, matching DLE."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/tripa",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE tripa labels self-command idiom colloquial."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-028-guardar-las-distancias",
+      "catalogSenseId": "es-sk:c2:exp-pilot-028-guardar-las-distancias:verb:1",
+      "level": "C2",
+      "entrySha256": "4be889b02a56640be11dfc2f320d75da64fa612e4738de634779119395e7d917",
+      "decision": "no-issue",
+      "notes": "Professional reserve without hostility matches the DLE interpersonal locution. Routine construction is suitable for contextual advanced practice but not demonstrably C2-only.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/distancia",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE distancia phrase excludes familiarity/excess cordiality."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-029-contemporizar",
+      "catalogSenseId": "es-sk:c2:exp-pilot-029-contemporizar:verb:1",
+      "level": "C2",
+      "entrySha256": "a27f62a2e2de8c85f73416b907a3fd41e7815f09d5bc8b2e6a7ad1a2c1470333",
+      "decision": "no-issue",
+      "notes": "Accommodation to opposing parties is natural without endorsement of their claims; construction contemporizar con is correct. Formal is an editorial register judgment.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/contemporizar",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE contemporizar concerns accommodation to others for a purpose."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-030-susceptibilidad",
+      "catalogSenseId": "es-sk:c2:exp-pilot-030-susceptibilidad:noun:1",
+      "level": "C2",
+      "entrySha256": "801323b3b051ecf497b2c988beb9d5e952c7a361e95639c86c5db085cd99016a",
+      "decision": "no-issue",
+      "notes": "The interpersonal offence sense is appropriate; susceptibility does not mean physical vulnerability here. C2 placement remains especially weak as a bare vocabulary distinction, although tact-sensitive use is legitimate advanced practice.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/susceptibilidad",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE susceptibilidad derives from susceptible; susceptible sense 2 gives the touchy/easily irritated interpersonal quality."
+        },
+        {
+          "url": "https://dle.rae.es/susceptible",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE susceptibilidad derives from susceptible; susceptible sense 2 gives the touchy/easily irritated interpersonal quality."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-031-resquemor",
+      "catalogSenseId": "es-sk:c2:exp-pilot-031-resquemor:noun:1",
+      "level": "C2",
+      "entrySha256": "8bf2d7134b155a78e00b341f0f69f78da86969b7b58978592927a58f6040bd77",
+      "decision": "changes-requested",
+      "notes": "The lingering discomfort reading is natural. DLE assigns a separate resentment gloss to Cantabria; avoid treating strict resentment as geographically unmarked on that source alone.",
+      "findings": [
+        {
+          "category": "sense-region",
+          "severity": "substantive",
+          "message": "Keep general emotional discomfort separate from strict resentment gloss marked Cantabria by DLE, or add primary broader-use evidence."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/resquemor",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE first sense is distress after something painful; separate resentment sense is marked Cantabria."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-032-animadversion",
+      "catalogSenseId": "es-sk:c2:exp-pilot-032-animadversion:noun:1",
+      "level": "C2",
+      "entrySha256": "6eda5d4aca6287e21a3467c5a4b6929139dfde63ad3004d173f391748ee0ccd2",
+      "decision": "no-issue",
+      "notes": "Hostile attitude toward an author is accurate, and contrast with reasoned criticism is coherent. Neither disagreement nor a negative review alone establishes animadversion.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/animadversión",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE first sense supports antagonism; obsolete critical-warning sense is excluded."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-033-letra-pequena",
+      "catalogSenseId": "es-sk:c2:exp-pilot-033-letra-pequena:noun:1",
+      "level": "C2",
+      "entrySha256": "96dbabdf56b1f10befb15da4e778f9fa48bb4647bd249dc4881c26038d857090",
+      "decision": "changes-requested",
+      "notes": "DLE supports important clauses receiving less attention due to smaller type. The candidate adds figurative non-typographic extension; either state the small-print origin or provide primary evidence for that extension.",
+      "findings": [
+        {
+          "category": "reference-sense",
+          "severity": "substantive",
+          "message": "State small-type basis or add primary attestation for claimed figurative non-typographic scope."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/letra",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE letra pequeña explicitly connects reduced salience to smaller type."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-034-vicio-oculto",
+      "catalogSenseId": "es-sk:c2:exp-pilot-034-vicio-oculto:noun:1",
+      "level": "C2",
+      "entrySha256": "c15738540eb2ccdf6a64b6127da052e88b4c2267e861319aeb0bd58d72da5527",
+      "decision": "changes-requested",
+      "notes": "Latent property defect is linguistically plausible, but DLE vicio only supports the generic defect component. DPEJ vicio-oculto URL returned a non-retryable safe-open error; selected technical phrase requires another observed primary source.",
+      "findings": [
+        {
+          "category": "reference-register",
+          "severity": "substantive",
+          "message": "Obtain primary phrase-level evidence and label legal/technical register. DLE vicio alone is not enough."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/vicio",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE vicio gives generic defect; selected phrase not found; DPEJ fetch failed."
+        },
+        {
+          "url": "https://dpej.rae.es/lema/vicio-oculto",
+          "status": "tool-safe-open-error-no-content",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE vicio gives generic defect; selected phrase not found; DPEJ fetch failed."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-035-quedar-en-papel-mojado",
+      "catalogSenseId": "es-sk:c2:exp-pilot-035-quedar-en-papel-mojado:verb:1",
+      "level": "C2",
+      "entrySha256": "ece5d8b2a3ccaccf867fa2e11685b0afc826c1c363e3e02804703b1052e37762",
+      "decision": "changes-requested",
+      "notes": "Practical ineffectiveness without formal invalidity is a sound distinction. DLE labels the figurative nominal papel mojado colloquial, so neutral metadata should change.",
+      "findings": [
+        {
+          "category": "register",
+          "severity": "substantive",
+          "message": "Change figurative papel mojado register to colloquial."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/papel",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE papel mojado figurative sense is an ineffective/inconsistent thing, labeled colloquial."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-036-dar-largas",
+      "catalogSenseId": "es-sk:c2:exp-pilot-036-dar-largas:verb:1",
+      "level": "C2",
+      "entrySha256": "65d55a3f07cf9f381f7cb62b09283c98f7ee586870302b465211ac6e66864a2b",
+      "decision": "no-issue",
+      "notes": "Repeated evasive postponement is natural and distinct from production aplazar, which is neutral rescheduling. DLE largo confirms delay via dar largas; intentional evasion is contextually inferred.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/largo",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE largo feminine delay sense exemplifies dar largas."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-037-hacer-la-vista-gorda",
+      "catalogSenseId": "es-sk:c2:exp-pilot-037-hacer-la-vista-gorda:verb:1",
+      "level": "C2",
+      "entrySha256": "f163a46ecc2c8c1553067bade9e8f9f2ce7c1b87940c501ba405a44d4c21a2fc",
+      "decision": "changes-requested",
+      "notes": "Knowing tolerance is correct and differs from production ignorar, which merely ignores attention. DLE explicitly labels the idiom colloquial, conflicting with neutral metadata.",
+      "findings": [
+        {
+          "category": "register",
+          "severity": "substantive",
+          "message": "Change register to colloquial, matching DLE."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/vista",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE vista phrase involves pretending not to see and is marked colloquial."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-038-poner-en-entredicho",
+      "catalogSenseId": "es-sk:c2:exp-pilot-038-poner-en-entredicho:verb:1",
+      "level": "C2",
+      "entrySha256": "cbbd6740ca1dc33d8fc91b4aed54fea77d2713bfb8ea140699bf842484bd31a1",
+      "decision": "changes-requested",
+      "notes": "The doubt/credibility sense is accurate but repeats production B1 cuestionar. The example supplies the same doubting function rather than a new sense; replace under strict no-synonym-duplicate acceptance.",
+      "findings": [
+        {
+          "category": "duplicate",
+          "severity": "substantive",
+          "message": "Replace under no-synonym-duplicate criterion: B1 cuestionar already covers doubts about accuracy/honesty/appropriateness."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/entredicho",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE entredicho concerns doubts about truth, quality or reputation."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-039-en-puridad",
+      "catalogSenseId": "es-sk:c2:exp-pilot-039-en-puridad:adv:1",
+      "level": "C2",
+      "entrySha256": "b3d196c5dfac3bcfe2010ab5e6fedc320f0fee8f23c308a427a456d09f30807d",
+      "decision": "no-issue",
+      "notes": "Strict-sense corrective marker is accurate; association versus causation is a suitable precise contrast. DLE modern sense is distinct from obsolete secrecy/directness senses.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/puridad",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE en puridad current sense is strict or actual truth."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-040-sin-perjuicio-de",
+      "catalogSenseId": "es-sk:c2:exp-pilot-040-sin-perjuicio-de:adp:1",
+      "level": "C2",
+      "entrySha256": "f0a522bb56ca29bf7a00c6e9bd2c7b5d454648ab94417e09d5f0e86c16f6eb44",
+      "decision": "no-issue",
+      "notes": "Acceptance with a reserved right to revise fits DLE sin perjuicio. The construction de plus infinitive is natural; no legal-rights advice is conveyed.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/perjuicio",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE sin perjuicio preserves something from impairment."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-041-peticion-de-principio",
+      "catalogSenseId": "es-sk:c2:exp-pilot-041-peticion-de-principio:noun:1",
+      "level": "C2",
+      "entrySha256": "1280edc56ee8bd446423d1d7e5273d621de7876f9ef04a4227c45fd2a62759bd",
+      "decision": "changes-requested",
+      "notes": "Definition accurately identifies circular support. The example risks interpreting siempre dice la verdad as independently verified track record, which would support reliability rather than assume it; make the repeated premise unequivocal.",
+      "findings": [
+        {
+          "category": "example",
+          "severity": "substantive",
+          "message": "Make circularity explicit; current premise could be independent reliability evidence."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/petición",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE petición de principio uses the intended conclusion as antecedent."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-042-falacia-del-hombre-de-paja",
+      "catalogSenseId": "es-sk:c2:exp-pilot-042-falacia-del-hombre-de-paja:noun:1",
+      "level": "C2",
+      "entrySha256": "97a67d48400e4bb4bdf0a9c3cddc970af321e9057037be6c6d63aaced168ae0f",
+      "decision": "changes-requested",
+      "notes": "The technical term and example correctly describe attacking a distorted stronger position. DLE falacia does not document the specific construction; UNAM-hosted logic text does.",
+      "findings": [
+        {
+          "category": "reference",
+          "severity": "substantive",
+          "message": "Replace generic DLE falacia URL with observed primary specialist source for the complete term."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/falacia",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE falacia lacks this specific term; UNAM-hosted logic chapter explains attacking a weakened substitute position."
+        },
+        {
+          "url": "https://www.filosoficas.unam.mx/~cruzparc/copicap4.pdf",
+          "status": "primary-search-excerpt-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE falacia lacks this specific term; UNAM-hosted logic chapter explains attacking a weakened substitute position."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-043-parsimonia",
+      "catalogSenseId": "es-sk:c2:exp-pilot-043-parsimonia:noun:1",
+      "level": "C2",
+      "entrySha256": "0a9dbc57010e8174d81c53235cca3144c2c2680baf3172670caa187bac170f5e",
+      "decision": "changes-requested",
+      "notes": "Methodological economy is natural and definition/example are aligned. DLE parsimonia has personal slowness, thrift and temperance senses, not methodological economy; UNAL/UNAM scientific source must replace it.",
+      "findings": [
+        {
+          "category": "reference",
+          "severity": "substantive",
+          "message": "Replace unsupported DLE methodological-sense reference with primary methodological source."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/parsimonia",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE does not list methodological sense; UNAL research explains economy of assumptions."
+        },
+        {
+          "url": "https://fce.unal.edu.co/media/files/imagenes/Cuadernos/ed_digital/revista_50.pdf",
+          "status": "primary-search-excerpt-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE does not list methodological sense; UNAL research explains economy of assumptions."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-044-espurio",
+      "catalogSenseId": "es-sk:c2:exp-pilot-044-espurio:adj:1",
+      "level": "C2",
+      "entrySha256": "a6d82c646cf45ec1af87c471d447456ca83edb64ffa32d0a30d71491d70d7eaa",
+      "decision": "changes-requested",
+      "notes": "Specialist apparent relation is defensible, but DLE only gives false/fabricated; research terminology needs specialist support. The example should say the association suggests a spurious causal link rather than that coincidence produced the link.",
+      "findings": [
+        {
+          "category": "reference-example",
+          "severity": "substantive",
+          "message": "Attach specialist causal reference and distinguish observed association from a merely apparent causal link."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/espurio",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE false sense is generic; UNAM causal-analysis paper identifies common-cause spurious association."
+        },
+        {
+          "url": "https://revistas.unam.mx/index.php/eab/article/download/72933/74148",
+          "status": "primary-search-excerpt-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE false sense is generic; UNAM causal-analysis paper identifies common-cause spurious association."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-045-hacer-lena-del-arbol-caido",
+      "catalogSenseId": "es-sk:c2:exp-pilot-045-hacer-lena-del-arbol-caido:verb:1",
+      "level": "C2",
+      "entrySha256": "3b422ed59fe5d7608b2fa46580313fea7f55a52e2a0d1dfeccc91b9440f0a582",
+      "decision": "changes-requested",
+      "notes": "The opportunistic attack on a weakened person is coherent. DLE leña does not contain the full phrase; Cervantes refranero explicitly records its current locution form.",
+      "findings": [
+        {
+          "category": "reference",
+          "severity": "substantive",
+          "message": "Use Cervantes full-locution evidence rather than missing DLE leña phrase."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/leña",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE leña lacked phrase; Cervantes refranero explicitly attests present-day locution."
+        },
+        {
+          "url": "https://cvc.cervantes.es/lengua/refranero/ficha.aspx?Lng=0&Par=58488",
+          "status": "primary-search-excerpt-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE leña lacked phrase; Cervantes refranero explicitly attests present-day locution."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-046-cortina-de-humo",
+      "catalogSenseId": "es-sk:c2:exp-pilot-046-cortina-de-humo:noun:1",
+      "level": "C2",
+      "entrySha256": "6e7e439bd21b849c655b87c6c91fba2c6133759391917570af2686892ceef70e",
+      "decision": "no-issue",
+      "notes": "Diversion to conceal another issue is accurate and the example marks interpretation as tentative. The literal curtain or military smoke senses are not duplicated.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/cortina",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE cortina de humo sense 1 is concealment by artifice."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-047-brindis-al-sol",
+      "catalogSenseId": "es-sk:c2:exp-pilot-047-brindis-al-sol:noun:1",
+      "level": "C2",
+      "entrySha256": "52960aaa824c84cd80318f513ecc72fd20cb830da0da9b349edd9e83e6fab289",
+      "decision": "changes-requested",
+      "notes": "DLE marks this Spain and includes awareness that the gesture is ineffective or infeasible. Current generic region and mere lack of prospects omit these material restrictions.",
+      "findings": [
+        {
+          "category": "region-definition",
+          "severity": "substantive",
+          "message": "Record Spain usage and known infeasibility/ineffectiveness, including performative purpose."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/brindis",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE brindis al sol is marked Spain and includes knowledge of lack of consequences/viability."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-048-canto-de-sirena",
+      "catalogSenseId": "es-sk:c2:exp-pilot-048-canto-de-sirena:noun:1",
+      "level": "C2",
+      "entrySha256": "db2ed9f6417f10e2348eebfb93e7d20f257f3b952acb43fcad8ce70fb935878d",
+      "decision": "changes-requested",
+      "notes": "Allusive deceptive attraction is accurate. DLE canto supplies the full phrase and notes it is more often plural; singular is permitted, but add plural as a usage form.",
+      "findings": [
+        {
+          "category": "forms-reference",
+          "severity": "substantive",
+          "message": "Use DLE canto full phrase and add cantos de sirena as commonly used plural form."
+        }
+      ],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/canto",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE canto de sirena describes attractive deceptive discourse; usually plural."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-049-panegirico",
+      "catalogSenseId": "es-sk:c2:exp-pilot-049-panegirico:noun:1",
+      "level": "C2",
+      "entrySha256": "6c697e357796de53ec8fa36544aad69ba473d19b54818bac7c91085c010c6393",
+      "decision": "no-issue",
+      "notes": "Definition describes a sustained praise discourse and example uses it critically without making insincerity inherent. Production C1 elogio is broader, so genre and register supply a reasonable extension.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/panegírico",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE noun senses support praise discourse or emphatic praise."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-050-vituperio",
+      "catalogSenseId": "es-sk:c2:exp-pilot-050-vituperio:noun:1",
+      "level": "C2",
+      "entrySha256": "212b74507f472edd2eff36857658ca0ad66aea1c07fa98b3a272fd17f30eb795",
+      "decision": "no-issue",
+      "notes": "Harsh verbal censure is accurate; formal masculine noun and personal-dispute example are natural. Distinguishes verbal dishonor from the second DLE sense of an action/circumstance causing it.",
+      "findings": [],
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/vituperio",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "DLE first sense concerns disparaging verbal dishonor."
+        }
+      ],
+      "placementConclusion": "Provisional contextual C2 practice only; no exclusive or officially verified lexical level."
+    }
+  ],
+  "methodology": "Independent Spanish review of all 50 definitions, examples, citation forms, register and provisional placement. DLE pages were opened through web; missing phrase/specialist senses were checked against primary institutional sources. Source support is semantic, not a licensed import or official CEFR assignment. Production term/component and related-sense searches used /tmp/wordfold-c2-existing.json; differences in spelling alone do not establish a new sense. No claim that every possible production synonym was exhaustively discovered.",
+  "placementAssessment": "All retained entries are at most provisional C2 practice selections. Formality, rarity and idiomaticity do not alone establish exclusive C2 levels. Several ordinary idioms could reasonably be taught earlier; the rationale can support advanced contextual practice but cannot certify lexical level. No official entry-level C1/C2 contradiction was verified in this review."
+}

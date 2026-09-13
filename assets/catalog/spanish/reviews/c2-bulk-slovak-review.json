@@ -1,0 +1,1929 @@
+{
+  "schemaVersion": 1,
+  "reviewerType": "ai",
+  "kind": "slovak",
+  "reviewerId": "c2-bulk-slovak-independent-ai",
+  "reviewedAt": "2026-09-13T15:46:00.793Z",
+  "notHumanApproval": true,
+  "batchId": "c2-bulk-2026-09-13",
+  "datasetSha256": "c71c721155b99276e0f4470ae738cb4967a2d5376a05896f84771b2fdd363225",
+  "scope": "Slovak hint accuracy and alignment with the selected Spanish sense; no audio review.",
+  "entries": [
+    {
+      "entryId": "es-sk:c2:exp-bulk-001-untuoso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-001-untuoso:adj:1",
+      "level": "C2",
+      "entrySha256": "aeed351bb935e43ca2c12a48c387ccebee1373ec048c040d51360d2960edffea",
+      "decision": "no-issue",
+      "notes": "The puree context supports a smooth, creamy fatty mouthfeel; no flattering-person sense is imported.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-002-astringente",
+      "catalogSenseId": "es-sk:c2:exp-bulk-002-astringente:adj:1",
+      "level": "C2",
+      "entrySha256": "978dd2e8b2dec2b041a5fb71229e9665da96fb72f512a53a38f8bcada398324a",
+      "decision": "no-issue",
+      "notes": "Trpký and the mouth-tightening paraphrase preserve astringent sensation rather than a medicinal effect.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-003-retrogusto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-003-retrogusto:noun:1",
+      "level": "C2",
+      "entrySha256": "784e6269e8eb66ccf89d4e4ffb726f11459a5df10c8712c8e9872c9c666af727",
+      "decision": "no-issue",
+      "notes": "Dochuť remains exact after Spanish probar replaces tragar: tasting can leave an aftertaste without swallowing. The cacao coffee example and Slovak hint remain aligned.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-004-enranciarse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-004-enranciarse:verb:1",
+      "level": "C2",
+      "entrySha256": "ffc7d12e02f18d8a65de58a87f8f0ed41fc34c36f74487e0bb4810ffe3b4fff5",
+      "decision": "no-issue",
+      "notes": "Resolved r1: the explicit unpleasant taste and smell from fat deterioration correctly describes rancidity. The misleading color-change verb and mustiness-only reading are removed.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-005-correoso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-005-correoso:adj:1",
+      "level": "C2",
+      "entrySha256": "7d4b3445fc7fb5cd8022fafa88f6c0c663f84beac60e26de7ade5ac45070ff88",
+      "decision": "no-issue",
+      "notes": "Tuhý a žuvavý fits hard elastic squid that is difficult to chew.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-006-desleir",
+      "catalogSenseId": "es-sk:c2:exp-bulk-006-desleir:verb:1",
+      "level": "C2",
+      "entrySha256": "e594dfb2486d149787cedcfe13ef595c10e0c69f2b270eee04eb227cb8183e0d",
+      "decision": "no-issue",
+      "notes": "Rozrobiť v tekutine fits mixing starch into cold water without implying chemical dissolution.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-007-atemperar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-007-atemperar:verb:1",
+      "level": "C2",
+      "entrySha256": "404d2ee9127938f45d38484a41984f3a90154b0624e8f4abe7e8c6fc78ab0368",
+      "decision": "no-issue",
+      "notes": "The cheese example makes reaching a suitable temperature clear; the hint avoids inventing a chocolate-specific technique.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-008-ligar-una-salsa",
+      "catalogSenseId": "es-sk:c2:exp-bulk-008-ligar-una-salsa:verb:1",
+      "level": "C2",
+      "entrySha256": "239c6e710b209d484489f9ee66261acb266cf8ae32cf0617654cb592a6b5189b",
+      "decision": "no-issue",
+      "notes": "Spojiť a zahustiť fits the selected uniform sauce with body and the butter example.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-009-confitar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-009-confitar:verb:1",
+      "level": "C2",
+      "entrySha256": "7e0367173404b7c34d5919846fbf3f68451a414243df5cfe08d107a7e3a59d6e",
+      "decision": "no-issue",
+      "notes": "Both the explanatory slow-cooking-in-fat gloss and konfitovať select the duck technique, excluding sugar preservation.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-010-desgrasar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-010-desgrasar:verb:1",
+      "level": "C2",
+      "entrySha256": "a974e43f8faa340186fe0bca9ccae2a72bc5d446c9c98878dc92fc02df9954d5",
+      "decision": "no-issue",
+      "notes": "Removing excess fat matches the chilled broth surface example.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-011-desvencijado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-011-desvencijado:adj:1",
+      "level": "C2",
+      "entrySha256": "f987adfeb9ffae760aafeb1749f79e9101b7a046fe03ff3d968aab256726aded",
+      "decision": "no-issue",
+      "notes": "Rozheganý and rozkývaný preserve loosened furniture joints.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-012-destartalado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-012-destartalado:adj:1",
+      "level": "C2",
+      "entrySha256": "830b72427cd42b08d03aa3c7596bd23bbfbded3e7b159d04453863504ee346ec",
+      "decision": "no-issue",
+      "notes": "Spustnutý and ošarpaný fit the deteriorated vestibule appearance.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-013-insalubre",
+      "catalogSenseId": "es-sk:c2:exp-bulk-013-insalubre:adj:1",
+      "level": "C2",
+      "entrySha256": "feb95cf54672c662cfbc17f17912720dbf4f7a682fe7c344fc1176038913f2fa",
+      "decision": "no-issue",
+      "notes": "Nezdravý is clarified by zdraviu škodlivý, matching unventilated premises.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-015-resquicio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-015-resquicio:noun:1",
+      "level": "C2",
+      "entrySha256": "25dcb982db4fa7805b419bd246912db96a6659b63d7432b54c9a898c80b6278d",
+      "decision": "no-issue",
+      "notes": "Škára and úzka medzera retain the narrow window gap and avoid figurative opportunity.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-016-desconchado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-016-desconchado:noun:1",
+      "level": "C2",
+      "entrySha256": "15bd6fcd8cb166603a9224265d82cf5d9c17fded3fbfa67f8d3fba968ac48621",
+      "decision": "no-issue",
+      "notes": "The paraphrase names a patch with flaked covering, not the process of peeling.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-017-filtracion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-017-filtracion:noun:1",
+      "level": "C2",
+      "entrySha256": "560ab813a5875d9b7cd9457c52704c27507c9b016a10c3c3cc4f0e38b457d1f1",
+      "decision": "no-issue",
+      "notes": "Presakovanie vody preserves slow water penetration rather than filtering water.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-018-asentamiento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-018-asentamiento:noun:1",
+      "level": "C2",
+      "entrySha256": "66b6ba340389e476e360b12b3f52dec637dfc1574d33e2f5e7c956d43ec055c3",
+      "decision": "no-issue",
+      "notes": "Sadanie stavby alebo základov correctly selects construction settlement, not human settlement.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-019-acometer-una-reforma",
+      "catalogSenseId": "es-sk:c2:exp-bulk-019-acometer-una-reforma:verb:1",
+      "level": "C2",
+      "entrySha256": "9755ee7a3124da95851b67a9a3421599dc39cbc3efbe26d9d24cbd91000d652e",
+      "decision": "no-issue",
+      "notes": "Pustiť sa do rekonštrukcie naturally expresses undertaking organized renovation.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-020-apuntalar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-020-apuntalar:verb:1",
+      "level": "C2",
+      "entrySha256": "a8df967de569bd5ffdb4a01197974f087fdf337a6bda0d1680b2e6c5b392936b",
+      "decision": "no-issue",
+      "notes": "The temporary-support paraphrase matches shoring up a ceiling before beam replacement.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-021-achaque",
+      "catalogSenseId": "es-sk:c2:exp-bulk-021-achaque:noun:1",
+      "level": "C2",
+      "entrySha256": "541213e274c88cd207e0c8032bc974ad241a2e9859db9f3661d7575cac0f0989",
+      "decision": "no-issue",
+      "notes": "Neduh and recurring health difficulty fit age-related habitual discomfort without diagnosing a disease.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-022-postracion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-022-postracion:noun:1",
+      "level": "C2",
+      "entrySha256": "ea464c68503b98d2749296cd9ae0dcf8f7d99824a3d6522a1f2bd3ff14914709",
+      "decision": "no-issue",
+      "notes": "Úplná vyčerpanosť and vysilenie retain severe debility, not physical prostration in worship.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-023-vahido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-023-vahido:noun:1",
+      "level": "C2",
+      "entrySha256": "42ca4f82c604e0eb308284d8cca665f1d77991c514fb2df1cca7d1d41caf7e68",
+      "decision": "no-issue",
+      "notes": "The hint retains dizziness and near-faintness without asserting actual loss of consciousness.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-024-embotamiento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-024-embotamiento:noun:1",
+      "level": "C2",
+      "entrySha256": "d1fa6ff0962704b3bc0129e03950c91b0bdb8c0004a4f4a6fd268bbfa0ecbc54",
+      "decision": "no-issue",
+      "notes": "Otupenosť and zastreté vnímanie fit diminished mental clarity after sleep loss.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-025-recrudecerse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-025-recrudecerse:verb:1",
+      "level": "C2",
+      "entrySha256": "21944fcff47c1b11d70f72ae21cecec341bb19b1dc57b45090066d70240bdf5e",
+      "decision": "no-issue",
+      "notes": "Opäť sa zhoršiť and zosilnieť fit pain worsening after improvement.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-026-agarrotamiento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-026-agarrotamiento:noun:1",
+      "level": "C2",
+      "entrySha256": "d5fa07d9642182bc6d52f2adaab1a4cc910bd52111f6d96fb872cc5672dcccc0",
+      "decision": "no-issue",
+      "notes": "Stuhnutie svalov fits neck rigidity restricting movement.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-027-hormigueo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-027-hormigueo:noun:1",
+      "level": "C2",
+      "entrySha256": "4d69174a8abf1913fb99d131d3df642113bb7b8c8b52c799412ee8574119c67a",
+      "decision": "no-issue",
+      "notes": "Mravčenie naturally names the tingling hand sensation.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-028-secuela",
+      "catalogSenseId": "es-sk:c2:exp-bulk-028-secuela:noun:1",
+      "level": "C2",
+      "entrySha256": "1ce805731d6aa88742f31439fe2d4797c77bf8a4615284e69dbc27fe30a10934",
+      "decision": "no-issue",
+      "notes": "Trvalejší následok selects a persisting illness or injury aftereffect without guaranteeing permanence.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-029-tirantez",
+      "catalogSenseId": "es-sk:c2:exp-bulk-029-tirantez:noun:1",
+      "level": "C2",
+      "entrySha256": "575403f893d260aa88e31d3f7507ba69a2862654ab4760ccf391ed807e7d5f4f",
+      "decision": "no-issue",
+      "notes": "Pnutie and napätá koža preserve tension around the scar, not interpersonal tension.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-030-remision",
+      "catalogSenseId": "es-sk:c2:exp-bulk-030-remision:noun:1",
+      "level": "C2",
+      "entrySha256": "69f568b8b2c8bcda4436a83c918b7ed08edd4b560bc6f8fb39b46757c6eec540",
+      "decision": "no-issue",
+      "notes": "Ústup prejavov choroby and remisia do not imply cure; follow-up monitoring remains coherent.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-031-periplo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-031-periplo:noun:1",
+      "level": "C2",
+      "entrySha256": "965d34de2c4abdb3af117c57994d5acf78e768acdb3071b1cb59175e694d4317",
+      "decision": "no-issue",
+      "notes": "The explanatory long-journey hint retains passage through several places.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-032-vicisitud",
+      "catalogSenseId": "es-sk:c2:exp-bulk-032-vicisitud:noun:1",
+      "level": "C2",
+      "entrySha256": "d1401e1e2ee2316faf0ecd9d7707e4b9145c00cffa197c534ec3595113147323",
+      "decision": "no-issue",
+      "notes": "Peripetia and nečakaný zvrat fit changing travel difficulties.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-034-intempestivo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-034-intempestivo:adj:1",
+      "level": "C2",
+      "entrySha256": "d56139d8f62796e79ffb8818a8288ffb31dcff73ff806ea757b5cf5e1dd2b481",
+      "decision": "no-issue",
+      "notes": "The explicit time qualifier fits inconvenient arrival rather than bad weather.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-035-impracticable",
+      "catalogSenseId": "es-sk:c2:exp-bulk-035-impracticable:adj:1",
+      "level": "C2",
+      "entrySha256": "5789fa972a8b7175c3031c2d1c9c12d8190903f3b210957c8cb1b2b087aad1c5",
+      "decision": "no-issue",
+      "notes": "Nepriechodný and nepoužiteľný fit an access route unusable because of snow.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-037-desandar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-037-desandar:verb:1",
+      "level": "C2",
+      "entrySha256": "ac03d9e5feb575f39f0e81ff3f7809d6fe8957e5fe12d96b3cc8f8947a38a666",
+      "decision": "no-issue",
+      "notes": "Vrátiť sa tou istou cestou captures retracing a route in reverse.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-038-circunvalar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-038-circunvalar:verb:1",
+      "level": "C2",
+      "entrySha256": "607008191aa8728aceb37268cb3e0e7986ee37edb0c3542a9ee0080779b528fa",
+      "decision": "no-issue",
+      "notes": "Obísť po vonkajšom obvode preserves going around the city externally.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-039-arribar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-039-arribar:verb:1",
+      "level": "C2",
+      "entrySha256": "dbe7c73ea7b4f7a12666bdda42f2e0c62da0b0dbe710f1573e63175f4e6ebe09",
+      "decision": "no-issue",
+      "notes": "Priplávať and the port qualifier preserve arrival by vessel.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-040-quedar-varado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-040-quedar-varado:verb:1",
+      "level": "C2",
+      "entrySha256": "88531f7327474cfea5d1f1fecd76f6e056540082ddddbf7c00600356ea7a1e8f",
+      "decision": "no-issue",
+      "notes": "The grounding hint fits a boat immobilized on sand at low tide, not merely delayed travel.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-041-amainar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-041-amainar:verb:1",
+      "level": "C2",
+      "entrySha256": "c6f9dfa7ea7f9f4b4c86b98bdb16887bacd62314a71bbd0e64dd6a6d06660b36",
+      "decision": "no-issue",
+      "notes": "Slabnúť and utíchať naturally describe a weakening storm.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-042-arreciar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-042-arreciar:verb:1",
+      "level": "C2",
+      "entrySha256": "fda19207d38b11af25bc46b28995abe39284565faa04ab9540d5058c3da840e0",
+      "decision": "no-issue",
+      "notes": "Silnieť and zosilnieť retain increasing weather force.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-043-azotar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-043-azotar:verb:1",
+      "level": "C2",
+      "entrySha256": "e34c83a659ceb4d527af6b608c7b5dd6f1ad2d4e39656dcc4f17ebd108e27c00",
+      "decision": "no-issue",
+      "notes": "Bičovať and dorážať na preserve forceful wind impact on a facade.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-044-relente",
+      "catalogSenseId": "es-sk:c2:exp-bulk-044-relente:noun:1",
+      "level": "C2",
+      "entrySha256": "f5e3ac8c4f287203aa7823b67611218d010f660a9f81e2f0c50403d23c17a8ab",
+      "decision": "no-issue",
+      "notes": "The cold nocturnal moist-air paraphrase corresponds to the definition without asserting rain.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-045-calima",
+      "catalogSenseId": "es-sk:c2:exp-bulk-045-calima:noun:1",
+      "level": "C2",
+      "entrySha256": "3160d092d03d0649fe7627b82635d91f4263e72bdc9135bb11a51b7585fd5881",
+      "decision": "no-issue",
+      "notes": "Suchý zákal vzduchu identifies particle haze rather than ordinary water fog.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-046-escorrentia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-046-escorrentia:noun:1",
+      "level": "C2",
+      "entrySha256": "7edb8b032bcbbd9056a169b18074785dffb66ae24320d9263f8e22995b3edf1f",
+      "decision": "no-issue",
+      "notes": "Povrchový odtok dažďovej vody accurately selects runoff over land.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-047-estiaje",
+      "catalogSenseId": "es-sk:c2:exp-bulk-047-estiaje:noun:1",
+      "level": "C2",
+      "entrySha256": "07b1619a085491a47c71d2e226a838ff372bd303b69f16e1827fbf375a3b819e",
+      "decision": "no-issue",
+      "notes": "Resolved r1: najnižší sezónny stav vody v rieke now names the defined seasonal minimum river level, not a period. Exposed ford stones fit that water state.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-048-sotavento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-048-sotavento:noun:1",
+      "level": "C2",
+      "entrySha256": "80f11b391f800a0559479376500768afd509fa3d093e068aaeb88c730f56c763",
+      "decision": "no-issue",
+      "notes": "Záveterná strana correctly identifies the side away from the incoming wind.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-049-yermo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-049-yermo:adj:1",
+      "level": "C2",
+      "entrySha256": "314e17048e32ede20dc61e16ae025eacc6ca04873fc2e78143adb9bb4d8528c7",
+      "decision": "no-issue",
+      "notes": "Pustý and neobrábaný retain desolate uncultivated land.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-050-escarpado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-050-escarpado:adj:1",
+      "level": "C2",
+      "entrySha256": "4a0b4ad4630e6bae884f4fdb048cd0b5df574dcaa9581d7e39341f3f5e14a302",
+      "decision": "no-issue",
+      "notes": "Strmý and zrázny naturally express steep difficult terrain.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-051-oneroso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-051-oneroso:adj:1",
+      "level": "C2",
+      "entrySha256": "0eeb3bea6ad6968e9eb08a8d4a5ba685b7e4c1d160a36e83b16db392f7d480a1",
+      "decision": "no-issue",
+      "notes": "Finančne náročný and nákladný preserve substantial economic burden.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-052-exorbitante",
+      "catalogSenseId": "es-sk:c2:exp-bulk-052-exorbitante:adj:1",
+      "level": "C2",
+      "entrySha256": "0738c882e0bb39c39cc2d3508563bd40a12157e29006a7c04649f8772eea25c6",
+      "decision": "no-issue",
+      "notes": "Premrštený and neúmerne vysoký fit the unreasonable repair charge.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-053-irrisorio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-053-irrisorio:adj:1",
+      "level": "C2",
+      "entrySha256": "7a2b9a9e583510887e1e33b5ae675810aa86b645654a61b7f37667c48b5949ae",
+      "decision": "no-issue",
+      "notes": "Smiešne nízky and zanedbateľný preserve insignificance relative to the damage.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-054-gravoso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-054-gravoso:adj:1",
+      "level": "C2",
+      "entrySha256": "647c2bee633751448e84b7e9f2abf54696dbfa44ac75d1d092918515ee17ff10",
+      "decision": "no-issue",
+      "notes": "Resolved r1: zaťažujúci and ťažko únosný are natural and preserve a hard-to-bear requirement without redundant bremenom wording.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-055-desembolso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-055-desembolso:noun:1",
+      "level": "C2",
+      "entrySha256": "1ec33c6d6d44b9a612c4f919b7dc1a54a4608c8e03396bd6f51f7619e4702895",
+      "decision": "no-issue",
+      "notes": "Výdavok and vynaložená suma select money expended rather than the act of unpacking funds.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-056-recargo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-056-recargo:noun:1",
+      "level": "C2",
+      "entrySha256": "e9115e03f90bc8114c667b185ed605408f6cc5459c8220bcaf96fe0c8c869e84",
+      "decision": "no-issue",
+      "notes": "Príplatok is general; penále is contextualized by late payment and does not assert a jurisdiction-specific legal rule.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-057-quebranto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-057-quebranto:noun:1",
+      "level": "C2",
+      "entrySha256": "e0df45863a275103db0bf41c3c3c61f55a3895163d672a853ae21af882775817",
+      "decision": "no-issue",
+      "notes": "Finančná strata and majetková ujma fit economic loss after supplier bankruptcy.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-058-resarcir",
+      "catalogSenseId": "es-sk:c2:exp-bulk-058-resarcir:verb:1",
+      "level": "C2",
+      "entrySha256": "b38a2b9790f1fc0e93d093dc4a1b504697195817fa6fd5fd4dc3fd36a5bef5f5",
+      "decision": "no-issue",
+      "notes": "Nahradiť škodu and odškodniť express compensating clients for loss.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-059-prorratear",
+      "catalogSenseId": "es-sk:c2:exp-bulk-059-prorratear:verb:1",
+      "level": "C2",
+      "entrySha256": "50805ce3079613d1989cf3bec8b07fb203de7e8f93584dd91a235f1d07b01986",
+      "decision": "no-issue",
+      "notes": "Rozpočítať pomerne preserves proportional allocation rather than equal division.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-060-a-fondo-perdido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-060-a-fondo-perdido:adv:1",
+      "level": "C2",
+      "entrySha256": "ecbed15fa6fd96ddc2b866e947cb5fa73264dc4f74bc7608f10093a06bb5c831",
+      "decision": "no-issue",
+      "notes": "Bez povinnosti splatenia disambiguates nenávratne as nonrepayable funding rather than lost money.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-063-perentorio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-063-perentorio:adj:1",
+      "level": "C2",
+      "entrySha256": "52aa3b9af5621986a120a60f5cf40b201265b585e0caa949a4611e11913f8ca5",
+      "decision": "no-issue",
+      "notes": "Naliehavý and neodkladný match the selected urgent demand sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-065-a-la-sazon",
+      "catalogSenseId": "es-sk:c2:exp-bulk-065-a-la-sazon:adv:1",
+      "level": "C2",
+      "entrySha256": "5dff0b7a680994cee8d688a607c6a2bebc120c418fa5a435596e9d80a0c0637e",
+      "decision": "no-issue",
+      "notes": "V tom čase and vtedy retain the time under discussion rather than seasoning.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-066-a-destiempo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-066-a-destiempo:adv:1",
+      "level": "C2",
+      "entrySha256": "fb67d61d0e5967ba420f43643227b461de6b9db663e5bb00bcf6a30966009ca7",
+      "decision": "no-issue",
+      "notes": "V nevhodnom čase captures an ill-timed apology.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-067-con-cuentagotas",
+      "catalogSenseId": "es-sk:c2:exp-bulk-067-con-cuentagotas:adv:1",
+      "level": "C2",
+      "entrySha256": "e7f8a1f1f2270a282b20005600e6bc19c3bfe12f8c06bab304f49a548e14f856",
+      "decision": "no-issue",
+      "notes": "Po kvapkách and veľmi pomaly preserve small or slow information releases.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-068-a-raudales",
+      "catalogSenseId": "es-sk:c2:exp-bulk-068-a-raudales:adv:1",
+      "level": "C2",
+      "entrySha256": "87ecb1e57d5dcd7591685ead8adbb526f464396f151440fe6d2c70e2d6ca1af7",
+      "decision": "no-issue",
+      "notes": "Vo veľkom množstve and prúdom fit abundant proposals.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-069-por-un-pelo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-069-por-un-pelo:adv:1",
+      "level": "C2",
+      "entrySha256": "763090174b5039c8b4ac64756b14ab163085b1e92b086937e20c636d9d7455d0",
+      "decision": "no-issue",
+      "notes": "Len o vlások naturally describes narrowly avoiding a missed train.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-070-a-todas-luces",
+      "catalogSenseId": "es-sk:c2:exp-bulk-070-a-todas-luces:adv:1",
+      "level": "C2",
+      "entrySha256": "76a83ed406dc60875ae64f5629487af94eeff560128b18a776dc7cbada1cc352",
+      "decision": "no-issue",
+      "notes": "Celkom zjavne and očividne preserve obviousness, not a literal lighting condition.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-071-desavenencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-071-desavenencia:noun:1",
+      "level": "C2",
+      "entrySha256": "e8d08e7d24d4de887d42d9197d80fc394e83f46aef876ef131c8cc9a70329c90",
+      "decision": "no-issue",
+      "notes": "Nezhoda and rozpor vo vzťahu retain disagreement affecting personal relations.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-072-desarraigo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-072-desarraigo:noun:1",
+      "level": "C2",
+      "entrySha256": "7bbfa8915f0295ab7f8684937cae4b83355c0b8c38477d92df904989635b97da",
+      "decision": "no-issue",
+      "notes": "Vykorenenosť and lost environmental ties retain lack of belonging after migration.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-073-arraigo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-073-arraigo:noun:1",
+      "level": "C2",
+      "entrySha256": "c51aae0ef8b4fb2245b7481306d24f353e0735526e22c76ea83e38d2964db9d6",
+      "decision": "no-issue",
+      "notes": "Zakorenenosť and community ties accurately express established local attachment.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-074-avenirse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-074-avenirse:verb:1",
+      "level": "C2",
+      "entrySha256": "e7d3d4f0f6f60a158081c2fd918a964bab08c45ace6584d80dc67fddbad66004",
+      "decision": "no-issue",
+      "notes": "Pristúpiť na matches agreement to a proposal after accommodation.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-077-limar-asperezas",
+      "catalogSenseId": "es-sk:c2:exp-bulk-077-limar-asperezas:verb:1",
+      "level": "C2",
+      "entrySha256": "b14b8d07fd62e7ad40381509e58ebb43cc3811f84a702a3f04b6d0fb44bc0207",
+      "decision": "no-issue",
+      "notes": "Urovnať nezhody and zmierniť napätie preserve easing relational friction.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-078-dar-el-brazo-a-torcer",
+      "catalogSenseId": "es-sk:c2:exp-bulk-078-dar-el-brazo-a-torcer:verb:1",
+      "level": "C2",
+      "entrySha256": "5ec07d8872f0ea24dc804b20a9c5268e774b86cee88d3dc1688ee614a06d24da",
+      "decision": "no-issue",
+      "notes": "Ustúpiť zo svojho stanoviska correctly names yielding an entrenched position.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-079-hacer-oidos-sordos",
+      "catalogSenseId": "es-sk:c2:exp-bulk-079-hacer-oidos-sordos:verb:1",
+      "level": "C2",
+      "entrySha256": "6276ca1e318cb8dd84ca69684ff5987bfebe6997164a92219493de9ad2793a05",
+      "decision": "no-issue",
+      "notes": "Robiť sa hluchým and zámerne ignorovať preserve deliberate refusal to heed complaints.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-080-poner-tierra-de-por-medio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-080-poner-tierra-de-por-medio:verb:1",
+      "level": "C2",
+      "entrySha256": "76c9a090f0f300aefa415f46e9eff4c54961c9806e5713625632f7a71d0cd4d3",
+      "decision": "no-issue",
+      "notes": "Vzdialiť sa od problémov captures physical distance sought after a breakup.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-082-dilucidar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-082-dilucidar:verb:1",
+      "level": "C2",
+      "entrySha256": "f133fdf2a64a6d9689569d364b30d73a9f23e3abb96e39017e3cccee02ea2696",
+      "decision": "no-issue",
+      "notes": "Resolved r1: nejasnú otázku now retains an unclear issue without adding a dispute; the data-loss investigation example agrees.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-083-refutar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-083-refutar:verb:1",
+      "level": "C2",
+      "entrySha256": "7d019c280a58207df1fc2c9227175b37d6e13acc5c669d2fe7f002230eb72743",
+      "decision": "no-issue",
+      "notes": "Vyvrátiť argumentmi alebo dôkazmi retains reasoned refutation rather than bare denial.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-084-aducir",
+      "catalogSenseId": "es-sk:c2:exp-bulk-084-aducir:verb:1",
+      "level": "C2",
+      "entrySha256": "463ff68f21664c891583ad999f8f7bb35676f32dd151e682412e3a6cc30d340b",
+      "decision": "no-issue",
+      "notes": "Uviesť ako dôvod alebo dôkaz preserves presenting supporting grounds.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-085-redundar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-085-redundar:verb:1",
+      "level": "C2",
+      "entrySha256": "d045e36d3bcabac7c04e85c9d75842cd7454e366de9f2008c6e13e6caa6c3103",
+      "decision": "no-issue",
+      "notes": "The outcome gloss retains resulting benefit or harm and avoids redundancy as an unrelated sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-086-menoscabar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-086-menoscabar:verb:1",
+      "level": "C2",
+      "entrySha256": "59e1167efc96e14395fdbbbbccd43d1d1eab549684e617e757829966535b7226",
+      "decision": "no-issue",
+      "notes": "Oslabiť and poškodiť fit undermining trust.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-087-solapar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-087-solapar:verb:1",
+      "level": "C2",
+      "entrySha256": "241da7d84076e62144739c7ac6da110e5739dbd8df27d7ac7673dec4c6c2e455",
+      "decision": "no-issue",
+      "notes": "Časovo prekrývať correctly selects partial schedule overlap rather than concealment.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-089-mordaz",
+      "catalogSenseId": "es-sk:c2:exp-bulk-089-mordaz:adj:1",
+      "level": "C2",
+      "entrySha256": "a5536c44edce51536da4844ef12ec5cf26f0cab20d5bb44cf070b8a12e942914",
+      "decision": "no-issue",
+      "notes": "Uštipačný and ostro kritický match incisive harsh humorous criticism.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-090-acerbo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-090-acerbo:adj:1",
+      "level": "C2",
+      "entrySha256": "5721e2dc3f518b033f71a559a8553abf9c7c15f2a7c86a40045cf142caace5c5",
+      "decision": "no-issue",
+      "notes": "Trpký and kruto kritický fit harsh critical commentary, not acervo as a collection.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-091-sardonico",
+      "catalogSenseId": "es-sk:c2:exp-bulk-091-sardonico:adj:1",
+      "level": "C2",
+      "entrySha256": "4aba630e967b5ff753f2654c740089c406cd1e2cef2408c1f0a93bb7775766db",
+      "decision": "no-issue",
+      "notes": "Sardonický is explained by trpko posmešný and fits a bitter mocking smile.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-092-pastiche",
+      "catalogSenseId": "es-sk:c2:exp-bulk-092-pastiche:noun:1",
+      "level": "C2",
+      "entrySha256": "0c662ef6c49adf455c055c108b31b8c67708dffbc7c927e407ad20147917c9fe",
+      "decision": "no-issue",
+      "notes": "Pastiš and the imitation or style-mixture explanation match the film example.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-094-conculcar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-094-conculcar:verb:1",
+      "level": "C2",
+      "entrySha256": "36b3e5f27fb2281160d1ebb3323ee13d5e717509ccde2123ff934ec54d4c76ab",
+      "decision": "no-issue",
+      "notes": "Porušiť právo alebo zásadu matches infringement without making a legal finding about the example.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-095-connivencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-095-connivencia:noun:1",
+      "level": "C2",
+      "entrySha256": "4a58a3cdd43fa4c5f2681a134d580a80a94f1717d595383c037677c87aba15af",
+      "decision": "no-issue",
+      "notes": "Resolved r1: tiché spolčenie and vedomé tolerovanie nekalosti retain tacit collusion or tolerance. The gloss no longer equates the term with a specific joint criminal-perpetration category.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-096-dogmatismo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-096-dogmatismo:noun:1",
+      "level": "C2",
+      "entrySha256": "ff39b4233f9aacf0c304270ac9e330c9f55c89b968b92acfa248704d448f000c",
+      "decision": "no-issue",
+      "notes": "Dogmatizmus and unwillingness to admit doubts match treating opinions as unquestionable truths.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-097-proselitismo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-097-proselitismo:noun:1",
+      "level": "C2",
+      "entrySha256": "f2f3a2a2e8e81e1a2075d3262360fcf261555950c87a593e441393c8af55e5e1",
+      "decision": "no-issue",
+      "notes": "The follower-recruitment paraphrase covers beliefs and causes without limiting the action to religion.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-098-obcecacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-098-obcecacion:noun:1",
+      "level": "C2",
+      "entrySha256": "fe7ddd00e724bb2052cf4e6c53ab1ddf1678989d17dc420e9134fecd1a13c166",
+      "decision": "no-issue",
+      "notes": "Zaslepená tvrdohlavosť preserves inability to consider contrary reasons.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-099-enjuto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-099-enjuto:adj:1",
+      "level": "C2",
+      "entrySha256": "4f2ed8967559c56d8de21e5f7fbc5ff4264939f760a75a2f28b8c0bd66d0fb3d",
+      "decision": "no-issue",
+      "notes": "Chudý and štíhly a šľachovitý fit a lean bodily description.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-100-desgarbado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-100-desgarbado:adj:1",
+      "level": "C2",
+      "entrySha256": "0acf8a2049394b0e507e979c3ffe21bc2d71cf3ffc59f3ddc51b7082743e662c",
+      "decision": "no-issue",
+      "notes": "Neohrabaný and nemotorný preserve graceless movement.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-101-semblante",
+      "catalogSenseId": "es-sk:c2:exp-bulk-101-semblante:noun:1",
+      "level": "C2",
+      "entrySha256": "a228135dcb6e89f26145d8aa953c615deb82ae5ef9d3d626e6e3733c3e6fa1f9",
+      "decision": "no-issue",
+      "notes": "Výraz tváre correctly selects the face as showing mood.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-102-imperterrito",
+      "catalogSenseId": "es-sk:c2:exp-bulk-102-imperterrito:adj:1",
+      "level": "C2",
+      "entrySha256": "227a35ac61888dd0365d77329488730de9a8089c39d6972fe6c0c40b8b17e0a0",
+      "decision": "no-issue",
+      "notes": "Navonok nepohnutý clarifies neochvejný as outwardly unperturbed rather than morally resolute.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-104-adusto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-104-adusto:adj:1",
+      "level": "C2",
+      "entrySha256": "76878e7cdc4fd41a5e924dab6f86984a5ae423ae751053cbf7855d0efe63f914",
+      "decision": "no-issue",
+      "notes": "Prísny and zachmúrený fit a stern unwelcoming expression.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-106-esbozar-una-sonrisa",
+      "catalogSenseId": "es-sk:c2:exp-bulk-106-esbozar-una-sonrisa:verb:1",
+      "level": "C2",
+      "entrySha256": "0fcebbb59c036296964d5e80649e79a1557b491a2a86fe799bbff749e8a291f1",
+      "decision": "no-issue",
+      "notes": "Naznačiť úsmev preserves a faint or emerging smile.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-107-desestimar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-107-desestimar:verb:1",
+      "level": "C2",
+      "entrySha256": "770dc0058e6da05343597bb5904cb96e3102ea151e1ea537da7393223a64dd7d",
+      "decision": "no-issue",
+      "notes": "Zamietnuť žiadosť alebo návrh matches rejecting a considered request.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-108-cotejar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-108-cotejar:verb:1",
+      "level": "C2",
+      "entrySha256": "6835e06ba67f902ca209073e1c50dad0574f4ea097e3e723f774ea9468440754",
+      "decision": "no-issue",
+      "notes": "Porovnať na overenie zhody preserves checking figures against originals.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-109-compulsar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-109-compulsar:verb:1",
+      "level": "C2",
+      "entrySha256": "fd6efd6997d8022176528928583b6db49730ca958b79e8128c96ab7f552f585f",
+      "decision": "no-issue",
+      "notes": "Overiť zhodu kópie s originálom retains comparison and attestation without asserting particular certification rules.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-110-consignar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-110-consignar:verb:1",
+      "level": "C2",
+      "entrySha256": "7fed3619e4ad03abf28c845064f69cab51558c7786943751e3e72a33bf9a18ff",
+      "decision": "no-issue",
+      "notes": "Uviesť and zapísať do dokumentu preserve written recording of a detail.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-111-diligencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-111-diligencia:noun:1",
+      "level": "C2",
+      "entrySha256": "54a1dec28f7bf5bdcd1110459030208a0c72f3a828ee3633e8b33fcc6b0d74cd",
+      "decision": "no-issue",
+      "notes": "Úradný záznam o vykonanom úkone correctly selects an administrative record rather than diligence.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-112-fe-de-erratas",
+      "catalogSenseId": "es-sk:c2:exp-bulk-112-fe-de-erratas:noun:1",
+      "level": "C2",
+      "entrySha256": "bd338a81cc3bf9111ef29eac4e307f3d4664cf9feb10888e96dd15f9bc4aec02",
+      "decision": "no-issue",
+      "notes": "Resolved r1: zoznam chýb v texte a ich opráv covers textual mistakes generally and the published correction list, without limiting errors to printing.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-113-suplantacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-113-suplantacion:noun:1",
+      "level": "C2",
+      "entrySha256": "21ec7e8c233b554ef36b97af3b44751268b592e05631d02ea8f3b453445422c1",
+      "decision": "no-issue",
+      "notes": "Vydávanie sa za inú osobu preserves impersonation without requiring identity theft as a specific offense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-115-baremo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-115-baremo:noun:1",
+      "level": "C2",
+      "entrySha256": "00da91072c426d881969e45d3cc6b9eb5cc9d22f28a0ec107494834be392d73f",
+      "decision": "no-issue",
+      "notes": "Bodovacia stupnica and hodnotiace kritériá preserve the scoring framework.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-116-aprovechamiento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-116-aprovechamiento:noun:1",
+      "level": "C2",
+      "entrySha256": "bab46b1dccee610169b8ba6f08e65f901e5a14fdef118a55ac2aedcb5fd8a347",
+      "decision": "no-issue",
+      "notes": "Osvojenie učiva and študijný prínos preserve educational achievement rather than exploitation.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-117-absentismo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-117-absentismo:noun:1",
+      "level": "C2",
+      "entrySha256": "11302f9fc1fce60f4d07b554e76e19cfa8d8f8c983af23b521ccfa7f39ed7de6",
+      "decision": "no-issue",
+      "notes": "Repeated school or work absence matches the definition without asserting its causes.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-118-discernir",
+      "catalogSenseId": "es-sk:c2:exp-bulk-118-discernir:verb:1",
+      "level": "C2",
+      "entrySha256": "697578985634d9dd47eeb2ce4a3fa50b68995da1345083c21a66e158ee40d84d",
+      "decision": "no-issue",
+      "notes": "Rozoznať and rozlíšiť úsudkom retain careful discriminating judgment.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-119-interdisciplinar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-119-interdisciplinar:adj:1",
+      "level": "C2",
+      "entrySha256": "128cb70719c06c92f3471994e20834fcf4244c07c3befa74313c2c2ba7c11935",
+      "decision": "no-issue",
+      "notes": "Medziodborový is a natural equivalent for combining disciplines.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-120-disertar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-120-disertar:verb:1",
+      "level": "C2",
+      "entrySha256": "3e2ed803f727d582f6add9a9ee0e5ecbd38ea84148328a53cee7936148df0543",
+      "decision": "no-issue",
+      "notes": "Prednášať and odborne rozoberať tému match an extended reasoned presentation.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-121-glosar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-121-glosar:verb:1",
+      "level": "C2",
+      "entrySha256": "b7942c29b77fd5667a0ef9f356e3b0eaa5838b69cba8de5ba45f72e2d08424bb",
+      "decision": "no-issue",
+      "notes": "Vykladať and komentovať text fit explanatory textual commentary.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-122-aprendizaje-vicario",
+      "catalogSenseId": "es-sk:c2:exp-bulk-122-aprendizaje-vicario:noun:1",
+      "level": "C2",
+      "entrySha256": "2d8d3b65257fd834231e1b8632755ee6e8e008f3d0c8953c33538fce85d7e31d",
+      "decision": "no-issue",
+      "notes": "Učenie pozorovaním druhých preserves observational learning without requiring direct practice.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-123-interinidad",
+      "catalogSenseId": "es-sk:c2:exp-bulk-123-interinidad:noun:1",
+      "level": "C2",
+      "entrySha256": "100e3044e0d7f48480877d17a06eb03fd31ac22bad4a71bff0a28c573ef33d7e",
+      "decision": "no-issue",
+      "notes": "Dočasné zastávanie funkcie correctly names provisional office-holding.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-124-preaviso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-124-preaviso:noun:1",
+      "level": "C2",
+      "entrySha256": "1f60ed9f1244caed0233f6a3c22b69f27ae435109fa9484db7374a726ae0bc6a",
+      "decision": "no-issue",
+      "notes": "Oznámenie vopred clarifies advance notice without inventing statutory notice periods.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-125-finiquito",
+      "catalogSenseId": "es-sk:c2:exp-bulk-125-finiquito:noun:1",
+      "level": "C2",
+      "entrySha256": "9bfcc5b627d6d04c95aeee0b8e36a11d244c34672612e5119138a7ef7611ff93",
+      "decision": "no-issue",
+      "notes": "Konečné finančné vyrovnanie captures settlement of outstanding employment amounts, not solely severance pay.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-126-subrogar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-126-subrogar:verb:1",
+      "level": "C2",
+      "entrySha256": "d37e4201159b2f7ee915815ba65cc3758df5e2af4671075fc85399e4dfad2347",
+      "decision": "no-issue",
+      "notes": "Resolved r1: nahradiť inú stranu v jej právach alebo povinnostiach expresses substitution within rights or obligations, avoiding appointment wording. No specific legal equivalence or procedural rule is claimed.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-127-cometido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-127-cometido:noun:1",
+      "level": "C2",
+      "entrySha256": "5ac23852789ca15e7361f0a975f281e329c3cbd0084eb2d6d26efa349cb0f71b",
+      "decision": "no-issue",
+      "notes": "Resolved r1: zverená úloha and zverená zodpovednosť are natural Slovak collocations for an assigned task or responsibility.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-128-injerencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-128-injerencia:noun:1",
+      "level": "C2",
+      "entrySha256": "3d75ba205486449ea4bec99a66d8f096dd9c6085ffe210c842de3cb405d1e362",
+      "decision": "no-issue",
+      "notes": "Neoprávnené zasahovanie fits intervention judged improper, not routine involvement.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-130-aplomo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-130-aplomo:noun:1",
+      "level": "C2",
+      "entrySha256": "a5b41e6cb082fec2ff3cca18a21bc3a6e30d6486f8e3fb33ba3445d9756009bb",
+      "decision": "no-issue",
+      "notes": "Sebaistota a rozvaha retains confident calm under pressure.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-133-renido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-133-renido:adj:1",
+      "level": "C2",
+      "entrySha256": "d1f53bbf501a7dc324394646c754e846d13933d1180f63de2c353ba1b643e9a5",
+      "decision": "no-issue",
+      "notes": "Resolved r1: vyrovnaný and s tesným rozdielom medzi súpermi naturally describe the close contest decided in its last play; the malformed tesne súperený is gone.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-135-zancadilla",
+      "catalogSenseId": "es-sk:c2:exp-bulk-135-zancadilla:noun:1",
+      "level": "C2",
+      "entrySha256": "55ab66db5276537727d1a55cdf313b505b5c7219c9f3b4fe460ec63b3072e30f",
+      "decision": "no-issue",
+      "notes": "Podrazenie nohy captures deliberately tripping another player.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-136-resarcirse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-136-resarcirse:verb:1",
+      "level": "C2",
+      "entrySha256": "a5a24eab013f95e57a8cc357e1003b2c066b72ec1ccb3f688fdb9a9fedfebd7f",
+      "decision": "no-issue",
+      "notes": "Vynahradiť si sklamanie matches gaining compensatory satisfaction after defeat.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-137-aguerrido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-137-aguerrido:adj:1",
+      "level": "C2",
+      "entrySha256": "c7b468690522403757342247b1af7c89d000950f7a5998cacb6a3cda02dd1cc4",
+      "decision": "no-issue",
+      "notes": "Bojovný and húževnatý preserve determined competitive spirit.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-138-dejar-el-liston-alto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-138-dejar-el-liston-alto:verb:1",
+      "level": "C2",
+      "entrySha256": "f83e03ec9b7de3ed61d8594c52f431d4a776aa20c8a9124a922e91af4a7c9660",
+      "decision": "no-issue",
+      "notes": "Nastaviť latku vysoko is an idiomatic counterpart for setting a demanding benchmark.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-139-desmentido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-139-desmentido:noun:1",
+      "level": "C2",
+      "entrySha256": "bb616c6ce0fc95c5545571521d974e176120c708da575e847340aba5550c5a9e",
+      "decision": "no-issue",
+      "notes": "Popretie správy and dementi preserve denial of reported information, not proof of falsehood.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-140-bulo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-140-bulo:noun:1",
+      "level": "C2",
+      "entrySha256": "f65fb3aed5066f50bbc9bf984913e33d9aed291422d0cd01f921baee99d1bab8",
+      "decision": "no-issue",
+      "notes": "Nepravdivá šírená správa and hoax fit a circulating false hospital-closure report.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-141-rectificacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-141-rectificacion:noun:1",
+      "level": "C2",
+      "entrySha256": "9cc1f35fe4c80cbed28d7f68f6dbb96bfb247a151e4bfb2fa6b34d3dd670a901",
+      "decision": "no-issue",
+      "notes": "Verejná oprava nesprávnej informácie accurately expresses a published correction.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-142-descontextualizar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-142-descontextualizar:verb:1",
+      "level": "C2",
+      "entrySha256": "6e80dbbe80f38d9fdfaa262319549b3b90fe19b794588e8a08dfa220ea42d820",
+      "decision": "no-issue",
+      "notes": "Vytrhnúť z kontextu naturally preserves removing interpretive circumstances.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-143-tendencioso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-143-tendencioso:adj:1",
+      "level": "C2",
+      "entrySha256": "b1e620d7f965bf10e5d986007a86f666d46bdc5f9fdfe08c4bc810d389d2d2d5",
+      "decision": "no-issue",
+      "notes": "Zaujatý and účelovo skresľujúci retain biased presentation favoring an interested interpretation.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-145-verosimil",
+      "catalogSenseId": "es-sk:c2:exp-bulk-145-verosimil:adj:1",
+      "level": "C2",
+      "entrySha256": "746fae65d77e8263fc381710150396d45068e01181c0eb1714a2913134451540",
+      "decision": "no-issue",
+      "notes": "Vierohodný and pravdepodobne pôsobiaci express apparent credibility without asserting truth.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-146-escudarse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-146-escudarse:verb:1",
+      "level": "C2",
+      "entrySha256": "8fb17ce835254580701afbbd4746d5f7edf75127f84e6bf66dc462e8e9126b92",
+      "decision": "no-issue",
+      "notes": "Resolved r1: the reason-or-circumstance shield paraphrase fits hiding behind message anonymity without requiring that reason to be a fabricated excuse.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-147-membrete",
+      "catalogSenseId": "es-sk:c2:exp-bulk-147-membrete:noun:1",
+      "level": "C2",
+      "entrySha256": "79a21755e551e794b17fb8f5f8e5b4f20c87087ab75dff081b02e1b3a252ef74",
+      "decision": "no-issue",
+      "notes": "Hlavička listu s údajmi organizácie correctly names a letterhead.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-148-acuse-de-recibo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-148-acuse-de-recibo:noun:1",
+      "level": "C2",
+      "entrySha256": "62988aac1c31b59a1d97f9779c9bf4054013b64a92a7e9b1f576ef7231018ea5",
+      "decision": "no-issue",
+      "notes": "Potvrdenie prijatia alebo doručenia preserves acknowledgment of receipt rather than dispatch alone.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-150-apostilla",
+      "catalogSenseId": "es-sk:c2:exp-bulk-150-apostilla:noun:1",
+      "level": "C2",
+      "entrySha256": "923c471e28867db5ece7b31528012f01cd9f601a07d2cfd5196db6fcb9ebe15c",
+      "decision": "no-issue",
+      "notes": "Doplňujúca poznámka correctly selects a textual comment rather than official apostille certification.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-153-desabastecimiento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-153-desabastecimiento:noun:1",
+      "level": "C2",
+      "entrySha256": "c5cc5d3b117500c8cee055e9df0ffcadc47f9cb68f4eb950fc04f204a69bf339",
+      "decision": "no-issue",
+      "notes": "Nedostatok zásob and výpadok zásobovania preserve a supply shortage.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-154-saneamiento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-154-saneamiento:noun:1",
+      "level": "C2",
+      "entrySha256": "53062afee32d9d35a35f640f8f9d2bd511315bef18c5165b90085ed63cd06124",
+      "decision": "no-issue",
+      "notes": "Odvádzanie a čistenie odpadových vôd accurately selects wastewater infrastructure and treatment.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-158-aforo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-158-aforo:noun:1",
+      "level": "C2",
+      "entrySha256": "ae6a3bc757b0d4245bfe541c9afa3a8249aaf545540ad1cc352f5f448cec010d",
+      "decision": "no-issue",
+      "notes": "Maximálna povolená kapacita osôb fits authorized venue occupancy.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-159-deshilacharse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-159-deshilacharse:verb:1",
+      "level": "C2",
+      "entrySha256": "e71eaa8e0cd5928325dc3292d7bbecc5f69f18230769ec1defd43f4562c3094a",
+      "decision": "no-issue",
+      "notes": "Strapkať sa and párať sa na okrajoch preserve fabric threads coming loose at edges.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-160-destenir",
+      "catalogSenseId": "es-sk:c2:exp-bulk-160-destenir:verb:1",
+      "level": "C2",
+      "entrySha256": "b144038b8cc2bdfb9839b1313ad394a6b795ba89d6e648d7f30391e5318b333a",
+      "decision": "no-issue",
+      "notes": "Púšťať farbu and blednúť preserve dye release and fading; the scarf example selects dye transfer.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-161-entallado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-161-entallado:adj:1",
+      "level": "C2",
+      "entrySha256": "108bba00dfc337b6133c60251966ee9227b0489db4892d6984d8ef1feede65d3",
+      "decision": "no-issue",
+      "notes": "Priliehavý and vypasovaný naturally describe a fitted coat.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-163-raido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-163-raido:adj:1",
+      "level": "C2",
+      "entrySha256": "c3edb7c7e6b2936b33796efb24b26ab185c47e43ea705835ff04c6c60128a18c",
+      "decision": "no-issue",
+      "notes": "Ošúchaný and obnosený fit fabric worn by prolonged use.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-164-indumentaria",
+      "catalogSenseId": "es-sk:c2:exp-bulk-164-indumentaria:noun:1",
+      "level": "C2",
+      "entrySha256": "a90fbbf3740f1a9251db72575b6a06c08e41606ebc081c7ed2ad5289f8126785",
+      "decision": "no-issue",
+      "notes": "Odev and súbor oblečenia capture a characteristic ensemble of clothing.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-165-sobrio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-165-sobrio:adj:1",
+      "level": "C2",
+      "entrySha256": "c2e26bb2caa5fc24adcd36f591247a9879601ba40f822f0bceaf7939c2cd7593",
+      "decision": "no-issue",
+      "notes": "Striedmy and nenápadný select restrained appearance, not sobriety from alcohol.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-166-recargado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-166-recargado:adj:1",
+      "level": "C2",
+      "entrySha256": "67ad6cbebc3f67c19ab5118ceff8580afe7dc75c5c562f68b11ff1d008e9f864",
+      "decision": "no-issue",
+      "notes": "Prezdobený and preplnený ozdobami express excessive ornamentation.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-167-aleatorio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-167-aleatorio:adj:1",
+      "level": "C2",
+      "entrySha256": "8316507ab8e21316181b83e369f064992c111c36f5d74a2be4d260a2f9c5619d",
+      "decision": "no-issue",
+      "notes": "Náhodný directly matches chance-dependent selection.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-168-falsable",
+      "catalogSenseId": "es-sk:c2:exp-bulk-168-falsable:adj:1",
+      "level": "C2",
+      "entrySha256": "5ba79ed77f22b09677e0d35be52f668d90a375d6b8138094b28e590e8ff1636d",
+      "decision": "no-issue",
+      "notes": "Vyvrátiteľný testovaním explains falzifikovateľný as testability, not counterfeitability.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-169-replicable",
+      "catalogSenseId": "es-sk:c2:exp-bulk-169-replicable:adj:1",
+      "level": "C2",
+      "entrySha256": "76f9d72dfac2337864192f20330b4e811e16a83e57322f07a64a6643aaaaa944",
+      "decision": "no-issue",
+      "notes": "Zopakovateľný na overenie výsledkov captures repeating a study to check its findings.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-170-extrapolar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-170-extrapolar:verb:1",
+      "level": "C2",
+      "entrySha256": "b8b1888f7811cbc0c203e51b495148c75ea3a50fbf9185c42d000f0d2c8ca5bb",
+      "decision": "no-issue",
+      "notes": "The extrapolation paraphrase preserves extension beyond observed data rather than ordinary summarization.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-171-correlacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-171-correlacion:noun:1",
+      "level": "C2",
+      "entrySha256": "ed82560b272ab2d4ebd518673185483cef47b0bf5928514b99d1258affe29403",
+      "decision": "no-issue",
+      "notes": "The hint names correlated change without importing causation.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-172-incertidumbre",
+      "catalogSenseId": "es-sk:c2:exp-bulk-172-incertidumbre:noun:1",
+      "level": "C2",
+      "entrySha256": "490d60ee3df6dddab90675465c2f35f61f64ddba44b3a7a101abc67961d6adfe",
+      "decision": "no-issue",
+      "notes": "Neistota merania correctly selects measurement uncertainty rather than personal insecurity.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-176-obsolescencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-176-obsolescencia:noun:1",
+      "level": "C2",
+      "entrySha256": "a410521c713f9b2c3c803beba3639d7a928c17e222aa792f7558d248041f6220",
+      "decision": "no-issue",
+      "notes": "Zastarávanie and technická zastaranosť preserve usefulness lost through supersession.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-177-promulgar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-177-promulgar:verb:1",
+      "level": "C2",
+      "entrySha256": "52735f72e830e2a3fbecf45413f53664a7e6d1f6be2f3b1cd5e0323abe26eb1b",
+      "decision": "no-issue",
+      "notes": "Vyhlásiť zákon names promulgation without asserting when legal effect begins.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-178-derogar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-178-derogar:verb:1",
+      "level": "C2",
+      "entrySha256": "055329b9c131b268169070abbfc3ed432c13b2ec53b308adce5e092160bd2a89",
+      "decision": "no-issue",
+      "notes": "Zrušiť platnosť právnej normy conveys repeal without importing a jurisdiction-specific procedure.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-179-prevaricacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-179-prevaricacion:noun:1",
+      "level": "C2",
+      "entrySha256": "485963b6bab960a2075356a6d570a5b2b4e40eec385e564c8bfcb059a77526c0",
+      "decision": "no-issue",
+      "notes": "The plain-language gloss retains knowing issuance of an unjust official decision and avoids equating distinct Slovak offenses.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-180-cautelar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-180-cautelar:adj:1",
+      "level": "C2",
+      "entrySha256": "8c873d378c95fc2ff4eda8212c374e0860e63427bc93691227898f6996efcc3e",
+      "decision": "no-issue",
+      "notes": "Predbežný and preventívny fit a provisional protective measure without assuming guilt.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-181-alegacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-181-alegacion:noun:1",
+      "level": "C2",
+      "entrySha256": "1c601e1c64943f45987f63bbca6d7dc12a987dac89359c55f41fd9c158f36f7e",
+      "decision": "no-issue",
+      "notes": "Resolved r1: argument predložený na podporu stanoviska v konaní preserves a submission supporting a position and does not require an objection.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-182-atenuante",
+      "catalogSenseId": "es-sk:c2:exp-bulk-182-atenuante:noun:1",
+      "level": "C2",
+      "entrySha256": "c5132f5a24df8cfc854d9807259d958ef85eed1d6f5933955468493a52ac1b81",
+      "decision": "no-issue",
+      "notes": "Poľahčujúca okolnosť preserves reduced severity without exculpation.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-183-agravante",
+      "catalogSenseId": "es-sk:c2:exp-bulk-183-agravante:noun:1",
+      "level": "C2",
+      "entrySha256": "a5441959556c1295e544be19c1a88effaa574631438a9ff085ffe9b6948292b2",
+      "decision": "no-issue",
+      "notes": "Priťažujúca okolnosť preserves increased severity without specifying a mandatory sentencing rule.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-184-probatorio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-184-probatorio:adj:1",
+      "level": "C2",
+      "entrySha256": "9be7954270f580058bab7e7b32306b4b904a53579fc8603184de23dcbca60e8e",
+      "decision": "no-issue",
+      "notes": "Dôkazný and slúžiaci na preukázanie preserve evidentiary function without guaranteeing conclusiveness.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-185-reincidir",
+      "catalogSenseId": "es-sk:c2:exp-bulk-185-reincidir:verb:1",
+      "level": "C2",
+      "entrySha256": "750e85be61a1781a1c42335a3652ae9baf7725f7697ccb87fbd8564f4c40967f",
+      "decision": "no-issue",
+      "notes": "Opakovane sa dopustiť previnenia captures repeated misconduct without asserting a technical criminal-recidivism definition.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-186-indulto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-186-indulto:noun:1",
+      "level": "C2",
+      "entrySha256": "7791b498607f1716f59d1692da273d9c3b1484ed7130345386c7dc09838f4ec9",
+      "decision": "no-issue",
+      "notes": "Milosť and odpustenie trestu retain pardon of punishment rather than declaration of innocence.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-187-claroscuro",
+      "catalogSenseId": "es-sk:c2:exp-bulk-187-claroscuro:noun:1",
+      "level": "C2",
+      "entrySha256": "80c20ebb561c1dcd5f55e48c9cd46dab194e8c0128bcd8539ea3ba9b033d4f3e",
+      "decision": "no-issue",
+      "notes": "Šerosvit directly matches pictorial light-dark contrast.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-188-contrapunto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-188-contrapunto:noun:1",
+      "level": "C2",
+      "entrySha256": "b092690d62ae1f998fe52b8feefa3cb3327ed6357d7ecefd3d7bd8f081c151e1",
+      "decision": "no-issue",
+      "notes": "Kontrapunkt is clarified by simultaneous independent melodies.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-189-disonancia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-189-disonancia:noun:1",
+      "level": "C2",
+      "entrySha256": "a54a7eef2aeca1bbd0c6d66e6c4d6a0a80dd780afbc36a55d4ad5f3f098b061f",
+      "decision": "no-issue",
+      "notes": "Disonancia and napätie medzi tónmi retain contextual musical tension.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-191-presagio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-191-presagio:noun:1",
+      "level": "C2",
+      "entrySha256": "973465ad5dfab876b70018793e3e2da1687dec6feedf9135b8ad998498de6386",
+      "decision": "no-issue",
+      "notes": "Predzvesť preserves a sign interpreted as foreshadowing later events.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-193-socarron",
+      "catalogSenseId": "es-sk:c2:exp-bulk-193-socarron:adj:1",
+      "level": "C2",
+      "entrySha256": "5406714b7d5b342b62928392b625106405e61ef2e435bc9d11186fcc5289184d",
+      "decision": "no-issue",
+      "notes": "Resolved r1: skryto posmešný and s predstieranou vážnosťou retain concealed mockery with apparent seriousness, rather than an unspecified covert agenda.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-194-leitmotiv",
+      "catalogSenseId": "es-sk:c2:exp-bulk-194-leitmotiv:noun:1",
+      "level": "C2",
+      "entrySha256": "fb6c525ac119479f183af17f47f460bad7f032c8d5c6452e5ead2e025e1c698a",
+      "decision": "no-issue",
+      "notes": "Opakujúci sa ústredný motív preserves a recurring unifying artistic element.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-195-laicismo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-195-laicismo:noun:1",
+      "level": "C2",
+      "entrySha256": "e3518a1775940c7027a8f6a74abf342b185e76fdb9dc72f107fad186a07f05e4",
+      "decision": "no-issue",
+      "notes": "Sekularizmus is clarified as institutional religious separation, not personal lack of belief.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-197-agnosticismo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-197-agnosticismo:noun:1",
+      "level": "C2",
+      "entrySha256": "020f8e30995fc2af580866364fb85738ce09514ea7821ab8771f4751914ec25b",
+      "decision": "no-issue",
+      "notes": "Agnosticizmus is the correct Slovak term and spelling.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-198-fatalismo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-198-fatalismo:noun:1",
+      "level": "C2",
+      "entrySha256": "e8fce2aec153e4f2d4882929fca6c718b2a81cc5bec989caeda8dc0fd2322125",
+      "decision": "no-issue",
+      "notes": "Fatalizmus and nezmeniteľný osud retain inevitability of events.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-199-escrupulo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-199-escrupulo:noun:1",
+      "level": "C2",
+      "entrySha256": "1371ab2647b3142e8581e22d004aa972756459dc31c5eb37d917eb72c75a0e6c",
+      "decision": "no-issue",
+      "notes": "Resolved r1: morálna zábrana and pochybnosť svedomia express a moral reservation impeding acceptance of a gift, without requiring retrospective guilt.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-200-abjurar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-200-abjurar:verb:1",
+      "level": "C2",
+      "entrySha256": "73387c621c08a7fc7a0efec7554e2d16b4c9d2df0b6acbfeb5a8f15282b0afdf",
+      "decision": "no-issue",
+      "notes": "Zrieknuť sa presvedčenia preserves explicit renunciation rather than merely doubting a belief.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-201-colindante",
+      "catalogSenseId": "es-sk:c2:exp-bulk-201-colindante:adj:1",
+      "level": "C2",
+      "entrySha256": "4107055d03ff63037d6b3b2d97e52607f52d138482a56cb74e2978363d52590b",
+      "decision": "no-issue",
+      "notes": "The shared-boundary qualifier distinguishes colindante from merely nearby.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-202-aledano",
+      "catalogSenseId": "es-sk:c2:exp-bulk-202-aledano:adj:1",
+      "level": "C2",
+      "entrySha256": "bb46c0a2fa76e468bae75c9d60330e29d28710a3d21a3b4c0e12ba056f89e54c",
+      "decision": "no-issue",
+      "notes": "Blízky and okolitý capture vicinity without requiring a common boundary.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-203-recondito",
+      "catalogSenseId": "es-sk:c2:exp-bulk-203-recondito:adj:1",
+      "level": "C2",
+      "entrySha256": "2fedee692866789a279c76acebb675878fb3d0dad322735fd614b496a8722337",
+      "decision": "no-issue",
+      "notes": "Skrytý and odľahlý preserve difficulty of finding an out-of-the-way place.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-204-tortuoso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-204-tortuoso:adj:1",
+      "level": "C2",
+      "entrySha256": "dabd6ce92b05635fb5202f26b6a0243d7a596c28d0b4a3dced207c4040f231c5",
+      "decision": "no-issue",
+      "notes": "Kľukatý selects a winding physical route rather than moral deviousness.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-205-oblicuo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-205-oblicuo:adj:1",
+      "level": "C2",
+      "entrySha256": "31c03e319904e914cb90b86ca5a8cd48553b3b18f4d8ad1e1b621c2f4c49f48d",
+      "decision": "no-issue",
+      "notes": "Šikmý remains the natural equivalent after the Spanish definition explicitly excludes parallel and perpendicular orientation. The angled-light example remains consistent.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-207-insoslayable",
+      "catalogSenseId": "es-sk:c2:exp-bulk-207-insoslayable:adj:1",
+      "level": "C2",
+      "entrySha256": "7de250aae8092563dd6a2731608dedcf92efffbfffcf24b9a8a256ff0557f046",
+      "decision": "no-issue",
+      "notes": "Taký, ktorý nemožno ignorovať clarifies neobíditeľný as an issue that cannot be set aside.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-208-taxativo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-208-taxativo:adj:1",
+      "level": "C2",
+      "entrySha256": "c3eb3d6525c7e3448f9e6a55800f7bd77591827c587ed93038df7d8b5d6a6bfa",
+      "decision": "no-issue",
+      "notes": "Jednoznačný a nekompromisný captures categorical wording rather than a tax-related sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-209-por-ende",
+      "catalogSenseId": "es-sk:c2:exp-bulk-209-por-ende:adv:1",
+      "level": "C2",
+      "entrySha256": "a426b14c85afa1747ea03569231340af410a78f674a4ff065b5582d10c696e8c",
+      "decision": "no-issue",
+      "notes": "Preto and v dôsledku toho accurately mark an inferential consequence.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-210-en-su-defecto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-210-en-su-defecto:adv:1",
+      "level": "C2",
+      "entrySha256": "af792c5344c8e0ca052c49677a3423258d6bf959b66d2a844ff48b3a59fe4191",
+      "decision": "no-issue",
+      "notes": "Ak to nie je k dispozícii correctly conditions the fallback option; namiesto toho is anchored by that qualifier.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-211-dicho-sea-de-paso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-211-dicho-sea-de-paso:adv:1",
+      "level": "C2",
+      "entrySha256": "fec43a96650a4d22ebc2fe3b904b60eea5d1dce7d59de3cb642238eb78cb9400",
+      "decision": "no-issue",
+      "notes": "Mimochodom naturally introduces a related incidental remark.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-212-a-fin-de-cuentas",
+      "catalogSenseId": "es-sk:c2:exp-bulk-212-a-fin-de-cuentas:adv:1",
+      "level": "C2",
+      "entrySha256": "5ca9632bc6576101895cf9fe157dd4394019cd59532e970da9d4c8ca1914701f",
+      "decision": "no-issue",
+      "notes": "Napokon and koniec koncov preserve a decisive overall consideration.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-213-no-en-vano",
+      "catalogSenseId": "es-sk:c2:exp-bulk-213-no-en-vano:adv:1",
+      "level": "C2",
+      "entrySha256": "97ecf1983fea7751b1800acb02970268f9aa07892200af9056a6467e0ac114d0",
+      "decision": "no-issue",
+      "notes": "Nie nadarmo fits the following explanation of long experience in the building.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-214-sea-como-fuere",
+      "catalogSenseId": "es-sk:c2:exp-bulk-214-sea-como-fuere:adv:1",
+      "level": "C2",
+      "entrySha256": "6e97c7d55f4ae76d907d20f2b946470768f7caebbffdc47ef995ccef116b4782",
+      "decision": "no-issue",
+      "notes": "Nech je to akokoľvek correctly continues despite unresolved prior alternatives.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-215-bien-mirado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-215-bien-mirado:adv:1",
+      "level": "C2",
+      "entrySha256": "7af8ae843e23523cbe649abc3e1db45c1174bfb965decfc2d87e0ac9bb5fb797",
+      "decision": "no-issue",
+      "notes": "Pri bližšom zvážení accurately introduces reconsidered judgment.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-217-maxime",
+      "catalogSenseId": "es-sk:c2:exp-bulk-217-maxime:adv:1",
+      "level": "C2",
+      "entrySha256": "de4e12ca965b01a588734beda77dc5217f2beeabf23fb589ddb1f349a41bc8c3",
+      "decision": "no-issue",
+      "notes": "Najmä and tým skôr fit a circumstance strengthening the assertion.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-218-a-tenor-de",
+      "catalogSenseId": "es-sk:c2:exp-bulk-218-a-tenor-de:adp:1",
+      "level": "C2",
+      "entrySha256": "5203908479618d44df04ee78ca7dbce44d6f6a0a66e93aa7f834a480ff0a62e1",
+      "decision": "no-issue",
+      "notes": "Podľa and súdiac podľa retain assessment in light of information.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-219-so-pena-de",
+      "catalogSenseId": "es-sk:c2:exp-bulk-219-so-pena-de:adp:1",
+      "level": "C2",
+      "entrySha256": "37c5b8960c438f25a8946f3294f75c842c1ac697f8f9d049e560c5ec011e0097",
+      "decision": "no-issue",
+      "notes": "Pod hrozbou and inak hrozí preserve the adverse consequence without imposing a legal penalty sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-220-salvo-mejor-criterio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-220-salvo-mejor-criterio:adv:1",
+      "level": "C2",
+      "entrySha256": "fad5a889d012b905c069b4f387caa4e82d6533cedffb9c12b441fd66dbc11485",
+      "decision": "no-issue",
+      "notes": "Resolved r1: s výhradou prípadného lepšieho posúdenia naturally marks deference to a potentially preferable assessment in the proposal.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-221-mutatis-mutandis",
+      "catalogSenseId": "es-sk:c2:exp-bulk-221-mutatis-mutandis:adv:1",
+      "level": "C2",
+      "entrySha256": "ec9d623a1d607f0929ed8bf4a5e3d50313e4e3d5ae1730a4dba4b01b81dbc7b2",
+      "decision": "no-issue",
+      "notes": "S nevyhnutnými obmenami captures the necessary changes when applying an analogy.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-222-ceteris-paribus",
+      "catalogSenseId": "es-sk:c2:exp-bulk-222-ceteris-paribus:adv:1",
+      "level": "C2",
+      "entrySha256": "b086d8bdcb4ddb6daf67abe5229ce9fcee51be25987b03076aa0c8f70f9ffecc",
+      "decision": "no-issue",
+      "notes": "Pri nezmenených ostatných podmienkach correctly holds other conditions constant.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-224-tara",
+      "catalogSenseId": "es-sk:c2:exp-bulk-224-tara:noun:1",
+      "level": "C2",
+      "entrySha256": "a2dd84537ca1f071d691248fb43d5c2f98132f17355ab0006775aca0ba32b965",
+      "decision": "no-issue",
+      "notes": "Kaz tovaru covers the generic product defect and výrobná chyba fits the lining example.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-225-tasacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-225-tasacion:noun:1",
+      "level": "C2",
+      "entrySha256": "bb2277b9a8113f74f83b40df5c2e49eff0934fb1d1fb25302e7574e0b5d0c214",
+      "decision": "no-issue",
+      "notes": "Odborné stanovenie hodnoty and ocenenie preserve economic valuation rather than an award.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-226-remanente",
+      "catalogSenseId": "es-sk:c2:exp-bulk-226-remanente:noun:1",
+      "level": "C2",
+      "entrySha256": "216f9e8376e29f9095a4f8369ba2b0d2df4f27cf93000a1275d5c76da0d3e355",
+      "decision": "no-issue",
+      "notes": "Zvyšok zásob fits the remaining collection stock in the selected example.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-227-rescindir",
+      "catalogSenseId": "es-sk:c2:exp-bulk-227-rescindir:verb:1",
+      "level": "C2",
+      "entrySha256": "c4afa205a353945eeab7fc269a6907d9e12c47ddc13c90c99cc6987b38fbbb90",
+      "decision": "no-issue",
+      "notes": "Zrušiť zmluvu and ukončiť dohodu convey ending contractual effect without claiming a particular legal remedy.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-228-leonino",
+      "catalogSenseId": "es-sk:c2:exp-bulk-228-leonino:adj:1",
+      "level": "C2",
+      "entrySha256": "1dda6d9c24b7d03bc842e472996ffdb84f046d06ef1036976605b6279cc71734",
+      "decision": "no-issue",
+      "notes": "Neprimerane jednostranný explains leonine terms; vykorisťujúci preserves the adverse asymmetry.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-230-devolucion-en-especie",
+      "catalogSenseId": "es-sk:c2:exp-bulk-230-devolucion-en-especie:noun:1",
+      "level": "C2",
+      "entrySha256": "07cb3b1293d4ac0031beea710781d4f5d143d97e6c4d9a5d7c2c2e5f002670b2",
+      "decision": "no-issue",
+      "notes": "Vrátenie v naturáliách and náhrada tovarom fit restitution through goods rather than cash.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-232-a-cuenta-de",
+      "catalogSenseId": "es-sk:c2:exp-bulk-232-a-cuenta-de:adp:1",
+      "level": "C2",
+      "entrySha256": "418d4657d2ee1916a9475ab7964f93d6ea48e359bac6830acc05e3438cb14f82",
+      "decision": "no-issue",
+      "notes": "Ako záloha na matches a partial payment deductible from the final amount.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-233-ecuanimidad",
+      "catalogSenseId": "es-sk:c2:exp-bulk-233-ecuanimidad:noun:1",
+      "level": "C2",
+      "entrySha256": "891d25f9fa3b70e595a8bf78740adb4fe71be3dece72585aa053ed19922847bc",
+      "decision": "no-issue",
+      "notes": "Nestrannosť a vyrovnanosť úsudku retain balanced judgment despite personal preferences.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-234-pusilanime",
+      "catalogSenseId": "es-sk:c2:exp-bulk-234-pusilanime:adj:1",
+      "level": "C2",
+      "entrySha256": "aa5b4de8aa3710fe689a84b8451d37142fe9f595fa17860c32b3ab9a913bc64f",
+      "decision": "no-issue",
+      "notes": "Malodušný and bojazlivo nerozhodný preserve lack of courage or resolve.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-235-irascible",
+      "catalogSenseId": "es-sk:c2:exp-bulk-235-irascible:adj:1",
+      "level": "C2",
+      "entrySha256": "2ab21147fa206a6b3e96bbf3bda25e8dac60ed01bd88f0510c113fc3f01e5588",
+      "decision": "no-issue",
+      "notes": "Popudlivý and prchký capture ease of becoming angry.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-236-aprension",
+      "catalogSenseId": "es-sk:c2:exp-bulk-236-aprension:noun:1",
+      "level": "C2",
+      "entrySha256": "397836f0f4f82d51bd441dda28b9d3c25c669e60a71d0836ecccbd7a138effd4",
+      "decision": "no-issue",
+      "notes": "Obava and úzkostné očakávanie select anxious anticipation rather than apprehension as arrest.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-237-desazon",
+      "catalogSenseId": "es-sk:c2:exp-bulk-237-desazon:noun:1",
+      "level": "C2",
+      "entrySha256": "5dccd34e8a12dbcf0c40c6b33428fb69d9da41fec32c70fba16d5aba47b45dc7",
+      "decision": "no-issue",
+      "notes": "Nepokoj and vnútorná tieseň preserve unexplained inner unease.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-238-indolencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-238-indolencia:noun:1",
+      "level": "C2",
+      "entrySha256": "281a6245725aea8431ab692625ff72a17d860dd6ed8a060c1d9ee2d80e36bd2f",
+      "decision": "no-issue",
+      "notes": "Ľahostajná nečinnosť and lenivosť fit unwillingness to exert effort.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-239-circunspecto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-239-circunspecto:adj:1",
+      "level": "C2",
+      "entrySha256": "d879dbab8ef4f1151f97805ab906e12c54c841e179580860eaeb787f99148027",
+      "decision": "no-issue",
+      "notes": "Obozretný and zdržanlivý retain caution and reserve in commenting on unverified news.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-240-veleidoso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-240-veleidoso:adj:1",
+      "level": "C2",
+      "entrySha256": "420f811182b1dfcb85b79337ffa6d6109ac53a9f6c15ebba66740f86a56957b5",
+      "decision": "no-issue",
+      "notes": "Vrtošivý and nestály accurately express changeable desires or intentions.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-243-sobreentendido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-243-sobreentendido:noun:1",
+      "level": "C2",
+      "entrySha256": "bab98517e19cdf3fdb67d50b1fce24cae49262bec8dad3ff00e200885e0c92c1",
+      "decision": "no-issue",
+      "notes": "Nevyslovený predpoklad correctly selects assumed shared information.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-245-presuposicion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-245-presuposicion:noun:1",
+      "level": "C2",
+      "entrySha256": "939e4209a235829e947a95c7fa1dd2bea33ffb8db4dac00dbe2dde3f4e930323",
+      "decision": "no-issue",
+      "notes": "Predpoklad obsiahnutý vo výpovedi explains the linguistic term presupozícia without asserting the presupposed event occurred.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-247-equivoco",
+      "catalogSenseId": "es-sk:c2:exp-bulk-247-equivoco:noun:1",
+      "level": "C2",
+      "entrySha256": "884a5e0eb1cad53fb161303b5faf7dab80f1391848b7d100f8da47a2d0dc5e27",
+      "decision": "no-issue",
+      "notes": "Nedorozumenie and mylný výklad preserve interpretive confusion rather than intentional deception.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-248-con-segundas",
+      "catalogSenseId": "es-sk:c2:exp-bulk-248-con-segundas:adv:1",
+      "level": "C2",
+      "entrySha256": "786f9b1afe148014dd899842196c47aa0f20409d2357b0339a167b5a9d887877",
+      "decision": "no-issue",
+      "notes": "Skrytý podtón and postranný zámer fit an indirect intention beyond literal words.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-249-a-buen-seguro",
+      "catalogSenseId": "es-sk:c2:exp-bulk-249-a-buen-seguro:adv:1",
+      "level": "C2",
+      "entrySha256": "3b3a04fde93f7da52ef4053739e82961a46c7049232512fded20500a5b0b527a",
+      "decision": "no-issue",
+      "notes": "Celkom iste and nepochybne express the speaker's strong confidence, not external proof.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-250-que-conste",
+      "catalogSenseId": "es-sk:c2:exp-bulk-250-que-conste:x:1",
+      "level": "C2",
+      "entrySha256": "e775795596757880ca944c5659403fde708ca412ab7c899e825f76db4e52b9fa",
+      "decision": "no-issue",
+      "notes": "Nech je jasné and aby bolo zrejmé preserve insistence on a clarification.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-251-ni-que-decir-tiene",
+      "catalogSenseId": "es-sk:c2:exp-bulk-251-ni-que-decir-tiene:x:1",
+      "level": "C2",
+      "entrySha256": "82b7d4d939bd3c7acd216b4085b9865b417bb6634d5f58c9547f3192f814bbbb",
+      "decision": "no-issue",
+      "notes": "Resolved r1: netreba ani hovoriť and samozrejme retain assumed obviousness without the unnecessary tentative azda.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-252-por-asi-decirlo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-252-por-asi-decirlo:adv:1",
+      "level": "C2",
+      "entrySha256": "68a77d116f64c9f813f7604ab1fdf3465d110af8ce35a7ebadf927fdaba5cecc",
+      "decision": "no-issue",
+      "notes": "Takpovediac correctly marks approximate or figurative wording.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-254-no-es-de-recibo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-254-no-es-de-recibo:x:1",
+      "level": "C2",
+      "entrySha256": "f7cd65ba10328ff65665ec3ac034e12f42ce7357ae813a69bd86b77eb189b25d",
+      "decision": "no-issue",
+      "notes": "To je neprijateľné and to nie je prípustné accurately convey rejection as unacceptable.",
+      "findings": []
+    }
+  ],
+  "previousReview": "c2-bulk-slovak-review-r1.json",
+  "method": "Independent final AI comparison of all 212 retained definition/example/Slovak hint combinations. Read the full retained learner text and inspected deltas against the original 254-entry snapshot; separately retrieved the middle range when the tool output truncated it. Individually written original assessments remain for unchanged learner text, with new resolution assessments for all 15 retained translation changes and both Spanish-definition changes. No dataset edits by this reviewer. No human, native-speaker, legal, comprehensive dictionary or official CEFR approval claimed. CEFR placement is outside the Slovak-review scope.",
+  "referenceEvidence": [
+    {
+      "status": "search-inconclusive",
+      "note": "Targeted primary-source searches for Slovak rancidity wording, sports collocation and complicity yielded no adequate current headword evidence. No JULS dictionary verification is claimed. Historical search results were not used to certify modern usage."
+    }
+  ]
+}

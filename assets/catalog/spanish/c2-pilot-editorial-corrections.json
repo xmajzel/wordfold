@@ -1,0 +1,1842 @@
+{
+  "schemaVersion": 1,
+  "notHumanReview": true,
+  "batchId": "c2-pilot-2026-09-13",
+  "authoredBaselineFileSha256": "2ac27f050a3f1b818243c1aa4d520c7bc1bd0ff5bc54a52c7a077292feb2cac1",
+  "finalFileSha256": "e3d0e6c7b2338211104841649fb27bfacc89d647d8ec721bc59d3308ff3cd996",
+  "authoredBaselinePayloadSha256": "ca530fc3d11a039947585566b9f0e1c22049dec04b8029bc372ccc31ad569dc9",
+  "finalPayloadSha256": "c83a53d967fd8e748260d372f09e555d47133f84b53858a2bc2b6faef953f984",
+  "note": "Original content corrections and source/register metadata corrections after two independent AI reviews. Three candidates replaced; reference access states remain explicit. Reconstruct original entries with before values to validate historical r1 hashes. Final reviewers independently rechecked the corrected payload.",
+  "changes": [
+    {
+      "entryId": "es-sk:c2:exp-pilot-001-aquilatar",
+      "originalEntryId": "es-sk:c2:exp-pilot-001-aquilatar",
+      "reason": [],
+      "fields": [
+        {
+          "field": "levelRationale",
+          "before": "Distinguishes careful appraisal of evidential worth from merely considering testimony; practice concerns calibrated commitment, not precious-metal testing. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+          "after": "Production B2 evaluar (es-sk:b2:i25125) covers broad assessment. Aquilatar adds formal rigorous calibration of evidential worth; the selected use weighs testimony without claiming proof. The distinction is precision of appraisal, not precious-metal testing. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim."
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/aquilatar",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/aquilatar",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE senses 2 and 4 support rigorous appraisal and precise analysis."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        },
+        {
+          "field": "lowerLevelComparison",
+          "before": "Distinguishes careful appraisal of evidential worth from merely considering testimony; practice concerns calibrated commitment, not precious-metal testing.",
+          "after": "Production B2 evaluar (es-sk:b2:i25125) covers broad assessment. Aquilatar adds formal rigorous calibration of evidential worth; the selected use weighs testimony without claiming proof. The distinction is precision of appraisal, not precious-metal testing."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-002-dirimir",
+      "originalEntryId": "es-sk:c2:exp-pilot-002-dirimir",
+      "reason": [
+        "Replace generic dirimir si with explicit resolution of a controversy between parties."
+      ],
+      "fields": [
+        {
+          "field": "example",
+          "before": "La comisión debe dirimir si el conflicto afecta al procedimiento o al fondo del asunto.",
+          "after": "La comisión debe dirimir la controversia entre los dos departamentos sobre quién autorizó el gasto."
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/dirimir",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://www.fundeu.es/recomendacion/dirimir-uso-adecuado/",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE sense 2 concerns settling a controversy; Fundéu warns against generic deciding."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-003-deslindar",
+      "originalEntryId": "es-sk:c2:exp-pilot-003-deslindar",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/deslindar",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/deslindar",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE sense 2 concerns removing conceptual confusion."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-004-colegir",
+      "originalEntryId": "es-sk:c2:exp-pilot-004-colegir",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/colegir",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/colegir",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE sense 2 supports inferential consequence; conjugation is irregular."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-005-anfibologia",
+      "originalEntryId": "es-sk:c2:exp-pilot-005-soslayar",
+      "reason": [
+        "Replace: production C1 eludir already has this sense and evasive questioning context."
+      ],
+      "fields": [
+        {
+          "field": "id",
+          "before": "es-sk:c2:exp-pilot-005-soslayar",
+          "after": "es-sk:c2:exp-pilot-005-anfibologia"
+        },
+        {
+          "field": "catalogSenseId",
+          "before": "es-sk:c2:exp-pilot-005-soslayar:verb:1",
+          "after": "es-sk:c2:exp-pilot-005-anfibologia:noun:1"
+        },
+        {
+          "field": "term",
+          "before": "soslayar",
+          "after": "anfibología"
+        },
+        {
+          "field": "normalizedTerm",
+          "before": "soslayar",
+          "after": "anfibología"
+        },
+        {
+          "field": "partOfSpeech",
+          "before": "VERB",
+          "after": "NOUN"
+        },
+        {
+          "field": "displayPartOfSpeech",
+          "before": "verbo",
+          "after": "sustantivo"
+        },
+        {
+          "field": "definition",
+          "before": "Evitar tratar una cuestión o afrontar una dificultad.",
+          "after": "Ambigüedad de una expresión que permite entenderla de más de una manera."
+        },
+        {
+          "field": "example",
+          "before": "La respuesta enumera logros, pero parece soslayar la pregunta sobre quién autorizó el gasto.",
+          "after": "El contrato habla de «la autorización del representante»; esa anfibología no aclara si él autoriza o necesita ser autorizado."
+        },
+        {
+          "field": "exampleSurfaceForm",
+          "before": "soslayar",
+          "after": "anfibología"
+        },
+        {
+          "field": "translation",
+          "before": "vyhnúť sa riešeniu; obísť otázku",
+          "after": "dvojznačnosť formulácie"
+        },
+        {
+          "field": "levelRationale",
+          "before": "Recognizes criticism of selective avoidance beneath an apparently relevant answer, rather than neutral prevention of harm. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+          "after": "Identifies two grammatical readings of the same wording, rather than uncertain facts or the self-contradiction taught by B2 paradoja (es-sk:b2:i71840). Intentional wordplay is a separate sense. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim."
+        },
+        {
+          "field": "gender",
+          "before": "not-applicable",
+          "after": "feminine"
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/soslayar",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/anfibolog%C3%ADa",
+            "role": "Semantic checking only; original learner text, no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE sense 1 supports context-dependent equivocal wording; deliberate rhetorical double meaning is a separate sense."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        },
+        {
+          "field": "lowerLevelComparison",
+          "before": "Recognizes criticism of selective avoidance beneath an apparently relevant answer, rather than neutral prevention of harm.",
+          "after": "Identifies two grammatical readings of the same wording, rather than uncertain facts or the self-contradiction taught by B2 paradoja (es-sk:b2:i71840). Intentional wordplay is a separate sense."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-006-salvedad",
+      "originalEntryId": "es-sk:c2:exp-pilot-006-salvedad",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/salvedad",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/salvedad",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE first sense supports a qualification restricting what is said or done."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-007-sin-ambages",
+      "originalEntryId": "es-sk:c2:exp-pilot-007-sin-ambages",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/ambages",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/ambages",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE ambages is plural circumlocution; sin construction is directly exemplified."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-008-hilar-fino",
+      "originalEntryId": "es-sk:c2:exp-pilot-008-hilar-fino",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/hilar",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/hilar",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE hilar fino concerns subtle reasoning or exact care."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-009-rizar-el-rizo",
+      "originalEntryId": "es-sk:c2:exp-pilot-009-rizar-el-rizo",
+      "reason": [
+        "Define selected negative sense explicitly as complicating more than necessary.",
+        "Align with the unnecessary-complication sense already selected by the example and Slovak hint."
+      ],
+      "fields": [
+        {
+          "field": "definition",
+          "before": "Añadir una complicación o un refinamiento a algo que ya era elaborado.",
+          "after": "Añadir a algo una complicación innecesaria."
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/rizar",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/rizo",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE rizar el rizo sense 3 is unnecessary complication; other senses differ."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-010-dar-con-la-horma-de-su-zapato",
+      "originalEntryId": "es-sk:c2:exp-pilot-010-dar-con-la-horma-de-su-zapato",
+      "reason": [
+        "Use primary-attested encontrar la horma de su zapato, or attach primary evidence for dar con variant."
+      ],
+      "fields": [
+        {
+          "field": "term",
+          "before": "dar con la horma de su zapato",
+          "after": "encontrar la horma de su zapato"
+        },
+        {
+          "field": "normalizedTerm",
+          "before": "dar con la horma de su zapato",
+          "after": "encontrar la horma de su zapato"
+        },
+        {
+          "field": "example",
+          "before": "El negociador, acostumbrado a imponer sus condiciones, dio con la horma de su zapato en la nueva portavoz.",
+          "after": "El negociador, acostumbrado a imponer sus condiciones, encontró la horma de su zapato en la nueva portavoz."
+        },
+        {
+          "field": "exampleSurfaceForm",
+          "before": "dio con la horma de su zapato",
+          "after": "encontró la horma de su zapato"
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/horma",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/horma",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE horma lists encontrar/hallar with resistance and compatibility as separate senses."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-011-no-dar-puntada-sin-hilo",
+      "originalEntryId": "es-sk:c2:exp-pilot-011-no-dar-puntada-sin-hilo",
+      "reason": [
+        "Include calculated pursuit of personal benefit."
+      ],
+      "fields": [
+        {
+          "field": "definition",
+          "before": "Actuar siempre con una intención o un interés calculado.",
+          "after": "Actuar de manera calculada para obtener un beneficio propio."
+        },
+        {
+          "field": "translation",
+          "before": "nič nerobiť bez vypočítavého zámeru",
+          "after": "nič nerobiť bez vypočítavého zámeru získať vlastný prospech"
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/puntada",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/puntada",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE phrase includes calculated action for personal advantage."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-012-nadar-y-guardar-la-ropa",
+      "originalEntryId": "es-sk:c2:exp-pilot-012-nadar-y-guardar-la-ropa",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/nadar",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/ropa",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE ropa phrase concerns precautions retaining protection if an undertaking fails."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-013-arrimar-el-ascua-a-su-sardina",
+      "originalEntryId": "es-sk:c2:exp-pilot-013-arrimar-el-ascua-a-su-sardina",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/ascua",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/ascua",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE ascua phrase concerns taking an opportunity for personal interest."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-014-a-toro-pasado",
+      "originalEntryId": "es-sk:c2:exp-pilot-014-a-toro-pasado",
+      "reason": [
+        "Include the opportunity for action having already passed."
+      ],
+      "fields": [
+        {
+          "field": "definition",
+          "before": "Cuando ya se conoce el resultado y ha desaparecido la incertidumbre inicial.",
+          "after": "Cuando ya ha pasado la ocasión de actuar y se juzga lo ocurrido con ventaja retrospectiva."
+        },
+        {
+          "field": "translation",
+          "before": "dodatočne, keď je už výsledok známy",
+          "after": "dodatočne, keď už pominula možnosť konať"
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/toro",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/toro",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE phrase centers the opportunity already being past."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-015-a-fuer-de",
+      "originalEntryId": "es-sk:c2:exp-pilot-015-a-fuer-de",
+      "reason": [
+        "Clarify causal quality reading without freezing the expression to masculine past tense."
+      ],
+      "fields": [
+        {
+          "field": "translation",
+          "before": "pre svoju vlastnosť; tým, že bol",
+          "after": "pre určitú vlastnosť (napr. z opatrnosti); vzhľadom na to, že je"
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/fuero",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/fuer",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE fuer locution supports causal or capacity-based interpretation."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-016-en-aras-de",
+      "originalEntryId": "es-sk:c2:exp-pilot-016-en-aras-de",
+      "reason": [
+        "Avoid implying moral superiority of the purpose."
+      ],
+      "fields": [
+        {
+          "field": "translation",
+          "before": "v záujme; v prospech vyššieho cieľa",
+          "after": "v záujme; v prospech uprednostneného cieľa"
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/ara",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://www.fundeu.es/recomendacion/en-aras-de-155/",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE ara supports interest/honor; Fundéu supplies sacrifice-related usage guidance."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-017-habida-cuenta-de",
+      "originalEntryId": "es-sk:c2:exp-pilot-017-habida-cuenta-de",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/cuenta",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://www.rae.es/sites/default/files/indice_de_materias_gramatica.pdf",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "primary-search-excerpt-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE cuenta records the formula; RAE grammar index supports alternate grammatical categorization."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-018-a-mayor-abundamiento",
+      "originalEntryId": "es-sk:c2:exp-pilot-018-a-mayor-abundamiento",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/abundamiento",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/abundamiento",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE abundamiento records an additional strengthening reason."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-019-valga-la-redundancia",
+      "originalEntryId": "es-sk:c2:exp-pilot-019-valga-la-redundancia",
+      "reason": [
+        "Use full-form Dominican Academy source; DLE redundancia alone is insufficient."
+      ],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/redundancia",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://academia.org.do/2013/04/08/valga-la-redundancia/",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE lacks complete formula; Dominican Academy explains excusing repetition of words or concepts."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-020-con-la-venia",
+      "originalEntryId": "es-sk:c2:exp-pilot-020-con-la-venia",
+      "reason": [
+        "Attach DPEJ full-form source and courtroom register note."
+      ],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/venia",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dpej.rae.es/lema/con-la-venia/boe",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "primary-search-excerpt-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE noun is permission; DPEJ records the ritual court permission formula."
+          }
+        },
+        {
+          "field": "register",
+          "before": "formal",
+          "after": "highly formal; especially courtroom formula"
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-021-decir-con-la-boca-pequena",
+      "originalEntryId": "es-sk:c2:exp-pilot-021-decir-con-la-boca-pequena",
+      "reason": [
+        "Align definition/example to perfunctory offer of support, or provide primary evidence for broader mere assertion."
+      ],
+      "fields": [
+        {
+          "field": "definition",
+          "before": "Decir algo sin convicción o sin querer comprometerse plenamente con ello.",
+          "after": "Hacer un ofrecimiento solo por cumplir, sin verdadera intención de llevarlo a cabo."
+        },
+        {
+          "field": "example",
+          "before": "Dijo con la boca pequeña que apoyaba el acuerdo, pero evitó defenderlo ante sus compañeros.",
+          "after": "Dijo con la boca pequeña que podía ayudar con la mudanza, pero enseguida empezó a poner excusas."
+        },
+        {
+          "field": "translation",
+          "before": "povedať niečo bez presvedčenia; len neochotne",
+          "after": "ponúknuť niečo len zo slušnosti, bez skutočného úmyslu to splniť"
+        },
+        {
+          "field": "levelRationale",
+          "before": "The idiom weakens apparent assent through stance, not voice volume; indirect evidence warrants interpretation rather than certainty about motives. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+          "after": "An apparent offer is interpreted as social compliance rather than genuine willingness; the idiom is not about low voice volume. Evasive follow-up motivates the reading without making every polite offer insincere. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim."
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/boca",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/boca",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE boca phrase concerns an offer made merely to fulfill social expectations."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        },
+        {
+          "field": "lowerLevelComparison",
+          "before": "The idiom weakens apparent assent through stance, not voice volume; indirect evidence warrants interpretation rather than certainty about motives.",
+          "after": "An apparent offer is interpreted as social compliance rather than genuine willingness; the idiom is not about low voice volume. Evasive follow-up motivates the reading without making every polite offer insincere."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-022-tirar-la-piedra-y-esconder-la-mano",
+      "originalEntryId": "es-sk:c2:exp-pilot-022-tirar-la-piedra-y-esconder-la-mano",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/piedra",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/piedra",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE piedra phrase combines harm with concealed agency."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-023-donde-dije-digo-digo-diego",
+      "originalEntryId": "es-sk:c2:exp-pilot-023-donde-dije-digo-digo-diego",
+      "reason": [
+        "Use Cervantes proverb entry; DLE decir does not attest it.",
+        "Allow retraction or changed assertion without requiring exact logical opposite."
+      ],
+      "fields": [
+        {
+          "field": "translation",
+          "before": "teraz tvrdia pravý opak; obracajú podľa potreby",
+          "after": "beriem späť, čo som povedal; teraz už tvrdím niečo iné"
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/digo",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://cvc.cervantes.es/lengua/refranero/ficha.aspx?Lng=0&Par=58538",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "primary-search-excerpt-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE decir did not contain phrase; Cervantes records self-correction/retraction and public critical context."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-024-a-buen-entendedor-pocas-palabras-bastan",
+      "originalEntryId": "es-sk:c2:exp-pilot-024-a-buen-entendedor-pocas-palabras-bastan",
+      "reason": [
+        "Use Cervantes proverb entry; DLE entendedor does not attest it."
+      ],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/entendedor",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://cvc.cervantes.es/lengua/refranero/ficha.aspx?Lng=0&Par=58037",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "primary-search-excerpt-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE entendedor did not contain proverb; Cervantes records indirect warning use."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-025-como-quien-no-quiere-la-cosa",
+      "originalEntryId": "es-sk:c2:exp-pilot-025-como-quien-no-quiere-la-cosa",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/querer",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/cosa",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE cosa phrase is dissimulation."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-026-por-no-decir",
+      "originalEntryId": "es-sk:c2:exp-pilot-026-por-no-decir",
+      "reason": [
+        "Attach primary pragmatic evidence and use neutral rather than colloquial-only register."
+      ],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/decir",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://formacion.icervantes.org/pluginfile.php/2524639/mod_forum/attachment/784375/C2.%20Taller%20de%20calificaci%C3%B3n.%20Muestra%201.%20Informe%20ALEX.pdf?forcedownload=1",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "primary-search-excerpt-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE decir did not contain phrase; Cervantes C2 examiner material illustrates it in precision of nuances, without assigning an exclusive lexical level."
+          }
+        },
+        {
+          "field": "register",
+          "before": "colloquial",
+          "after": "neutral"
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-027-hacer-de-tripas-corazon",
+      "originalEntryId": "es-sk:c2:exp-pilot-027-hacer-de-tripas-corazon",
+      "reason": [
+        "Change register to colloquial, matching DLE."
+      ],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/tripa",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/tripa",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE tripa labels self-command idiom colloquial."
+          }
+        },
+        {
+          "field": "register",
+          "before": "neutral",
+          "after": "colloquial"
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-028-guardar-las-distancias",
+      "originalEntryId": "es-sk:c2:exp-pilot-028-guardar-las-distancias",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/distancia",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/distancia",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE distancia phrase excludes familiarity/excess cordiality."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-029-contemporizar",
+      "originalEntryId": "es-sk:c2:exp-pilot-029-contemporizar",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/contemporizar",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/contemporizar",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE contemporizar concerns accommodation to others for a purpose."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-030-pundonor",
+      "originalEntryId": "es-sk:c2:exp-pilot-030-susceptibilidad",
+      "reason": [],
+      "fields": [
+        {
+          "field": "id",
+          "before": "es-sk:c2:exp-pilot-030-susceptibilidad",
+          "after": "es-sk:c2:exp-pilot-030-pundonor"
+        },
+        {
+          "field": "catalogSenseId",
+          "before": "es-sk:c2:exp-pilot-030-susceptibilidad:noun:1",
+          "after": "es-sk:c2:exp-pilot-030-pundonor:noun:1"
+        },
+        {
+          "field": "term",
+          "before": "susceptibilidad",
+          "after": "pundonor"
+        },
+        {
+          "field": "normalizedTerm",
+          "before": "susceptibilidad",
+          "after": "pundonor"
+        },
+        {
+          "field": "definition",
+          "before": "Facilidad para sentirse ofendido por palabras o acciones ajenas.",
+          "after": "Orgullo por la propia reputación que anima a esforzarse y a no quedar por debajo de lo que uno exige de sí mismo."
+        },
+        {
+          "field": "example",
+          "before": "Formuló la objeción con cuidado para no herir la susceptibilidad de su colega.",
+          "after": "Por pundonor, terminó el trabajo con esmero aunque nadie fuera a reprocharle que lo dejara a medias."
+        },
+        {
+          "field": "exampleSurfaceForm",
+          "before": "susceptibilidad",
+          "after": "pundonor"
+        },
+        {
+          "field": "translation",
+          "before": "urážlivosť; precitlivenosť na kritiku",
+          "after": "hrdosť na vlastnú česť, ktorá podnecuje k úsiliu a prekonávaniu sa"
+        },
+        {
+          "field": "levelRationale",
+          "before": "Interpersonal sensitivity constrains wording; this sense is unrelated to physical susceptibility and can itself sound judgmental. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+          "after": "Distinguishes the motive to preserve reputation through effort from B1 orgullo as satisfaction in achievements (es-sk:b1:i76332), A2 honor as good character (es-sk:a2:i62572), and C1 dignidad as worthiness of respect (es-sk:c1:i62669). The formal motivation term can convey admirable resolve or excessive self-demand depending on context. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim."
+        },
+        {
+          "field": "gender",
+          "before": "feminine",
+          "after": "masculine"
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/susceptibilidad",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/pundonor",
+            "role": "Semantic checking only; original learner text, no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE describes a feeling motivating maintenance of good reputation and self-improvement."
+          }
+        },
+        {
+          "field": "register",
+          "before": "neutral",
+          "after": "formal"
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        },
+        {
+          "field": "lowerLevelComparison",
+          "before": "Interpersonal sensitivity constrains wording; this sense is unrelated to physical susceptibility and can itself sound judgmental.",
+          "after": "Distinguishes the motive to preserve reputation through effort from B1 orgullo as satisfaction in achievements (es-sk:b1:i76332), A2 honor as good character (es-sk:a2:i62572), and C1 dignidad as worthiness of respect (es-sk:c1:i62669). The formal motivation term can convey admirable resolve or excessive self-demand depending on context."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-031-resquemor",
+      "originalEntryId": "es-sk:c2:exp-pilot-031-resquemor",
+      "reason": [
+        "Keep general emotional discomfort separate from strict resentment gloss marked Cantabria by DLE, or add primary broader-use evidence."
+      ],
+      "fields": [
+        {
+          "field": "definition",
+          "before": "Malestar o resentimiento que permanece después de una experiencia desagradable.",
+          "after": "Malestar interior que queda después de algo que ha dolido o disgustado."
+        },
+        {
+          "field": "translation",
+          "before": "pretrvávajúca horkosť; zvyšková nevôľa",
+          "after": "pretrvávajúca vnútorná horkosť či nepríjemný pocit"
+        },
+        {
+          "field": "levelRationale",
+          "before": "Distinguishes lingering grievance despite outward reconciliation from open hatred or momentary irritation. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+          "after": "Distinguishes lingering emotional discomfort despite an accepted apology from open hostility or momentary irritation. The general discomfort sense is selected; the separate resentment sense marked Cantabria in DLE is not bundled as an unmarked synonym. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim."
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/resquemor",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/resquemor",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE first sense is distress after something painful; separate resentment sense is marked Cantabria."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        },
+        {
+          "field": "lowerLevelComparison",
+          "before": "Distinguishes lingering grievance despite outward reconciliation from open hatred or momentary irritation.",
+          "after": "Distinguishes lingering emotional discomfort despite an accepted apology from open hostility or momentary irritation. The general discomfort sense is selected; the separate resentment sense marked Cantabria in DLE is not bundled as an unmarked synonym."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-032-animadversion",
+      "originalEntryId": "es-sk:c2:exp-pilot-032-animadversion",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/animadversión",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/animadversión",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE first sense supports antagonism; obsolete critical-warning sense is excluded."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-033-letra-pequena",
+      "originalEntryId": "es-sk:c2:exp-pilot-033-letra-pequena",
+      "reason": [
+        "State small-type basis or add primary attestation for claimed figurative non-typographic scope."
+      ],
+      "fields": [
+        {
+          "field": "definition",
+          "before": "Condiciones o limitaciones de un acuerdo que reciben poca atención y pueden resultar decisivas.",
+          "after": "Cláusulas de un acuerdo impresas en un tamaño menor que pueden pasar inadvertidas pese a su importancia."
+        },
+        {
+          "field": "levelRationale",
+          "before": "Metonymic use concerns less salient restrictions, even without literally small type; the contrast between headline promise and condition matters. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+          "after": "Distinguishes the less salient small-type restrictions from the prominent promise in an advertisement; the selected sense retains its typographic basis and does not assert that every small-print clause is abusive. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim."
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/letra",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/letra",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE letra pequeña explicitly connects reduced salience to smaller type."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        },
+        {
+          "field": "lowerLevelComparison",
+          "before": "Metonymic use concerns less salient restrictions, even without literally small type; the contrast between headline promise and condition matters.",
+          "after": "Distinguishes the less salient small-type restrictions from the prominent promise in an advertisement; the selected sense retains its typographic basis and does not assert that every small-print clause is abusive."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-034-vicio-oculto",
+      "originalEntryId": "es-sk:c2:exp-pilot-034-vicio-oculto",
+      "reason": [
+        "Obtain primary phrase-level evidence and label legal/technical register. DLE vicio alone is not enough."
+      ],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/vicio",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://www.boe.es/biblioteca_juridica/anuarios_derecho/abrir_pdf.php?id=ANU-R-2021-70244102458",
+            "role": "Phrase-level linguistic reference only; no legal advice, deadlines or remedies imported.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "BOE-hosted research by Amparo Núñez Marti discusses non-apparent material defects of a purchased thing, contrasting them with apparent defects."
+          }
+        },
+        {
+          "field": "register",
+          "before": "neutral",
+          "after": "technical/legal; receptive vocabulary"
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-035-quedar-en-papel-mojado",
+      "originalEntryId": "es-sk:c2:exp-pilot-035-quedar-en-papel-mojado",
+      "reason": [
+        "Change figurative papel mojado register to colloquial."
+      ],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/papel",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/papel",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE papel mojado figurative sense is an ineffective/inconsistent thing, labeled colloquial."
+          }
+        },
+        {
+          "field": "register",
+          "before": "neutral",
+          "after": "colloquial"
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-036-dar-largas",
+      "originalEntryId": "es-sk:c2:exp-pilot-036-dar-largas",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/largo",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/largo",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE largo feminine delay sense exemplifies dar largas."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-037-hacer-la-vista-gorda",
+      "originalEntryId": "es-sk:c2:exp-pilot-037-hacer-la-vista-gorda",
+      "reason": [
+        "Change register to colloquial, matching DLE."
+      ],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/vista",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/vista",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE vista phrase involves pretending not to see and is marked colloquial."
+          }
+        },
+        {
+          "field": "register",
+          "before": "neutral",
+          "after": "colloquial"
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-038-a-beneficio-de-inventario",
+      "originalEntryId": "es-sk:c2:exp-pilot-038-poner-en-entredicho",
+      "reason": [
+        "Replace under no-synonym-duplicate criterion: B1 cuestionar already covers doubts about accuracy/honesty/appropriateness."
+      ],
+      "fields": [
+        {
+          "field": "id",
+          "before": "es-sk:c2:exp-pilot-038-poner-en-entredicho",
+          "after": "es-sk:c2:exp-pilot-038-a-beneficio-de-inventario"
+        },
+        {
+          "field": "catalogSenseId",
+          "before": "es-sk:c2:exp-pilot-038-poner-en-entredicho:verb:1",
+          "after": "es-sk:c2:exp-pilot-038-a-beneficio-de-inventario:adv:1"
+        },
+        {
+          "field": "term",
+          "before": "poner en entredicho",
+          "after": "a beneficio de inventario"
+        },
+        {
+          "field": "normalizedTerm",
+          "before": "poner en entredicho",
+          "after": "a beneficio de inventario"
+        },
+        {
+          "field": "partOfSpeech",
+          "before": "VERB",
+          "after": "ADV"
+        },
+        {
+          "field": "displayPartOfSpeech",
+          "before": "locución verbal",
+          "after": "locución adverbial"
+        },
+        {
+          "field": "definition",
+          "before": "Cuestionar la credibilidad, la validez o la reputación de algo o alguien.",
+          "after": "Con reservas, sin aceptar como segura una idea, una noticia o una afirmación."
+        },
+        {
+          "field": "example",
+          "before": "Las facturas contradictorias pueden poner en entredicho la versión ofrecida por la empresa.",
+          "after": "Tomó la promesa de entrega a beneficio de inventario: pidió una fecha por escrito antes de organizar la mudanza."
+        },
+        {
+          "field": "exampleSurfaceForm",
+          "before": "poner en entredicho",
+          "after": "a beneficio de inventario"
+        },
+        {
+          "field": "translation",
+          "before": "spochybniť dôveryhodnosť či platnosť",
+          "after": "s výhradami; bez bezvýhradného prijatia tvrdenia"
+        },
+        {
+          "field": "levelRationale",
+          "before": "Evidence casts doubt without proving falsity; learners must preserve this degree of commitment in a disputed account. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+          "after": "Practices a fixed idiom for reserved reception of a report: the recipient does not commit fully pending confirmation. It builds on B1 cuestionar (es-sk:b1:i25964) and A1 duda (es-sk:a1:i66857); the new learning target is the idiomatic stance formula, not a new mental state. Distinguish it from an explicit salvedad condition; exclude inheritance and carefree senses. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim."
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/entredicho",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/beneficio",
+            "role": "Semantic checking only; original learner text, no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE a beneficio de inventario sense 1 expresses doubt or reservation toward an idea, news or assertion; two other senses are excluded."
+          }
+        },
+        {
+          "field": "register",
+          "before": "neutral",
+          "after": "formal"
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        },
+        {
+          "field": "lowerLevelComparison",
+          "before": "Evidence casts doubt without proving falsity; learners must preserve this degree of commitment in a disputed account.",
+          "after": "Practices a fixed idiom for reserved reception of a report: the recipient does not commit fully pending confirmation. It builds on B1 cuestionar (es-sk:b1:i25964) and A1 duda (es-sk:a1:i66857); the new learning target is the idiomatic stance formula, not a new mental state. Distinguish it from an explicit salvedad condition; exclude inheritance and carefree senses."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-039-en-puridad",
+      "originalEntryId": "es-sk:c2:exp-pilot-039-en-puridad",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/puridad",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/puridad",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE en puridad current sense is strict or actual truth."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-040-sin-perjuicio-de",
+      "originalEntryId": "es-sk:c2:exp-pilot-040-sin-perjuicio-de",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/perjuicio",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/perjuicio",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE sin perjuicio preserves something from impairment."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-041-peticion-de-principio",
+      "originalEntryId": "es-sk:c2:exp-pilot-041-peticion-de-principio",
+      "reason": [
+        "Make circularity explicit; current premise could be independent reliability evidence."
+      ],
+      "fields": [
+        {
+          "field": "example",
+          "before": "Afirmar que el informe es fiable porque siempre dice la verdad incurre en una petición de principio.",
+          "after": "Decir «esta norma es justa porque es una norma justa» es una petición de principio: la conclusión se repite como premisa."
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/petición",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/petición",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE petición de principio uses the intended conclusion as antecedent."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-042-falacia-del-hombre-de-paja",
+      "originalEntryId": "es-sk:c2:exp-pilot-042-falacia-del-hombre-de-paja",
+      "reason": [
+        "Replace generic DLE falacia URL with observed primary specialist source for the complete term."
+      ],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/falacia",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://www.filosoficas.unam.mx/~cruzparc/copicap4.pdf",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "primary-search-excerpt-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE falacia lacks this specific term; UNAM-hosted logic chapter explains attacking a weakened substitute position."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-043-parsimonia",
+      "originalEntryId": "es-sk:c2:exp-pilot-043-parsimonia",
+      "reason": [
+        "Replace unsupported DLE methodological-sense reference with primary methodological source."
+      ],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/parsimonia",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://fce.unal.edu.co/media/files/imagenes/Cuadernos/ed_digital/revista_50.pdf",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "primary-search-excerpt-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE does not list methodological sense; UNAL research explains economy of assumptions."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-044-espurio",
+      "originalEntryId": "es-sk:c2:exp-pilot-044-espurio",
+      "reason": [
+        "Attach specialist causal reference and distinguish observed association from a merely apparent causal link.",
+        "Avoid denying any genuine association or underlying explanation; coordinate with Spanish review of the exact technical example."
+      ],
+      "fields": [
+        {
+          "field": "definition",
+          "before": "Que aparenta una relación o una validez que en realidad no tiene.",
+          "after": "Que parece tener una validez que en realidad no posee."
+        },
+        {
+          "field": "example",
+          "before": "La coincidencia entre ambas tendencias produjo un vínculo espurio, debido a una tercera variable.",
+          "after": "La asociación entre las dos tendencias sugería un vínculo causal espurio: ambas dependían de una tercera variable."
+        },
+        {
+          "field": "translation",
+          "before": "zdanlivý; nepravý (vzťah bez skutočného podkladu)",
+          "after": "zdanlivý; nepravý (tu: domnelý príčinný vzťah)"
+        },
+        {
+          "field": "levelRationale",
+          "before": "Scientific-context use separates a misleading apparent link from fabricated observations; the measurements can be real while the inferred link is not. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+          "after": "The observed statistical association can be real while the inferred causal link is spurious. Distinguishes causation from common-cause association, not real measurements from fabricated data; earlier falso (es-sk:a1:i13643) does not teach this inferential distinction. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim."
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/espurio",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://revistas.unam.mx/index.php/eab/article/download/72933/74148",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "primary-search-excerpt-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE false sense is generic; UNAM causal-analysis paper identifies common-cause spurious association."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        },
+        {
+          "field": "lowerLevelComparison",
+          "before": "Scientific-context use separates a misleading apparent link from fabricated observations; the measurements can be real while the inferred link is not.",
+          "after": "The observed statistical association can be real while the inferred causal link is spurious. Distinguishes causation from common-cause association, not real measurements from fabricated data; earlier falso (es-sk:a1:i13643) does not teach this inferential distinction."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-045-hacer-lena-del-arbol-caido",
+      "originalEntryId": "es-sk:c2:exp-pilot-045-hacer-lena-del-arbol-caido",
+      "reason": [
+        "Use Cervantes full-locution evidence rather than missing DLE leña phrase."
+      ],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/leña",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://cvc.cervantes.es/lengua/refranero/ficha.aspx?Lng=0&Par=58488",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "primary-search-excerpt-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE leña lacked phrase; Cervantes refranero explicitly attests present-day locution."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-046-cortina-de-humo",
+      "originalEntryId": "es-sk:c2:exp-pilot-046-cortina-de-humo",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/cortina",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/cortina",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE cortina de humo sense 1 is concealment by artifice."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-047-brindis-al-sol",
+      "originalEntryId": "es-sk:c2:exp-pilot-047-brindis-al-sol",
+      "reason": [
+        "Record Spain usage and known infeasibility/ineffectiveness, including performative purpose."
+      ],
+      "fields": [
+        {
+          "field": "definition",
+          "before": "Propuesta o declaración vistosa que carece de posibilidades reales de cumplirse.",
+          "after": "Gesto o promesa que busca impresionar aun sabiendo que no tendrá efecto o no podrá cumplirse."
+        },
+        {
+          "field": "example",
+          "before": "Sin plazos ni financiación, la promesa de reformarlo todo quedó en un brindis al sol.",
+          "after": "Sabía que no habría financiación, pero prometió reformarlo todo: fue un brindis al sol."
+        },
+        {
+          "field": "translation",
+          "before": "prázdne veľkolepé gesto či sľub bez reálnej šance na splnenie",
+          "after": "veľkolepé gesto či sľub, o ktorom sa vie, že nič neprinesie"
+        },
+        {
+          "field": "levelRationale",
+          "before": "An evaluative metaphor attacks performative appeal without practical prospect; distinguish it from a literal toast or sincere feasible promise. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+          "after": "Recognizes a performative promise made with awareness of its ineffectiveness; unlike a feasible sincere promise, the gesture seeks an impression without practical consequence. This Spain-marked idiom is contextual C2 practice, not a pan-Hispanic requirement. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim."
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/brindis",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/brindis",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE brindis al sol is marked Spain and includes knowledge of lack of consequences/viability."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "Spain (DLE regional label); familiarity elsewhere is not measured."
+        },
+        {
+          "field": "lowerLevelComparison",
+          "before": "An evaluative metaphor attacks performative appeal without practical prospect; distinguish it from a literal toast or sincere feasible promise.",
+          "after": "Recognizes a performative promise made with awareness of its ineffectiveness; unlike a feasible sincere promise, the gesture seeks an impression without practical consequence. This Spain-marked idiom is contextual C2 practice, not a pan-Hispanic requirement."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-048-canto-de-sirena",
+      "originalEntryId": "es-sk:c2:exp-pilot-048-canto-de-sirena",
+      "reason": [
+        "Use DLE canto full phrase and add cantos de sirena as commonly used plural form."
+      ],
+      "fields": [
+        {
+          "field": "alternativeForms",
+          "before": [],
+          "after": [
+            {
+              "form": "cantos de sirena",
+              "type": "plural",
+              "note": "DLE notes that the expression is used more often in the plural."
+            }
+          ]
+        },
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/sirena",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/canto",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE canto de sirena describes attractive deceptive discourse; usually plural."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-049-panegirico",
+      "originalEntryId": "es-sk:c2:exp-pilot-049-panegirico",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/panegírico",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/panegírico",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE noun senses support praise discourse or emphatic praise."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-050-vituperio",
+      "originalEntryId": "es-sk:c2:exp-pilot-050-vituperio",
+      "reason": [],
+      "fields": [
+        {
+          "field": "lexicalEvidence",
+          "before": {
+            "referenceUrl": "https://dle.rae.es/vituperio",
+            "role": "Independent semantic reference; not a licensed content import or CEFR assignment. Review must verify the selected sense.",
+            "verificationStatus": "pending-ai-review"
+          },
+          "after": {
+            "referenceUrl": "https://dle.rae.es/vituperio",
+            "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+            "verificationStatus": "page-read",
+            "observedAt": "2026-09-13",
+            "support": "DLE first sense concerns disparaging verbal dishonor."
+          }
+        },
+        {
+          "field": "region",
+          "before": "Spanish; regional familiarity and register require review, not an assertion of equal use in every country.",
+          "after": "No regional restriction asserted; the pilot does not measure frequency across countries."
+        }
+      ]
+    }
+  ]
+}

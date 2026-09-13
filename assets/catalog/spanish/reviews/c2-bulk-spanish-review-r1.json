@@ -1,0 +1,2881 @@
+{
+  "schemaVersion": 1,
+  "reviewerType": "ai",
+  "kind": "spanish",
+  "reviewerId": "c2-bulk-spanish-independent-ai",
+  "reviewedAt": "2026-09-13T15:42:27.397Z",
+  "notHumanApproval": true,
+  "batchId": "c2-bulk-2026-09-13",
+  "datasetSha256": "b997261274b1b101c71f77502e4629b712e98af30e9bab5984e16265fbe3e735",
+  "scope": "Spanish sense, definition, example, morphology, register and provisional placement; no audio review. All 254 authored entries read independently; exact and selected semantic comparisons against course, pilot and legacy expansion. Selective primary-source checks only; no claim of comprehensive lexicographic verification or official C2 assignment.",
+  "entries": [
+    {
+      "entryId": "es-sk:c2:exp-bulk-001-untuoso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-001-untuoso:adj:1",
+      "level": "C2",
+      "entrySha256": "3b647e204250f07975372c3ca3a9e1ffc9754fe26dbc0b7b0a0e4fdf47fcc80d",
+      "decision": "no-issue",
+      "notes": "Mouthfeel of the puree accurately selects the smooth fatty texture sense.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-002-astringente",
+      "catalogSenseId": "es-sk:c2:exp-bulk-002-astringente:adj:1",
+      "level": "C2",
+      "entrySha256": "02ec51f5e87fea9c427bc01a4bf6f5617b665182742e615648f7ea0669ebd499",
+      "decision": "no-issue",
+      "notes": "Drying tactile effect is distinguished from bitter flavour and medicinal action.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-003-retrogusto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-003-retrogusto:noun:1",
+      "level": "C2",
+      "entrySha256": "8e7b31eae293187039973fdabe2f9741a3c9640cb4e8e9efca2556c6cf963adf",
+      "decision": "changes-requested",
+      "notes": "Lingering coffee flavour is natural; swallowing is not necessary for the lexical sense.",
+      "findings": [
+        {
+          "field": "definition",
+          "issue": "Retrogusto can remain after tasting without swallowing; requiring tragar wrongly narrows the sense.",
+          "suggestedValue": "Sabor que permanece después de probar un alimento o una bebida."
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied.",
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/retrogusto",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "Definition supports lingering sensation after tasting; swallowing is not stipulated."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-004-enranciarse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-004-enranciarse:verb:1",
+      "level": "C2",
+      "entrySha256": "4b26a1583671235cb6fa20be925b9421927bff0939ee0428cff2a3ef19ea97f1",
+      "decision": "no-issue",
+      "notes": "Nuts becoming rancid supports deterioration of fats rather than generic spoilage.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-005-correoso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-005-correoso:adj:1",
+      "level": "C2",
+      "entrySha256": "64eb001d6f0c1d43122b37fdfa941765d337116aa71231bfb25ac11a9bcaf6e9",
+      "decision": "no-issue",
+      "notes": "Tough elastic squid is an idiomatic culinary collocation and distinct texture.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-006-desleir",
+      "catalogSenseId": "es-sk:c2:exp-bulk-006-desleir:verb:1",
+      "level": "C2",
+      "entrySha256": "9032ffdec1ae8eee3a2a95fa5805eb42018f440f45f492408ebfe493988bd3bc",
+      "decision": "no-issue",
+      "notes": "Maicena dispersed in cold water supports the culinary loosening/dissolving sense.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-007-atemperar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-007-atemperar:verb:1",
+      "level": "C2",
+      "entrySha256": "cd4b28d762c8bf857435aa1e027c34d4bbbc28b2faa06dc115c262ed10cbdc57",
+      "decision": "no-issue",
+      "notes": "Serving cheese after temperature adjustment is natural; no chocolate-technique claim is made.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-008-ligar-una-salsa",
+      "catalogSenseId": "es-sk:c2:exp-bulk-008-ligar-una-salsa:verb:1",
+      "level": "C2",
+      "entrySha256": "a161f20a2cf137d106d9b97307cb291e1c3aecedbc29b870d312b05fc59dca20",
+      "decision": "no-issue",
+      "notes": "Adding butter for body and cohesion supports the selected culinary phrase.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-009-confitar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-009-confitar:verb:1",
+      "level": "C2",
+      "entrySha256": "a1d86d10a227cb9c6fca380d91d90477d5d21af38e3261de583f6103f470d614",
+      "decision": "no-issue",
+      "notes": "Duck cooked slowly in its fat isolates a legitimate culinary use.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-010-desgrasar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-010-desgrasar:verb:1",
+      "level": "C2",
+      "entrySha256": "b5d548e94a3b26bdd915133484ce11b0089414db753bfd61872f0447ee608b1e",
+      "decision": "no-issue",
+      "notes": "Removing surface fat after cooling broth is coherent and idiomatic.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-011-desvencijado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-011-desvencijado:adj:1",
+      "level": "C2",
+      "entrySha256": "2f3a569f3c789cb965b8af8ad7e7cb2268ef311819609e5c8d5839d054a952c3",
+      "decision": "no-issue",
+      "notes": "Creaking worn furniture supports loose-joint deterioration, distinct from general shabbiness.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-012-destartalado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-012-destartalado:adj:1",
+      "level": "C2",
+      "entrySha256": "85cc8735e640765e13606d4e3f0fe068ab91e708449cef61b524d456265c1392",
+      "decision": "no-issue",
+      "notes": "Shabby entrance hall fits the overall disordered and deteriorated appearance.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-013-insalubre",
+      "catalogSenseId": "es-sk:c2:exp-bulk-013-insalubre:adj:1",
+      "level": "C2",
+      "entrySha256": "60d7982b8a1148e1b5f5c8df7e224414023815e5498ca76cb698b02e35a3400c",
+      "decision": "no-issue",
+      "notes": "Unventilated housing supplies a meaningful health-conditions evaluation, beyond dirtiness.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-014-inhabitable",
+      "catalogSenseId": "es-sk:c2:exp-bulk-014-inhabitable:adj:1",
+      "level": "C2",
+      "entrySha256": "1c4c4df638b12c7aa56f12255fc5a04135b785ff61d55bcb52c7e79008d2c41e",
+      "decision": "changes-requested",
+      "notes": "Post-fire unsuitability for living is accurate, but a basic transparent sense.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Transparent ordinary unfit-for-living sense; current context does not justify new C2 placement.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-015-resquicio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-015-resquicio:noun:1",
+      "level": "C2",
+      "entrySha256": "235245d0ce1ab6f58f2df33936e908b7f08562400b91aed87e1d5bb6d62002c1",
+      "decision": "no-issue",
+      "notes": "A gap around a window differs from a fracture within its material.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-016-desconchado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-016-desconchado:noun:1",
+      "level": "C2",
+      "entrySha256": "215cc83a7483c836ef53fa75b01209d31ca0954984754d4682a2f8576fbd9ff7",
+      "decision": "no-issue",
+      "notes": "Loss of wall coating from humidity supports the masculine noun.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-017-filtracion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-017-filtracion:noun:1",
+      "level": "C2",
+      "entrySha256": "94a4d7a011a573f88207d709b5dd885c4aedaafa6db9b3d9209f322dae08a27d",
+      "decision": "no-issue",
+      "notes": "Roof-water ingress is a clear selected sense, distinct from information leakage.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-018-asentamiento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-018-asentamiento:noun:1",
+      "level": "C2",
+      "entrySha256": "b5990936d1e8ed83d8aa8b454801923e4ae3818528d88ea7bd8ba22b8e9dd933",
+      "decision": "no-issue",
+      "notes": "Uneven foundation settlement is coherent; the framework population sense must not be claimed as direct evidence.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-019-acometer-una-reforma",
+      "catalogSenseId": "es-sk:c2:exp-bulk-019-acometer-una-reforma:verb:1",
+      "level": "C2",
+      "entrySha256": "a1e2d5666feb47dead128197c4b13252942bd7ca691a0f086fbb8600c4811ca3",
+      "decision": "no-issue",
+      "notes": "Formal initiation of substantial renovation is a plausible advanced collocational target.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-020-apuntalar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-020-apuntalar:verb:1",
+      "level": "C2",
+      "entrySha256": "fedefbd6b01e487d35c716ae5dd918349f7ac824ed07ae46310df51736db2b02",
+      "decision": "no-issue",
+      "notes": "Temporary supports before replacing a beam accurately illustrate structural shoring.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-021-achaque",
+      "catalogSenseId": "es-sk:c2:exp-bulk-021-achaque:noun:1",
+      "level": "C2",
+      "entrySha256": "ecfb090b45ae3bf05289280d3a7f310842e6ee301a34e263d8f0ecf817f16a77",
+      "decision": "no-issue",
+      "notes": "Recurring minor complaint in later life is natural and framework-compatible.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-022-postracion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-022-postracion:noun:1",
+      "level": "C2",
+      "entrySha256": "4558efe10682a6aec9d50b51f6cf6743bc70cc1e5aaecfd143f54a503a27c289",
+      "decision": "no-issue",
+      "notes": "Severe physical weakness following infection supports the selected state.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-023-vahido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-023-vahido:noun:1",
+      "level": "C2",
+      "entrySha256": "c610d01c20d27fbcdbec2024b6195d699db360890a85a6f593d557a6d2aa5498",
+      "decision": "no-issue",
+      "notes": "Near-faintness requiring sitting is consistent without asserting loss of consciousness.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-024-embotamiento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-024-embotamiento:noun:1",
+      "level": "C2",
+      "entrySha256": "090502f27bfae2b61537e9754f8a3a3830fa4cca998b47e4b7bd4390c3a7370b",
+      "decision": "no-issue",
+      "notes": "Sleeplessness leading to dull thinking is a clear mental-state example.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-025-recrudecerse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-025-recrudecerse:verb:1",
+      "level": "C2",
+      "entrySha256": "59f41f5cf1ac487187ec21cda1e046250dbd96a38f1edbc850043f57b9bc0c7a",
+      "decision": "no-issue",
+      "notes": "Pain worsening again after improvement is coherent with renewed aggravation.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-026-agarrotamiento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-026-agarrotamiento:noun:1",
+      "level": "C2",
+      "entrySha256": "9998e953a96c930ad2efc35e25c61705ee555565bde5b98d76f00b90b57ad1a5",
+      "decision": "no-issue",
+      "notes": "Stiff neck restricting movement distinguishes muscular rigidity from tingling.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-027-hormigueo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-027-hormigueo:noun:1",
+      "level": "C2",
+      "entrySha256": "c19a3b53364f4985157f1919e9cfa386025f2b7c46c19fabfe4b1d75ef195b2b",
+      "decision": "no-issue",
+      "notes": "Pressure on an elbow producing tingling accurately anchors the sensation.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-028-secuela",
+      "catalogSenseId": "es-sk:c2:exp-bulk-028-secuela:noun:1",
+      "level": "C2",
+      "entrySha256": "ad754c7949c6b101c2e0dc19377d294508c40eae2c7a32680f35c6112068e9ea",
+      "decision": "no-issue",
+      "notes": "Persistent hearing damage after illness supports aftermath, not an active temporary symptom.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-029-tirantez",
+      "catalogSenseId": "es-sk:c2:exp-bulk-029-tirantez:noun:1",
+      "level": "C2",
+      "entrySha256": "6d859cae5b7fb19080a7678e9db7095cef6494dc478cee908f840508498a45e8",
+      "decision": "no-issue",
+      "notes": "Tension around a stretched scar accurately selects the bodily sense.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-030-remision",
+      "catalogSenseId": "es-sk:c2:exp-bulk-030-remision:noun:1",
+      "level": "C2",
+      "entrySha256": "ed9648f0aa675281ddfb0d92412378131f29676e51d0845ac94d92c9bf1630e6",
+      "decision": "no-issue",
+      "notes": "Disease remission is distinguished from cure and from document sending.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-031-periplo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-031-periplo:noun:1",
+      "level": "C2",
+      "entrySha256": "6d133f7df1e4a1ac114390a96cba37ea3f6a7ffa23998dacef42c27d1e0e5950",
+      "decision": "no-issue",
+      "notes": "Multi-stop island journey is natural in a cultivated narrative register.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-032-vicisitud",
+      "catalogSenseId": "es-sk:c2:exp-bulk-032-vicisitud:noun:1",
+      "level": "C2",
+      "entrySha256": "99536f7ae2da7ded5172f445ed15f16cbdf8e7b0b400473b7c26000fd0483f7e",
+      "decision": "no-issue",
+      "notes": "Changing setbacks across an itinerary fit the usual plural vicisitudes.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-033-contratiempo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-033-contratiempo:noun:1",
+      "level": "C2",
+      "entrySha256": "13636ac809c1a9b7063ebd7f6592d552165c13620e1c0cd0fc1a39db4ca5300b",
+      "decision": "changes-requested",
+      "notes": "Cancelled ferry is a correct setback sense but adds little advanced demand.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Ordinary unforeseen setback; no meaningful advanced register or interpretive contrast demonstrated.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-034-intempestivo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-034-intempestivo:adj:1",
+      "level": "C2",
+      "entrySha256": "c57448b6d6b99b674b66931dc8ae10cff4cc7606d666c50036b67bd39ca1b745",
+      "decision": "no-issue",
+      "notes": "Late inconvenient arrival accurately illustrates untimeliness, independently of the weather reference.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-035-impracticable",
+      "catalogSenseId": "es-sk:c2:exp-bulk-035-impracticable:adj:1",
+      "level": "C2",
+      "entrySha256": "80d16e9da48f428687ef4e8f6dcd210b4ac64ebba8c3bdb4fbae5e3cb128837f",
+      "decision": "no-issue",
+      "notes": "Snow blocking access supports impracticable in the route sense.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-036-intransitable",
+      "catalogSenseId": "es-sk:c2:exp-bulk-036-intransitable:adj:1",
+      "level": "C2",
+      "entrySha256": "0299d9b2ad136b691499207ba220482b67a19beb738e61d8f0e29c3432856814",
+      "decision": "changes-requested",
+      "notes": "Blocked road duplicates the unusable-route meaning of impracticable in this batch.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Same unusable-road selected sense as batch impracticable. Keep one rather than inflate coverage.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-037-desandar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-037-desandar:verb:1",
+      "level": "C2",
+      "entrySha256": "309e6afea19ff851cfef749a7f189bc965293b9f8aaacc766de8c0f84108287a",
+      "decision": "no-issue",
+      "notes": "Retracing the identical path adds direction-specific meaning beyond returning.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-038-circunvalar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-038-circunvalar:verb:1",
+      "level": "C2",
+      "entrySha256": "662cfbdcf369bfa95858bbd1f1245c67a266955f3b5fdc944616d954e68770ba",
+      "decision": "no-issue",
+      "notes": "Bus routing around a closed centre is a natural circunvalar example.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-039-arribar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-039-arribar:verb:1",
+      "level": "C2",
+      "entrySha256": "8cd2f245e0f5c87720f161e791807d10b0bc7844a02f6a30753f27595456c948",
+      "decision": "no-issue",
+      "notes": "Arrival at port selects the maritime verb without an appointment sense.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-040-quedar-varado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-040-quedar-varado:verb:1",
+      "level": "C2",
+      "entrySha256": "9ad792bc59880f1956092b6fed1114d897b1a9b20449e09e6b10f944366d9b80",
+      "decision": "no-issue",
+      "notes": "Vessel touching sand at low tide supports grounding rather than delayed passengers.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-041-amainar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-041-amainar:verb:1",
+      "level": "C2",
+      "entrySha256": "1c2d2e5a692a890f55e3a21f09edf99015db5fb9087fd7445a5757015df2e2e9",
+      "decision": "no-issue",
+      "notes": "Waiting for the storm to weaken accurately illustrates meteorological amainar.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-042-arreciar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-042-arreciar:verb:1",
+      "level": "C2",
+      "entrySha256": "1e749f2cab5a553490624359e6a18501528d2bbdf34912124d5a6c71c279c117",
+      "decision": "no-issue",
+      "notes": "Wind strengthening fits arreciar and contrasts clearly with amainar.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-043-azotar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-043-azotar:verb:1",
+      "level": "C2",
+      "entrySha256": "6db19cf3b2676ae059255a6ad0d24f8c8e3e208e257741c0b53811605813c40a",
+      "decision": "no-issue",
+      "notes": "Gusts striking a facade support the figurative meteorological impact sense.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-044-relente",
+      "catalogSenseId": "es-sk:c2:exp-bulk-044-relente:noun:1",
+      "level": "C2",
+      "entrySha256": "e9e4424255be89c2ec88233cabb03e064301c7518ad0e8c1fa6aeced85462153",
+      "decision": "no-issue",
+      "notes": "Cold dampness outdoors at night is coherent for relente.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-045-calima",
+      "catalogSenseId": "es-sk:c2:exp-bulk-045-calima:noun:1",
+      "level": "C2",
+      "entrySha256": "9d0b98e05c26be87530157833f7bd528375d9caecff587f49034c58e5d9510f5",
+      "decision": "no-issue",
+      "notes": "Suspended particles obscuring distant mountains correctly distinguish haze from ordinary fog.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-046-escorrentia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-046-escorrentia:noun:1",
+      "level": "C2",
+      "entrySha256": "532b12dbb6d7f326c55358c835955ce46fb785e464c635dc8dabb390676b9b7a",
+      "decision": "no-issue",
+      "notes": "Rainwater running over soil and carrying sediment supports surface runoff.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-047-estiaje",
+      "catalogSenseId": "es-sk:c2:exp-bulk-047-estiaje:noun:1",
+      "level": "C2",
+      "entrySha256": "bb85b94b265417e355ab6b4b833aebbb9b2009999583e0a28a40e0aef91e27b9",
+      "decision": "no-issue",
+      "notes": "Exposed river stones at low seasonal water support estiaje rather than exceptional drought.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-048-sotavento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-048-sotavento:noun:1",
+      "level": "C2",
+      "entrySha256": "c29e2aea8ab8299d0641a2a112fb1e8eb576fe5a467cc13256b4abe543c8d78e",
+      "decision": "no-issue",
+      "notes": "Tents sheltered behind a hill support the wind-relative leeward location.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-049-yermo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-049-yermo:adj:1",
+      "level": "C2",
+      "entrySha256": "52aa84b7dc43cb73e1dd790584866b5221e280dd2dd4a20227c9060dd5dc6658",
+      "decision": "no-issue",
+      "notes": "Uncultivated desolate land is coherent; dryness alone is not asserted as necessary.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-050-escarpado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-050-escarpado:adj:1",
+      "level": "C2",
+      "entrySha256": "fac6417dcdd65c46c5357c72c595c4b6ce8528477fcbb6bb17cc96cc3b5e904c",
+      "decision": "no-issue",
+      "notes": "Steep difficult terrain supports the adjective rather than altitude alone.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-051-oneroso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-051-oneroso:adj:1",
+      "level": "C2",
+      "entrySha256": "aa16e5578501363126bea7568f4bff044fc0f41a1563f063cf648b706299480c",
+      "decision": "no-issue",
+      "notes": "Expense relative to a small association's resources supports economic burden.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-052-exorbitante",
+      "catalogSenseId": "es-sk:c2:exp-bulk-052-exorbitante:adj:1",
+      "level": "C2",
+      "entrySha256": "97c9be49f5b6c4e2dbe3d14a4a0ca2e90f9439acb2684aa829576142ddc8bec8",
+      "decision": "no-issue",
+      "notes": "Unreasonable charge for a simple repair supports evaluative excess.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-053-irrisorio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-053-irrisorio:adj:1",
+      "level": "C2",
+      "entrySha256": "61568a63fa83dc2db0437deea2e7bf888328504579e7572d102de3f25e783998",
+      "decision": "no-issue",
+      "notes": "Compensation negligible relative to harm correctly selects insufficiency with judgment.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-054-gravoso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-054-gravoso:adj:1",
+      "level": "C2",
+      "entrySha256": "17bc061135404618597cce1ad69b1b064f845c4721efe262b39f7e8f083257c1",
+      "decision": "no-issue",
+      "notes": "Onerous administrative demand can impose nonmonetary burden, maintaining a useful distinction from oneroso.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-055-desembolso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-055-desembolso:noun:1",
+      "level": "C2",
+      "entrySha256": "c314d2bc20a2011852d6aacde07be4c01eaa926db065e6e63ee6378ece2f0de4",
+      "decision": "no-issue",
+      "notes": "Unexpected immediate repair outlay is accurately distinguished from an advertised price.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-056-recargo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-056-recargo:noun:1",
+      "level": "C2",
+      "entrySha256": "d18beae2a821db671be32427b6f6cae0f29750e2d21bf11e1a95083920c22a59",
+      "decision": "no-issue",
+      "notes": "Late-payment supplement is an accurate example without asserting a legal entitlement.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-057-quebranto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-057-quebranto:noun:1",
+      "level": "C2",
+      "entrySha256": "2533e1fd3061fee8cfd319cfa50e2ff3a01bd8dc2f47f66ce90e35fb6f07b4fa",
+      "decision": "no-issue",
+      "notes": "Supplier bankruptcy causing financial damage supports the economic-loss noun.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-058-resarcir",
+      "catalogSenseId": "es-sk:c2:exp-bulk-058-resarcir:verb:1",
+      "level": "C2",
+      "entrySha256": "126fc47605f622c48d3d062f83df70cdca1ebe779fd72e01b96a93c6b39ad7f8",
+      "decision": "no-issue",
+      "notes": "Compensation tied to expenses from harm gives the selected damage-remedy sense.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-059-prorratear",
+      "catalogSenseId": "es-sk:c2:exp-bulk-059-prorratear:verb:1",
+      "level": "C2",
+      "entrySha256": "3c4f1dec45a08d0f914e38c1764aebc7aa4a74a0d9bd38e28c4c4d8ac052fea1",
+      "decision": "no-issue",
+      "notes": "Allocation by days used correctly illustrates proportional rather than equal distribution.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-060-a-fondo-perdido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-060-a-fondo-perdido:adv:1",
+      "level": "C2",
+      "entrySha256": "d73d7719733d06cdaef7466ac4297658cbc6b2e8a87efdd46f17101aaa8b27fc",
+      "decision": "no-issue",
+      "notes": "Conditions on a nonrepayable grant do not contradict the funding expression.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-061-paulatino",
+      "catalogSenseId": "es-sk:c2:exp-bulk-061-paulatino:adj:1",
+      "level": "C2",
+      "entrySha256": "4338eebd902a30320059d4dec65eaabc79162432ac5704100c292a687f29454b",
+      "decision": "changes-requested",
+      "notes": "Progressive recovery matches the definition but reproduces baseline gradual without a new target.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Definition and context reproduce C1 gradual: gradual staged progression.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-062-inexorable",
+      "catalogSenseId": "es-sk:c2:exp-bulk-062-inexorable:adj:1",
+      "level": "C2",
+      "entrySha256": "d4161e61849cdc8dc7f4746ce9e093ae4dcad0fcbc98ab5fb4f97d73b050d3cb",
+      "decision": "changes-requested",
+      "notes": "Unavoidability matches baseline inevitable; the date advancing is additionally awkward wording.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Selected unavoidable sense duplicates B1 inevitable; no independent nuanced use is demonstrated.",
+          "suggestedValue": "quarantine"
+        },
+        {
+          "field": "example",
+          "issue": "El avance de la fecha límite is awkward; the deadline approaches, whereas time advances.",
+          "suggestedValue": "El paso inexorable del tiempo obligó al equipo a reducir el alcance del proyecto."
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied.",
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/inexorable",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "First sense is unavoidable; second concerns resistance to appeals."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-063-perentorio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-063-perentorio:adj:1",
+      "level": "C2",
+      "entrySha256": "eddbbf23318a4497f6e8aab41044129125c796c719744ce6fa79d06d00327b27",
+      "decision": "no-issue",
+      "notes": "Formal time-pressing requirement is natural, with contextual urgency rather than truth of an argument.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-064-inminente",
+      "catalogSenseId": "es-sk:c2:exp-bulk-064-inminente:adj:1",
+      "level": "C2",
+      "entrySha256": "66bbece00b942d64b5c1e43e03c6999950034ca0944689c534d33d5d434b1cee",
+      "decision": "changes-requested",
+      "notes": "Imminent departure is an ordinary transparent timing example with weak C2 distinction.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Ordinary about-to-happen sense gives no persuasive new C2 demand.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-065-a-la-sazon",
+      "catalogSenseId": "es-sk:c2:exp-bulk-065-a-la-sazon:adv:1",
+      "level": "C2",
+      "entrySha256": "0797a9696cc2bab81e25b214fcb3c94b28107c8801564b53a2b302606b11d565",
+      "decision": "no-issue",
+      "notes": "Parenthetical role at the narrated time is accurate formal a la sazón.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-066-a-destiempo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-066-a-destiempo:adv:1",
+      "level": "C2",
+      "entrySha256": "afa522c9cef61ee4251aff0da36c25b6db67b69cf79568601fab80d5d6f45c1d",
+      "decision": "no-issue",
+      "notes": "Too-late apology clearly illustrates inappropriate timing without defining all uses as lateness.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-067-con-cuentagotas",
+      "catalogSenseId": "es-sk:c2:exp-bulk-067-con-cuentagotas:adv:1",
+      "level": "C2",
+      "entrySha256": "2dc632a6e283d86e71b4477b69a264b509889d77be9fc35bbc7c0d03e08570d3",
+      "decision": "no-issue",
+      "notes": "Sparse slowly arriving information accurately selects the figurative idiom.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-068-a-raudales",
+      "catalogSenseId": "es-sk:c2:exp-bulk-068-a-raudales:adv:1",
+      "level": "C2",
+      "entrySha256": "f2d8e3fc2d8d1ca555f4dd224d44e2a215a837f20564ee536066a4dc1bc10cf6",
+      "decision": "no-issue",
+      "notes": "Abundant proposals naturally exemplify figurative a raudales.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-069-por-un-pelo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-069-por-un-pelo:adv:1",
+      "level": "C2",
+      "entrySha256": "fc7aa498fe7b4699596d3dde2d0d88869fd75db04f7bca7d0cacaf2ca460ef45",
+      "decision": "no-issue",
+      "notes": "Narrowly catching the train correctly expresses a tiny margin of success.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-070-a-todas-luces",
+      "catalogSenseId": "es-sk:c2:exp-bulk-070-a-todas-luces:adv:1",
+      "level": "C2",
+      "entrySha256": "885de6013ca9f5fefd9903d34ffa3ad3630c3acbcd21cf221a07add0d5e03e26",
+      "decision": "no-issue",
+      "notes": "Insufficient budget supports the speaker's emphatic assessment rather than literal light.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-071-desavenencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-071-desavenencia:noun:1",
+      "level": "C2",
+      "entrySha256": "10314d53b43e96afa73003b26e1bbece7ba8a770d1c1bef5fd06603920914739",
+      "decision": "no-issue",
+      "notes": "Disagreement disrupting cohabitation adds relational tension to neutral disagreement.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-072-desarraigo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-072-desarraigo:noun:1",
+      "level": "C2",
+      "entrySha256": "7a849c05e8ac2e8d3cf1364fe742ff72fe69222f1a972ee73f645c0576815e4f",
+      "decision": "no-issue",
+      "notes": "Feeling unrooted despite employment accurately separates belonging from material integration.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-073-arraigo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-073-arraigo:noun:1",
+      "level": "C2",
+      "entrySha256": "b1d75b4e3c6b0aedfe196ba6ec1a068a85ac05f8ef95d3230d5f3aad36210f1a",
+      "decision": "no-issue",
+      "notes": "Years of neighbourhood involvement support stable attachment, not legal detention.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-074-avenirse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-074-avenirse:verb:1",
+      "level": "C2",
+      "entrySha256": "b1e37337000810cc012bc0e588f8fac1620039b9f878c737dc287d4d26fba4cd",
+      "decision": "no-issue",
+      "notes": "Avenirse a revisar has correct government and negotiated-acceptance meaning.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-075-reconciliarse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-075-reconciliarse:verb:1",
+      "level": "C2",
+      "entrySha256": "011cb64e96dbca52a9e40539b6a651de555d542bce3704bc83407ab125bb21bb",
+      "decision": "changes-requested",
+      "notes": "Restoring family relations is accurate but ordinary C2 selection is unpersuasive.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Ordinary restoring a relationship sense lacks a justified advanced distinction.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-076-hacer-de-mediador",
+      "catalogSenseId": "es-sk:c2:exp-bulk-076-hacer-de-mediador:verb:1",
+      "level": "C2",
+      "entrySha256": "6ea1a785794daa5535025eb35d8d953a6d07d4f6f8813af67270f9d3554d5e46",
+      "decision": "changes-requested",
+      "notes": "Compositional hacer de mediador adds no demonstrated advanced lexical learning target.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Transparent compositional phrase; no new advanced lexical target beyond mediation.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-077-limar-asperezas",
+      "catalogSenseId": "es-sk:c2:exp-bulk-077-limar-asperezas:verb:1",
+      "level": "C2",
+      "entrySha256": "891c46b44b0c07f295c5bdf8d33db787e5f5a5ef56f4f562a97d32d526635a43",
+      "decision": "no-issue",
+      "notes": "Informal conversation reducing tension without resolving everything fits the idiom.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-078-dar-el-brazo-a-torcer",
+      "catalogSenseId": "es-sk:c2:exp-bulk-078-dar-el-brazo-a-torcer:verb:1",
+      "level": "C2",
+      "entrySha256": "81a9e1a4179c9e020e54edb27ee4f749f5cee1e61f7fe1574f7b59f6135533f5",
+      "decision": "no-issue",
+      "notes": "Yielding after contrary evidence is coherent and need not indicate irrational weakness.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-079-hacer-oidos-sordos",
+      "catalogSenseId": "es-sk:c2:exp-bulk-079-hacer-oidos-sordos:verb:1",
+      "level": "C2",
+      "entrySha256": "5a2178db296a5fbf47f298a5dd76c411adfdc9ebee071246c659e5045a66a579",
+      "decision": "no-issue",
+      "notes": "Deliberate disregard of complaints accurately selects the figurative phrase.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-080-poner-tierra-de-por-medio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-080-poner-tierra-de-por-medio:verb:1",
+      "level": "C2",
+      "entrySha256": "b867f05d8299d56bd4f3d9b439f6f78f195abe18873f65c920a73e69411b76d2",
+      "decision": "no-issue",
+      "notes": "Moving away after a breakup clearly supplies literal distance with avoidance motivation.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-081-subsanar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-081-subsanar:verb:1",
+      "level": "C2",
+      "entrySha256": "f3e23ea251a58c8e64740aa61414e203f2f2922b17dd33682ca6ccb7c03d2034",
+      "decision": "changes-requested",
+      "notes": "Baseline already contains subsanar; the defective application sense does not create a new entry.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Exact existing subsanar already covers correcting defects.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-082-dilucidar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-082-dilucidar:verb:1",
+      "level": "C2",
+      "entrySha256": "d703be17b99203eefe309378c93b27d878db64ab724c949fa41ad0ae36cac5b2",
+      "decision": "no-issue",
+      "notes": "Investigating an unclear cause supports formal inquiry rather than merely clearer expression.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-083-refutar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-083-refutar:verb:1",
+      "level": "C2",
+      "entrySha256": "23e0f027bd0d9a37ac4ac87ad1aa504b1a953abf17843377eb9b22e3f7b9815e",
+      "decision": "no-issue",
+      "notes": "Attempting reasoned disproof correctly avoids asserting the hypothesis was actually refuted.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-084-aducir",
+      "catalogSenseId": "es-sk:c2:exp-bulk-084-aducir:verb:1",
+      "level": "C2",
+      "entrySha256": "7b4d681108fb81432eda8faff6ede8b2f27d1dd3f11dc72c9e19a47474057dd9",
+      "decision": "no-issue",
+      "notes": "Aducir a reason need not establish its validity; the example makes that clear.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-085-redundar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-085-redundar:verb:1",
+      "level": "C2",
+      "entrySha256": "183f1a28f7226ec770ec7fa2a4e969f231e05fede7d08567a0fa707492fe1e2d",
+      "decision": "no-issue",
+      "notes": "Redundar en beneficio has correct government and consequential meaning.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-086-menoscabar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-086-menoscabar:verb:1",
+      "level": "C2",
+      "entrySha256": "ed97530693b243ec74d8adfd1446e71c82ac8667842f7812583ecb7727edd898",
+      "decision": "no-issue",
+      "notes": "Erosion of institutional confidence is a natural abstract impairment collocation.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-087-solapar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-087-solapar:verb:1",
+      "level": "C2",
+      "entrySha256": "af40fd374e5b96d9c43bbc053c34de470135dd25c32284ee5b13fcba9e105ea1",
+      "decision": "no-issue",
+      "notes": "Partially overlapping interview schedules accurately selects temporal solapar.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-088-sesgo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-088-sesgo:noun:1",
+      "level": "C2",
+      "entrySha256": "4dfda40a99752f91c94ad4e6e8feeb555c4de6875bf1dc61b53208800e20d086",
+      "decision": "changes-requested",
+      "notes": "Baseline already contains sesgo; the methodological-distortion sense needs no duplicate.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Exact existing sesgo already covers systematic bias.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-089-mordaz",
+      "catalogSenseId": "es-sk:c2:exp-bulk-089-mordaz:adj:1",
+      "level": "C2",
+      "entrySha256": "f1af592b55b07096e3fc31d99749dcfa3029605d2a386c2c3e3065c66b35a94f",
+      "decision": "no-issue",
+      "notes": "Cutting humorous political criticism coheres with mordaz.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-090-acerbo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-090-acerbo:adj:1",
+      "level": "C2",
+      "entrySha256": "08e559aaf93e07ef90b39d5e6c4298c3dc2f82c252dd4ed4e251e74f6a06a113",
+      "decision": "no-issue",
+      "notes": "Harsh critical judgment supports acerbo and avoids confusion with acervo.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-091-sardonico",
+      "catalogSenseId": "es-sk:c2:exp-bulk-091-sardonico:adj:1",
+      "level": "C2",
+      "entrySha256": "5565a09e44416d68b99e5f9c2f1c8e54b17205ebc2af0720143093566877c651",
+      "decision": "no-issue",
+      "notes": "Bitter mocking smile coheres with sardónico and remains distinct from mordaz commentary.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-092-pastiche",
+      "catalogSenseId": "es-sk:c2:exp-bulk-092-pastiche:noun:1",
+      "level": "C2",
+      "entrySha256": "50ac45270937eabdd341fc6a0e248176f1fbecac9dce8a21d431e4fb812a06a0",
+      "decision": "no-issue",
+      "notes": "Recognisable genre imitation and mixture is consistent without asserting plagiarism.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-093-alusion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-093-alusion:noun:1",
+      "level": "C2",
+      "entrySha256": "6b2fb763195a4ff27dfb075843d5860fc8ed199700940e27928c1e2c6448911b",
+      "decision": "changes-requested",
+      "notes": "Nominal indirect reference adds no new selected meaning beyond baseline aludir.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Morphological noun repeats existing C1 aludir indirect-reference sense.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-094-conculcar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-094-conculcar:verb:1",
+      "level": "C2",
+      "entrySha256": "adb5bcee7c29fd52c5fec96dc8e4cd1ad065038081c0b79875bd4be2f1cf9568",
+      "decision": "no-issue",
+      "notes": "Potential rights violation supports formal conculcar without establishing a legal ruling.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-095-connivencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-095-connivencia:noun:1",
+      "level": "C2",
+      "entrySha256": "695b7b818a4fbb65c06a794cae25d92e05ee79bf2bcac4e200b270c37fe9b02b",
+      "decision": "no-issue",
+      "notes": "Tacit complicity in fraud is accurate; ordinary coexistence is excluded.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-096-dogmatismo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-096-dogmatismo:noun:1",
+      "level": "C2",
+      "entrySha256": "daa210506e9e41b9413346fc87267e1766079a934aaeb8b59ebfb42dc56617b3",
+      "decision": "no-issue",
+      "notes": "Unquestionable dogmatic certainty contrasts correctly with exchange of reasons.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-097-proselitismo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-097-proselitismo:noun:1",
+      "level": "C2",
+      "entrySha256": "bfe20459df2bbe8bc2ab890b639c0f32866e027c41c921c813fd4d485c1d170f",
+      "decision": "no-issue",
+      "notes": "Active adherence recruitment is distinguished from neutral information.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-098-obcecacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-098-obcecacion:noun:1",
+      "level": "C2",
+      "entrySha256": "4ec12e941359be22e124f6fb3a1b9e0a4973870cf0fa990a87fcc76903e3a45a",
+      "decision": "no-issue",
+      "notes": "Fixation on schedule blocking attention to errors is coherent obcecación.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-099-enjuto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-099-enjuto:adj:1",
+      "level": "C2",
+      "entrySha256": "41391d8a6395b6ee4e5d58b65d64e71dc73d194e2b09aa9936eb08ab3021a66d",
+      "decision": "no-issue",
+      "notes": "Lean physique is natural in narration and does not entail illness.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-100-desgarbado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-100-desgarbado:adj:1",
+      "level": "C2",
+      "entrySha256": "0cbb502ef303ba9eac26c7342288a8ef132ae5165a339cf705f7796190560e83",
+      "decision": "no-issue",
+      "notes": "Awkward gait rather than general ugliness fits the adjective.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-101-semblante",
+      "catalogSenseId": "es-sk:c2:exp-bulk-101-semblante:noun:1",
+      "level": "C2",
+      "entrySha256": "e6072b54653f10e115586b8aa998d4f151362aba6eb9919f035ac2988048238f",
+      "decision": "no-issue",
+      "notes": "Facial appearance indicating mood is distinct from the face as a body part.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-102-imperterrito",
+      "catalogSenseId": "es-sk:c2:exp-bulk-102-imperterrito:adj:1",
+      "level": "C2",
+      "entrySha256": "2f2c34e23d50cccdc5bea3f6b5de44181a7bf72b05239b66ad3a2cbac2ae440a",
+      "decision": "no-issue",
+      "notes": "Visible composure during shouting is natural and need not imply inner calm.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-103-erguirse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-103-erguirse:verb:1",
+      "level": "C2",
+      "entrySha256": "43cbc7da4f2cdc191eb8a1639dfd486006236d440c18e651c0b37ef90e1ca423",
+      "decision": "changes-requested",
+      "notes": "Pronominal posture change does not add enough beyond existing erguir.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Pronominal posture variant overlaps existing B2 erguir; no distinct selected meaning.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-104-adusto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-104-adusto:adj:1",
+      "level": "C2",
+      "entrySha256": "01318a29402d1c6729be3922894303d4cdef0ae78926d6223959d3be843d7348",
+      "decision": "no-issue",
+      "notes": "Stern facial expression softening on recognition supports adusto without permanent hostility.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-105-encorvarse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-105-encorvarse:verb:1",
+      "level": "C2",
+      "entrySha256": "39b7762ea1accbd6d44717e7101c774be4fa6817f5783edfda28960e1a04cf29",
+      "decision": "changes-requested",
+      "notes": "Bending the back duplicates the existing C1 encorvar sense.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Pronominal variant repeats existing C1 encorvar back-bending sense.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-106-esbozar-una-sonrisa",
+      "catalogSenseId": "es-sk:c2:exp-bulk-106-esbozar-una-sonrisa:verb:1",
+      "level": "C2",
+      "entrySha256": "f61e8b7c86990fe259b5737bcc7dc33645eca7f3f16ad10ed2d3c6ce696bb14f",
+      "decision": "no-issue",
+      "notes": "Barely initiated restrained smile illustrates the collocation accurately.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-107-desestimar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-107-desestimar:verb:1",
+      "level": "C2",
+      "entrySha256": "67466b74798f8503c39a2250e336fa9708a2c43e9d1b996e15f83fccaff7ee1a",
+      "decision": "no-issue",
+      "notes": "Administrative rejection after consideration is formal and distinct from overlooking.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-108-cotejar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-108-cotejar:verb:1",
+      "level": "C2",
+      "entrySha256": "a0ee408848e3a5b64af7cc3f066b4516517708ecaf0c729cbf792dcf70335562",
+      "decision": "no-issue",
+      "notes": "Comparing reported figures with originals accurately selects verification by comparison.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-109-compulsar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-109-compulsar:verb:1",
+      "level": "C2",
+      "entrySha256": "c3062a3c3fc3228745505a8a1b386e20bcaeb432514b8daa69a1fb802e7006db",
+      "decision": "no-issue",
+      "notes": "Attesting that a copy matches the original is distinct from ordinary cotejar.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-110-consignar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-110-consignar:verb:1",
+      "level": "C2",
+      "entrySha256": "f0728a9e8c0e9e0ca993a808bd92d880704242c86a7154d7b216ec08fa70187d",
+      "decision": "no-issue",
+      "notes": "Entering contact details in a document supports formal consignar.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-111-diligencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-111-diligencia:noun:1",
+      "level": "C2",
+      "entrySha256": "e9eaf1e17111ed3dec9091e6438ea3dacd5aafc4b900c7be2f01a043a5316878",
+      "decision": "no-issue",
+      "notes": "Record added to an administrative file isolates the documentary noun.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-112-fe-de-erratas",
+      "catalogSenseId": "es-sk:c2:exp-bulk-112-fe-de-erratas:noun:1",
+      "level": "C2",
+      "entrySha256": "7277fc5da140089bd64e204b2aba234afb3bcb9c84abdf0967bce57b44d6c186",
+      "decision": "no-issue",
+      "notes": "Published error-and-correction list accurately illustrates this fixed editorial term.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-113-suplantacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-113-suplantacion:noun:1",
+      "level": "C2",
+      "entrySha256": "8ba3765118557df1a1eef1782e4f7062c1b4f6e4766b29b804ca9aae99d5e422",
+      "decision": "no-issue",
+      "notes": "Identity impersonation differs from imitation of style or chosen pen name.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-114-seudonimo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-114-seudonimo:noun:1",
+      "level": "C2",
+      "entrySha256": "d6ce3ac6ae613decf7c6de7d7070f1bf99e1737ceafad720a2cbca7af00d3387",
+      "decision": "changes-requested",
+      "notes": "Correct pen-name definition, but PCIC explicitly places seudónimo in C1 identity coverage.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "PCIC specific notions 3.1.1 places seudónimo at C1; current straightforward use gives no C2 extension.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-115-baremo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-115-baremo:noun:1",
+      "level": "C2",
+      "entrySha256": "8750a4258717df35d22486d0594fca962160d5417ba52214bc6db59d80d5679f",
+      "decision": "no-issue",
+      "notes": "Weighted points for experience clearly illustrate a scoring rubric rather than a result.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-116-aprovechamiento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-116-aprovechamiento:noun:1",
+      "level": "C2",
+      "entrySha256": "57f25adbeab7b4c51eb39b455ed2cac65665ea8eef2c058c1df03066c0158d7c",
+      "decision": "no-issue",
+      "notes": "Demonstrated learning in addition to attendance supports educational aprovechamiento.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-117-absentismo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-117-absentismo:noun:1",
+      "level": "C2",
+      "entrySha256": "acbefaaca520f06b7720a3b107a1c362644d3a8333dd7f36de795ae272307cdf",
+      "decision": "no-issue",
+      "notes": "Repeated nonattendance is coherent; no unsupported motive is asserted.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-118-discernir",
+      "catalogSenseId": "es-sk:c2:exp-bulk-118-discernir:verb:1",
+      "level": "C2",
+      "entrySha256": "6ac0b225f41d66f99e7b5420241e1520b99e545206d7864a04c10a899842febd",
+      "decision": "no-issue",
+      "notes": "Distinguishing reliable evidence from merely polished presentation provides meaningful discernment.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-119-interdisciplinar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-119-interdisciplinar:adj:1",
+      "level": "C2",
+      "entrySha256": "2ce1c28d0f8432a5ec64c1058bb39fdc395c6e2a84f4f497af9a69fc283d2a95",
+      "decision": "no-issue",
+      "notes": "Combining disciplinary expertise fits the adjective without treating any group as interdisciplinary.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-120-disertar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-120-disertar:verb:1",
+      "level": "C2",
+      "entrySha256": "9184e79fb015d35da2f5f6f33c81ac60d5d2d7bbd77b80c8a040fc2b70c4d4c5",
+      "decision": "no-issue",
+      "notes": "Reasoned sustained exposition on a topic fits disertar sobre.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-121-glosar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-121-glosar:verb:1",
+      "level": "C2",
+      "entrySha256": "de08357c4c8f261ce6cb7e6dc9ac22474181319d48b03fd37dfea70883854440",
+      "decision": "no-issue",
+      "notes": "Explaining difficult ironic passages supports textual commentary rather than translation.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-122-aprendizaje-vicario",
+      "catalogSenseId": "es-sk:c2:exp-bulk-122-aprendizaje-vicario:noun:1",
+      "level": "C2",
+      "entrySha256": "8bf60566236825e6eb96374751ab288e538f3467b5ca2df6f5d1b7a3650960f1",
+      "decision": "no-issue",
+      "notes": "Observation and consequences correctly distinguish vicarious learning from rote imitation.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-123-interinidad",
+      "catalogSenseId": "es-sk:c2:exp-bulk-123-interinidad:noun:1",
+      "level": "C2",
+      "entrySha256": "a643106c12d41bb342a3a1088e856b1e7907788a64b474cbaf1702d7f042ec8f",
+      "decision": "no-issue",
+      "notes": "Provisional leadership pending selection accurately illustrates interinidad.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-124-preaviso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-124-preaviso:noun:1",
+      "level": "C2",
+      "entrySha256": "707eedfa2d0d5d8a1bfde9dc83f5f780bebaec615e171e8c3b4296f3ca0652b2",
+      "decision": "no-issue",
+      "notes": "Notice ahead of termination is coherent without prescribing a legal period.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-125-finiquito",
+      "catalogSenseId": "es-sk:c2:exp-bulk-125-finiquito:noun:1",
+      "level": "C2",
+      "entrySha256": "f62cc85ea457938a792221830b7e7888b79d171bff11c665d63a1de116e06107",
+      "decision": "no-issue",
+      "notes": "Final outstanding employment settlement is distinguished from severance compensation alone.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-126-subrogar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-126-subrogar:verb:1",
+      "level": "C2",
+      "entrySha256": "7df0ef26b392008d9a8700d2e4708d405543092f43497b2a12e441a859e32fc4",
+      "decision": "no-issue",
+      "notes": "Replacing an entity within existing obligations uses subrogar correctly without jurisdictional advice.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-127-cometido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-127-cometido:noun:1",
+      "level": "C2",
+      "entrySha256": "303fafc99927d3e80408818fc64857d130e7b1c6ddef80f595f7a8181144dccb",
+      "decision": "no-issue",
+      "notes": "Assigned coordinating responsibility separates a person's remit from budget authority.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-128-injerencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-128-injerencia:noun:1",
+      "level": "C2",
+      "entrySha256": "b610066a273da44e30cb5b08dff8deda7a9ef118ec43877784da78e7d0432537",
+      "decision": "no-issue",
+      "notes": "Interference judged improper by participants accurately represents evaluative injerencia.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-129-prescindible",
+      "catalogSenseId": "es-sk:c2:exp-bulk-129-prescindible:adj:1",
+      "level": "C2",
+      "entrySha256": "dd3d554d2b4c67c6ba3faaa6e4563b22455255b439362300db46db4778878f4b",
+      "decision": "changes-requested",
+      "notes": "Adjective of dispensability repeats baseline prescindir without additional contextual nuance.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Transparent adjective from baseline prescindir; current sense adds no distinctive learning value.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-130-aplomo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-130-aplomo:noun:1",
+      "level": "C2",
+      "entrySha256": "c41dee4aa8607383f0f341f7cd1a474589e9610eab9ce526a60278caac204bba",
+      "decision": "no-issue",
+      "notes": "Assured calm under difficult questioning is natural aplomo.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-131-esparcimiento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-131-esparcimiento:noun:1",
+      "level": "C2",
+      "entrySha256": "0b23f5e51982741d9133dbb6d237aadb0131e0e26e13e8b732a6f71ef7bab74c",
+      "decision": "changes-requested",
+      "notes": "Recreational garden usage is correct but essentially duplicates the baseline leisure sense.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Recreation/rest sense overlaps baseline A1 ocio with only a cultivated synonym, not a demonstrated new target.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-132-desempatar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-132-desempatar:verb:1",
+      "level": "C2",
+      "entrySha256": "2da5741386d98ea486c97419c3fa87fa6a92c24d01f76e4ad6e5fbdc361b1580",
+      "decision": "changes-requested",
+      "notes": "Breaking an existing tie is correct but ordinary sports vocabulary rather than persuasive C2 practice.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Ordinary tie-breaking sports action; no persuasive advanced distinction.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-133-renido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-133-renido:adj:1",
+      "level": "C2",
+      "entrySha256": "41c6fb7d9b030079027e3ef089160d9554a6d013086eac8fe1953481a1ec129a",
+      "decision": "no-issue",
+      "notes": "Closely contested result clearly selects reñido without interpersonal quarrelling.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-134-remontada",
+      "catalogSenseId": "es-sk:c2:exp-bulk-134-remontada:noun:1",
+      "level": "C2",
+      "entrySha256": "e058cdf2acdd9e2bb8cb7e1fea3e0458fd6089621bb2d01e4ceace3a1264934f",
+      "decision": "changes-requested",
+      "notes": "Recovering from a trailing score substantially overlaps baseline remontar.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Nominal recovery from losing overlaps baseline B1 remontar.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-135-zancadilla",
+      "catalogSenseId": "es-sk:c2:exp-bulk-135-zancadilla:noun:1",
+      "level": "C2",
+      "entrySha256": "79d73d3c618c152849cb1d5249240056192f808bbe3e2a3f33eac7b57f9b6b04",
+      "decision": "no-issue",
+      "notes": "Leg placement to trip an opponent is accurate physical zancadilla.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-136-resarcirse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-136-resarcirse:verb:1",
+      "level": "C2",
+      "entrySha256": "06e77d71a2d57950aac969ca9ad727f4d76354e0aaad4d0cf65a565bd6fd875e",
+      "decision": "no-issue",
+      "notes": "Seeking emotional compensation after defeat maintains distinction from transitive monetary resarcir.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-137-aguerrido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-137-aguerrido:adj:1",
+      "level": "C2",
+      "entrySha256": "d8f4ccdf5baea0c7fb93a61b2945b9936bf9e08562246d7260d38c7be194880c",
+      "decision": "no-issue",
+      "notes": "Combative determination during sport need not imply violent conduct.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-138-dejar-el-liston-alto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-138-dejar-el-liston-alto:verb:1",
+      "level": "C2",
+      "entrySha256": "6f83f284b856c4910abdb7ce4e78f6e30579db8ec640696c1ac39858c697812b",
+      "decision": "no-issue",
+      "notes": "A strong first performance setting a benchmark supports the figurative expression.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-139-desmentido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-139-desmentido:noun:1",
+      "level": "C2",
+      "entrySha256": "4036f54acfb33372ea05938fb22c744ab566979acde992be20f0f191c75dfd86",
+      "decision": "no-issue",
+      "notes": "A published denial does not automatically prove the original report false.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-140-bulo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-140-bulo:noun:1",
+      "level": "C2",
+      "entrySha256": "69c0631ff4d207b7ce949fbf6920617b13ce4707db9eaae4e1c42787b7cfa0b5",
+      "decision": "no-issue",
+      "notes": "False circulated report is distinguished from a merely unverified rumour.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-141-rectificacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-141-rectificacion:noun:1",
+      "level": "C2",
+      "entrySha256": "ce07212b1ce848924d50078dae6bea83b6f024c4812317c78ed82397e8c0e3c9",
+      "decision": "no-issue",
+      "notes": "Correcting one reported datum differs from denial of a whole allegation.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-142-descontextualizar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-142-descontextualizar:verb:1",
+      "level": "C2",
+      "entrySha256": "87bc8966d9a3dad248a587619379ad357d9611f66293ae44f4662475b746131f",
+      "decision": "no-issue",
+      "notes": "Cutting away necessary context is coherent and not conflated with all summarisation.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-143-tendencioso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-143-tendencioso:adj:1",
+      "level": "C2",
+      "entrySha256": "fde92b8b22a50d6ce0fcfc664204b9847291fb710f358b37025c25c8260101e2",
+      "decision": "no-issue",
+      "notes": "Omission favouring an interested interpretation accurately illustrates biased framing.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-144-tergiversacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-144-tergiversacion:noun:1",
+      "level": "C2",
+      "entrySha256": "614bc0b3008380ca33b4f17eabac1351528e29e2f68b5246fd1b3aa1560d66a0",
+      "decision": "changes-requested",
+      "notes": "Nominal distortion duplicates production and legacy tergiversar.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Morphological noun repeats production and legacy tergiversar.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-145-verosimil",
+      "catalogSenseId": "es-sk:c2:exp-bulk-145-verosimil:adj:1",
+      "level": "C2",
+      "entrySha256": "095a4a9eba8754859c35e3afc7f469bb751f3e6b40f26a63d8243cc6544db3b5",
+      "decision": "no-issue",
+      "notes": "Apparent credibility without proof is accurate and worth retaining over redundant derivatives.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-146-escudarse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-146-escudarse:verb:1",
+      "level": "C2",
+      "entrySha256": "69c38ff672fadb8be8da96bd4b4250ff27eca2730e42e1338cb08e39a0776b58",
+      "decision": "no-issue",
+      "notes": "Using anonymity as a shield against responsibility supports the pronominal figurative verb.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-147-membrete",
+      "catalogSenseId": "es-sk:c2:exp-bulk-147-membrete:noun:1",
+      "level": "C2",
+      "entrySha256": "52367fbbd3fefe32049a5c1ffcc74bedf925c0e65178315c49e2e0f6257f3a16",
+      "decision": "no-issue",
+      "notes": "Institutional letterhead is distinct from signature and subject line.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-148-acuse-de-recibo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-148-acuse-de-recibo:noun:1",
+      "level": "C2",
+      "entrySha256": "062f891b5fa28ec294bf333d9dd1d1fa49e9cb285288618da8d2ffb52bcf04c2",
+      "decision": "no-issue",
+      "notes": "Acknowledged delivery date does not imply agreement with message contents.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-149-franqueo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-149-franqueo:noun:1",
+      "level": "C2",
+      "entrySha256": "65f56fe126383d2fe3d044dcf12c1a71fc1a9db35ed51a9cd0f24f9d982c8ac9",
+      "decision": "changes-requested",
+      "notes": "Postal payment sense is correct but PCIC C1 placement makes this unsuitable new C2 content.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "PCIC C1 postal-payment sense; no new selected C2 meaning.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-150-apostilla",
+      "catalogSenseId": "es-sk:c2:exp-bulk-150-apostilla:noun:1",
+      "level": "C2",
+      "entrySha256": "cdb979e3c8888847cd69db03938da1327c9afc45c90d37b28fd8c561c3f4bcb6",
+      "decision": "no-issue",
+      "notes": "Brief clarifying addition correctly selects commentary rather than document authentication.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-151-ilegible",
+      "catalogSenseId": "es-sk:c2:exp-bulk-151-ilegible:adj:1",
+      "level": "C2",
+      "entrySha256": "0148bbb93629fba5c8687f88421b5ef1a0ca00643c16fc503acea473365bdd66",
+      "decision": "changes-requested",
+      "notes": "An unreadable copy is a basic transparent sense without advanced interpretation demand.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Transparent unreadable-document sense; no persuasive advanced placement rationale.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-152-remitente",
+      "catalogSenseId": "es-sk:c2:exp-bulk-152-remitente:noun:1",
+      "level": "C2",
+      "entrySha256": "38564724b704441edefb4f6c4817e72694db3298218d6658bbff0bc7202960c1",
+      "decision": "changes-requested",
+      "notes": "Sender of a package is ordinary correspondence vocabulary with weak C2 placement.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Ordinary sender role in correspondence; C2 placement unsupported.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-153-desabastecimiento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-153-desabastecimiento:noun:1",
+      "level": "C2",
+      "entrySha256": "4a8efc985fbd557582a7c516548689f86eab9c8f0ab2ec7388196d7c10d81728",
+      "decision": "no-issue",
+      "notes": "Road closure causing local supply shortage is coherent and distinct from individual poverty.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-154-saneamiento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-154-saneamiento:noun:1",
+      "level": "C2",
+      "entrySha256": "1bcaa62d75cb85039c55d2bc8423e236f8fe1c870f47ee1a07d89cdc60c2edf2",
+      "decision": "no-issue",
+      "notes": "Wastewater infrastructure is properly isolated from financial recovery and generic hygiene.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-155-desalojo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-155-desalojo:noun:1",
+      "level": "C2",
+      "entrySha256": "156000f4b9f2573e336f2a7158d0d068d7936a41d2544e11c46264c2ffcb1762",
+      "decision": "changes-requested",
+      "notes": "Safety evacuation nominally duplicates production desalojar.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Nominal safety evacuation overlaps existing B1 desalojar.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-156-averia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-156-averia:noun:1",
+      "level": "C2",
+      "entrySha256": "2407e5cfc11ec8afd0d1d6db8a2a4797c3fb01610d4af43946b3da2123d62067",
+      "decision": "changes-requested",
+      "notes": "Exact baseline avería duplicates the same malfunction sense.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Exact existing avería with the same malfunction meaning.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-157-corte-intermitente",
+      "catalogSenseId": "es-sk:c2:exp-bulk-157-corte-intermitente:noun:1",
+      "level": "C2",
+      "entrySha256": "47db91aeabab954aad6c754c9b797ca244019ee7f15c37bbbcba7c2d441320d8",
+      "decision": "changes-requested",
+      "notes": "Repeated service interruption is compositional and does not establish a useful C2 lexical target.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Compositional service interruption phrase rather than a demonstrated C2 lexical target.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-158-aforo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-158-aforo:noun:1",
+      "level": "C2",
+      "entrySha256": "84bae4b480072f2a4c2a61112fb70676d805339ce69bb280ab10132d09ff703f",
+      "decision": "no-issue",
+      "notes": "Maximum admitted occupancy is clearly distinguished from current attendance.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-159-deshilacharse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-159-deshilacharse:verb:1",
+      "level": "C2",
+      "entrySha256": "6a43f87d5a78e32e3c475847c58539bd50927bc549f9d0a3040c6785622ce1e3",
+      "decision": "no-issue",
+      "notes": "Threads unravelling at cuffs accurately illustrate fraying, not a clean cut.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-160-destenir",
+      "catalogSenseId": "es-sk:c2:exp-bulk-160-destenir:verb:1",
+      "level": "C2",
+      "entrySha256": "5eb4715baa1ce16179617fe88a489bd24b9e7ecd3d320bb259e8fb0d7675cafb",
+      "decision": "no-issue",
+      "notes": "Loss or transfer of red dye coherently supports desteñir.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-161-entallado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-161-entallado:adj:1",
+      "level": "C2",
+      "entrySha256": "d4e916d5a031caf005420809a8911b30b07ce21cd96cd73a99f02132c5b36958",
+      "decision": "no-issue",
+      "notes": "Fitted garment design is correctly distinguished from uncomfortable tightness.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-162-holgado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-162-holgado:adj:1",
+      "level": "C2",
+      "entrySha256": "c91a70cd5fe81e91d1099188d267eda2235dce2b20ec580ef9703c67f594bc39",
+      "decision": "changes-requested",
+      "notes": "Loose clothing sense is explicitly earlier PCIC C1 coverage.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Loose-fitting clothing is PCIC C1 coverage.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-163-raido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-163-raido:adj:1",
+      "level": "C2",
+      "entrySha256": "15f63c23c0ee9ad39ae29e25b671ae95ee23500b0bb284c792c04aa72e1744e1",
+      "decision": "no-issue",
+      "notes": "Material worn at the elbows accurately selects raído.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-164-indumentaria",
+      "catalogSenseId": "es-sk:c2:exp-bulk-164-indumentaria:noun:1",
+      "level": "C2",
+      "entrySha256": "2780736373b74b72c2b31572ce63e99453b4636e890253e8ecd20bbe4df39285",
+      "decision": "no-issue",
+      "notes": "Clothes characterising historical occupations support cultivated ensemble description.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-165-sobrio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-165-sobrio:adj:1",
+      "level": "C2",
+      "entrySha256": "395399ab79becf2fc8a2eef082d3fe2272272e841d6305233be25f82ebc649f5",
+      "decision": "no-issue",
+      "notes": "Restrained suit styling selects the non-intoxication sense of sobrio.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-166-recargado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-166-recargado:adj:1",
+      "level": "C2",
+      "entrySha256": "1e62c771b41e25a30fc6e172f9e56a5a7ff131bb237f176adf9d442e49940572",
+      "decision": "no-issue",
+      "notes": "Excessive decorative detail supports recargado, separate from fees or recharging.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-167-aleatorio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-167-aleatorio:adj:1",
+      "level": "C2",
+      "entrySha256": "faee6a8f0e27b373b236d902ebeeb906f9f0547c77dfdb75f3c4697d44b926b2",
+      "decision": "no-issue",
+      "notes": "Random question ordering selects chance-based allocation without confusing arbitrary authority.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-168-falsable",
+      "catalogSenseId": "es-sk:c2:exp-bulk-168-falsable:adj:1",
+      "level": "C2",
+      "entrySha256": "a6574d6b070b51797dc94df9d37210b9328b47f36ad87d9db6cd07f0eccc3657",
+      "decision": "no-issue",
+      "notes": "Potentially disconfirming observation accurately illustrates falsability, not existing falsity.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-169-replicable",
+      "catalogSenseId": "es-sk:c2:exp-bulk-169-replicable:adj:1",
+      "level": "C2",
+      "entrySha256": "201b573e3e31a03e12df841f136a506c9064af4b309e92e4b480b057b8f65ba5",
+      "decision": "no-issue",
+      "notes": "Published procedure supports replication for verification, not guaranteed identical results.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-170-extrapolar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-170-extrapolar:verb:1",
+      "level": "C2",
+      "entrySha256": "53e85abc127e1aa3004302ea4bbf6c11f01761850debd7e42546f5c4e2175e4f",
+      "decision": "no-issue",
+      "notes": "Generalising beyond one city accurately illustrates extrapolation beyond observed data.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-171-correlacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-171-correlacion:noun:1",
+      "level": "C2",
+      "entrySha256": "d546f6838841e1ba6c67f1a31c7634f8448c0532b1ef5d2651905f0675e8b5e1",
+      "decision": "no-issue",
+      "notes": "Associated variables are explicitly distinguished from demonstrated causation.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-172-incertidumbre",
+      "catalogSenseId": "es-sk:c2:exp-bulk-172-incertidumbre:noun:1",
+      "level": "C2",
+      "entrySha256": "8e544609e7a745ca019e2bf5cbace6e6110bf4ecb4676cc58d1556ecadcbf9ff",
+      "decision": "no-issue",
+      "notes": "Measurement uncertainty is a technical selected sense rather than indecision.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-173-parsimonioso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-173-parsimonioso:adj:1",
+      "level": "C2",
+      "entrySha256": "433503542ba726d22fa99d83cddfd446450bbc4924857721784285cd5278e1e1",
+      "decision": "changes-requested",
+      "notes": "Methodological adjective duplicates pilot parsimonia; definition additionally allows unnecessary assumptions.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Methodological adjective repeats reviewed pilot parsimonia; quarantine rather than duplicate.",
+          "suggestedValue": "quarantine"
+        },
+        {
+          "field": "definition",
+          "issue": "Pocos supuestos o elementos innecesarios permits unnecessary assumptions instead of excluding them. The DLE page does not individually verify this specialist sense."
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied.",
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/parsimonioso",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "Page lists economical/scant and slow/phlegmatic senses; it does not itself establish the authored methodological definition."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-174-plausibilidad",
+      "catalogSenseId": "es-sk:c2:exp-bulk-174-plausibilidad:noun:1",
+      "level": "C2",
+      "entrySha256": "e79a6573d021c059304ac173dd53db4616da57eb3370610a738280b6457506ed",
+      "decision": "changes-requested",
+      "notes": "Reasonable explanatory credibility adds little beyond this batch's verosímil.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Plausibility substantially overlaps batch verosímil selected credible-but-unproven meaning.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-175-cotejo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-175-cotejo:noun:1",
+      "level": "C2",
+      "entrySha256": "898c9edcd73ac318b1a78edccd624e7fd9ad7ca34f52df2ff0c233f645691ac4",
+      "decision": "changes-requested",
+      "notes": "Nominal comparison repeats batch cotejar without a new sense.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Morphological noun repeats batch cotejar verification-by-comparison sense.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-176-obsolescencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-176-obsolescencia:noun:1",
+      "level": "C2",
+      "entrySha256": "175beb3295bf11259676953670851b19efedcf579388e5ff67dd7bd565a4cd1a",
+      "decision": "no-issue",
+      "notes": "An outdated file format losing usability coherently illustrates obsolescence.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-177-promulgar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-177-promulgar:verb:1",
+      "level": "C2",
+      "entrySha256": "25149367f16fbb062f65941eacfcef2191694134dad7f8f91e247428ad4db99e",
+      "decision": "no-issue",
+      "notes": "Formal announcement of approved law is coherent vocabulary practice without procedural guarantees.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-178-derogar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-178-derogar:verb:1",
+      "level": "C2",
+      "entrySha256": "c16ae04052f2ea319243bd966ff46a92992b487c13c1e29e0cb0a181d135ec0f",
+      "decision": "no-issue",
+      "notes": "Removing an existing norm's force through another disposition accurately illustrates derogar.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-179-prevaricacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-179-prevaricacion:noun:1",
+      "level": "C2",
+      "entrySha256": "8f78ffeb5beffbca633b261b65200bdfc858b16ce48b5e32ebb232ae699f14ca",
+      "decision": "no-issue",
+      "notes": "Knowing unjust official resolution is clearly distinguished from administrative mistake.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-180-cautelar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-180-cautelar:adj:1",
+      "level": "C2",
+      "entrySha256": "caa0ea45d0d353eeeb0963b63fa890d76db8b845f2ffef072625f68ddefeca21",
+      "decision": "no-issue",
+      "notes": "Interim protective action pending resolution is not presented as a final judgment.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-181-alegacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-181-alegacion:noun:1",
+      "level": "C2",
+      "entrySha256": "45e64ef8243c86539906e5aff7b53186ca57cc82c4eeaa564265f535723d5c73",
+      "decision": "no-issue",
+      "notes": "Reason submitted procedurally to support a position is not necessarily an accusation.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-182-atenuante",
+      "catalogSenseId": "es-sk:c2:exp-bulk-182-atenuante:noun:1",
+      "level": "C2",
+      "entrySha256": "584712504d7f2880dcf1c9cfea0f944f5b556b7de289ac1eb9ce70950877b672",
+      "decision": "no-issue",
+      "notes": "Reduced assessment of blame is distinguished from total justification.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-183-agravante",
+      "catalogSenseId": "es-sk:c2:exp-bulk-183-agravante:noun:1",
+      "level": "C2",
+      "entrySha256": "ac673355720da81fd0f9c46ea05b6d0f92fe1c151271588dbdaaba503487af93",
+      "decision": "no-issue",
+      "notes": "Increased assessment of gravity is coherently illustrated without automatic legal consequences.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-184-probatorio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-184-probatorio:adj:1",
+      "level": "C2",
+      "entrySha256": "6f7df8bd53a08602d8e4b5b3ea1979bbfa167817c417654a5eab67580b1ecafe",
+      "decision": "no-issue",
+      "notes": "Evidentiary value is correctly distinguished from conclusive proof.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-185-reincidir",
+      "catalogSenseId": "es-sk:c2:exp-bulk-185-reincidir:verb:1",
+      "level": "C2",
+      "entrySha256": "3e7ee0b394b6975ca52e9b0fbef05266daf96f44ea0544e00bc502a1ce3d08b2",
+      "decision": "no-issue",
+      "notes": "Repeating wrongful conduct fits reincidir and excludes neutral repetition.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-186-indulto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-186-indulto:noun:1",
+      "level": "C2",
+      "entrySha256": "611fb506b2ac6e21b0a31b1b4984929d9ed1652d97ad32aa8fc37acdebd83937",
+      "decision": "no-issue",
+      "notes": "Forgiveness of punishment is appropriately distinguished from declaration of innocence.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-187-claroscuro",
+      "catalogSenseId": "es-sk:c2:exp-bulk-187-claroscuro:noun:1",
+      "level": "C2",
+      "entrySha256": "e2188d58d91ed2ee6b1866579845f143875b0f352e31435b3cc2b77eba151a52",
+      "decision": "no-issue",
+      "notes": "Contrast of light and shade directing visual attention coheres with claroscuro.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-188-contrapunto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-188-contrapunto:noun:1",
+      "level": "C2",
+      "entrySha256": "d9d5898404247125b49990412cb23edb0f167cd1055cf02e334490dc053ffbf8",
+      "decision": "no-issue",
+      "notes": "Simultaneous independent melodies correctly identify musical counterpoint.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-189-disonancia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-189-disonancia:noun:1",
+      "level": "C2",
+      "entrySha256": "d92fc0182c8b8b33f2686772bd16d2ab17126570a4c77724235feda1b0b40aa1",
+      "decision": "no-issue",
+      "notes": "Contextual musical tension resolving later is not mistaken for poor performance.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-190-verosimilitud",
+      "catalogSenseId": "es-sk:c2:exp-bulk-190-verosimilitud:noun:1",
+      "level": "C2",
+      "entrySha256": "5f1b736bf203e8ed8f0bb4764450faa14101ffd74f171fbacb55a3ba4bc51071",
+      "decision": "changes-requested",
+      "notes": "Narrative credibility largely restates batch verosímil in nominal form.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Nominal narrative credibility is insufficiently distinct from batch verosímil in its current form.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-191-presagio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-191-presagio:noun:1",
+      "level": "C2",
+      "entrySha256": "16b866a9f38bf2626cfbedc669bf17f5d71750cc00704582dcd5d463f5dc7d5b",
+      "decision": "no-issue",
+      "notes": "Film image functioning as foreshadowing avoids a claim about supernatural predictive evidence.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-192-evocador",
+      "catalogSenseId": "es-sk:c2:exp-bulk-192-evocador:adj:1",
+      "level": "C2",
+      "entrySha256": "7d0e8d23fb137adc1c78ea9897b1cff41a878181ea00c3761fab4ba63fc46b50",
+      "decision": "changes-requested",
+      "notes": "Adjectival capacity to evoke repeats existing evocar without new meaning.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Adjective repeats baseline B1 evocar associative recall.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-193-socarron",
+      "catalogSenseId": "es-sk:c2:exp-bulk-193-socarron:adj:1",
+      "level": "C2",
+      "entrySha256": "8397514ce0e9f9a3c894b949704e64f39a1a6bcebf60a28ee1046098ea692353",
+      "decision": "no-issue",
+      "notes": "Disguised sly mockery is differentiated from open bitter sardonic expression.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-194-leitmotiv",
+      "catalogSenseId": "es-sk:c2:exp-bulk-194-leitmotiv:noun:1",
+      "level": "C2",
+      "entrySha256": "872548fc78e88d84df6a8ebbea30d88bd86f4e6e374a898b3caaad9121068ef1",
+      "decision": "no-issue",
+      "notes": "Repeated image across stories supports a unifying recurring motif.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-195-laicismo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-195-laicismo:noun:1",
+      "level": "C2",
+      "entrySha256": "a5a31391eccf18983fe0c864c5adcfa61c1e95b2907ebdb0bc265331dac2f242",
+      "decision": "no-issue",
+      "notes": "Institutional independence from religion is distinguished from individual atheism.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-196-ortodoxia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-196-ortodoxia:noun:1",
+      "level": "C2",
+      "entrySha256": "94b54f7786b50e25ff65953b37a09bc5a6eea6a7e0eee709c5e0c1dc545907b6",
+      "decision": "changes-requested",
+      "notes": "Nominal doctrinal conformity duplicates existing ortodoxo.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Noun repeats existing B2 ortodoxo doctrinal conformity.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-197-agnosticismo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-197-agnosticismo:noun:1",
+      "level": "C2",
+      "entrySha256": "faef3df94e917472d0501b8a93ad3340da70c4845f08516fbf26ae14ba839f58",
+      "decision": "no-issue",
+      "notes": "Limits of knowledge about divinity are distinguished from definite denial.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-198-fatalismo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-198-fatalismo:noun:1",
+      "level": "C2",
+      "entrySha256": "74fbfa7bc83fd78751d23389a40eb4d172e3ba3e7306d6378e9ed6a3b5b221e5",
+      "decision": "no-issue",
+      "notes": "Assumed unavoidable destiny discouraging action supports attitudinal fatalismo.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-199-escrupulo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-199-escrupulo:noun:1",
+      "level": "C2",
+      "entrySha256": "c5e946152e85e19845b0bb410ff34706b38943dd666e10af7948ceb0658e1737",
+      "decision": "no-issue",
+      "notes": "Moral hesitation about a potentially interested gift isolates the selected noun.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-200-abjurar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-200-abjurar:verb:1",
+      "level": "C2",
+      "entrySha256": "3751df079d0f5d456a781319b82d94e31e516d783c4e9cca5a94be7d23a7a5aa",
+      "decision": "no-issue",
+      "notes": "Explicit renunciation of convictions supports abjurar de with correct government.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-201-colindante",
+      "catalogSenseId": "es-sk:c2:exp-bulk-201-colindante:adj:1",
+      "level": "C2",
+      "entrySha256": "9d43f431a0672559a86d1e70cdb078ef9488a795a5c80a4d4af9415075be44a7",
+      "decision": "no-issue",
+      "notes": "Shared property boundary correctly distinguishes colindante from merely nearby.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-202-aledano",
+      "catalogSenseId": "es-sk:c2:exp-bulk-202-aledano:adj:1",
+      "level": "C2",
+      "entrySha256": "f27a33d9fee8f977b19157c730fd4ebba646eee1acb0cb543084ae10351ad3cb",
+      "decision": "no-issue",
+      "notes": "Streets around a theatre support aledaño without a shared-boundary requirement.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-203-recondito",
+      "catalogSenseId": "es-sk:c2:exp-bulk-203-recondito:adj:1",
+      "level": "C2",
+      "entrySha256": "a5930b42aece3eb37ac7c531372565599db22286ebe991ca1f29f27c1c835e1b",
+      "decision": "no-issue",
+      "notes": "Hidden difficult-to-find corner accurately selects recóndito.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-204-tortuoso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-204-tortuoso:adj:1",
+      "level": "C2",
+      "entrySha256": "a1316977593d28c77dc74fc76eea4d111258cc7d56d7acff985fa5c6c5c1568b",
+      "decision": "no-issue",
+      "notes": "Winding road correctly selects physical tortuoso rather than moral deviousness.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-205-oblicuo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-205-oblicuo:adj:1",
+      "level": "C2",
+      "entrySha256": "3b07c88c1055cb35d0ff25721804affa2f50be12c18c5ab65b110a0e15c734ec",
+      "decision": "changes-requested",
+      "notes": "The definition lacks the exclusion of right-angle/perpendicular orientation necessary for oblicuo.",
+      "findings": [
+        {
+          "field": "definition",
+          "issue": "Inclination without excluding parallel or perpendicular orientation is insufficiently precise for oblicuo.",
+          "suggestedValue": "Que está inclinado respecto de una línea o superficie sin ser paralelo ni perpendicular a ella."
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-206-intersticio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-206-intersticio:noun:1",
+      "level": "C2",
+      "entrySha256": "e8ca1826e9cde32d5ff5c75912f8d7f671b4ff536daa5f237017c91438e85d82",
+      "decision": "changes-requested",
+      "notes": "Small gap between stones substantially overlaps resquicio without a demonstrated extra target.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Intervening small opening substantially repeats batch resquicio without sufficient differentiation.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-207-insoslayable",
+      "catalogSenseId": "es-sk:c2:exp-bulk-207-insoslayable:adj:1",
+      "level": "C2",
+      "entrySha256": "5b5b3833f99e27aa1178b6f5ff6a6fea48a0b3b4ff67e7c3b775c40f79ac9ff2",
+      "decision": "no-issue",
+      "notes": "An issue that cannot responsibly be ignored fits formal insoslayable.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-208-taxativo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-208-taxativo:adj:1",
+      "level": "C2",
+      "entrySha256": "c02fbab0875850108d8e3a1dc36aaf2ae0eb11f0a364a2f5a39245d4657e58f2",
+      "decision": "no-issue",
+      "notes": "Categorical wording is correctly distinguished from factual accuracy.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-209-por-ende",
+      "catalogSenseId": "es-sk:c2:exp-bulk-209-por-ende:adv:1",
+      "level": "C2",
+      "entrySha256": "dd9bbf88dd952e29280cc13e7e12600a56f50eb397a7af8dade135f035d24183",
+      "decision": "no-issue",
+      "notes": "Formal consequential connector preserves inference rather than independent addition.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-210-en-su-defecto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-210-en-su-defecto:adv:1",
+      "level": "C2",
+      "entrySha256": "a04c96ef8f42e64faad5451b53792a4608914700e2543cd57c126317d00d34a0",
+      "decision": "no-issue",
+      "notes": "Unavailable original followed by a fallback copy accurately illustrates the expression.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-211-dicho-sea-de-paso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-211-dicho-sea-de-paso:adv:1",
+      "level": "C2",
+      "entrySha256": "8ced00bae417643d4c6c698fb702ae1bb263dd70ce17a6a6be0ecdba533108d5",
+      "decision": "no-issue",
+      "notes": "Comment arriving too late is a natural secondary aside.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-212-a-fin-de-cuentas",
+      "catalogSenseId": "es-sk:c2:exp-bulk-212-a-fin-de-cuentas:adv:1",
+      "level": "C2",
+      "entrySha256": "a50b39319238e7afaed219b2c22ebd834ef9dae82e10bd5aa2f4b94cb96c6473",
+      "decision": "no-issue",
+      "notes": "Weighed decisive consideration is coherent; the formula is not limited to formal specialist usage.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-213-no-en-vano",
+      "catalogSenseId": "es-sk:c2:exp-bulk-213-no-en-vano:adv:1",
+      "level": "C2",
+      "entrySha256": "6fb0b2c60dafabefb0a85dde29867cdd2ff8f77eaaf42a7e2f97b6eb06ceaf66",
+      "decision": "no-issue",
+      "notes": "Long prior employment supplies the explanatory reason for the preceding assertion.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-214-sea-como-fuere",
+      "catalogSenseId": "es-sk:c2:exp-bulk-214-sea-como-fuere:adv:1",
+      "level": "C2",
+      "entrySha256": "3d6722467024b8737deb98bed662cd81b90f1c22a02897f832ca890a210bf094",
+      "decision": "no-issue",
+      "notes": "A conclusion maintained despite an unresolved prior issue correctly uses sea como fuere.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-215-bien-mirado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-215-bien-mirado:adv:1",
+      "level": "C2",
+      "entrySha256": "db420904d21b1b3bff51c4b4f412a9a7504dbef7f0be7f386d3cd6ada08a11ea",
+      "decision": "no-issue",
+      "notes": "Reconsidering a delay positively supports reflective bien mirado.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-216-dicho-de-otro-modo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-216-dicho-de-otro-modo:adv:1",
+      "level": "C2",
+      "entrySha256": "407654d151eb39ae5da9b21e08d75aaef7b55590530fb963109978c26a5e49ff",
+      "decision": "changes-requested",
+      "notes": "Plain reformulation is accurate but does not demonstrate a specifically advanced new target.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Basic explicit reformulation has no specifically advanced selected demand in current wording.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-217-maxime",
+      "catalogSenseId": "es-sk:c2:exp-bulk-217-maxime:adv:1",
+      "level": "C2",
+      "entrySha256": "abd070c5ed09eb58b43e300ad9e6191c6a2dc21ebf0c355660097691ca460002",
+      "decision": "no-issue",
+      "notes": "Following circumstance reinforces the recommendation in formal máxime cuando usage.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-218-a-tenor-de",
+      "catalogSenseId": "es-sk:c2:exp-bulk-218-a-tenor-de:adp:1",
+      "level": "C2",
+      "entrySha256": "a55e1d443f91bd1932d8ab4873fe20fe8a69226d516177a9a68b7eb66f844f27",
+      "decision": "no-issue",
+      "notes": "Results form a basis for assessment without proving necessity as logical entailment.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-219-so-pena-de",
+      "catalogSenseId": "es-sk:c2:exp-bulk-219-so-pena-de:adp:1",
+      "level": "C2",
+      "entrySha256": "c3a6328d4b4f03ba4ad852c0b1987595fbd755ad032ce8f24eddd1d840f8aaf1",
+      "decision": "no-issue",
+      "notes": "Adverse consequence of failing to retain a copy fits the cultivated warning phrase.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-220-salvo-mejor-criterio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-220-salvo-mejor-criterio:adv:1",
+      "level": "C2",
+      "entrySha256": "6b012e8d3f47aae42e51a07b1546bb33ab69b278a2f9c595304914363d9876e0",
+      "decision": "no-issue",
+      "notes": "Formal proposal explicitly defers to better judgment without withdrawing itself.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-221-mutatis-mutandis",
+      "catalogSenseId": "es-sk:c2:exp-bulk-221-mutatis-mutandis:adv:1",
+      "level": "C2",
+      "entrySha256": "86c8b68b6dd165bc8d2acd3e38e739f507964c01792a00bf7da3613ae5f60b7f",
+      "decision": "no-issue",
+      "notes": "Conditional transfer of an analogy with adjustments supports the established Latin expression.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-222-ceteris-paribus",
+      "catalogSenseId": "es-sk:c2:exp-bulk-222-ceteris-paribus:adv:1",
+      "level": "C2",
+      "entrySha256": "ad15e3e596fa14179d10c8c516efcbad841443b4d24964a0f0cbbaa251d28aeb",
+      "decision": "no-issue",
+      "notes": "Holding other relevant conditions constant correctly qualifies a predicted effect.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-223-merma",
+      "catalogSenseId": "es-sk:c2:exp-bulk-223-merma:noun:1",
+      "level": "C2",
+      "entrySha256": "f2dc91a4dc018f4e36ce5ac420d17bb99bc7ab6c734dd5664b4796f200e6c47f",
+      "decision": "changes-requested",
+      "notes": "Nominal reduction in value repeats baseline mermar.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Nominal reduction repeats baseline B2 mermar.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-224-tara",
+      "catalogSenseId": "es-sk:c2:exp-bulk-224-tara:noun:1",
+      "level": "C2",
+      "entrySha256": "0724d3db01a5dc78906b421f00b70b25ae0a7bc6ae8e3c0588b7e5b1749e9ffe",
+      "decision": "no-issue",
+      "notes": "Product manufacturing or preservation flaw correctly excludes packaging weight and personal defect.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-225-tasacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-225-tasacion:noun:1",
+      "level": "C2",
+      "entrySha256": "70f0461e8943cf7f2dc088ee8098db9178eb9260542b0ce2555caf667134e1aa",
+      "decision": "no-issue",
+      "notes": "Independent estimated value is distinguished from the actual sale price.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-226-remanente",
+      "catalogSenseId": "es-sk:c2:exp-bulk-226-remanente:noun:1",
+      "level": "C2",
+      "entrySha256": "08db35891f1b3321e75d26ba1b95991bca11390674f911272019f991c68574ee",
+      "decision": "no-issue",
+      "notes": "Residual stock after a collection is sold is coherent without implying defects.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-227-rescindir",
+      "catalogSenseId": "es-sk:c2:exp-bulk-227-rescindir:verb:1",
+      "level": "C2",
+      "entrySha256": "3eaab3a3d3f96b943f9e80f77a0e85947980ea5c02dab75e4932ea2d2044fe74",
+      "decision": "no-issue",
+      "notes": "Ending contractual effect is distinguished from postponement.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-228-leonino",
+      "catalogSenseId": "es-sk:c2:exp-bulk-228-leonino:adj:1",
+      "level": "C2",
+      "entrySha256": "ec4a99bbeff9ee4933193732315ee52de51d903605bc64de044466afd2480f0f",
+      "decision": "no-issue",
+      "notes": "Unequal burdens in a clause support evaluative leonino without automatic illegality.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-229-tacitamente",
+      "catalogSenseId": "es-sk:c2:exp-bulk-229-tacitamente:adv:1",
+      "level": "C2",
+      "entrySha256": "c145a93d536883badb8bd08c4f1b9d10aa639e98af77b8c442a8620faad44710",
+      "decision": "changes-requested",
+      "notes": "Adverbial implicit acceptance duplicates legacy tácito.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Adverb repeats legacy C2 tácito implied acceptance.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-230-devolucion-en-especie",
+      "catalogSenseId": "es-sk:c2:exp-bulk-230-devolucion-en-especie:noun:1",
+      "level": "C2",
+      "entrySha256": "4f2c3dbd5a5c529651a57c5256b3613a39ca7d3ce37ffdb105b17db5c90db94a",
+      "decision": "no-issue",
+      "notes": "In-kind restitution using equivalent products is coherent, with no specific legal rule.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-231-precio-desorbitado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-231-precio-desorbitado:noun:1",
+      "level": "C2",
+      "entrySha256": "92593d4a6f5ec6f8b8cd57cae84b1896600e30f8ad97477be5af13912a77e920",
+      "decision": "changes-requested",
+      "notes": "Excessive price restates batch exorbitante without distinct learning value.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Evaluative excessive price repeats batch exorbitante.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-232-a-cuenta-de",
+      "catalogSenseId": "es-sk:c2:exp-bulk-232-a-cuenta-de:adp:1",
+      "level": "C2",
+      "entrySha256": "37d07589621640331004024bf0b2ebe1cd8a9becb4be57508ad8f35005537219",
+      "decision": "no-issue",
+      "notes": "Partial advance payment is accurately isolated from the causal a cuenta de sense.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-233-ecuanimidad",
+      "catalogSenseId": "es-sk:c2:exp-bulk-233-ecuanimidad:noun:1",
+      "level": "C2",
+      "entrySha256": "60bf586e400bcea2ec0412a3c62c367ec1bc1a585776756f90b77fd2b0c36c75",
+      "decision": "no-issue",
+      "notes": "Balanced judgment despite friendship coheres with ecuanimidad.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-234-pusilanime",
+      "catalogSenseId": "es-sk:c2:exp-bulk-234-pusilanime:adj:1",
+      "level": "C2",
+      "entrySha256": "faa677177acffe01149d80c0b6aaf211701e7a9eed78378db83137e594f00fe1",
+      "decision": "no-issue",
+      "notes": "Lack of courage to defend another is distinguished from ordinary shyness.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-235-irascible",
+      "catalogSenseId": "es-sk:c2:exp-bulk-235-irascible:adj:1",
+      "level": "C2",
+      "entrySha256": "44f10597b18753a9caa9bd359db612174af2f77cab541af509d5dd207b02c75c",
+      "decision": "no-issue",
+      "notes": "Disposition toward easy anger is accurate; example does not define one isolated reaction as a trait.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-236-aprension",
+      "catalogSenseId": "es-sk:c2:exp-bulk-236-aprension:noun:1",
+      "level": "C2",
+      "entrySha256": "323f893cb1a638796f1f6c5a7e1a3749f0870d9138f6af5c07d394a203dc9eac",
+      "decision": "no-issue",
+      "notes": "Anticipatory apprehension is more specific than general unrest.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-237-desazon",
+      "catalogSenseId": "es-sk:c2:exp-bulk-237-desazon:noun:1",
+      "level": "C2",
+      "entrySha256": "a272f227e3f7bf2be505b435b11f782ba78db1473cf459c104335116296a0b86",
+      "decision": "no-issue",
+      "notes": "Diffuse emotional unrest is coherent without asserting a physical illness.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-238-indolencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-238-indolencia:noun:1",
+      "level": "C2",
+      "entrySha256": "10e47673f460588200e0614d00769df63827bcbd989f7aeaa1c501bab5bdde67",
+      "decision": "no-issue",
+      "notes": "Failure to act from lack of inclination is distinguished from exhaustion.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-239-circunspecto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-239-circunspecto:adj:1",
+      "level": "C2",
+      "entrySha256": "fcce1f17ee15835e2e070bc36565bf21cccfffcae44aeaed549f9d22deae1c3a",
+      "decision": "no-issue",
+      "notes": "Reserved caution toward unverified news supports circumspection.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-240-veleidoso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-240-veleidoso:adj:1",
+      "level": "C2",
+      "entrySha256": "0b6c9039c5c93076f1f7c4a1c52a79d0c01b0641c1be640170fd279d760430af",
+      "decision": "no-issue",
+      "notes": "Capricious shifting purposes are distinguished from reasoned revision.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-241-inquina",
+      "catalogSenseId": "es-sk:c2:exp-bulk-241-inquina:noun:1",
+      "level": "C2",
+      "entrySha256": "b9dfe80e44c04f9f235e0d2b7370b3d69d5622ac60feb8b55a1e47275ee3e7cd",
+      "decision": "changes-requested",
+      "notes": "Selected intense hostility repeats pilot animadversión without sufficient distinction.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Same selected hostility toward a person as reviewed pilot animadversión.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-242-complacencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-242-complacencia:noun:1",
+      "level": "C2",
+      "entrySha256": "5e07b75d02c51da234d5a202435982f9d414602d572a1228f1225dfcd713fe07",
+      "decision": "changes-requested",
+      "notes": "Definition imports mandatory excessive self-satisfaction and impaired vigilance beyond the ordinary noun.",
+      "findings": [
+        {
+          "field": "definition",
+          "issue": "DLE complacencia denotes satisfaction/pleasure arising from something, not necessarily excessive self-satisfaction that impairs vigilance. The proposed narrow meaning is not established by the supplied source.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied.",
+      "referenceEvidence": [
+        {
+          "url": "https://dle.rae.es/complacencia",
+          "status": "page-read",
+          "observedAt": "2026-09-13",
+          "paraphrase": "The noun names satisfaction, pleasure or contentment arising from something; deficient vigilance is not part of its definition."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-243-sobreentendido",
+      "catalogSenseId": "es-sk:c2:exp-bulk-243-sobreentendido:noun:1",
+      "level": "C2",
+      "entrySha256": "e65d05e1d72af195f7cf7c9807247e643e6710480e32581142fd7b9a96a60622",
+      "decision": "no-issue",
+      "notes": "Unspoken assumed common ground causing disagreement supports sobreentendido.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-244-reticencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-244-reticencia:noun:1",
+      "level": "C2",
+      "entrySha256": "4d89f499edcbaacc44548c61329ab8a0b131190c46da82e75872eb17ab2be365",
+      "decision": "changes-requested",
+      "notes": "Exact baseline reticencia is not a new selected sense.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Exact baseline reticencia; same guarded reluctance.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-245-presuposicion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-245-presuposicion:noun:1",
+      "level": "C2",
+      "entrySha256": "f4b52f24e2fcaaae6c8286978a5d2f942fdf0391cb346808778701f18de1a6c2",
+      "decision": "no-issue",
+      "notes": "Background assumption carried in the wording is distinguished from proved conclusion.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-246-insinuacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-246-insinuacion:noun:1",
+      "level": "C2",
+      "entrySha256": "0fd837f936718dd72d54c17d8696da3c91f825cff47b2b1cea773f4889070146",
+      "decision": "changes-requested",
+      "notes": "Nominal suggestion repeats existing insinuar without new meaning.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Nominal expression repeats baseline C1 insinuar indirect suggestion.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-247-equivoco",
+      "catalogSenseId": "es-sk:c2:exp-bulk-247-equivoco:noun:1",
+      "level": "C2",
+      "entrySha256": "bd84a5fbbe1ceaf32954e25dc06195db6b648c2a9dff7a5938a219f12d3ad456",
+      "decision": "no-issue",
+      "notes": "An actual misunderstanding differs from ambiguity merely available in wording.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-248-con-segundas",
+      "catalogSenseId": "es-sk:c2:exp-bulk-248-con-segundas:adv:1",
+      "level": "C2",
+      "entrySha256": "7ed41d588976169dda808bbf5b1cdf4fecad2b2271528aae4abfa93daa2193be",
+      "decision": "changes-requested",
+      "notes": "Pointed indirect intention is accurate, but the formal-specialist label is wrong for the colloquial idiom.",
+      "findings": [
+        {
+          "field": "register",
+          "issue": "The phrase is ordinary conversational discourse rather than specialist or intrinsically formal language.",
+          "suggestedValue": "colloquial; pointed indirect intention"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-249-a-buen-seguro",
+      "catalogSenseId": "es-sk:c2:exp-bulk-249-a-buen-seguro:adv:1",
+      "level": "C2",
+      "entrySha256": "e28d32c430f1f92f8989669dd88cefb89228086530a78514f96114708de73cb5",
+      "decision": "no-issue",
+      "notes": "High speaker confidence is correctly distinguished from a guarantee of truth.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-250-que-conste",
+      "catalogSenseId": "es-sk:c2:exp-bulk-250-que-conste:x:1",
+      "level": "C2",
+      "entrySha256": "fff077db3a3b8f8b21f25a17c41e78ab82fd39b33bdf15e84f224a8ea1cf7254",
+      "decision": "changes-requested",
+      "notes": "Formula clarifies commitment to block an unwanted inference; not restricted to formal specialist speech.",
+      "findings": [
+        {
+          "field": "register",
+          "issue": "The phrase is ordinary conversational discourse rather than specialist or intrinsically formal language.",
+          "suggestedValue": "general discourse formula; emphatic clarification"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-251-ni-que-decir-tiene",
+      "catalogSenseId": "es-sk:c2:exp-bulk-251-ni-que-decir-tiene:x:1",
+      "level": "C2",
+      "entrySha256": "496c360dfe181430dd5d1108077a2666511298f967f98469f553cdbfe2b8487d",
+      "decision": "no-issue",
+      "notes": "Shared-obviousness framing is distinguished from proof that everyone agrees.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-252-por-asi-decirlo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-252-por-asi-decirlo:adv:1",
+      "level": "C2",
+      "entrySha256": "a60b11fd262c9056d01c7a21fe0ef136e7cf49276ebeb7b8129613c49006cc52",
+      "decision": "no-issue",
+      "notes": "Approximate figurative wording is correctly hedged without retracting factual content.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-253-con-reservas",
+      "catalogSenseId": "es-sk:c2:exp-bulk-253-con-reservas:adv:1",
+      "level": "C2",
+      "entrySha256": "f0498c4e0e531d9e4f64d2df74397dfe93e9750b97ab854681a4d081c0809a6a",
+      "decision": "changes-requested",
+      "notes": "Qualified assent overlaps pilot salvedad and a beneficio de inventario with little new lexical demand.",
+      "findings": [
+        {
+          "field": "placement",
+          "issue": "Qualified assent overlaps reviewed pilot salvedad and a beneficio de inventario without a new target.",
+          "suggestedValue": "quarantine"
+        }
+      ],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-254-no-es-de-recibo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-254-no-es-de-recibo:x:1",
+      "level": "C2",
+      "entrySha256": "52fe6903783fb22df63242e368388eeb3601a1a767fc5318d703f6ea89adc929",
+      "decision": "no-issue",
+      "notes": "Normative rejection of unfair demands accurately selects the evaluative formula.",
+      "findings": [],
+      "placementConclusion": "Provisional editorial advanced-vocabulary practice only; no exclusive acquisition level, official word-level C2 assignment, or individual source verification is implied."
+    }
+  ],
+  "summary": {
+    "total": 254,
+    "noIssue": 208,
+    "changesRequested": 46,
+    "reviewLimitations": [
+      "Independent AI linguistic review, not human approval.",
+      "Broad topic presence is not complete CEFR C2 attainment or curriculum validation.",
+      "Individual dictionary checking was selective.",
+      "Quarantine advised for weak placement and redundant senses; passing means acceptable provisional draft practice."
+    ]
+  }
+}

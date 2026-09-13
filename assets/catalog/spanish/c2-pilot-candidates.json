@@ -1,0 +1,2371 @@
+{
+  "schemaVersion": 1,
+  "courseId": "es-sk",
+  "batchId": "c2-pilot-2026-09-13",
+  "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+  "publicationStatus": "draft",
+  "notice": "Original C2 vocabulary-practice pilot, not a complete curriculum. AI review is not human review, official CEFR validation, or publication approval.",
+  "counts": {
+    "A1": 0,
+    "A2": 0,
+    "B1": 0,
+    "B2": 0,
+    "C1": 0,
+    "C2": 50
+  },
+  "references": [
+    {
+      "id": "pcic-objectives-c1-c2",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/01_objetivos_relacion_c1-c2.htm",
+      "role": "Framework: C2 social-agent objectives 1.1–1.3; not an official entry-level assignment."
+    },
+    {
+      "id": "pcic-general-c1-c2",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/08_nociones_generales_inventario_c1-c2.htm",
+      "role": "Framework coverage only; independently authored learner text."
+    },
+    {
+      "id": "pcic-specific-c1-c2",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_c1-c2.htm",
+      "role": "Framework coverage only; independently authored learner text."
+    },
+    {
+      "id": "pcic-pragmatics-c1-c2",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/06_tacticas_pragmaticas_inventario_c1-c2.htm",
+      "role": "Framework coverage only; independently authored learner text."
+    },
+    {
+      "id": "pcic-functions-c1-c2",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/05_funciones_inventario_c1-c2.htm",
+      "role": "Framework coverage only; independently authored learner text."
+    }
+  ],
+  "frameworkPermissionEvidencePath": "docs/legal/INSTITUTO_CERVANTES_PCIC_PERMISSION.md",
+  "baseline": {
+    "path": "assets/catalog/spanish/course.json",
+    "sha256": "f169536bf817dac59e8afb2d322676e2176d8aa00b90548eb7219a658409c6f1",
+    "conceptCount": 5888,
+    "memberCount": 6086
+  },
+  "entries": [
+    {
+      "id": "es-sk:c2:exp-pilot-001-aquilatar",
+      "catalogSenseId": "es-sk:c2:exp-pilot-001-aquilatar:verb:1",
+      "term": "aquilatar",
+      "normalizedTerm": "aquilatar",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Valorar con mucho cuidado las cualidades o el alcance de algo.",
+      "example": "Antes de publicar la acusación, conviene aquilatar el valor de cada testimonio.",
+      "exampleSurfaceForm": "aquilatar",
+      "translation": "dôkladne posúdiť; starostlivo zvážiť hodnotu",
+      "levelRationale": "Production B2 evaluar (es-sk:b2:i25125) covers broad assessment. Aquilatar adds formal rigorous calibration of evidential worth; the selected use weighs testimony without claiming proof. The distinction is precision of appraisal, not precious-metal testing. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/aquilatar",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE senses 2 and 4 support rigorous appraisal and precise analysis."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "8",
+        "label": "Nociones generales"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": false,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-precision"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-general-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Production B2 evaluar (es-sk:b2:i25125) covers broad assessment. Aquilatar adds formal rigorous calibration of evidential worth; the selected use weighs testimony without claiming proof. The distinction is precision of appraisal, not precious-metal testing."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-002-dirimir",
+      "catalogSenseId": "es-sk:c2:exp-pilot-002-dirimir:verb:1",
+      "term": "dirimir",
+      "normalizedTerm": "dirimir",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Resolver una controversia o un desacuerdo mediante una decisión.",
+      "example": "La comisión debe dirimir la controversia entre los dos departamentos sobre quién autorizó el gasto.",
+      "exampleSurfaceForm": "dirimir",
+      "translation": "rozhodnúť spor; vyriešiť spornú otázku",
+      "levelRationale": "Unlike deciding a personal preference, the verb frames an authoritative resolution between competing positions. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://www.fundeu.es/recomendacion/dirimir-uso-adecuado/",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE sense 2 concerns settling a controversy; Fundéu warns against generic deciding."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "8",
+        "label": "Nociones generales"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": false,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-precision"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-general-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Unlike deciding a personal preference, the verb frames an authoritative resolution between competing positions."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-003-deslindar",
+      "catalogSenseId": "es-sk:c2:exp-pilot-003-deslindar:verb:1",
+      "term": "deslindar",
+      "normalizedTerm": "deslindar",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Distinguir con precisión aspectos que pueden confundirse.",
+      "example": "El informe procura deslindar la responsabilidad política de la responsabilidad administrativa.",
+      "exampleSurfaceForm": "deslindar",
+      "translation": "presne rozlíšiť; vymedziť",
+      "levelRationale": "The target is conceptual responsibility boundaries, not physically separating objects; learners must preserve the distinction without implying exoneration. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/deslindar",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE sense 2 concerns removing conceptual confusion."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "8",
+        "label": "Nociones generales"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": false,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-precision"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-general-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "The target is conceptual responsibility boundaries, not physically separating objects; learners must preserve the distinction without implying exoneration."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-004-colegir",
+      "catalogSenseId": "es-sk:c2:exp-pilot-004-colegir:verb:1",
+      "term": "colegir",
+      "normalizedTerm": "colegir",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Deducir una conclusión a partir de indicios o datos.",
+      "example": "De su silencio no cabe colegir que haya aceptado todas las condiciones.",
+      "exampleSurfaceForm": "colegir",
+      "translation": "vyvodiť; usúdiť z indícií",
+      "levelRationale": "Formal inference under negation: absence of speech does not license a conclusion; this is not a synonym for knowing or proving. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/colegir",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE sense 2 supports inferential consequence; conjugation is irregular."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "8",
+        "label": "Nociones generales"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": false,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-precision"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-general-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Formal inference under negation: absence of speech does not license a conclusion; this is not a synonym for knowing or proving."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-005-anfibologia",
+      "catalogSenseId": "es-sk:c2:exp-pilot-005-anfibologia:noun:1",
+      "term": "anfibología",
+      "normalizedTerm": "anfibología",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Ambigüedad de una expresión que permite entenderla de más de una manera.",
+      "example": "El contrato habla de «la autorización del representante»; esa anfibología no aclara si él autoriza o necesita ser autorizado.",
+      "exampleSurfaceForm": "anfibología",
+      "translation": "dvojznačnosť formulácie",
+      "levelRationale": "Identifies two grammatical readings of the same wording, rather than uncertain facts or the self-contradiction taught by B2 paradoja (es-sk:b2:i71840). Intentional wordplay is a separate sense. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/anfibolog%C3%ADa",
+        "role": "Semantic checking only; original learner text, no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE sense 1 supports context-dependent equivocal wording; deliberate rhetorical double meaning is a separate sense."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "8",
+        "label": "Nociones generales"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": false,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-precision"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-general-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Identifies two grammatical readings of the same wording, rather than uncertain facts or the self-contradiction taught by B2 paradoja (es-sk:b2:i71840). Intentional wordplay is a separate sense."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-006-salvedad",
+      "catalogSenseId": "es-sk:c2:exp-pilot-006-salvedad:noun:1",
+      "term": "salvedad",
+      "normalizedTerm": "salvedad",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Reserva o precisión que limita el alcance de una afirmación o un acuerdo.",
+      "example": "Aceptamos el calendario con la salvedad de que las fechas dependen del permiso municipal.",
+      "exampleSurfaceForm": "salvedad",
+      "translation": "výhrada; obmedzujúce spresnenie",
+      "levelRationale": "A qualification limits assent without necessarily rejecting it; distinguish this pragmatic reservation from an exception already realized. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/salvedad",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE first sense supports a qualification restricting what is said or done."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "8",
+        "label": "Nociones generales"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": false,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-precision"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-general-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "A qualification limits assent without necessarily rejecting it; distinguish this pragmatic reservation from an exception already realized."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-007-sin-ambages",
+      "catalogSenseId": "es-sk:c2:exp-pilot-007-sin-ambages:adv:1",
+      "term": "sin ambages",
+      "normalizedTerm": "sin ambages",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "locución adverbial",
+      "definition": "De manera directa, sin rodeos ni expresiones que oculten lo que se quiere decir.",
+      "example": "Le pidió que dijera sin ambages si apoyaría la propuesta, aunque la respuesta resultara incómoda.",
+      "exampleSurfaceForm": "sin ambages",
+      "translation": "bez okolkov; priamo",
+      "levelRationale": "Directness is a deliberate stance despite interpersonal cost; formal expression must be distinguished from aggression or certainty. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/ambages",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE ambages is plural circumlocution; sin construction is directly exemplified."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "8",
+        "label": "Nociones generales"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-precision"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-general-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Directness is a deliberate stance despite interpersonal cost; formal expression must be distinguished from aggression or certainty."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-008-hilar-fino",
+      "catalogSenseId": "es-sk:c2:exp-pilot-008-hilar-fino:verb:1",
+      "term": "hilar fino",
+      "normalizedTerm": "hilar fino",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "locución verbal",
+      "definition": "Distinguir o analizar detalles muy sutiles.",
+      "example": "Hay que hilar fino para distinguir una crítica al método de un ataque a quien lo aplica.",
+      "exampleSurfaceForm": "hilar fino",
+      "translation": "jemne rozlišovať; dôkladne rozoberať detaily",
+      "levelRationale": "Interprets a figurative demand for fine distinctions in a face-sensitive criticism; literal sewing and needless complication are excluded. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/hilar",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE hilar fino concerns subtle reasoning or exact care."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-idioms"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Interprets a figurative demand for fine distinctions in a face-sensitive criticism; literal sewing and needless complication are excluded."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-009-rizar-el-rizo",
+      "catalogSenseId": "es-sk:c2:exp-pilot-009-rizar-el-rizo:verb:1",
+      "term": "rizar el rizo",
+      "normalizedTerm": "rizar el rizo",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "locución verbal",
+      "definition": "Añadir a algo una complicación innecesaria.",
+      "example": "Exigir otra firma para confirmar las tres anteriores sería rizar el rizo.",
+      "exampleSurfaceForm": "rizar el rizo",
+      "translation": "zbytočne to ešte komplikovať",
+      "levelRationale": "The selected use criticizes excessive refinement; the negative stance must be inferred, not translated as an actual curl. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/rizo",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE rizar el rizo sense 3 is unnecessary complication; other senses differ."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-idioms"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "The selected use criticizes excessive refinement; the negative stance must be inferred, not translated as an actual curl."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-010-dar-con-la-horma-de-su-zapato",
+      "catalogSenseId": "es-sk:c2:exp-pilot-010-dar-con-la-horma-de-su-zapato:verb:1",
+      "term": "encontrar la horma de su zapato",
+      "normalizedTerm": "encontrar la horma de su zapato",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "locución verbal",
+      "definition": "Encontrar a alguien capaz de hacer frente a las propias exigencias o de frenar los propios abusos.",
+      "example": "El negociador, acostumbrado a imponer sus condiciones, encontró la horma de su zapato en la nueva portavoz.",
+      "exampleSurfaceForm": "encontró la horma de su zapato",
+      "translation": "naraziť na seberovného súpera; nájsť si svojho majstra",
+      "levelRationale": "The context frames a check on dominance, not romantic compatibility; possessive and perspective must track the person being challenged. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/horma",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE horma lists encontrar/hallar with resistance and compatibility as separate senses."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-idioms"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "The context frames a check on dominance, not romantic compatibility; possessive and perspective must track the person being challenged."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-011-no-dar-puntada-sin-hilo",
+      "catalogSenseId": "es-sk:c2:exp-pilot-011-no-dar-puntada-sin-hilo:verb:1",
+      "term": "no dar puntada sin hilo",
+      "normalizedTerm": "no dar puntada sin hilo",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "locución verbal",
+      "definition": "Actuar de manera calculada para obtener un beneficio propio.",
+      "example": "Si mencionó la vacante delante del director, fue por algo: no da puntada sin hilo.",
+      "exampleSurfaceForm": "no da puntada sin hilo",
+      "translation": "nič nerobiť bez vypočítavého zámeru získať vlastný prospech",
+      "levelRationale": "An apparently casual remark is read as strategic self-interest; the expression attributes a motive without proving it. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/puntada",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE phrase includes calculated action for personal advantage."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-idioms"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "An apparently casual remark is read as strategic self-interest; the expression attributes a motive without proving it."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-012-nadar-y-guardar-la-ropa",
+      "catalogSenseId": "es-sk:c2:exp-pilot-012-nadar-y-guardar-la-ropa:verb:1",
+      "term": "nadar y guardar la ropa",
+      "normalizedTerm": "nadar y guardar la ropa",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "locución verbal",
+      "definition": "Intentar obtener una ventaja sin exponerse al riesgo o al compromiso que suele acompañarla.",
+      "example": "Apoya la protesta en privado, pero no firma el manifiesto; quiere nadar y guardar la ropa.",
+      "exampleSurfaceForm": "nadar y guardar la ropa",
+      "translation": "chcieť získať výhodu a pritom nič neriskovať",
+      "levelRationale": "The idiom criticizes an attempt to combine benefit with protected noncommitment; it does not assert that the strategy succeeded. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/ropa",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE ropa phrase concerns precautions retaining protection if an undertaking fails."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-idioms"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "The idiom criticizes an attempt to combine benefit with protected noncommitment; it does not assert that the strategy succeeded."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-013-arrimar-el-ascua-a-su-sardina",
+      "catalogSenseId": "es-sk:c2:exp-pilot-013-arrimar-el-ascua-a-su-sardina:verb:1",
+      "term": "arrimar el ascua a su sardina",
+      "normalizedTerm": "arrimar el ascua a su sardina",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "locución verbal",
+      "definition": "Orientar una situación o un argumento hacia el propio beneficio.",
+      "example": "En el debate sobre el presupuesto, cada departamento intentó arrimar el ascua a su sardina.",
+      "exampleSurfaceForm": "arrimar el ascua a su sardina",
+      "translation": "obracať situáciu vo svoj prospech; prihrievať si vlastnú polievočku",
+      "levelRationale": "Identifies self-serving framing within a collective discussion; distinguish legitimate interest from the speaker's critical insinuation. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/ascua",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE ascua phrase concerns taking an opportunity for personal interest."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-idioms"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Identifies self-serving framing within a collective discussion; distinguish legitimate interest from the speaker's critical insinuation."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-014-a-toro-pasado",
+      "catalogSenseId": "es-sk:c2:exp-pilot-014-a-toro-pasado:adv:1",
+      "term": "a toro pasado",
+      "normalizedTerm": "a toro pasado",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "locución adverbial",
+      "definition": "Cuando ya ha pasado la ocasión de actuar y se juzga lo ocurrido con ventaja retrospectiva.",
+      "example": "A toro pasado, todos sabían qué inversión había que evitar.",
+      "exampleSurfaceForm": "A toro pasado",
+      "translation": "dodatočne, keď už pominula možnosť konať",
+      "levelRationale": "The ironic claim targets hindsight presented as foresight; the temporal phrase is not simply later. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/toro",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE phrase centers the opportunity already being past."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-idioms"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "The ironic claim targets hindsight presented as foresight; the temporal phrase is not simply later."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-015-a-fuer-de",
+      "catalogSenseId": "es-sk:c2:exp-pilot-015-a-fuer-de:adp:1",
+      "term": "a fuer de",
+      "normalizedTerm": "a fuer de",
+      "level": "C2",
+      "partOfSpeech": "ADP",
+      "displayPartOfSpeech": "locución preposicional",
+      "definition": "Por ser o por tener la cualidad que se expresa a continuación.",
+      "example": "A fuer de prudente, dejó pasar una oportunidad que no volvió a presentarse.",
+      "exampleSurfaceForm": "A fuer de",
+      "translation": "pre určitú vlastnosť (napr. z opatrnosti); vzhľadom na to, že je",
+      "levelRationale": "Literary causal construction links a normally positive trait to an adverse outcome; distinguish cause from purpose or concession. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/fuer",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE fuer locution supports causal or capacity-based interpretation."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-register"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "literary",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Literary causal construction links a normally positive trait to an adverse outcome; distinguish cause from purpose or concession."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-016-en-aras-de",
+      "catalogSenseId": "es-sk:c2:exp-pilot-016-en-aras-de:adp:1",
+      "term": "en aras de",
+      "normalizedTerm": "en aras de",
+      "level": "C2",
+      "partOfSpeech": "ADP",
+      "displayPartOfSpeech": "locución preposicional",
+      "definition": "En favor de un fin al que se da prioridad.",
+      "example": "En aras de la transparencia, publicaron incluso los datos que perjudicaban su propia imagen.",
+      "exampleSurfaceForm": "En aras de",
+      "translation": "v záujme; v prospech uprednostneného cieľa",
+      "levelRationale": "Formal prioritization suggests a cost accepted for a stated value; learners should not assume every invocation genuinely justifies the sacrifice. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://www.fundeu.es/recomendacion/en-aras-de-155/",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE ara supports interest/honor; Fundéu supplies sacrifice-related usage guidance."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-register"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Formal prioritization suggests a cost accepted for a stated value; learners should not assume every invocation genuinely justifies the sacrifice."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-017-habida-cuenta-de",
+      "catalogSenseId": "es-sk:c2:exp-pilot-017-habida-cuenta-de:adp:1",
+      "term": "habida cuenta de",
+      "normalizedTerm": "habida cuenta de",
+      "level": "C2",
+      "partOfSpeech": "ADP",
+      "displayPartOfSpeech": "locución preposicional",
+      "definition": "Teniendo en consideración un hecho o una circunstancia.",
+      "example": "Habida cuenta de que el plazo ya había vencido, la petición se tramitó como una excepción.",
+      "exampleSurfaceForm": "Habida cuenta de",
+      "translation": "vzhľadom na; berúc do úvahy",
+      "levelRationale": "Recognizes a fixed formal premise marker, including de que before a clause, without treating it as evidence that the decision was mandatory. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://www.rae.es/sites/default/files/indice_de_materias_gramatica.pdf",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "primary-search-excerpt-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE cuenta records the formula; RAE grammar index supports alternate grammatical categorization."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-register"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Recognizes a fixed formal premise marker, including de que before a clause, without treating it as evidence that the decision was mandatory."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-018-a-mayor-abundamiento",
+      "catalogSenseId": "es-sk:c2:exp-pilot-018-a-mayor-abundamiento:adv:1",
+      "term": "a mayor abundamiento",
+      "normalizedTerm": "a mayor abundamiento",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "locución adverbial",
+      "definition": "Para añadir otra razón que refuerza lo que ya se ha expuesto.",
+      "example": "El acta carece de firma; a mayor abundamiento, la fecha tampoco coincide con la de la reunión.",
+      "exampleSurfaceForm": "a mayor abundamiento",
+      "translation": "navyše, na ďalšie podporenie argumentu",
+      "levelRationale": "Marks a reinforcing argument beyond an already sufficient point in formal discourse, rather than a neutral addition to a list. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/abundamiento",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE abundamiento records an additional strengthening reason."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-register"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Marks a reinforcing argument beyond an already sufficient point in formal discourse, rather than a neutral addition to a list."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-019-valga-la-redundancia",
+      "catalogSenseId": "es-sk:c2:exp-pilot-019-valga-la-redundancia:x:1",
+      "term": "valga la redundancia",
+      "normalizedTerm": "valga la redundancia",
+      "level": "C2",
+      "partOfSpeech": "X",
+      "displayPartOfSpeech": "expresión",
+      "definition": "Expresión con la que se reconoce y se acepta una repetición de significado.",
+      "example": "Necesitamos un consenso compartido, valga la redundancia, antes de anunciar el acuerdo.",
+      "exampleSurfaceForm": "valga la redundancia",
+      "translation": "ak dovolíte tú významovú nadbytočnosť",
+      "levelRationale": "Metalinguistic aside acknowledges pleonasm; recognize the speaker's self-awareness without treating the formula as an apology for factual error. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://academia.org.do/2013/04/08/valga-la-redundancia/",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE lacks complete formula; Dominican Academy explains excusing repetition of words or concepts."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-register"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Metalinguistic aside acknowledges pleonasm; recognize the speaker's self-awareness without treating the formula as an apology for factual error."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-020-con-la-venia",
+      "catalogSenseId": "es-sk:c2:exp-pilot-020-con-la-venia:adv:1",
+      "term": "con la venia",
+      "normalizedTerm": "con la venia",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "locución adverbial",
+      "definition": "Fórmula formal para pedir permiso antes de intervenir.",
+      "example": "Con la venia, quisiera señalar una contradicción entre ambas declaraciones.",
+      "exampleSurfaceForm": "Con la venia",
+      "translation": "s dovolením (formálna žiadosť o slovo)",
+      "levelRationale": "Formula regulates permission to speak in highly formal, especially courtroom, settings; courtroom convention is register evidence, not procedural advice. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dpej.rae.es/lema/con-la-venia/boe",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "primary-search-excerpt-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE noun is permission; DPEJ records the ritual court permission formula."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-register"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "highly formal; especially courtroom formula",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Formula regulates permission to speak in highly formal, especially courtroom, settings; courtroom convention is register evidence, not procedural advice."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-021-decir-con-la-boca-pequena",
+      "catalogSenseId": "es-sk:c2:exp-pilot-021-decir-con-la-boca-pequena:verb:1",
+      "term": "decir con la boca pequeña",
+      "normalizedTerm": "decir con la boca pequeña",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "locución verbal",
+      "definition": "Hacer un ofrecimiento solo por cumplir, sin verdadera intención de llevarlo a cabo.",
+      "example": "Dijo con la boca pequeña que podía ayudar con la mudanza, pero enseguida empezó a poner excusas.",
+      "exampleSurfaceForm": "Dijo con la boca pequeña",
+      "translation": "ponúknuť niečo len zo slušnosti, bez skutočného úmyslu to splniť",
+      "levelRationale": "An apparent offer is interpreted as social compliance rather than genuine willingness; the idiom is not about low voice volume. Evasive follow-up motivates the reading without making every polite offer insincere. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/boca",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE boca phrase concerns an offer made merely to fulfill social expectations."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-implication"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "An apparent offer is interpreted as social compliance rather than genuine willingness; the idiom is not about low voice volume. Evasive follow-up motivates the reading without making every polite offer insincere."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-022-tirar-la-piedra-y-esconder-la-mano",
+      "catalogSenseId": "es-sk:c2:exp-pilot-022-tirar-la-piedra-y-esconder-la-mano:verb:1",
+      "term": "tirar la piedra y esconder la mano",
+      "normalizedTerm": "tirar la piedra y esconder la mano",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "locución verbal",
+      "definition": "Provocar un daño o un conflicto y ocultar la propia responsabilidad.",
+      "example": "Difundir el rumor sin firmarlo fue tirar la piedra y esconder la mano.",
+      "exampleSurfaceForm": "tirar la piedra y esconder la mano",
+      "translation": "ublížiť či vyvolať spor a zatajiť vlastnú účasť",
+      "levelRationale": "Decodes an accusation combining provocation and concealed agency; neither simple secrecy nor literal stone throwing captures it. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/piedra",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE piedra phrase combines harm with concealed agency."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-implication"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Decodes an accusation combining provocation and concealed agency; neither simple secrecy nor literal stone throwing captures it."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-023-donde-dije-digo-digo-diego",
+      "catalogSenseId": "es-sk:c2:exp-pilot-023-donde-dije-digo-digo-diego:x:1",
+      "term": "donde dije digo, digo Diego",
+      "normalizedTerm": "donde dije digo, digo diego",
+      "level": "C2",
+      "partOfSpeech": "X",
+      "displayPartOfSpeech": "expresión",
+      "definition": "Expresión usada para criticar que alguien cambia lo que había afirmado.",
+      "example": "Ayer garantizaban que no habría recortes y hoy, donde dije digo, digo Diego, anuncian nuevas restricciones.",
+      "exampleSurfaceForm": "donde dije digo, digo Diego",
+      "translation": "beriem späť, čo som povedal; teraz už tvrdím niečo iné",
+      "levelRationale": "Metalinguistic wordplay mocks reversal of commitment, rather than merely reporting correction of an innocent slip. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://cvc.cervantes.es/lengua/refranero/ficha.aspx?Lng=0&Par=58538",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "primary-search-excerpt-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE decir did not contain phrase; Cervantes records self-correction/retraction and public critical context."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-implication"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Metalinguistic wordplay mocks reversal of commitment, rather than merely reporting correction of an innocent slip."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-024-a-buen-entendedor-pocas-palabras-bastan",
+      "catalogSenseId": "es-sk:c2:exp-pilot-024-a-buen-entendedor-pocas-palabras-bastan:x:1",
+      "term": "a buen entendedor, pocas palabras bastan",
+      "normalizedTerm": "a buen entendedor, pocas palabras bastan",
+      "level": "C2",
+      "partOfSpeech": "X",
+      "displayPartOfSpeech": "expresión",
+      "definition": "Expresión que indica que una insinuación basta para comprender un mensaje.",
+      "example": "El director recordó quién renovaba los contratos y añadió: «A buen entendedor, pocas palabras bastan».",
+      "exampleSurfaceForm": "A buen entendedor, pocas palabras bastan",
+      "translation": "múdremu stačí naznačiť",
+      "levelRationale": "A proverb functions here as a veiled threat through power and context; the expression itself is not inherently threatening. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://cvc.cervantes.es/lengua/refranero/ficha.aspx?Lng=0&Par=58037",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "primary-search-excerpt-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE entendedor did not contain proverb; Cervantes records indirect warning use."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-implication"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "A proverb functions here as a veiled threat through power and context; the expression itself is not inherently threatening."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-025-como-quien-no-quiere-la-cosa",
+      "catalogSenseId": "es-sk:c2:exp-pilot-025-como-quien-no-quiere-la-cosa:adv:1",
+      "term": "como quien no quiere la cosa",
+      "normalizedTerm": "como quien no quiere la cosa",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "locución adverbial",
+      "definition": "Con apariencia de casualidad o de falta de intención.",
+      "example": "Como quien no quiere la cosa, preguntó si el puesto seguiría libre el mes siguiente.",
+      "exampleSurfaceForm": "Como quien no quiere la cosa",
+      "translation": "akoby len tak mimochodom; so zdanlivou nenútenosťou",
+      "levelRationale": "Distinguishes outward casualness from the narrator's suspicion of a concealed aim; genuine indifference is not entailed. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/cosa",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE cosa phrase is dissimulation."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-implication"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Distinguishes outward casualness from the narrator's suspicion of a concealed aim; genuine indifference is not entailed."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-026-por-no-decir",
+      "catalogSenseId": "es-sk:c2:exp-pilot-026-por-no-decir:x:1",
+      "term": "por no decir",
+      "normalizedTerm": "por no decir",
+      "level": "C2",
+      "partOfSpeech": "X",
+      "displayPartOfSpeech": "expresión",
+      "definition": "Expresión que introduce una formulación más fuerte que la anterior, presentándola como si se evitara.",
+      "example": "La explicación fue incompleta, por no decir engañosa.",
+      "exampleSurfaceForm": "por no decir",
+      "translation": "ak nie rovno; aby som nepovedal",
+      "levelRationale": "A pretended restraint actually intensifies criticism; the second description is evoked rather than simply withdrawn. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://formacion.icervantes.org/pluginfile.php/2524639/mod_forum/attachment/784375/C2.%20Taller%20de%20calificaci%C3%B3n.%20Muestra%201.%20Informe%20ALEX.pdf?forcedownload=1",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "primary-search-excerpt-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE decir did not contain phrase; Cervantes C2 examiner material illustrates it in precision of nuances, without assigning an exclusive lexical level."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "6",
+        "label": "Tácticas y estrategias pragmáticas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-implication"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-pragmatics-c1-c2"
+      ],
+      "register": "neutral",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "A pretended restraint actually intensifies criticism; the second description is evoked rather than simply withdrawn."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-027-hacer-de-tripas-corazon",
+      "catalogSenseId": "es-sk:c2:exp-pilot-027-hacer-de-tripas-corazon:verb:1",
+      "term": "hacer de tripas corazón",
+      "normalizedTerm": "hacer de tripas corazón",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "locución verbal",
+      "definition": "Reunir valor para afrontar algo que produce miedo, dolor o rechazo.",
+      "example": "Tuvo que hacer de tripas corazón para felicitar a quien había recibido el puesto que ella deseaba.",
+      "exampleSurfaceForm": "hacer de tripas corazón",
+      "translation": "premôcť sa; pozbierať odvahu napriek vnútornému odporu",
+      "levelRationale": "The example requires overcoming hurt and resistance to perform a social duty; it is not emotional indifference. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/tripa",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE tripa labels self-command idiom colloquial."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-relationships"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "The example requires overcoming hurt and resistance to perform a social duty; it is not emotional indifference."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-028-guardar-las-distancias",
+      "catalogSenseId": "es-sk:c2:exp-pilot-028-guardar-las-distancias:verb:1",
+      "term": "guardar las distancias",
+      "normalizedTerm": "guardar las distancias",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "locución verbal",
+      "definition": "Mantener cierta reserva en el trato con otra persona.",
+      "example": "Aunque colaboraban a diario, ella prefería guardar las distancias para no confundir amistad y autoridad.",
+      "exampleSurfaceForm": "guardar las distancias",
+      "translation": "udržiavať si odstup vo vzťahu",
+      "levelRationale": "Interpersonal reserve negotiates power and familiarity without necessarily implying hostility; literal spatial distance is excluded. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/distancia",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE distancia phrase excludes familiarity/excess cordiality."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-relationships"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "neutral",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Interpersonal reserve negotiates power and familiarity without necessarily implying hostility; literal spatial distance is excluded."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-029-contemporizar",
+      "catalogSenseId": "es-sk:c2:exp-pilot-029-contemporizar:verb:1",
+      "term": "contemporizar",
+      "normalizedTerm": "contemporizar",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Adaptarse a las circunstancias o a lo que otros desean para evitar un enfrentamiento.",
+      "example": "La mediadora intentó contemporizar con ambas partes sin dar por buenas sus acusaciones.",
+      "exampleSurfaceForm": "contemporizar",
+      "translation": "prispôsobiť sa okolnostiam či druhým, aby nevznikol konflikt",
+      "levelRationale": "Accommodation can preserve negotiation without endorsing claims; learners must distinguish pragmatic compromise from agreement. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/contemporizar",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE contemporizar concerns accommodation to others for a purpose."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": false,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-relationships"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Accommodation can preserve negotiation without endorsing claims; learners must distinguish pragmatic compromise from agreement."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-030-pundonor",
+      "catalogSenseId": "es-sk:c2:exp-pilot-030-pundonor:noun:1",
+      "term": "pundonor",
+      "normalizedTerm": "pundonor",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Orgullo por la propia reputación que anima a esforzarse y a no quedar por debajo de lo que uno exige de sí mismo.",
+      "example": "Por pundonor, terminó el trabajo con esmero aunque nadie fuera a reprocharle que lo dejara a medias.",
+      "exampleSurfaceForm": "pundonor",
+      "translation": "hrdosť na vlastnú česť, ktorá podnecuje k úsiliu a prekonávaniu sa",
+      "levelRationale": "Distinguishes the motive to preserve reputation through effort from B1 orgullo as satisfaction in achievements (es-sk:b1:i76332), A2 honor as good character (es-sk:a2:i62572), and C1 dignidad as worthiness of respect (es-sk:c1:i62669). The formal motivation term can convey admirable resolve or excessive self-demand depending on context. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "masculine",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/pundonor",
+        "role": "Semantic checking only; original learner text, no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE describes a feeling motivating maintenance of good reputation and self-improvement."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": false,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-relationships"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Distinguishes the motive to preserve reputation through effort from B1 orgullo as satisfaction in achievements (es-sk:b1:i76332), A2 honor as good character (es-sk:a2:i62572), and C1 dignidad as worthiness of respect (es-sk:c1:i62669). The formal motivation term can convey admirable resolve or excessive self-demand depending on context."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-031-resquemor",
+      "catalogSenseId": "es-sk:c2:exp-pilot-031-resquemor:noun:1",
+      "term": "resquemor",
+      "normalizedTerm": "resquemor",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Malestar interior que queda después de algo que ha dolido o disgustado.",
+      "example": "Aceptó las disculpas, aunque le quedó cierto resquemor por haber sido excluido de la reunión.",
+      "exampleSurfaceForm": "resquemor",
+      "translation": "pretrvávajúca vnútorná horkosť či nepríjemný pocit",
+      "levelRationale": "Distinguishes lingering emotional discomfort despite an accepted apology from open hostility or momentary irritation. The general discomfort sense is selected; the separate resentment sense marked Cantabria in DLE is not bundled as an unmarked synonym. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "masculine",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/resquemor",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE first sense is distress after something painful; separate resentment sense is marked Cantabria."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": false,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-relationships"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "neutral",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Distinguishes lingering emotional discomfort despite an accepted apology from open hostility or momentary irritation. The general discomfort sense is selected; the separate resentment sense marked Cantabria in DLE is not bundled as an unmarked synonym."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-032-animadversion",
+      "catalogSenseId": "es-sk:c2:exp-pilot-032-animadversion:noun:1",
+      "term": "animadversión",
+      "normalizedTerm": "animadversión",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Sentimiento de rechazo u hostilidad hacia alguien.",
+      "example": "La reseña transmitía tal animadversión hacia el autor que apenas discutía el contenido del libro.",
+      "exampleSurfaceForm": "animadversión",
+      "translation": "nevraživosť; nepriateľský odpor",
+      "levelRationale": "Formal naming of hostility frames an assessment of critical bias; disagreement alone is insufficient to infer this feeling. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/animadversión",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE first sense supports antagonism; obsolete critical-warning sense is excluded."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": false,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-relationships"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Formal naming of hostility frames an assessment of critical bias; disagreement alone is insufficient to infer this feeling."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-033-letra-pequena",
+      "catalogSenseId": "es-sk:c2:exp-pilot-033-letra-pequena:noun:1",
+      "term": "letra pequeña",
+      "normalizedTerm": "letra pequeña",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "locución nominal",
+      "definition": "Cláusulas de un acuerdo impresas en un tamaño menor que pueden pasar inadvertidas pese a su importancia.",
+      "example": "El anuncio prometía flexibilidad, pero la letra pequeña exigía avisar con tres meses de antelación.",
+      "exampleSurfaceForm": "letra pequeña",
+      "translation": "drobné písmo; nenápadné, ale dôležité podmienky",
+      "levelRationale": "Distinguishes the less salient small-type restrictions from the prominent promise in an advertisement; the selected sense retains its typographic basis and does not assert that every small-print clause is abusive. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/letra",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE letra pequeña explicitly connects reduced salience to smaller type."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-transactions"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "neutral",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Distinguishes the less salient small-type restrictions from the prominent promise in an advertisement; the selected sense retains its typographic basis and does not assert that every small-print clause is abusive."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-034-vicio-oculto",
+      "catalogSenseId": "es-sk:c2:exp-pilot-034-vicio-oculto:noun:1",
+      "term": "vicio oculto",
+      "normalizedTerm": "vicio oculto",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "locución nominal",
+      "definition": "Defecto de un bien que no resulta evidente al examinarlo de manera ordinaria.",
+      "example": "Tras la compra apareció un vicio oculto en la instalación, invisible durante la visita.",
+      "exampleSurfaceForm": "vicio oculto",
+      "translation": "skrytá vada",
+      "levelRationale": "Technical receptive term separates latent defect from ordinary wear or vice of character; the card makes no claim about legal remedies or deadlines. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "masculine",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://www.boe.es/biblioteca_juridica/anuarios_derecho/abrir_pdf.php?id=ANU-R-2021-70244102458",
+        "role": "Phrase-level linguistic reference only; no legal advice, deadlines or remedies imported.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "BOE-hosted research by Amparo Núñez Marti discusses non-apparent material defects of a purchased thing, contrasting them with apparent defects."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-transactions"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "technical/legal; receptive vocabulary",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Technical receptive term separates latent defect from ordinary wear or vice of character; the card makes no claim about legal remedies or deadlines."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-035-quedar-en-papel-mojado",
+      "catalogSenseId": "es-sk:c2:exp-pilot-035-quedar-en-papel-mojado:verb:1",
+      "term": "quedar en papel mojado",
+      "normalizedTerm": "quedar en papel mojado",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "locución verbal",
+      "definition": "Perder eficacia práctica o no llegar a cumplirse algo escrito o acordado.",
+      "example": "Sin presupuesto para aplicarlo, el compromiso de renovación puede quedar en papel mojado.",
+      "exampleSurfaceForm": "quedar en papel mojado",
+      "translation": "zostať len na papieri; nemať praktický účinok",
+      "levelRationale": "Figurative evaluation distinguishes a formally existing promise from its practical ineffectiveness, without asserting formal legal invalidity. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/papel",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE papel mojado figurative sense is an ineffective/inconsistent thing, labeled colloquial."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-transactions"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Figurative evaluation distinguishes a formally existing promise from its practical ineffectiveness, without asserting formal legal invalidity."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-036-dar-largas",
+      "catalogSenseId": "es-sk:c2:exp-pilot-036-dar-largas:verb:1",
+      "term": "dar largas",
+      "normalizedTerm": "dar largas",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "locución verbal",
+      "definition": "Retrasar deliberadamente una respuesta o una solución mediante excusas o aplazamientos.",
+      "example": "Cada vez que pregunta por la devolución, le dan largas con una explicación distinta.",
+      "exampleSurfaceForm": "dan largas",
+      "translation": "naťahovať vybavenie výhovorkami; odkladať odpoveď",
+      "levelRationale": "The construction imputes evasive delay, unlike neutral rescheduling; repeated shifting explanations support that reading. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/largo",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE largo feminine delay sense exemplifies dar largas."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-transactions"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "neutral",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "The construction imputes evasive delay, unlike neutral rescheduling; repeated shifting explanations support that reading."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-037-hacer-la-vista-gorda",
+      "catalogSenseId": "es-sk:c2:exp-pilot-037-hacer-la-vista-gorda:verb:1",
+      "term": "hacer la vista gorda",
+      "normalizedTerm": "hacer la vista gorda",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "locución verbal",
+      "definition": "Fingir que no se advierte una falta para dejarla pasar.",
+      "example": "El encargado decidió hacer la vista gorda ante un retraso aislado, pero no ante los repetidos.",
+      "exampleSurfaceForm": "hacer la vista gorda",
+      "translation": "vedome privrieť oči nad prehreškom",
+      "levelRationale": "Intentional non-enforcement differs from ignorance; context determines whether the tolerance is sympathetic or blameworthy. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/vista",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE vista phrase involves pretending not to see and is marked colloquial."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-transactions"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "colloquial",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Intentional non-enforcement differs from ignorance; context determines whether the tolerance is sympathetic or blameworthy."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-038-a-beneficio-de-inventario",
+      "catalogSenseId": "es-sk:c2:exp-pilot-038-a-beneficio-de-inventario:adv:1",
+      "term": "a beneficio de inventario",
+      "normalizedTerm": "a beneficio de inventario",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "locución adverbial",
+      "definition": "Con reservas, sin aceptar como segura una idea, una noticia o una afirmación.",
+      "example": "Tomó la promesa de entrega a beneficio de inventario: pidió una fecha por escrito antes de organizar la mudanza.",
+      "exampleSurfaceForm": "a beneficio de inventario",
+      "translation": "s výhradami; bez bezvýhradného prijatia tvrdenia",
+      "levelRationale": "Practices a fixed idiom for reserved reception of a report: the recipient does not commit fully pending confirmation. It builds on B1 cuestionar (es-sk:b1:i25964) and A1 duda (es-sk:a1:i66857); the new learning target is the idiomatic stance formula, not a new mental state. Distinguish it from an explicit salvedad condition; exclude inheritance and carefree senses. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/beneficio",
+        "role": "Semantic checking only; original learner text, no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE a beneficio de inventario sense 1 expresses doubt or reservation toward an idea, news or assertion; two other senses are excluded."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-transactions"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Practices a fixed idiom for reserved reception of a report: the recipient does not commit fully pending confirmation. It builds on B1 cuestionar (es-sk:b1:i25964) and A1 duda (es-sk:a1:i66857); the new learning target is the idiomatic stance formula, not a new mental state. Distinguish it from an explicit salvedad condition; exclude inheritance and carefree senses."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-039-en-puridad",
+      "catalogSenseId": "es-sk:c2:exp-pilot-039-en-puridad:adv:1",
+      "term": "en puridad",
+      "normalizedTerm": "en puridad",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "locución adverbial",
+      "definition": "Hablando con exactitud y atendiendo al sentido estricto de lo que se dice.",
+      "example": "En puridad, el estudio describe una asociación, no demuestra una relación causal.",
+      "exampleSurfaceForm": "En puridad",
+      "translation": "presne vzaté; v prísnom zmysle",
+      "levelRationale": "Formal corrective marker narrows a claim by its strict meaning; it is not a reference to purity or moral virtue. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/puridad",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE en puridad current sense is strict or actual truth."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-work-science"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Formal corrective marker narrows a claim by its strict meaning; it is not a reference to purity or moral virtue."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-040-sin-perjuicio-de",
+      "catalogSenseId": "es-sk:c2:exp-pilot-040-sin-perjuicio-de:adp:1",
+      "term": "sin perjuicio de",
+      "normalizedTerm": "sin perjuicio de",
+      "level": "C2",
+      "partOfSpeech": "ADP",
+      "displayPartOfSpeech": "locución preposicional",
+      "definition": "Sin que ello impida o limite lo que se indica a continuación.",
+      "example": "Podemos aceptar esta versión provisional, sin perjuicio de revisarla cuando lleguen los datos pendientes.",
+      "exampleSurfaceForm": "sin perjuicio de",
+      "translation": "bez toho, aby tým bola dotknutá možnosť; pri zachovaní možnosti",
+      "levelRationale": "Preserves a further option alongside present acceptance; distinguish this formal reservation from simple contradiction or physical harm. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/perjuicio",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE sin perjuicio preserves something from impairment."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-work-science"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Preserves a further option alongside present acceptance; distinguish this formal reservation from simple contradiction or physical harm."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-041-peticion-de-principio",
+      "catalogSenseId": "es-sk:c2:exp-pilot-041-peticion-de-principio:noun:1",
+      "term": "petición de principio",
+      "normalizedTerm": "petición de principio",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "locución nominal",
+      "definition": "Razonamiento que usa como premisa aquello mismo que pretende demostrar.",
+      "example": "Decir «esta norma es justa porque es una norma justa» es una petición de principio: la conclusión se repite como premisa.",
+      "exampleSurfaceForm": "petición de principio",
+      "translation": "logický kruh; predpokladanie toho, čo sa má dokázať",
+      "levelRationale": "Identifies circular support rather than an initial request or any weak argument; a receptive reasoning term used in critical reading. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/petición",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE petición de principio uses the intended conclusion as antecedent."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-work-science"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Identifies circular support rather than an initial request or any weak argument; a receptive reasoning term used in critical reading."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-042-falacia-del-hombre-de-paja",
+      "catalogSenseId": "es-sk:c2:exp-pilot-042-falacia-del-hombre-de-paja:noun:1",
+      "term": "falacia del hombre de paja",
+      "normalizedTerm": "falacia del hombre de paja",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "locución nominal",
+      "definition": "Error argumentativo que consiste en refutar una versión deformada de la postura ajena.",
+      "example": "Presentar una propuesta de regulación como una prohibición absoluta es una falacia del hombre de paja.",
+      "exampleSurfaceForm": "falacia del hombre de paja",
+      "translation": "argumentačný klam: vyvracanie skreslenej podoby cudzieho názoru",
+      "levelRationale": "Requires tracking the original position and its distortion; it is not merely insult, exaggeration, or disagreement. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://www.filosoficas.unam.mx/~cruzparc/copicap4.pdf",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "primary-search-excerpt-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE falacia lacks this specific term; UNAM-hosted logic chapter explains attacking a weakened substitute position."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-work-science"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Requires tracking the original position and its distortion; it is not merely insult, exaggeration, or disagreement."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-043-parsimonia",
+      "catalogSenseId": "es-sk:c2:exp-pilot-043-parsimonia:noun:1",
+      "term": "parsimonia",
+      "normalizedTerm": "parsimonia",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Uso de pocos supuestos o recursos explicativos, sin añadir los que no hacen falta.",
+      "example": "Entre dos modelos que explican igual de bien los datos, la parsimonia favorece el que necesita menos supuestos.",
+      "exampleSurfaceForm": "parsimonia",
+      "translation": "úspornosť vysvetlenia; minimum potrebných predpokladov",
+      "levelRationale": "Methodological economy is distinct from slowness or personal thrift; fewer assumptions alone do not guarantee truth. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://fce.unal.edu.co/media/files/imagenes/Cuadernos/ed_digital/revista_50.pdf",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "primary-search-excerpt-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE does not list methodological sense; UNAL research explains economy of assumptions."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": false,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-work-science"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Methodological economy is distinct from slowness or personal thrift; fewer assumptions alone do not guarantee truth."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-044-espurio",
+      "catalogSenseId": "es-sk:c2:exp-pilot-044-espurio:adj:1",
+      "term": "espurio",
+      "normalizedTerm": "espurio",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Que parece tener una validez que en realidad no posee.",
+      "example": "La asociación entre las dos tendencias sugería un vínculo causal espurio: ambas dependían de una tercera variable.",
+      "exampleSurfaceForm": "espurio",
+      "translation": "zdanlivý; nepravý (tu: domnelý príčinný vzťah)",
+      "levelRationale": "The observed statistical association can be real while the inferred causal link is spurious. Distinguishes causation from common-cause association, not real measurements from fabricated data; earlier falso (es-sk:a1:i13643) does not teach this inferential distinction. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "espuria",
+          "type": "feminine singular"
+        },
+        {
+          "form": "espurios",
+          "type": "masculine plural"
+        },
+        {
+          "form": "espurias",
+          "type": "feminine plural"
+        }
+      ],
+      "lexicalEvidence": {
+        "referenceUrl": "https://revistas.unam.mx/index.php/eab/article/download/72933/74148",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "primary-search-excerpt-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE false sense is generic; UNAM causal-analysis paper identifies common-cause spurious association."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": false,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-work-science"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "The observed statistical association can be real while the inferred causal link is spurious. Distinguishes causation from common-cause association, not real measurements from fabricated data; earlier falso (es-sk:a1:i13643) does not teach this inferential distinction."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-045-hacer-lena-del-arbol-caido",
+      "catalogSenseId": "es-sk:c2:exp-pilot-045-hacer-lena-del-arbol-caido:verb:1",
+      "term": "hacer leña del árbol caído",
+      "normalizedTerm": "hacer leña del árbol caído",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "locución verbal",
+      "definition": "Aprovechar la caída o la desgracia de alguien para atacarlo.",
+      "example": "La crítica de su gestión era necesaria, pero burlarse ahora de su ruina sería hacer leña del árbol caído.",
+      "exampleSurfaceForm": "hacer leña del árbol caído",
+      "translation": "útočiť na toho, kto už padol; zneužívať cudzie nešťastie",
+      "levelRationale": "The metaphor condemns opportunistic attack on a weakened person while allowing legitimate criticism to remain distinct. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://cvc.cervantes.es/lengua/refranero/ficha.aspx?Lng=0&Par=58488",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "primary-search-excerpt-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE leña lacked phrase; Cervantes refranero explicitly attests present-day locution."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-culture-public"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "neutral",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "The metaphor condemns opportunistic attack on a weakened person while allowing legitimate criticism to remain distinct."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-046-cortina-de-humo",
+      "catalogSenseId": "es-sk:c2:exp-pilot-046-cortina-de-humo:noun:1",
+      "term": "cortina de humo",
+      "normalizedTerm": "cortina de humo",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "locución nominal",
+      "definition": "Acción o asunto con el que se desvía la atención de otro que se quiere ocultar.",
+      "example": "La polémica sobre el decorado parecía una cortina de humo para evitar preguntas sobre el presupuesto.",
+      "exampleSurfaceForm": "cortina de humo",
+      "translation": "dymová clona; zástupná téma na odvedenie pozornosti",
+      "levelRationale": "Accuses a distraction of serving concealment; the appearance marker preserves uncertainty about intent. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/cortina",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE cortina de humo sense 1 is concealment by artifice."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-culture-public"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "neutral",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Accuses a distraction of serving concealment; the appearance marker preserves uncertainty about intent."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-047-brindis-al-sol",
+      "catalogSenseId": "es-sk:c2:exp-pilot-047-brindis-al-sol:noun:1",
+      "term": "brindis al sol",
+      "normalizedTerm": "brindis al sol",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "locución nominal",
+      "definition": "Gesto o promesa que busca impresionar aun sabiendo que no tendrá efecto o no podrá cumplirse.",
+      "example": "Sabía que no habría financiación, pero prometió reformarlo todo: fue un brindis al sol.",
+      "exampleSurfaceForm": "brindis al sol",
+      "translation": "veľkolepé gesto či sľub, o ktorom sa vie, že nič neprinesie",
+      "levelRationale": "Recognizes a performative promise made with awareness of its ineffectiveness; unlike a feasible sincere promise, the gesture seeks an impression without practical consequence. This Spain-marked idiom is contextual C2 practice, not a pan-Hispanic requirement. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "masculine",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/brindis",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE brindis al sol is marked Spain and includes knowledge of lack of consequences/viability."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-culture-public"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "neutral",
+      "region": "Spain (DLE regional label); familiarity elsewhere is not measured.",
+      "lowerLevelComparison": "Recognizes a performative promise made with awareness of its ineffectiveness; unlike a feasible sincere promise, the gesture seeks an impression without practical consequence. This Spain-marked idiom is contextual C2 practice, not a pan-Hispanic requirement."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-048-canto-de-sirena",
+      "catalogSenseId": "es-sk:c2:exp-pilot-048-canto-de-sirena:noun:1",
+      "term": "canto de sirena",
+      "normalizedTerm": "canto de sirena",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "locución nominal",
+      "definition": "Promesa o propuesta atractiva que puede engañar o conducir a una decisión perjudicial.",
+      "example": "La rentabilidad garantizada era un canto de sirena que ocultaba riesgos considerables.",
+      "exampleSurfaceForm": "canto de sirena",
+      "translation": "lákavý, ale klamlivý či nebezpečný prísľub",
+      "levelRationale": "Allusive warning links attraction to concealed danger; the image is neither an emergency siren nor any pleasant invitation. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "cantos de sirena",
+          "type": "plural",
+          "note": "DLE notes that the expression is used more often in the plural."
+        }
+      ],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/canto",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE canto de sirena describes attractive deceptive discourse; usually plural."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": true,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-culture-public"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "neutral",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Allusive warning links attraction to concealed danger; the image is neither an emergency siren nor any pleasant invitation."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-049-panegirico",
+      "catalogSenseId": "es-sk:c2:exp-pilot-049-panegirico:noun:1",
+      "term": "panegírico",
+      "normalizedTerm": "panegírico",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Discurso o escrito dedicado a elogiar ampliamente a alguien o algo.",
+      "example": "Lo que debía ser una evaluación crítica terminó siendo un panegírico del fundador.",
+      "exampleSurfaceForm": "panegírico",
+      "translation": "oslavný prejav či text; chválospev",
+      "levelRationale": "Names a sustained praise genre; the contrast with evaluation adds criticism, but excess or insincerity is not inherent in every panegyric. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "masculine",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/panegírico",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE noun senses support praise discourse or emphatic praise."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": false,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-culture-public"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Names a sustained praise genre; the contrast with evaluation adds criticism, but excess or insincerity is not inherent in every panegyric."
+    },
+    {
+      "id": "es-sk:c2:exp-pilot-050-vituperio",
+      "catalogSenseId": "es-sk:c2:exp-pilot-050-vituperio:noun:1",
+      "term": "vituperio",
+      "normalizedTerm": "vituperio",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Reproche o expresión de censura especialmente dura contra alguien.",
+      "example": "El debate pasó de la discrepancia razonada al vituperio personal.",
+      "exampleSurfaceForm": "vituperio",
+      "translation": "hanobenie; prudká slovná hana",
+      "levelRationale": "Formal designation of harsh personal censure distinguishes attack from reasoned disagreement; no obscenity is required. Provisional C2 practice selection: earlier acquisition is possible; no exclusive or official word-level claim.",
+      "gender": "masculine",
+      "alternativeForms": [],
+      "lexicalEvidence": {
+        "referenceUrl": "https://dle.rae.es/vituperio",
+        "role": "Semantic checking only; no source definitions or examples imported and no official CEFR word-level assignment.",
+        "verificationStatus": "page-read",
+        "observedAt": "2026-09-13",
+        "support": "DLE first sense concerns disparaging verbal dishonor."
+      },
+      "authoringBatch": "c2-pilot-2026-09-13",
+      "sourceVersion": "wordfold-spanish-c2-pilot-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "pcicClassification": {
+        "id": "9",
+        "label": "Nociones específicas"
+      },
+      "secondaryClassifications": [],
+      "isReflexiveVerb": false,
+      "isMultiwordExpression": false,
+      "originalContent": true,
+      "originalContentDeclaration": "Independently selected and authored Wordfold draft. PCIC is a framework reference; no learner-facing PCIC definitions or examples were copied.",
+      "objectiveIds": [
+        "C2-culture-public"
+      ],
+      "placementStatus": "provisional",
+      "placementReferenceIds": [
+        "pcic-objectives-c1-c2",
+        "pcic-specific-c1-c2"
+      ],
+      "register": "formal",
+      "region": "No regional restriction asserted; the pilot does not measure frequency across countries.",
+      "lowerLevelComparison": "Formal designation of harsh personal censure distinguishes attack from reasoned disagreement; no obscenity is required."
+    }
+  ]
+}

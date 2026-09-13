@@ -1,0 +1,544 @@
+{
+  "schemaVersion": 1,
+  "reviewerType": "ai",
+  "kind": "slovak",
+  "reviewerId": "c2-slovak-independent-ai",
+  "reviewedAt": "2026-09-13T14:59:41.225Z",
+  "notHumanApproval": true,
+  "batchId": "c2-pilot-2026-09-13",
+  "datasetSha256": "ca530fc3d11a039947585566b9f0e1c22049dec04b8029bc372ccc31ad569dc9",
+  "scope": "Slovak hint accuracy and alignment with the selected Spanish sense; no audio review.",
+  "entries": [
+    {
+      "entryId": "es-sk:c2:exp-pilot-001-aquilatar",
+      "catalogSenseId": "es-sk:c2:exp-pilot-001-aquilatar:verb:1",
+      "level": "C2",
+      "entrySha256": "0fb9021eee224db0d3312a78cd3364be88d49bdbd5bd4b205af854f2f75f33a6",
+      "decision": "no-issue",
+      "notes": "Dôkladne posúdiť and starostlivo zvážiť hodnotu preserve careful assessment of testimonial worth; neither implies assaying metal or proving the accusation.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-002-dirimir",
+      "catalogSenseId": "es-sk:c2:exp-pilot-002-dirimir:verb:1",
+      "level": "C2",
+      "entrySha256": "d47a65da347186051576e74a8b5b85eb0c3d98e9e07f589835e5ad7106820db2",
+      "decision": "no-issue",
+      "notes": "Rozhodnúť spor and vyriešiť spornú otázku express resolution of competing positions and fit the commission deciding the disputed issue.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-003-deslindar",
+      "catalogSenseId": "es-sk:c2:exp-pilot-003-deslindar:verb:1",
+      "level": "C2",
+      "entrySha256": "60080744245ba2c07a43b23eb14da6ffc994ab56eb50fddaddc876ab8c0a848d",
+      "decision": "no-issue",
+      "notes": "Presne rozlíšiť captures the conceptual boundary between political and administrative responsibility; vymedziť is a useful supporting gloss without implying acquittal.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-004-colegir",
+      "catalogSenseId": "es-sk:c2:exp-pilot-004-colegir:verb:1",
+      "level": "C2",
+      "entrySha256": "964cd122d1059c15ec7ba413a21fcc64d22ce715685cfa84aefb5dacd6addcfe",
+      "decision": "no-issue",
+      "notes": "Vyvodiť and usúdiť z indícií preserve inference rather than knowledge; the Spanish negation correctly denies that silence licenses the conclusion.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-005-soslayar",
+      "catalogSenseId": "es-sk:c2:exp-pilot-005-soslayar:verb:1",
+      "level": "C2",
+      "entrySha256": "cbcaffeca3fc05f553572a121dcb08422afe4d1212ffbd22894b79178969369f",
+      "decision": "no-issue",
+      "notes": "Obísť otázku is exact for evasive answering; vyhnúť sa riešeniu supports avoiding engagement without confusing the sense with preventing harm.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-006-salvedad",
+      "catalogSenseId": "es-sk:c2:exp-pilot-006-salvedad:noun:1",
+      "level": "C2",
+      "entrySha256": "fdd4bb7e0097e6c9fff53c69a177243564c46ad9c96754c4e130c1a469a64178",
+      "decision": "no-issue",
+      "notes": "Výhrada and obmedzujúce spresnenie preserve qualified assent, including the dependency of dates on permission, without implying wholesale rejection.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-007-sin-ambages",
+      "catalogSenseId": "es-sk:c2:exp-pilot-007-sin-ambages:adv:1",
+      "level": "C2",
+      "entrySha256": "b93a79103c5ec281c6635e2673f7b8f3782e34c643889908fcfcf6833e116928",
+      "decision": "no-issue",
+      "notes": "Bez okolkov is idiomatic Slovak for direct speech; priamo is supported by the no-evasion definition and does not add hostility.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-008-hilar-fino",
+      "catalogSenseId": "es-sk:c2:exp-pilot-008-hilar-fino:verb:1",
+      "level": "C2",
+      "entrySha256": "6e8c0c520d1b7187014bffd652d79de8aea09143c326205944a1cadf791c2c6b",
+      "decision": "no-issue",
+      "notes": "Jemne rozlišovať and dôkladne rozoberať detaily fit distinguishing criticism of a method from attacking its user; metaphor is not translated literally.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-009-rizar-el-rizo",
+      "catalogSenseId": "es-sk:c2:exp-pilot-009-rizar-el-rizo:verb:1",
+      "level": "C2",
+      "entrySha256": "c26e4d70d3d4950e10f20f45430cb9cfb97be49c02fbe4096ad54fec0e7615b9",
+      "decision": "changes-requested",
+      "notes": "The Slovak hint correctly selects excessive complication in the signatures example, but the Spanish definition also admits neutral refinement. Narrow the Spanish sense so the fields agree.",
+      "findings": [
+        {
+          "field": "definition",
+          "suggestedReplacement": "Añadir a algo una complicación innecesaria.",
+          "reason": "Align with the unnecessary-complication sense already selected by the example and Slovak hint."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-010-dar-con-la-horma-de-su-zapato",
+      "catalogSenseId": "es-sk:c2:exp-pilot-010-dar-con-la-horma-de-su-zapato:verb:1",
+      "level": "C2",
+      "entrySha256": "3b2c94e177fdfae5af279054f86c7ac3a556d9025677b221c54a7439457f645f",
+      "decision": "no-issue",
+      "notes": "Naraziť na seberovného súpera fits the negotiator meeting effective resistance; nájsť si svojho majstra supplies an idiomatic counterpart without literal shoe imagery.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-011-no-dar-puntada-sin-hilo",
+      "catalogSenseId": "es-sk:c2:exp-pilot-011-no-dar-puntada-sin-hilo:verb:1",
+      "level": "C2",
+      "entrySha256": "549f820eec9c8a2d7bf762127c61967a199e588188e9895ee229e6372f8d855f",
+      "decision": "no-issue",
+      "notes": "Vypočítavý zámer preserves calculated self-interest in mentioning the vacancy to the director, rather than simply acting carefully or sewing literally.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-012-nadar-y-guardar-la-ropa",
+      "catalogSenseId": "es-sk:c2:exp-pilot-012-nadar-y-guardar-la-ropa:verb:1",
+      "level": "C2",
+      "entrySha256": "7c11f453cbb7ed243696591ac6aa85719f42df8e7714a6c19b085bb716af3c37",
+      "decision": "no-issue",
+      "notes": "The hint retains seeking benefit while avoiding accompanying risk; it fits supporting the protest privately without public commitment.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-013-arrimar-el-ascua-a-su-sardina",
+      "catalogSenseId": "es-sk:c2:exp-pilot-013-arrimar-el-ascua-a-su-sardina:verb:1",
+      "level": "C2",
+      "entrySha256": "c3e0b18a69c2aaeae46b8c88154387946ac3b524666e6c7d5e439eaccfa483da",
+      "decision": "no-issue",
+      "notes": "Prihrievať si vlastnú polievočku is an idiomatic counterpart to self-serving advocacy; the first gloss explains the benefit without literal fire imagery.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-014-a-toro-pasado",
+      "catalogSenseId": "es-sk:c2:exp-pilot-014-a-toro-pasado:adv:1",
+      "level": "C2",
+      "entrySha256": "06ea81f34d58bd7c02abec70557152815a58f45375e464fb49eddba397868831",
+      "decision": "no-issue",
+      "notes": "Dodatočne, keď je už výsledok známy preserves hindsight and resolved uncertainty; the example supplies the ironic claim that everyone already knew.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-015-a-fuer-de",
+      "catalogSenseId": "es-sk:c2:exp-pilot-015-a-fuer-de:adp:1",
+      "level": "C2",
+      "entrySha256": "177493fa3994003df48fc42431dc59ced0f2d269139068846528a42acb5d9b5b",
+      "decision": "changes-requested",
+      "notes": "The causal reading is present, but pre svoju vlastnosť is an opaque generic phrase and tým, že bol fixes masculine past-tense wording not inherent in the expression. Provide an intelligible causal gloss.",
+      "findings": [
+        {
+          "field": "translation",
+          "suggestedReplacement": "pre určitú vlastnosť (napr. z opatrnosti); vzhľadom na to, že je",
+          "reason": "Clarify causal quality reading without freezing the expression to masculine past tense."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-016-en-aras-de",
+      "catalogSenseId": "es-sk:c2:exp-pilot-016-en-aras-de:adp:1",
+      "level": "C2",
+      "entrySha256": "0f76f6fee14a58bb374ac46c20c503de92660dbe1e1fab4dded9ac9988c5b89c",
+      "decision": "changes-requested",
+      "notes": "V záujme is exact, but vyššieho cieľa adds the idea of an elevated or morally superior purpose. The Spanish only prioritizes a purpose.",
+      "findings": [
+        {
+          "field": "translation",
+          "suggestedReplacement": "v záujme; v prospech uprednostneného cieľa",
+          "reason": "Avoid implying moral superiority of the purpose."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-017-habida-cuenta-de",
+      "catalogSenseId": "es-sk:c2:exp-pilot-017-habida-cuenta-de:adp:1",
+      "level": "C2",
+      "entrySha256": "db7501c0c7e8c75fe9e5c69527c7a08c790cb46e43560ae44c82722a0f30499f",
+      "decision": "no-issue",
+      "notes": "Vzhľadom na and berúc do úvahy both preserve considering an already expired deadline; neither implies automatic causal inevitability.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-018-a-mayor-abundamiento",
+      "catalogSenseId": "es-sk:c2:exp-pilot-018-a-mayor-abundamiento:adv:1",
+      "level": "C2",
+      "entrySha256": "3a974dd9f3ef36bf36e7ca3861fd7035a2d5390ed1bffe0efb255a560e562d9d",
+      "decision": "no-issue",
+      "notes": "Navyše correctly adds corroboration, and na ďalšie podporenie argumentu explains its formal argumentative function; the missing date correspondence adds a separate reinforcing reason.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-019-valga-la-redundancia",
+      "catalogSenseId": "es-sk:c2:exp-pilot-019-valga-la-redundancia:x:1",
+      "level": "C2",
+      "entrySha256": "6f302e2495bedc00f042aec7da3a31fc6047a50196fb04e69fd57484949479a1",
+      "decision": "no-issue",
+      "notes": "Ak dovolíte tú významovú nadbytočnosť functions as a metalinguistic acknowledgement seeking tolerance for the redundant wording, matching the example.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-020-con-la-venia",
+      "catalogSenseId": "es-sk:c2:exp-pilot-020-con-la-venia:adv:1",
+      "level": "C2",
+      "entrySha256": "4a834bbfa3d9ed78d6f0656199b4999cfdb958981609aa16989945ac8c25f75e",
+      "decision": "no-issue",
+      "notes": "S dovolením is natural and the explicit formal request-for-floor parenthesis preserves the ceremonial register rather than implying agreement.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-021-decir-con-la-boca-pequena",
+      "catalogSenseId": "es-sk:c2:exp-pilot-021-decir-con-la-boca-pequena:verb:1",
+      "level": "C2",
+      "entrySha256": "968a22ea2dcb92ebc35488bcf731c25a9759859e1280a3671aa72df73cccfc5d",
+      "decision": "no-issue",
+      "notes": "Bez presvedčenia is precise for weakly voiced support; len neochotne remains compatible in this example though reluctance alone would not define the full expression.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-022-tirar-la-piedra-y-esconder-la-mano",
+      "catalogSenseId": "es-sk:c2:exp-pilot-022-tirar-la-piedra-y-esconder-la-mano:verb:1",
+      "level": "C2",
+      "entrySha256": "db9b317712c8bc42368724e1668110347cd7642bbd1f6deed8bee562ebfc3998",
+      "decision": "no-issue",
+      "notes": "The hint preserves both causing harm/conflict and hiding responsibility. Vlastnú účasť is understood as culpable involvement through the first clause.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-023-donde-dije-digo-digo-diego",
+      "catalogSenseId": "es-sk:c2:exp-pilot-023-donde-dije-digo-digo-diego:x:1",
+      "level": "C2",
+      "entrySha256": "d4c1a294b3e3496eb0038494170e52281804c457c8524d38b6252a8daea8308c",
+      "decision": "changes-requested",
+      "notes": "Teraz tvrdia pravý opak narrows retraction to exact contradiction, and obracajú podľa potreby hard-codes expediency. The expression can mark backing away from an earlier assertion more generally.",
+      "findings": [
+        {
+          "field": "translation",
+          "suggestedReplacement": "beriem späť, čo som povedal; teraz už tvrdím niečo iné",
+          "reason": "Allow retraction or changed assertion without requiring exact logical opposite."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-024-a-buen-entendedor-pocas-palabras-bastan",
+      "catalogSenseId": "es-sk:c2:exp-pilot-024-a-buen-entendedor-pocas-palabras-bastan:x:1",
+      "level": "C2",
+      "entrySha256": "8035fee18d2c6bfbcb321779ec9bbcbb5fbbf8f02eaddd9b158ec8f88fe8a9c2",
+      "decision": "no-issue",
+      "notes": "Múdremu stačí naznačiť is a natural proverb equivalent and keeps inference from a hint; the threatening force is correctly supplied by the contract-renewal context.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-025-como-quien-no-quiere-la-cosa",
+      "catalogSenseId": "es-sk:c2:exp-pilot-025-como-quien-no-quiere-la-cosa:adv:1",
+      "level": "C2",
+      "entrySha256": "01ce7161df277e770911141fd017d08db3190e2eff438e11457258f5116a78db",
+      "decision": "no-issue",
+      "notes": "Akoby and zdanlivou preserve apparent casualness and leave room for actual intent; the job question demonstrates the indirect maneuver.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-026-por-no-decir",
+      "catalogSenseId": "es-sk:c2:exp-pilot-026-por-no-decir:x:1",
+      "level": "C2",
+      "entrySha256": "c97544d974e4cb4603711f5484573173cbf9747ddfa855f116a9aa13ffa4a880",
+      "decision": "no-issue",
+      "notes": "Ak nie rovno and aby som nepovedal naturally introduce the stronger accusation while presenting it as restrained; neither reads as literal prohibition on speaking.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-027-hacer-de-tripas-corazon",
+      "catalogSenseId": "es-sk:c2:exp-pilot-027-hacer-de-tripas-corazon:verb:1",
+      "level": "C2",
+      "entrySha256": "d63f3adcd876a07938aea09b6c2ff17eee24c251c714d50d71c00842e7ff40e0",
+      "decision": "no-issue",
+      "notes": "Premôcť sa is particularly apt for congratulating a rival despite disappointment; the second gloss retains courage plus inner resistance without suggesting emotional absence.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-028-guardar-las-distancias",
+      "catalogSenseId": "es-sk:c2:exp-pilot-028-guardar-las-distancias:verb:1",
+      "level": "C2",
+      "entrySha256": "4be889b02a56640be11dfc2f320d75da64fa612e4738de634779119395e7d917",
+      "decision": "no-issue",
+      "notes": "Udržiavať si odstup vo vzťahu preserves interpersonal reserve, not physical distance, and fits maintaining a professional authority boundary.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-029-contemporizar",
+      "catalogSenseId": "es-sk:c2:exp-pilot-029-contemporizar:verb:1",
+      "level": "C2",
+      "entrySha256": "a27f62a2e2de8c85f73416b907a3fd41e7815f09d5bc8b2e6a7ad1a2c1470333",
+      "decision": "no-issue",
+      "notes": "The Slovak causal purpose clause preserves accommodation to avoid conflict; it does not imply endorsement of either party’s accusations.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-030-susceptibilidad",
+      "catalogSenseId": "es-sk:c2:exp-pilot-030-susceptibilidad:noun:1",
+      "level": "C2",
+      "entrySha256": "801323b3b051ecf497b2c988beb9d5e952c7a361e95639c86c5db085cd99016a",
+      "decision": "no-issue",
+      "notes": "Urážlivosť precisely captures readiness to take offense. Precitlivenosť na kritiku narrows the supporting gloss appropriately to the carefully framed objection example.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-031-resquemor",
+      "catalogSenseId": "es-sk:c2:exp-pilot-031-resquemor:noun:1",
+      "level": "C2",
+      "entrySha256": "8bf2d7134b155a78e00b341f0f69f78da86969b7b58978592927a58f6040bd77",
+      "decision": "no-issue",
+      "notes": "Pretrvávajúca horkosť accurately retains lingering resentment despite accepting an apology. Zvyšková nevôľa is intelligible but slightly technical in collocation; optional smoother second gloss: pretrvávajúca nevôľa.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-032-animadversion",
+      "catalogSenseId": "es-sk:c2:exp-pilot-032-animadversion:noun:1",
+      "level": "C2",
+      "entrySha256": "6eda5d4aca6287e21a3467c5a4b6929139dfde63ad3004d173f391748ee0ccd2",
+      "decision": "no-issue",
+      "notes": "Nevraživosť and nepriateľský odpor preserve hostility toward the author rather than intellectual disagreement with the book.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-033-letra-pequena",
+      "catalogSenseId": "es-sk:c2:exp-pilot-033-letra-pequena:noun:1",
+      "level": "C2",
+      "entrySha256": "96dbabdf56b1f10befb15da4e778f9fa48bb4647bd249dc4881c26038d857090",
+      "decision": "no-issue",
+      "notes": "Drobné písmo evokes the established contractual image, while the explanatory gloss prevents confusing physical font size with the consequential conditions sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-034-vicio-oculto",
+      "catalogSenseId": "es-sk:c2:exp-pilot-034-vicio-oculto:noun:1",
+      "level": "C2",
+      "entrySha256": "c15738540eb2ccdf6a64b6127da052e88b4c2267e861319aeb0bd58d72da5527",
+      "decision": "no-issue",
+      "notes": "Skrytá vada is the appropriate lexical counterpart for a defect not apparent in ordinary examination. This is language correspondence, not verification of jurisdiction-specific legal rights.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-035-quedar-en-papel-mojado",
+      "catalogSenseId": "es-sk:c2:exp-pilot-035-quedar-en-papel-mojado:verb:1",
+      "level": "C2",
+      "entrySha256": "ece5d8b2a3ccaccf867fa2e11685b0afc826c1c363e3e02804703b1052e37762",
+      "decision": "no-issue",
+      "notes": "Zostať len na papieri is idiomatic and nemať praktický účinok explains lack of implementation; Spanish puede correctly leaves failure as a possibility.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-036-dar-largas",
+      "catalogSenseId": "es-sk:c2:exp-pilot-036-dar-largas:verb:1",
+      "level": "C2",
+      "entrySha256": "65d55a3f07cf9f381f7cb62b09283c98f7ee586870302b465211ac6e66864a2b",
+      "decision": "no-issue",
+      "notes": "Naťahovať vybavenie výhovorkami retains deliberate stalling; odkladať odpoveď is anchored by that first gloss and the repeated changing explanations.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-037-hacer-la-vista-gorda",
+      "catalogSenseId": "es-sk:c2:exp-pilot-037-hacer-la-vista-gorda:verb:1",
+      "level": "C2",
+      "entrySha256": "f163a46ecc2c8c1553067bade9e8f9f2ce7c1b87940c501ba405a44d4c21a2fc",
+      "decision": "no-issue",
+      "notes": "Vedome privrieť oči nad prehreškom is idiomatic and explicitly preserves intentional tolerance rather than accidental failure to notice.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-038-poner-en-entredicho",
+      "catalogSenseId": "es-sk:c2:exp-pilot-038-poner-en-entredicho:verb:1",
+      "level": "C2",
+      "entrySha256": "cbbd6740ca1dc33d8fc91b4aed54fea77d2713bfb8ea140699bf842484bd31a1",
+      "decision": "no-issue",
+      "notes": "Spochybniť dôveryhodnosť či platnosť accurately fits contradictory invoices undermining the company account; the example does not demand an additional reputation gloss.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-039-en-puridad",
+      "catalogSenseId": "es-sk:c2:exp-pilot-039-en-puridad:adv:1",
+      "level": "C2",
+      "entrySha256": "b3d196c5dfac3bcfe2010ab5e6fedc320f0fee8f23c308a427a456d09f30807d",
+      "decision": "no-issue",
+      "notes": "Presne vzaté and v prísnom zmysle preserve strict formulation, especially association versus causality, without suggesting secrecy.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-040-sin-perjuicio-de",
+      "catalogSenseId": "es-sk:c2:exp-pilot-040-sin-perjuicio-de:adp:1",
+      "level": "C2",
+      "entrySha256": "f0a522bb56ca29bf7a00c6e9bd2c7b5d454648ab94417e09d5f0e86c16f6eb44",
+      "decision": "no-issue",
+      "notes": "Both Slovak phrases preserve the remaining possibility of later revision and do not imply that the provisional text causes damage. The gloss is tailored to the selected example.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-041-peticion-de-principio",
+      "catalogSenseId": "es-sk:c2:exp-pilot-041-peticion-de-principio:noun:1",
+      "level": "C2",
+      "entrySha256": "1280edc56ee8bd446423d1d7e5273d621de7876f9ef04a4227c45fd2a62759bd",
+      "decision": "no-issue",
+      "notes": "The explanatory second gloss precisely identifies assuming what must be proved; logický kruh is a familiar learner aid and is disambiguated by that explanation.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-042-falacia-del-hombre-de-paja",
+      "catalogSenseId": "es-sk:c2:exp-pilot-042-falacia-del-hombre-de-paja:noun:1",
+      "level": "C2",
+      "entrySha256": "97a67d48400e4bb4bdf0a9c3cddc970af321e9057037be6c6d63aaced168ae0f",
+      "decision": "no-issue",
+      "notes": "The paraphrase identifies refuting a distorted version of another position and avoids a literal straw-man translation. The example preserves regulation versus absolute prohibition.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-043-parsimonia",
+      "catalogSenseId": "es-sk:c2:exp-pilot-043-parsimonia:noun:1",
+      "level": "C2",
+      "entrySha256": "0a9dbc57010e8174d81c53235cca3144c2c2680baf3172670caa187bac170f5e",
+      "decision": "no-issue",
+      "notes": "Úspornosť vysvetlenia and minimum potrebných predpokladov match the explanatory-economy sense, rather than slowness, stinginess or low evidence quality.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-044-espurio",
+      "catalogSenseId": "es-sk:c2:exp-pilot-044-espurio:adj:1",
+      "level": "C2",
+      "entrySha256": "a6d82c646cf45ec1af87c471d447456ca83edb64ffa32d0a30d71491d70d7eaa",
+      "decision": "changes-requested",
+      "notes": "The core zdanlivý/nepravý is suitable, but vzťah bez skutočného podkladu can mislead here: a third variable can explain a real statistical association while the claimed direct causal link is unsupported. Clarify selected relationship in both languages.",
+      "findings": [
+        {
+          "field": "translation",
+          "suggestedReplacement": "zdanlivý; nepravý (vzťah, ktorý sa javí ako skutočný)",
+          "reason": "Avoid denying any genuine association or underlying explanation; coordinate with Spanish review of the exact technical example."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-045-hacer-lena-del-arbol-caido",
+      "catalogSenseId": "es-sk:c2:exp-pilot-045-hacer-lena-del-arbol-caido:verb:1",
+      "level": "C2",
+      "entrySha256": "3b422ed59fe5d7608b2fa46580313fea7f55a52e2a0d1dfeccc91b9440f0a582",
+      "decision": "no-issue",
+      "notes": "Útočiť na toho, kto už padol preserves attacking a weakened person; zneužívať cudzie nešťastie is anchored by that precise first gloss and the mocking-ruin example.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-046-cortina-de-humo",
+      "catalogSenseId": "es-sk:c2:exp-pilot-046-cortina-de-humo:noun:1",
+      "level": "C2",
+      "entrySha256": "6e7e439bd21b849c655b87c6c91fba2c6133759391917570af2686892ceef70e",
+      "decision": "no-issue",
+      "notes": "Dymová clona is a natural figurative equivalent and the explanatory second gloss captures concealment through distraction; the Spanish appearance marker leaves intention uncertain.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-047-brindis-al-sol",
+      "catalogSenseId": "es-sk:c2:exp-pilot-047-brindis-al-sol:noun:1",
+      "level": "C2",
+      "entrySha256": "52960aaa824c84cd80318f513ecc72fd20cb830da0da9b349edd9e83e6fab289",
+      "decision": "no-issue",
+      "notes": "The Slovak description preserves grand display without practical prospect and avoids literal toasting; the funding and timing omissions motivate that evaluation.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-048-canto-de-sirena",
+      "catalogSenseId": "es-sk:c2:exp-pilot-048-canto-de-sirena:noun:1",
+      "level": "C2",
+      "entrySha256": "db2ed9f6417f10e2348eebfb93e7d20f257f3b952acb43fcad8ce70fb935878d",
+      "decision": "no-issue",
+      "notes": "Lákavý, ale klamlivý či nebezpečný prísľub retains attraction plus deception/danger; the selected guaranteed-return example specifically supports the promise wording.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-049-panegirico",
+      "catalogSenseId": "es-sk:c2:exp-pilot-049-panegirico:noun:1",
+      "level": "C2",
+      "entrySha256": "6c697e357796de53ec8fa36544aad69ba473d19b54818bac7c91085c010c6393",
+      "decision": "no-issue",
+      "notes": "Oslavný prejav či text names the praise genre and chválospev is a useful equivalent; neither makes every instance necessarily insincere despite the critical example.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-pilot-050-vituperio",
+      "catalogSenseId": "es-sk:c2:exp-pilot-050-vituperio:noun:1",
+      "level": "C2",
+      "entrySha256": "212b74507f472edd2eff36857658ca0ad66aea1c07fa98b3a272fd17f30eb795",
+      "decision": "no-issue",
+      "notes": "Hanobenie and prudká slovná hana retain forceful personal censure without requiring obscenity. Hana is literary in tone and suitable to the formal headword; direct JULS corroboration was unavailable.",
+      "findings": []
+    }
+  ],
+  "method": "Independent AI comparison of every Slovak hint with its Spanish definition and example. Contextual paraphrases are evaluated as sense hints, not full sentence translations. No human, native-speaker or official level approval is claimed.",
+  "referenceEvidence": [
+    {
+      "url": "https://www.fundeu.es/recomendacion/a-fuer-de-no-es-a-fuerza-de/",
+      "status": "consulted",
+      "entryNumbers": [
+        15
+      ],
+      "note": "Institutional usage guidance supports causal by-being reading; distinguishes it from repeated-effort construction."
+    },
+    {
+      "url": "https://cvc.cervantes.es/lengua/refranero/ficha.aspx?Lng=0&Par=58538",
+      "status": "consulted",
+      "entryNumbers": [
+        23
+      ],
+      "note": "Cervantes describes rectifying or retracting a previous assertion; exact opposite is not required."
+    },
+    {
+      "url": "https://dle.rae.es/rizo",
+      "status": "consulted",
+      "entryNumbers": [
+        9
+      ],
+      "note": "DLE separates difficult achievement from excessive complication; Slovak hint selects excessive complication."
+    },
+    {
+      "url": "https://dle.rae.es/espurio",
+      "status": "consulted",
+      "entryNumbers": [
+        44
+      ],
+      "note": "General false/fictitious senses only; this page alone does not externally verify the technical confounding explanation."
+    },
+    {
+      "url": "https://slovnik.juls.savba.sk/?w=hana",
+      "status": "access-failed",
+      "entryNumbers": [
+        50
+      ],
+      "note": "Web tool returned non-retryable unsafe-to-open error. No JULS dictionary verification claimed."
+    },
+    {
+      "url": "https://slovnik.juls.savba.sk/?w=nev%C3%B4%C4%BEa",
+      "status": "access-failed",
+      "entryNumbers": [
+        31
+      ],
+      "note": "Web tool returned non-retryable unsafe-to-open error. Search did not supply suitable current dictionary evidence; assessment here is AI linguistic judgment."
+    }
+  ]
+}

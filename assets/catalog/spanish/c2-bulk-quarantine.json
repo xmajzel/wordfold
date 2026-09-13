@@ -1,0 +1,346 @@
+{
+  "schemaVersion": 1,
+  "batchId": "c2-bulk-2026-09-13",
+  "publicationStatus": "draft",
+  "authoredDatasetSha256": "b997261274b1b101c71f77502e4629b712e98af30e9bab5984e16265fbe3e735",
+  "reviewedDatasetSha256": "c71c721155b99276e0f4470ae738cb4967a2d5376a05896f84771b2fdd363225",
+  "notice": "Excluded from the reviewed preview. These nominations are preserved in c2-bulk-candidates.json; exclusion does not assign them to another CEFR level.",
+  "entries": [
+    {
+      "entryId": "es-sk:c2:exp-bulk-014-inhabitable",
+      "catalogSenseId": "es-sk:c2:exp-bulk-014-inhabitable:adj:1",
+      "term": "inhabitable",
+      "reasons": [
+        "Transparent ordinary unfit-for-living sense; current context does not justify new C2 placement."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-033-contratiempo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-033-contratiempo:noun:1",
+      "term": "contratiempo",
+      "reasons": [
+        "Ordinary unforeseen setback; no meaningful advanced register or interpretive contrast demonstrated."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-036-intransitable",
+      "catalogSenseId": "es-sk:c2:exp-bulk-036-intransitable:adj:1",
+      "term": "intransitable",
+      "reasons": [
+        "Same unusable-road selected sense as batch impracticable. Keep one rather than inflate coverage."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-061-paulatino",
+      "catalogSenseId": "es-sk:c2:exp-bulk-061-paulatino:adj:1",
+      "term": "paulatino",
+      "reasons": [
+        "Definition and context reproduce C1 gradual: gradual staged progression."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-062-inexorable",
+      "catalogSenseId": "es-sk:c2:exp-bulk-062-inexorable:adj:1",
+      "term": "inexorable",
+      "reasons": [
+        "Selected unavoidable sense duplicates B1 inevitable; no independent nuanced use is demonstrated."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-064-inminente",
+      "catalogSenseId": "es-sk:c2:exp-bulk-064-inminente:adj:1",
+      "term": "inminente",
+      "reasons": [
+        "Ordinary about-to-happen sense gives no persuasive new C2 demand."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-075-reconciliarse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-075-reconciliarse:verb:1",
+      "term": "reconciliarse",
+      "reasons": [
+        "Ordinary restoring a relationship sense lacks a justified advanced distinction."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-076-hacer-de-mediador",
+      "catalogSenseId": "es-sk:c2:exp-bulk-076-hacer-de-mediador:verb:1",
+      "term": "hacer de mediador",
+      "reasons": [
+        "Transparent compositional phrase; no new advanced lexical target beyond mediation."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-081-subsanar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-081-subsanar:verb:1",
+      "term": "subsanar",
+      "reasons": [
+        "Exact existing subsanar already covers correcting defects."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-088-sesgo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-088-sesgo:noun:1",
+      "term": "sesgo",
+      "reasons": [
+        "Exact existing sesgo already covers systematic bias."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-093-alusion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-093-alusion:noun:1",
+      "term": "alusión",
+      "reasons": [
+        "Morphological noun repeats existing C1 aludir indirect-reference sense."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-103-erguirse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-103-erguirse:verb:1",
+      "term": "erguirse",
+      "reasons": [
+        "Pronominal posture variant overlaps existing B2 erguir; no distinct selected meaning."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-105-encorvarse",
+      "catalogSenseId": "es-sk:c2:exp-bulk-105-encorvarse:verb:1",
+      "term": "encorvarse",
+      "reasons": [
+        "Pronominal variant repeats existing C1 encorvar back-bending sense."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-114-seudonimo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-114-seudonimo:noun:1",
+      "term": "seudónimo",
+      "reasons": [
+        "PCIC specific notions 3.1.1 places seudónimo at C1; current straightforward use gives no C2 extension."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-129-prescindible",
+      "catalogSenseId": "es-sk:c2:exp-bulk-129-prescindible:adj:1",
+      "term": "prescindible",
+      "reasons": [
+        "Transparent adjective from baseline prescindir; current sense adds no distinctive learning value."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-131-esparcimiento",
+      "catalogSenseId": "es-sk:c2:exp-bulk-131-esparcimiento:noun:1",
+      "term": "esparcimiento",
+      "reasons": [
+        "Recreation/rest sense overlaps baseline A1 ocio with only a cultivated synonym, not a demonstrated new target."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-132-desempatar",
+      "catalogSenseId": "es-sk:c2:exp-bulk-132-desempatar:verb:1",
+      "term": "desempatar",
+      "reasons": [
+        "Ordinary tie-breaking sports action; no persuasive advanced distinction."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-134-remontada",
+      "catalogSenseId": "es-sk:c2:exp-bulk-134-remontada:noun:1",
+      "term": "remontada",
+      "reasons": [
+        "Nominal recovery from losing overlaps baseline B1 remontar."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-144-tergiversacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-144-tergiversacion:noun:1",
+      "term": "tergiversación",
+      "reasons": [
+        "Morphological noun repeats production and legacy tergiversar."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-149-franqueo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-149-franqueo:noun:1",
+      "term": "franqueo",
+      "reasons": [
+        "PCIC C1 postal-payment sense; no new selected C2 meaning."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-151-ilegible",
+      "catalogSenseId": "es-sk:c2:exp-bulk-151-ilegible:adj:1",
+      "term": "ilegible",
+      "reasons": [
+        "Transparent unreadable-document sense; no persuasive advanced placement rationale."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-152-remitente",
+      "catalogSenseId": "es-sk:c2:exp-bulk-152-remitente:noun:1",
+      "term": "remitente",
+      "reasons": [
+        "Ordinary sender role in correspondence; C2 placement unsupported."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-155-desalojo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-155-desalojo:noun:1",
+      "term": "desalojo",
+      "reasons": [
+        "Nominal safety evacuation overlaps existing B1 desalojar."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-156-averia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-156-averia:noun:1",
+      "term": "avería",
+      "reasons": [
+        "Exact existing avería with the same malfunction meaning."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-157-corte-intermitente",
+      "catalogSenseId": "es-sk:c2:exp-bulk-157-corte-intermitente:noun:1",
+      "term": "corte intermitente",
+      "reasons": [
+        "Compositional service interruption phrase rather than a demonstrated C2 lexical target."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-162-holgado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-162-holgado:adj:1",
+      "term": "holgado",
+      "reasons": [
+        "Loose-fitting clothing is PCIC C1 coverage."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-173-parsimonioso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-173-parsimonioso:adj:1",
+      "term": "parsimonioso",
+      "reasons": [
+        "Methodological adjective repeats reviewed pilot parsimonia; quarantine rather than duplicate."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-174-plausibilidad",
+      "catalogSenseId": "es-sk:c2:exp-bulk-174-plausibilidad:noun:1",
+      "term": "plausibilidad",
+      "reasons": [
+        "Plausibility substantially overlaps batch verosímil selected credible-but-unproven meaning."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-175-cotejo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-175-cotejo:noun:1",
+      "term": "cotejo",
+      "reasons": [
+        "Morphological noun repeats batch cotejar verification-by-comparison sense."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-190-verosimilitud",
+      "catalogSenseId": "es-sk:c2:exp-bulk-190-verosimilitud:noun:1",
+      "term": "verosimilitud",
+      "reasons": [
+        "Nominal narrative credibility is insufficiently distinct from batch verosímil in its current form."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-192-evocador",
+      "catalogSenseId": "es-sk:c2:exp-bulk-192-evocador:adj:1",
+      "term": "evocador",
+      "reasons": [
+        "Adjective repeats baseline B1 evocar associative recall."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-196-ortodoxia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-196-ortodoxia:noun:1",
+      "term": "ortodoxia",
+      "reasons": [
+        "Noun repeats existing B2 ortodoxo doctrinal conformity."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-206-intersticio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-206-intersticio:noun:1",
+      "term": "intersticio",
+      "reasons": [
+        "Intervening small opening substantially repeats batch resquicio without sufficient differentiation."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-216-dicho-de-otro-modo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-216-dicho-de-otro-modo:adv:1",
+      "term": "dicho de otro modo",
+      "reasons": [
+        "Basic explicit reformulation has no specifically advanced selected demand in current wording."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-223-merma",
+      "catalogSenseId": "es-sk:c2:exp-bulk-223-merma:noun:1",
+      "term": "merma",
+      "reasons": [
+        "Nominal reduction repeats baseline B2 mermar."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-229-tacitamente",
+      "catalogSenseId": "es-sk:c2:exp-bulk-229-tacitamente:adv:1",
+      "term": "tácitamente",
+      "reasons": [
+        "Adverb repeats legacy C2 tácito implied acceptance."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-231-precio-desorbitado",
+      "catalogSenseId": "es-sk:c2:exp-bulk-231-precio-desorbitado:noun:1",
+      "term": "precio desorbitado",
+      "reasons": [
+        "Evaluative excessive price repeats batch exorbitante."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-241-inquina",
+      "catalogSenseId": "es-sk:c2:exp-bulk-241-inquina:noun:1",
+      "term": "inquina",
+      "reasons": [
+        "Same selected hostility toward a person as reviewed pilot animadversión."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-242-complacencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-242-complacencia:noun:1",
+      "term": "complacencia",
+      "reasons": [
+        "DLE complacencia denotes satisfaction/pleasure arising from something, not necessarily excessive self-satisfaction that impairs vigilance. The proposed narrow meaning is not established by the supplied source."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-244-reticencia",
+      "catalogSenseId": "es-sk:c2:exp-bulk-244-reticencia:noun:1",
+      "term": "reticencia",
+      "reasons": [
+        "Exact baseline reticencia; same guarded reluctance."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-246-insinuacion",
+      "catalogSenseId": "es-sk:c2:exp-bulk-246-insinuacion:noun:1",
+      "term": "insinuación",
+      "reasons": [
+        "Nominal expression repeats baseline C1 insinuar indirect suggestion."
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-253-con-reservas",
+      "catalogSenseId": "es-sk:c2:exp-bulk-253-con-reservas:adv:1",
+      "term": "con reservas",
+      "reasons": [
+        "Qualified assent overlaps reviewed pilot salvedad and a beneficio de inventario without a new target."
+      ]
+    }
+  ]
+}
