@@ -70,3 +70,13 @@ it('keeps offline submission visible and distinguishes it from delivery', async 
   await waitFor(() => expect(view.getByText('Saved — waiting to send')).toBeTruthy());
   expect(view.queryByText('Feedback sent')).toBeNull();
 });
+
+
+it('opens general feedback from the compact accessible icon', async () => {
+  const view = await render(<FeedbackLink screen="today" label="Help improve Wordfold" iconOnly/>);
+  expect(view.queryByText('Help improve Wordfold')).toBeNull();
+  await fireEvent.press(view.getByRole('button', { name: 'Help improve Wordfold' }));
+  const route = mockPush.mock.calls[0][0];
+  expect(route.pathname).toBe('/feedback');
+  expect(getFeedbackOrigin(route.params.origin)).toEqual(expect.objectContaining({ screen: 'today' }));
+});

@@ -445,10 +445,12 @@ function Header({ filter, availableFilters, learnedLanguage, onSelectFilter }: {
   const theme = useAppTheme();
   return <View style={styles.headerBlock}>
     <View style={styles.header}><View><AppText variant="title">Today’s {learnedLanguage.toLowerCase()}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Showing {filter === 'all' ? `all ${learnedLanguage.toLowerCase()} words` : categoryWordLabel(filter)}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Open settings" onPress={() => router.push('/settings')} style={({ pressed }) => [styles.settings, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.7 : 1 }]}><Ionicons name="options-outline" color={theme.primary} size={22}/></Pressable></View>
-    <FeedbackLink screen="today" label="Help improve Wordfold"/>
-    <ScrollView horizontal accessibilityRole="tablist" showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filters}>
-      {filterOptions.filter((option) => availableFilters.includes(option.id)).map((option) => <Pressable key={option.id} accessibilityRole="tab" accessibilityLabel={`Show ${option.label} words`} accessibilityState={{ selected: filter === option.id }} aria-selected={filter === option.id} onPress={() => void onSelectFilter(option.id)} style={[styles.filter, { backgroundColor: filter === option.id ? theme.primary : theme.surface, borderColor: filter === option.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: filter === option.id ? '#FFFFFF' : theme.text }}>{option.label}</AppText></Pressable>)}
-    </ScrollView>
+    <View style={styles.filterRow}>
+      <ScrollView horizontal style={styles.filterScroll} accessibilityRole="tablist" showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filters}>
+        {filterOptions.filter((option) => availableFilters.includes(option.id)).map((option) => <Pressable key={option.id} accessibilityRole="tab" accessibilityLabel={`Show ${option.label} words`} accessibilityState={{ selected: filter === option.id }} aria-selected={filter === option.id} onPress={() => void onSelectFilter(option.id)} style={[styles.filter, { backgroundColor: filter === option.id ? theme.primary : theme.surface, borderColor: filter === option.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: filter === option.id ? '#FFFFFF' : theme.text }}>{option.label}</AppText></Pressable>)}
+      </ScrollView>
+      <FeedbackLink screen="today" label="Help improve Wordfold" iconOnly/>
+    </View>
   </View>;
 }
 
@@ -483,5 +485,7 @@ const styles = StyleSheet.create({
   recommendationWords: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
   recommendationWord: { minHeight: 48, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderRadius: radii.control, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   settings: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 22, borderWidth: 1 }, filters: { gap: spacing.sm },
+  filterRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  filterScroll: { flex: 1 },
   filter: { minWidth: 44, minHeight: 44, paddingHorizontal: spacing.md, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' }, position: { flex: 1, textAlign: 'center', paddingVertical: spacing.xs },
 });
