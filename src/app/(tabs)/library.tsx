@@ -1,16 +1,17 @@
 import { useMemo, useState } from 'react';
-import { Alert, FlatList, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 
 import { AppText } from '@/components/app-text';
-import { describeCatalogAvailability } from '@/components/catalog-availability';
 import { EmptyState } from '@/components/empty-state';
 import { FormField } from '@/components/form-field';
 import { PrimaryButton } from '@/components/primary-button';
+import { RecommendationFallbackNote } from '@/components/recommendation-fallback-note';
+import { ProgressCountLabel } from '@/components/progress-count-label';
 import { Screen } from '@/components/screen';
 import { WordCard } from '@/components/word-card';
-import { getCourseCatalogAvailability, getCourseCatalogEntries } from '@/data/course-catalog';
+import { getCourseCatalogAvailability, getCourseCatalogEntries, getCourseCatalogLevelState } from '@/data/course-catalog';
 import { cefrLevelDescriptions, cefrLevels } from '@/data/cefr-levels';
 import { getCourseForWord, wordBelongsToCourse } from '@/domain/courses';
 import { languageLabel } from '@/domain/languages';
@@ -25,6 +26,7 @@ type LibraryView = 'discover' | 'my-words';
 
 export default function LibraryScreen() {
   const theme = useAppTheme();
+  const { width, fontScale } = useWindowDimensions();
   const {
     words, collections, activeCourse, activeCourseId, learningPreferences,
     createCollection, addRecommendedWords, wordCapacity,
@@ -42,12 +44,12 @@ export default function LibraryScreen() {
   const collectionNames = useMemo(() => Object.fromEntries(collections.map((item) => [item.id, item.name])), [collections]);
   const learnedLanguage = languageLabel(activeCourse.sourceLanguageCode);
   const catalogAvailability = getCourseCatalogAvailability(activeCourseId);
-  const spanishPreview = catalogAvailability.isPreview;
   const cefrLevelSummaries = useMemo(() => cefrLevels.map((level) => {
     const entries = getCourseCatalogEntries(activeCourseId, level);
     return {
       level,
       count: entries.length,
+      state: getCourseCatalogLevelState(activeCourseId, level),
       description: cefrLevelDescriptions[level],
       progress: calculateCefrProgress(entries, activeWords),
     };
@@ -56,7 +58,8 @@ export default function LibraryScreen() {
     learningPreferences,
     activeWords.map((word) => word.normalizedTerm),
     10,
-  ) : [], [activeCourse.capabilities.recommendations, activeWords, learningPreferences]);
+    activeCourseId,
+  ) : [], [activeCourseId, activeCourse.capabilities.recommendations, activeWords, learningPreferences]);
   const hasPreferences = learningPreferences.levels.length > 0 && learningPreferences.topics.length > 0;
   const recommendationAddCount = wordCapacity.remaining === null
     ? Math.min(10, recommendationPreview.length)
@@ -114,29 +117,27 @@ export default function LibraryScreen() {
               {otherWords.length > 0 ? <FilterChip label={`Other vocabulary (${otherWords.length})`} selected={selectedCollection === 'other-vocabulary'} onPress={() => setSelectedCollection('other-vocabulary')}/> : null}
             </ScrollView> : null}
           </> : <>
-            <View style={styles.sectionHeader}><View style={styles.sectionCopy}><AppText variant="heading">{learnedLanguage} levels</AppText><AppText variant="caption" style={{ color: theme.muted }}>{spanishPreview
-              ? describeCatalogAvailability(catalogAvailability)
-              : catalogAvailability.total > 0
+            <View style={styles.sectionHeader}><View style={styles.sectionCopy}><AppText variant="heading">{learnedLanguage} levels</AppText><AppText variant="caption" style={{ color: theme.muted }}>{catalogAvailability.total > 0
               ? 'Browse the built-in CEFR-aligned catalog and see how far you have come.'
-              : 'A1–C2 are ready for organization. Spanish catalog content is not released yet; manual words and imports remain available.'}</AppText></View></View>
+              : 'Catalog content is not available yet; manual words and imports remain available.'}</AppText></View></View>
             <View style={styles.levelGrid}>
               {cefrLevelSummaries.map((item) => <Pressable
                 key={item.level}
                 testID={`catalog-level-${item.level}`}
                 accessibilityRole="button"
-                accessibilityLabel={`Browse ${learnedLanguage} level ${item.level}. ${item.progress.known} known, ${item.progress.learning} learning, ${item.progress.addedNotStarted} added but not started, ${item.progress.notAdded} not added.`}
+                accessibilityLabel={item.state === 'available' ? `Browse ${learnedLanguage} level ${item.level}. ${item.progress.known} known, ${item.progress.learning} learning, ${item.progress.addedNotStarted} added but not started, ${item.progress.notAdded} not added.` : `${learnedLanguage} level ${item.level}. ${item.state === 'unsupported-by-source' ? 'Currently unavailable.' : 'Not yet available.'}`}
+                accessibilityState={{ disabled: item.state !== 'available' }}
+                disabled={item.state !== 'available'}
                 onPress={() => router.push({ pathname: '/level/[level]', params: { level: item.level } } as never)}
-                style={[styles.levelCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-                <View style={styles.levelTopRow}><View style={[styles.levelBadge, { backgroundColor: theme.primarySoft }]}><AppText variant="heading" style={{ color: theme.primary }}>{item.level}</AppText></View><Ionicons name="chevron-forward" color={theme.primary} size={18}/></View>
-                <View style={styles.levelText}><AppText variant="label">{item.description}</AppText>{item.count > 0 ? <><LevelProgressBar progress={item.progress}/><AppText variant="caption" style={{ color: theme.muted }}>{item.progress.known.toLocaleString()} known · {item.progress.learning.toLocaleString()} learning</AppText><AppText variant="caption" style={{ color: theme.muted }}>{item.progress.addedNotStarted.toLocaleString()} added · {item.progress.notAdded.toLocaleString()} not added</AppText></> : <AppText variant="caption" style={{ color: theme.muted }}>Catalog pending review</AppText>}</View>
+                style={[styles.levelCard, { backgroundColor: item.state === 'available' ? theme.surface : theme.canvas, borderColor: item.state === 'available' ? theme.border : theme.muted, borderStyle: item.state === 'available' ? 'solid' : 'dashed', minWidth: Math.min(160 * fontScale, width - spacing.lg * 2) }]}>
+                <View style={styles.levelTopRow}><View style={[styles.levelBadge, { backgroundColor: theme.primarySoft }]}><AppText variant="heading" style={{ color: theme.primary }}>{item.level}</AppText></View>{item.state === 'available' ? <Ionicons name="chevron-forward" color={theme.primary} size={18}/> : null}</View>
+                <View style={styles.levelText}>{item.state === 'available' ? <AppText variant="label">{item.description}</AppText> : null}{item.count > 0 ? <><LevelProgressBar progress={item.progress}/><View style={styles.progressPairs}><ProgressCountLabel value={item.progress.known} label="known" testID={`library-progress-${item.level}-known`}/><ProgressCountLabel value={item.progress.learning} label="learning" testID={`library-progress-${item.level}-learning`}/><ProgressCountLabel value={item.progress.addedNotStarted} label="added" testID={`library-progress-${item.level}-added`}/><ProgressCountLabel value={item.progress.notAdded} label="not added" testID={`library-progress-${item.level}-not-added`}/></View></> : <AppText variant="caption" style={{ color: theme.muted }}>{item.state === 'unsupported-by-source' ? 'Currently unavailable' : 'Not yet available'}</AppText>}</View>
               </Pressable>)}
             </View>
           </>}
         </View>}
         ListEmptyComponent={libraryView === 'my-words' ? <View style={styles.empty}><EmptyState title={selectedCollection === 'other-vocabulary' ? 'No other vocabulary' : `No ${learnedLanguage.toLowerCase()} words here yet`} message={selectedCollection === 'other-vocabulary'
           ? 'Words outside the supported English → Slovak and Spanish → Slovak courses appear here.'
-          : spanishPreview
-          ? 'Open Discover and choose a level with entries to add Spanish words, then practice them here.'
           : activeCourse.capabilities.recommendations
           ? 'Add a word here, or switch to Discover for recommendations.'
           : 'Add a Spanish word manually or bulk paste your own reviewed vocabulary.'}/></View> : null}
@@ -147,11 +148,12 @@ export default function LibraryScreen() {
         ListFooterComponent={libraryView === 'discover' ? <View style={styles.footer}>
           <View style={styles.sectionHeader}><View style={styles.sectionCopy}><AppText variant="heading">{activeCourse.capabilities.recommendations ? 'Recommended for you' : 'Spanish catalog status'}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{activeCourse.capabilities.recommendations ? 'Small batches shaped by your level and interests.' : 'Manual and imported Spanish words are fully available now.'}</AppText></View></View>
           {!activeCourse.capabilities.recommendations ? <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-            <View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="shield-checkmark-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">{spanishPreview ? 'Spanish preview is ready for local testing' : catalogAvailability.total > 0 ? 'Spanish catalog entries are available' : 'Reviewed A1–C2 content is not bundled yet'}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{spanishPreview ? 'Browse a level with entries above and add words to My words. This development preview is not a production release or a complete curriculum.' : 'Instituto Cervantes informs the editorial structure only. No certification or endorsement is implied.'}</AppText></View></View>
+            <View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="shield-checkmark-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">Spanish A1–C1 catalog is available</AppText><AppText variant="caption" style={{ color: theme.muted }}>Browse offline words in A1–C1. Concepts with pending review findings are excluded; C2 is unsupported by the current source. Instituto Cervantes informs the editorial structure only, with no certification or endorsement implied.</AppText></View></View>
             <View style={styles.actionRow}><View style={styles.action}><PrimaryButton label="Add Spanish word" onPress={() => router.push('/word/new')} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/></View><View style={styles.action}><PrimaryButton label="Import" variant="secondary" onPress={() => router.push('/import')} icon={<Ionicons name="clipboard-outline" color={theme.primary} size={18}/>}/></View></View>
           </View> : hasPreferences ? <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
             <View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="sparkles-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">{learningPreferences.levels.join(', ')} {learnedLanguage}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{topicOptions.filter((topic) => learningPreferences.topics.includes(topic.id)).map((topic) => topic.title).join(' · ')}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Edit learning preferences" onPress={() => router.push('/preferences' as never)} style={styles.editPreferences}><AppText variant="label" style={{ color: theme.primary }}>Edit</AppText></Pressable></View>
             {recommendationPreview.length > 0 ? <View style={styles.recommendationWords}>{recommendationPreview.slice(0, 3).map(({ entry }) => <View key={entry.id} style={[styles.recommendationWord, { backgroundColor: theme.primarySoft }]}><AppText variant="label" style={{ color: theme.primary }}>{entry.term}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{entry.level}</AppText></View>)}</View> : <AppText style={{ color: theme.muted }}>You have already added every available recommendation for these choices.</AppText>}
+            <RecommendationFallbackNote recommendations={recommendationPreview.slice(0, recommendationAddCount)}/>
             <PrimaryButton label={recommendationPreview.length === 0 ? 'No new recommendations' : recommendationAddCount === 0 ? 'Unlock to add recommendations' : `Add ${recommendationAddCount} recommended words`} loading={recommendationsBusy} disabled={recommendationPreview.length === 0} onPress={() => void addRecommendations()} icon={<Ionicons name={recommendationAddCount === 0 ? 'infinite-outline' : 'add'} color="#FFFFFF" size={18}/>}/>
           </View> : <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="options-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">Make recommendations personal</AppText><AppText variant="caption" style={{ color: theme.muted }}>Choose at least one level and interest.</AppText></View></View><PrimaryButton label="Choose learning preferences" variant="secondary" onPress={() => router.push('/preferences' as never)}/></View>}
         </View> : null}
@@ -190,6 +192,7 @@ const styles = StyleSheet.create({
   panel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.lg }, empty: { minHeight: 220 },
   packText: { flex: 1, gap: 2 }, recommendationHeading: { flexDirection: 'row', alignItems: 'center', gap: spacing.md }, recommendationIcon: { width: 44, height: 44, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' }, editPreferences: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }, recommendationWords: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, recommendationWord: { minHeight: 48, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderRadius: radii.control, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   capacityNotice: { minHeight: 76, borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
-  levelGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, levelCard: { width: '48.5%', minHeight: 178, borderWidth: 1, borderRadius: radii.card, padding: spacing.md, gap: spacing.sm }, levelTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
+  levelGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, levelCard: { width: '48.5%', flexGrow: 1, minHeight: 178, borderWidth: 1, borderRadius: radii.card, padding: spacing.md, gap: spacing.sm }, levelTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
+  progressPairs: { flexDirection: 'row', flexWrap: 'wrap', columnGap: spacing.sm, rowGap: spacing.xs },
   levelBadge: { width: 52, height: 52, borderRadius: 18, alignItems: 'center', justifyContent: 'center' }, levelText: { flex: 1, gap: spacing.xs }, levelProgress: { height: 8, flexDirection: 'row', borderRadius: radii.pill, overflow: 'hidden', marginTop: spacing.xs },
 });

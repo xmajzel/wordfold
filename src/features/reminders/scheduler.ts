@@ -10,6 +10,9 @@ import { pickReminderWord } from './word-selector';
 const CHANNEL_ID = 'word-reminders';
 let rebuildQueue: Promise<unknown> = Promise.resolve();
 
+type RunDatabaseMutation = <T>(mutation: () => Promise<T>) => Promise<T>;
+const runImmediately: RunDatabaseMutation = (mutation) => mutation();
+
 export interface ReminderPermissionResult {
   granted: boolean;
   canAskAgain: boolean;
@@ -70,8 +73,10 @@ async function performReminderScheduleRebuild(
   words: Word[],
   settings: ReminderSettings,
   courseId?: CourseId,
+  runDatabaseMutation: RunDatabaseMutation = runImmediately,
 ) {
-  await clearScheduledReminders(database);
+  await Notifications.cancelAllScheduledNotificationsAsync();
+  await runDatabaseMutation(() => database.runAsync('DELETE FROM scheduled_reminders'));
   if (!settings.enabled || words.every((word) => word.state === 'learned')) return 0;
 
   const permission = await Notifications.getPermissionsAsync();
@@ -99,10 +104,10 @@ async function performReminderScheduleRebuild(
         channelId: CHANNEL_ID,
       },
     });
-    await database.runAsync(
+    await runDatabaseMutation(() => database.runAsync(
       'INSERT INTO scheduled_reminders (notification_id, word_id, scheduled_at) VALUES (?, ?, ?)',
       notificationId, word.id, date.toISOString(),
-    );
+    ));
     count += 1;
   }
   return count;
@@ -113,8 +118,9 @@ export function rebuildReminderSchedule(
   words: Word[],
   settings: ReminderSettings,
   courseId?: CourseId,
+  runDatabaseMutation: RunDatabaseMutation = runImmediately,
 ) {
-  const rebuild = rebuildQueue.then(() => performReminderScheduleRebuild(database, words, settings, courseId));
+  const rebuild = rebuildQueue.then(() => performReminderScheduleRebuild(database, words, settings, courseId, runDatabaseMutation));
   rebuildQueue = rebuild.catch(() => undefined);
   return rebuild;
 }

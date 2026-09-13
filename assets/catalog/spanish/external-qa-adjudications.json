@@ -1,0 +1,1257 @@
+{
+  "schemaVersion": 1,
+  "notHumanReview": true,
+  "courseId": "es-sk",
+  "policy": {
+    "bucketA": "Wrong learner-facing Spanish definition or example. Apply the replacement overlay without regenerating unaffected content.",
+    "bucketB": "Correct Spanish content that intentionally rejects the attributed OMW sense. Only solar and querido are semantic exceptions.",
+    "bucketR": "Correct Spanish content and supported selected OMW record; the external-reference failure is a Wiktionary coverage or sense-granularity miss.",
+    "reporting": "Always report A/B/R alongside external correspondence; never present a raw external non-correspondence rate on its own."
+  },
+  "sourceRuns": [
+    {
+      "level": "A1",
+      "path": "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-quality-qa/findings.json",
+      "sha256": "043a81e59103449e57ce03f8ea9920af48e4387692e6ca7817ec7a6058479fc1"
+    },
+    {
+      "level": "A1",
+      "path": "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-everyday-quality-qa/findings.json",
+      "sha256": "d53c1038c4e9a2d1d8ed499a332012bda93b6b61c37e72dec385a43cc877a972"
+    },
+    {
+      "level": "A1",
+      "path": "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-minority-pos-quality-qa/findings.json",
+      "sha256": "601e351e5f4ccc1eb449e64c06b1f667bdeae4155f4813d58b384dae568770ef"
+    },
+    {
+      "level": "A2",
+      "path": "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-quality-qa/findings.json",
+      "sha256": "d19fe2ddbff2161d5c138670623bdd12377ac4f3ead77bf732ae759476b120ee"
+    },
+    {
+      "level": "A2",
+      "path": "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json",
+      "sha256": "3e98fa3602845aa532441353da3431e871b24145652161031ba2ea12c8da9697"
+    },
+    {
+      "level": "A2",
+      "path": "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-post-correction-quality-qa/findings.json",
+      "sha256": "c6ca192e359dddeb016f9f55c5c4b69f1657b3243bcd96b02dd17e3e168f2ccd"
+    },
+    {
+      "level": "B1",
+      "path": "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json",
+      "sha256": "28f47aa7f7234065800684ee7a451eeb382778a7dca24aefc7c5d022d445a137"
+    }
+  ],
+  "countsByLevel": {
+    "A1": {
+      "uniqueFindings": 17,
+      "bucketA": 1,
+      "bucketB": 0,
+      "bucketR": 16
+    },
+    "A2": {
+      "uniqueFindings": 26,
+      "bucketA": 5,
+      "bucketB": 2,
+      "bucketR": 19
+    },
+    "B1": {
+      "uniqueFindings": 20,
+      "bucketA": 4,
+      "bucketB": 0,
+      "bucketR": 16
+    }
+  },
+  "totals": {
+    "uniqueFindings": 63,
+    "bucketA": 10,
+    "bucketB": 2,
+    "bucketR": 51
+  },
+  "entries": [
+    {
+      "entryId": "es-cefr:bbd261e2f5ed5981",
+      "term": "chulo",
+      "partOfSpeech": "adjective",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "Excessive pride and self-confidence are distinct from the listed aggressive or uncultivated traits."
+    },
+    {
+      "entryId": "es-cefr:de81dabcd1e209ef",
+      "term": "claustro",
+      "partOfSpeech": "noun",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-quality-qa/findings.json"
+      ],
+      "categories": [],
+      "externalRationale": "La definición identifica el patio, mientras que la acepción arquitectónica suministrada identifica la galería que lo rodea."
+    },
+    {
+      "entryId": "es-cefr:ef70005b65fc6455",
+      "term": "compañero",
+      "partOfSpeech": "noun",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-quality-qa/findings.json"
+      ],
+      "categories": [],
+      "externalRationale": "La referencia ofrece compañía y actividad compartida en general, pero no identifica específicamente al condiscípulo."
+    },
+    {
+      "entryId": "es-cefr:f4f75dae96dffdbb",
+      "term": "cuidador",
+      "partOfSpeech": "noun",
+      "level": "A1",
+      "bucket": "A",
+      "decision": "repair-content",
+      "semanticException": false,
+      "staleSlovakHint": true,
+      "replacementDefinition": "Persona que atiende y ayuda a alguien que necesita cuidados.",
+      "replacementExample": "El cuidador ayuda al anciano a vestirse cada mañana.",
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-quality-qa/findings.json"
+      ],
+      "categories": [],
+      "externalRationale": "La caracterización genérica de quien cuida no enumera el oficio específico de vigilante de exámenes."
+    },
+    {
+      "entryId": "es-cefr:74fc638b83d14d2e",
+      "term": "director",
+      "partOfSpeech": "noun",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-quality-qa/findings.json"
+      ],
+      "categories": [],
+      "externalRationale": "No se recoge específicamente la máxima autoridad escolar; dirigir en general, presidir academias o gestionar negocios no basta."
+    },
+    {
+      "entryId": "es-cefr:fd96b61975e654a8",
+      "term": "embutir",
+      "partOfSpeech": "verb",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-quality-qa/findings.json"
+      ],
+      "categories": [],
+      "externalRationale": "Rellenar un pollo no equivale a elaborar embutidos y no implica introducir algo apretadamente a presión."
+    },
+    {
+      "entryId": "es-cefr:3a57678aede12611",
+      "term": "favorito",
+      "partOfSpeech": "noun",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "The reference lists a preferred person and specialized objects, but no general preferred thing."
+    },
+    {
+      "entryId": "es-cefr:e298d85a37769fbe",
+      "term": "fibra",
+      "partOfSpeech": "noun",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-everyday-quality-qa/findings.json"
+      ],
+      "categories": [
+        "food"
+      ],
+      "externalRationale": "La fibra alimentaria no figura entre las acepciones; los filamentos orgánicos no expresan ese concepto nutricional."
+    },
+    {
+      "entryId": "es-cefr:e80ba5572a21916f",
+      "term": "flamenco",
+      "partOfSpeech": "noun",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-everyday-quality-qa/findings.json"
+      ],
+      "categories": [
+        "leisure"
+      ],
+      "externalRationale": "La referencia enumera el género musical, pero no el baile definido y ejemplificado."
+    },
+    {
+      "entryId": "es-cefr:f8d3796b9d2a003f",
+      "term": "holandés",
+      "partOfSpeech": "noun",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "The definition identifies Dutch generally; the reference specifies a regional variety within Dutch."
+    },
+    {
+      "entryId": "es-cefr:8b9f67dfbf5ea6ad",
+      "term": "inglés",
+      "partOfSpeech": "adjective",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "Relation specifically to the English language is not listed; relation to England alone is insufficient."
+    },
+    {
+      "entryId": "es-cefr:c11dcb2f15ac4384",
+      "term": "instalar",
+      "partOfSpeech": "verb",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-quality-qa/findings.json"
+      ],
+      "categories": [],
+      "externalRationale": "Only software installation is listed; the definition and example concern setting up physical equipment."
+    },
+    {
+      "entryId": "es-cefr:a6135a74f2a99c99",
+      "term": "loco",
+      "partOfSpeech": "noun",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "Unusual or eccentric behavior does not necessarily express irrationality or loss of sanity."
+    },
+    {
+      "entryId": "es-cefr:fa9c34a27d9e90fd",
+      "term": "marítimo",
+      "partOfSpeech": "adjective",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-quality-qa/findings.json"
+      ],
+      "categories": [],
+      "externalRationale": "Define una relación con barcos y navegación sin limitarla al mar; las acepciones suministradas exigen esa relación marina."
+    },
+    {
+      "entryId": "es-cefr:d17f69a611adfd1f",
+      "term": "prima",
+      "partOfSpeech": "noun",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-quality-qa/findings.json"
+      ],
+      "categories": [],
+      "externalRationale": "The supplied senses do not include the female cousin relationship."
+    },
+    {
+      "entryId": "es-cefr:56e11051d848b85a",
+      "term": "sanitario",
+      "partOfSpeech": "adjective",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-quality-qa/findings.json"
+      ],
+      "categories": [],
+      "externalRationale": "La referencia expresa relación con la sanidad, pero no la cualidad específica de estar limpio y libre de agentes patógenos."
+    },
+    {
+      "entryId": "es-cefr:f59a0e3c7f6ae252",
+      "term": "vegetal",
+      "partOfSpeech": "adjective",
+      "level": "A1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a1-quality-qa/findings.json"
+      ],
+      "categories": [],
+      "externalRationale": "Las glosas describen organismos y verduras, no la relación con plantas ni la procedencia vegetal."
+    },
+    {
+      "entryId": "es-cefr:8633c601409bf51d",
+      "term": "amigo",
+      "partOfSpeech": "adjective",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "None of the supplied senses identifies military affiliation with one's own or allied forces."
+    },
+    {
+      "entryId": "es-cefr:1827b366b54fab3d",
+      "term": "animal",
+      "partOfSpeech": "adjective",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "Bodily drives are distinct from zoological affiliation and deficient intelligence or manners."
+    },
+    {
+      "entryId": "es-cefr:4c190cd33f36ab00",
+      "term": "anís",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-quality-qa/findings.json"
+      ],
+      "categories": [
+        "food"
+      ],
+      "externalRationale": "The supplied senses identify the plant and alcoholic drinks, not the seeds as an ingredient."
+    },
+    {
+      "entryId": "es-cefr:249933cda7157421",
+      "term": "ballet",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-quality-qa/findings.json"
+      ],
+      "categories": [
+        "leisure"
+      ],
+      "externalRationale": "Defines a theatrical performance; the supplied senses identify a dance style and its company."
+    },
+    {
+      "entryId": "es-cefr:06465b9411e6582e",
+      "term": "balonmano",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "A",
+      "decision": "repair-content",
+      "semanticException": false,
+      "staleSlovakHint": true,
+      "replacementDefinition": "Deporte de equipo en el que se lanza una pelota con las manos para marcar goles.",
+      "replacementExample": "Nuestro equipo de balonmano ganó el partido por dos goles.",
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-quality-qa/findings.json"
+      ],
+      "categories": [
+        "sport"
+      ],
+      "externalRationale": "The definition and wall example indicate a striking game, not the listed team sport with goals."
+    },
+    {
+      "entryId": "es-cefr:dea1ef8f7223d58f",
+      "term": "chicha",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "A",
+      "decision": "repair-content",
+      "semanticException": false,
+      "staleSlovakHint": true,
+      "replacementDefinition": "Bebida tradicional americana elaborada mediante la fermentación del maíz.",
+      "replacementExample": "Sirvieron chicha de maíz durante la celebración.",
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-quality-qa/findings.json"
+      ],
+      "categories": [
+        "food"
+      ],
+      "externalRationale": "None of the supplied beverage senses denotes illegally distilled corn whisky."
+    },
+    {
+      "entryId": "es-cefr:8c4ee587bbf3308f",
+      "term": "clásico",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "The supplied senses concern football matches, not enduringly valued works."
+    },
+    {
+      "entryId": "es-cefr:23d7c8b797d3207b",
+      "term": "complejo",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "Neither the psychological nor mathematical sense denotes a group of buildings."
+    },
+    {
+      "entryId": "es-cefr:7a6f17ad03a9ba8b",
+      "term": "diminutivo",
+      "partOfSpeech": "adjective",
+      "level": "A2",
+      "bucket": "A",
+      "decision": "repair-content",
+      "semanticException": false,
+      "staleSlovakHint": true,
+      "replacementDefinition": null,
+      "replacementExample": "La terminación diminutiva añade un matiz afectivo a la palabra.",
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "Being very small differs from causing reduction or marking it with a suffix."
+    },
+    {
+      "entryId": "es-cefr:f35e27206fcd4148",
+      "term": "guapo",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "A",
+      "decision": "repair-content",
+      "semanticException": false,
+      "staleSlovakHint": true,
+      "replacementDefinition": "Hombre de aspecto atractivo.",
+      "replacementExample": "El guapo de la película sonrió a la cámara.",
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "The supplied senses do not describe a man attentive to dress and appearance."
+    },
+    {
+      "entryId": "es-cefr:1d4701b639671e69",
+      "term": "interior",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "The supplied nouns describe regions outside a capital or underwear, not an inside space."
+    },
+    {
+      "entryId": "es-cefr:d649b48992df6316",
+      "term": "latino",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "None specifies Latin American origin alone; the references use different geographic, linguistic, or migration criteria."
+    },
+    {
+      "entryId": "es-cefr:753c3105a2b8b1af",
+      "term": "millonario",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "The supplied wealth sense is figurative and does not express the numerical dollar threshold."
+    },
+    {
+      "entryId": "es-cefr:cc13c37d9c1c59b3",
+      "term": "multinacional",
+      "partOfSpeech": "adjective",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "A general relation to several nations does not specifically express business operations across countries."
+    },
+    {
+      "entryId": "es-cefr:78c6410de47320f7",
+      "term": "mundial",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-quality-qa/findings.json",
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos",
+        "sport"
+      ],
+      "externalRationale": "El torneo futbolístico cuatrienal es más específico que la competición mundial genérica; el otro sentido designa un intervalo temporal."
+    },
+    {
+      "entryId": "es-cefr:9bfac141f0e410de",
+      "term": "norteamericano",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "The reference is restricted to United States residents or natives, whereas the definition includes other North American countries."
+    },
+    {
+      "entryId": "es-cefr:aa9a6dd58a7b8b1d",
+      "term": "pastel",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-quality-qa/findings.json"
+      ],
+      "categories": [
+        "food"
+      ],
+      "externalRationale": "El ejemplo identifica un bizcocho de cumpleaños; la referencia alimentaria describe masa que envuelve un relleno."
+    },
+    {
+      "entryId": "es-cefr:eeba9691f45e7326",
+      "term": "pleno",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "A",
+      "decision": "repair-content",
+      "semanticException": false,
+      "staleSlovakHint": true,
+      "replacementDefinition": "Reunión general de todos los miembros de una corporación o asamblea.",
+      "replacementExample": "El pleno del ayuntamiento aprobó el presupuesto.",
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "The supplied sense describes a legislative meeting, not an air-pressure chamber."
+    },
+    {
+      "entryId": "es-cefr:e92fb20d3f721556",
+      "term": "querido",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "B",
+      "decision": "semantic-exception",
+      "semanticException": true,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "A generally cherished person does not establish a romantic partner or financially supported lover."
+    },
+    {
+      "entryId": "es-cefr:7e59a1a75edaba29",
+      "term": "rebelde",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "Independence and disagreement with peers do not establish rebellion against authority."
+    },
+    {
+      "entryId": "es-cefr:881e533f2b70f81e",
+      "term": "recado",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-post-correction-quality-qa/findings.json"
+      ],
+      "categories": [
+        "post-correction"
+      ],
+      "externalRationale": "No se lista la gestión breve fuera de casa; las provisiones y la remisión a recadar no expresan ese sentido."
+    },
+    {
+      "entryId": "es-cefr:0cb144aa1d39706a",
+      "term": "salmón",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-quality-qa/findings.json"
+      ],
+      "categories": [
+        "food"
+      ],
+      "externalRationale": "La definición designa carne como alimento; los sentidos enumerados designan el pez y un color."
+    },
+    {
+      "entryId": "es-cefr:48633185a64b2bd3",
+      "term": "solar",
+      "partOfSpeech": "verb",
+      "level": "A2",
+      "bucket": "B",
+      "decision": "semantic-exception",
+      "semanticException": true,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "Neither installing flooring nor adding shoe soles expresses electrical grounding."
+    },
+    {
+      "entryId": "es-cefr:d796815302425eb1",
+      "term": "tomillo",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-quality-qa/findings.json"
+      ],
+      "categories": [
+        "food"
+      ],
+      "externalRationale": "La referencia designa plantas y menciona su uso culinario, pero no enumera un sentido para las hojas como ingrediente."
+    },
+    {
+      "entryId": "es-cefr:aefe0907de22f43f",
+      "term": "top",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-quality-qa/findings.json"
+      ],
+      "categories": [
+        "clothing"
+      ],
+      "externalRationale": "La prenda definida llega a cintura o caderas; la prenda de referencia deja descubierto el abdomen."
+    },
+    {
+      "entryId": "es-cefr:bcd795da6808deff",
+      "term": "vegetariano",
+      "partOfSpeech": "noun",
+      "level": "A2",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-a2-minority-pos-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "Excluding meat and fish permits other animal foods, while the supplied sense requires exclusively plant-derived food."
+    },
+    {
+      "entryId": "es-cefr:fd0d600bb7694f8d",
+      "term": "aeróbic",
+      "partOfSpeech": "noun",
+      "level": "B1",
+      "bucket": "A",
+      "decision": "repair-content",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": "Técnica gimnástica realizada con música y control del ritmo respiratorio.",
+      "replacementExample": "Mi madre practica aeróbic con música tres veces por semana.",
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "probability-pilot"
+      ],
+      "externalRationale": "Increased oxygen demand does not identify the listed exercise performed rhythmically to music."
+    },
+    {
+      "entryId": "es-cefr:fe8ff7b42a4e8cdb",
+      "term": "conservador",
+      "partOfSpeech": "noun",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "General resistance to change does not establish the specifically political position listed."
+    },
+    {
+      "entryId": "es-cefr:bc7313f2715c3305",
+      "term": "curioso",
+      "partOfSpeech": "noun",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "A nonparticipating onlooker is a distinct role not established by the general desire to discover things."
+    },
+    {
+      "entryId": "es-cefr:7223c33f7cf6e0ab",
+      "term": "depositar",
+      "partOfSpeech": "verb",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "probability-pilot"
+      ],
+      "externalRationale": "Entrusting valuables for safekeeping does not specifically express crediting a bank account."
+    },
+    {
+      "entryId": "es-cefr:26d5a16788ec97f5",
+      "term": "editor",
+      "partOfSpeech": "noun",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "probability-pilot"
+      ],
+      "externalRationale": "Editorial authority over publication content differs from text revision, publishing, and audiovisual editing."
+    },
+    {
+      "entryId": "es-cefr:e0d5dbee58073340",
+      "term": "era",
+      "partOfSpeech": "noun",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "probability-pilot"
+      ],
+      "externalRationale": "A general historical epoch is distinct from a geological division or a fixed chronological starting date."
+    },
+    {
+      "entryId": "es-cefr:bcdc3e9f3925d58e",
+      "term": "esclavo",
+      "partOfSpeech": "adjective",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos",
+        "probability-pilot"
+      ],
+      "externalRationale": "Servile behavior does not establish loss of personal freedom or inability to escape a compulsion."
+    },
+    {
+      "entryId": "es-cefr:df44edcc4f435283",
+      "term": "extraer",
+      "partOfSpeech": "verb",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "probability-pilot"
+      ],
+      "externalRationale": "Removing something from a location is not equivalent to taking a portion of a whole or exploiting resources."
+    },
+    {
+      "entryId": "es-cefr:df21f1cbc03a1087",
+      "term": "hispano",
+      "partOfSpeech": "noun",
+      "level": "B1",
+      "bucket": "A",
+      "decision": "repair-content",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": "Persona de origen hispanoamericano, especialmente la que vive en Estados Unidos.",
+      "replacementExample": "El hispano mantiene vínculos con la cultura de su familia.",
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "US nationality and a Spanish first language do not express the listed requirement of Hispanic American origin."
+    },
+    {
+      "entryId": "es-cefr:0af656fa8f175ff5",
+      "term": "liar",
+      "partOfSpeech": "verb",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "probability-pilot"
+      ],
+      "externalRationale": "Ningún sentido suministrado expresa desordenar, revolver o ensuciar."
+    },
+    {
+      "entryId": "es-cefr:66458b520c58b0ea",
+      "term": "licenciar",
+      "partOfSpeech": "verb",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "probability-pilot"
+      ],
+      "externalRationale": "La autorización profesional descrita difiere de titular estudiantes o licenciar bienes e información protegidos."
+    },
+    {
+      "entryId": "es-cefr:14d6f4290fc90276",
+      "term": "mascar",
+      "partOfSpeech": "verb",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "probability-pilot"
+      ],
+      "externalRationale": "La definición prepara para tragar; el sentido suministrado especifica masticación sin ingestión."
+    },
+    {
+      "entryId": "es-cefr:c1148869147f0576",
+      "term": "moral",
+      "partOfSpeech": "noun",
+      "level": "B1",
+      "bucket": "A",
+      "decision": "repair-content",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": "Conjunto de principios sobre lo correcto y lo incorrecto que guía la conducta.",
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "Personal ethical motivation differs from an academic discipline, mental faculties, or emotional morale."
+    },
+    {
+      "entryId": "es-cefr:821058c18a3ff7a0",
+      "term": "pin",
+      "partOfSpeech": "noun",
+      "level": "B1",
+      "bucket": "A",
+      "decision": "repair-content",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": "Insignia o adorno pequeño que se lleva prendido en la ropa.",
+      "replacementExample": "Llevaba un pin azul en la chaqueta.",
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "probability-pilot"
+      ],
+      "externalRationale": "El alfiler de sujeción descrito no aparece entre la insignia, el contacto eléctrico y el código."
+    },
+    {
+      "entryId": "es-cefr:c13195cd40b94793",
+      "term": "probador",
+      "partOfSpeech": "noun",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "probability-pilot"
+      ],
+      "externalRationale": "Los sentidos suministrados no incluyen a un catador."
+    },
+    {
+      "entryId": "es-cefr:379341f1ead13aa9",
+      "term": "ranchero",
+      "partOfSpeech": "noun",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "probability-pilot"
+      ],
+      "externalRationale": "Habitar un rancho o preparar su comida no equivale a poseerlo o dirigirlo."
+    },
+    {
+      "entryId": "es-cefr:4837f664b99664fd",
+      "term": "salvaje",
+      "partOfSpeech": "noun",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos",
+        "probability-pilot"
+      ],
+      "externalRationale": "La crueldad individual difiere de la clasificación histórica de sociedades suministrada."
+    },
+    {
+      "entryId": "es-cefr:897bdb57d7e834e5",
+      "term": "valiente",
+      "partOfSpeech": "noun",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "Actual courage differs from the supplied sense of someone who boasts about their qualities."
+    },
+    {
+      "entryId": "es-cefr:952b982f7a601b35",
+      "term": "vara",
+      "partOfSpeech": "noun",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "probability-pilot"
+      ],
+      "externalRationale": "La pieza genérica de diversos materiales no equivale específicamente a una rama ni a los objetos especializados listados."
+    },
+    {
+      "entryId": "es-cefr:d90c0d25ef385a5a",
+      "term": "virgen",
+      "partOfSpeech": "adjective",
+      "level": "B1",
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "semanticException": false,
+      "staleSlovakHint": false,
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "sourceRuns": [
+        "/Users/jozefmajzel/Workspace/Other/vocabulary/.artifacts/spanish-b1-quality-qa/findings.json"
+      ],
+      "categories": [
+        "minority-pos"
+      ],
+      "externalRationale": "First-use material, illustrated by wool, is distinct from natural material untouched by human intervention."
+    }
+  ]
+}

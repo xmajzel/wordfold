@@ -139,9 +139,9 @@ function recommendationsToInputs(
     catalogSenseId: entry.catalogSenseId,
     cefrLevel: entry.level,
     source: topic ?? 'manual',
-    sourceLanguageCode: 'en',
-    targetLanguageCode: 'sk',
-    sourcePronunciationLocale: locale,
+    sourceLanguageCode: entry.sourceLanguageCode,
+    targetLanguageCode: entry.targetLanguageCode,
+    sourcePronunciationLocale: entry.courseId === 'en-sk' ? locale : getCourseDefinition(entry.courseId).defaultSourcePronunciationLocale,
     targetPronunciationLocale: 'sk-SK',
   }));
 }
@@ -182,6 +182,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     ? new SyncCutoverService(appDatabase, new SupabaseGuestImportRemote(supabase), powerSyncDatabase)
     : null);
   const [databaseMutationQueue] = useState(createSerialMutationQueue);
+  const [reminderQueue] = useState(createSerialMutationQueue);
   const [translationQueue] = useState(createSerialMutationQueue);
   const translationTasks = useRef(new Map<string, Promise<void>>());
   const lastScheduleDay = useRef<string | null>(null);
@@ -431,12 +432,13 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   }, [refreshGuestImport, syncHasSynced, syncPhase]);
 
   const reschedule = useCallback(async (nextWords?: Word[], nextSettings?: ReminderSettings) => {
-    return runDatabaseMutation(async () => {
+    // Native notification calls must not hold up vocabulary writes.
+    return reminderQueue.run(async () => {
       const scheduleWords = nextWords ?? await vocabularyStore.listWords();
       const scheduleSettings = nextSettings ?? await repository.getReminderSettings(appDatabase);
-      return rebuildReminderSchedule(appDatabase, scheduleWords, scheduleSettings, activeCourseId);
+      return rebuildReminderSchedule(appDatabase, scheduleWords, scheduleSettings, activeCourseId, runDatabaseMutation);
     });
-  }, [activeCourseId, appDatabase, runDatabaseMutation, vocabularyStore]);
+  }, [activeCourseId, appDatabase, reminderQueue, runDatabaseMutation, vocabularyStore]);
 
   const refreshReminderSchedule = useCallback(async (force = false) => {
     const settings = await repository.getReminderSettings(appDatabase);
@@ -598,7 +600,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       const recommendations = getCourseDefinition(activeCourseId).capabilities.recommendations
         ? buildRecommendations(preferences, existing
           .filter((word) => wordBelongsToCourse(word, activeCourseId))
-          .map((word) => word.normalizedTerm), starterLimit)
+          .map((word) => word.normalizedTerm), starterLimit, activeCourseId)
         : [];
       await runDatabaseMutation(async () => {
         assertWordCapacity((await vocabularyStore.listWords()).length, recommendations.length, purchase.unlimited);
@@ -632,7 +634,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       const existing = await vocabularyStore.listWords();
       const recommendations = buildRecommendations(learningPreferences, existing
         .filter((word) => wordBelongsToCourse(word, activeCourseId))
-        .map((word) => word.normalizedTerm), limit);
+        .map((word) => word.normalizedTerm), purchase.unlimited ? limit : Math.min(limit, getWordCapacity(existing.length, false).remaining ?? 0), activeCourseId);
       if (recommendations.length === 0) return 0;
       await runDatabaseMutation(async () => {
         assertWordCapacity((await vocabularyStore.listWords()).length, recommendations.length, purchase.unlimited);
@@ -644,7 +646,8 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
           pronunciationVoicePreference,
         ));
       });
-      await refresh(); await reschedule();
+      await refresh();
+      void reschedule().catch((error) => console.warn('Could not refresh reminders after adding recommendations.', error));
       return recommendations.length;
     },
     noteNotificationOpen: async (wordId) => {

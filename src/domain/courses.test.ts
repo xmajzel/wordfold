@@ -1,9 +1,12 @@
 import {
   courseDefinitions,
   defaultCourseId,
+  courseSupportsPronunciation,
   getCourseDefinition,
   getCourseForLanguagePair,
   isCourseId,
+  languagePairSupportsPronunciation,
+  wordSupportsPronunciation,
   wordBelongsToCourse,
 } from './courses';
 
@@ -18,7 +21,9 @@ describe('course registry', () => {
       defaultSourcePronunciationLocale: 'es-ES',
       defaultTargetPronunciationLocale: 'sk-SK',
       catalogId: 'spanish-cefr',
+      capabilities: { bundledCatalog: true, devicePronunciation: false },
     });
+    expect(getCourseDefinition('en-sk').capabilities.devicePronunciation).toBe(true);
   });
 
   it('derives course identity from both language fields', () => {
@@ -33,5 +38,12 @@ describe('course registry', () => {
     expect(isCourseId('en-sk')).toBe(true);
     expect(isCourseId('es-sk')).toBe(true);
     expect(isCourseId('sk-es')).toBe(false);
+  });
+
+  it('exposes pronunciation only for courses with an approved delivery path', () => {
+    expect(courseSupportsPronunciation(getCourseDefinition('en-sk'))).toBe(true);
+    expect(languagePairSupportsPronunciation('en', 'sk')).toBe(true);
+    expect(wordSupportsPronunciation({ sourceLanguageCode: 'es', targetLanguageCode: 'sk' })).toBe(false);
+    expect(languagePairSupportsPronunciation('es', 'en')).toBe(true);
   });
 });

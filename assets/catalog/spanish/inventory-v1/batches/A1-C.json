@@ -1,0 +1,3198 @@
+{
+  "schemaVersion": 1,
+  "batchId": "A1-C",
+  "courseId": "es-sk",
+  "level": "A1",
+  "package": "C",
+  "status": "proposed",
+  "author": "all-level-inventory (AI)",
+  "levelMeaning": "recommended-sense-introduction",
+  "references": [
+    {
+      "id": "pcic-leisure",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions8.1; A1 activities versus A2 leisure labels",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-events",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions8.2 and18.6; A1 event identification versus A2 booking detail",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-sports",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions8.3; A1 sport/action set and A2 facilities",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-games",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions8.4; A1 generic game versus A2 named board/card games",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-channels",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions9.1; A1 channel identification and A2 information exchange predicates",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-letters",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions9.2; A1 materials/texts versus A2 send/receive operations",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-phone",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions9.3; A1 device/number versus A2 call handling",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-press",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions9.4; A1 publications/kiosk versus A2 news roles",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-broadcast",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions9.5; A1 media use versus A2 programme structure",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-internet",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions9.6; A1 address symbols/page/mail versus A2 interactive operations",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-art",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions18.1; A1 concrete domains/evaluation versus A2 umbrella labels",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-music",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions18.2; A1 music/singing versus A2 instrument taxonomy",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-visual",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions18.3; A1 visitor orientation versus A2 production/object vocabulary",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-literature",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions18.4; A1 book/read/write versus A2 genre taxonomy",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-photo",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions18.5; A1 image versus A2 equipment/production",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "pcic-screen",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions18.6; A1 roles/venues versus A2 production roles",
+      "use": "Checked 2026-09-05; framework only, with original Wordfold sense judgments. Not official word-level certification or copied learner definitions/examples."
+    },
+    {
+      "id": "rae-guion",
+      "url": "https://www.rae.es/dpd/guion",
+      "section": "DPD guion1: current accentuation and diphthong/hiatus variation; guion2: hyphen character",
+      "use": "Checked 2026-09-05 for current spelling, rather than reproducing historical PCIC guión spelling. Original pronunciation notes; no source examples copied."
+    },
+    {
+      "id": "pcic-forms",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/02_gramatica_inventario_a1-a2.htm",
+      "section": "2 grammar1–2 noun/adjective agreement,7 pronouns,9 verb forms,12 predicate constructions; A1/A2 contrast",
+      "use": "Checked framework for form obligations; grammatical availability is not automatic word-level placement."
+    },
+    {
+      "id": "pcic-pronunciation",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/03_pronunciacion_inventario_a1-a2.htm",
+      "section": "3 pronunciation and prosody: A1/A2 syllable, stress, vowel/consonant contrasts and phrase grouping",
+      "use": "Written risk framework checked 2026-09-05. No native signoff, listening review or device playback is claimed."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "A1-C-leisure",
+      "description": "State simple leisure preferences and identify available recreation destinations.",
+      "frameworkSections": [
+        "9 specific notions8.1; A1 activities versus A2 leisure labels"
+      ],
+      "referenceIds": [
+        "pcic-leisure"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated leisure meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-events",
+      "description": "Choose a cinema, theatre, concert or exhibition and identify admission needs.",
+      "frameworkSections": [
+        "9 specific notions8.2 and18.6; A1 event identification versus A2 booking detail"
+      ],
+      "referenceIds": [
+        "pcic-events"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated events meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-sports",
+      "description": "Name and distinguish the selected everyday sports and their basic participation actions.",
+      "frameworkSections": [
+        "9 specific notions8.3; A1 sport/action set and A2 facilities"
+      ],
+      "referenceIds": [
+        "pcic-sports"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated sports meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-games",
+      "description": "Identify a game and a playing companion without describing complex rules.",
+      "frameworkSections": [
+        "9 specific notions8.4; A1 generic game versus A2 named board/card games"
+      ],
+      "referenceIds": [
+        "pcic-games"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated games meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-channels",
+      "description": "Distinguish spoken, written and digital communication channels.",
+      "frameworkSections": [
+        "9 specific notions9.1; A1 channel identification and A2 information exchange predicates"
+      ],
+      "referenceIds": [
+        "pcic-channels"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated channels meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-letters",
+      "description": "Identify materials and a written item for elementary correspondence.",
+      "frameworkSections": [
+        "9 specific notions9.2; A1 materials/texts versus A2 send/receive operations"
+      ],
+      "referenceIds": [
+        "pcic-letters"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated letters meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-phone",
+      "description": "Identify a telephone type and a simple telephone contact action.",
+      "frameworkSections": [
+        "9 specific notions9.3; A1 device/number versus A2 call handling"
+      ],
+      "referenceIds": [
+        "pcic-phone"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated phone meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-press",
+      "description": "Identify a newspaper or magazine and where to obtain it.",
+      "frameworkSections": [
+        "9 specific notions9.4; A1 publications/kiosk versus A2 news roles"
+      ],
+      "referenceIds": [
+        "pcic-press"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated press meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-broadcast",
+      "description": "Distinguish broadcast media from their receiving devices and viewing/listening actions.",
+      "frameworkSections": [
+        "9 specific notions9.5; A1 media use versus A2 programme structure"
+      ],
+      "referenceIds": [
+        "pcic-broadcast"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated broadcast meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-internet",
+      "description": "Read or dictate a short web/email identifier and recognize a digital communication channel.",
+      "frameworkSections": [
+        "9 specific notions9.6; A1 address symbols/page/mail versus A2 interactive operations"
+      ],
+      "referenceIds": [
+        "pcic-internet"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated internet meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-art",
+      "description": "Identify a familiar artistic domain and express a short basic reaction.",
+      "frameworkSections": [
+        "9 specific notions18.1; A1 concrete domains/evaluation versus A2 umbrella labels"
+      ],
+      "referenceIds": [
+        "pcic-art"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated art meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-music",
+      "description": "Identify singing, dancing, a song and instrument playing as distinct activities.",
+      "frameworkSections": [
+        "9 specific notions18.2; A1 music/singing versus A2 instrument taxonomy"
+      ],
+      "referenceIds": [
+        "pcic-music"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated music meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-visual",
+      "description": "Identify a museum, exhibited object and recognizable cultural building.",
+      "frameworkSections": [
+        "9 specific notions18.3; A1 visitor orientation versus A2 production/object vocabulary"
+      ],
+      "referenceIds": [
+        "pcic-visual"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated visual meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-literature",
+      "description": "Identify reading material and reading/writing activity without literary analysis.",
+      "frameworkSections": [
+        "9 specific notions18.4; A1 book/read/write versus A2 genre taxonomy"
+      ],
+      "referenceIds": [
+        "pcic-literature"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated literature meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-photo",
+      "description": "Identify a photograph and distinguish the image from its capture device.",
+      "frameworkSections": [
+        "9 specific notions18.5; A1 image versus A2 equipment/production"
+      ],
+      "referenceIds": [
+        "pcic-photo"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated photo meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-screen",
+      "description": "Identify screen/stage performers and distinguish venue, medium and work.",
+      "frameworkSections": [
+        "9 specific notions18.6; A1 roles/venues versus A2 production roles"
+      ],
+      "referenceIds": [
+        "pcic-screen"
+      ],
+      "disposition": "selected",
+      "rationale": "The enumerated screen meanings supply concrete scenario contrasts; individual entries distinguish required A1 use from proposed later extensions."
+    },
+    {
+      "id": "A1-C-leisure-later",
+      "description": "Extended social arrangements, sports techniques and named-game rule systems.",
+      "frameworkSections": [
+        "9 specific notions8.1–8.4; checked A1 versus A2 columns"
+      ],
+      "referenceIds": [
+        "pcic-leisure"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "The A1 scenario is choosing an activity/destination and identifying a participant, not negotiating invitations, narrating outings or explaining rules. A2 owns quedar arrangements, hiking/cycling procedures, gym enrolment, named board/card-game systems and sport technique. Current A1-C contains explicit later labels and relevel proposals, not a claim these extended scenarios are covered."
+    },
+    {
+      "id": "A1-C-event-production-later",
+      "description": "Booking procedures and performance-production details.",
+      "frameworkSections": [
+        "9 specific notions8.2,18.2,18.6; A1 identification versus A2 transaction/production"
+      ],
+      "referenceIds": [
+        "pcic-events"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "The bounded A1 task names a film, venue, concert, exhibition and admission ticket with shared price/time support. Reserving seats, interpreting a detailed programme, director/crew roles, musical genres, instrumental technique and critical review are A2 or later work. Actual introductory ticket/role exceptions remain explicit per selection."
+    },
+    {
+      "id": "A1-C-media-operations-later",
+      "description": "Interactive media operations, news production and message handling.",
+      "frameworkSections": [
+        "9 specific notions9.1–9.6; A1 channels/objects versus A2 operations and roles"
+      ],
+      "referenceIds": [
+        "pcic-internet"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "A1 identifies channels, documents and simple identifiers. Sending/receiving/responding, connection diagnosis, phone transfer or voicemail, news interviews/reporting, advertising analysis, programme structure, online chat/forum participation and software troubleshooting belong later operational scenarios. Legacy operation verbs have explicit A2 proposals instead of being hidden as omissions."
+    },
+    {
+      "id": "A1-C-art-analysis-later",
+      "description": "Artistic production, literary genre explanation and critical interpretation.",
+      "frameworkSections": [
+        "9 specific notions18.1–18.6; A1 concrete identification versus A2 taxonomy/production"
+      ],
+      "referenceIds": [
+        "pcic-art"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "A1 names a concrete medium/work/venue/performer and gives a short reaction using F/P. Artistic movements, detailed architecture, sculpture technique, painting production, literary analysis and camera operation require later scopes. Existing genre/instrument/production records are individually relevelled or flagged, not blanket-approved by category18."
+    },
+    {
+      "id": "A1-C-foundations",
+      "description": "Reference, questions, quantity, scheduling and elementary preferences.",
+      "frameworkSections": [
+        "9 specific notions8.1–8.4,18.1;2 grammar7,9,12"
+      ],
+      "referenceIds": [
+        "pcic-forms"
+      ],
+      "disposition": "prerequisite",
+      "rationale": "Unresolved shared coverage prerequisite: A1-F supplies pronouns/articles, ser/estar/hay, numbers, clock/date, location, ability and selected questions. A1-P/F supply gustar/querer and D supplies accepting/declining, clarification and simple reactions. For an event price, use A1-F-297 ADV cuánto with costar, not only noun-linked A1-F-037 DET. These generic lexemes are not cloned into C."
+    },
+    {
+      "id": "A1-C-topical-ownership",
+      "description": "Food/transport/contact/building and classroom dependencies.",
+      "frameworkSections": [
+        "9 specific notions8,9,18 with11,14,3,5,6,10,16,19,20"
+      ],
+      "referenceIds": [
+        "pcic-leisure"
+      ],
+      "disposition": "prerequisite",
+      "rationale": "Unresolved cross-cell ownership: H owns restaurant/bar/café choices and buying/payment; T owns travel/tourist facilities, ticket es-sk:a1:304-entrada and distinct physical entrance; W owns book/paper/read/write and hardware; P owns phone-number/email-address phrases and social companions; S owns geographic/religious building reuse. Crosslinked objects share IDs, but each owning objective must close independently."
+    },
+    {
+      "id": "A1-C-form-audio",
+      "description": "Per-entry morphology and pronunciation execution requirements.",
+      "frameworkSections": [
+        "2 grammar1–2,9;3 pronunciation/prosody A1/A2"
+      ],
+      "referenceIds": [
+        "pcic-pronunciation"
+      ],
+      "disposition": "prerequisite",
+      "rationale": "Unresolved authoring/review gate: every selected item needs gender/plural, irregular verb, complement, orthographic and connected-phrase checks. Give special attention to actor/actriz, foto gender, radio regional gender, media/device homographs, guion spelling with variable syllabification, rr/j/ñ, and hiatus in teatro/museo/correo/fotografía. Device es-ES routing and risk-stratified listening remain separate physical QA; text notes alone never close audio review."
+    }
+  ],
+  "selections": [
+    {
+      "id": "A1-C-001",
+      "term": "tiempo libre",
+      "partOfSpeech": "NOUN",
+      "sense": "time not occupied by work or other obligations",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:216-tiempo-libre"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-leisure"
+      ],
+      "levelRationale": "This label lets a beginner identify the part of life in which chosen activities occur.",
+      "lowerLevelContrast": "A1 scenario extension to the PCIC A2 label; do not extend to time-management argument.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine mass phrase; mi tiempo libre; libre modifies tiempo.",
+      "pronunciationNotes": "Stress tiem and li; ie diphthong, no written accent.",
+      "referenceIds": [
+        "pcic-leisure"
+      ],
+      "uncertainties": [
+        "PCIC8.1 labels this A2; proposed early scaffold for the approved activity-preference scenario."
+      ]
+    },
+    {
+      "id": "A1-C-002",
+      "term": "música",
+      "partOfSpeech": "NOUN",
+      "sense": "organized musical sound as an art or listening activity",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:217-musica"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-music"
+      ],
+      "levelRationale": "Provides the basic object of a listening preference and names an artistic domain.",
+      "lowerLevelContrast": "Introduce the general domain before genres and compositional terminology.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine mass noun; escuchar música generally without article.",
+      "pronunciationNotes": "Three syllables; written accent marks antepenultimate mú.",
+      "referenceIds": [
+        "pcic-music"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-003",
+      "term": "canción",
+      "partOfSpeech": "NOUN",
+      "sense": "a short musical work intended to be sung",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:218-cancion"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-music"
+      ],
+      "levelRationale": "A learner needs to distinguish an individual song from music as a whole.",
+      "lowerLevelContrast": "PCIC8.1 A1 listening context supports introduction although18.2 lists the label in A2.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; canciones loses written accent; cantar/escuchar una canción.",
+      "pronunciationNotes": "Final ción stress with io diphthong; c before i theta in es-ES.",
+      "referenceIds": [
+        "pcic-music"
+      ],
+      "uncertainties": [
+        "Cross-inventory A1/A2 placement requires acceptance of the specific listening object."
+      ]
+    },
+    {
+      "id": "A1-C-004",
+      "term": "película",
+      "partOfSpeech": "NOUN",
+      "sense": "an audiovisual film as a work to watch",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:219-pelicula"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-screen"
+      ],
+      "levelRationale": "Names the work chosen for an evening, not merely the venue.",
+      "lowerLevelContrast": "Introduce a film as an object; detailed plot, genre and criticism remain later.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; películas; ver una película.",
+      "pronunciationNotes": "Four syllables; stress lí, never initial pe.",
+      "referenceIds": [
+        "pcic-screen"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-005",
+      "term": "cine",
+      "partOfSpeech": "NOUN",
+      "sense": "a venue where films are shown to an audience",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:220-cine"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-events"
+      ],
+      "levelRationale": "An elementary destination choice needs the cinema venue.",
+      "lowerLevelContrast": "Venue meaning is distinct from film-making as an art or industry.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; cines; ir al cine contracts a+el.",
+      "pronunciationNotes": "Two syllables; ci theta in reference es-ES, seseo valid.",
+      "referenceIds": [
+        "pcic-events"
+      ],
+      "uncertainties": [
+        "Separate medium sense proposed later in this batch; do not overwrite venue ID."
+      ]
+    },
+    {
+      "id": "A1-C-006",
+      "term": "teatro",
+      "partOfSpeech": "NOUN",
+      "sense": "a venue for live stage performances",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:221-teatro"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-events"
+      ],
+      "levelRationale": "Completes the live-stage alternative to a cinema in an outing choice.",
+      "lowerLevelContrast": "The building/venue is not automatically the performing-art discipline.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; teatros; ir al teatro.",
+      "pronunciationNotes": "Three syllables te-a-tro with e-a hiatus; stress a.",
+      "referenceIds": [
+        "pcic-events"
+      ],
+      "uncertainties": [
+        "Venue/discipline granularity must remain explicit."
+      ]
+    },
+    {
+      "id": "A1-C-007",
+      "term": "museo",
+      "partOfSpeech": "NOUN",
+      "sense": "a place displaying cultural or scientific collections",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:222-museo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-visual"
+      ],
+      "levelRationale": "A visitor can name a museum as a destination without art-history knowledge.",
+      "lowerLevelContrast": "Introduce the venue; curation and provenance belong later.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; museos; visitar/ir a un museo.",
+      "pronunciationNotes": "Three syllables mu-se-o; stress se and final eo hiatus.",
+      "referenceIds": [
+        "pcic-visual"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-008",
+      "term": "deporte",
+      "partOfSpeech": "NOUN",
+      "sense": "physical activity organized as sport or exercise",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:223-deporte"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-sports"
+      ],
+      "levelRationale": "Provides an umbrella term for an elementary activity preference.",
+      "lowerLevelContrast": "Basic participation label, not regulation or competitive institutions.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; hacer deporte, practicar un deporte; deportes for kinds.",
+      "pronunciationNotes": "Stress por; three syllables, initial de audible.",
+      "referenceIds": [
+        "pcic-sports"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-009",
+      "term": "fútbol",
+      "partOfSpeech": "NOUN",
+      "sense": "association football as a sport",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:224-futbol"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-sports"
+      ],
+      "levelRationale": "Names a common team-game preference distinct from racket and water activities.",
+      "lowerLevelContrast": "Basic identification only; no team tactics or specialist rules.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; jugar al fútbol; variant futbol has different regional stress.",
+      "pronunciationNotes": "Written accent marks fút; maintain final l and tb boundary.",
+      "referenceIds": [
+        "pcic-sports"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-010",
+      "term": "tenis",
+      "partOfSpeech": "NOUN",
+      "sense": "the racket sport tennis",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:225-tenis"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-sports"
+      ],
+      "levelRationale": "Supplies a contrasting individual/pair sport in preference questions.",
+      "lowerLevelContrast": "Sport sense, not regional footwear use.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine invariable label; jugar al tenis.",
+      "pronunciationNotes": "Penultimate te stress; final s audible.",
+      "referenceIds": [
+        "pcic-sports"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-011",
+      "term": "natación",
+      "partOfSpeech": "NOUN",
+      "sense": "swimming as an activity or sport",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:226-natacion"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-sports"
+      ],
+      "levelRationale": "Allows recognition of a swimming class/activity label alongside nadar.",
+      "lowerLevelContrast": "Independent A1 scenario extension from the A1 swimming verb, not proof that every sport noun is A1.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine normally mass; hacer/practicar natación.",
+      "pronunciationNotes": "Three syllables na-ta-ción; final ción stress and io diphthong; c before i is theta in reference es-ES.",
+      "referenceIds": [
+        "pcic-sports"
+      ],
+      "uncertainties": [
+        "PCIC8.3 foregrounds nadar rather than this noun; confirm introduction of activity-label pair."
+      ]
+    },
+    {
+      "id": "A1-C-012",
+      "term": "baile",
+      "partOfSpeech": "NOUN",
+      "sense": "rhythmic bodily movement as dancing",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:227-baile"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-music"
+      ],
+      "levelRationale": "Names the activity for a learner who says they like dancing.",
+      "lowerLevelContrast": "Ordinary activity before artistic-school or social-event meanings.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; bailes for kinds; bailar is the corresponding verb.",
+      "pronunciationNotes": "Two syllables bai-le; ai diphthong and stress bai.",
+      "referenceIds": [
+        "pcic-music"
+      ],
+      "uncertainties": [
+        "Distinguish ordinary baile from art-focused danza without counting mere stylistic synonyms twice."
+      ]
+    },
+    {
+      "id": "A1-C-013",
+      "term": "juego",
+      "partOfSpeech": "NOUN",
+      "sense": "an activity with rules undertaken for amusement",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:228-juego"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-games"
+      ],
+      "levelRationale": "Generic game identification enables a beginner to choose a leisure activity.",
+      "lowerLevelContrast": "No automatic extension to a set of objects, gambling or figurative interaction.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; juegos; jugar a un juego.",
+      "pronunciationNotes": "Stress jue with ue diphthong; j velar fricative, not Slovak j.",
+      "referenceIds": [
+        "pcic-games"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-014",
+      "term": "parque",
+      "partOfSpeech": "NOUN",
+      "sense": "a public green area for walking or resting",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:229-parque"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-leisure"
+      ],
+      "levelRationale": "Supplies a free outdoor alternative to paid entertainment.",
+      "lowerLevelContrast": "Basic place, not industrial park or vehicle fleet.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; parques; ir al parque.",
+      "pronunciationNotes": "Stress par; qu represents k and u is silent.",
+      "referenceIds": [
+        "pcic-leisure"
+      ],
+      "uncertainties": [
+        "S/T share this physical place; primary C ID retained without duplicating it."
+      ]
+    },
+    {
+      "id": "A1-C-015",
+      "term": "playa",
+      "partOfSpeech": "NOUN",
+      "sense": "a shore area of sand or stones beside the sea",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:230-playa"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-leisure"
+      ],
+      "levelRationale": "Identifies a familiar outdoor leisure destination.",
+      "lowerLevelContrast": "Concrete beach rather than coastal processes or holiday services.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; playas; ir a la playa.",
+      "pronunciationNotes": "Stress pla; y consonant varies regionally, not a hiatus.",
+      "referenceIds": [
+        "pcic-leisure"
+      ],
+      "uncertainties": [
+        "S owns geography reuse and T travel context; preserve one shore sense."
+      ]
+    },
+    {
+      "id": "A1-C-016",
+      "term": "concierto",
+      "partOfSpeech": "NOUN",
+      "sense": "a live musical performance for an audience",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:231-concierto"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-events"
+      ],
+      "levelRationale": "Names an event alternative to watching a film or visiting a museum.",
+      "lowerLevelContrast": "Performance sense only, not agreement or orderly arrangement.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; conciertos; ir a un concierto.",
+      "pronunciationNotes": "Stress cier with ie diphthong; c before i theta in es-ES.",
+      "referenceIds": [
+        "pcic-events"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-017",
+      "term": "lectura",
+      "partOfSpeech": "NOUN",
+      "sense": "the activity of reading written text",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:232-lectura"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-literature"
+      ],
+      "levelRationale": "An abstract activity label extends the beginner's concrete leer un libro pattern.",
+      "lowerLevelContrast": "A1 uses the verb and book; the nominal activity is proposed as an A2 extension.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; lectura de; plural lecturas can name reading assignments, outside this row.",
+      "pronunciationNotes": "Stress tu; retain ct cluster without extra vowel.",
+      "referenceIds": [
+        "pcic-literature"
+      ],
+      "uncertainties": [
+        "Existing A1 placement proposed A2; review literacy-classroom need before migration."
+      ]
+    },
+    {
+      "id": "A1-C-018",
+      "term": "dibujo",
+      "partOfSpeech": "NOUN",
+      "sense": "a picture made primarily with drawn lines",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:233-dibujo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-visual"
+      ],
+      "levelRationale": "Distinguishing drawn from painted works extends basic museum/object identification.",
+      "lowerLevelContrast": "A1 foto and generic visual reference precede medium-specific product vocabulary.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; dibujos; not the verb form dibujo as a separate sense.",
+      "pronunciationNotes": "Stress bu; j velar fricative.",
+      "referenceIds": [
+        "pcic-visual"
+      ],
+      "uncertainties": [
+        "PCIC18.3 places this object distinction in A2; preserve legacy ID pending adjudication."
+      ]
+    },
+    {
+      "id": "A1-C-019",
+      "term": "bicicleta",
+      "partOfSpeech": "NOUN",
+      "sense": "a two-wheeled pedal-powered vehicle",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:234-bicicleta"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-sports"
+      ],
+      "levelRationale": "A learner can identify their leisure equipment and transport object.",
+      "lowerLevelContrast": "Naming the vehicle does not imply A1 mastery of cycling route or repair vocabulary.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; bicicletas; bici is a feminine colloquial shortened form.",
+      "pronunciationNotes": "Stress cle; four syllables, c before i theta in reference es-ES.",
+      "referenceIds": [
+        "pcic-sports"
+      ],
+      "uncertainties": [
+        "T shares transport-object ownership; same vehicle sense, not separate sports equipment ID."
+      ]
+    },
+    {
+      "id": "A1-C-020",
+      "term": "paseo",
+      "partOfSpeech": "NOUN",
+      "sense": "a leisurely walk undertaken for enjoyment",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:235-paseo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-leisure"
+      ],
+      "levelRationale": "The leisure activity noun supports routine-plan descriptions after immediate destinations.",
+      "lowerLevelContrast": "A1 names the park and simple walking mode; go-for-a-walk collocations are A2 in PCIC8.1.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; paseos; dar un paseo; promenade/place meaning separate.",
+      "pronunciationNotes": "Three syllables pa-se-o with final hiatus.",
+      "referenceIds": [
+        "pcic-leisure"
+      ],
+      "uncertainties": [
+        "Existing A1 -> A2 proposal; do not merge promenade/place names."
+      ]
+    },
+    {
+      "id": "A1-C-021",
+      "term": "tocar",
+      "partOfSpeech": "VERB",
+      "sense": "produce music using an instrument",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:236-tocar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-music"
+      ],
+      "levelRationale": "Instrument-playing is a lexical verb sense needed after basic singing/listening choices.",
+      "lowerLevelContrast": "A1 cantar/bailar/listen precede instrument-specific ability statements in PCIC18.2.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Regular -ar; tocar un instrumento with no a before instrument; toque spelling in later forms.",
+      "pronunciationNotes": "Final car stress; c is k; preserve final r.",
+      "referenceIds": [
+        "pcic-music"
+      ],
+      "uncertainties": [
+        "Existing ID means playing an instrument, not physical contact. P must mint/link a separate contact sense if selected."
+      ]
+    },
+    {
+      "id": "A1-C-022",
+      "term": "bailar",
+      "partOfSpeech": "VERB",
+      "sense": "move the body rhythmically with music",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:237-bailar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-music"
+      ],
+      "levelRationale": "A concrete first-person activity verb supports a simple hobby answer.",
+      "lowerLevelContrast": "Not metaphorical movement or a named professional dance technique.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Regular -ar; bailo/baila/bailamos; intransitive or with a dance type.",
+      "pronunciationNotes": "Final lar stress, ai diphthong in bai.",
+      "referenceIds": [
+        "pcic-music"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-023",
+      "term": "nadar",
+      "partOfSpeech": "VERB",
+      "sense": "move through water using the body",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:238-nadar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-sports"
+      ],
+      "levelRationale": "States an ordinary physical activity or elementary ability.",
+      "lowerLevelContrast": "The activity is independent of training techniques or competitive strokes.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Regular -ar; nado/nada; saber nadar uses F ability sense.",
+      "pronunciationNotes": "Final dar stress; keep intervocalic d audible enough for identification.",
+      "referenceIds": [
+        "pcic-sports"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-024",
+      "term": "jugar",
+      "partOfSpeech": "VERB",
+      "sense": "take part in a game or sport for amusement",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:239-jugar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-games"
+      ],
+      "levelRationale": "A beginner needs one participation verb for the selected game/sport choices.",
+      "lowerLevelContrast": "Game participation, not gamble or play a social role.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Present juego/juegas/juega/juegan; jugamos/jugáis; jugar a/al in reference Spain usage.",
+      "pronunciationNotes": "Infinitive final gar; j fricative and ue in stressed present forms.",
+      "referenceIds": [
+        "pcic-games"
+      ],
+      "uncertainties": [
+        "Regional omission of a with sport names should be labeled valid where appropriate."
+      ]
+    },
+    {
+      "id": "A1-C-025",
+      "term": "divertido",
+      "partOfSpeech": "ADJ",
+      "sense": "providing amusement or entertainment",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:240-divertido"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-leisure"
+      ],
+      "levelRationale": "Supplies a short personal reaction to an activity without an extended review.",
+      "lowerLevelContrast": "Narrow entertaining quality; divertirse event narration is a separate construction.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Divertida/divertidos/divertidas; ser divertido for the quality.",
+      "pronunciationNotes": "Stress ti; four syllables, no added accent.",
+      "referenceIds": [
+        "pcic-leisure"
+      ],
+      "uncertainties": [
+        "Independent early reaction-word proposal; not a blanket claim for all emotion adjectives."
+      ]
+    },
+    {
+      "id": "A1-C-026",
+      "term": "noticia",
+      "partOfSpeech": "NOUN",
+      "sense": "a recent report of an event",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:241-noticia"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-press"
+      ],
+      "levelRationale": "Distinguishing news content from the publication expands basic media identification.",
+      "lowerLevelContrast": "A1 can name a newspaper; reporting and evaluating current events remain later.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; noticias; plural news does not create a separate sense.",
+      "pronunciationNotes": "Stress ti; cia diphthong; c before i theta in es-ES.",
+      "referenceIds": [
+        "pcic-press"
+      ],
+      "uncertainties": [
+        "Legacy A1 proposed A2 as content-level extension beyond PCIC9.4 A1 publication objects."
+      ]
+    },
+    {
+      "id": "A1-C-027",
+      "term": "periódico",
+      "partOfSpeech": "NOUN",
+      "sense": "a regularly issued newspaper",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:242-periodico"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-press"
+      ],
+      "levelRationale": "A learner can name an everyday reading object or request it at a kiosk.",
+      "lowerLevelContrast": "Publication sense, not adjective periodic.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; periódicos; leer el periódico.",
+      "pronunciationNotes": "Stress rió; ió diphthong; written accent retained in plural.",
+      "referenceIds": [
+        "pcic-press"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-028",
+      "term": "revista",
+      "partOfSpeech": "NOUN",
+      "sense": "a magazine containing articles and images",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:243-revista"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-press"
+      ],
+      "levelRationale": "Completes the practical newspaper/magazine contrast for choosing reading material.",
+      "lowerLevelContrast": "Not an inspection, military review or stage revue.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; revistas; revista de viajes as later topic modifier.",
+      "pronunciationNotes": "Stress vis; initial r is a trill.",
+      "referenceIds": [
+        "pcic-press"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-029",
+      "term": "mensaje",
+      "partOfSpeech": "NOUN",
+      "sense": "a short communication sent from one person to another",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:244-mensaje"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-letters"
+      ],
+      "levelRationale": "Names a small written item in an immediate digital or personal exchange.",
+      "lowerLevelContrast": "The basic message does not imply an abstract moral or implicit artistic message.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; mensajes; mensaje electrónico is a transparent modifier.",
+      "pronunciationNotes": "Stress sa; j fricative; no silent final e.",
+      "referenceIds": [
+        "pcic-letters"
+      ],
+      "uncertainties": [
+        "PCIC9.2 supplies A1 written electronic-message context; call-message handling is later."
+      ]
+    },
+    {
+      "id": "A1-C-030",
+      "term": "carta",
+      "partOfSpeech": "NOUN",
+      "sense": "a written letter sent to another person",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:245-carta"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-letters"
+      ],
+      "levelRationale": "Identifies personal written correspondence alongside a postcard or electronic message.",
+      "lowerLevelContrast": "Correspondence only; the restaurant menu is a distinct H proposal.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; cartas; escribir una carta; no automatic playing-card meaning.",
+      "pronunciationNotes": "Stress car; maintain rt sequence.",
+      "referenceIds": [
+        "pcic-letters"
+      ],
+      "uncertainties": [
+        "Preserve es-sk:a1:245-carta for correspondence; H menu must not overwrite it."
+      ]
+    },
+    {
+      "id": "A1-C-031",
+      "term": "correo electrónico",
+      "partOfSpeech": "NOUN",
+      "sense": "the electronic system used to exchange written messages",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:246-correo-electronico"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-internet"
+      ],
+      "levelRationale": "Names a familiar communication channel and supports choosing how to contact someone.",
+      "lowerLevelContrast": "System sense is not automatically an individual message or mailbox address.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine mass phrase; electrónico agrees; email/e-mail variants require later editorial choice.",
+      "pronunciationNotes": "Correo has rr trill and e-o hiatus; electrónico stress tró.",
+      "referenceIds": [
+        "pcic-internet"
+      ],
+      "uncertainties": [
+        "P owns address identification as a separate phrase; individual correo message granularity remains explicit."
+      ]
+    },
+    {
+      "id": "A1-C-032",
+      "term": "llamada",
+      "partOfSpeech": "NOUN",
+      "sense": "a telephone communication event",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:247-llamada"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-phone"
+      ],
+      "levelRationale": "Names a call as distinct from a written message in a minimal contact exchange.",
+      "lowerLevelContrast": "Narrow call label before leaving messages, transferring calls or describing failed connections.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; llamadas; una llamada de/por teléfono.",
+      "pronunciationNotes": "Stress ma; initial ll with reference yeísmo and valid regional variants.",
+      "referenceIds": [
+        "pcic-phone"
+      ],
+      "uncertainties": [
+        "PCIC9.1/9.3 emphasize call operations at A2; propose early naming only for channel choice."
+      ]
+    },
+    {
+      "id": "A1-C-033",
+      "term": "pantalla",
+      "partOfSpeech": "NOUN",
+      "sense": "the display surface of an electronic device",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:248-pantalla"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-internet"
+      ],
+      "levelRationale": "Identifying where text or an image is visible supports a modern elementary media task.",
+      "lowerLevelContrast": "Concrete display only; protective screen and screen-as-medium metaphors remain separate.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; pantallas; pantalla del móvil.",
+      "pronunciationNotes": "Stress ta; ll reference yeísmo; no extra l syllable.",
+      "referenceIds": [
+        "pcic-internet"
+      ],
+      "uncertainties": [
+        "Modern Wordfold task extension and W device ownership collision require adjudication."
+      ]
+    },
+    {
+      "id": "A1-C-034",
+      "term": "información",
+      "partOfSpeech": "NOUN",
+      "sense": "facts supplied to help someone know about something",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:249-informacion"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-channels"
+      ],
+      "levelRationale": "An elementary request for event or visitor information needs the basic information label.",
+      "lowerLevelContrast": "Narrow practical facts before abstract information theory or media reliability.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine mass noun in ordinary request; plural not the default for discrete facts.",
+      "pronunciationNotes": "Final ción stress; preserve four syllables and io diphthong.",
+      "referenceIds": [
+        "pcic-channels"
+      ],
+      "uncertainties": [
+        "Specific practical-info use accepted as introduction proposal; legacy definition is broader."
+      ]
+    },
+    {
+      "id": "A1-C-035",
+      "term": "comunicar",
+      "partOfSpeech": "VERB",
+      "sense": "convey information or ideas to another person",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:250-comunicar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-channels"
+      ],
+      "levelRationale": "The general transfer predicate extends A1 naming of a channel or concrete message.",
+      "lowerLevelContrast": "A1 hablar/escribir/decir suffice for immediate actions; abstract communicate is not required first.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Regular -ar; comunicar algo a alguien; comunicar-se changes construction.",
+      "pronunciationNotes": "Final car stress; c before a k; later comuniqué spelling is form only.",
+      "referenceIds": [
+        "pcic-channels"
+      ],
+      "uncertainties": [
+        "Legacy A1 proposed A2; communicating roads or adjoining rooms is not this meaning."
+      ]
+    },
+    {
+      "id": "A1-C-036",
+      "term": "llamar",
+      "partOfSpeech": "VERB",
+      "sense": "contact someone using a telephone",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:251-llamar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-phone"
+      ],
+      "levelRationale": "A short telephone action is useful when selecting a contact channel.",
+      "lowerLevelContrast": "Phone contact only, not naming oneself, summoning or knocking.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Llamar a alguien por teléfono; regular -ar; llamarse is separate.",
+      "pronunciationNotes": "Final mar stress; initial ll reference yeísmo.",
+      "referenceIds": [
+        "pcic-phone"
+      ],
+      "uncertainties": [
+        "PCIC9.3 lists phone action A2; narrow A1 practical introduction remains a judgment for controller."
+      ]
+    },
+    {
+      "id": "A1-C-037",
+      "term": "enviar",
+      "partOfSpeech": "VERB",
+      "sense": "cause an item to reach another person or destination",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:252-enviar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-letters"
+      ],
+      "levelRationale": "Sending initiates a routine correspondence transaction after identifying the message.",
+      "lowerLevelContrast": "A1 can write/name the item; sending procedures and recipients are an A2 extension.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Envío/envías/envía/envían versus enviamos/enviáis; enviar algo a alguien.",
+      "pronunciationNotes": "Envía has í-a hiatus; infinitive en-viar normally ia diphthong.",
+      "referenceIds": [
+        "pcic-letters"
+      ],
+      "uncertainties": [
+        "Legacy A1 -> A2 proposal; T parcel use and digital message use share the general transfer sense."
+      ]
+    },
+    {
+      "id": "A1-C-038",
+      "term": "recibir",
+      "partOfSpeech": "VERB",
+      "sense": "get something that another person sends",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:253-recibir"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-letters"
+      ],
+      "levelRationale": "Receiving completes the send/receive relation in routine correspondence.",
+      "lowerLevelContrast": "A1 identification of a letter does not establish the full exchange sequence.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Regular -ir; recibir algo de alguien; welcoming a visitor is outside this row.",
+      "pronunciationNotes": "Final bir stress; ci theta in reference es-ES.",
+      "referenceIds": [
+        "pcic-letters"
+      ],
+      "uncertainties": [
+        "Existing A1 proposed A2 in line with PCIC9.1/9.2 exchange operations."
+      ]
+    },
+    {
+      "id": "A1-C-039",
+      "term": "contestar",
+      "partOfSpeech": "VERB",
+      "sense": "give a response to a question or message",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:254-contestar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-channels"
+      ],
+      "levelRationale": "Response management extends elementary questions and concrete contact naming.",
+      "lowerLevelContrast": "F/D own simple answers; this general lexical response predicate is proposed later.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Contestar a una pregunta/un mensaje; contestar algo; context distinguishes answering a phone.",
+      "pronunciationNotes": "Final tar stress; preserve n-t cluster.",
+      "referenceIds": [
+        "pcic-channels"
+      ],
+      "uncertainties": [
+        "Existing A1 -> A2 proposal per PCIC9.1; W classroom use may justify earlier narrow use and must be adjudicated."
+      ]
+    },
+    {
+      "id": "A1-C-040",
+      "term": "conectado",
+      "partOfSpeech": "ADJ",
+      "sense": "having an active connection to a communication network",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:255-conectado"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-internet"
+      ],
+      "levelRationale": "Connection status becomes useful when explaining a routine digital problem.",
+      "lowerLevelContrast": "A1 names device/channel; connection-state diagnosis is the next operational layer.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Conectada/conectados/conectadas; estar conectado a; not ser conectado.",
+      "pronunciationNotes": "Stress ta; preserve ct sequence.",
+      "referenceIds": [
+        "pcic-internet"
+      ],
+      "uncertainties": [
+        "Existing A1 proposed A2; W may share same network-state sense."
+      ]
+    },
+    {
+      "id": "A1-C-041",
+      "term": "arte",
+      "partOfSpeech": "NOUN",
+      "sense": "creative activity considered as an aesthetic or expressive domain",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:436-arte"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-art"
+      ],
+      "levelRationale": "An umbrella concept organizes concrete arts after a learner can name music or cinema.",
+      "lowerLevelContrast": "A1 concrete domains precede abstract definition or classification of art.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Usually el arte in singular and las artes in plural; gender usage needs authored examples.",
+      "pronunciationNotes": "Two syllables ar-te; first stress.",
+      "referenceIds": [
+        "pcic-art"
+      ],
+      "uncertainties": [
+        "PCIC18.1 explicitly puts general arte in A2; preserve ID pending review."
+      ]
+    },
+    {
+      "id": "A1-C-042",
+      "term": "artista",
+      "partOfSpeech": "NOUN",
+      "sense": "a person who creates or performs artistic work",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:437-artista"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-art"
+      ],
+      "levelRationale": "General creator/performer label follows concrete singer or actor roles.",
+      "lowerLevelContrast": "A1 specific roles are more immediately identifying than the umbrella profession.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Common gender el/la artista; artistas; no invented artista/artisto pair.",
+      "pronunciationNotes": "Stress tis; three syllables.",
+      "referenceIds": [
+        "pcic-art"
+      ],
+      "uncertainties": [
+        "Existing A1 proposed A2 per PCIC18.1; W profession ownership to reconcile."
+      ]
+    },
+    {
+      "id": "A1-C-043",
+      "term": "pintura",
+      "partOfSpeech": "NOUN",
+      "sense": "an image produced by applying colored material",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:438-pintura"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-visual"
+      ],
+      "levelRationale": "Medium-specific product identification extends the initial museum visit vocabulary.",
+      "lowerLevelContrast": "Image sense, not paint substance or painting as a process.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; pinturas; compare cuadro without automatic synonym merging.",
+      "pronunciationNotes": "Stress tu; three syllables, n before t.",
+      "referenceIds": [
+        "pcic-visual"
+      ],
+      "uncertainties": [
+        "Legacy A1 -> A2 proposal; painting object versus paint substance needs sense review."
+      ]
+    },
+    {
+      "id": "A1-C-044",
+      "term": "cuadro",
+      "partOfSpeech": "NOUN",
+      "sense": "a painted work on a flat support",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:439-cuadro"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-visual"
+      ],
+      "levelRationale": "Names an exhibited painted object once the basic venue is known.",
+      "lowerLevelContrast": "Not a chart, electrical panel or framed spatial square.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; cuadros; un cuadro de identifies artist or subject contextually.",
+      "pronunciationNotes": "Stress cua with ua diphthong; dr consonant group.",
+      "referenceIds": [
+        "pcic-visual"
+      ],
+      "uncertainties": [
+        "PCIC18.3 A2 object vocabulary; painting/pintura granularity unresolved."
+      ]
+    },
+    {
+      "id": "A1-C-045",
+      "term": "fotografía",
+      "partOfSpeech": "NOUN",
+      "sense": "an image obtained using a camera",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:440-fotografia"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-photo"
+      ],
+      "levelRationale": "A personal photograph is a concrete object usable in an initial identification exchange.",
+      "lowerLevelContrast": "Same image sense as shortened foto; the full form alone does not create an A2 sense.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; fotografías; foto/fotos is a feminine alternative form, not a new image sense.",
+      "pronunciationNotes": "Five syllables; stress fí and í-a hiatus.",
+      "referenceIds": [
+        "pcic-photo"
+      ],
+      "uncertainties": [
+        "PCIC lists foto at A1 and fotografía at A2; retain meaning at A1 with variant-register/form review rather than duplicate by full form."
+      ]
+    },
+    {
+      "id": "A1-C-046",
+      "term": "cámara",
+      "partOfSpeech": "NOUN",
+      "sense": "a device for taking photographs or recording video",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:441-camara"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-photo"
+      ],
+      "levelRationale": "Capture equipment extends recognizing a photograph to describing its production.",
+      "lowerLevelContrast": "A1 photo identification precedes naming specialist capture equipment; smartphone object remains W/P.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; cámaras; cámara de fotos clarifies device and excludes room/chamber senses.",
+      "pronunciationNotes": "Three syllables; written accent marks cá.",
+      "referenceIds": [
+        "pcic-photo"
+      ],
+      "uncertainties": [
+        "Legacy A1 -> A2 proposal based on18.5; owner can justify a narrower modern A1 device need without silent migration."
+      ]
+    },
+    {
+      "id": "A1-C-047",
+      "term": "danza",
+      "partOfSpeech": "NOUN",
+      "sense": "dance considered as an expressive performing art",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:442-danza"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-music"
+      ],
+      "levelRationale": "Distinguishing an artistic discipline from ordinary dancing supports cultural description.",
+      "lowerLevelContrast": "A1 bailar/baile already covers the ordinary leisure action.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; danzas for styles/works; overlap with baile must be treated by use.",
+      "pronunciationNotes": "Stress dan; z theta in reference es-ES.",
+      "referenceIds": [
+        "pcic-music"
+      ],
+      "uncertainties": [
+        "Art-focused sense may overlap baile; A2 proposal requires explicit granularity decision, not rarity-based placement."
+      ]
+    },
+    {
+      "id": "A1-C-048",
+      "term": "instrumento",
+      "partOfSpeech": "NOUN",
+      "sense": "an object designed to produce musical sounds",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:443-instrumento"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-music"
+      ],
+      "levelRationale": "The instrument class supports naming and comparing ways of making music.",
+      "lowerLevelContrast": "A1 music/singing before instrument taxonomy; tool or means senses excluded.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; instrumentos; instrumento musical disambiguates.",
+      "pronunciationNotes": "Stress men; preserve ns-tr consonant group without epenthesis.",
+      "referenceIds": [
+        "pcic-music"
+      ],
+      "uncertainties": [
+        "PCIC18.2 instrument-playing context A2; preserve musical sense of broad lemma."
+      ]
+    },
+    {
+      "id": "A1-C-049",
+      "term": "guitarra",
+      "partOfSpeech": "NOUN",
+      "sense": "a plucked string instrument with a fretted neck",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:444-guitarra"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-music"
+      ],
+      "levelRationale": "Names one selected instrument for simple musical-ability discussion.",
+      "lowerLevelContrast": "A1 singing/listening precede instrument-specific skill identification.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; guitarras; tocar la guitarra.",
+      "pronunciationNotes": "Stress ta; gu before i has silent u, rr is trill.",
+      "referenceIds": [
+        "pcic-music"
+      ],
+      "uncertainties": [
+        "Legacy A1 -> A2 proposal; common Slovak cognate is not by itself level evidence."
+      ]
+    },
+    {
+      "id": "A1-C-050",
+      "term": "piano",
+      "partOfSpeech": "NOUN",
+      "sense": "a keyboard instrument whose keys operate hammers striking strings",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:445-piano"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-music"
+      ],
+      "levelRationale": "Provides the keyboard alternative to guitar in the bounded instrument discussion.",
+      "lowerLevelContrast": "Instrument object, not musical soft-dynamic adverb.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; pianos; tocar el piano.",
+      "pronunciationNotes": "Two syllables pia-no with ia diphthong; stress pia.",
+      "referenceIds": [
+        "pcic-music"
+      ],
+      "uncertainties": [
+        "Existing A1 proposed A2 per18.2; no inference of complete instrument coverage."
+      ]
+    },
+    {
+      "id": "A1-C-051",
+      "term": "novela",
+      "partOfSpeech": "NOUN",
+      "sense": "an extended fictional narrative work",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:446-novela"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-literature"
+      ],
+      "levelRationale": "Genre identification extends the A1 book object and reading activity.",
+      "lowerLevelContrast": "Not narrative analysis, plot structure or a television serial.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; novelas; leer una novela.",
+      "pronunciationNotes": "Stress ve; three syllables.",
+      "referenceIds": [
+        "pcic-literature"
+      ],
+      "uncertainties": [
+        "Existing A1 -> A2 proposal per18.4."
+      ]
+    },
+    {
+      "id": "A1-C-052",
+      "term": "poema",
+      "partOfSpeech": "NOUN",
+      "sense": "an individual literary composition commonly using verse",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:447-poema"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-literature"
+      ],
+      "levelRationale": "An individual poem contrasts with a novel when identifying reading genres.",
+      "lowerLevelContrast": "A1 book/read precede genre distinctions; no claim that every poem must rhyme.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine despite -a; poemas; distinguish poesía domain from individual work.",
+      "pronunciationNotes": "Three syllables po-e-ma with hiatus; stress e.",
+      "referenceIds": [
+        "pcic-literature"
+      ],
+      "uncertainties": [
+        "Legacy A1 proposed A2, aligned with later genre taxonomy; source names poesía rather than certifying poema."
+      ]
+    },
+    {
+      "id": "A1-C-053",
+      "term": "espectáculo",
+      "partOfSpeech": "NOUN",
+      "sense": "a performance arranged for an audience to watch",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:448-espectaculo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-events"
+      ],
+      "levelRationale": "The general performance label supports programmes after concrete cinema/concert choices.",
+      "lowerLevelContrast": "A1 names specific events; abstract umbrella label and figurative spectacle are later.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; espectáculos; ver un espectáculo.",
+      "pronunciationNotes": "Five syllables; stress tá, initial es audible.",
+      "referenceIds": [
+        "pcic-events"
+      ],
+      "uncertainties": [
+        "Existing A1 -> A2 proposal; practical event signs may motivate an earlier recognized form pending review."
+      ]
+    },
+    {
+      "id": "A1-C-054",
+      "term": "pintar",
+      "partOfSpeech": "VERB",
+      "sense": "make an image by applying color to a surface",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:449-pintar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-visual"
+      ],
+      "levelRationale": "Making a painting extends identification of art objects to artistic production.",
+      "lowerLevelContrast": "A1 seeing/naming an image precedes production method distinctions.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Regular -ar; pintar un cuadro; wall decorating and symbolic portrayal separate.",
+      "pronunciationNotes": "Final tar stress; n-t cluster without extra vowel.",
+      "referenceIds": [
+        "pcic-visual"
+      ],
+      "uncertainties": [
+        "Existing A1 proposed A2 per18.3; hobby-only early teaching would need an explicit exception."
+      ]
+    },
+    {
+      "id": "A1-C-055",
+      "term": "cantar",
+      "partOfSpeech": "VERB",
+      "sense": "produce musical sounds with the voice",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:450-cantar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-music"
+      ],
+      "levelRationale": "Names a simple creative activity distinct from dancing and listening.",
+      "lowerLevelContrast": "Basic action before technique, interpretation or singing professions.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Regular -ar; cantar una canción or intransitive cantar.",
+      "pronunciationNotes": "Final tar stress; clear first a and n-t boundary.",
+      "referenceIds": [
+        "pcic-music"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-056",
+      "term": "radio",
+      "partOfSpeech": "NOUN",
+      "sense": "broadcast communication using audio programmes",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-broadcast"
+      ],
+      "levelRationale": "Names the audio-only medium in an elementary listening preference.",
+      "lowerLevelContrast": "Medium distinct from receiving apparatus; not a geometric radius.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine la radio; escuchar la radio; mass medium use.",
+      "pronunciationNotes": "Two syllables ra-dio with io diphthong; initial r trill.",
+      "referenceIds": [
+        "pcic-broadcast"
+      ],
+      "uncertainties": [
+        "A separate device reading follows; global sense policy must decide whether one entry can clearly carry both."
+      ]
+    },
+    {
+      "id": "A1-C-057",
+      "term": "radio",
+      "partOfSpeech": "NOUN",
+      "sense": "an apparatus for receiving audio broadcasts",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-broadcast"
+      ],
+      "levelRationale": "A learner can identify the device used to listen to broadcasts.",
+      "lowerLevelContrast": "Concrete device versus broadcast system, not radius or chemical radium.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "La radio in reference Spain; masculine el radio for apparatus is regional in the Americas; radios plural.",
+      "pronunciationNotes": "Initial r trill; stress ra, io diphthong.",
+      "referenceIds": [
+        "pcic-broadcast"
+      ],
+      "uncertainties": [
+        "Device/medium granularity and regional gender require independent review; H/W may own device reuse."
+      ]
+    },
+    {
+      "id": "A1-C-058",
+      "term": "televisión",
+      "partOfSpeech": "NOUN",
+      "sense": "the medium of audiovisual broadcasting",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-broadcast"
+      ],
+      "levelRationale": "Gives the visual-broadcast alternative to listening to radio.",
+      "lowerLevelContrast": "Medium is not automatically the physical television set or a single programme.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; ver la televisión; tele is a familiar shortened form.",
+      "pronunciationNotes": "Four syllables te-le-vi-sión; final stress and io diphthong.",
+      "referenceIds": [
+        "pcic-broadcast"
+      ],
+      "uncertainties": [
+        "Separate device sense proposed; no duplicate count for tele as a shortened form."
+      ]
+    },
+    {
+      "id": "A1-C-059",
+      "term": "televisión",
+      "partOfSpeech": "NOUN",
+      "sense": "a device used to display television broadcasts",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-broadcast"
+      ],
+      "levelRationale": "Names a familiar household media object in a basic identification exchange.",
+      "lowerLevelContrast": "Device reading, unlike watching the medium as an activity.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; televisiones; televisor is a masculine lexical alternative requiring synonym policy.",
+      "pronunciationNotes": "Final sión stress; plural loses written accent.",
+      "referenceIds": [
+        "pcic-broadcast"
+      ],
+      "uncertainties": [
+        "H/W may select televisor; device-lemma synonym and medium/device granularity must be adjudicated."
+      ]
+    },
+    {
+      "id": "A1-C-060",
+      "term": "baloncesto",
+      "partOfSpeech": "NOUN",
+      "sense": "basketball as a team sport",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-sports"
+      ],
+      "levelRationale": "Completes the selected team/racket/water/winter sport-choice scenario with an indoor team game.",
+      "lowerLevelContrast": "Basic sport identification, not position names or tactical vocabulary.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; jugar al baloncesto; básquet/básquetbol/basquetbol regional alternatives.",
+      "pronunciationNotes": "Stress ces; c before e theta in reference es-ES, four syllables.",
+      "referenceIds": [
+        "pcic-sports"
+      ],
+      "uncertainties": [
+        "Regional alternatives are variants pending policy, not automatic extra senses."
+      ]
+    },
+    {
+      "id": "A1-C-061",
+      "term": "esquiar",
+      "partOfSpeech": "VERB",
+      "sense": "move over snow using skis",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-sports"
+      ],
+      "levelRationale": "A Slovak learner can name a familiar winter activity alongside running and swimming.",
+      "lowerLevelContrast": "Basic action identification; equipment details and mountain-safety instructions are later.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Esquío/esquías/esquía/esquían versus esquiamos/esquiáis; no extra sense per form.",
+      "pronunciationNotes": "Infinitive final ar with ia diphthong; esquío has í-o hiatus; qu has silent u.",
+      "referenceIds": [
+        "pcic-sports"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-062",
+      "term": "piscina",
+      "partOfSpeech": "NOUN",
+      "sense": "an artificial pool used for swimming",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-sports"
+      ],
+      "levelRationale": "Names the immediate destination needed to choose swimming as an activity.",
+      "lowerLevelContrast": "Facility identification only, not membership arrangements or pool rules.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; piscinas; ir a la piscina.",
+      "pronunciationNotes": "Stress ci; sc before i yields s+theta in reference es-ES, seseo variants valid.",
+      "referenceIds": [
+        "pcic-sports"
+      ],
+      "uncertainties": [
+        "PCIC8.3 places facility labels A2; this narrow A1 destination is an explicit Wordfold scenario extension."
+      ]
+    },
+    {
+      "id": "A1-C-063",
+      "term": "gimnasio",
+      "partOfSpeech": "NOUN",
+      "sense": "an indoor facility for exercise or sport",
+      "proposedLevel": "A2",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-sports"
+      ],
+      "levelRationale": "The facility supports arranging regular exercise beyond a minimal sport preference.",
+      "lowerLevelContrast": "A1 basic activity names first; enrolment/equipment decisions belong A2.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; gimnasios; ir al gimnasio.",
+      "pronunciationNotes": "Stress na; g before i fricative and io diphthong.",
+      "referenceIds": [
+        "pcic-sports"
+      ],
+      "uncertainties": [
+        "Explicit A2 boundary paired with proposed early piscina exception; no equal-level assumption for all facilities."
+      ]
+    },
+    {
+      "id": "A1-C-064",
+      "term": "gimnasia",
+      "partOfSpeech": "NOUN",
+      "sense": "a set of bodily exercises for fitness or physical training",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-sports"
+      ],
+      "levelRationale": "Names exercise-based activity distinct from competitive games and swimming.",
+      "lowerLevelContrast": "Basic activity category, not apparatus gymnastics techniques.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine mass noun; hacer gimnasia.",
+      "pronunciationNotes": "Stress na; initial gi fricative, final ia diphthong.",
+      "referenceIds": [
+        "pcic-sports"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-065",
+      "term": "ejercicio",
+      "partOfSpeech": "NOUN",
+      "sense": "physical activity performed to maintain or improve fitness",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:188-ejercicio"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-sports"
+      ],
+      "levelRationale": "Provides the everyday fitness activity in a simple statement of routine.",
+      "lowerLevelContrast": "New physical-activity sense contrasted with legacy188 practice task; do not merely relabel the existing classroom example.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; hacer ejercicio usually mass; ejercicios for individual movements.",
+      "pronunciationNotes": "Four syllables e-jer-ci-cio; stress ci, j fricative and final io diphthong.",
+      "referenceIds": [
+        "pcic-sports"
+      ],
+      "uncertainties": [
+        "Legacy definition is broad practice; W may favor one broad sense. Preserve its ID until physical/classroom granularity is resolved."
+      ]
+    },
+    {
+      "id": "A1-C-066",
+      "term": "correr",
+      "partOfSpeech": "VERB",
+      "sense": "move rapidly on foot by running",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:028-correr"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-sports"
+      ],
+      "levelRationale": "A beginner can identify running as a leisure action without discussing training.",
+      "lowerLevelContrast": "Same physical motion already owned P; sports context alone does not create another sense.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Regular -er; corro/corre/corremos; no a before the activity.",
+      "pronunciationNotes": "Final rrer stress; rr is a trill.",
+      "referenceIds": [
+        "pcic-sports"
+      ],
+      "uncertainties": [
+        "P owns bodily-motion review; crosslink the same baseline meaning."
+      ]
+    },
+    {
+      "id": "A1-C-067",
+      "term": "compañero",
+      "partOfSpeech": "NOUN",
+      "sense": "a person participating in an activity together with someone",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-games"
+      ],
+      "levelRationale": "A basic game exchange can identify the person playing alongside the learner.",
+      "lowerLevelContrast": "Participation companion, not automatically romantic partner or formal membership.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Compañera/compañeros/compañeras; compañero de juego; gender forms not separate senses.",
+      "pronunciationNotes": "Stress ñe; ñ is palatal nasal, not separate n+y.",
+      "referenceIds": [
+        "pcic-games"
+      ],
+      "uncertainties": [
+        "P may select the broader companion sense; global ownership should merge equivalent use, not clone a game-specific person."
+      ]
+    },
+    {
+      "id": "A1-C-068",
+      "term": "descansar",
+      "partOfSpeech": "VERB",
+      "sense": "pause activity in order to recover energy",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:210-descansar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-leisure"
+      ],
+      "levelRationale": "Supplies a non-active leisure choice alongside going out or playing a sport.",
+      "lowerLevelContrast": "Rest activity, not sleep itself or a physical object's support.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Regular -ar; descanso/descansa; descansar de an activity.",
+      "pronunciationNotes": "Final sar stress; preserve s-c cluster in reference pronunciation.",
+      "referenceIds": [
+        "pcic-leisure"
+      ],
+      "uncertainties": [
+        "W/P share rest use; same baseline sense crosslinked."
+      ]
+    },
+    {
+      "id": "A1-C-069",
+      "term": "discoteca",
+      "partOfSpeech": "NOUN",
+      "sense": "a venue where people dance to recorded music",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-leisure"
+      ],
+      "levelRationale": "Names the dancing destination among the bounded outing alternatives.",
+      "lowerLevelContrast": "Venue, not a collection of records.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; discotecas; ir a una discoteca; no assumption of alcohol use.",
+      "pronunciationNotes": "Stress te; four syllables with initial dis audible.",
+      "referenceIds": [
+        "pcic-leisure"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-070",
+      "term": "circo",
+      "partOfSpeech": "NOUN",
+      "sense": "a circus entertainment venue or company presenting live acts",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-events"
+      ],
+      "levelRationale": "Provides a familiar family-entertainment alternative to cinema and concerts.",
+      "lowerLevelContrast": "Naming an outing type; act taxonomy and production roles are later.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; circos; ir al circo.",
+      "pronunciationNotes": "Stress cir; ci theta in reference es-ES.",
+      "referenceIds": [
+        "pcic-events"
+      ],
+      "uncertainties": [
+        "Venue/company metonymy may be narrowed during authoring; do not claim all senses of circo covered."
+      ]
+    },
+    {
+      "id": "A1-C-071",
+      "term": "exposición",
+      "partOfSpeech": "NOUN",
+      "sense": "a public display of objects or artworks for visitors",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-visual"
+      ],
+      "levelRationale": "Distinguishes a temporary display from the museum building itself.",
+      "lowerLevelContrast": "Display event, not explanation, risk exposure or photographic exposure.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; exposiciones; exposición de identifies displayed material.",
+      "pronunciationNotes": "Final ción stress; x commonly ks, preserve intelligibility in sequence.",
+      "referenceIds": [
+        "pcic-visual"
+      ],
+      "uncertainties": [
+        "PCIC18.3 A1 versus8.2 A2 emphasis: choose narrow visitor identification, not booking or reviewing the show."
+      ]
+    },
+    {
+      "id": "A1-C-072",
+      "term": "entrada",
+      "partOfSpeech": "NOUN",
+      "sense": "a ticket giving admission to an event or venue",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:304-entrada"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-events"
+      ],
+      "levelRationale": "Identifies the concrete item needed for the approved basic event-choice scenario.",
+      "lowerLevelContrast": "Ticket only, not a physical entrance, first dish or data input.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; entradas; una entrada para el concierto.",
+      "pronunciationNotes": "Stress tra; en-tra-da, no extra vowel in tr.",
+      "referenceIds": [
+        "pcic-events"
+      ],
+      "uncertainties": [
+        "T A1-T-014 owns existing ticket ID; PCIC8.2 lists transactions A2, so A1 names item only. Physical entrance A1-T-063 stays separate."
+      ]
+    },
+    {
+      "id": "A1-C-073",
+      "term": "actor",
+      "partOfSpeech": "NOUN",
+      "sense": "a performer who portrays a character on stage or screen",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-screen"
+      ],
+      "levelRationale": "A learner can identify the person seen in a film or theatre performance.",
+      "lowerLevelContrast": "Concrete performer role before directing or critical interpretation.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Actor/actriz gender counterparts; actores/actrices; one role sense proposal with explicit irregular forms.",
+      "pronunciationNotes": "Actor final tor stress; actress form actriz final triz with theta in es-ES.",
+      "referenceIds": [
+        "pcic-screen"
+      ],
+      "uncertainties": [
+        "Actriz is covered as the counterpart form, not silently omitted or counted again. W occupational use requires ownership merge."
+      ]
+    },
+    {
+      "id": "A1-C-074",
+      "term": "cantante",
+      "partOfSpeech": "NOUN",
+      "sense": "a person who performs music using the voice",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-music"
+      ],
+      "levelRationale": "Identifies a basic musical role independently of the verb cantar.",
+      "lowerLevelContrast": "Specific recognizable role before general artista or professional music terminology.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Common gender el/la cantante; cantantes.",
+      "pronunciationNotes": "Stress tan; three syllables, final e clear.",
+      "referenceIds": [
+        "pcic-music"
+      ],
+      "uncertainties": [
+        "W role ownership crosslink required if also selected as a profession."
+      ]
+    },
+    {
+      "id": "A1-C-075",
+      "term": "cine",
+      "partOfSpeech": "NOUN",
+      "sense": "film-making and films considered as an artistic medium",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:220-cine"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-art"
+      ],
+      "levelRationale": "A preference for cinema as an art differs from naming a building to visit.",
+      "lowerLevelContrast": "New artistic-medium reading, distinct from baseline220 venue.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine generally mass; el cine español as a transparent modifier, not separate national senses.",
+      "pronunciationNotes": "Stress ci; identical sound to venue noun means context must disambiguate.",
+      "referenceIds": [
+        "pcic-art"
+      ],
+      "uncertainties": [
+        "Global venue/medium granularity must be decided; existing venue ID must not be overwritten."
+      ]
+    },
+    {
+      "id": "A1-C-076",
+      "term": "teatro",
+      "partOfSpeech": "NOUN",
+      "sense": "live dramatic performance considered as an art",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:221-teatro"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-art"
+      ],
+      "levelRationale": "A learner can express liking stage drama rather than a particular theatre building.",
+      "lowerLevelContrast": "New discipline reading; individual play and plot terminology are later.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine mass in the art sense; el teatro; a specific work is not automatically teatro.",
+      "pronunciationNotes": "Three syllables te-a-tro; e-a hiatus.",
+      "referenceIds": [
+        "pcic-art"
+      ],
+      "uncertainties": [
+        "Global discipline/venue policy needed; preserve baseline221 building sense."
+      ]
+    },
+    {
+      "id": "A1-C-077",
+      "term": "monumento",
+      "partOfSpeech": "NOUN",
+      "sense": "a structure recognized for commemorative or cultural importance",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-visual"
+      ],
+      "levelRationale": "Names a visible cultural landmark a visitor can identify or locate.",
+      "lowerLevelContrast": "Concrete landmark, not abstract monumental importance or detailed conservation.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; monumentos; monumento a may identify commemorated subject.",
+      "pronunciationNotes": "Four syllables; stress men.",
+      "referenceIds": [
+        "pcic-visual"
+      ],
+      "uncertainties": [
+        "PCIC18.3 A1 versus18.1 A2 context: narrow visitor identification proposed."
+      ]
+    },
+    {
+      "id": "A1-C-078",
+      "term": "catedral",
+      "partOfSpeech": "NOUN",
+      "sense": "the principal church of a bishop's diocese",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-visual"
+      ],
+      "levelRationale": "A tourist can identify a named cathedral as a type of cultural building.",
+      "lowerLevelContrast": "Building recognition, not ecclesiastical administration or a claim about belief.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; catedrales; lowercase generic type, capitalization only proper name rules.",
+      "pronunciationNotes": "Three syllables ca-te-dral; final stress and dr cluster.",
+      "referenceIds": [
+        "pcic-visual"
+      ],
+      "uncertainties": [
+        "T/S building/religion contexts must share or adjudicate the same sense."
+      ]
+    },
+    {
+      "id": "A1-C-079",
+      "term": "edificio",
+      "partOfSpeech": "NOUN",
+      "sense": "a constructed building used for human activities",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:259-edificio"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-visual"
+      ],
+      "levelRationale": "Supplies the generic object when identifying a cultural structure.",
+      "lowerLevelContrast": "Same physical construction as H baseline; no art-specific new sense.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; edificios; edificio antiguo uses F adjective if approved.",
+      "pronunciationNotes": "Four syllables; stress fi; final cio diphthong.",
+      "referenceIds": [
+        "pcic-visual"
+      ],
+      "uncertainties": [
+        "H owns generic building; C only references visitor usage."
+      ]
+    },
+    {
+      "id": "A1-C-080",
+      "term": "iglesia",
+      "partOfSpeech": "NOUN",
+      "sense": "a building used for Christian worship",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:452-iglesia"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-visual"
+      ],
+      "levelRationale": "Identifies a cultural/religious building encountered during a visit.",
+      "lowerLevelContrast": "Building only, not the institutional Church or personal religious affiliation.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; iglesias; lowercase for building.",
+      "pronunciationNotes": "Three syllables i-gle-sia with ia diphthong; stress gle.",
+      "referenceIds": [
+        "pcic-visual"
+      ],
+      "uncertainties": [
+        "S owns religious-building context; no endorsement or doctrine in learner wording."
+      ]
+    },
+    {
+      "id": "A1-C-081",
+      "term": "libro",
+      "partOfSpeech": "NOUN",
+      "sense": "a bound set of pages containing text or images",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:178-libro"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-literature"
+      ],
+      "levelRationale": "Names a concrete reading object used in an elementary leisure preference.",
+      "lowerLevelContrast": "Same book as W, not separate literary and textbook senses by topic alone.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; libros; leer un libro.",
+      "pronunciationNotes": "Stress li; br cluster without an inserted vowel.",
+      "referenceIds": [
+        "pcic-literature"
+      ],
+      "uncertainties": [
+        "W A1-W-008 owns baseline object; crosslink without duplicate count."
+      ]
+    },
+    {
+      "id": "A1-C-082",
+      "term": "leer",
+      "partOfSpeech": "VERB",
+      "sense": "interpret written words or text",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:088-leer"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-literature"
+      ],
+      "levelRationale": "Supports the basic statement of reading a book or publication.",
+      "lowerLevelContrast": "Same reading activity as W, not interpret data or read someone's mind.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Leo/lees/lee/leemos/leéis/leen; infinitive leer has e-e sequence.",
+      "pronunciationNotes": "Two syllables le-er in infinitive with final stress; preserve vowel contact.",
+      "referenceIds": [
+        "pcic-literature"
+      ],
+      "uncertainties": [
+        "W/F share this baseline verb; literary context does not justify a new sense."
+      ]
+    },
+    {
+      "id": "A1-C-083",
+      "term": "escribir",
+      "partOfSpeech": "VERB",
+      "sense": "produce written words or text",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:087-escribir"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-letters"
+      ],
+      "levelRationale": "A beginner can state writing a letter, card or message.",
+      "lowerLevelContrast": "Same baseline activity as W; composition genres do not create separate verb senses here.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Regular -ir present; escribo/escribe; escribir a alguien/una carta.",
+      "pronunciationNotes": "Final bir stress; initial es and scr consonant sequence audible.",
+      "referenceIds": [
+        "pcic-letters"
+      ],
+      "uncertainties": [
+        "W owns literacy action; C links correspondence use."
+      ]
+    },
+    {
+      "id": "A1-C-084",
+      "term": "teléfono",
+      "partOfSpeech": "NOUN",
+      "sense": "a device for spoken or other remote communication",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:060-telefono"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-phone"
+      ],
+      "levelRationale": "Identifies the object used for a call and contrasts it with written channels.",
+      "lowerLevelContrast": "Generic device; fijo/móvil type modifiers and phone-number phrase are not all new device senses.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; teléfonos; teléfono fijo/móvil; móvil noun is a shortened type label whose global form policy belongs P/W.",
+      "pronunciationNotes": "Four syllables; stress lé.",
+      "referenceIds": [
+        "pcic-phone"
+      ],
+      "uncertainties": [
+        "P/T also crosslink baseline060; same device ID must remain stable."
+      ]
+    },
+    {
+      "id": "A1-C-085",
+      "term": "sobre",
+      "partOfSpeech": "NOUN",
+      "sense": "a paper envelope used to enclose correspondence",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-letters"
+      ],
+      "levelRationale": "Completes the physical letter materials: writing sheet, container and postage.",
+      "lowerLevelContrast": "Object noun, not preposition on/about.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; sobres; meter una carta en un sobre is later usage support.",
+      "pronunciationNotes": "Stress so; br cluster; distinct POS depends on context not sound.",
+      "referenceIds": [
+        "pcic-letters"
+      ],
+      "uncertainties": [
+        "T postal context should reuse this object, not duplicate it."
+      ]
+    },
+    {
+      "id": "A1-C-086",
+      "term": "sello",
+      "partOfSpeech": "NOUN",
+      "sense": "a postage stamp indicating payment for mailing an item",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-letters"
+      ],
+      "levelRationale": "Identifies the small item needed for basic physical correspondence.",
+      "lowerLevelContrast": "Postage only, not official seal, stamp tool or brand.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; sellos; sello de correos clarifies meaning.",
+      "pronunciationNotes": "Stress se; ll reference yeísmo.",
+      "referenceIds": [
+        "pcic-letters"
+      ],
+      "uncertainties": [
+        "T owns postal service procedure; share stamp object after adjudication."
+      ]
+    },
+    {
+      "id": "A1-C-087",
+      "term": "postal",
+      "partOfSpeech": "NOUN",
+      "sense": "a card carrying a short written message sent by post",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-letters"
+      ],
+      "levelRationale": "Adds the holiday-message alternative to a letter and an electronic message.",
+      "lowerLevelContrast": "Correspondence object, not postal adjective or picturesque view metaphor.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine la postal from tarjeta postal; postales.",
+      "pronunciationNotes": "Two syllables pos-tal; final stress.",
+      "referenceIds": [
+        "pcic-letters"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-C-088",
+      "term": "papel",
+      "partOfSpeech": "NOUN",
+      "sense": "thin sheet material used for writing or printing",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:182-papel"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-letters"
+      ],
+      "levelRationale": "Names the writing material in a short correspondence task.",
+      "lowerLevelContrast": "Same material as W; a document, role or official papers would be another meaning.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine mass noun; papel; hojas de papel not individual paper counting in this row.",
+      "pronunciationNotes": "Final pel stress; preserve both unstressed/stressed vowels.",
+      "referenceIds": [
+        "pcic-letters"
+      ],
+      "uncertainties": [
+        "W owns baseline182 material; do not reuse ID for actor's papel role."
+      ]
+    },
+    {
+      "id": "A1-C-089",
+      "term": "quiosco",
+      "partOfSpeech": "NOUN",
+      "sense": "a small stand selling newspapers and similar goods",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-press"
+      ],
+      "levelRationale": "Provides the ordinary place to request a newspaper or magazine.",
+      "lowerLevelContrast": "Retail stand, not every specialized kiosk or digital terminal.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; quioscos; kiosco is an accepted spelling variant to normalize by policy.",
+      "pronunciationNotes": "Stress quios with io diphthong; qu has silent u.",
+      "referenceIds": [
+        "pcic-press"
+      ],
+      "uncertainties": [
+        "T/H may own retailer context; spelling variants not automatic extra entries."
+      ]
+    },
+    {
+      "id": "A1-C-090",
+      "term": "internet",
+      "partOfSpeech": "NOUN",
+      "sense": "the worldwide interconnected computer network",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-internet"
+      ],
+      "levelRationale": "Names a familiar medium used to access a page or exchange messages.",
+      "lowerLevelContrast": "Network identification, not technical architecture or online safety operations.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Lowercase internet used here; Internet is also a spelling convention; gender usage must be consistent in authored text, often without article.",
+      "pronunciationNotes": "Final net stress; retain final t, avoid English-only stress assumption.",
+      "referenceIds": [
+        "pcic-internet"
+      ],
+      "uncertainties": [
+        "Modern capitalization/gender policy requires editorial consistency; W technology use is same referent."
+      ]
+    },
+    {
+      "id": "A1-C-091",
+      "term": "página web",
+      "partOfSpeech": "NOUN",
+      "sense": "a document accessible on the World Wide Web",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-internet"
+      ],
+      "levelRationale": "Identifies what a beginner opens or names when given a short online address.",
+      "lowerLevelContrast": "Individual page distinguished from entire site; do not silently define both as identical.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; páginas web; final web normally invariable as modifier.",
+      "pronunciationNotes": "Página stresses pá; web one syllable, final b may be weakened but not replaced by p deliberately.",
+      "referenceIds": [
+        "pcic-internet"
+      ],
+      "uncertainties": [
+        "W digital-object ownership must merge equivalent page sense."
+      ]
+    },
+    {
+      "id": "A1-C-092",
+      "term": "arroba",
+      "partOfSpeech": "NOUN",
+      "sense": "the at-sign used in an email address",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-internet"
+      ],
+      "levelRationale": "Makes spoken email-address identification possible.",
+      "lowerLevelContrast": "Address-symbol sense only, not historic weight unit.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; arrobas when counting symbols; arroba in dictated address.",
+      "pronunciationNotes": "Stress rro; rr trill; three syllables.",
+      "referenceIds": [
+        "pcic-internet"
+      ],
+      "uncertainties": [
+        "P address phrase requires this F/C symbol support."
+      ]
+    },
+    {
+      "id": "A1-C-093",
+      "term": "guion",
+      "partOfSpeech": "NOUN",
+      "sense": "a short horizontal hyphen used inside an identifier",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-internet"
+      ],
+      "levelRationale": "Distinguishes a hyphen from a dot or underscore when dictating a simple address.",
+      "lowerLevelContrast": "Symbol meaning, not a film script or organized speaking outline.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; guiones; standard current spelling guion without accent.",
+      "pronunciationNotes": "Normally one syllable for accentuation; spoken hiatus occurs regionally and is not an error.",
+      "referenceIds": [
+        "pcic-internet",
+        "rae-guion"
+      ],
+      "uncertainties": [
+        "PCIC historical text uses guión; authoring should apply current RAE spelling, with variant pronunciation noted."
+      ]
+    },
+    {
+      "id": "A1-C-094",
+      "term": "guion bajo",
+      "partOfSpeech": "NOUN",
+      "sense": "the underscore character used in an identifier",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-internet"
+      ],
+      "levelRationale": "An underscore must be distinguished from a hyphen to reproduce a contact address.",
+      "lowerLevelContrast": "Bounded symbol phrase rather than a separate meaning for every keyboard key.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine phrase; guiones bajos; standard guion spelling without accent.",
+      "pronunciationNotes": "Guion followed by ba-jo; j fricative and independent bajo stress.",
+      "referenceIds": [
+        "pcic-internet",
+        "rae-guion"
+      ],
+      "uncertainties": [
+        "P address use crosslinks this symbol; historical PCIC guión spelling is not current default."
+      ]
+    },
+    {
+      "id": "A1-C-095",
+      "term": "punto",
+      "partOfSpeech": "NOUN",
+      "sense": "the dot character separating parts of a digital address",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-internet"
+      ],
+      "levelRationale": "The dot enables accurate reproduction of a simple web or email address.",
+      "lowerLevelContrast": "Character use only; score, spatial point and topic are separate meanings.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; puntos; pronounce punto between address segments.",
+      "pronunciationNotes": "Stress pun; preserve nt sequence.",
+      "referenceIds": [
+        "pcic-internet"
+      ],
+      "uncertainties": [
+        "W may select sentence full stop or other point sense; adjudicate symbol granularity, not automatic merge."
+      ]
+    },
+    {
+      "id": "A1-C-096",
+      "term": "barra",
+      "partOfSpeech": "NOUN",
+      "sense": "a slash character separating parts of a web address",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-internet"
+      ],
+      "levelRationale": "Adds the slash contrast needed for a short web path beyond a domain name.",
+      "lowerLevelContrast": "Address-symbol extension, not a bar counter, metal rod or music measure.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; barras; barra inclinada clarifies slash; backslash explicitly outside this simple-path scenario.",
+      "pronunciationNotes": "Stress ba; rr trill.",
+      "referenceIds": [
+        "pcic-internet"
+      ],
+      "uncertainties": [
+        "Independent modern identifier-scenario extension beyond the PCIC A1 listed address symbols."
+      ]
+    },
+    {
+      "id": "A1-C-097",
+      "term": "correo electrónico",
+      "partOfSpeech": "NOUN",
+      "sense": "an individual written message sent electronically",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:246-correo-electronico"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-letters"
+      ],
+      "levelRationale": "A concrete email message can be identified alongside a letter or postcard.",
+      "lowerLevelContrast": "New countable message use, distinct from baseline246 electronic-mail system and P address phrase.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Masculine; un correo electrónico/correos electrónicos; distinguish countable article from mass system use.",
+      "pronunciationNotes": "Correo has rr and e-o hiatus; electrónico stress tró.",
+      "referenceIds": [
+        "pcic-letters"
+      ],
+      "uncertainties": [
+        "Global message/system granularity must be decided; existing system ID linked as collision history only."
+      ]
+    },
+    {
+      "id": "A1-C-098",
+      "term": "escuchar",
+      "partOfSpeech": "VERB",
+      "sense": "pay attention to sound in order to hear it",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-actions-planned-01"
+      ],
+      "objectiveIds": [
+        "A1-C-broadcast"
+      ],
+      "levelRationale": "Supplies the action for choosing music or radio as an activity.",
+      "lowerLevelContrast": "Attentive listening differs from mere auditory perception oír; the latter retains F's explicit A2 proposal.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Regular -ar; escuchar algo/a alguien; listen to no inserted a before nonhuman sound object.",
+      "pronunciationNotes": "Final char stress; ch affricate, initial es audible.",
+      "referenceIds": [
+        "pcic-broadcast"
+      ],
+      "uncertainties": [
+        "Exact planned a1-actions-planned-01 and F listening sense are crosslinked, not a new media-only verb."
+      ]
+    },
+    {
+      "id": "A1-C-099",
+      "term": "ver",
+      "partOfSpeech": "VERB",
+      "sense": "perceive visually, including watching a film or broadcast",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-011-ver"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-broadcast"
+      ],
+      "levelRationale": "Connects the film/television object to a basic activity statement.",
+      "lowerLevelContrast": "Ordinary viewing use of baseline visual perception; intentional inspection mirar is not silently identical.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Veo/ves/ve/vemos/veis/ven; ver una película/ver la televisión.",
+      "pronunciationNotes": "One-syllable infinitive; veo has e-o hiatus.",
+      "referenceIds": [
+        "pcic-broadcast"
+      ],
+      "uncertainties": [
+        "F owns visual-perception sense; global policy must confirm watching use as ordinary extension rather than minting duplicate."
+      ]
+    },
+    {
+      "id": "A1-C-100",
+      "term": "mirar",
+      "partOfSpeech": "VERB",
+      "sense": "direct one's gaze intentionally at something",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-actions-planned-02"
+      ],
+      "objectiveIds": [
+        "A1-C-broadcast"
+      ],
+      "levelRationale": "This intentional-looking alternative is a later lexical extension beyond the selected basic viewing/listening actions.",
+      "lowerLevelContrast": "A1 ver supplies the simple film/television pattern; not all dialectal media uses of mirar are errors.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Regular -ar; mirar algo/a alguien; regional mirar televisión should be labeled.",
+      "pronunciationNotes": "Final rar stress; intervocalic r tap.",
+      "referenceIds": [
+        "pcic-broadcast"
+      ],
+      "uncertainties": [
+        "Exact former A1 planned a1-actions-planned-02 retains history; F proposes A2. Regional media use may alter teaching choice but not silently migrate ID."
+      ]
+    },
+    {
+      "id": "A1-C-101",
+      "term": "encender",
+      "partOfSpeech": "VERB",
+      "sense": "switch on a device so that it operates",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a2-routines-planned-03"
+      ],
+      "objectiveIds": [
+        "A1-C-internet"
+      ],
+      "levelRationale": "Operating a media device extends naming its screen or channel.",
+      "lowerLevelContrast": "A1 identifies the device; on/off procedures belong the routine-operation extension.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Enciendo/enciendes/enciende/encienden versus encendemos/encendéis; device object required to avoid fire sense.",
+      "pronunciationNotes": "Final der stress; ie diphthong in stressed present forms.",
+      "referenceIds": [
+        "pcic-internet"
+      ],
+      "uncertainties": [
+        "Exact a2-routines-planned-03 belongs W operational coverage; C only records media dependency."
+      ]
+    },
+    {
+      "id": "A1-C-102",
+      "term": "quedar",
+      "partOfSpeech": "VERB",
+      "sense": "arrange to meet another person",
+      "proposedLevel": "A2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a2-routines-planned-05"
+      ],
+      "objectiveIds": [
+        "A1-C-leisure"
+      ],
+      "levelRationale": "Making a shared outing arrangement extends simple activity and destination preferences.",
+      "lowerLevelContrast": "A1 chooses/names activity; agree-on-time interpersonal construction is later, not remaining/staying sense.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Quedar con alguien; quedar para una actividad/a una hora; regular -ar.",
+      "pronunciationNotes": "Final dar stress; qu has silent u.",
+      "referenceIds": [
+        "pcic-leisure"
+      ],
+      "uncertainties": [
+        "Exact a2-routines-planned-05 belongs A2-P/D/C ownership adjudication; not a new A1 sense."
+      ]
+    },
+    {
+      "id": "A1-C-103",
+      "term": "vacaciones",
+      "partOfSpeech": "NOUN",
+      "sense": "a period free from ordinary work or classes",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:400-vacaciones"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-leisure"
+      ],
+      "levelRationale": "Identifies the familiar time frame for leisure travel or recreation.",
+      "lowerLevelContrast": "Same holiday period as W/T, not paid-leave legal entitlement.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine plural lexical form; estar de vacaciones/tener vacaciones.",
+      "pronunciationNotes": "Stress cio with io diphthong; c before i theta in reference es-ES.",
+      "referenceIds": [
+        "pcic-leisure"
+      ],
+      "uncertainties": [
+        "W/T share baseline400 holiday meaning; preserve one identity."
+      ]
+    },
+    {
+      "id": "A1-C-104",
+      "term": "turista",
+      "partOfSpeech": "NOUN",
+      "sense": "a person visiting a place for leisure",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:373-turista"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-leisure"
+      ],
+      "levelRationale": "Names the ordinary participant in a museum or sightseeing visit.",
+      "lowerLevelContrast": "Tourist identity before detailed tourism-industry classification.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Common gender el/la turista; turistas; no turisto form.",
+      "pronunciationNotes": "Stress ris; three syllables.",
+      "referenceIds": [
+        "pcic-leisure"
+      ],
+      "uncertainties": [
+        "T owns visitor role; C references the same baseline373."
+      ]
+    },
+    {
+      "id": "A1-C-105",
+      "term": "fiesta",
+      "partOfSpeech": "NOUN",
+      "sense": "a social gathering organized for celebration or enjoyment",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:113-fiesta"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-C-leisure"
+      ],
+      "levelRationale": "Adds a social gathering as an activity option alongside public entertainment.",
+      "lowerLevelContrast": "Same P gathering sense, not a public holiday or religious observance automatically.",
+      "register": "neutral",
+      "region": "Pan-Hispanic unless usage notes say otherwise; es-ES audio",
+      "formNotes": "Feminine; fiestas; ir a una fiesta.",
+      "pronunciationNotes": "Stress fies with ie diphthong.",
+      "referenceIds": [
+        "pcic-leisure"
+      ],
+      "uncertainties": [
+        "P owns baseline113; occasion-specific modifiers do not create duplicate gatherings."
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "subject": "An exhaustive list of hobbies, sports, games, art forms or works",
+      "reason": "This version bounds A1 to choosing among enumerated passive/creative/physical/social activities, recognizing their selected venues/roles and making a short preference statement. It is not a national sports list or cultural canon. Specialist genres/rules/technique and every possible leisure activity belong separately scoped later scenarios, subject to independent omission review.",
+      "objectiveIds": [
+        "A1-C-leisure-later",
+        "A1-C-event-production-later",
+        "A1-C-art-analysis-later"
+      ]
+    },
+    {
+      "subject": "Every spelling, gender form or metonym as an automatic extra catalog word",
+      "reason": "Actriz is an explicit actor counterpart, foto a fotografía shortening, and tele a televisión shortening. Radio/televisión medium versus device and cine/teatro venue versus discipline are explicit granularity proposals, not accepted net-new totals. Regional spellings or pronunciations need evidence and labeling, not duplicate inflation.",
+      "objectiveIds": [
+        "A1-C-form-audio"
+      ]
+    },
+    {
+      "subject": "An unlimited inventory of keyboard symbols or platform-specific features",
+      "reason": "The selected identifier scenario covers ordinary letters/digits via shared foundations and the five symbols at-sign, dot, hyphen, underscore and forward slash. Complex URL query syntax, backslash/file paths, programming characters and specific commercial platforms are not the A1 contact task.",
+      "objectiveIds": [
+        "A1-C-internet",
+        "A1-C-media-operations-later"
+      ]
+    },
+    {
+      "subject": "Bulk PCIC reproduction, art excerpts and implied institutional endorsement",
+      "reason": "Framework categories inform these original English editorial sense glosses and judgments. No protected learner definitions/examples, lyrics, literary passages or artwork are reproduced; no Cervantes certification or native-speaker approval is implied.",
+      "objectiveIds": []
+    }
+  ],
+  "coverageNotes": [
+    "Enumeration proposal for the declared A1-C scenarios: 16 selected objectives plus four later-scope dispositions and three unresolved prerequisites. No deferred-core selection gap is currently claimed closed by exclusion; independent coverage review can require additions and must mark required missing work deferred-core. Status remains proposed, not frozen or published.",
+    "All 55 primary legacy records in PCIC categories 8,9,18 are individually linked: 25 leisure, 15 media/communication, 15 arts. 55/55 exact primary IDs reconciled. Other baseline matches are cross-cell references or collision history, not extra primary records.",
+    "All 685 current records (500 legacy plus 185 supplemental) and all 138 exact next selections were inspected for relevant scope. C links the four relevant planned IDs a1-actions-planned-01 (escuchar), a1-actions-planned-02 (mirar, proposed A2), a2-routines-planned-03 (encender) and a2-routines-planned-05 (quedar). Shared numerals/questions/date/pragmatics remain explicit F/P/D prerequisites, not broadly cloned here.",
+    "Bounded scenarios: state activity/preference; identify a physical/social/creative activity and participant; choose a venue/event with shared time/price; distinguish broadcast medium/device/work/performer; identify a letter/postcard/message and its materials; identify telephone type and contact channel; recognize a newspaper/magazine/kiosk; reproduce a simple online identifier; identify a museum/exhibition/landmark/book/photograph. No claim of full speaking, listening or cultural competence follows from this vocabulary selection.",
+    "Primary identity guardrails: es-sk:a1:245-carta remains written correspondence, not H menu or playing card; es-sk:a1:236-tocar remains instrument-playing, not P physical contact; es-sk:a1:304-entrada remains event admission ticket, distinct from T physical entrance. Existing references on select-new meanings are collision history, not authorization to overwrite.",
+    "Additional granularity decisions: fotografía/foto is one image meaning with form variants; cámara equipment is separately proposed A2. Cine/teatro venue versus discipline, radio/televisión medium versus device, correo electrónico system versus countable message versus P mailbox address, ejercicio physical activity versus W practice task, pintura/cuadro and baile/danza remain explicitly unresolved. No new global IDs or compatibility migrations are created.",
+    "Recommended introduction is a sense/context judgment: several legacy A1 items receive explicit A2 proposals based on staged operational/genre/production demands. Early Wordfold scenario exceptions such as time-free label, piscina destination, llamada label or narrow phone action are individually flagged; PCIC framework columns are not asserted to certify these exact word levels.",
+    "Every row includes original rationale, form and written pronunciation risks. Later full Spanish descriptions/examples and Slovak hints, independent ES/SK reviews and actual es-ES physical-device/listening gates remain required. No learner text/runtime asset, saved progress, native build or remote service changed."
+  ],
+  "counts": {
+    "selections": 105,
+    "objectives": 23
+  }
+}

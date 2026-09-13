@@ -7,6 +7,7 @@ import { AppText } from '@/components/app-text';
 import { LevelSelection, TopicSelection } from '@/components/preference-cards';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
+import { getCourseCatalogAvailability } from '@/data/course-catalog';
 import type { CefrLevel, ContentPackId } from '@/domain/types';
 import { languageLabel } from '@/domain/languages';
 import { normalizeLearningPreferences } from '@/features/recommendations/selector';
@@ -18,7 +19,9 @@ export default function PreferencesScreen() {
   const theme = useAppTheme();
   const { activeCourse, learningPreferences, saveLearningPreferences } = useAppData();
   const learnedLanguage = languageLabel(activeCourse.sourceLanguageCode);
-  const [levels, setLevels] = useState<CefrLevel[]>(learningPreferences.levels);
+  const availability = getCourseCatalogAvailability(activeCourse.id);
+  const selectableLevels = learningPreferences.levels.filter((level) => availability.levels[level] === 'available');
+  const [levels, setLevels] = useState<CefrLevel[]>(selectableLevels);
   const [topics, setTopics] = useState<ContentPackId[]>(learningPreferences.topics);
   const [saving, setSaving] = useState(false);
   const toggleLevel = (level: CefrLevel) => setLevels((current) => normalizeLearningPreferences({
@@ -50,10 +53,10 @@ export default function PreferencesScreen() {
         <View style={styles.close}/>
       </View>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
-        <View style={styles.section}><View><AppText variant="heading">{learnedLanguage} levels</AppText><AppText style={{ color: theme.muted }}>{activeCourse.capabilities.recommendations ? 'Recommendations always stay inside these levels.' : 'Study filters stay inside these levels when your words have CEFR labels.'}</AppText></View><LevelSelection selected={levels} onToggle={toggleLevel}/></View>
+        <View style={styles.section}><View><AppText variant="heading">{learnedLanguage} levels</AppText><AppText style={{ color: theme.muted }}>{activeCourse.capabilities.recommendations ? 'Recommendations always stay inside these levels.' : 'Choose from the Spanish levels currently included in the app.'}</AppText></View><LevelSelection selected={levels} onToggle={toggleLevel} disabledLevels={Object.fromEntries(Object.entries(availability.levels).flatMap(([level, state]) => state === 'available' ? [] : [[level, state === 'unsupported-by-source' ? 'Currently unavailable' : 'Not yet available']]))}/></View>
         {activeCourse.capabilities.recommendations ? <View style={styles.section}><View><AppText variant="heading">Your interests</AppText><AppText style={{ color: theme.muted }}>We prioritize matching words where the catalog has them.</AppText></View><TopicSelection selected={topics} onToggle={toggleTopic}/></View> : <View style={styles.section}>
-          <AppText variant="heading">Spanish recommendations are gated</AppText>
-          <AppText style={{ color: theme.muted }}>The planned A1–C2 catalog will use original or licensed content with independent level, definition, example, and Slovak-hint review. Instituto Cervantes remains a qualitative reference only.</AppText>
+          <AppText variant="heading">Spanish A1–C1 is available</AppText>
+          <AppText style={{ color: theme.muted }}>Choose levels from A1 through C1. Concepts with pending review findings are excluded, and C2 is unsupported by the current ELELex source. Spanish definitions and Slovak hints are AI cross-reviewed, not natively reviewed.</AppText>
         </View>}
         <AppText variant="caption" style={{ color: theme.muted }}>Changing these choices never removes words or learning history already in your library.</AppText>
       </ScrollView>

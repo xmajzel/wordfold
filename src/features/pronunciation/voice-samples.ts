@@ -1,5 +1,7 @@
 import { Asset } from 'expo-asset';
 
+import type { DevicePronunciationCallbacks } from '@/features/pronunciation/device-speech';
+
 import type { NeuralPronunciationLocale } from '@/features/pronunciation/cloud';
 import {
   playPronunciationFile,
@@ -43,12 +45,13 @@ export function preloadBundledVoiceSamples() {
   return preloadPromise;
 }
 
-export async function playBundledVoiceSample(locale: NeuralPronunciationLocale) {
+export async function playBundledVoiceSample(locale: NeuralPronunciationLocale, callbacks: DevicePronunciationCallbacks = {}, signal?: AbortSignal) {
   const [asset] = await Promise.all([
     loadSample(locale),
     preparePronunciationFilePlayback(),
   ]);
   const uri = asset.localUri ?? asset.uri;
   if (!uri) throw new Error(`The bundled ${locale} voice sample has no playable location.`);
-  await playPronunciationFile(uri);
+  if (signal?.aborted) return;
+  await playPronunciationFile(uri, callbacks, signal);
 }

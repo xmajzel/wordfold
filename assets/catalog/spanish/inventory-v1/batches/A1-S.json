@@ -1,0 +1,4913 @@
+{
+  "schemaVersion": 1,
+  "batchId": "A1-S",
+  "courseId": "es-sk",
+  "level": "A1",
+  "package": "S",
+  "status": "proposed",
+  "author": "picker_implementation AI sense-selection worker",
+  "levelMeaning": "recommended-sense-introduction",
+  "references": [
+    {
+      "id": "pcic-specific",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_a1-a2.htm",
+      "section": "9 specific notions15 economy/industry,17 civic life,19 religion,20 geography/nature; A1/A2 columns checked 2026-09-05",
+      "use": "Framework only; original Wordfold selected meanings and introduction proposals, not official word-level placement or certification."
+    },
+    {
+      "id": "pcic-general",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/08_nociones_generales_inventario_a1-a2.htm",
+      "section": "8 general notions existence,place/direction,time and qualities; A1/A2 columns",
+      "use": "Shared prerequisite framework; contextual reuse does not mint new senses."
+    },
+    {
+      "id": "pcic-pronunciation",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/03_pronunciacion_inventario_a1-a2.htm",
+      "section": "3 pronunciation/prosody A1/A2 stress,syllables and contrasts",
+      "use": "Written risk checklist only; actual audio and native review are not performed."
+    },
+    {
+      "id": "rae-hindu",
+      "url": "https://www.rae.es/dpd/hind%C3%BA",
+      "section": "DPD hindú; religious sense and recommended plural checked 2026-09-05",
+      "use": "Narrow usage and morphology verification, paraphrased; not CEFR placement or copied learner text."
+    },
+    {
+      "id": "pcic-specific-later",
+      "url": "https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/niveles/09_nociones_especificas_inventario_b1-b2.htm",
+      "section": "9 specific notions15 economy/industry,17 society/law,19 religion/philosophy and20 environment; B1/B2 columns checked 2026-09-05",
+      "use": "Distinguishes checked lexical examples from independent Wordfold sense-introduction proposals; cited columns support domain comparison, not exact sense certification. Explicit B1 versus B2 conflicts remain open."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "A1-S-money",
+      "description": "Identify money and elementary buying/selling roles.",
+      "frameworkSections": [
+        "PCIC9 specific notions 15.1 finance;15.3 trade; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Select immediate payment concepts; saving, income reasoning and economic systems have later boundaries."
+    },
+    {
+      "id": "A1-S-civic",
+      "description": "Identify a country, capital and a few public roles or institutions.",
+      "frameworkSections": [
+        "PCIC9 specific notions 17.1 community;17.2 government;17.3 law/justice; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Naming an institution or role is not explaining its constitution, policy or current officeholder."
+    },
+    {
+      "id": "A1-S-affiliation",
+      "description": "Name a religious affiliation or absence of affiliation neutrally when volunteered.",
+      "frameworkSections": [
+        "PCIC9 specific notions 19.1 religion; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Lexical self-identification without ranking beliefs, assuming identity or teaching doctrine."
+    },
+    {
+      "id": "A1-S-worship-places",
+      "description": "Identify common places of worship as places.",
+      "frameworkSections": [
+        "PCIC9 specific notions 19.1 religion;20.3.1 urban spaces; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Building meanings are separate from religious institutions or communities."
+    },
+    {
+      "id": "A1-S-geography",
+      "description": "Identify familiar settlement and landscape types.",
+      "frameworkSections": [
+        "PCIC9 specific notions 20.2 geography;20.3 urban/rural spaces; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Concrete map and surrounding-place recognition; not exhaustive territorial classification."
+    },
+    {
+      "id": "A1-S-orientation",
+      "description": "Use the four cardinal directions on a simple map.",
+      "frameworkSections": [
+        "PCIC9 specific notions20.2.1 geography; A1/A2 columns",
+        "PCIC8 general notions3 spatial direction; A1/A2 columns"
+      ],
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general"
+      ],
+      "disposition": "selected",
+      "rationale": "Four bounded orientation contrasts; compound bearings remain later."
+    },
+    {
+      "id": "A1-S-sky",
+      "description": "Identify familiar visible sky objects and the world.",
+      "frameworkSections": [
+        "PCIC9 specific notions 20.1 universe and space; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Everyday recognition, not astronomical mechanisms or a scientific taxonomy."
+    },
+    {
+      "id": "A1-S-weather",
+      "description": "Describe directly observable simple weather and seasons.",
+      "frameworkSections": [
+        "PCIC9 specific notions 20.4 weather and climate; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Everyday conditions and the four season names; hemispheric differences must be respected."
+    },
+    {
+      "id": "A1-S-day-parts",
+      "description": "Relate an ordinary outdoor activity or weather statement to part of day.",
+      "frameworkSections": [
+        "PCIC9 specific notions20.4 weather context; A1/A2 columns",
+        "PCIC8 general notions4 time; A1/A2 columns"
+      ],
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general"
+      ],
+      "disposition": "selected",
+      "rationale": "Existing morning/afternoon/night meanings belong to F time ownership and are not new S counts."
+    },
+    {
+      "id": "A1-S-flora",
+      "description": "Identify common plant categories and a few visible parts.",
+      "frameworkSections": [
+        "PCIC9 specific notions 20.6 flora; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Useful familiar-plant recognition, not exhaustive species or cultivation procedures."
+    },
+    {
+      "id": "A1-S-fauna",
+      "description": "Identify pets and a bounded set of familiar animals.",
+      "frameworkSections": [
+        "PCIC9 specific notions 20.5 fauna; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Direct recognition and personal possession, not every species or specialist animal anatomy."
+    },
+    {
+      "id": "A1-S-material-world",
+      "description": "Identify ordinary natural substances and elementary cleanliness.",
+      "frameworkSections": [
+        "PCIC9 specific notions 20.3 rural spaces;20.4 atmosphere;20.6 flora; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Concrete material recognition without industrial, chemical or ecological-system explanations."
+    },
+    {
+      "id": "A1-S-shared",
+      "description": "Reuse personal/place identity and basic time/location predicates.",
+      "frameworkSections": [
+        "PCIC8 general notions1/3/4;PCIC9 notions3 identity"
+      ],
+      "referenceIds": [
+        "pcic-general"
+      ],
+      "disposition": "selected",
+      "rationale": "Country, nationality and language remain distinct, with P/W/F ownership dependencies."
+    },
+    {
+      "id": "A1-S-later-boundaries",
+      "description": "Reconcile abstract, institutional and explanatory meanings proposed for later introduction.",
+      "frameworkSections": [
+        "PCIC9 specific notions 15 economy/industry;17 civic life;19 beliefs;20 nature; A1/A2 columns compared",
+        "PCIC9 specific notions15/17/20; B1/B2 later-domain comparison"
+      ],
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-specific-later"
+      ],
+      "disposition": "selected",
+      "rationale": "Each later row preserves an existing or planned identity and explicitly records a later introduction proposal; no A1 promotion or runtime relevel occurs."
+    },
+    {
+      "id": "A1-S-economic-systems",
+      "description": "Explain economic systems, finance/investment, industrial production or public economic policy.",
+      "frameworkSections": [
+        "PCIC9 specific notions 15.1 finance;15.2 empty heading;15.3 trade;15.4 enterprises;15.5 industry/energy; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "Immediate money, company/place and trade-role identification is selected separately. Investment mechanics, production chains, advertising/marketing strategy and economic policy require later explanations; 15.2 and15.3.2 are empty framework headings, not missing lexical quotas."
+    },
+    {
+      "id": "A1-S-political-legal",
+      "description": "Explain policy, political processes, legal obligations or justice procedures.",
+      "frameworkSections": [
+        "PCIC9 specific notions 17.2 government;17.3 law/justice; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "A1 names country and public roles and can follow simple immediate instructions. Explaining political processes, rights or legal procedures is later; broad topic membership does not bring those concepts into A1."
+    },
+    {
+      "id": "A1-S-military",
+      "description": "Explain military organization, war or peace processes.",
+      "frameworkSections": [
+        "PCIC9 specific notions 17.4 military; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "There is no selected A1 military participation scenario. Institution, conflict and peace vocabulary belongs to later social description; urgent help is covered by P/T rather than requiring military terminology."
+    },
+    {
+      "id": "A1-S-belief-argument",
+      "description": "Develop theological or philosophical explanations and arguments.",
+      "frameworkSections": [
+        "PCIC9 specific notions 19 religion/philosophy; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "A1 allows neutral volunteered self-identification or declining to share it. Explaining doctrine, reasons for belief or philosophical positions needs later discourse; labels do not provide that competence."
+    },
+    {
+      "id": "A1-S-nature-processes",
+      "description": "Explain environmental causation, classification, weather systems or agricultural production.",
+      "frameworkSections": [
+        "PCIC9 specific notions 20.1 space;20.2 geography;20.4 climate;20.5 fauna;20.6 flora; A1/A2 columns compared"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "not-applicable",
+      "rationale": "A1 recognizes bounded visible places, organisms and conditions. Scientific classification, causes of weather, agricultural production and environmental effects require later explanations; advanced environmental plans are explicitly linked as B2 boundaries."
+    },
+    {
+      "id": "A1-S-business-identification",
+      "description": "Identify an ordinary business, workplace and transaction roles without explaining an economic system.",
+      "frameworkSections": [
+        "PCIC9 specific notions15.3.1 transactions and15.4.1 enterprises; A1/A2 columns"
+      ],
+      "referenceIds": [
+        "pcic-specific"
+      ],
+      "disposition": "selected",
+      "rationale": "Company, office, shop and the people involved are shared with W/H; industrial organization, marketing strategy and finance remain later."
+    }
+  ],
+  "selections": [
+    {
+      "id": "A1-S-001",
+      "term": "economía",
+      "partOfSpeech": "NOUN",
+      "sense": "economic system of production and exchange",
+      "proposedLevel": "B1",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:411-economia"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Independent Wordfold B1 proposal for naming a familiar economic system in a short description; PCIC15.1.1 lists the lemma in its B1 column, which supports this domain choice without proving the exact selected sense's minimum introduction level.",
+      "lowerLevelContrast": "System-level abstraction exceeds A1 money identification.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; economías.",
+      "pronunciationNotes": "Written í marks hiatus.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation",
+        "pcic-specific-later"
+      ],
+      "uncertainties": [
+        "Proposed B1 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required.",
+        "Source evidence: PCIC9 B1/B2,15.1.1 includes economía at B1. Exact sense scope and earlier recognitional use still require independent adjudication; a topic example is not a mandatory minimum level."
+      ]
+    },
+    {
+      "id": "A1-S-002",
+      "term": "industria",
+      "partOfSpeech": "NOUN",
+      "sense": "industry transforming materials through organized production",
+      "proposedLevel": "B1",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:412-industria"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Independent Wordfold B1 proposal for naming organized production rather than only its workplace; PCIC15.5.1 provides a B1 lexical example, not a competence threshold for every use.",
+      "lowerLevelContrast": "A1 identifies a generic shop or office; factory naming is proposed at A2 before explaining an industrial sector or production process.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; industrias; process/sector meaning preserved.",
+      "pronunciationNotes": "Penultimate stress; final ia sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation",
+        "pcic-specific-later"
+      ],
+      "uncertainties": [
+        "Proposed B1 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required.",
+        "Source evidence: PCIC9 B1/B2,15.5.1 includes industria at B1. Match the selected production sense independently and consider simpler uses before accepting the proposed relevel."
+      ]
+    },
+    {
+      "id": "A1-S-003",
+      "term": "fábrica",
+      "partOfSpeech": "NOUN",
+      "sense": "factory where goods are made",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:413-fabrica"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A2 identifies a routine workplace and what is made there.",
+      "lowerLevelContrast": "More specialised workplace than a generic shop or office.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; fábricas; W ownership overlap.",
+      "pronunciationNotes": "First stress marked by á.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required."
+      ]
+    },
+    {
+      "id": "A1-S-004",
+      "term": "comercio",
+      "partOfSpeech": "NOUN",
+      "sense": "commercial buying and selling activity",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:414-comercio"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A2 names trade as an everyday activity or work sector.",
+      "lowerLevelContrast": "A1 comprar/vender actions precede the abstract activity noun.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; comercio commonly singular for activity.",
+      "pronunciationNotes": "Penultimate stress; cio syllable.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required."
+      ]
+    },
+    {
+      "id": "A1-S-005",
+      "term": "negocio",
+      "partOfSpeech": "NOUN",
+      "sense": "organized business activity earning income",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:415-negocio"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A2 describes a small business beyond naming an employer.",
+      "lowerLevelContrast": "Business activity, not merely a shop building or a good deal.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; negocios.",
+      "pronunciationNotes": "Penultimate stress; cio syllable.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required."
+      ]
+    },
+    {
+      "id": "A1-S-006",
+      "term": "moneda",
+      "partOfSpeech": "NOUN",
+      "sense": "metal coin used as money",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:416-moneda"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "Distinguish a coin from other payment media.",
+      "lowerLevelContrast": "Concrete coin, not currency system generally.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; monedas.",
+      "pronunciationNotes": "Penultimate stress; d may weaken naturally.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete moneda use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-007",
+      "term": "producir",
+      "partOfSpeech": "VERB",
+      "sense": "produce goods through work and resources",
+      "proposedLevel": "B1",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:417-producir"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Independent Wordfold B1 proposal for describing goods production in a familiar process; the checked later inventory offers relevant B1 examples rather than assigning this precise Wordfold sense.",
+      "lowerLevelContrast": "A1 names the item and simple making action before this productive process.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Produzco/produce; irregular -zco; producir bienes.",
+      "pronunciationNotes": "Final infinitive stress; c/z variation by dialect.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation",
+        "pcic-specific-later"
+      ],
+      "uncertainties": [
+        "Proposed B1 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required.",
+        "Source evidence: PCIC9 B1/B2,15.4.1 and15.5.1 include producir at B1. Exact goods-production scope and the possible earlier introduction of simple uses remain open."
+      ]
+    },
+    {
+      "id": "A1-S-008",
+      "term": "ahorrar",
+      "partOfSpeech": "VERB",
+      "sense": "save money for later use",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:418-ahorrar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A2 describes a routine personal spending or saving plan.",
+      "lowerLevelContrast": "A1 paying now precedes managing future money.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Ahorro; ahorrar dinero; regular -ar.",
+      "pronunciationNotes": "Silent h; rr strong; final infinitive stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required."
+      ]
+    },
+    {
+      "id": "A1-S-009",
+      "term": "gastar",
+      "partOfSpeech": "VERB",
+      "sense": "spend money on a purchase or service",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:419-gastar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A2 describes one's spending beyond a single immediate payment.",
+      "lowerLevelContrast": "Money-use action, not wearing out an object.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Gasto; gastar dinero en algo.",
+      "pronunciationNotes": "Final stress; st sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required."
+      ]
+    },
+    {
+      "id": "A1-S-010",
+      "term": "agricultura",
+      "partOfSpeech": "NOUN",
+      "sense": "agriculture cultivating land for useful products",
+      "proposedLevel": "B1",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:420-agricultura"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Independent Wordfold B1 proposal for naming cultivation as a production activity; its appearance in the later B1 inventory supports the domain, not a proof based on abstraction alone.",
+      "lowerLevelContrast": "A1 recognizes plants and land without explaining agricultural production.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; agricultura normally singular as activity.",
+      "pronunciationNotes": "Penultimate stress; gr and lt clusters.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation",
+        "pcic-specific-later"
+      ],
+      "uncertainties": [
+        "Proposed B1 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required.",
+        "Source evidence: PCIC9 B1/B2,15.5.1 includes agricultura at B1. The chosen activity sense and any simpler naming use need global introduction-level review."
+      ]
+    },
+    {
+      "id": "A1-S-011",
+      "term": "gobierno",
+      "partOfSpeech": "NOUN",
+      "sense": "government administering a country",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:431-gobierno"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A2 identifies the governing institution in ordinary public discussion.",
+      "lowerLevelContrast": "Country and head-of-state labels precede the governing system.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; gobiernos; not a person or building.",
+      "pronunciationNotes": "Penultimate stress; ie diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required."
+      ]
+    },
+    {
+      "id": "A1-S-012",
+      "term": "ley",
+      "partOfSpeech": "NOUN",
+      "sense": "law as an official societal rule",
+      "proposedLevel": "B1",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:432-ley"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Independent Wordfold B1 proposal for recognizing an official societal rule in a familiar context; PCIC17.3 has a relevant B1 example, but legal explanation is not itself evidence of first introduction.",
+      "lowerLevelContrast": "A1 recognizes a sign or permission without interpreting law.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; leyes; selected countable rule, not legal discipline.",
+      "pronunciationNotes": "One syllable; plural adds ye syllable.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation",
+        "pcic-specific-later"
+      ],
+      "uncertainties": [
+        "Proposed B1 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required.",
+        "Source evidence: PCIC9 B1/B2,17.3 includes ley at B1. This does not settle every rule sense or exclude earlier recognition; independent sense-level adjudication remains necessary."
+      ]
+    },
+    {
+      "id": "A1-S-013",
+      "term": "presidente",
+      "partOfSpeech": "NOUN",
+      "sense": "president as head of a republic",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:433-presidente"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-civic"
+      ],
+      "levelRationale": "Recognize a common public-role label without learning any current officeholder.",
+      "lowerLevelContrast": "Role sense, not chair of any committee or the institution itself.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Presidente/presidenta; plural forms; current role holders are outside scope.",
+      "pronunciationNotes": "Penultimate stress; preserve nt group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-014",
+      "term": "votar",
+      "partOfSpeech": "VERB",
+      "sense": "express a choice by voting",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:434-votar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A2 describes taking part in a routine group or civic decision.",
+      "lowerLevelContrast": "A1 selects a personal option before describing voting procedure.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Voto; votar por/a depending on complement and variety; no procedural advice.",
+      "pronunciationNotes": "Final stress; v shares b phoneme.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required."
+      ]
+    },
+    {
+      "id": "A1-S-015",
+      "term": "público",
+      "partOfSpeech": "ADJ",
+      "sense": "belonging to society or the state",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:435-publico"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A2 distinguishes public from private provision.",
+      "lowerLevelContrast": "Not merely open to anyone and not the audience noun.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Público/pública and plurals; preserve state/society relation.",
+      "pronunciationNotes": "First stress marked by ú.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required."
+      ]
+    },
+    {
+      "id": "A1-S-016",
+      "term": "religión",
+      "partOfSpeech": "NOUN",
+      "sense": "religion as an organized set of sacred beliefs/practices",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:451-religion"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-affiliation"
+      ],
+      "levelRationale": "Recognize the category needed for neutral volunteered affiliation.",
+      "lowerLevelContrast": "Category label, not a request to explain doctrine or infer someone's belief.",
+      "register": "neutral; voluntary non-evaluative self-description",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; religiones.",
+      "pronunciationNotes": "Final stress marked by ó; g before i fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-017",
+      "term": "iglesia",
+      "partOfSpeech": "NOUN",
+      "sense": "Christian worship building",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:452-iglesia"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-worship-places"
+      ],
+      "levelRationale": "Identify a common building on a map or in a simple visit plan.",
+      "lowerLevelContrast": "Building iglesia is distinct from institutional Iglesia.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; iglesias; lowercase for ordinary building noun.",
+      "pronunciationNotes": "Penultimate stress; gl cluster and final ia.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-018",
+      "term": "fe",
+      "partOfSpeech": "NOUN",
+      "sense": "religious faith or trust",
+      "proposedLevel": "B1",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:453-fe"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Independent, uncertain Wordfold B1 proposal for a short personal statement of religious trust, not doctrinal explanation; the checked later reference does not establish this B1 placement.",
+      "lowerLevelContrast": "Abstract trust in a religion exceeds simple affiliation labels.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine mass noun fe; no written accent.",
+      "pronunciationNotes": "One syllable; do not add an accent.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation",
+        "pcic-specific-later"
+      ],
+      "uncertainties": [
+        "Proposed B1 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required.",
+        "Source conflict: PCIC9 B1/B2,19.1 places tener fe in the B2 column. No exact B1 placement for this selected faith sense was established. B1 remains an explicitly earlier Wordfold hypothesis requiring adjudication against B2; absence from A1/A2 and explanatory use alone are insufficient."
+      ]
+    },
+    {
+      "id": "A1-S-019",
+      "term": "filosofía",
+      "partOfSpeech": "NOUN",
+      "sense": "philosophy examining knowledge,reality and conduct",
+      "proposedLevel": "B1",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:454-filosofia"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Independent, uncertain Wordfold B1 proposal for identifying the discipline in a short familiar discussion, not developing philosophical argument; the checked later reference does not establish this B1 placement.",
+      "lowerLevelContrast": "Not every opinion or the mere label of a classroom subject without meaning review.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; filosofías for traditions when needed.",
+      "pronunciationNotes": "Written í marks hiatus.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation",
+        "pcic-specific-later"
+      ],
+      "uncertainties": [
+        "Proposed B1 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required.",
+        "Source conflict: PCIC9 B1/B2,19.2 lists filosofía in B2, not B1. No exact B1 placement for this selected discipline sense was established. Any earlier Wordfold introduction needs independent justification and adjudication; abstract meaning or absence from A1/A2 does not prove B1."
+      ]
+    },
+    {
+      "id": "A1-S-020",
+      "term": "religioso",
+      "partOfSpeech": "ADJ",
+      "sense": "related to a religion or its practices",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:455-religioso"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A2 describes a custom or activity as religious.",
+      "lowerLevelContrast": "Relational adjective is not automatically a devout person's character.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Religioso/religiosa and plurals; preserve relational sense.",
+      "pronunciationNotes": "Penultimate stress; g before i fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required."
+      ]
+    },
+    {
+      "id": "A1-S-021",
+      "term": "mundo",
+      "partOfSpeech": "NOUN",
+      "sense": "world comprising Earth and what exists on it",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:456-mundo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-sky"
+      ],
+      "levelRationale": "Name the familiar world as a whole in simple place identification.",
+      "lowerLevelContrast": "Not every social sphere or an astronomical model.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; mundo; todos los mundos is outside this introductory scope.",
+      "pronunciationNotes": "Initial stress; nd group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-022",
+      "term": "tierra",
+      "partOfSpeech": "NOUN",
+      "sense": "soil where plants grow",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:457-tierra"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-material-world"
+      ],
+      "levelRationale": "Identify earth/soil in an ordinary garden or outdoor setting.",
+      "lowerLevelContrast": "Material soil, not planet Tierra or a floor surface.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; tierra often mass noun.",
+      "pronunciationNotes": "Initial stress; ie diphthong and rr strong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-023",
+      "term": "continente",
+      "partOfSpeech": "NOUN",
+      "sense": "continent as a major land division",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:458-continente"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A2 extends country/location description to larger geographic groupings.",
+      "lowerLevelContrast": "A1 country and simple map directions precede continent classification.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; continentes.",
+      "pronunciationNotes": "Penultimate stress; nt group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required."
+      ]
+    },
+    {
+      "id": "A1-S-024",
+      "term": "región",
+      "partOfSpeech": "NOUN",
+      "sense": "region within a territory",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:459-region"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A2 makes a more detailed location description.",
+      "lowerLevelContrast": "Region, not independent country or a fixed administrative rank everywhere.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; regiones.",
+      "pronunciationNotes": "Final stress marked by ó; g fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required."
+      ]
+    },
+    {
+      "id": "A1-S-025",
+      "term": "isla",
+      "partOfSpeech": "NOUN",
+      "sense": "island landform",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:460-isla"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Identify a familiar travel or home-place type on a map.",
+      "lowerLevelContrast": "Island is surrounded by water, unlike a riverbank or peninsula.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; islas.",
+      "pronunciationNotes": "Initial stress; preserve sl group without extra vowel.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete isla use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-026",
+      "term": "montaña",
+      "partOfSpeech": "NOUN",
+      "sense": "mountain landform",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:461-montana"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Name a recognisable natural destination or nearby feature.",
+      "lowerLevelContrast": "Mountain, not every elevation or a metaphorical quantity.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; montañas.",
+      "pronunciationNotes": "Penultimate stress; ñ palatal nasal.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-027",
+      "term": "río",
+      "partOfSpeech": "NOUN",
+      "sense": "river watercourse",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:462-rio"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Identify a visible water feature or map landmark.",
+      "lowerLevelContrast": "Flowing watercourse, not the sea or a still lake.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; ríos.",
+      "pronunciationNotes": "Written í marks hiatus; initial r strong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-028",
+      "term": "mar",
+      "partOfSpeech": "NOUN",
+      "sense": "sea body of salt water",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:463-mar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Name a familiar coastal destination or landscape.",
+      "lowerLevelContrast": "Sea, not any water or exact scientific ocean classification.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Usually masculine el mar; la mar occurs in maritime/regional uses; mares.",
+      "pronunciationNotes": "One syllable; final r.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-029",
+      "term": "lago",
+      "partOfSpeech": "NOUN",
+      "sense": "lake body of inland water",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:464-lago"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Distinguish a lake from a river or sea on a simple map.",
+      "lowerLevelContrast": "Still inland water feature, not all reservoirs automatically.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; lagos.",
+      "pronunciationNotes": "Initial stress; hard g.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete lago use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-030",
+      "term": "bosque",
+      "partOfSpeech": "NOUN",
+      "sense": "forest wooded area",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:465-bosque"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Name a common outdoor place in a short activity/location exchange.",
+      "lowerLevelContrast": "Area of trees, not one tree or an abstract ecosystem.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; bosques.",
+      "pronunciationNotes": "Initial stress; qu silent u.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete bosque use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-031",
+      "term": "campo",
+      "partOfSpeech": "NOUN",
+      "sense": "countryside outside urban settlements",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:466-campo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Contrast a rural place with a city in a basic location statement.",
+      "lowerLevelContrast": "Countryside, not sports field or academic field.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; el campo; field sub-senses need separate review.",
+      "pronunciationNotes": "Initial stress; mp group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-032",
+      "term": "pueblo",
+      "partOfSpeech": "NOUN",
+      "sense": "small settlement or town",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:467-pueblo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Name a settlement smaller than a city.",
+      "lowerLevelContrast": "Settlement sense, not a people/nation collective.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; pueblos.",
+      "pronunciationNotes": "Initial stress; ue diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-033",
+      "term": "naturaleza",
+      "partOfSpeech": "NOUN",
+      "sense": "natural world not created by humans",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:468-naturaleza"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A2 names the broad natural-world category in an ordinary description.",
+      "lowerLevelContrast": "A1 names concrete plants and places first; no automatic meaning of personality.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; naturaleza normally singular.",
+      "pronunciationNotes": "Penultimate stress; z dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required."
+      ]
+    },
+    {
+      "id": "A1-S-034",
+      "term": "árbol",
+      "partOfSpeech": "NOUN",
+      "sense": "tree plant",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:469-arbol"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-flora"
+      ],
+      "levelRationale": "Identify a familiar large plant in immediate surroundings.",
+      "lowerLevelContrast": "Tree organism, not family tree or software structure.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; árboles; same written accent retained.",
+      "pronunciationNotes": "Initial stress marked by á.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-035",
+      "term": "flor",
+      "partOfSpeech": "NOUN",
+      "sense": "flower part of a plant",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:470-flor"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-flora"
+      ],
+      "levelRationale": "Identify a visible flower in a garden or simple purchase.",
+      "lowerLevelContrast": "Flower as plant part, not every decorative object called a flower.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; flores.",
+      "pronunciationNotes": "One syllable; fl cluster.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-036",
+      "term": "planta",
+      "partOfSpeech": "NOUN",
+      "sense": "living plant organism",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:471-planta"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-flora"
+      ],
+      "levelRationale": "Name the general living-plant category.",
+      "lowerLevelContrast": "Different from a building floor or industrial plant.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; plantas.",
+      "pronunciationNotes": "Initial stress; pl and nt groups.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-037",
+      "term": "animal",
+      "partOfSpeech": "NOUN",
+      "sense": "animal living creature",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:472-animal"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-fauna"
+      ],
+      "levelRationale": "Recognize the general animal category before naming a pet.",
+      "lowerLevelContrast": "Biological creature, not an insulting label for a person.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; animales.",
+      "pronunciationNotes": "Final singular stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-038",
+      "term": "perro",
+      "partOfSpeech": "NOUN",
+      "sense": "domestic dog",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:473-perro"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-fauna"
+      ],
+      "levelRationale": "Name a common pet in a simple identification or possession statement.",
+      "lowerLevelContrast": "Dog animal, not a figurative insult.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Perro/perra and plurals when sex is relevant; no automatic extra sense per form.",
+      "pronunciationNotes": "Initial stress; rr strong distinguishes it from pero.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete perro use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-039",
+      "term": "gato",
+      "partOfSpeech": "NOUN",
+      "sense": "domestic cat",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:474-gato"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-fauna"
+      ],
+      "levelRationale": "Name the contrasting familiar household pet.",
+      "lowerLevelContrast": "Cat animal, not a lifting jack or other homonym.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Gato/gata and plurals.",
+      "pronunciationNotes": "Initial stress; hard g.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete gato use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-040",
+      "term": "pájaro",
+      "partOfSpeech": "NOUN",
+      "sense": "bird as a familiar feathered animal",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:475-pajaro"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-fauna"
+      ],
+      "levelRationale": "Name a visible or pet bird without species classification.",
+      "lowerLevelContrast": "Everyday pájaro scope needs care beside technical ave categories.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; pájaros; sex-specific naming is not automatically a simple feminine form.",
+      "pronunciationNotes": "First stress marked by á; j fricative.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete pájaro use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-041",
+      "term": "pez",
+      "partOfSpeech": "NOUN",
+      "sense": "living fish animal",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:476-pez"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-fauna"
+      ],
+      "levelRationale": "Identify a fish in water or as a pet.",
+      "lowerLevelContrast": "Different from pescado as food in H.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; peces; z to c spelling.",
+      "pronunciationNotes": "One syllable; z dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete pez use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-042",
+      "term": "caballo",
+      "partOfSpeech": "NOUN",
+      "sense": "horse animal",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:477-caballo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-fauna"
+      ],
+      "levelRationale": "Name a recognisable domestic/riding animal.",
+      "lowerLevelContrast": "Animal, not horseback activity or a chess piece.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; caballos; yegua is a different related noun, not an -a inflection.",
+      "pronunciationNotes": "Penultimate stress; ll yeísmo.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete caballo use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-043",
+      "term": "vaca",
+      "partOfSpeech": "NOUN",
+      "sense": "cow animal",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:478-vaca"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-fauna"
+      ],
+      "levelRationale": "Identify a common female farm animal.",
+      "lowerLevelContrast": "Not milk food; toro is a different lexical counterpart, not vaco.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; vacas.",
+      "pronunciationNotes": "Initial stress; v/b no contrast.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete vaca use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-044",
+      "term": "sol",
+      "partOfSpeech": "NOUN",
+      "sense": "sun in Earth's sky",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:479-sol"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-sky"
+      ],
+      "levelRationale": "Identify the familiar daylight source in a weather statement.",
+      "lowerLevelContrast": "Object noun, not every use of sunny weather as a new sense.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; el sol in ordinary reference; proper astronomical naming needs orthographic review.",
+      "pronunciationNotes": "One syllable; final l clear.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-045",
+      "term": "luna",
+      "partOfSpeech": "NOUN",
+      "sense": "moon orbiting Earth",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:480-luna"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-sky"
+      ],
+      "levelRationale": "Identify a familiar visible night-sky object.",
+      "lowerLevelContrast": "Earth's moon, not an exhaustive satellite category.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; la luna; proper-name capitalization context-dependent.",
+      "pronunciationNotes": "Initial stress; two syllables.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete luna use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-046",
+      "term": "cielo",
+      "partOfSpeech": "NOUN",
+      "sense": "sky visible above the Earth",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:481-cielo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-sky"
+      ],
+      "levelRationale": "Describe what is seen overhead in a simple weather exchange.",
+      "lowerLevelContrast": "Visible sky, not religious heaven or affectionate address.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; cielos in certain contexts, introductory singular preferred.",
+      "pronunciationNotes": "Initial stress; ie diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete cielo use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-047",
+      "term": "nube",
+      "partOfSpeech": "NOUN",
+      "sense": "visible cloud in the atmosphere",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:482-nube"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Identify a directly observable weather feature.",
+      "lowerLevelContrast": "Cloud in the sky, not online storage.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; nubes.",
+      "pronunciationNotes": "Initial stress; intervocalic b may soften.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete nube use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-048",
+      "term": "lluvia",
+      "partOfSpeech": "NOUN",
+      "sense": "rain falling as water drops",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:483-lluvia"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Name a familiar weather condition.",
+      "lowerLevelContrast": "Rain noun complements weather verb llover, not a process explanation.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; lluvia generally mass noun.",
+      "pronunciationNotes": "Initial stress; ll variation and ia diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete lluvia use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-049",
+      "term": "nieve",
+      "partOfSpeech": "NOUN",
+      "sense": "snow falling or lying as frozen precipitation",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:484-nieve"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Identify a familiar visible cold-weather condition.",
+      "lowerLevelContrast": "Snow, not every form of ice.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; nieve generally mass noun.",
+      "pronunciationNotes": "Initial stress; ie diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete nieve use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-050",
+      "term": "viento",
+      "partOfSpeech": "NOUN",
+      "sense": "wind moving through the air",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:485-viento"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Describe a directly felt outdoor condition.",
+      "lowerLevelContrast": "Air movement, not air substance itself.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; viento/vientos depending on context.",
+      "pronunciationNotes": "Initial stress; ie diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-051",
+      "term": "tiempo",
+      "partOfSpeech": "NOUN",
+      "sense": "weather conditions at a place",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:486-tiempo"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Ask about or describe current weather.",
+      "lowerLevelContrast": "Exact baseline weather sense, not duration/time selected separately by F.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; el tiempo; hacer buen/mal tiempo.",
+      "pronunciationNotes": "Initial stress; ie diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-052",
+      "term": "primavera",
+      "partOfSpeech": "NOUN",
+      "sense": "spring season",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:487-primavera"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Identify one of four season names in a simple annual context.",
+      "lowerLevelContrast": "Season timing and weather differ by hemisphere; do not equate universally with particular months.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; primaveras; en primavera without article in common use.",
+      "pronunciationNotes": "Penultimate stress; initial pr cluster.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-053",
+      "term": "verano",
+      "partOfSpeech": "NOUN",
+      "sense": "summer season",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:488-verano"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Name the season associated locally with summer activities.",
+      "lowerLevelContrast": "Relative season name, not a guarantee of heat everywhere.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; veranos; hemisphere matters.",
+      "pronunciationNotes": "Penultimate stress; v/b no contrast.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-054",
+      "term": "otoño",
+      "partOfSpeech": "NOUN",
+      "sense": "autumn season",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:489-otono"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Complete the season contrast after summer and before winter.",
+      "lowerLevelContrast": "Not a universal date range or a figurative stage of life.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; otoños.",
+      "pronunciationNotes": "Penultimate stress; ñ.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-055",
+      "term": "invierno",
+      "partOfSpeech": "NOUN",
+      "sense": "winter season",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:490-invierno"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Name the remaining annual season.",
+      "lowerLevelContrast": "Season does not always imply snow in every country.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Masculine; inviernos.",
+      "pronunciationNotes": "Penultimate stress; ie diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-056",
+      "term": "mañana",
+      "partOfSpeech": "NOUN",
+      "sense": "morning part of day",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:491-manana"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-day-parts"
+      ],
+      "levelRationale": "Locate a simple weather observation or outdoor plan in the morning.",
+      "lowerLevelContrast": "Existing noun morning is not tomorrow adverb from F.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; por la mañana; mañanas.",
+      "pronunciationNotes": "Penultimate stress; ñ.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-057",
+      "term": "tarde",
+      "partOfSpeech": "NOUN",
+      "sense": "afternoon part of day",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:492-tarde"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-day-parts"
+      ],
+      "levelRationale": "Identify the later daylight part of a daily plan.",
+      "lowerLevelContrast": "Existing noun afternoon is not late adverb in F.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; por la tarde; tardes.",
+      "pronunciationNotes": "Initial stress; rt group.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-058",
+      "term": "noche",
+      "partOfSpeech": "NOUN",
+      "sense": "night part of day",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:493-noche"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-day-parts"
+      ],
+      "levelRationale": "Place a simple sky or weather observation at night.",
+      "lowerLevelContrast": "Part of day, not a separate hotel-night billing sense automatically.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Feminine; noches; por la noche.",
+      "pronunciationNotes": "Initial stress; ch affricate.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-059",
+      "term": "soleado",
+      "partOfSpeech": "ADJ",
+      "sense": "sunny with few clouds",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:494-soleado"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Give a short familiar-weather description.",
+      "lowerLevelContrast": "Property of conditions, not the sun object itself.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Soleado/soleada and plurals; día soleado.",
+      "pronunciationNotes": "Penultimate stress; e-a sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete soleado use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-060",
+      "term": "nublado",
+      "partOfSpeech": "ADJ",
+      "sense": "cloud-covered sky or weather",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:495-nublado"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Contrast cloudy with sunny conditions.",
+      "lowerLevelContrast": "Not figurative mental confusion.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Nublado/nublada and plurals; cielo nublado.",
+      "pronunciationNotes": "Penultimate stress; bl cluster.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete nublado use retained as an independent Wordfold A1 proposal; PCIC A1/A2 topic examples are not a word-level entitlement. Review this immediate-use rationale against later-column detail before global acceptance."
+      ]
+    },
+    {
+      "id": "A1-S-061",
+      "term": "llover",
+      "partOfSpeech": "VERB",
+      "sense": "rain as a weather event",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:496-llover"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "State directly that it is raining.",
+      "lowerLevelContrast": "Impersonal weather action, not a named rainfall measurement.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Llueve; llover impersonal in selected sense; o to ue.",
+      "pronunciationNotes": "Final infinitive stress; ll and ue in present.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-062",
+      "term": "nevar",
+      "partOfSpeech": "VERB",
+      "sense": "snow as a weather event",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:497-nevar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "State the corresponding snow condition.",
+      "lowerLevelContrast": "Impersonal precipitation event, not skiing or snow removal.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Nieva; nevar impersonal; e to ie.",
+      "pronunciationNotes": "Final infinitive stress; ie present.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-063",
+      "term": "crecer",
+      "partOfSpeech": "VERB",
+      "sense": "grow in size or development",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:498-crecer"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A2 describes a simple change in a plant or animal over time.",
+      "lowerLevelContrast": "A1 names what is present before describing development.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Crezco/crece; -zco irregularity; no reflexive needed.",
+      "pronunciationNotes": "Final stress; c/z dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required."
+      ]
+    },
+    {
+      "id": "A1-S-064",
+      "term": "natural",
+      "partOfSpeech": "ADJ",
+      "sense": "originating from nature rather than artificial creation",
+      "proposedLevel": "A2",
+      "action": "propose-relevel",
+      "existingEntryIds": [
+        "es-sk:a1:499-natural"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A2 contrasts product/material origins in a simple description.",
+      "lowerLevelContrast": "Not normal, native-born or self-evident meanings.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Natural/naturales; gender invariant.",
+      "pronunciationNotes": "Final stress; no written accent.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Proposed A2 introduction replaces the legacy A1 category-only placement rationale; independent sense-placement and stable-ID compatibility decisions required."
+      ]
+    },
+    {
+      "id": "A1-S-065",
+      "term": "limpio",
+      "partOfSpeech": "ADJ",
+      "sense": "free of dirt or contamination",
+      "proposedLevel": "A1",
+      "action": "retain-existing",
+      "existingEntryIds": [
+        "es-sk:a1:500-limpio"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-material-world"
+      ],
+      "levelRationale": "Identify an immediately clean object or place.",
+      "lowerLevelContrast": "Same H cleanliness property; do not imply technical purity or environmental certification.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted usage differences; es-ES pronunciation target",
+      "formNotes": "Limpio/limpia and plurals.",
+      "pronunciationNotes": "Initial stress; io diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": []
+    },
+    {
+      "id": "A1-S-066",
+      "term": "este",
+      "partOfSpeech": "NOUN",
+      "sense": "cardinal direction opposite west",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-orientation"
+      ],
+      "levelRationale": "Completes four-way orientation for a simple map.",
+      "lowerLevelContrast": "Different POS and meaning from F near-demonstrative este.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Masculine; usually singular; al este de.",
+      "pronunciationNotes": "Two syllables, initial stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "F A1-F-290 proposes the same east sense; merge ownership globally, not two new entries."
+      ]
+    },
+    {
+      "id": "A1-S-067",
+      "term": "oeste",
+      "partOfSpeech": "NOUN",
+      "sense": "cardinal direction opposite east",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-orientation"
+      ],
+      "levelRationale": "Enables locating a place on the remaining side of a simple map.",
+      "lowerLevelContrast": "Contrasts with east, not vague left.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Masculine; al oeste de.",
+      "pronunciationNotes": "Check o-e hiatus and middle-syllable stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "F A1-F-291 proposes the same sense; assign one geographic owner."
+      ]
+    },
+    {
+      "id": "A1-S-068",
+      "term": "capital",
+      "partOfSpeech": "NOUN",
+      "sense": "city serving as the seat of a country's government",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-civic"
+      ],
+      "levelRationale": "A basic map and country-identification answer.",
+      "lowerLevelContrast": "Not financial capital or the capital-letter adjective.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Feminine for the city; capitales.",
+      "pronunciationNotes": "Final stress without written accent.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Keep capital-city distinct from money or investment meanings in later S."
+      ]
+    },
+    {
+      "id": "A1-S-069",
+      "term": "estrella",
+      "partOfSpeech": "NOUN",
+      "sense": "a star visible as a point of light in the night sky",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-sky"
+      ],
+      "levelRationale": "Completes immediate Sun, Moon and star recognition.",
+      "lowerLevelContrast": "Not celebrity, hotel rating or star-shaped symbol.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Feminine; estrellas.",
+      "pronunciationNotes": "Check ll and penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Wordfold concrete A1 proposal; PCIC A1/A2 universe column contrast requires editorial adjudication."
+      ]
+    },
+    {
+      "id": "A1-S-070",
+      "term": "católico",
+      "partOfSpeech": "ADJ",
+      "sense": "identifying oneself as affiliated with Catholic Christianity",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-affiliation"
+      ],
+      "levelRationale": "Allows a short voluntary statement of religious affiliation.",
+      "lowerLevelContrast": "Not a claim about virtue, observance or a person's assumed beliefs.",
+      "register": "neutral; voluntary non-evaluative self-description",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Católico/católica; plural -s; lowercase.",
+      "pronunciationNotes": "Written accent fixes antepenultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Self-description only; no inference of religion from nationality or name."
+      ]
+    },
+    {
+      "id": "A1-S-071",
+      "term": "cristiano",
+      "partOfSpeech": "ADJ",
+      "sense": "identifying oneself as affiliated with Christianity",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-affiliation"
+      ],
+      "levelRationale": "Provides the broader Christian affiliation without equating it with Catholic.",
+      "lowerLevelContrast": "Not a ranking or a nationality label.",
+      "register": "neutral; voluntary non-evaluative self-description",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Cristiano/cristiana; plurals -s; lowercase.",
+      "pronunciationNotes": "Check initial cr cluster and ia sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Broader than católico; do not merge these self-identification meanings."
+      ]
+    },
+    {
+      "id": "A1-S-072",
+      "term": "protestante",
+      "partOfSpeech": "ADJ",
+      "sense": "identifying oneself as affiliated with Protestant Christianity",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-affiliation"
+      ],
+      "levelRationale": "Adds a distinct familiar Christian affiliation for voluntary introductions.",
+      "lowerLevelContrast": "Not a person protesting a policy.",
+      "register": "neutral; voluntary non-evaluative self-description",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Same masculine/feminine form; protestantes.",
+      "pronunciationNotes": "Penultimate stress; retain medial st.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Neutral self-description; avoid treating all Protestant traditions as identical."
+      ]
+    },
+    {
+      "id": "A1-S-073",
+      "term": "musulmán",
+      "partOfSpeech": "ADJ",
+      "sense": "identifying oneself as affiliated with Islam",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-affiliation"
+      ],
+      "levelRationale": "Supports a simple volunteered affiliation in mixed communities.",
+      "lowerLevelContrast": "Not a synonym for Arab or an inference of ethnicity.",
+      "register": "neutral; voluntary non-evaluative self-description",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Musulmán/musulmana; musulmanes/musulmanas.",
+      "pronunciationNotes": "Stress stays on final stem syllable; accent changes in inflection.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Affiliation adjective and a person-denoting noun need POS adjudication if later selected separately."
+      ]
+    },
+    {
+      "id": "A1-S-074",
+      "term": "judío",
+      "partOfSpeech": "ADJ",
+      "sense": "identifying oneself as affiliated with Judaism",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-affiliation"
+      ],
+      "levelRationale": "Allows the explicitly religious affiliation in a simple identity statement.",
+      "lowerLevelContrast": "Does not cover every Jewish cultural or ethnic identity.",
+      "register": "neutral; voluntary non-evaluative self-description",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Judío/judía; plurals -s; lowercase.",
+      "pronunciationNotes": "Written í creates hiatus.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Religious sense narrowly chosen; culturally broader senses must not be collapsed into it."
+      ]
+    },
+    {
+      "id": "A1-S-075",
+      "term": "budista",
+      "partOfSpeech": "ADJ",
+      "sense": "identifying oneself as affiliated with Buddhism",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-affiliation"
+      ],
+      "levelRationale": "Includes a non-Abrahamic affiliation in the same bounded voluntary exchange.",
+      "lowerLevelContrast": "Not an assertion about particular doctrine or practice.",
+      "register": "neutral; voluntary non-evaluative self-description",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Gender-invariant; budistas.",
+      "pronunciationNotes": "Penultimate stress; clear intervocalic d.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "This is a Wordfold scope choice, not an exhaustive religion inventory."
+      ]
+    },
+    {
+      "id": "A1-S-076",
+      "term": "hindú",
+      "partOfSpeech": "ADJ",
+      "sense": "identifying oneself as affiliated with Hinduism",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-affiliation"
+      ],
+      "levelRationale": "Separates a religious affiliation from citizenship or geographical origin.",
+      "lowerLevelContrast": "Not an automatic replacement for indio as nationality.",
+      "register": "neutral; voluntary non-evaluative self-description",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Gender-invariant; prefer plural hindúes in the written authoring convention, following RAE/ASALE DPD.",
+      "pronunciationNotes": "Silent h and written final stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation",
+        "rae-hindu"
+      ],
+      "uncertainties": [
+        "Keep the narrowly religious sense distinct from nationality and the language name hindi; final Spanish review must preserve the verified hindúes plural convention."
+      ]
+    },
+    {
+      "id": "A1-S-077",
+      "term": "ateo",
+      "partOfSpeech": "ADJ",
+      "sense": "self-identifying as not believing in a god",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-affiliation"
+      ],
+      "levelRationale": "Allows a neutral lack-of-belief self-description alongside affiliations.",
+      "lowerLevelContrast": "Not merely non-observant or unaffiliated.",
+      "register": "neutral; voluntary non-evaluative self-description",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Ateo/atea; plurals -s.",
+      "pronunciationNotes": "Keep e-o in separate syllables.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Belief-description scope only; no evaluative or derogatory gloss."
+      ]
+    },
+    {
+      "id": "A1-S-078",
+      "term": "mezquita",
+      "partOfSpeech": "NOUN",
+      "sense": "building used for Muslim worship",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-worship-places"
+      ],
+      "levelRationale": "Recognizes a place when locating a building in town.",
+      "lowerLevelContrast": "Not the whole religious community or doctrine.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Feminine; mezquitas.",
+      "pronunciationNotes": "Qu before i is /k/; z differs by dialect.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Building sense only, shared town-landmark use with T."
+      ]
+    },
+    {
+      "id": "A1-S-079",
+      "term": "sinagoga",
+      "partOfSpeech": "NOUN",
+      "sense": "building used for Jewish worship",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-worship-places"
+      ],
+      "levelRationale": "Provides a second distinct worship-place type on a simple map.",
+      "lowerLevelContrast": "Not an ethnic or religious identity label.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Feminine; sinagogas.",
+      "pronunciationNotes": "Penultimate stress; g before o is not the sound of j.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Place identification does not imply access rules or endorsement."
+      ]
+    },
+    {
+      "id": "A1-S-080",
+      "term": "templo",
+      "partOfSpeech": "NOUN",
+      "sense": "building dedicated to religious worship",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-worship-places"
+      ],
+      "levelRationale": "Provides a general place label when no more specific building name is needed.",
+      "lowerLevelContrast": "Not a figurative shrine to an activity.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Masculine; templos.",
+      "pronunciationNotes": "Retain m-pl sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Generic versus specific worship-building overlap is intentional, not synonym duplication."
+      ]
+    },
+    {
+      "id": "A1-S-081",
+      "term": "mascota",
+      "partOfSpeech": "NOUN",
+      "sense": "animal kept as a household companion",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-fauna"
+      ],
+      "levelRationale": "Supports a simple question about having a pet.",
+      "lowerLevelContrast": "Not a team's symbolic mascot.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Feminine grammatical gender for animals of any sex; mascotas.",
+      "pronunciationNotes": "Penultimate stress and medial sc.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Specific pet use may sit in PCIC A2 examples; proposed A1 for personal introductions, reviewed against P ownership."
+      ]
+    },
+    {
+      "id": "A1-S-082",
+      "term": "conejo",
+      "partOfSpeech": "NOUN",
+      "sense": "rabbit as a living animal",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-fauna"
+      ],
+      "levelRationale": "Adds a familiar pet and outdoor animal distinct from cats and dogs.",
+      "lowerLevelContrast": "Not rabbit meat as a food sense.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Conejo/coneja; plurals -s.",
+      "pronunciationNotes": "Check j; penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Bounded Wordfold A1 animal-recognition exception; coordinate food meaning with H if selected later."
+      ]
+    },
+    {
+      "id": "A1-S-083",
+      "term": "oveja",
+      "partOfSpeech": "NOUN",
+      "sense": "female sheep or ordinary reference to a sheep",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-fauna"
+      ],
+      "levelRationale": "Allows recognizing a familiar farm animal beside cow and horse.",
+      "lowerLevelContrast": "Not wool material or a figurative follower.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Feminine; ovejas; carnero is a separate lexical male term.",
+      "pronunciationNotes": "Initial vowel and j require clear articulation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Ordinary species reference versus sex-specific sense granularity needs Spanish review; concrete A1 proposal beyond PCIC A1 category label."
+      ]
+    },
+    {
+      "id": "A1-S-084",
+      "term": "cerdo",
+      "partOfSpeech": "NOUN",
+      "sense": "pig as a living farm animal",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-fauna"
+      ],
+      "levelRationale": "Distinguishes another familiar farm animal in a basic picture or visit.",
+      "lowerLevelContrast": "Not pork food or an insult.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Cerdo/cerda; plurals -s.",
+      "pronunciationNotes": "Initial ce varies by dialect; keep r before d.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Animal recognition is an explicit Wordfold A1 exception; food/insult senses excluded."
+      ]
+    },
+    {
+      "id": "A1-S-085",
+      "term": "insecto",
+      "partOfSpeech": "NOUN",
+      "sense": "small animal recognized as an insect",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-fauna"
+      ],
+      "levelRationale": "Provides an everyday category for a small outdoor creature.",
+      "lowerLevelContrast": "Not a scientific lesson requiring taxonomy or leg counts.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Masculine; insectos.",
+      "pronunciationNotes": "Retain ct cluster without inserted vowel.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Bounded everyday category proposal; species names and biological classification remain later."
+      ]
+    },
+    {
+      "id": "A1-S-086",
+      "term": "hoja",
+      "partOfSpeech": "NOUN",
+      "sense": "leaf growing on a plant",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-flora"
+      ],
+      "levelRationale": "Makes a visible plant-part contrast with tree, plant and flower.",
+      "lowerLevelContrast": "Not a sheet of paper or blade.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Feminine; hojas.",
+      "pronunciationNotes": "Silent h; check j.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "PCIC places more plant-part detail in A2; this concrete A1 exception needs adjudication, with paper meaning kept separate."
+      ]
+    },
+    {
+      "id": "A1-S-087",
+      "term": "hierba",
+      "partOfSpeech": "NOUN",
+      "sense": "grass or low green plant growth on the ground",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-flora"
+      ],
+      "levelRationale": "Describes the visible ground covering in a park.",
+      "lowerLevelContrast": "Not medicinal herb, seasoning or drug slang.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Feminine; usually mass singular in this ground-cover sense.",
+      "pronunciationNotes": "Silent h; initial ie glide.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Grass versus individual herb granularity and césped overlap need Spanish review; regional yerba spelling not default."
+      ]
+    },
+    {
+      "id": "A1-S-088",
+      "term": "jardín",
+      "partOfSpeech": "NOUN",
+      "sense": "planted outdoor area beside a home",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:267-jardin"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-flora"
+      ],
+      "levelRationale": "Recognizes plants in an ordinary home garden, reusing the H place meaning.",
+      "lowerLevelContrast": "Not automatically a botanical institution or every public garden.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Masculine; jardines; accent disappears in plural.",
+      "pronunciationNotes": "Final stress with í; check j.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Check H and T shared-place proposals before creating a global identity."
+      ]
+    },
+    {
+      "id": "A1-S-089",
+      "term": "aire",
+      "partOfSpeech": "NOUN",
+      "sense": "the air around people and other living things",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-material-world"
+      ],
+      "levelRationale": "Names the familiar surrounding substance in a basic outdoor statement.",
+      "lowerLevelContrast": "Not a manner, resemblance or musical tune.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Masculine; normally mass singular.",
+      "pronunciationNotes": "Check ai diphthong and single r.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete material sense, not atmospheric science."
+      ]
+    },
+    {
+      "id": "A1-S-090",
+      "term": "piedra",
+      "partOfSpeech": "NOUN",
+      "sense": "a small piece of rock",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-material-world"
+      ],
+      "levelRationale": "Allows pointing out or describing a tangible outdoor object.",
+      "lowerLevelContrast": "Not the uncountable construction-material sense by default.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Feminine; piedras.",
+      "pronunciationNotes": "Check pie diphthong and dr cluster.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Countable piece versus material may need separate future senses."
+      ]
+    },
+    {
+      "id": "A1-S-091",
+      "term": "arena",
+      "partOfSpeech": "NOUN",
+      "sense": "sand as loose small grains on the ground",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-material-world"
+      ],
+      "levelRationale": "Describes a beach or ground surface using an observable material.",
+      "lowerLevelContrast": "Not an arena building or political arena.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Feminine; normally mass singular.",
+      "pronunciationNotes": "Three syllables with middle stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Concrete landscape-material addition, with A1/A2 placement to review independently."
+      ]
+    },
+    {
+      "id": "A1-S-092",
+      "term": "madera",
+      "partOfSpeech": "NOUN",
+      "sense": "wood as material from trees",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-material-world"
+      ],
+      "levelRationale": "Identify a familiar object as wood in a short de madera response, linking the object to a tree material; no hardness or production explanation.",
+      "lowerLevelContrast": "Not woodland or a figurative talent. Immediate object-material identification is the proposal, not tangibility alone.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Feminine; mass singular in material use.",
+      "pronunciationNotes": "Penultimate stress; single r.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H object-material ownership must reuse one sense, not duplicate it.",
+        "Explicit level conflict: A1-F reserves general material/moisture inventories for A2. This narrower immediate-use A1 proposal needs global level adjudication with H/F; being tangible does not itself establish A1."
+      ]
+    },
+    {
+      "id": "A1-S-093",
+      "term": "metal",
+      "partOfSpeech": "NOUN",
+      "sense": "metal as a material used in ordinary objects",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-material-world"
+      ],
+      "levelRationale": "Distinguish an everyday object made of metal from one made of wood in a short material answer.",
+      "lowerLevelContrast": "Not a music genre or chemical taxonomy. No metallic taxonomy, conductivity or mechanical properties are taught.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Masculine; mass singular; metales when distinguishing kinds.",
+      "pronunciationNotes": "Final stress without an accent.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Object-material A1 selection should merge with H if already proposed.",
+        "Explicit level conflict: A1-F reserves general material/moisture inventories for A2. This narrower immediate-use A1 proposal needs global level adjudication with H/F; being tangible does not itself establish A1."
+      ]
+    },
+    {
+      "id": "A1-S-094",
+      "term": "plástico",
+      "partOfSpeech": "NOUN",
+      "sense": "plastic as the material of an everyday object",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-material-world"
+      ],
+      "levelRationale": "Recognize the material label on an everyday bottle or container in a short object-identification exchange.",
+      "lowerLevelContrast": "Not the artistic adjective or a bank card metonym. No polymer properties, lifecycle assessment or recycling rules are implied.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Masculine; usually mass singular.",
+      "pronunciationNotes": "Written accent fixes antepenultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "A1 material naming is proposed; environmental effects and recycling systems are not implied.",
+        "Explicit level conflict: A1-F reserves general material/moisture inventories for A2. This narrower immediate-use A1 proposal needs global level adjudication with H/F; being tangible does not itself establish A1."
+      ]
+    },
+    {
+      "id": "A1-S-095",
+      "term": "basura",
+      "partOfSpeech": "NOUN",
+      "sense": "unwanted waste to be thrown away",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-material-world"
+      ],
+      "levelRationale": "Supports immediate identification of rubbish in a shared outdoor space.",
+      "lowerLevelContrast": "Not an insult or an evaluation of information.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Feminine; mass singular in this sense.",
+      "pronunciationNotes": "Penultimate stress and single r.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H household-waste reuse should have one global owner."
+      ]
+    },
+    {
+      "id": "A1-S-096",
+      "term": "sucio",
+      "partOfSpeech": "ADJ",
+      "sense": "having dirt on its surface",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-material-world"
+      ],
+      "levelRationale": "Supplies the direct opposite of existing limpio.",
+      "lowerLevelContrast": "Not dishonest, obscene or polluted in a technical sense.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Sucio/sucia; plurals -s.",
+      "pronunciationNotes": "Check cio syllable and ce/ci dialect target.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Merge H cleanliness contrast if present; no hygienic or water-safety guarantee."
+      ]
+    },
+    {
+      "id": "A1-S-097",
+      "term": "seco",
+      "partOfSpeech": "ADJ",
+      "sense": "without surface moisture",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-material-world"
+      ],
+      "levelRationale": "Request or identify a dry towel after washing or rain in an immediate household/outdoor need.",
+      "lowerLevelContrast": "Not wine sweetness, personality or long-term climate. Only absence of moisture on the object; not generic climate or consistency description.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Seco/seca; plurals -s.",
+      "pronunciationNotes": "Penultimate stress; clear c as /k/.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H object-state overlap; this observable sense is narrower than drought or aridity.",
+        "Explicit level conflict: A1-F reserves general material/moisture inventories for A2. This narrower immediate-use A1 proposal needs global level adjudication with H/F; being tangible does not itself establish A1."
+      ]
+    },
+    {
+      "id": "A1-S-098",
+      "term": "mojado",
+      "partOfSpeech": "ADJ",
+      "sense": "wet with water on or in it",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-material-world"
+      ],
+      "levelRationale": "Identify wet clothing or a wet towel immediately after rain or washing.",
+      "lowerLevelContrast": "Not the act of wetting or figurative uses. A directly useful result-state contrast, not a general moisture-scale lesson.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Mojado/mojada; plurals -s; adjectival participle.",
+      "pronunciationNotes": "Check j and penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Distinguish selected result-state adjective from a separate mojar verb.",
+        "Explicit level conflict: A1-F reserves general material/moisture inventories for A2. This narrower immediate-use A1 proposal needs global level adjudication with H/F; being tangible does not itself establish A1."
+      ]
+    },
+    {
+      "id": "A1-S-099",
+      "term": "frío",
+      "partOfSpeech": "NOUN",
+      "sense": "low temperature in the surrounding weather",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:048-frio"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Enables the immediate weather construction hace frío.",
+      "lowerLevelContrast": "Different from baseline P bodily feeling with tener frío.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Masculine mass noun; hace frío, not tiene frío for ambient weather.",
+      "pronunciationNotes": "Written í separates vowels.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Different usage-sense from es-sk:a1:048-frio and F low-temperature adjective; decide noun polysemy granularity globally."
+      ]
+    },
+    {
+      "id": "A1-S-100",
+      "term": "calor",
+      "partOfSpeech": "NOUN",
+      "sense": "high temperature in the surrounding weather",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:047-calor"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Provides the weather opposite of hace frío.",
+      "lowerLevelContrast": "Different from P subjective feeling tener calor.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Masculine mass noun; hace calor.",
+      "pronunciationNotes": "Final stress and single r.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Baseline es-sk:a1:047-calor is bodily feeling; retain identity only if adjudication accepts the broader thermal sense."
+      ]
+    },
+    {
+      "id": "A1-S-101",
+      "term": "hacer",
+      "partOfSpeech": "VERB",
+      "sense": "impersonal verb used to state certain weather conditions",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:exp-006-hacer"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Supplies the construction needed to express heat, cold or sunshine.",
+      "lowerLevelContrast": "Not authored expansion doing or making an activity.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Impersonal hace with weather nouns; no person subject in this use.",
+      "pronunciationNotes": "Silent h; ce follows target Spanish dialect.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "New construction-sense linked to existing hacer only as a contrast; F may choose grammar-level rather than separate card ownership."
+      ]
+    },
+    {
+      "id": "A1-S-102",
+      "term": "temperatura",
+      "partOfSpeech": "NOUN",
+      "sense": "degree of warmth or cold shown or felt",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Allows a short weather reading or question about degrees.",
+      "lowerLevelContrast": "Not a medical diagnosis or detailed measurement theory.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Feminine; temperaturas; pair with grado rather than inventing units.",
+      "pronunciationNotes": "Five syllables and penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "P body-temperature measurement is a contextual reuse candidate; precise A1/A2 boundary requires review."
+      ]
+    },
+    {
+      "id": "A1-S-103",
+      "term": "grado",
+      "partOfSpeech": "NOUN",
+      "sense": "unit used when stating a temperature",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Makes simple temperature numbers interpretable.",
+      "lowerLevelContrast": "Not school grade, academic degree or angular measurement.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Masculine; grados; Celsius context explicit, no assumed conversion.",
+      "pronunciationNotes": "Initial gr cluster; penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "F quantity ownership may hold unit nouns; Celsius versus other scales is contextual, not a universal assumption."
+      ]
+    },
+    {
+      "id": "A1-S-104",
+      "term": "buen tiempo",
+      "partOfSpeech": "NOUN",
+      "sense": "weather considered pleasant for an ordinary planned activity",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Allows a short conventional positive weather description.",
+      "lowerLevelContrast": "Not a long period of time; pleasant is context-dependent.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Masculine phrase; hacer buen tiempo; bueno shortened before noun.",
+      "pronunciationNotes": "Keep buen tiempo phrase stress natural.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Formula versus compositional buen + tiempo should be adjudicated with F; no absolute climate preference."
+      ]
+    },
+    {
+      "id": "A1-S-105",
+      "term": "mal tiempo",
+      "partOfSpeech": "NOUN",
+      "sense": "weather considered unsuitable or unpleasant for a planned activity",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-weather"
+      ],
+      "levelRationale": "Provides the conventional contrast to buen tiempo.",
+      "lowerLevelContrast": "Not emotional distress or a difficult historical period.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Masculine phrase; hacer mal tiempo; malo shortened before noun.",
+      "pronunciationNotes": "Keep final l linked into following t without an added vowel.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Formula granularity matches buen tiempo; not a severe-weather warning or safety assessment."
+      ]
+    },
+    {
+      "id": "A1-S-106",
+      "term": "rey",
+      "partOfSpeech": "NOUN",
+      "sense": "male monarch in a state headed by a monarchy",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-civic"
+      ],
+      "levelRationale": "Completes the basic head-of-state role contrast with presidente.",
+      "lowerLevelContrast": "Not a chess piece, celebrity epithet or a current named officeholder.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Masculine; reyes; reina is a separate lexical counterpart.",
+      "pronunciationNotes": "One syllable; plural re-yes requires review.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Role naming only; no assertion that every state has this office."
+      ]
+    },
+    {
+      "id": "A1-S-107",
+      "term": "reina",
+      "partOfSpeech": "NOUN",
+      "sense": "female monarch or queen as a royal role",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-civic"
+      ],
+      "levelRationale": "Allows identifying the corresponding familiar royal role.",
+      "lowerLevelContrast": "Not an insect caste or a figurative leader.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Feminine; reinas; not an inflected form of rey.",
+      "pronunciationNotes": "Check ei diphthong.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Reigning monarch versus consort scope needs later editorial precision without teaching constitutional detail."
+      ]
+    },
+    {
+      "id": "A1-S-108",
+      "term": "abogado",
+      "partOfSpeech": "NOUN",
+      "sense": "person whose profession involves legal advice and representation",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-civic"
+      ],
+      "levelRationale": "Recognizes a public-facing professional role at basic introduction level.",
+      "lowerLevelContrast": "Not explaining law, rights or a legal procedure.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning with noted variation; es-ES pronunciation target",
+      "formNotes": "Abogado/abogada; plurals -s.",
+      "pronunciationNotes": "Penultimate stress; intervocalic g is not j.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "W profession and T service ownership should share one role identity; no legal guidance supplied."
+      ]
+    },
+    {
+      "id": "A1-S-109",
+      "term": "país",
+      "partOfSpeech": "NOUN",
+      "sense": "country as a politically organized territory",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:062-pais"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-civic"
+      ],
+      "levelRationale": "A short origin or map-identification answer names the country.",
+      "lowerLevelContrast": "Country differs from nationality, language and a government institution.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; países; do not assume every speaker has one nationality.",
+      "pronunciationNotes": "Written í preserves hiatus in país/países.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "P A1-P-062 crosslinks the same country sense; propose S geographic ownership."
+      ]
+    },
+    {
+      "id": "A1-S-110",
+      "term": "ciudad",
+      "partOfSpeech": "NOUN",
+      "sense": "large settlement with many buildings and services",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:063-ciudad"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Completes the village/city distinction on a simple map.",
+      "lowerLevelContrast": "Not citizenship or a municipal governing body.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; ciudades.",
+      "pronunciationNotes": "Final d and iu sequence need attention.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "P/T place use is contextual reuse, not a second city entry."
+      ]
+    },
+    {
+      "id": "A1-S-111",
+      "term": "nacionalidad",
+      "partOfSpeech": "NOUN",
+      "sense": "legal affiliation of a person with a country",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:064-nacionalidad"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-shared"
+      ],
+      "levelRationale": "Supports interpreting a basic voluntary identity statement.",
+      "lowerLevelContrast": "Not language spoken, ethnicity, place of birth or religious affiliation.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; nacionalidades; avoid forced single-nationality assumptions.",
+      "pronunciationNotes": "Final stress and ci dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "P owns personal-data use; legal details and current citizenship rules remain out of scope."
+      ]
+    },
+    {
+      "id": "A1-S-112",
+      "term": "idioma",
+      "partOfSpeech": "NOUN",
+      "sense": "language used by a community to communicate",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:065-idioma"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-shared"
+      ],
+      "levelRationale": "Distinguishes a language question from a country question.",
+      "lowerLevelContrast": "Not an individual's nationality or all languages spoken in one state.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine despite -a; idiomas.",
+      "pronunciationNotes": "Initial i and io sequence require clear syllables.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "W language-learning owner; P/S contextual reuse only."
+      ]
+    },
+    {
+      "id": "A1-S-113",
+      "term": "persona",
+      "partOfSpeech": "NOUN",
+      "sense": "an individual human being",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:079-persona"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-shared"
+      ],
+      "levelRationale": "Supports referring to someone without presuming gender or affiliation.",
+      "lowerLevelContrast": "Not a role, nationality or religious group.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Grammatically feminine for any person's gender; personas.",
+      "pronunciationNotes": "Penultimate stress; single r.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "P people identity owns this broad sense."
+      ]
+    },
+    {
+      "id": "A1-S-114",
+      "term": "vecino",
+      "partOfSpeech": "NOUN",
+      "sense": "person living nearby or in the same building",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:109-vecino"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-civic"
+      ],
+      "levelRationale": "Enables a short description of everyday local community.",
+      "lowerLevelContrast": "Not an adjacent country or the formal municipal-resident meaning.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Vecino/vecina; plurals -s.",
+      "pronunciationNotes": "Ce/ci target dialect and penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "P neighbor-person sense reused; institution meanings remain distinct."
+      ]
+    },
+    {
+      "id": "A1-S-115",
+      "term": "agua",
+      "partOfSpeech": "NOUN",
+      "sense": "water as the familiar liquid needed by living things",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:121-agua"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-material-world"
+      ],
+      "levelRationale": "Connects a known drink/material word to plants and surroundings.",
+      "lowerLevelContrast": "Reuse H familiar water; no separate new sense solely because outside.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; el agua fría in singular, las aguas when countable; normally mass here.",
+      "pronunciationNotes": "Initial stressed a and gua sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Broader material context must not imply all visible water is drinkable."
+      ]
+    },
+    {
+      "id": "A1-S-116",
+      "term": "papel",
+      "partOfSpeech": "NOUN",
+      "sense": "paper as material made into sheets for writing or printing",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:182-papel"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-material-world"
+      ],
+      "levelRationale": "Provides a familiar material contrast with wood, metal and plastic.",
+      "lowerLevelContrast": "Not a document, acting role or plant leaf.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine mass noun; papers/documents would require different scope.",
+      "pronunciationNotes": "Final stress, not English-style first stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "W primary ownership and H packaging reuse should share this material sense."
+      ]
+    },
+    {
+      "id": "A1-S-117",
+      "term": "parque",
+      "partOfSpeech": "NOUN",
+      "sense": "public green space for walking and resting",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:229-parque"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Identifies a familiar outdoor place within a city.",
+      "lowerLevelContrast": "Not an amusement park or a protected national park.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; parques.",
+      "pronunciationNotes": "Qu before e is /k/.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "C leisure and T directions reuse one park sense."
+      ]
+    },
+    {
+      "id": "A1-S-118",
+      "term": "playa",
+      "partOfSpeech": "NOUN",
+      "sense": "shore area with sand or stones beside the sea",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:230-playa"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Names an immediately recognizable coastal destination.",
+      "lowerLevelContrast": "Not every lakeside shore or a swimming pool.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; playas.",
+      "pronunciationNotes": "Check y and initial pl.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "C/T leisure and travel contexts are not new beach senses."
+      ]
+    },
+    {
+      "id": "A1-S-119",
+      "term": "banco",
+      "partOfSpeech": "NOUN",
+      "sense": "institution that holds money and provides financial services",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:291-banco"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "Recognizes where to obtain an ordinary banking service.",
+      "lowerLevelContrast": "Not a bench, bank building as a different metonym or financial policy.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; bancos.",
+      "pronunciationNotes": "N before c and penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "T institution owner; S money context does not authorize financial advice."
+      ]
+    },
+    {
+      "id": "A1-S-120",
+      "term": "policía",
+      "partOfSpeech": "NOUN",
+      "sense": "public institution responsible for policing",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:294-policia"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-civic"
+      ],
+      "levelRationale": "Recognizes the institution in basic local-service information.",
+      "lowerLevelContrast": "Not an individual officer; T has a separate person proposal.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine institution noun; la policía; collective use.",
+      "pronunciationNotes": "Written í maintains hiatus.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Preserve institution identity; person-role police must not replace it."
+      ]
+    },
+    {
+      "id": "A1-S-121",
+      "term": "ayuntamiento",
+      "partOfSpeech": "NOUN",
+      "sense": "institution administering a town or municipality",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:298-ayuntamiento"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-civic"
+      ],
+      "levelRationale": "Identifies a local public institution from a simple service question.",
+      "lowerLevelContrast": "Not automatically the building housing that institution.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; ayuntamientos.",
+      "pronunciationNotes": "Check initial a-yu and mien sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "T municipal-service context reuses institution; governance processes are later."
+      ]
+    },
+    {
+      "id": "A1-S-122",
+      "term": "dinero",
+      "partOfSpeech": "NOUN",
+      "sense": "money used for payments",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:318-dinero"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "Supplies the generic payment concept behind coin and euro.",
+      "lowerLevelContrast": "Not income, savings or capital as economic abstractions.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine mass noun; ordinary dinero not a count of banknotes.",
+      "pronunciationNotes": "Penultimate stress and single r.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H owns payment vocabulary; S economic-framework reuse adds no new sense."
+      ]
+    },
+    {
+      "id": "A1-S-123",
+      "term": "euro",
+      "partOfSpeech": "NOUN",
+      "sense": "euro as a currency unit",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:319-euro"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "Supports a simple price or monetary amount relevant to Slovakia and Spain.",
+      "lowerLevelContrast": "Not a current exchange rate or a claim about every European country's currency.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; euros; no plural change in official currency code EUR.",
+      "pronunciationNotes": "Eu diphthong; single r.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "No current membership lists or financial assumptions are bundled."
+      ]
+    },
+    {
+      "id": "A1-S-124",
+      "term": "comprar",
+      "partOfSpeech": "VERB",
+      "sense": "obtain an item in exchange for money",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:336-comprar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "Names the buyer side of a basic transaction.",
+      "lowerLevelContrast": "Not bribery or accepting an argument.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Regular comprar; compro/compra for basic use.",
+      "pronunciationNotes": "Retain m-pr cluster.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H transaction sense reused; not abstract trade policy."
+      ]
+    },
+    {
+      "id": "A1-S-125",
+      "term": "vender",
+      "partOfSpeech": "VERB",
+      "sense": "give an item to a buyer in exchange for money",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:337-vender"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "Completes the buyer/seller role contrast.",
+      "lowerLevelContrast": "Not figurative persuasion or betrayal.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Regular vender; vendo/vende.",
+      "pronunciationNotes": "Final infinitive stress; clear nd.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H selling sense reused, not a new business-domain sense."
+      ]
+    },
+    {
+      "id": "A1-S-126",
+      "term": "pagar",
+      "partOfSpeech": "VERB",
+      "sense": "give money for a product or service",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:167-pagar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "Links money to the concrete action of paying.",
+      "lowerLevelContrast": "Not suffering a consequence or settling a legal debt.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Pagar; pago/paga; spelling pagué is later form awareness.",
+      "pronunciationNotes": "G before a/o is not the j sound.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H owns action; T services and S payment contexts reuse it."
+      ]
+    },
+    {
+      "id": "A1-S-127",
+      "term": "mapa",
+      "partOfSpeech": "NOUN",
+      "sense": "visual representation of a territory and its places",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:376-mapa"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-orientation"
+      ],
+      "levelRationale": "Supports a concrete cardinal-direction task.",
+      "lowerLevelContrast": "Not an abstract conceptual map or live navigation instructions.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine despite -a; mapas.",
+      "pronunciationNotes": "Penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "T travel map and S geography are the same selected meaning."
+      ]
+    },
+    {
+      "id": "A1-S-128",
+      "term": "calle",
+      "partOfSpeech": "NOUN",
+      "sense": "urban road between buildings",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:388-calle"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Locates common places within a town.",
+      "lowerLevelContrast": "Not a rural highway or metaphorical public opinion.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; calles.",
+      "pronunciationNotes": "Check ll realization.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "T urban orientation owns the same street sense."
+      ]
+    },
+    {
+      "id": "A1-S-129",
+      "term": "plaza",
+      "partOfSpeech": "NOUN",
+      "sense": "open urban square bordered by streets or buildings",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:389-plaza"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Contrasts a town square with a street or park.",
+      "lowerLevelContrast": "Not a job vacancy, booked place or military post.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; plazas.",
+      "pronunciationNotes": "Z varies by dialect; retain pl.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "T place ownership; do not merge later seat/position senses."
+      ]
+    },
+    {
+      "id": "A1-S-130",
+      "term": "norte",
+      "partOfSpeech": "NOUN",
+      "sense": "cardinal direction opposite south",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:401-norte"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-orientation"
+      ],
+      "levelRationale": "Provides one half of the north/south map contrast.",
+      "lowerLevelContrast": "Not a figurative personal guiding aim.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; al norte de; usually singular.",
+      "pronunciationNotes": "Keep r before t.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "T legacy ownership and F A1-F-288 reuse require one S geographic owner."
+      ]
+    },
+    {
+      "id": "A1-S-131",
+      "term": "sur",
+      "partOfSpeech": "NOUN",
+      "sense": "cardinal direction opposite north",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:402-sur"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-orientation"
+      ],
+      "levelRationale": "Completes the north/south contrast.",
+      "lowerLevelContrast": "Not an imprecise political grouping of countries.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; al sur de; usually singular.",
+      "pronunciationNotes": "Single syllable with final r.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "T legacy ownership and F A1-F-289 reuse require one S geographic owner."
+      ]
+    },
+    {
+      "id": "A1-S-132",
+      "term": "empresa",
+      "partOfSpeech": "NOUN",
+      "sense": "organization supplying goods or services",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:197-empresa"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-business-identification"
+      ],
+      "levelRationale": "A short profession or workplace exchange identifies the organization.",
+      "lowerLevelContrast": "Not the abstraction of industry or an adventurous undertaking.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; empresas.",
+      "pronunciationNotes": "Retain m-pr cluster.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "W business-organization owner; concrete identification does not require teaching production systems."
+      ]
+    },
+    {
+      "id": "A1-S-133",
+      "term": "oficina",
+      "partOfSpeech": "NOUN",
+      "sense": "place where administrative or professional work is done",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:198-oficina"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-business-identification"
+      ],
+      "levelRationale": "Names a familiar workplace or service destination.",
+      "lowerLevelContrast": "Not the organization itself.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; oficinas.",
+      "pronunciationNotes": "Penultimate stress; ci dialect variation.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "W place owner, T service-location reuse."
+      ]
+    },
+    {
+      "id": "A1-S-134",
+      "term": "jefe",
+      "partOfSpeech": "NOUN",
+      "sense": "person directing other people's work",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:199-jefe"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-business-identification"
+      ],
+      "levelRationale": "Identifies a supervisor in a short work introduction.",
+      "lowerLevelContrast": "Not a country's ruler or an organization.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Jefe/jefa; plurals -s; extend male-only legacy wording inclusively during later authoring.",
+      "pronunciationNotes": "Initial j and penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "W role owner; feminine counterpart belongs to form review, not a duplicate S entry."
+      ]
+    },
+    {
+      "id": "A1-S-135",
+      "term": "vendedor",
+      "partOfSpeech": "NOUN",
+      "sense": "person offering products or services for sale",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:203-vendedor"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-business-identification"
+      ],
+      "levelRationale": "Names the seller role without conflating it with the buyer.",
+      "lowerLevelContrast": "Not a person who merely owns a company.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Vendedor/vendedora; plurals -es/-as.",
+      "pronunciationNotes": "Final stress for vendedor; ending shifts in vendedora.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "W/H share the same seller role; baseline masculine definition needs inclusive form review."
+      ]
+    },
+    {
+      "id": "A1-S-136",
+      "term": "tienda",
+      "partOfSpeech": "NOUN",
+      "sense": "shop where products are sold",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:311-tienda"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-business-identification"
+      ],
+      "levelRationale": "Names the physical transaction place in ordinary surroundings.",
+      "lowerLevelContrast": "Not a tent or an online platform by default.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; tiendas.",
+      "pronunciationNotes": "Ie diphthong and penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H shop identity reused; a company is not necessarily a shop."
+      ]
+    },
+    {
+      "id": "A1-S-137",
+      "term": "cliente",
+      "partOfSpeech": "NOUN",
+      "sense": "person buying a product or using a service",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:314-cliente"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-business-identification"
+      ],
+      "levelRationale": "Allows identifying a customer of either a shop or a service.",
+      "lowerLevelContrast": "Broader than only a purchaser of goods.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Cliente/clienta variation; authoring convention must be reviewed.",
+      "pronunciationNotes": "Check ie sequence and nt.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H customer owner; customer and narrower comprador should remain distinct if both selected."
+      ]
+    },
+    {
+      "id": "A1-S-138",
+      "term": "barato",
+      "partOfSpeech": "ADJ",
+      "sense": "low in price compared with alternatives",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:334-barato"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "Supports a short budget-based purchase description.",
+      "lowerLevelContrast": "Relative price judgement, not low quality or a fixed monetary threshold.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Barato/barata; plurals -s.",
+      "pronunciationNotes": "Penultimate stress; single r.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H price adjective reused."
+      ]
+    },
+    {
+      "id": "A1-S-139",
+      "term": "caro",
+      "partOfSpeech": "ADJ",
+      "sense": "high in price compared with alternatives",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:335-caro"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "Supplies the opposite price comparison to barato.",
+      "lowerLevelContrast": "Not beloved or cherished; no absolute price threshold.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Caro/cara; plurals -s.",
+      "pronunciationNotes": "Single r contrasts with carro.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H price adjective reused."
+      ]
+    },
+    {
+      "id": "A1-S-140",
+      "term": "pescado",
+      "partOfSpeech": "NOUN",
+      "sense": "fish intended for food",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:131-pescado"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-shared"
+      ],
+      "levelRationale": "Accounts for the fishing-industry cross-reference without teaching the industry.",
+      "lowerLevelContrast": "Not a live animal pez in S nature recognition.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; usually mass noun in food use.",
+      "pronunciationNotes": "Retain sc; penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H food owns this meaning; PCIC15.5.3 cross-reference does not make it a second S word."
+      ]
+    },
+    {
+      "id": "A1-S-141",
+      "term": "ser",
+      "partOfSpeech": "VERB",
+      "sense": "identify a person or state a personal characteristic",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-001-ser"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-shared"
+      ],
+      "levelRationale": "Reuses the short identity construction for a voluntarily stated affiliation or public role.",
+      "lowerLevelContrast": "Not estar location; non-person classification extension needs later scope review.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Irregular soy/eres/es; adjective agrees with subject.",
+      "pronunciationNotes": "Short forms must remain audible in connected speech.",
+      "referenceIds": [
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "F owns this foundational personal-identification sense."
+      ]
+    },
+    {
+      "id": "A1-S-142",
+      "term": "estar",
+      "partOfSpeech": "VERB",
+      "sense": "be in a place or a temporary situation",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-002-estar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-shared"
+      ],
+      "levelRationale": "Supports locating a familiar place or describing its current condition.",
+      "lowerLevelContrast": "Not general identity with ser.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Irregular estoy/estás/está; written accents in forms.",
+      "pronunciationNotes": "Final stress of está needs contrast with demonstrative esta.",
+      "referenceIds": [
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "F existing place/state breadth is reused, not replaced."
+      ]
+    },
+    {
+      "id": "A1-S-143",
+      "term": "haber",
+      "partOfSpeech": "VERB",
+      "sense": "indicate that something exists or is present",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-004-haber"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-shared"
+      ],
+      "levelRationale": "Introduces an animal or landmark visible in a scene.",
+      "lowerLevelContrast": "Not auxiliary haber used with a participle.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Impersonal hay; no plural hayn or invented agreement.",
+      "pronunciationNotes": "Silent h; hay is one syllable.",
+      "referenceIds": [
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "F existential owner; S picture description adds no new sense."
+      ]
+    },
+    {
+      "id": "A1-S-144",
+      "term": "ver",
+      "partOfSpeech": "VERB",
+      "sense": "perceive with the eyes",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-011-ver"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-shared"
+      ],
+      "levelRationale": "Supports naming an animal or sky object one can see.",
+      "lowerLevelContrast": "Not deliberately looking with mirar.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Irregular veo/ves/ve.",
+      "pronunciationNotes": "Short forms and vowel sequence in veo require review.",
+      "referenceIds": [
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "F broad visual-perception sense reused; no separate astronomy-specific verb."
+      ]
+    },
+    {
+      "id": "A1-S-145",
+      "term": "hoy",
+      "partOfSpeech": "ADV",
+      "sense": "on the present calendar day",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-020-hoy"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-day-parts"
+      ],
+      "levelRationale": "Anchors a brief current-weather statement.",
+      "lowerLevelContrast": "Not ahora meaning at the present moment.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Invariable adverb.",
+      "pronunciationNotes": "Silent h; one syllable.",
+      "referenceIds": [
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "F time owner, not S new count."
+      ]
+    },
+    {
+      "id": "A1-S-146",
+      "term": "no",
+      "partOfSpeech": "ADV",
+      "sense": "negate a statement or give a negative answer",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:exp-070-no"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-shared"
+      ],
+      "levelRationale": "Makes non-affiliation or negative existence answers possible without assuming beliefs.",
+      "lowerLevelContrast": "Not a lexical label for every form of nonbelief.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Invariable; precedes the finite verb in ordinary negation.",
+      "pronunciationNotes": "Maintain negative scope through audible phrasing.",
+      "referenceIds": [
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "F grammar ownership; not all non-affiliation means atheist."
+      ]
+    },
+    {
+      "id": "A1-S-147",
+      "term": "comprador",
+      "partOfSpeech": "NOUN",
+      "sense": "person purchasing an item",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-business-identification"
+      ],
+      "levelRationale": "Completes the seller/buyer role contrast in a simple transaction.",
+      "lowerLevelContrast": "Narrower than cliente using a service.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning; es-ES pronunciation target",
+      "formNotes": "Comprador/compradora; plurals -es/-as.",
+      "pronunciationNotes": "Final stress in comprador.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "W/H role ownership and overlap with cliente require adjudication."
+      ]
+    },
+    {
+      "id": "A1-S-148",
+      "term": "billete",
+      "partOfSpeech": "NOUN",
+      "sense": "paper banknote representing money",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:305-billete"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "Completes the tangible coin/banknote payment contrast.",
+      "lowerLevelContrast": "Different from existing transport-document billete.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning; es-ES pronunciation target",
+      "formNotes": "Masculine; billetes; monetary values are contextual.",
+      "pronunciationNotes": "Check ll and penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H proposes the banknote sense; existing es-sk:a1:305-billete is a contrast link, not the same meaning."
+      ]
+    },
+    {
+      "id": "A1-S-149",
+      "term": "tarjeta",
+      "partOfSpeech": "NOUN",
+      "sense": "card used to make a payment",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:070-tarjeta"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "Names the familiar non-cash payment instrument.",
+      "lowerLevelContrast": "Narrower than generic information/function card in baseline070.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning; es-ES pronunciation target",
+      "formNotes": "Feminine; tarjetas; tarjeta de crédito/débito distinctions are later scope.",
+      "pronunciationNotes": "Check r before j and penultimate stress.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H/T payment-card proposals should merge; adjudicate specialization of generic baseline card, without assuming all cards pay."
+      ]
+    },
+    {
+      "id": "A1-S-150",
+      "term": "España",
+      "partOfSpeech": "PROPN",
+      "sense": "Spain as a country name",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Provides one concrete country-name answer relevant to the target-language setting.",
+      "lowerLevelContrast": "Not español as language or nationality adjective.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning; es-ES pronunciation target",
+      "formNotes": "Proper noun with capital initial; ordinary use without article.",
+      "pronunciationNotes": "Ñ is palatal, not n.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Bounded course-context choice; nationality and language identities belong to P/W and are not this PROPN."
+      ]
+    },
+    {
+      "id": "A1-S-151",
+      "term": "Eslovaquia",
+      "partOfSpeech": "PROPN",
+      "sense": "Slovakia as a country name",
+      "proposedLevel": "A1",
+      "action": "select-new",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-geography"
+      ],
+      "levelRationale": "Provides the source-language country reference for a simple map or origin exchange.",
+      "lowerLevelContrast": "Not eslovaco as language or nationality adjective.",
+      "register": "neutral",
+      "region": "pan-Hispanic meaning; es-ES pronunciation target",
+      "formNotes": "Proper noun with capital initial; ordinary use without article.",
+      "pronunciationNotes": "Initial esl cluster and quia sequence need checking.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Does not assume every Slovak-speaking learner is a Slovak citizen; open country lists are not enumerated."
+      ]
+    },
+    {
+      "id": "A1-S-152",
+      "term": "desigualdad",
+      "partOfSpeech": "NOUN",
+      "sense": "unequal conditions, rights or resources among people",
+      "proposedLevel": "B2",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:b2:exp-008-desigualdad"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Sustained discussion compares social conditions beyond naming a community.",
+      "lowerLevelContrast": "Not the A1 adjective contrast of same and different.",
+      "register": "neutral",
+      "region": "pan-Hispanic with noted variants; es-ES pronunciation target",
+      "formNotes": "Feminine; desigualdades.",
+      "pronunciationNotes": "Final stress; gu before a retains /g/.",
+      "referenceIds": [
+        "pcic-specific-later",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Retain the authored B2 proposal outside A1; B2-S and relevant W/D ownership and final introduction level remain global decisions."
+      ]
+    },
+    {
+      "id": "A1-S-153",
+      "term": "sostenible",
+      "partOfSpeech": "ADJ",
+      "sense": "able to continue without exhausting resources or causing serious environmental harm",
+      "proposedLevel": "B2",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:b2:exp-009-sostenible"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Evaluates a process over time, not just an observable natural object.",
+      "lowerLevelContrast": "Not a synonym for natural, green-colored or physically supportable.",
+      "register": "neutral",
+      "region": "pan-Hispanic with noted variants; es-ES pronunciation target",
+      "formNotes": "Gender-invariant; sostenibles.",
+      "pronunciationNotes": "Penultimate stress; retain st.",
+      "referenceIds": [
+        "pcic-specific-later",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Retain the authored B2 proposal outside A1; B2-S and relevant W/D ownership and final introduction level remain global decisions."
+      ]
+    },
+    {
+      "id": "A1-S-154",
+      "term": "privacidad",
+      "partOfSpeech": "NOUN",
+      "sense": "personal-life sphere one chooses not to disclose",
+      "proposedLevel": "B2",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:b2:exp-010-privacidad"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Describes a social concept requiring boundaries and explanations.",
+      "lowerLevelContrast": "A1 can decline sharing identity information without mastering this abstract noun.",
+      "register": "neutral",
+      "region": "pan-Hispanic with noted variants; es-ES pronunciation target",
+      "formNotes": "Feminine; normally singular.",
+      "pronunciationNotes": "Final stress; ci dialect variation.",
+      "referenceIds": [
+        "pcic-specific-later",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Retain the authored B2 proposal outside A1; B2-S and relevant W/D ownership and final introduction level remain global decisions."
+      ]
+    },
+    {
+      "id": "A1-S-155",
+      "term": "impacto",
+      "partOfSpeech": "NOUN",
+      "sense": "significant effect produced by an event or measure",
+      "proposedLevel": "B2",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:b2:exp-011-impacto"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Explains environmental or social consequences across causes.",
+      "lowerLevelContrast": "Not a physical collision or mere immediate weather observation.",
+      "register": "neutral",
+      "region": "pan-Hispanic with noted variants; es-ES pronunciation target",
+      "formNotes": "Masculine; impactos.",
+      "pronunciationNotes": "Retain ct cluster.",
+      "referenceIds": [
+        "pcic-specific-later",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Retain the authored B2 proposal outside A1; B2-S and relevant W/D ownership and final introduction level remain global decisions."
+      ]
+    },
+    {
+      "id": "A1-S-156",
+      "term": "recurso",
+      "partOfSpeech": "NOUN",
+      "sense": "available means used to meet a need or carry out an activity",
+      "proposedLevel": "B2",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:b2:exp-012-recurso"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Supports discussing how collective needs are met.",
+      "lowerLevelContrast": "Not automatically only natural resources or a legal appeal.",
+      "register": "neutral",
+      "region": "pan-Hispanic with noted variants; es-ES pronunciation target",
+      "formNotes": "Masculine; recursos.",
+      "pronunciationNotes": "Single r between vowels, initial r strong.",
+      "referenceIds": [
+        "pcic-specific-later",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Retain the authored B2 proposal outside A1; B2-S and relevant W/D ownership and final introduction level remain global decisions."
+      ]
+    },
+    {
+      "id": "A1-S-157",
+      "term": "concienciar",
+      "partOfSpeech": "VERB",
+      "sense": "help someone recognize why an issue matters",
+      "proposedLevel": "B2",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:b2:exp-013-concienciar"
+      ],
+      "plannedSelectionIds": [],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Supports a public-awareness discussion and its intention.",
+      "lowerLevelContrast": "Not requiring the listener to take action or an A1 recognition verb.",
+      "register": "neutral",
+      "region": "pan-Hispanic with noted variants; es-ES pronunciation target",
+      "formNotes": "Regular -ar pattern; conciencio; regional concientizar variant noted.",
+      "pronunciationNotes": "Check cien and ci dialect realization.",
+      "referenceIds": [
+        "pcic-specific-later",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Retain the authored B2 proposal outside A1; B2-S and relevant W/D ownership and final introduction level remain global decisions."
+      ]
+    },
+    {
+      "id": "A1-S-158",
+      "term": "huella de carbono",
+      "partOfSpeech": "NOUN",
+      "sense": "measure of greenhouse-gas emissions associated with an activity",
+      "proposedLevel": "B2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "b2-public-issues-planned-01"
+      ],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "A public-environmental comparison needs a defined measure and explanation.",
+      "lowerLevelContrast": "Not a literal footprint or merely seeing smoke.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine phrase; huellas de carbono.",
+      "pronunciationNotes": "Silent h, ll variation and phrase stress.",
+      "referenceIds": [
+        "pcic-specific-later",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Planned B2 public-issues identity remains outside A1; exact scope and S/W/P ownership require global adjudication, not publication."
+      ]
+    },
+    {
+      "id": "A1-S-159",
+      "term": "brecha digital",
+      "partOfSpeech": "NOUN",
+      "sense": "gap in access to or effective use of digital technology",
+      "proposedLevel": "B2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "b2-public-issues-planned-02"
+      ],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Discusses unequal access across people or groups.",
+      "lowerLevelContrast": "Not a broken computer or a literal physical gap.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine phrase; brechas digitales.",
+      "pronunciationNotes": "Check ch and final stress of digital.",
+      "referenceIds": [
+        "pcic-specific-later",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Planned B2 public-issues identity remains outside A1; exact scope and S/W/P ownership require global adjudication, not publication."
+      ]
+    },
+    {
+      "id": "A1-S-160",
+      "term": "accesibilidad",
+      "partOfSpeech": "NOUN",
+      "sense": "extent to which an environment or service can be accessed and used",
+      "proposedLevel": "B2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "b2-public-issues-planned-03"
+      ],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Evaluates participation barriers in a broader public issue.",
+      "lowerLevelContrast": "Not just the immediate label open or available.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; normalmente singular in this abstract use.",
+      "pronunciationNotes": "Long word with final stress; avoid skipping syllables.",
+      "referenceIds": [
+        "pcic-specific-later",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Planned B2 public-issues identity remains outside A1; exact scope and S/W/P ownership require global adjudication, not publication."
+      ]
+    },
+    {
+      "id": "A1-S-161",
+      "term": "conciliación",
+      "partOfSpeech": "NOUN",
+      "sense": "compatibility of work and personal or family life",
+      "proposedLevel": "B2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "b2-public-issues-planned-04"
+      ],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Explains a work-life arrangement and its social consequences.",
+      "lowerLevelContrast": "Not reconciling people after an argument or falling asleep.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine; often conciliación laboral/familiar.",
+      "pronunciationNotes": "Final written stress and ci sequence.",
+      "referenceIds": [
+        "pcic-specific-later",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Planned B2 public-issues identity remains outside A1; exact scope and S/W/P ownership require global adjudication, not publication."
+      ]
+    },
+    {
+      "id": "A1-S-162",
+      "term": "participación ciudadana",
+      "partOfSpeech": "NOUN",
+      "sense": "involvement of community members in public affairs",
+      "proposedLevel": "B2",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "b2-public-issues-planned-05"
+      ],
+      "objectiveIds": [
+        "A1-S-later-boundaries"
+      ],
+      "levelRationale": "Describes forms of civic participation beyond naming roles or institutions.",
+      "lowerLevelContrast": "Not merely being physically present at an activity.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Feminine phrase; ciudadana agrees with participación.",
+      "pronunciationNotes": "Final stress in participación, then penultimate in ciudadana.",
+      "referenceIds": [
+        "pcic-specific-later",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Planned B2 public-issues identity remains outside A1; exact scope and S/W/P ownership require global adjudication, not publication."
+      ]
+    },
+    {
+      "id": "A1-S-163",
+      "term": "este",
+      "partOfSpeech": "DET",
+      "sense": "identify a nearby referent before a noun",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-identity-planned-02"
+      ],
+      "objectiveIds": [
+        "A1-S-shared"
+      ],
+      "levelRationale": "Needed for pointing out a familiar place or visible object.",
+      "lowerLevelContrast": "Not the cardinal-direction noun east.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Este/esta/estos/estas; no accent.",
+      "pronunciationNotes": "Initial stress contrasts with está.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "F A1-F-010 owns this demonstrative; the east row must not be counted as covering its different planned meaning."
+      ]
+    },
+    {
+      "id": "A1-S-164",
+      "term": "cambio",
+      "partOfSpeech": "NOUN",
+      "sense": "money returned after a cash payment exceeds the price",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a2-services-planned-02"
+      ],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "Completes the immediate cash payment exchange.",
+      "lowerLevelContrast": "Not currency conversion or general change.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Masculine; normally singular.",
+      "pronunciationNotes": "Check mb and io sequence.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "H A1-H-228 proposes the same A1 exception against original A2 plan; keep one shared identity and adjudicate level."
+      ]
+    },
+    {
+      "id": "A1-S-165",
+      "term": "cuánto",
+      "partOfSpeech": "ADV",
+      "sense": "ask the price with a bare cost question",
+      "proposedLevel": "A1",
+      "action": "cross-reference",
+      "existingEntryIds": [],
+      "plannedSelectionIds": [
+        "a1-function-words-planned-05"
+      ],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "Supports the short question cuánto cuesta for an item.",
+      "lowerLevelContrast": "Not DET cuánto with a noun such as dinero.",
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "formNotes": "Invariable in this adverbial construction; written accent.",
+      "pronunciationNotes": "Check cuán diphthong and tonic syllable.",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-general",
+        "pcic-pronunciation"
+      ],
+      "uncertainties": [
+        "Align F A1-F-297/T A1-T-179 ADV cost use; H broad DET price row requires global POS/granularity reconciliation."
+      ]
+    },
+    {
+      "id": "A1-S-166",
+      "proposedLevel": "A1",
+      "plannedSelectionIds": [],
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "term": "efectivo",
+      "partOfSpeech": "NOUN",
+      "sense": "cash in banknotes and coins",
+      "action": "cross-reference",
+      "existingEntryIds": [
+        "es-sk:a1:343-efectivo"
+      ],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "Identifies the cash option alongside card in an immediate payment.",
+      "lowerLevelContrast": "Not efectivo meaning effective or a staff member.",
+      "formNotes": "Masculine mass noun; en efectivo.",
+      "pronunciationNotes": "Penultimate stress and ct cluster.",
+      "uncertainties": [
+        "H A1-H-118 owns this cash sense; PCIC A2 cash-phrase example does not settle Wordfold's proposed A1 payment-use exception."
+      ]
+    },
+    {
+      "id": "A1-S-167",
+      "proposedLevel": "A1",
+      "plannedSelectionIds": [],
+      "register": "neutral",
+      "region": "pan-Hispanic; es-ES pronunciation target",
+      "referenceIds": [
+        "pcic-specific",
+        "pcic-pronunciation"
+      ],
+      "term": "cambiar",
+      "partOfSpeech": "VERB",
+      "sense": "exchange money in one currency for money in another",
+      "action": "select-new",
+      "existingEntryIds": [
+        "es-sk:a1:341-cambiar"
+      ],
+      "objectiveIds": [
+        "A1-S-money"
+      ],
+      "levelRationale": "A short request to exchange travel money is an immediate service need; no rate calculation or financial recommendation.",
+      "lowerLevelContrast": "Narrow currency-conversion use differs from baseline replacement of one item by another, which H proposes A2.",
+      "formNotes": "Regular cambiar; cambiar dinero; currency names are contextual, not an exhaustive list.",
+      "pronunciationNotes": "Check mb and final infinitive stress.",
+      "uncertainties": [
+        "T money-service use and H generic replacement must be adjudicated by meaning; explicit A1 narrow-use proposal, not a runtime relevel of baseline341."
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "subject": "Every country, demonym, religion, plant or animal species",
+      "reason": "These open sets cannot define lexical completion. Select bounded scenario contrasts and ask independent reviewers to assess omissions.",
+      "objectiveIds": [
+        "A1-S-geography",
+        "A1-S-affiliation",
+        "A1-S-fauna",
+        "A1-S-flora"
+      ]
+    },
+    {
+      "subject": "Current named officeholders, changing laws, election schedules and financial rates",
+      "reason": "Changing real-world facts are not stable lexical senses; no legal or financial advice is part of this inventory.",
+      "objectiveIds": [
+        "A1-S-civic",
+        "A1-S-money"
+      ]
+    }
+  ],
+  "coverageNotes": [
+    "Enumeration proposal only, not a published course, complete CEFR level or frozen unique inventory. Original Wordfold sense glosses and rationale; PCIC is acknowledged as a reference framework, not certification or endorsement.",
+    "All 65 primary legacy S identities individually reconciled: 411–420 (10 economy), 431–435 (5 civic), 451–455 (5 belief), 456–500 (45 nature). References retain stable IDs even where the proposed introduction level is later.",
+    "Selected bounded scenarios cover immediate money and buyer/seller relations; company/place versus person; country/capital and basic public roles; voluntary affiliation and worship buildings; settlements, cardinal directions, sky, simple weather and seasons; plant/animal recognition; immediate familiar materials and wet/dry/clean/dirty contrasts.",
+    "Applicable specific-notion subcategories are dispositioned: 15.1 money selected, 15.2 empty, 15.3 transactions selected/marketing strategy later, 15.4 company/workplace roles reused from W/H, 15.5 production later with H food and S animal references; 17.1 neighbor-person reused with broader conduct in P/D, 17.2 role names selected/processes later, 17.3 lawyer role selected/legal reasoning later, 17.4 military later; 19 affiliation/place recognition selected/doctrine later; 20.1 visible sky selected/science later, 20.2 geographic identification selected/detailed grouping later, 20.3 familiar urban/rural places selected, 20.4 simple conditions and seasons selected/explanatory climate later, 20.5/20.6 bounded animals/plants selected/taxonomy and processes later.",
+    "Open sets are bounded by course-relevant scenarios, not a numerical target: Spain and Slovakia as country names, common volunteered affiliation contrasts, familiar household/farm/outdoor animals, and elementary visible plant categories. Do not infer learner nationality, ethnicity, religion or access needs; additional names can be personalized without claiming an exhaustive world lexicon.",
+    "Shared F/P/H/T/W/C uses are not net-new meanings. Critical boundaries: country versus nationality/language; institution versus person/building; east NOUN versus este DET; morning/afternoon NOUN versus tomorrow/late ADV; weather tiempo versus duration; ambient heat/cold versus bodily sensation; living pez versus pescado food; soil versus planet; payment billete/card versus existing travel-document/generic-card meanings.",
+    "Exact planned links cover the demonstrative, bare-price quantity question, change returned after payment, and all five B2 public-issues plans. Other next-selection identities were checked by meaning: no dedicated A1 nature or affiliation entries exist among the 138; unrelated numeric, routine, discourse and advanced rhetorical plans are not adopted merely because they could appear in a social conversation.",
+    "Existing B2 desigualdad, sostenible, privacidad, impacto, recurso and concienciar are explicit later-domain references, not A1 coverage. General argument/professional/rhetorical verbs remain D/W responsibilities rather than being duplicated as every possible S context.",
+    "First omission pass added buyer versus customer, cash/card/coin/banknote and currency-exchange contrasts, workplace-organization links and concrete country names. Material/moisture A1 proposals explicitly conflict with F's A2 general boundary and require adjudication; these are narrow immediate-use choices, not automatic promotions for all tangible words.",
+    "No deferred-core objective remains in this bounded A1 proposal. Uncertainties are genuine global ownership, meaning granularity, morphology or level decisions; structural validation does not resolve them or authorize freeze.",
+    "Written pronunciation notes identify stress, spelling and contrast risks only. No native Spanish/Slovak approval, audio listening, learner-text authoring, global deduplication or publication occurred."
+  ],
+  "counts": {
+    "selections": 167,
+    "objectives": 20
+  }
+}

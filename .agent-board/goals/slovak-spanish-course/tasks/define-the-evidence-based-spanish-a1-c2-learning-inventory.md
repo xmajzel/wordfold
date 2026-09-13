@@ -12,7 +12,7 @@ blocks: []
 blocked_by: []
 relates_to: ["spanish-a1-c2-catalog-expansion-and-picker-completion"]
 created: "2026-09-05T12:44:51.138Z"
-updated: "2026-09-05T13:41:44.822Z"
+updated: "2026-09-05T14:39:54.850Z"
 verified: "2026-09-05T13:40:11.149Z"
 verified_sha: "c4aed38c815d68756ae5e8b80f7890bb1de9abf2"
 archived: ""
@@ -123,3 +123,5 @@ Ran all test suites matching /src\/features\/content\/spanish-inventory.test.js|
 - `git diff --check` exit=0
 
 - [progress] 2026-09-05T13:41:44.822Z by codex: Verified partial checkpoint: 185 authored and independently Spanish/Slovak AI-reviewed senses, 25 objectives, 138 explicit next selections. Preview now 685 entries. Current raw/canonical hashes and correction history bound. Structural board verification passes; leave task in progress because remaining sense authoring, unmapped coverage and individual legacy level adjudication are unfinished.
+
+- [progress] 2026-09-05T14:39:54.850Z by jozefmajzel: Completed six level planning reports and 48 coverage cells; 48 individual selection tasks linked behind owner plan approval and before global freeze. Full enumerated sense inventory and authoring remain pending. Current 685 unchanged; no publication.

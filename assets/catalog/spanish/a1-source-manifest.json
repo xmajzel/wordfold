@@ -16,8 +16,8 @@
       "attribution": "Plan Curricular del Instituto Cervantes (PCIC)",
       "redistributionScope": "Levels, categories, and classifications may structure original Wordfold content; protected PCIC learner-facing prose and bulk lexical inventories are not reproduced.",
       "transformations": [
-        "Reference the twenty top-level Nociones específicas classifications as curriculum evidence.",
-        "Independently select and grade every candidate term.",
+        "Retain the twenty top-level Nociones específicas classifications only as optional metadata.",
+        "Do not use PCIC classifications to determine catalog membership, CEFR level, or sense selection.",
         "Write all definitions, examples, and Slovak hints as original Wordfold content."
       ],
       "evidencePath": "docs/legal/INSTITUTO_CERVANTES_PCIC_PERMISSION.md"
@@ -32,7 +32,7 @@
       "redistributionScope": "Commercial reuse, redistribution, and adaptation are permitted with attribution. Only the Spanish omw-es module is extracted.",
       "transformations": [
         "Extract Spanish lemma, universal POS, lexical-entry ID, sense ID, synset ID, ILI and any source definition/examples as review evidence.",
-        "Match independently selected Wordfold candidates by normalized Spanish lemma and compatible POS.",
+        "Match the fixed ELELex-derived course catalog by normalized Spanish lemma and compatible POS.",
         "Retain original source identifiers; do not copy source glosses into learner content."
       ]
     },
@@ -61,9 +61,9 @@
       "attribution": "Wordfold",
       "redistributionScope": "Original candidate selection, level decisions, definitions, examples, and Slovak learning hints. Draft content requires independent review before release.",
       "transformations": [
-        "Author candidates in five isolated batches of one hundred.",
-        "Normalize identifiers and attach source evidence deterministically.",
-        "Reject production compilation until Spanish and Slovak reviewer gates pass."
+        "Retain the legacy 500-entry editorial pilot for historical comparison only.",
+        "Do not use legacy editorial candidates to determine membership or level in the ELELex-derived course.",
+        "Keep original learner prose outside production until the applicable review gates pass."
       ]
     }
   ],

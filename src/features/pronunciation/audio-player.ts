@@ -48,11 +48,14 @@ export async function stopPronunciationFilePlayback() {
 export async function playPronunciationFile(
   uri: string,
   callbacks: DevicePronunciationCallbacks = {},
+  signal?: AbortSignal,
 ) {
+  if (signal?.aborted) return;
   await stopPronunciationFilePlayback();
   await configureAudioMode();
 
   const { createAudioPlayer } = await loadExpoAudio();
+  if (signal?.aborted) return;
   const player = createAudioPlayer({ uri }, { updateInterval: 100 });
   activePlayer = player;
   await new Promise<void>((resolve, reject) => {
@@ -65,6 +68,7 @@ export async function playPronunciationFile(
       settled = true;
       if (timeout) clearTimeout(timeout);
       subscription?.remove();
+      signal?.removeEventListener('abort', stopCurrent);
       if (activeStop === stopCurrent) activeStop = null;
       if (activePlayer === player) activePlayer = null;
       player.remove();
@@ -84,6 +88,7 @@ export async function playPronunciationFile(
       finish();
     };
     activeStop = stopCurrent;
+    signal?.addEventListener('abort', stopCurrent, { once: true });
     subscription = player.addListener('playbackStatusUpdate', (status) => {
       if (status.error) {
         fail(new Error(status.error));

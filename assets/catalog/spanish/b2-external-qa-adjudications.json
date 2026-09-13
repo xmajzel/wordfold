@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 1,
+  "notHumanReview": true,
+  "courseId": "es-sk",
+  "level": "B2",
+  "sourceAdjudicationRunIdentitySha256": "197afa660685097b6a00465c6e4e21ef68b7be5f52a2176b7cdfdbd1f34fbe62",
+  "policy": "Three-way external-QA adjudication. A is content repair, B is provenance-only correction, R is reference miss. Never report raw external non-correspondence without this split.",
+  "counts": {
+    "A": 4,
+    "B": 0,
+    "R": 19
+  },
+  "countsByCategory": {
+    "probability-sample": {
+      "A": 4,
+      "B": 0,
+      "R": 19
+    }
+  },
+  "entries": [
+    {
+      "entryId": "es-cefr:1bfd096d6f9619be",
+      "term": "destapar",
+      "partOfSpeech": "verb",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Destapar una parte del cuerpo retirando la ropa es un uso válido y coincide con el sentido seleccionado."
+    },
+    {
+      "entryId": "es-cefr:bbf8a07ce91304bb",
+      "term": "ratificar",
+      "partOfSpeech": "verb",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La aprobación formal de un tratado corresponde directamente al sentido seleccionado."
+    },
+    {
+      "entryId": "es-cefr:57ae824182c2d983",
+      "term": "trapezoidal",
+      "partOfSpeech": "adjective",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "The generated definition corresponds directly to the selected OMW record; the external mismatch is reference coverage or sense granularity, not a learner-content defect."
+    },
+    {
+      "entryId": "es-cefr:4515e8e7f5c1e783",
+      "term": "adepto",
+      "partOfSpeech": "adjective",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "A",
+      "decision": "repair-content",
+      "replacementDefinition": "Que sigue o apoya a una persona, una idea o una doctrina.",
+      "replacementExample": "Es adepto a una filosofía que promueve una vida sencilla.",
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Se ha trasladado el significado del inglés adept. El español adepto expresa adhesión; el único candidato no respalda esa corrección."
+    },
+    {
+      "entryId": "es-cefr:f82899524a8734b9",
+      "term": "apartado",
+      "partOfSpeech": "noun",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "El apartado de un contrato es una sección de un texto y está respaldado por el registro seleccionado."
+    },
+    {
+      "entryId": "es-cefr:8a9f1482ab9e300b",
+      "term": "atún",
+      "partOfSpeech": "noun",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La definición y la ensalada ejemplifican el atún como alimento, que es el sentido seleccionado."
+    },
+    {
+      "entryId": "es-cefr:4ea8f707a7d24b1f",
+      "term": "biblia",
+      "partOfSpeech": "noun",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "A",
+      "decision": "repair-content",
+      "replacementDefinition": "Conjunto de libros que el cristianismo considera sagrados.",
+      "replacementExample": "En clase estudiaron un pasaje de la Biblia.",
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "El sentido está bien atribuido, pero el nombre del texto sagrado requiere mayúscula en este ejemplo."
+    },
+    {
+      "entryId": "es-cefr:0c81f246b25a6adb",
+      "term": "caudillo",
+      "partOfSpeech": "noun",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Caudillo admite este uso referido a un jefe militar con dominio político territorial; el candidato respalda esa especialización."
+    },
+    {
+      "entryId": "es-cefr:6283827b2d179b27",
+      "term": "consolidación",
+      "partOfSpeech": "noun",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La integración de empresas corresponde al sentido seleccionado de consolidación."
+    },
+    {
+      "entryId": "es-cefr:4b5ae7ee0802a88e",
+      "term": "cuadrícula",
+      "partOfSpeech": "noun",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Las líneas regulares usadas para dibujar el plano representan la cuadrícula del registro seleccionado."
+    },
+    {
+      "entryId": "es-cefr:704edab41290ea41",
+      "term": "demandar",
+      "partOfSpeech": "verb",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Demandar paciencia significa requerirla y coincide con el candidato seleccionado."
+    },
+    {
+      "entryId": "es-cefr:fcd22dba819373a2",
+      "term": "envasar",
+      "partOfSpeech": "verb",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Envasar admite la conservación en latas como aplicación específica; el candidato respalda ese alcance aunque el verbo también abarque otros envases."
+    },
+    {
+      "entryId": "es-cefr:403b0747d7b26c9c",
+      "term": "exigencia",
+      "partOfSpeech": "noun",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La puntualidad se presenta como un requisito laboral, compatible con las obligaciones del sentido seleccionado."
+    },
+    {
+      "entryId": "es-cefr:26e840f8142cd66b",
+      "term": "falsedad",
+      "partOfSpeech": "noun",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "The generated definition corresponds directly to the selected OMW record; the external mismatch is reference coverage or sense granularity, not a learner-content defect."
+    },
+    {
+      "entryId": "es-cefr:d9e0f8ca96f72651",
+      "term": "madero",
+      "partOfSpeech": "noun",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Un madero empleado como poste es una aplicación válida del término y coincide con el candidato."
+    },
+    {
+      "entryId": "es-cefr:fcfdbb90426ec075",
+      "term": "motera",
+      "partOfSpeech": "noun",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Motera es el femenino válido para una persona que conduce o viaja en motocicleta; el registro respalda el contenido."
+    },
+    {
+      "entryId": "es-cefr:345ad227b342fb5d",
+      "term": "practicante",
+      "partOfSpeech": "adjective",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "El adjetivo distingue la práctica religiosa de la mera creencia, conforme al sentido seleccionado."
+    },
+    {
+      "entryId": "es-cefr:cf8774be3c3da4d0",
+      "term": "predecesor",
+      "partOfSpeech": "noun",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La persona que ocupaba antes la alcaldía ejemplifica exactamente la relación del sentido seleccionado."
+    },
+    {
+      "entryId": "es-cefr:0938aa82c3ac0ae0",
+      "term": "procedimiento",
+      "partOfSpeech": "noun",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Los pasos para solicitar una devolución encajan en el sentido general de procedimiento elegido."
+    },
+    {
+      "entryId": "es-cefr:942c9384388e596b",
+      "term": "radical",
+      "partOfSpeech": "adjective",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "The generated definition corresponds directly to the selected OMW record; the external mismatch is reference coverage or sense granularity, not a learner-content defect."
+    },
+    {
+      "entryId": "es-cefr:7378932245fd253d",
+      "term": "rutinario",
+      "partOfSpeech": "adjective",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "The generated definition corresponds directly to the selected OMW record; the external mismatch is reference coverage or sense granularity, not a learner-content defect."
+    },
+    {
+      "entryId": "es-cefr:a18bedd5de27ae54",
+      "term": "vega",
+      "partOfSpeech": "noun",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "A",
+      "decision": "repair-content",
+      "replacementDefinition": "Extensión de tierra baja y fértil, generalmente junto a un río, apta para el cultivo.",
+      "replacementExample": "En la vega del río se cultivan hortalizas y cereales.",
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La producción de heno no define una vega. Ningún candidato recoge sus características geográficas propias."
+    },
+    {
+      "entryId": "es-cefr:d476ce026dc4c5e0",
+      "term": "vocación",
+      "partOfSpeech": "noun",
+      "level": "B2",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "A",
+      "decision": "repair-content",
+      "replacementDefinition": "Inclinación personal hacia una profesión o actividad.",
+      "replacementExample": "Desde pequeña siente vocación por la enseñanza.",
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Vocación designa la inclinación, no la profesión para la que alguien se forma; el único candidato confunde ambos conceptos."
+    }
+  ]
+}

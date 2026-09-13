@@ -7,6 +7,7 @@ import Animated, { FadeInDown, FadeOut, ReduceMotion } from 'react-native-reanim
 import { AppText } from '@/components/app-text';
 import { EmptyState } from '@/components/empty-state';
 import { PrimaryButton } from '@/components/primary-button';
+import { RecommendationFallbackNote } from '@/components/recommendation-fallback-note';
 import { Screen } from '@/components/screen';
 import { SwipeableWordCard } from '@/components/swipeable-word-card';
 import { WordCard } from '@/components/word-card';
@@ -103,6 +104,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
   const [sessionWordIds, setSessionWordIds] = useState(() => new Set(initialSession.feed.map((word) => word.id)));
   const [notificationReviewWord, setNotificationReviewWord] = useState<Word | null>(initialSession.reviewWord);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [viewportIndex, setViewportIndex] = useState(0);
   const [sessionComplete, setSessionComplete] = useState(false);
   const [listHeight, setListHeight] = useState(0);
   const [translationStates, setTranslationStates] = useState<Record<string, 'loading' | 'error'>>({});
@@ -134,7 +136,8 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     learningPreferences,
     activeWords.map((word) => word.normalizedTerm),
     10,
-  ) : [], [activeCourse.capabilities.recommendations, activeWords, learningPreferences]);
+    activeCourseId,
+  ) : [], [activeCourseId, activeCourse.capabilities.recommendations, activeWords, learningPreferences]);
   const hasRecommendationPreferences = learningPreferences.levels.length > 0
     && learningPreferences.topics.length > 0;
   const recommendationAddCount = wordCapacity.remaining === null
@@ -194,7 +197,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     const nextIndex = currentIndex + 1;
     if (nextIndex < sessionFeed.length) {
       setCurrentIndex(nextIndex);
-      requestAnimationFrame(() => listRef.current?.scrollToIndex({ index: nextIndex, animated: true }));
+      listRef.current?.scrollToIndex({ index: nextIndex, animated: false });
     } else {
       updateSessionComplete(true);
     }
@@ -225,6 +228,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     sessionFeedLengthRef.current = continuedSessionFeed.length;
     setSessionFeed(continuedSessionFeed);
     setCurrentIndex(0);
+    setViewportIndex(0);
     updateSessionComplete(false);
   };
 
@@ -309,7 +313,18 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
         snapToInterval={cardHeight + spacing.md}
         decelerationRate="fast"
         getItemLayout={(_, index) => ({ length: cardHeight + spacing.md, offset: (cardHeight + spacing.md) * index, index })}
-        onMomentumScrollEnd={(event) => setCurrentIndex(Math.round(event.nativeEvent.contentOffset.y / (cardHeight + spacing.md)))}
+        scrollEventThrottle={16}
+        onScroll={(event) => {
+          const offset = event.nativeEvent.contentOffset.y;
+          const index = Math.round(offset / (cardHeight + spacing.md));
+          // Only release an outgoing card once the native viewport reaches a row.
+          if (Math.abs(offset - index * (cardHeight + spacing.md)) < 1) setViewportIndex(index);
+        }}
+        onMomentumScrollEnd={(event) => {
+          const index = Math.round(event.nativeEvent.contentOffset.y / (cardHeight + spacing.md));
+          setCurrentIndex(index);
+          setViewportIndex(index);
+        }}
         renderItem={({ item, index }) => {
           const currentWord = currentWords[item.id] ?? item;
           const sessionRating = submittedRatings.current.get(currentWord.id);
@@ -317,7 +332,20 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
             && isOnDeviceTranslationPairSupported(currentWord.sourceLanguageCode, currentWord.targetLanguageCode)
             ? translationStates[currentWord.id] ?? 'loading'
             : undefined;
-          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><SwipeableWordCard word={currentWord} active={index === currentIndex} disabled={sessionRating !== undefined} onSwipe={(rating) => handleRating(currentWord, rating)}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} sessionRating={sessionRating} showPronunciation pronunciationActive={index === currentIndex} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={sessionRating === undefined ? (rating) => handleRating(currentWord, rating) : undefined}/></SwipeableWordCard></View>;
+          const nextItem = sessionFeed[index + 1];
+          const nextWord = nextItem ? currentWords[nextItem.id] ?? nextItem : null;
+          const nextCard = nextWord ? <WordCard
+            key={nextWord.id}
+            word={nextWord}
+            collectionName={collectionNames[nextWord.collectionId]}
+            dense={denseCards}
+            animateEntrance={false}
+            showPronunciation
+            pronunciationActive={false}
+            sessionRating={submittedRatings.current.get(nextWord.id)}
+            onRate={() => undefined}
+          /> : undefined;
+          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><SwipeableWordCard nextCard={nextCard} word={currentWord} active={index === currentIndex} inViewport={index === viewportIndex} disabled={sessionRating !== undefined} onSwipe={(rating) => handleRating(currentWord, rating)}>{(animateRating) => <WordCard animateEntrance={false} word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} sessionRating={sessionRating} showPronunciation pronunciationActive={index === currentIndex} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={sessionRating === undefined ? animateRating : undefined}/>}</SwipeableWordCard></View>;
         }}
       />
       <AppText variant="caption" style={[styles.position, { color: theme.muted }]}>{Math.min(currentIndex + 1, sessionFeed.length)} of {sessionFeed.length} due now · scroll to skip</AppText>
@@ -364,6 +392,12 @@ function LearningEmptyState({ title, message, recommendations, learningPreferenc
       </Animated.View>
     </ScrollView>;
   }
+  if (recommendations.length === 0 && !showManualCourseSetup
+    && (learningPreferences.levels.length === 0 || learningPreferences.topics.length === 0)) {
+    return <EmptyState title={`Personalize your ${learnedLanguage} words`}
+      message="Choose your levels and interests to get your next set of words."
+      actionLabel="Choose my preferences" onAction={() => router.push('/preferences')}/>;
+  }
   if (recommendations.length === 0) {
     return <EmptyState title={title} message={message} actionLabel="Browse library" actionVariant="secondary" compactAction onAction={() => router.push('/(tabs)/library')}/>;
   }
@@ -398,6 +432,7 @@ function LearningEmptyState({ title, message, recommendations, learningPreferenc
               <AppText variant="caption" style={{ color: theme.muted }}>{topics} · {recommendations.length} {wordLabel}</AppText>
             </View>
           </View>
+          <RecommendationFallbackNote recommendations={recommendations}/>
           <View style={styles.recommendationWords}>{recommendations.slice(0, 3).map(({ entry }) => <View key={entry.id} style={[styles.recommendationWord, { backgroundColor: theme.primarySoft }]}><AppText variant="label">{entry.term}</AppText><AppText variant="caption">{entry.level}</AppText></View>)}</View>
           <PrimaryButton testID="add-today-recommendations" label={`Add ${recommendations.length} ${wordLabel} & start learning`} loading={busy} onPress={onAdd} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/>
         </View>

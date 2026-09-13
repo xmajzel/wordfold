@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { AppText } from '@/components/app-text';
-import { PronunciationButton } from '@/components/pronunciation-button';
+import { PronunciationButton, type PronunciationStatus } from '@/components/pronunciation-button';
 import { languageLabel, pronunciationLocaleLabel } from '@/domain/languages';
 import type { PronunciationVoicePreference } from '@/domain/types';
 import {
@@ -60,6 +60,16 @@ export function PronunciationVoicePicker({
 }) {
   const theme = useAppTheme();
   const [testing, setTesting] = useState<NeuralPronunciationLocale | null>(null);
+  const [sampleStatus, setSampleStatus] = useState<'preparing' | 'playing'>('preparing');
+  const [phoneStatus, setPhoneStatus] = useState<PronunciationStatus>('idle');
+  const sampleRequest = useRef<AbortController | null>(null);
+  const phoneBusy = useRef(false);
+  const onPhoneStatusChange = useCallback((status: PronunciationStatus) => {
+    phoneBusy.current = status !== 'idle';
+    setPhoneStatus(status);
+  }, []);
+  const samplesBusy = testing !== null || phoneStatus !== 'idle';
+  useEffect(() => () => { sampleRequest.current?.abort(); }, [sourceLanguageCode]);
   const pronunciationLabel = `${languageLabel(sourceLanguageCode)} · ${pronunciationLocaleLabel(sourceLanguageCode, pronunciationLocale)}`;
   const choices: typeof englishChoices = [
     ...(sourceLanguageCode === 'en' ? englishChoices : []),
@@ -78,16 +88,25 @@ export function PronunciationVoicePicker({
   }, [sourceLanguageCode]);
 
   const testNeural = async (locale: NeuralPronunciationLocale) => {
+    if (disabled || sampleRequest.current || phoneBusy.current) return;
+    const request = new AbortController();
+    sampleRequest.current = request;
+    setSampleStatus('preparing');
     setTesting(locale);
     try {
-      await playBundledVoiceSample(locale);
+      await playBundledVoiceSample(locale, {
+        onStart: () => { if (!request.signal.aborted) setSampleStatus('playing'); },
+        onError: (error) => { if (!request.signal.aborted) Alert.alert('Voice sample unavailable', error.message); },
+      }, request.signal);
     } catch (error) {
+      if (request.signal.aborted) return;
       Alert.alert(
         'Voice sample unavailable',
         error instanceof Error ? error.message : 'The bundled voice sample could not be played. Please try again.',
       );
     } finally {
-      setTesting(null);
+      if (sampleRequest.current === request) sampleRequest.current = null;
+      if (!request.signal.aborted) setTesting(null);
     }
   };
 
@@ -135,23 +154,26 @@ export function PronunciationVoicePicker({
           {choice.locale ? <Pressable
             accessibilityRole="button"
             accessibilityLabel={`Test ${choice.title}`}
-            accessibilityState={{ busy: testing === choice.locale, disabled: disabled || testing !== null }}
-            disabled={disabled || testing !== null}
+            accessibilityState={{ busy: testing === choice.locale, disabled: disabled || samplesBusy }}
+            disabled={disabled || samplesBusy}
             onPress={() => void testNeural(choice.locale!)}
             style={({ pressed }) => [styles.testButton, {
               backgroundColor: theme.raised,
               borderColor: theme.primary,
-              opacity: disabled || testing !== null ? 0.5 : pressed ? 0.72 : 1,
+              opacity: disabled || samplesBusy ? 0.5 : pressed ? 0.72 : 1,
             }]}
           >
-            <Ionicons name={testing === choice.locale ? 'hourglass-outline' : 'play-outline'} color={theme.primary} size={18}/>
+            <Ionicons name={testing === choice.locale ? sampleStatus === 'playing' ? 'volume-high-outline' : 'hourglass-outline' : 'play-outline'} color={theme.primary} size={18}/>
             <AppText variant="label" style={{ color: theme.primary }}>
-              {testing === choice.locale ? 'Preparing sample…' : 'Test voice'}
+              {testing === choice.locale ? sampleStatus === 'playing' ? 'Playing…' : 'Preparing sample…' : 'Test voice'}
             </AppText>
           </Pressable> : <PronunciationButton
             text={deviceSampleText[sourceLanguageCode] ?? `Test ${languageLabel(sourceLanguageCode)} pronunciation.`}
             locale={pronunciationLocale}
             compact
+            align="flex-start"
+            disabled={disabled || testing !== null}
+            onStatusChange={onPhoneStatusChange}
             idleLabel={`Test ${pronunciationLabel} phone voice`}
           />}
         </View>

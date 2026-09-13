@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "notHumanReview": true,
+  "status": "bundled-production-a1",
+  "courseId": "es-sk",
+  "level": "A1",
+  "catalog": {
+    "path": "assets/catalog/spanish/a1-course.json",
+    "sha256": "04c34da6fd8770637f4131f84430278627d7cbaf209cde8d17286a6f6d4d4641",
+    "bytes": 1685645,
+    "counts": {
+      "concepts": 1599,
+      "terms": 1687,
+      "ownerReviewedConcepts": 82,
+      "ownerVerdictRequiredConcepts": 47,
+      "ownerResolvedRequiredConcepts": 47,
+      "ownerPendingConcepts": 0
+    }
+  },
+  "reviewDisclosureSha256": "3f6f32b5b4edc38e5fd96a12e5cfa7f62e3fd10907cc0353131593ee42e212a9",
+  "sourceHashes": {
+    "learnerManifest": {
+      "path": ".artifacts/spanish-a1-learner-content/full/manifest.json",
+      "sha256": "2acd00f5fb185d372d4df44adc3e845635ceae72a24464cd743926193f59d797"
+    },
+    "releaseAdjudications": {
+      "path": "assets/catalog/spanish/a1-learner-content-adjudications.json",
+      "sha256": "568f90088722647d47dfc2bff68ba7cf590bafedea4e0d1bcdb70e498671cb8a"
+    },
+    "crossReviewAdjudications": {
+      "path": "assets/catalog/spanish/a1-ai-cross-review-adjudications.json",
+      "sha256": "a5567786e9dfc0bea9e5bae2f560e7e24aa17919d5a8c4349e20cbc8c92635f0"
+    },
+    "ownerAdjudications": {
+      "path": "assets/catalog/spanish/a1-slovak-owner-adjudications.json",
+      "sha256": "d19162106806c186d116757244c3e2ec653bbdcab89a60905a82b5c7af16e616"
+    },
+    "externalQaAdjudications": {
+      "path": "assets/catalog/spanish/external-qa-adjudications.json",
+      "sha256": "9955c1d2fe6ddec980431d0acc3683a4ecddf9471cf2badf02258fa31d3d2ba7"
+    },
+    "courseCatalog": {
+      "path": "assets/catalog/spanish/cefr-course-catalog.json",
+      "sha256": "69fa0ad43812e0f548c3caf124a0eae295aeb904610f62965630e42362794e04"
+    },
+    "courseOrder": {
+      "path": "assets/catalog/spanish/cefr-course-order.json",
+      "sha256": "df00242fba3fe5815871095c0b784a239091c6c783894a84cf67535794552a28"
+    },
+    "catalogManifest": {
+      "path": "assets/catalog/spanish/cefr-catalog-manifest.json",
+      "sha256": "31a5c639b2b538957a6f5f28db6be9e1df67aee9b27f85d7ff1e56e2bb41a52a"
+    },
+    "entryMerges": {
+      "path": "assets/catalog/spanish/course-entry-merges.json",
+      "sha256": "1e4a954d2afc51758eedb12b9318d8487ad9678b89c353a0843c952536829b16"
+    },
+    "pilotManifest": {
+      "path": ".artifacts/spanish-a1-slovak-translations/pilot/manifest.json",
+      "sha256": "412d40df3965430cee27c06fea9ab3f025179d8f9df7f98d395d1a459e474415"
+    },
+    "remainingManifest": {
+      "path": ".artifacts/spanish-a1-slovak-translations/remaining/manifest.json",
+      "sha256": "eb0eb22884fd69cbee2aabbdb24187a80e98e22971034692b032231c3ad878cb"
+    },
+    "initialOwnerReviewManifest": {
+      "path": ".artifacts/spanish-a1-slovak-translations/pilot/owner-review-manifest.json",
+      "sha256": "66a9ddd0163ed8d6c08668ff5cc7c6410867eed6d69fb05387b4af1d67b10e84"
+    }
+  },
+  "editorialManifest": {
+    "path": "assets/catalog/spanish/cefr-catalog-manifest.json",
+    "sha256": "31a5c639b2b538957a6f5f28db6be9e1df67aee9b27f85d7ff1e56e2bb41a52a",
+    "runtimeImported": false
+  },
+  "bundlePolicy": {
+    "includedLevels": [
+      "A1"
+    ],
+    "excludedLevels": [
+      "A2",
+      "B1",
+      "B2",
+      "C1"
+    ],
+    "unsupportedLevels": [
+      "C2"
+    ],
+    "editorialManifestRuntimeImported": false
+  }
+}

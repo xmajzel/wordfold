@@ -1,6 +1,7 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
 import type { ReminderSettings, Word } from '@/domain/types';
+import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
 import { rebuildReminderSchedule, requestReminderPermission } from './scheduler';
 
 interface ScheduledRequest {
@@ -99,6 +100,36 @@ describe('reminder scheduler', () => {
     expect(count).toBe(0);
     expect(mockCancelAllScheduledNotificationsAsync).toHaveBeenCalledTimes(1);
     expect(mockScheduleNotificationAsync).not.toHaveBeenCalled();
+  });
+
+  it('keeps database writes serialized without holding the queue during native scheduling', async () => {
+    const queue = createSerialMutationQueue();
+    const mutationStarted = jest.fn();
+    const runMutation: typeof queue.run = (mutation) => {
+      mutationStarted();
+      return queue.run(mutation);
+    };
+    let finishNotification!: (id: string) => void;
+    let notificationStarted!: () => void;
+    const started = new Promise<void>((resolve) => { notificationStarted = resolve; });
+    mockScheduleNotificationAsync.mockImplementationOnce(() => {
+      notificationStarted();
+      return new Promise<string>((resolve) => { finishNotification = resolve; });
+    });
+    const db = database();
+    const rebuild = rebuildReminderSchedule(db, [word(1)], settings, 'en-sk', runMutation);
+    await started;
+    try {
+      await expect(queue.run(async () => 'word saved')).resolves.toBe('word saved');
+      expect(db.runAsync).toHaveBeenCalledTimes(1);
+      expect(mutationStarted).toHaveBeenCalledTimes(1);
+    } finally {
+      finishNotification('notification');
+      await rebuild;
+    }
+    const scheduledCount = await rebuild;
+    expect(db.runAsync).toHaveBeenCalledTimes(scheduledCount + 1);
+    expect(mutationStarted).toHaveBeenCalledTimes(scheduledCount + 1);
   });
 
   it('keeps the displayed word and navigation payload aligned', async () => {

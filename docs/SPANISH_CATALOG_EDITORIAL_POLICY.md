@@ -6,9 +6,11 @@ The Spanish course teaches Spanish to Slovak-native learners. Runtime identity i
 `es-sk`: Spanish is the learned, defined, example, and pronounced language; Slovak is
 the revealable hint language.
 
-`assets/catalog/spanish/cefr-pilot.json` is original Wordfold draft content used only
-to exercise the six-level data pipeline. Normal catalog APIs exclude it. It must not
-be represented as reviewed, production-ready, or an official CEFR vocabulary list.
+`assets/catalog/spanish/cefr-pilot.json` is original Wordfold draft content retained
+as historical, non-gating evidence for the retired six-entry pilot. Normal catalog
+APIs exclude it. The runtime imports the promoted A1-only production asset at
+`assets/catalog/spanish/a1-course.json`; A2-C1 remain not yet available and C2 is
+unsupported by the current ELELex source.
 
 ## Instituto Cervantes reference boundary
 
@@ -100,7 +102,79 @@ Owner approval authorizes these draft edits. It does not write native-speaker
 decisions or attestations. The original reports remain unchanged; after candidate
 edits, their old hashes document the reviewed baseline rather than the new payload.
 
+The A2 correction layer is
+`assets/catalog/spanish/a2-ai-cross-review-adjudications.json`. Its 23 unique content
+findings comprise 19 material-definition findings, including all four wrong-sense
+findings, plus four example-only findings. Only `solar` and `querido` remain semantic
+exceptions. Their generated OMW sense is explicitly rejected and the corresponding
+Slovak hint is stale; repaired entries must pass post-correction external-reference
+QA before compilation.
+
+`assets/catalog/spanish/external-qa-adjudications.json` records the three-way
+adjudication of the 63 unique A1, A2, and B1 external-reference non-correspondences.
+Bucket A is a learner-content defect and carries a correction overlay, bucket B is a
+provenance-only semantic exception, and bucket R is a Wiktionary coverage or
+sense-granularity miss where the generated definition and selected OMW record agree.
+The recorded split is A=10, B=2, R=51. External-reference results must always be
+reported with this split; a raw non-correspondence rate is not a content-quality rate.
+
+The same policy applies to the later-level sidecars. The B2 adjudication records
+A=4, B=0, R=19, and the C1 adjudication records A=2, B=0, R=21. B2 and C1 add no
+semantic exceptions. Their bucket-A overlays were carried into Slovak grouping;
+post-correction external QA confirmed both C1 replacements and three of four B2
+replacements directly. The remaining B2 item, `biblia`, is an externally recorded
+case/coverage miss: its learner-facing repair is capitalization of the example, not
+a newly unsupported meaning.
+
+`assets/catalog/spanish/b1-post-translation-content-corrections.json` removes the
+US-specific framing left in the initial `hispano` repair. Its existing general Slovak
+hint remains applicable, the owner-review queue shows the corrected Spanish text,
+and a one-entry post-correction external check confirmed correspondence at sense rank
+2. The immutable historical translation run is not rewritten.
+
+`assets/catalog/spanish/course-entry-merges.json` merges the post-normalization A1
+`solo`/`sólo` adverb duplicate for course presentation. The unaccented entry survives,
+while both ELELex source rows, source forms, OMW aliases, immutable generated records,
+and the retired entry ID remain recorded as provenance. The source catalog and ELELex
+level assignment are not rewritten.
+
 ## Production promotion gate
+
+### ELELex A1 production-review amendment (2026-09-08)
+
+For the frozen ELELex-derived A1 course, the owner approved automated external-reference
+QA plus an independent AI cross-review plus explicit owner risk acceptance as the
+production review standard for Spanish learner content. This supersedes the qualified
+Spanish-reviewer requirement below for that release only. It does not turn either
+automated pass into human or native-speaker review. Every generated manifest and
+summary remains marked `notHumanReview`, and every product source disclosure must say:
+
+> Spanish definitions are generated and automatically verified against reference
+> sources; they have not been reviewed by native Spanish speakers. Slovak hints are
+> checked against linked lexical references where available and independently AI
+> cross-reviewed; they have not been reviewed by native Slovak speakers. Flagged A1
+> hints carry AI-assisted, owner-accepted verdicts. Spanish–Slovak sense correspondence
+> has not been verified by a native bilingual reviewer.
+
+Under the narrowed policy, only machine-flagged Slovak rows require owner verdicts.
+All 47 flagged A1 concepts have AI-assisted, owner-accepted verdicts; the earlier 35
+owner verdicts remain historical metadata only. A2-C1 use a 300-concept probability
+sample per level plus all divergence-gate findings, with targeted rows excluded from
+the probability denominator unless independently sampled. Their 70 flagged rows remain
+unresolved and do not gate A1. A critical-error rate above 2% or a material-error rate
+above 5% escalates that later level to a larger sample or complete review. The ELELex
+licensing gate and the A1 flagged-row verdict gate are both clear.
+
+The approved A1 asset is promoted to `assets/catalog/spanish/a1-course.json`; its
+catalog and source-input hashes are recorded in the adjacent small release manifest.
+Neither the Spanish editorial manifest nor the cross-course CEFR catalog manifest is
+runtime-imported. Only A1 is bundled.
+
+For B2 and C1, external-reference QA uses one deterministic probability sample per
+level plus the complete minority-POS cohort. It does not separately add the
+everyday-life cohort because the measured external check produced approximately five
+reference misses for every content defect and these levels have the cleanest measured
+category and minority-POS indicators. The blinded Astra cross-review remains separate.
 
 An asset may change from `draft` to `production` only when:
 
@@ -108,79 +182,30 @@ An asset may change from `draft` to `production` only when:
    version, checksum, attribution, and redistribution scope;
 2. every entry has namespaced unique identity, valid normalized term, CEFR evidence,
    POS, original Spanish definition/example, and Slovak hint;
-3. a qualified Spanish reviewer approves the lemma, sense, level, definition, and
-   example, and a qualified Slovak reviewer approves the hint for that exact sense;
+3. the applicable approved Spanish review standard and Slovak flagged-row verdict
+   policy are satisfied;
 4. disagreements are adjudicated and recorded rather than silently overwritten;
 5. deterministic validation passes and each manifest count matches the entries; and
 6. release QA confirms the product labels the catalog CEFR-aligned and displays all
    required attribution.
 
-## A1 pilot review rubric
+## Retired 500-entry A1 pilot
 
-The 500-entry A1 pilot is authored and reviewed outside runtime catalog APIs. Agent or
-machine-authored output is always draft and never counts as reviewer approval.
+The schema-v1, quota-bound 500-entry candidate pipeline and its bespoke local review
+server are retired. The 6,185-entry ELELex-derived catalog, schema-v2 lexical evidence,
+current learner-content QA, and flagged-row TSV adjudication workflow supersede them.
+The retired workflow is historical evidence only and cannot gate or produce a release.
+Its decision, retained assets, and deliberately retired quality rules are recorded in
+`assets/catalog/spanish/cefr-catalog-manifest.json` under
+`retiredEditorialWorkflows.a1QuotaPilot500`.
 
-The Spanish reviewer evaluates every immutable candidate for:
+The 500 candidate records, their correction ledger, the A1 portions of the second
+correction ledger, and `SPANISH_A1_IMPLEMENTATION_VERIFICATION.md` remain in place as
+historical, non-gating evidence. The old validate, review-server, score, and compile
+commands no longer exist. The active schema-v2 `a1-lexical-evidence.json` must not be
+passed through the retired schema-v1 validator.
 
-- the selected lemma, explicit sense, controlled part of speech, gender/alternative
-  forms, and primary curriculum classification;
-- defensible A1 usefulness and broadly understood neutral Spanish;
-- a concise, non-circular, learner-appropriate original definition;
-- a natural original example that expresses the selected sense; and
-- exclusion or explicit treatment of regionalisms, proper names, arbitrary
-  inflections, and unstable phrase fragments.
-
-The Slovak reviewer independently evaluates every hint for:
-
-- the exact selected Spanish sense rather than the spelling alone;
-- natural, correctly spelled Slovak and an appropriate aspect/form where relevant;
-- enough specificity to avoid a misleading broader or narrower meaning; and
-- absence of untranslated Spanish, copied definitions, or unnecessary explanation.
-
-Each reviewer uses a distinct stable reviewer ID and attests to the relevant language
-qualification. Review files bind to the complete candidate SHA-256. Reviewers choose
-`approved`, `changes-requested`, or `rejected` and give a note for every requested
-change or rejection. They do
-not see or edit the other reviewer's decisions while their own review is in progress.
-
-Any content change invalidates the affected decisions. An adjudication records the
-before/after value, reason, adjudicator, and date; the corrected entry then requires
-fresh approval from both reviewers. A compile command must reject missing decisions,
-same-reviewer submissions, stale hashes, requested changes, and unresolved
-adjudications.
-
-## Local A1 pilot workflow
-
-### In-app development preview
-
-The owner approved local testing of the corrected 500-word A1 dataset on 2026-09-05.
-To enable it, put `EXPO_PUBLIC_SPANISH_A1_PREVIEW_ENABLED=true` in ignored
-`.env.local`, then restart the Expo development server. This workspace has that
-local opt-in enabled. The flag also requires `__DEV__`; release-mode catalog
-lookups remain gated even when the environment flag is true.
-
-Select **Slovak → Spanish** in Settings (or onboarding), then open
-**Library → Discover → A1**. Browse/search the 500 words, add chosen entries to
-**My words**, and practice them in **Learn** with Spanish definitions/examples,
-Slovak hints and the existing Spanish–Spain device pronunciation control. A1 cards
-also show grammatical gender and available alternative forms. Words are not
-automatically added during onboarding. A2–C2 and Spanish recommendations remain
-unavailable; the English recommendation engine is not reused for Spanish.
-
-This preview does not mutate reviewer files or claim native-reviewer approval.
-Added words use the existing library storage and account-sync behavior; use a guest
-or test account for disposable native-device tests. Web preview word state is
-in-memory and resets on page reload. No database migration or cloud build is needed.
-
-Verification: 90 suites / 482 tests passed, including preview-enabled/disabled and
-release-mode gates plus adding Spanish identities/hints/locales. Live web QA verified
-Library → A1 → add `cabeza` → Learn → reveal `hlava`. Mobile word titles were measured
-and fixed to remain one line at 375px; back/add controls measured 44/50px high and
-search text 16px. Desktop practice had no page overflow at 1280px. Native-device
-audio was not reverified. Expo Doctor still reports the existing five dependency
-advisories described in `SPANISH_A1_IMPLEMENTATION_VERIFICATION.md`.
-
-### Editorial source preparation
+## Active editorial source preparation
 
 Download and extract the pinned `omw-es-2.0.tar.xz` and `omw-en-2.0.tar.xz` releases
 outside the repository, then generate the lexical-evidence sidecar while verifying
@@ -190,81 +215,18 @@ both sources:
 pnpm spanish:a1:sources --archive <path-to-omw-es-2.0.tar.xz> --omw <path-to-omw-es.xml> --english-archive <path-to-omw-en-2.0.tar.xz> --english-omw <path-to-omw-en.xml>
 ```
 
-Validate the immutable candidates, source manifest, exact quotas, and evidence:
-
-```sh
-pnpm spanish:a1:validate --sources assets/catalog/spanish/a1-source-manifest.json --candidates assets/catalog/spanish/a1-candidates.json --evidence assets/catalog/spanish/a1-lexical-evidence.json
-```
-
-Prepare independent ignored review packages:
-
-```sh
-pnpm spanish:a1:prepare-reviews --sources assets/catalog/spanish/a1-source-manifest.json --candidates assets/catalog/spanish/a1-candidates.json --evidence assets/catalog/spanish/a1-lexical-evidence.json --spanish-output .artifacts/spanish-a1/reviews/spanish-review.json --slovak-output .artifacts/spanish-a1/reviews/slovak-review.json
-```
-
-Preparation refuses existing files. After approved content/evidence changes, refresh
-only untouched pending packages with:
-
-```sh
-node scripts/spanish-a1-pipeline.mjs refresh-reviews --sources assets/catalog/spanish/a1-source-manifest.json --candidates assets/catalog/spanish/a1-candidates.json --evidence assets/catalog/spanish/a1-lexical-evidence.json --spanish-output .artifacts/spanish-a1/reviews/spanish-review.json --slovak-output .artifacts/spanish-a1/reviews/slovak-review.json
-```
-
-Refresh preserves reviewer IDs and qualifications and creates unique byte-original
-`.backup` files beside both packages. It refuses decisions, notes, sense selections,
-attestations, completion dates, changed entry identities, or an active save lock.
-Never clear human work to bypass this check; completed or partially reviewed content
-requires explicit adjudication and fresh review of the changed payload.
-
-Each reviewer starts a separate local process for only their assigned package. The
-server binds to `127.0.0.1`, validates the committed source/candidate/evidence assets
-and package hashes before serving, and prints the local URL. Start the Spanish review:
-
-```sh
-pnpm spanish:a1:review --review .artifacts/spanish-a1/reviews/spanish-review.json
-```
-
-After stopping that process, start the Slovak review separately:
-
-```sh
-pnpm spanish:a1:review --review .artifacts/spanish-a1/reviews/slovak-review.json
-```
-
-Use the page to search or filter subjects, choose decisions, enter required notes,
-and save. Before navigation or a search/filter change, the page automatically saves
-unsaved input and proceeds only after success; validation or revision conflicts leave
-the reviewer on the same subject with the error visible. Every save is atomic,
-revision-checked, and guarded by a package-specific cross-process lock; a stale browser
-must refresh instead of overwriting newer work.
-Spanish approval requires one offered OMW sense,
-or explicit approval of the documented original-editorial exception when no sense is
-offered. When no decisions remain pending, the reviewer enters their own truthful
-attestation and finalizes. Finalization records a server-generated ISO completion
-time, but does not score, compile, publish, or promote the catalog.
-
-Each Spanish source option now carries a readable English WordNet definition,
-member lemmas and any examples, plus Spanish descriptions when the pinned Spanish
-source supplies them. Source languages are labelled; reference text is not
-machine-translated. Duplicate Spanish senses pointing to the same synset form one
-option with retained source aliases. The English reference maps by the same WordNet
-3.0 offset and equal ILI; only adjective `a` to satellite `s` fallback is allowed.
-Reviewers must understand the displayed references to make a meaningful selection.
-These descriptions never replace original Wordfold learner text or establish a
-CEFR grade. Slovak sessions contain the candidate context and hint, not these
-source-sense descriptions or another reviewer's decisions.
-
-After the two reviewers complete their separate files, score them with
-`pnpm spanish:a1:score`. Use `pnpm spanish:a1:compile` only with both completed review
-files and a resolved adjudication file. Compilation produces a reviewed draft
-promotion candidate, not a runtime release; a separate approved promotion task must
-still integrate it.
+This command validates the active source manifest and both pinned OMW archives before
+writing schema-v2 lexical evidence for the selected CEFR level. The current A1 evidence
+covers 1,705 entries from the 6,185-entry catalog. Downstream learner-content, quality,
+Slovak-hint, correspondence, and staging commands implement the current workflow.
 
 ## Original multi-level supplemental drafts (2026-09-05)
 
 The owner-approved expansion has a separate original-content draft lane, documented
-in `docs/SPANISH_CATALOG_EXPANSION.md`. It preserves the A1 licensed evidence and
-human-review gates above. Supplemental AI assessments bind every entry and exact
-input hashes; corrections invalidate coverage and require rechecking. Preview
+in `docs/SPANISH_CATALOG_EXPANSION.md`. It is not part of the retired quota-pilot
+review workflow. Supplemental AI assessments bind every entry and exact input hashes;
+corrections invalidate coverage and require rechecking. Preview
 compilation rejects unresolved, stale or incomplete reports and never emits a
-production release. Existing human decisions are not populated from AI records.
-All six levels have available preview entries but remain partial; the next 138
-enumerated selections and additional unmapped coverage are still unfinished.
+production release. Existing human decisions are not populated from AI records. The
+historical preview contains entries across all six levels but is not runtime-imported;
+the next 138 enumerated selections and additional unmapped coverage remain unfinished.

@@ -2,6 +2,10 @@
 
 ## Launch contract
 
+The initial production A1 release will keep Spanish pronunciation disabled. Enabling
+it remains a later release change and still requires all physical-device and listening
+evidence below; text-course release approval must not be presented as audio approval.
+
 - The approved Slovak → Spanish course pronunciation locale is `es-ES`.
 - `es-MX` remains implemented only for backward-compatible playback of previously stored vocabulary. It is not selectable for new or edited Spanish course words until it passes its own device and native-speaker quality gate.
 - Wordfold compares canonicalized BCP 47 locale tags and selects only an installed exact match. An `es-MX`, generic `es`, or any non-Spanish voice must never satisfy an `es-ES` request.

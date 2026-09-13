@@ -38,6 +38,8 @@ jest.mock('expo-sqlite', () => ({
 
 jest.mock('@/data/repository', () => ({
   listWords: jest.fn(async () => []),
+  addWords: jest.fn(async () => []),
+  completeOnboardingSetup: jest.fn(async () => undefined),
   listCollections: jest.fn(async () => []),
   getStats: jest.fn(async () => ({
     totalWords: 0,
@@ -149,8 +151,73 @@ function CourseProbe() {
   </Pressable>;
 }
 
+function StarterProbe() {
+  const { activeCourseId, completePersonalizedOnboarding } = useAppData();
+  return <Pressable onPress={() => void completePersonalizedOnboarding({ levels: ['A1'], topics: ['spoken'] }, 'device')}>
+    <Text>{`Create ${activeCourseId} starter`}</Text>
+  </Pressable>;
+}
+
+function RecommendationProbe({ onComplete }: { onComplete(count: number): void }) {
+  const { activeCourseId, words, addRecommendedWords } = useAppData();
+  return <Pressable onPress={() => void addRecommendedWords(10).then(onComplete)}>
+    <Text>{`Add ${activeCourseId} batch: ${words.length}`}</Text>
+  </Pressable>;
+}
+
 describe('AppDataProvider', () => {
   beforeEach(() => jest.clearAllMocks());
+
+  it.each(['startup', 'after adding'] as const)('adds a Spanish batch while reminders stall %s', async (stage) => {
+    let releaseSchedule!: (count: number) => void;
+    const stalledSchedule = new Promise<number>((resolve) => { releaseSchedule = resolve; });
+    let storedWords: Word[] = [];
+    const onComplete = jest.fn();
+    jest.mocked(repository.getActiveCourseId).mockResolvedValue('es-sk');
+    jest.mocked(repository.getLearningPreferences).mockResolvedValue({ levels: ['A1'], topics: ['spoken'] });
+    jest.mocked(repository.listCollections).mockResolvedValue([
+      { id: 'collection', name: 'My words', color: '#000000', createdAt: word.createdAt, updatedAt: word.updatedAt },
+    ]);
+    jest.mocked(repository.listWords).mockImplementation(async () => storedWords);
+    jest.mocked(repository.addWords).mockImplementation(async (_database, inputs) => {
+      storedWords = inputs.map((input, index) => ({ ...word, ...input, id: `spanish-${index}` }));
+      return storedWords.map((item) => item.id);
+    });
+    if (stage === 'startup') mockRebuildReminderSchedule.mockImplementationOnce(() => stalledSchedule);
+    else mockRebuildReminderSchedule.mockResolvedValueOnce(0).mockImplementationOnce(() => stalledSchedule);
+
+    const view = await render(<AppDataProvider><RecommendationProbe onComplete={onComplete}/></AppDataProvider>);
+    try {
+      await waitFor(() => expect(mockRebuildReminderSchedule).toHaveBeenCalled());
+      await fireEvent.press(view.getByText('Add es-sk batch: 0'));
+      await waitFor(() => expect(onComplete).toHaveBeenCalledWith(10));
+      view.getByText('Add es-sk batch: 10');
+      expect(repository.addWords).toHaveBeenCalledTimes(1);
+      expect(storedWords.every((item) => item.sourceLanguageCode === 'es' && item.translation && item.cefrLevel === 'A1')).toBe(true);
+    } finally {
+      await act(async () => { releaseSchedule(0); });
+      await view.unmount();
+      jest.mocked(repository.getActiveCourseId).mockResolvedValue('en-sk');
+      jest.mocked(repository.getLearningPreferences).mockResolvedValue({ levels: [], topics: [] });
+      jest.mocked(repository.listWords).mockResolvedValue([]);
+      jest.mocked(repository.listCollections).mockResolvedValue([]);
+    }
+  });
+
+  it('saves Spanish starter words with course metadata within the remaining capacity', async () => {
+    jest.mocked(repository.getActiveCourseId).mockResolvedValue('es-sk');
+    jest.mocked(repository.listWords).mockResolvedValue(Array.from({ length: 97 }, (_, index) => ({ ...word, id: String(index) })));
+    const view = await render(<AppDataProvider><StarterProbe/></AppDataProvider>);
+    await waitFor(() => view.getByText('Create es-sk starter'));
+    await fireEvent.press(view.getByText('Create es-sk starter'));
+    await waitFor(() => expect(repository.completeOnboardingSetup).toHaveBeenCalled());
+    const args = jest.mocked(repository.completeOnboardingSetup).mock.calls[0];
+    expect(args[3]).toHaveLength(3);
+    expect(args[3].every((input) => input.sourceLanguageCode === 'es' && input.sourcePronunciationLocale === 'es-ES' && input.cefrLevel === 'A1')).toBe(true);
+    expect(args[4]).toBe('es-sk');
+    jest.mocked(repository.listWords).mockResolvedValue([]);
+    jest.mocked(repository.getActiveCourseId).mockResolvedValue('en-sk');
+  });
 
   it('uses Suspense for only one SQLite provider', async () => {
     const providerTree = AppDataProvider({ children: <Text>Ready</Text> }) as ReactElement<{
@@ -227,7 +294,7 @@ describe('AppDataProvider', () => {
     await waitFor(() => expect(mockRebuildReminderSchedule).toHaveBeenCalledTimes(1));
   });
 
-  it('waits for reminder writes before saving a translation', async () => {
+  it('saves a translation while native reminder scheduling is pending', async () => {
     let finishReminderWrite!: () => void;
     mockRebuildReminderSchedule.mockImplementationOnce(() => new Promise<number>((resolve) => {
       finishReminderWrite = () => resolve(0);
@@ -237,14 +304,12 @@ describe('AppDataProvider', () => {
     await waitFor(() => expect(mockRebuildReminderSchedule).toHaveBeenCalledTimes(1));
 
     await fireEvent.press(saveButton);
-    expect(repository.updateWordTranslation).not.toHaveBeenCalled();
-
-    await act(async () => finishReminderWrite());
     await waitFor(() => expect(repository.updateWordTranslation).toHaveBeenCalledWith(
       expect.anything(),
       word.id,
       'rozsah',
     ));
+    await act(async () => finishReminderWrite());
   });
 
   it('does not mutate a saved catalog word that has no translation during refresh', async () => {

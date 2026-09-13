@@ -1,6 +1,8 @@
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { Pressable, Text } from 'react-native';
 
+import { buildRecommendations } from '@/features/recommendations/selector';
+
 import { AppDataProvider, useAppData } from './app-data-provider.web';
 
 const mockFound = jest.fn();
@@ -60,6 +62,18 @@ function SpanishLookupProbe() {
   </>;
 }
 
+const mockSavedWords = jest.fn();
+function StarterProbe() {
+  const { activeCourseId, words, switchActiveCourse, completePersonalizedOnboarding, addRecommendedWords } = useAppData();
+  mockSavedWords(words);
+  return <>
+    <Text>{`${activeCourseId}:${words.length}`}</Text>
+    <Pressable onPress={() => void switchActiveCourse('es-sk')}><Text>Spanish starter</Text></Pressable>
+    <Pressable onPress={() => void completePersonalizedOnboarding({ levels: ['A1'], topics: ['spoken'] }, 'device')}><Text>Create starter</Text></Pressable>
+    <Pressable onPress={() => void addRecommendedWords(10)}><Text>Next batch</Text></Pressable>
+  </>;
+}
+
 describe('web app data provider', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -110,4 +124,20 @@ describe('web app data provider', () => {
 
     await waitFor(() => expect(mockFound).toHaveBeenCalledWith([]));
   });
+  it('saves the Spanish preview with Spanish metadata and adds a distinct next batch', async () => {
+    const view = await render(<AppDataProvider><StarterProbe/></AppDataProvider>);
+    await fireEvent.press(view.getByText('Spanish starter'));
+    await waitFor(() => view.getByText('es-sk:0'));
+    await fireEvent.press(view.getByText('Create starter'));
+    await waitFor(() => view.getByText('es-sk:10'));
+    const first = mockSavedWords.mock.calls.at(-1)![0];
+    const preview = buildRecommendations({ levels: ['A1'], topics: ['spoken'] }, [], 10, 'es-sk');
+    expect(first.map((word: { catalogSenseId: string }) => word.catalogSenseId)).toEqual(preview.map(({ entry }) => entry.catalogSenseId));
+    expect(first).toEqual(expect.arrayContaining([expect.objectContaining({ sourceLanguageCode: 'es', targetLanguageCode: 'sk', sourcePronunciationLocale: 'es-ES' })]));
+    await fireEvent.press(view.getByText('Next batch'));
+    await waitFor(() => view.getByText('es-sk:20'));
+    const all = mockSavedWords.mock.calls.at(-1)![0];
+    expect(new Set(all.map((word: { catalogSenseId: string }) => word.catalogSenseId)).size).toBe(20);
+  });
+
 });

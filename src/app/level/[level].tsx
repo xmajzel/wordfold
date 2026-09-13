@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Alert, FlatList, Pressable, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useLocalSearchParams } from 'expo-router';
 
@@ -7,8 +7,14 @@ import { AppText } from '@/components/app-text';
 import { EmptyState } from '@/components/empty-state';
 import { FormField } from '@/components/form-field';
 import { PrimaryButton } from '@/components/primary-button';
+import { ProgressCountLabel } from '@/components/progress-count-label';
 import { Screen } from '@/components/screen';
-import { getCourseCatalogAvailability, getCourseCatalogEntries, type CourseCatalogEntry } from '@/data/course-catalog';
+import {
+  getCourseCatalogEntries,
+  getCourseCatalogEntriesForNormalizedTerm,
+  getCourseCatalogLevelState,
+  type CourseCatalogEntry,
+} from '@/data/course-catalog';
 import { cefrLevelDescriptions, isCefrLevel } from '@/data/cefr-levels';
 import { wordBelongsToCourse } from '@/domain/courses';
 import { languageLabel } from '@/domain/languages';
@@ -30,17 +36,24 @@ export default function CefrLevelScreen() {
     ? 'en-GB'
     : activeCourse.defaultSourcePronunciationLocale;
   const learnedLanguage = languageLabel(activeCourse.sourceLanguageCode);
-  const spanishPreview = getCourseCatalogAvailability(activeCourseId).isPreview;
   const [query, setQuery] = useState('');
   const [busyId, setBusyId] = useState<string | null>(null);
   const validLevel = isCefrLevel(level) ? level : null;
+  const levelState = validLevel ? getCourseCatalogLevelState(activeCourseId, validLevel) : null;
   const entries = useMemo(() => validLevel ? getCourseCatalogEntries(activeCourseId, validLevel) : [], [activeCourseId, validLevel]);
   const activeWords = useMemo(() => words.filter((word) => wordBelongsToCourse(word, activeCourseId)), [activeCourseId, words]);
   const progress = useMemo(() => calculateCefrProgress(entries, activeWords), [activeWords, entries]);
-  const normalizedQuery = normalizeTerm(query);
-  const filteredEntries = useMemo(() => normalizedQuery
-    ? entries.filter((entry) => entry.normalizedTerm.includes(normalizedQuery) || normalizeTerm(entry.definition).includes(normalizedQuery))
-    : entries, [entries, normalizedQuery]);
+  const normalizedQuery = normalizeTerm(query, activeCourse.sourceLanguageCode);
+  const filteredEntries = useMemo(() => {
+    if (!normalizedQuery) return entries;
+    const directMatches = new Map(getCourseCatalogEntriesForNormalizedTerm(activeCourseId, normalizedQuery)
+      .map((entry) => [entry.catalogSenseId, entry]));
+    return entries
+      .filter((entry) => entry.normalizedTerm.includes(normalizedQuery)
+        || entry.alternativeTerms?.some((term) => normalizeTerm(term, activeCourse.sourceLanguageCode).includes(normalizedQuery))
+        || normalizeTerm(entry.definition, activeCourse.sourceLanguageCode).includes(normalizedQuery))
+      .map((entry) => directMatches.get(entry.catalogSenseId) ?? entry);
+  }, [activeCourse.sourceLanguageCode, activeCourseId, entries, normalizedQuery]);
   const wordsByTerm = useMemo(() => new Map(activeWords.flatMap((word) => (
     word.catalogSenseId === null ? [[word.normalizedTerm, word] as const] : []
   ))), [activeWords]);
@@ -95,6 +108,17 @@ export default function CefrLevelScreen() {
     return <Screen><Header title={`${learnedLanguage} levels`}/><EmptyState title="Level not available" message="Choose a level from A1 through C2." actionLabel="Back to the library" onAction={() => router.replace('/(tabs)/library')}/></Screen>;
   }
 
+  if (levelState !== 'available') {
+    return <Screen><Header title={`${validLevel} ${learnedLanguage}`}/><EmptyState
+      title={levelState === 'unsupported-by-source' ? 'Level unsupported by the current source' : 'Level not yet available'}
+      message={levelState === 'unsupported-by-source'
+        ? 'ELELex does not provide a C2 source level, so Wordfold does not synthesize one.'
+        : 'This Spanish level remains outside the app until its editorial review is complete.'}
+      actionLabel="Back to the library"
+      onAction={() => router.replace('/(tabs)/library')}
+    /></Screen>;
+  }
+
   return (
     <Screen style={styles.screen}>
       <FlatList
@@ -109,7 +133,6 @@ export default function CefrLevelScreen() {
         ItemSeparatorComponent={() => <View style={styles.separator}/>}
         ListHeaderComponent={<View style={styles.headerContent}>
           <Header title={`${validLevel} ${learnedLanguage}`}/>
-          {spanishPreview ? <AppText testID="spanish-preview-notice" variant="caption" style={{ color: theme.muted }}>Local development preview · {validLevel} · not a production release or a complete level</AppText> : null}
           <View style={styles.intro}>
             <View style={[styles.levelBadge, { backgroundColor: theme.primarySoft }]}><AppText variant="display" style={{ color: theme.primary }}>{validLevel}</AppText></View>
             <View style={styles.introText}><AppText variant="heading">{cefrLevelDescriptions[validLevel]}</AppText><AppText style={{ color: theme.muted }}>{entries.length > 0
@@ -171,6 +194,7 @@ function CatalogWordCard({ entry, word, loading, disabled, onAdd }: {
 
 function LevelProgressSummary({ progress }: { progress: CefrProgress }) {
   const theme = useAppTheme();
+  const { fontScale } = useWindowDimensions();
   return <View accessible accessibilityRole="summary" accessibilityLabel={`${progress.known} known, ${progress.learning} learning, ${progress.addedNotStarted} added but not started, ${progress.notAdded} not added, out of ${progress.total} words`} style={[styles.progressPanel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
     <View style={styles.progressHeading}><AppText variant="heading">Your progress</AppText><AppText variant="label" style={{ color: theme.primary }}>{progress.known.toLocaleString()} of {progress.total.toLocaleString()} known</AppText></View>
     <View style={[styles.progressBar, { backgroundColor: theme.raised }]}>
@@ -182,15 +206,14 @@ function LevelProgressSummary({ progress }: { progress: CefrProgress }) {
     <View style={styles.progressGrid}>
       <ProgressStat label="Known" value={progress.known} color={stateColors.learned}/>
       <ProgressStat label="Learning" value={progress.learning} color={stateColors.understood}/>
-      <ProgressStat label="Added, not started" value={progress.addedNotStarted} color={stateColors.new}/>
+      <ProgressStat label={fontScale >= 1.5 ? 'Not started' : 'Added, not started'} value={progress.addedNotStarted} color={stateColors.new} testID="progress-pair-added-not-started"/>
       <ProgressStat label="Not added" value={progress.notAdded} color={theme.muted}/>
     </View>
   </View>;
 }
 
-function ProgressStat({ label, value, color }: { label: string; value: number; color: string }) {
-  const theme = useAppTheme();
-  return <View style={styles.progressStat}><View style={[styles.progressDot, { backgroundColor: color }]}/><View style={styles.progressStatText}><AppText variant="label">{value.toLocaleString()}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{label}</AppText></View></View>;
+function ProgressStat({ label, value, color, testID }: { label: string; value: number; color: string; testID?: string }) {
+  return <View style={styles.progressStat}><View style={[styles.progressDot, { backgroundColor: color }]}/><ProgressCountLabel value={value} label={label} emphasizeValue testID={testID ?? `progress-pair-${label.toLowerCase().replace(/[^a-z]+/gu, '-')}`}/></View>;
 }
 
 function CatalogProgressBadge({ state }: { state: Word['state'] }) {
@@ -206,7 +229,7 @@ const styles = StyleSheet.create({
   headerContent: { gap: spacing.lg, marginBottom: spacing.lg }, header: { minHeight: 68, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   back: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' }, intro: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg },
   levelBadge: { width: 82, height: 82, borderRadius: 26, alignItems: 'center', justifyContent: 'center' }, introText: { flex: 1, gap: spacing.xs },
-  progressPanel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md }, progressHeading: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', gap: spacing.md }, progressBar: { height: 12, flexDirection: 'row', borderRadius: radii.pill, overflow: 'hidden' }, progressGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, progressStat: { width: '48%', flexDirection: 'row', alignItems: 'center', gap: spacing.sm }, progressDot: { width: 10, height: 10, borderRadius: 5 }, progressStatText: { flex: 1 },
+  progressPanel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md }, progressHeading: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: spacing.md }, progressBar: { height: 12, flexDirection: 'row', borderRadius: radii.pill, overflow: 'hidden' }, progressGrid: { flexDirection: 'row', flexWrap: 'wrap', columnGap: spacing.lg, rowGap: spacing.sm }, progressStat: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, flexShrink: 0 }, progressDot: { width: 10, height: 10, borderRadius: 5 },
   card: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md }, wordHeader: { flexDirection: 'row', justifyContent: 'space-between', gap: spacing.md },
   wordTitle: { flex: 1, gap: 2 }, cardMeta: { alignItems: 'flex-end', gap: spacing.xs }, catalogProgressBadge: { borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.sm, paddingVertical: spacing.xs },
   spanishWordHeader: { flexDirection: 'column' }, spanishCardMeta: { alignItems: 'flex-start' },

@@ -20,19 +20,138 @@ commercial digital language-learning application.
   or official validation and does not use the Instituto Cervantes logo as a
   promotional mark.
 
-`assets/catalog/spanish/cefr-pilot.json` contains six original Wordfold draft records
-created solely to validate the course-aware catalog schema and level code paths. They
-are explicitly excluded from production catalog APIs and recommendations until
-independent Spanish and Slovak review is recorded. The editorial and promotion rules
-are documented in `docs/SPANISH_CATALOG_EDITORIAL_POLICY.md`.
+`assets/catalog/spanish/cefr-pilot.json` retains six original Wordfold draft records as
+historical, non-gating evidence for the retired pilot workflow. Runtime catalog APIs
+instead load the promoted A1-only production asset at
+`assets/catalog/spanish/a1-course.json`. The Spanish checks are not human or
+native-speaker review. The editorial and promotion rules are documented in
+`docs/SPANISH_CATALOG_EDITORIAL_POLICY.md`.
+
+### ELELex Spanish CEFR level source
+
+Spanish headwords, parts of speech, and CEFR level assignments are adapted from ELELex,
+a CEFR-graded lexical resource developed as part of the CEFRLex project at
+UCLouvain/CENTAL.
+
+- Project: https://cental.uclouvain.be/cefrlex/
+- Pinned asset: `assets/catalog/sources/elelex-freeling-2020-12-04.tsv`
+- Download URL: https://cental.uclouvain.be/cefrlex/static/resources/es/ELELex.tsv
+- Revision: server `Last-Modified` 4 December 2020 09:48:08 GMT; ETag
+  `1607075288.0-1442791-870521007`; retrieved 6 September 2026
+- SHA-256: `87a28dc6d3c5c2344883698f7bc77e259bd42212446ac2b52761a3fc8f5f26cf`
+- Published license: Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+  International (CC BY-NC-SA 4.0)
+- Wordfold-specific authorization: UCLouvain/CENTAL granted Wordfold written permission on
+  6 September 2026 to use and integrate ELELex lexical entries, CEFR-level information,
+  and associated frequency data within its commercial language-learning application,
+  and to process, transform, and integrate that data into Wordfold's own database. A
+  follow-up clarification recorded on 9 September 2026 confirms that both the
+  NonCommercial and ShareAlike restrictions of CC BY-NC-SA 4.0 do not apply to the
+  described Wordfold use. Evidence: `docs/legal/UCLOUVAIN_ELELEX_PERMISSION.md`
+- Required acknowledgement: “Spanish vocabulary level data is based in part on ELELex,
+  a CEFR-graded lexical resource developed as part of the CEFRLex project at
+  UCLouvain/CENTAL.”
+- Level coverage: A1-C1. The current release bundles A1 only; A2-C1 are not yet
+  available. ELELex does not publish a C2 column, so C2 is unsupported by the current
+  source and no C2 entries are synthesized from the C1 tail.
+- ShareAlike status: resolved for the described Wordfold use; see the consolidated
+  ShareAlike legal-review records below.
+- Restrictions: the authorization does not imply endorsement, certification, or
+  validation of Wordfold by UCLouvain.
+
+### ShareAlike records for legal review
+
+Review these three items together whenever the Spanish course licensing posture receives
+legal review:
+
+1. **ELELex — resolved for the described Wordfold use:** UCLouvain/CENTAL's
+   follow-up clarification says that the NonCommercial and ShareAlike restrictions
+   of CC BY-NC-SA 4.0 do not apply to Wordfold's use as described in the
+   correspondence. Wordfold may distribute the described ELELex-derived data under
+   its own terms, including commercially, provided that the agreed attribution is
+   retained. All other authorization conditions remain unchanged. The repository
+   records when the owner supplied the follow-up, but not the original email date or
+   headers; retain those in the legal archive.
+2. **Spanish Wiktionary QA reference:** a pinned Kaikki/Wiktextract extraction of
+   Spanish Wiktionary is read only for internal QA under Wiktionary's CC BY-SA 4.0 / GFDL
+   terms. The raw archive and extracted sense text remain in ignored `.artifacts`, are
+   never bundled, and are not used to generate or adapt learner content. Reports retain
+   verdicts, ranks, source revisions, and hashes but no Wiktionary glosses. This
+   QA-only, attribution-preserving separation is Wordfold's current cautious posture,
+   not a legal conclusion about ShareAlike; it must be reviewed alongside the ELELex
+   question.
+3. **Open Multilingual Wordnet Slovak 2.0 QA reference:** the pinned `omw-sk:2.0`
+   archive is read only for internal Spanish-to-Slovak correspondence QA under CC
+   BY-SA 3.0. The raw archive, ILI joins, and listed Slovak lemmas remain in ignored
+   `.artifacts`, are never bundled, and are not used to generate or adapt product
+   hints. An exact proposed-hint match may pass verification and a mismatch may flag
+   a row, but a listed `omw-sk` lemma must never be copied or substituted as a
+   correction. Corrections come from the owner's Slovak judgment or an independent
+   Astra review, never from this reference. This QA-only separation is Wordfold's
+   current cautious posture, not a legal conclusion about ShareAlike.
+
+### Spanish-to-Slovak hint correspondence review
+
+Spanish-to-Slovak hint correspondence is checked deterministically against linked
+lexical references where coverage allows and by two isolated, blinded `gpt-6-astra`
+cross-review passes elsewhere. MADLAD and other machine-translation models are not
+judges. Only agreement between the two Astra passes counts as AI evidence; inter-pass
+disagreement and every non-unanimous dimension are review flags. These are AI
+cross-review disagreement rates, not measured error rates, and every output remains
+marked `notHumanReview`.
+
+Only machine-flagged rows require owner verdicts. The A1 verdicts are AI-assisted and
+owner-accepted; they are not native-speaker review and do not certify bilingual
+correspondence to a selected Spanish sense. Product copy must state: “Spanish
+definitions are generated and automatically verified against reference sources; they
+have not been reviewed by native Spanish speakers. Slovak hints are checked against
+linked lexical references where available and independently AI cross-reviewed; they
+have not been reviewed by native Slovak speakers. Flagged A1 hints carry AI-assisted,
+owner-accepted verdicts. Spanish–Slovak sense correspondence has not been verified by a
+native bilingual reviewer.”
+
+Changes made by Wordfold: the pinned ELELex distribution is verified by SHA-256, lemmas
+are NFKC-normalized and lowercased for Spanish, FreeLing parts of speech are mapped to
+the WordNet noun/verb/adjective/adverb categories, and entries are joined to Open
+Multilingual Wordnet Spanish on normalized lemma plus compatible part of speech. Entries
+without a compatible OMW sense are excluded from the frozen membership. ELELex's
+document counts are aggregated independently at each level for each normalized lemma
+and mapped part of speech. An entry is attested when an aggregate reaches two documents,
+and is assigned the first A1-C1 level that does so. Entries that never reach two
+documents remain in the frozen membership as unattested, have no assigned level, and
+are excluded from courses and learner-content generation without a fallback level.
+Source-native FreeLing `NP0` and `NP*` proper names and nonlexical term shapes are also
+retained frozen but excluded from courses. A targeted audit of title-cased OMW lemmas
+and WordNet named instances excludes six additional person/place-name misses while
+retaining useful common homographs. The approved modern headwords `solo` and `guion`
+replace source spellings `sólo` and `guión` only after the source-form OMW join; stable
+membership IDs, original source forms and rows, and all OMW senses remain recorded.
+Attested multiword lexical units are included unless another course filter applies; no
+multi-POS filter is used. This replaces ELELex's single-document first-occurrence
+interpretation without model scoring, external evidence, or frequency re-ranking.
+Evidence tiers, the threshold rule, first-occurrence comparison, course filters, source
+rows, orthography rules, revision, hashes, counts, and every exclusion are retained in
+the Spanish source manifest.
+
+Regional variants are temporarily retained as independent entries with their unchanged
+ELELex-derived levels. Entries whose selected OMW senses resolve to the same WordNet
+synset/ILI may be grouped at the sense level without an external regional source: there
+is no global canonical entry, the course teaches the shared concept once, and every
+member form remains available for recognition and search. This grouping also covers
+ordinary synonym clusters and is approved for the translation/presentation stage.
+Only regional labelling and locale-preferred primary-form selection remain deferred
+pending a licensed regional source; GEOLEXI and Wiktionary/Wiktextract are not used for
+catalog membership, CEFR level, sense selection, regional labels, or learner-content
+generation. The later QA-only use of Wiktionary/Wiktextract is described below.
 
 ### Spanish A1 lexical evidence
 
-The original 500-entry Spanish A1 editorial pilot uses the Spanish module from Open
+The ELELex-derived Spanish A1 course catalog uses the Spanish module from Open
 Multilingual Wordnet 2.0 for lemma, part-of-speech, and candidate sense identifiers.
 The module packages the Spanish data from Multilingual Central Repository 3.0 release
-2016. It does not supply Wordfold's level decisions, learner definitions, examples, or
-Slovak hints.
+2016. It does not determine Wordfold's catalog membership or CEFR levels and does not
+supply Wordfold's learner definitions, examples, or Slovak hints. PCIC classifications,
+when present, are metadata only and do not affect membership, level, or sense selection.
 
 - Source release: https://github.com/omwn/omw-data/releases/tag/v2.0
 - Pinned asset: `omw-es-2.0.tar.xz`
@@ -45,10 +164,11 @@ Slovak hints.
   for the same synset are grouped with aliases retained. Source descriptions are
   review evidence, not learner content.
 
-The separately licensed English module from the MCR package is not ingested. Every
-Spanish definition and example and every Slovak hint in the pilot is original draft
-Wordfold content and remains excluded from runtime APIs until independent Spanish and
-Slovak review is complete.
+The separately licensed English module from the MCR package is ingested only to bridge
+each supplied Spanish OMW sense to its WordNet 3.0 English synset as generation and
+review evidence. Every Spanish definition and example and every Slovak hint in the
+pilot is original draft Wordfold content and remains excluded from runtime APIs until
+the applicable validation and review gates are complete.
 
 ### WordNet 3.0 semantic references for Spanish review
 
@@ -74,6 +194,90 @@ outside Wordfold learner definitions, examples, hints, and runtime catalogs.
 Google Books Ngram Spanish corpus `googlebooks-spa-20200217` may be used as an optional
 aggregate ranking signal over the 2000-2019 window. It never determines a CEFR level or
 sense, and raw n-gram rows are not bundled.
+
+### Spanish A1 automated quality checks
+
+The immutable 1,707-entry A1 learner-content run (content SHA-256
+`5383a7a98cd218c707c850bdf88f20b943522c0782f4389418acc6cb304f3f1a`) received two
+independent automated checks. Every manifest and summary is marked `notHumanReview`.
+There was no native-Spanish review, and neither check may be described as one.
+
+- **External-reference validity sample:** 300 entries were selected reproducibly and
+  proportionally from the 353 Spanish-gloss and 1,354 English-bridge-only strata (62 and
+  238 respectively). Against the Spanish Wiktionary extraction dated 1 September 2026,
+  reference coverage was 294/300 (98%). There were 293 definitive outcomes: 10/300
+  definitions were strict non-correspondences, 283/293 definitive judgments
+  corresponded, and 7 were uncertain (including 6 without a compatible reference
+  entry). Among the 283 valid correspondences, the source sense index had median 1,
+  p90 3, p95 4, and maximum 9;
+  the within-part-of-speech rank had median 1, p90 2, p95 4, and maximum 9. High rank is
+  only a suspicion because Wiktionary ordering is editorial rather than corpus-based.
+  This check measures whether a definition expresses a listed real Spanish sense, not
+  whether it is the right sense to teach at A1, and is not an overall quality rate.
+- **Blinded AI cross-review:** `gpt-6-astra` independently reviewed the existing
+  200-item packet without OMW glosses, selected senses, generation confidence, flags,
+  or adjudications. Content disagreement was 15/200 (7.5%): 0 wrong-sense verdicts,
+  14 material-definition disagreements, and 1 material-example disagreement. Level
+  disagreement was separately 82/200 (41%). Dimensions overlap. This is an AI
+  cross-review disagreement rate, not a measured error rate.
+
+### Spanish A2 automated quality checks
+
+The immutable 1,847-entry A2 learner-content run (content SHA-256
+`25da85d0a9942771fbab766f4aa47470b6e1a910a21fbd05956d25077e9a23b4`) is also
+marked `notHumanReview`. A deterministic WordNet-hypernym classifier identified 98
+A2 entries in the food, clothing, sport, and leisure risk domains. This deliberately
+targeted cohort is not a probability sample: Wiktionary covered 93/98 entries, and 9/98
+were strict non-correspondences. The same classifier applied to A1 found 109 entries;
+coverage was 109/109 and 2/109 (1.83%) were strict non-correspondences. A2's 9.18% is
+7.35 percentage points, or 5.00 times, higher in this like-for-like targeted comparison.
+Neither result is a level-wide quality rate.
+
+A separate blinded 200-entry `gpt-6-astra` cross-review found content disagreement in
+23/200 entries (11.5%): 4 wrong-sense verdicts, 19 material-definition disagreements,
+and 7 material-example disagreements. Level disagreement was separately 57/200 (28.5%).
+Dimensions overlap. Compared with A1, the observed content-disagreement rate increased
+by 4 percentage points, or 53% relative; the intervals overlap, so this is not presented
+as a statistically significant difference. This is an AI cross-review disagreement
+rate, not a measured error rate. The model's level judgments do not alter any ELELex
+assignment.
+
+ELELex minority-POS targeting evaluates 6,171 single-word catalog entries. There are
+257 distinct source lemma/POS risks below 50%, expanding to 258 catalog entries because
+the independently generated `solo` and normalized `sólo` A1 adverbs share one display
+lemma/POS. The entry counts are A1 63, A2 96, B1 55, B2 23, and C1 21; 155 are below
+25% and 69 below 10%. In the complete A1/A2 targeted cohorts, external-reference
+coverage was 60/63 and 83/96, with strict non-correspondence of 5/63 (7.94%) and 17/96
+(17.71%). Blinded AI content disagreement was 9/63 (14.29%) and 16/96 (16.67%); level
+disagreement was separately 24/63 and 32/96. These risk-cohort findings are excluded
+from probability-sample denominators.
+
+The Slovak translation packet was not part of either check. Under the narrowed policy,
+deterministic lexical-reference checks and two-pass AI cross-review identify the rows
+that require owner verdicts. All 47 flagged A1 concepts now have AI-assisted,
+owner-accepted verdicts; the earlier 35 owner verdicts remain historical metadata only.
+For A2-C1, reproducible probability samples plus separately reported targeted findings
+produced 70 flagged rows that remain unresolved and do not gate an A1-only release. The
+probability-sample gates are at most 2% critical error and at most 5% material error.
+Targeted findings are excluded from those denominators. This policy does not produce a
+native-speaker disagreement baseline, and AI disagreement rates are not measured error
+rates.
+
+Any product summary of Slovak review coverage must preserve the level distinction:
+
+> Slovak hints are AI cross-reviewed and not natively reviewed; all 47 flagged A1 hints
+> have AI-assisted, owner-accepted verdicts.
+
+For the frozen ELELex-derived Spanish course levels, the owner approved automated
+external-reference QA plus independent AI cross-review plus explicit owner risk acceptance as the
+Spanish production-review standard on 8 September 2026. Neither pass is human or
+native-speaker review. Product source disclosures must use the complete approved
+wording quoted in the Spanish-to-Slovak correspondence section above.
+
+The ELELex licensing distribution blocker is resolved by the follow-up authorization.
+The A1 content distribution gate is clear: all 47 policy-required flagged concepts have
+AI-assisted, owner-accepted verdicts and none remain pending. The 70 unresolved A2-C1
+flagged rows do not gate an A1-only release.
 
 ## Open English WordNet 2025
 
@@ -173,7 +377,8 @@ with original Spanish definitions/examples and Slovak hints. No PCIC learner-fac
 prose or bulk publisher word list is reproduced. The per-sense framework references,
 provisional placements, objective coverage and gaps are in `a1-c2-inventory.json`.
 
-The learner preview in `expansion-preview.json` contains only original learner
+The retired learner preview in `expansion-preview.json` remains historical,
+non-gating evidence and is not runtime-imported. It contains only original learner
 fields and audit hashes; licensed OMW/WordNet reviewer glosses are not included.
 Both independent AI assessments and their prior revisions are retained under
 `assets/catalog/spanish/reviews/`. These assessments are not native attestations,

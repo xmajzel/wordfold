@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "notHumanReview": true,
+  "courseId": "es-sk",
+  "policy": "Merge post-normalization duplicate course entries without changing their ELELex evidence, level assignment, generated-run history, or saved-reference provenance.",
+  "merges": [
+    {
+      "survivingEntryId": "es-cefr:8b8ab9d45013c38a",
+      "retiredEntryIds": [
+        "es-cefr:c882e187b6181abf"
+      ],
+      "term": "solo",
+      "partOfSpeech": "adverb",
+      "level": "A1",
+      "reason": "The RAE-2010 sólo → solo display normalization produced two course entries for the same normalized adverb. Both immutable generated entries selected OMW synset 00004722-r and generated the same definition.",
+      "survivingProvenance": {
+        "sourceForms": [
+          "solo",
+          "sólo"
+        ],
+        "sourceRows": [
+          12614,
+          12904
+        ],
+        "sourceTags": [
+          "RG"
+        ],
+        "omwLexicalEntryIds": [
+          "omw-es-solo-r",
+          "omw-es-sólo-r"
+        ],
+        "omwSenseAliases": [
+          "omw-es-solo-00004722-r",
+          "omw-es-sólo-00004722-r"
+        ]
+      },
+      "savedReferenceAlias": {
+        "from": "es-cefr:c882e187b6181abf",
+        "to": "es-cefr:8b8ab9d45013c38a"
+      }
+    }
+  ]
+}

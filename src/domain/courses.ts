@@ -1,5 +1,4 @@
 import type { Word } from './types';
-import { spanishA1PreviewEnabled } from './spanish-preview';
 
 export type CourseId = 'en-sk' | 'es-sk';
 
@@ -62,10 +61,10 @@ export const courseDefinitions: readonly CourseDefinition[] = [
     defaultTargetPronunciationLocale: 'sk-SK',
     catalogId: 'spanish-cefr',
     capabilities: {
-      bundledCatalog: spanishA1PreviewEnabled,
-      recommendations: false,
+      bundledCatalog: true,
+      recommendations: true,
       onDeviceTranslation: true,
-      devicePronunciation: true,
+      devicePronunciation: false,
       publicNeuralPronunciation: false,
       privateNeuralPronunciation: false,
       offlinePronunciation: false,
@@ -98,6 +97,28 @@ export function getCourseForLanguagePair(
 
 export function getCourseForWord(word: Pick<Word, 'sourceLanguageCode' | 'targetLanguageCode'>) {
   return getCourseForLanguagePair(word.sourceLanguageCode, word.targetLanguageCode);
+}
+
+export function courseSupportsPronunciation(course: CourseDefinition) {
+  const capabilities = course.capabilities;
+  return capabilities.devicePronunciation
+    || capabilities.publicNeuralPronunciation
+    || capabilities.privateNeuralPronunciation
+    || capabilities.offlinePronunciation;
+}
+
+export function languagePairSupportsPronunciation(
+  sourceLanguageCode: string,
+  targetLanguageCode: string,
+) {
+  const course = getCourseForLanguagePair(sourceLanguageCode, targetLanguageCode);
+  return course ? courseSupportsPronunciation(course) : true;
+}
+
+export function wordSupportsPronunciation(
+  word: Pick<Word, 'sourceLanguageCode' | 'targetLanguageCode'>,
+) {
+  return languagePairSupportsPronunciation(word.sourceLanguageCode, word.targetLanguageCode);
 }
 
 export function wordBelongsToCourse(

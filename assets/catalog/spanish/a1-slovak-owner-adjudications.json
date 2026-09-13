@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 2,
+  "notHumanReview": true,
+  "status": "complete-for-a1-release",
+  "courseId": "es-sk",
+  "level": "A1",
+  "supersedesSha256": "eab8ed747c1a3d59b5938193c431e6f0ec5bd0ff3d9d215d9d27e7bf903e73c3",
+  "reviewerRole": "owner",
+  "sourceReviewPacket": {
+    "path": ".artifacts/spanish-a1-slovak-translations/pilot/owner-review-30-groups.tsv",
+    "sha256": "3f0d9373205ab33a38ea7b930f06e0302ede74ae07148cc3537988aa22d4d14b",
+    "groups": 30
+  },
+  "coverage": {
+    "productionConcepts": 1599,
+    "historicalOwnerVerdicts": 35,
+    "policyRequiredFlaggedConcepts": 47,
+    "policyRequiredVerdictsRecorded": 47,
+    "policyRequiredVerdictsPending": 0,
+    "aiAssistedOwnerAcceptedVerdicts": 47,
+    "acceptedProposedCorrections": 40,
+    "ownerOverrides": 7,
+    "definitiveCorrectSlovakVerdicts": 3,
+    "acceptedWithoutChange": 33,
+    "memberOverrides": 1,
+    "sharedHintReplacements": 1
+  },
+  "policy": "The earlier 35 owner verdicts are retained as historical metadata only. Under the narrowed A1 release policy, only the 47 concepts flagged by deterministic reference checks or two-pass AI cross-review require verdicts; every required verdict is AI-assisted and owner-accepted, not native-speaker review.",
+  "defaultVerdict": "Every group in the original 30-row packet not listed in entries was accepted without change. This historical default does not apply outside that packet and is not part of the narrowed 47-row release gate.",
+  "entries": [
+    {
+      "groupId": "es-sk:a1:i75105",
+      "entryId": "es-cefr:9190f93c9408e40c",
+      "term": "ocasión",
+      "decision": "memberOverride",
+      "originalSharedHint": "raz",
+      "replacementSlovakHint": "príležitosť",
+      "rationale": "The owner identified that the shared hint raz fits vez but not the preferred Slovak lexicalization of ocasión."
+    },
+    {
+      "groupId": "es-sk:a1:i20231",
+      "terms": [
+        "quizás",
+        "quizá"
+      ],
+      "decision": "acceptedSharedHint",
+      "slovakHint": "možno",
+      "rationale": "Both Spanish variants express the same possibility meaning and share the natural Slovak hint možno. Their presentation relationship remains deferred variant work."
+    },
+    {
+      "groupId": "es-sk:a1:i25740",
+      "terms": [
+        "contestar",
+        "responder"
+      ],
+      "decision": "acceptedSharedHint",
+      "slovakHint": "odpovedať",
+      "rationale": "Both selected Spanish senses map naturally to the same Slovak verb odpovedať."
+    },
+    {
+      "groupId": "es-sk:a1:i51496",
+      "terms": [
+        "carro",
+        "coche"
+      ],
+      "decision": "acceptedSharedHint",
+      "slovakHint": "auto",
+      "rationale": "The Spanish definitions differ in wording and regional usage, but both selected senses map naturally to the same Slovak hint auto."
+    },
+    {
+      "groupId": "es-sk:a1:i43203",
+      "terms": [
+        "pájaro",
+        "ave"
+      ],
+      "decision": "acceptedSharedHint",
+      "slovakHint": "vták",
+      "rationale": "Both selected senses denote a bird and share the natural Slovak hint vták; splitting them would introduce a distinction absent from the selected senses."
+    },
+    {
+      "groupId": "es-sk:a1:i55760",
+      "terms": [
+        "salón",
+        "sala"
+      ],
+      "decision": "sharedHintReplacement",
+      "originalSharedHint": "obývacia izba",
+      "replacementSlovakHint": "obývačka",
+      "rationale": "Both selected definitions specifically denote a living room. The concise shared hint obývačka fits both; sála or generic miestnosť would describe different senses."
+    }
+  ],
+  "aiAssistedOwnerAcceptedVerdicts": {
+    "notHumanReview": true,
+    "verdictProvenance": "ai-assisted-owner-accepted",
+    "sourceQueue": {
+      "path": ".artifacts/spanish-slovak-correspondence-qa/owner-review-queue.tsv",
+      "sha256": "26e12cee496623f5d2d1266d7b18e3704576d97279c60621db6abf549b02b6b3"
+    },
+    "counts": {
+      "flaggedRows": 47,
+      "resolvedRows": 47,
+      "acceptedProposedCorrections": 40,
+      "ownerOverrides": 7,
+      "definitiveCorrectSlovakRows": 3
+    },
+    "definitiveCorrectSlovakReviewItemIds": [
+      "SK-A1-F-0234",
+      "SK-A1-F-0479",
+      "SK-A1-F-1161"
+    ],
+    "overrideRationales": {
+      "SK-A1-F-0456": "Use the established Slovak noun turizmus.",
+      "SK-A1-F-0748": "Keep výrobca čižiem because the proposed correction added a meaning absent from the Spanish definition.",
+      "SK-A1-F-0919": "Keep malá batéria for pila because the Spanish definition explicitly says dispositivo pequeño.",
+      "SK-A1-F-1197": "Keep the precise Slovak self-employment term samostatne zárobkovo činný.",
+      "SK-A1-F-1313": "Use the concise Slovak equivalent klobása.",
+      "SK-A1-F-1434": "Keep the original Slovak hint meditácia.",
+      "SK-A1-F-1599": "Keep neutral Američan because the supplied Spanish definition is neutral and the A1 course does not teach a pejorative here."
+    },
+    "entries": [
+      {"groupId":"es-sk:a1:i27466","reviewItemId":"SK-A1-F-0049","resolution":"accepted-proposed-correction","resolvedHints":{"tomar":"piť","beber":"piť"}},
+      {"groupId":"es-sk:a1:i116908","reviewItemId":"SK-A1-F-0126","resolution":"accepted-proposed-correction","resolvedHints":{"mañana":"ráno a dopoludnie"}},
+      {"groupId":"es-sk:a1:i82504","reviewItemId":"SK-A1-F-0131","resolution":"accepted-proposed-correction","resolvedHints":{"pueblo":"mestečko","población":"mestečko"}},
+      {"groupId":"es-sk:a1:i58206","reviewItemId":"SK-A1-F-0156","resolution":"accepted-proposed-correction","resolvedHints":{"camino":"cesta","carretera":"cesta"}},
+      {"groupId":"es-sk:a1:i34166","reviewItemId":"SK-A1-F-0231","resolution":"accepted-proposed-correction","resolvedHints":{"casar":"oženiť sa; vydať sa"}},
+      {"groupId":"es-sk:a1:i57211","reviewItemId":"SK-A1-F-0234","resolution":"accepted-proposed-correction","resolvedHints":{"foto":"fotka","fotografía":"fotografia"}},
+      {"groupId":"es-sk:a1:i77942","reviewItemId":"SK-A1-F-0240","resolution":"accepted-proposed-correction","resolvedHints":{"pescado":"rybie mäso"}},
+      {"groupId":"es-sk:a1:i5119","reviewItemId":"SK-A1-F-0248","resolution":"accepted-proposed-correction","resolvedHints":{"barato":"lacný","económico":"lacný"}},
+      {"groupId":"es-sk:a1:i89220","reviewItemId":"SK-A1-F-0302","resolution":"accepted-proposed-correction","resolvedHints":{"socio":"spolumajiteľ podniku"}},
+      {"groupId":"es-sk:a1:i40019","reviewItemId":"SK-A1-F-0456","resolution":"owner-override","resolvedHints":{"turismo":"turizmus"}},
+      {"groupId":"es-sk:a1:i30762","reviewItemId":"SK-A1-F-0479","resolution":"accepted-proposed-correction","resolvedHints":{"enamorar":"vzbudiť v niekom lásku alebo príťažlivosť"}},
+      {"groupId":"es-sk:a1:i25647","reviewItemId":"SK-A1-F-0491","resolution":"accepted-proposed-correction","resolvedHints":{"invitar":"zdvorilo požiadať"}},
+      {"groupId":"es-sk:a1:i52370","reviewItemId":"SK-A1-F-0558","resolution":"accepted-proposed-correction","resolvedHints":{"esquina":"križovatka ulíc"}},
+      {"groupId":"es-sk:a1:i52483","reviewItemId":"SK-A1-F-0636","resolution":"accepted-proposed-correction","resolvedHints":{"crema":"krém na pokožku"}},
+      {"groupId":"es-sk:a1:i14196","reviewItemId":"SK-A1-F-0649","resolution":"accepted-proposed-correction","resolvedHints":{"ecológico":"bio"}},
+      {"groupId":"es-sk:a1:i89276","reviewItemId":"SK-A1-F-0701","resolution":"accepted-proposed-correction","resolvedHints":{"primo":"bratranec","prima":"sesternica"}},
+      {"groupId":"es-sk:a1:i112950","reviewItemId":"SK-A1-F-0702","resolution":"accepted-proposed-correction","resolvedHints":{"prisa":"zhon"}},
+      {"groupId":"es-sk:a1:i35262","reviewItemId":"SK-A1-F-0717","resolution":"accepted-proposed-correction","resolvedHints":{"soler":"mať vo zvyku"}},
+      {"groupId":"es-sk:a1:i93947","reviewItemId":"SK-A1-F-0726","resolution":"accepted-proposed-correction","resolvedHints":{"virgen":"panic; panna"}},
+      {"groupId":"es-sk:a1:i76481","reviewItemId":"SK-A1-F-0732","resolution":"accepted-proposed-correction","resolvedHints":{"alimentación":"strava"}},
+      {"groupId":"es-sk:a1:i88647","reviewItemId":"SK-A1-F-0748","resolution":"owner-override","resolvedHints":{"botero":"výrobca čižiem"}},
+      {"groupId":"es-sk:a1:i33058","reviewItemId":"SK-A1-F-0765","resolution":"accepted-proposed-correction","resolvedHints":{"cuadrar":"zosúladiť príjmy a výdavky"}},
+      {"groupId":"es-sk:a1:i50578","reviewItemId":"SK-A1-F-0919","resolution":"owner-override","resolvedHints":{"batería":"batéria","pila":"malá batéria"}},
+      {"groupId":"es-sk:a1:i13837","reviewItemId":"SK-A1-F-0931","resolution":"accepted-proposed-correction","resolvedHints":{"céntrico":"situovaný v centre mesta"}},
+      {"groupId":"es-sk:a1:i67316","reviewItemId":"SK-A1-F-0983","resolution":"accepted-proposed-correction","resolvedHints":{"favorito":"najobľúbenejšia vec"}},
+      {"groupId":"es-sk:a1:i74998","reviewItemId":"SK-A1-F-1036","resolution":"accepted-proposed-correction","resolvedHints":{"maravilla":"úžasná vec"}},
+      {"groupId":"es-sk:a1:i27317","reviewItemId":"SK-A1-F-1080","resolution":"accepted-proposed-correction","resolvedHints":{"pescar":"loviť ryby alebo morské plody"}},
+      {"groupId":"es-sk:a1:i53274","reviewItemId":"SK-A1-F-1098","resolution":"accepted-proposed-correction","resolvedHints":{"residencia":"obydlie","vivienda":"obydlie"}},
+      {"groupId":"es-sk:a1:i12365","reviewItemId":"SK-A1-F-1124","resolution":"accepted-proposed-correction","resolvedHints":{"suave":"hladký"}},
+      {"groupId":"es-sk:a1:i36392","reviewItemId":"SK-A1-F-1130","resolution":"accepted-proposed-correction","resolvedHints":{"tanto":"skórovanie"}},
+      {"groupId":"es-sk:a1:i71306","reviewItemId":"SK-A1-F-1132","resolution":"accepted-proposed-correction","resolvedHints":{"tarjeta":"kartička na odkazy alebo pozdravy"}},
+      {"groupId":"es-sk:a1:i23086","reviewItemId":"SK-A1-F-1161","resolution":"accepted-proposed-correction","resolvedHints":{"acostumbrar":"privykať niekoho na niečo"}},
+      {"groupId":"es-sk:a1:i4736","reviewItemId":"SK-A1-F-1197","resolution":"owner-override","resolvedHints":{"autónomo":"samostatne zárobkovo činný"}},
+      {"groupId":"es-sk:a1:i13638","reviewItemId":"SK-A1-F-1237","resolution":"accepted-proposed-correction","resolvedHints":{"cierto":"pravdivý","verdadero":"pravdivý"}},
+      {"groupId":"es-sk:a1:i77287","reviewItemId":"SK-A1-F-1313","resolution":"owner-override","resolvedHints":{"embutido":"klobása"}},
+      {"groupId":"es-sk:a1:i23915","reviewItemId":"SK-A1-F-1327","resolution":"accepted-proposed-correction","resolvedHints":{"especializar":"prispôsobiť na konkrétny účel"}},
+      {"groupId":"es-sk:a1:i6974","reviewItemId":"SK-A1-F-1350","resolution":"accepted-proposed-correction","resolvedHints":{"fundamental":"zásadný"}},
+      {"groupId":"es-sk:a1:i35634","reviewItemId":"SK-A1-F-1382","resolution":"accepted-proposed-correction","resolvedHints":{"ida":"odchod"}},
+      {"groupId":"es-sk:a1:i67293","reviewItemId":"SK-A1-F-1434","resolution":"owner-override","resolvedHints":{"meditación":"meditácia"}},
+      {"groupId":"es-sk:a1:i31515","reviewItemId":"SK-A1-F-1448","resolution":"accepted-proposed-correction","resolvedHints":{"montar":"jazdiť na zvierati"}},
+      {"groupId":"es-sk:a1:i53056","reviewItemId":"SK-A1-F-1498","resolution":"accepted-proposed-correction","resolvedHints":{"pomo":"otočná guľa na dverách"}},
+      {"groupId":"es-sk:a1:i41398","reviewItemId":"SK-A1-F-1510","resolution":"accepted-proposed-correction","resolvedHints":{"programación":"zostavovanie harmonogramu"}},
+      {"groupId":"es-sk:a1:i67177","reviewItemId":"SK-A1-F-1528","resolution":"accepted-proposed-correction","resolvedHints":{"recuerdo":"spomínanie"}},
+      {"groupId":"es-sk:a1:i22289","reviewItemId":"SK-A1-F-1561","resolution":"accepted-proposed-correction","resolvedHints":{"sonrojar":"zahanbiť niekoho až do červena"}},
+      {"groupId":"es-sk:a1:i69608","reviewItemId":"SK-A1-F-1575","resolution":"accepted-proposed-correction","resolvedHints":{"término":"výraz; pomenovanie"}},
+      {"groupId":"es-sk:a1:i81234","reviewItemId":"SK-A1-F-1589","resolution":"accepted-proposed-correction","resolvedHints":{"variedad":"pestrá zmes"}},
+      {"groupId":"es-sk:a1:i87952","reviewItemId":"SK-A1-F-1599","resolution":"owner-override","resolvedHints":{"yanqui":"Američan"}}
+    ]
+  },
+  "deferredVariantWork": [
+    {
+      "terms": [
+        "quizás",
+        "quizá"
+      ],
+      "alongside": [
+        "solo",
+        "sólo"
+      ],
+      "status": "deferred",
+      "instruction": "Do not merge identities or change learner presentation in the A1 release preparation."
+    }
+  ],
+  "gate": "Cleared for an A1-only release under the narrowed policy: all 47 flagged A1 concepts have AI-assisted, owner-accepted verdicts and none remain pending. The earlier 35 owner verdicts are retained as historical metadata only."
+}

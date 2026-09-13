@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "courseId": "es-sk",
+  "level": "A1",
+  "sourceReviewFlagsSha256": "874a41cdf31b20c25f437ee97c67a50dab0eb317c04664e0ec1b9326f42196ea",
+  "policy": "These decisions affect release eligibility or selected learner content only. They do not change ELELex membership or CEFR levels.",
+  "counts": {
+    "keep": 5,
+    "dropFromRelease": 14,
+    "reSensePendingContent": 1,
+    "routePending": 3
+  },
+  "entries": [
+    {
+      "entryId": "es-cefr:a58de5322618d68e",
+      "term": "despedir",
+      "decision": "keep",
+      "selectedSenseId": "omw-es-despedir-02402825-v",
+      "rationale": "The employment-termination sense is exact and useful; OMW does not supply the separate farewell sense."
+    },
+    {
+      "entryId": "es-cefr:2a31ff67e0562122",
+      "term": "flamenco",
+      "decision": "drop-from-release",
+      "selectedSenseId": "omw-es-flamenco-03066448-a",
+      "rationale": "The adjective supplies only the Flemish sense; the separate A1 noun entry supplies the dance and music senses."
+    },
+    {
+      "entryId": "es-cefr:e07cc0fe05100a34",
+      "term": "anticucho",
+      "decision": "drop-from-release",
+      "selectedSenseId": "omw-es-anticucho-04227900-n",
+      "rationale": "The supplied sense describes a skewer rather than the dish."
+    },
+    {
+      "entryId": "es-cefr:dbd57064af49e18f",
+      "term": "bienal",
+      "decision": "drop-from-release",
+      "selectedSenseId": "omw-es-bienal-11552976-n",
+      "rationale": "The only supplied noun sense is the specialized botanical biennial."
+    },
+    {
+      "entryId": "es-cefr:51b88181d67e9f46",
+      "term": "calidad",
+      "decision": "route-pending",
+      "selectedSenseId": "omw-es-calidad-04723816-n",
+      "rationale": "The ordinary excellence sense is missing; retain the entry pending an approved authored-or-grammar route."
+    },
+    {
+      "entryId": "es-cefr:9f871a2e4fc315d7",
+      "term": "cerca",
+      "decision": "keep",
+      "selectedSenseId": "omw-es-cerca-00073033-r",
+      "rationale": "Cerca de completing or reaching a state is a valid natural non-spatial sense."
+    },
+    {
+      "entryId": "es-cefr:6ac2f8951594a1c0",
+      "term": "compadre",
+      "decision": "drop-from-release",
+      "selectedSenseId": "omw-es-compadre-10070711-n",
+      "rationale": "The supplied show-off sense does not support ordinary Spanish compadre."
+    },
+    {
+      "entryId": "es-cefr:d2f99ddc768c3d50",
+      "term": "comparsa",
+      "decision": "drop-from-release",
+      "selectedSenseId": "omw-es-comparsa-00296585-n",
+      "rationale": "The supplied procession and performer senses do not establish the ordinary festive-troupe meaning."
+    },
+    {
+      "entryId": "es-cefr:f4f75dae96dffdbb",
+      "term": "cuidador",
+      "decision": "drop-from-release",
+      "selectedSenseId": "omw-es-cuidador-10216403-n",
+      "rationale": "The only supplied sense is an exam invigilator rather than a caregiver."
+    },
+    {
+      "entryId": "es-cefr:79bbbb2464be8e7c",
+      "term": "deber",
+      "decision": "keep",
+      "selectedSenseId": "omw-es-deber-02253956-v",
+      "rationale": "Owe or be in debt is a valid basic sense even though modal obligation is absent."
+    },
+    {
+      "entryId": "es-cefr:1fa46da7d9819dc9",
+      "term": "despacho",
+      "decision": "drop-from-release",
+      "selectedSenseId": "omw-es-despacho-00061290-n",
+      "rationale": "The supplied senses omit the ordinary office/workroom meaning."
+    },
+    {
+      "entryId": "es-cefr:b51d2cc9b40cb159",
+      "term": "junto",
+      "decision": "drop-from-release",
+      "selectedSenseId": "omw-es-junto-01481812-a",
+      "rationale": "The marriage-only relation produces an unnatural and overly narrow Spanish entry."
+    },
+    {
+      "entryId": "es-cefr:1f02f1249853017a",
+      "term": "lindo",
+      "decision": "drop-from-release",
+      "selectedSenseId": "omw-es-lindo-09991026-n",
+      "rationale": "The rare nominal dandy sense is not suitable and indicates a POS/sense artifact."
+    },
+    {
+      "entryId": "es-cefr:dc406b06f6b0670c",
+      "term": "pablo",
+      "decision": "drop-from-release",
+      "selectedSenseId": "omw-es-Pablo-11225661-n",
+      "rationale": "The entry is a proper-name filter miss and is also excluded by the catalog semantic audit."
+    },
+    {
+      "entryId": "es-cefr:9c37bfad3a50bab3",
+      "term": "personaje",
+      "decision": "keep",
+      "selectedSenseId": "omw-es-personaje-05929008-n",
+      "rationale": "A theatrical role or character is an exact and useful sense."
+    },
+    {
+      "entryId": "es-cefr:5972c43909e35a2b",
+      "term": "pieza",
+      "decision": "keep",
+      "selectedSenseId": "omw-es-pieza-03716327-n",
+      "rationale": "A board-game piece is an exact beginner-appropriate sense."
+    },
+    {
+      "entryId": "es-cefr:82bef650b2aef35e",
+      "term": "poder",
+      "decision": "route-pending",
+      "selectedSenseId": "omw-es-poder-00213794-v",
+      "rationale": "The supplied false-friend senses omit ability; retain the entry pending an approved authored-or-grammar route."
+    },
+    {
+      "entryId": "es-cefr:324e05cad2640e44",
+      "term": "romántico",
+      "decision": "drop-from-release",
+      "selectedSenseId": "omw-es-romántico-01837182-a",
+      "rationale": "The supplied senses omit the ordinary amorous meaning appropriate to A1."
+    },
+    {
+      "entryId": "es-cefr:312b8f975937d90b",
+      "term": "santería",
+      "decision": "drop-from-release",
+      "selectedSenseId": "omw-es-santería-04868350-n",
+      "rationale": "The supplied sense is sanctimony rather than the religion."
+    },
+    {
+      "entryId": "es-cefr:e3be2baeefe1b251",
+      "term": "señorito",
+      "decision": "drop-from-release",
+      "selectedSenseId": "omw-es-señorito-10129825-n",
+      "rationale": "The supplied young-woman sense conflicts with the masculine form."
+    },
+    {
+      "entryId": "es-cefr:75843545a2ceeea4",
+      "term": "sí",
+      "decision": "route-pending",
+      "selectedSenseId": "omw-es-sí-00497560-r",
+      "rationale": "The supplied sense omits ordinary affirmative yes; retain the entry pending an approved authored-or-grammar route."
+    },
+    {
+      "entryId": "es-cefr:581e2fe8b5e84d53",
+      "term": "toma",
+      "decision": "re-sense-pending-content",
+      "selectedSenseId": "omw-es-toma-00714477-n",
+      "replacementSenseId": "omw-es-toma-00908133-n",
+      "rationale": "Use the supplied film/photographic take sense; no replacement learner definition or example is authored yet."
+    },
+    {
+      "entryId": "es-cefr:6306a186cd066915",
+      "term": "universitario",
+      "decision": "drop-from-release",
+      "selectedSenseId": "omw-es-universitario-02083615-a",
+      "rationale": "Scholarly does not establish the ordinary university-related adjective."
+    }
+  ]
+}

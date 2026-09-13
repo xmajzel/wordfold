@@ -1,5 +1,5 @@
 import { act, fireEvent, render, waitFor, within } from '@testing-library/react-native';
-import { Alert, StyleSheet } from 'react-native';
+import { Alert, FlatList, StyleSheet } from 'react-native';
 
 import LearnScreen from '@/app/(tabs)';
 import type { LearningFilter, LearningPreferences, LearningRating, Word } from '@/domain/types';
@@ -36,6 +36,8 @@ const mockThirdWord = baseWord({ id: 'third', term: 'pace', normalizedTerm: 'pac
 const mockRecommendedWord = baseWord({ id: 'recommended', term: 'negotiate', normalizedTerm: 'negotiate', cefrLevel: 'B2', source: 'business' });
 const mockRecommendationBatch = Array.from({ length: 10 }, (_, index): Recommendation => ({
   entry: {
+    courseId: 'en-sk', sourceLanguageCode: 'en', targetLanguageCode: 'sk',
+    publicationStatus: 'production', learnerContentReviewStatus: 'approved', hintReviewStatus: 'approved', levelEvidence: 'test',
     id: `recommendation-${index}`,
     term: `recommended ${index + 1}`,
     normalizedTerm: `recommended ${index + 1}`,
@@ -117,14 +119,17 @@ jest.mock('@/components/swipeable-word-card', () => {
   const React = jest.requireActual('react');
   const { View } = jest.requireActual('react-native');
   return {
-    SwipeableWordCard: ({ children, disabled, word }: {
-      children: React.ReactNode;
+    SwipeableWordCard: ({ children, disabled, word, onSwipe, inViewport }: {
+      children: (onRate: (rating: LearningRating) => void) => React.ReactNode;
+      onSwipe: (rating: LearningRating) => void;
+      inViewport: boolean;
       disabled: boolean;
       word: { id: string };
     }) => React.createElement(View, {
       accessibilityState: { disabled },
+      inViewport,
       testID: `swipe-wrapper-${word.id}`,
-    }, children),
+    }, children(onSwipe)),
   };
 });
 
@@ -133,7 +138,7 @@ jest.mock('@/providers/app-data-provider', () => ({
     words: mockWords,
     activeCourseId: mockActiveCourseId,
     activeCourse: mockActiveCourseId === 'es-sk'
-      ? { sourceLanguageCode: 'es', capabilities: { recommendations: false } }
+      ? { sourceLanguageCode: 'es', capabilities: { recommendations: true } }
       : { sourceLanguageCode: 'en', capabilities: { recommendations: true } },
     collections: [{ id: 'my-words', name: 'My words' }],
     learningFilter: mockLearningFilter,
@@ -154,7 +159,7 @@ describe('continued learning session', () => {
     mockActiveCourseId = 'en-sk';
     mockWords = [mockFirstWord, mockNextWord];
     mockLearningFilter = 'all';
-    mockLearningPreferences = { levels: [], topics: [] };
+    mockLearningPreferences = { levels: ['B2'], topics: ['business'] };
     mockWordCapacity = { limit: 100, count: 2, remaining: 98, unlimited: false, shouldShowNotice: false };
     mockRateWord.mockImplementation(async () => undefined);
     mockAddRecommendedWords.mockResolvedValue(0);
@@ -233,6 +238,35 @@ describe('continued learning session', () => {
       ['next', 'learned'],
       ['third', 'learned'],
     ]);
+  });
+
+  it('advances ratings without vertical animation and preserves scrolling to skip', async () => {
+    const scroll = jest.spyOn(FlatList.prototype, 'scrollToIndex').mockImplementation(() => undefined);
+    mockBuildLearningFeed.mockReturnValue([mockFirstWord, mockNextWord, mockThirdWord]);
+    const view = await render(<LearnScreen/>);
+    await fireEvent(view.getByTestId('today-words-list'), 'layout', {
+      nativeEvent: { layout: { height: 600 } },
+    });
+    await fireEvent.press(within(view.getByTestId('swipe-wrapper-first'))
+      .getByRole('button', { name: /I know this/ }));
+    expect(scroll).toHaveBeenLastCalledWith({ index: 1, animated: false });
+    expect(view.getByTestId('swipe-wrapper-first').props.inViewport).toBe(true);
+    await fireEvent(view.getByTestId('today-words-list'), 'scroll', {
+      nativeEvent: { contentOffset: { x: 0, y: 600 + spacing.md },
+        layoutMeasurement: { width: 300, height: 600 },
+        contentSize: { width: 300, height: 3 * (600 + spacing.md) } },
+    });
+    expect(view.getByTestId('swipe-wrapper-first').props.inViewport).toBe(false);
+    expect(view.getByTestId('swipe-wrapper-next').props.inViewport).toBe(true);
+    await fireEvent(view.getByTestId('today-words-list'), 'momentumScrollEnd', {
+      nativeEvent: { contentOffset: { y: 2 * (600 + spacing.md) } },
+    });
+    expect(view.getByText(/^3 of 3 due now/)).toBeTruthy();
+    await fireEvent.press(within(view.getByTestId('swipe-wrapper-third'))
+      .getByRole('button', { name: /Keep learning/ }));
+    await waitFor(() => expect(mockRateWord).toHaveBeenCalledTimes(2));
+    expect(mockRateWord.mock.calls.map(([word]) => word.id)).toEqual(['first', 'third']);
+    scroll.mockRestore();
   });
 
   it('returns a failed rating at the end of the current session', async () => {
@@ -320,22 +354,26 @@ describe('continued learning session', () => {
     expect(StyleSheet.flatten(browseButton.props.style).borderColor).not.toBe('transparent');
   });
 
-  it('shows connected first-word actions when the active course has no words', async () => {
+  it('lets existing Spanish users finish their recommendation preferences', async () => {
     mockActiveCourseId = 'es-sk';
+    mockLearningPreferences = { levels: ['A1'], topics: [] };
     mockBuildLearningFeed.mockReturnValue([]);
     mockBuildContinuedLearningFeed.mockReturnValue([]);
     const view = await render(<LearnScreen/>);
+    view.getByText('Personalize your Spanish words');
+    await fireEvent.press(view.getByRole('button', { name: 'Choose my preferences' }));
+    expect(mockRouterPush).toHaveBeenCalledWith('/preferences');
+  });
 
-    view.getByTestId('today-course-empty');
-    view.getByText('No Spanish words yet');
-    view.getByText('Each language keeps its own library and progress.');
-    view.getByText('Start your Spanish library');
-    expect(view.queryByRole('button', { name: 'Browse library' })).toBeNull();
-
-    await fireEvent.press(view.getByRole('button', { name: 'Add a Spanish word' }));
-    expect(mockRouterPush).toHaveBeenCalledWith('/word/new');
-    await fireEvent.press(view.getByRole('button', { name: 'Bulk paste' }));
-    expect(mockRouterPush).toHaveBeenCalledWith('/import');
+  it('offers the shared add-words action for Spanish', async () => {
+    mockActiveCourseId = 'es-sk';
+    mockBuildLearningFeed.mockReturnValue([]);
+    mockBuildContinuedLearningFeed.mockReturnValue([]);
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch.slice(0, 1));
+    const view = await render(<LearnScreen/>);
+    view.getByTestId('today-recommendations');
+    await fireEvent.press(view.getByTestId('add-today-recommendations'));
+    expect(mockAddRecommendedWords).toHaveBeenCalledWith(1);
   });
 
   it('keeps the existing library fallback for an empty course that supports recommendations', async () => {

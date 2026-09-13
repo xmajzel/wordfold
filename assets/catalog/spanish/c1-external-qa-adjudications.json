@@ -1,0 +1,396 @@
+{
+  "schemaVersion": 1,
+  "notHumanReview": true,
+  "courseId": "es-sk",
+  "level": "C1",
+  "sourceAdjudicationRunIdentitySha256": "ccdf06c726554a88d96a8cb460a55e0be368180a5d3abf6f92600d89e5892f93",
+  "policy": "Three-way external-QA adjudication. A is content repair, B is provenance-only correction, R is reference miss. Never report raw external non-correspondence without this split.",
+  "counts": {
+    "A": 2,
+    "B": 0,
+    "R": 21
+  },
+  "countsByCategory": {
+    "minority-pos": {
+      "A": 0,
+      "B": 0,
+      "R": 3
+    },
+    "probability-sample": {
+      "A": 2,
+      "B": 0,
+      "R": 19
+    }
+  },
+  "entries": [
+    {
+      "entryId": "es-cefr:0dff8060b06b2994",
+      "term": "hidratante",
+      "partOfSpeech": "adjective",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "A",
+      "decision": "repair-content",
+      "replacementDefinition": "Que aporta humedad o ayuda a conservarla.",
+      "replacementExample": "La crema hidratante ayuda a mantener la piel suave.",
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Confunde hidratante con hidratado. El único candidato describe agua incorporada a un compuesto, no la capacidad de hidratar."
+    },
+    {
+      "entryId": "es-cefr:92145d2ffd50a85c",
+      "term": "judío",
+      "partOfSpeech": "noun",
+      "level": "C1",
+      "categories": [
+        "minority-pos"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "The generated definition corresponds directly to the selected OMW record; the external mismatch is reference coverage or sense granularity, not a learner-content defect."
+    },
+    {
+      "entryId": "es-cefr:f7eaa4a3c4d3093d",
+      "term": "benigno",
+      "partOfSpeech": "adjective",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La acepción médica y el ejemplo del tumor corresponden al registro seleccionado."
+    },
+    {
+      "entryId": "es-cefr:ad57072df8bc4f7f",
+      "term": "cívico",
+      "partOfSpeech": "adjective",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La referencia a ciudadanía, derechos y deberes coincide con el sentido seleccionado; el ejemplo es natural."
+    },
+    {
+      "entryId": "es-cefr:68669e93577f7594",
+      "term": "componente",
+      "partOfSpeech": "noun",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Una pieza reemplazable del ordenador ejemplifica directamente el componente material del candidato."
+    },
+    {
+      "entryId": "es-cefr:345936014efaf5c1",
+      "term": "desbordar",
+      "partOfSpeech": "verb",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Desbordar admite superar la capacidad de respuesta. El ejemplo institucional amplía el contexto emocional sin cambiar el núcleo del sentido."
+    },
+    {
+      "entryId": "es-cefr:bb1ccffb7abb56d5",
+      "term": "duro",
+      "partOfSpeech": "noun",
+      "level": "C1",
+      "categories": [
+        "probability-sample",
+        "minority-pos"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "El sustantivo duro puede designar a un partidario de posiciones intransigentes, como recoge el candidato político."
+    },
+    {
+      "entryId": "es-cefr:2e6dcdecfdb20ee9",
+      "term": "emir",
+      "partOfSpeech": "noun",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La descripción del gobernante y su actuación protocolaria encajan con el candidato suministrado."
+    },
+    {
+      "entryId": "es-cefr:a761363ad763c309",
+      "term": "empeño",
+      "partOfSpeech": "noun",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Empeño puede referirse a un esfuerzo orientado a una empresa; la campaña del ejemplo permite esa lectura respaldada por el candidato."
+    },
+    {
+      "entryId": "es-cefr:99fa964b892c8f6e",
+      "term": "euforia",
+      "partOfSpeech": "noun",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La alegría exaltada y la reacción colectiva a la victoria corresponden al sentido seleccionado."
+    },
+    {
+      "entryId": "es-cefr:58a3b0230b1dc547",
+      "term": "hebreo",
+      "partOfSpeech": "adjective",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La definición identifica la lengua y el manuscrito admite claramente esa interpretación lingüística."
+    },
+    {
+      "entryId": "es-cefr:faeaf33d3d650436",
+      "term": "hormiguero",
+      "partOfSpeech": "noun",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La elevación de tierra es una acepción válida de hormiguero y coincide con el candidato elegido."
+    },
+    {
+      "entryId": "es-cefr:1b58c7e1c024362a",
+      "term": "librar",
+      "partOfSpeech": "verb",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Librar una batalla es una construcción habitual y ejemplifica el sentido bélico seleccionado."
+    },
+    {
+      "entryId": "es-cefr:a0cac8bde5db0a83",
+      "term": "mamífero",
+      "partOfSpeech": "adjective",
+      "level": "C1",
+      "categories": [
+        "minority-pos"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "The generated definition corresponds directly to the selected OMW record; the external mismatch is reference coverage or sense granularity, not a learner-content defect."
+    },
+    {
+      "entryId": "es-cefr:fc57ffdc8084faa7",
+      "term": "moderar",
+      "partOfSpeech": "verb",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Organizar las intervenciones de un debate corresponde al uso de moderar recogido en el candidato."
+    },
+    {
+      "entryId": "es-cefr:4c24a3316dade796",
+      "term": "nochevieja",
+      "partOfSpeech": "noun",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "The generated definition corresponds directly to the selected OMW record; the external mismatch is reference coverage or sense granularity, not a learner-content defect."
+    },
+    {
+      "entryId": "es-cefr:78073a9cd7c3a5cd",
+      "term": "oxigenar",
+      "partOfSpeech": "verb",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "El aporte de oxígeno a la sangre ejemplifica exactamente el proceso descrito por el candidato seleccionado."
+    },
+    {
+      "entryId": "es-cefr:aed9c73a50cc19e9",
+      "term": "pensante",
+      "partOfSpeech": "adjective",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Pensante admite describir a quien ejerce la reflexión; el personaje crítico concuerda con el matiz del candidato."
+    },
+    {
+      "entryId": "es-cefr:4f1465adb7838323",
+      "term": "persistir",
+      "partOfSpeech": "verb",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La continuidad deliberada ante dificultades coincide con la perseverancia del registro seleccionado."
+    },
+    {
+      "entryId": "es-cefr:e884daa6a019060d",
+      "term": "pique",
+      "partOfSpeech": "noun",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "Pique puede designar un enfrentamiento leve; la disputa por el horario encaja con el candidato."
+    },
+    {
+      "entryId": "es-cefr:3f1ae428ad3532af",
+      "term": "planteamiento",
+      "partOfSpeech": "noun",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La manera de abordar una situación mediante medidas concretas corresponde al sentido seleccionado."
+    },
+    {
+      "entryId": "es-cefr:fb0aa8eca2bce335",
+      "term": "recaer",
+      "partOfSpeech": "verb",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "R",
+      "decision": "reference-miss-no-content-change",
+      "replacementDefinition": null,
+      "replacementExample": null,
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La atribución de responsabilidad y la construcción recaer sobre son correctas y están respaldadas por el candidato."
+    },
+    {
+      "entryId": "es-cefr:8474994dc0f5542b",
+      "term": "vacante",
+      "partOfSpeech": "noun",
+      "level": "C1",
+      "categories": [
+        "probability-sample"
+      ],
+      "bucket": "A",
+      "decision": "repair-content",
+      "replacementDefinition": "Puesto o plaza que está libre y puede ser ocupado por alguien.",
+      "replacementExample": "La empresa publicó una oferta para cubrir la vacante.",
+      "replacementMeaningReferenceSenseId": null,
+      "semanticException": false,
+      "rationale": "La definición presenta un estado abstracto, mientras el ejemplo usa vacante como plaza disponible. La corrección concreta el sustantivo dentro de la desocupación recogida por el candidato."
+    }
+  ]
+}

@@ -11,11 +11,12 @@ import { describeCatalogAvailability } from '@/components/catalog-availability';
 import { CourseSelector } from '@/components/course-selector';
 import { LevelSelection, TopicSelection } from '@/components/preference-cards';
 import { PrimaryButton } from '@/components/primary-button';
+import { RecommendationFallbackNote } from '@/components/recommendation-fallback-note';
 import { PronunciationVoicePicker } from '@/components/pronunciation-voice-picker';
 import { Screen } from '@/components/screen';
 import { cefrLevelDescriptions } from '@/data/cefr-levels';
 import { getCourseCatalogAvailability } from '@/data/course-catalog';
-import { wordBelongsToCourse, type CourseDefinition, type CourseId } from '@/domain/courses';
+import { courseSupportsPronunciation, wordBelongsToCourse, type CourseDefinition, type CourseId } from '@/domain/courses';
 import type { CefrLevel, ContentPackId, LearningPreferences, PronunciationVoicePreference } from '@/domain/types';
 import { neuralPreviewFeatureEnabled, neuralVoiceLabel } from '@/features/pronunciation/cloud';
 import { buildRecommendations, normalizeLearningPreferences, topicOptions } from '@/features/recommendations/selector';
@@ -38,9 +39,11 @@ export default function OnboardingScreen() {
   const [topics, setTopics] = useState<ContentPackId[]>([]);
   const [voicePreference, setVoicePreference] = useState<PronunciationVoicePreference>(activeCourseId === 'en-sk' ? 'neural-en-US' : 'device');
   const [busy, setBusy] = useState(false);
+  const [submittedPreview, setSubmittedPreview] = useState<ReturnType<typeof buildRecommendations> | null>(null);
   const [switchingCourse, setSwitchingCourse] = useState(false);
   const showVoiceStep = activeCourse.capabilities.offlinePronunciation && Platform.OS !== 'web' && neuralPreviewFeatureEnabled();
   const showInterestsStep = activeCourse.capabilities.recommendations;
+  const catalogAvailability = getCourseCatalogAvailability(activeCourseId);
   const stepNames: readonly string[] = [
     'Language',
     ...(showVoiceStep ? ['Voice'] as const : []),
@@ -58,6 +61,7 @@ export default function OnboardingScreen() {
     preferences,
     words.filter((word) => wordBelongsToCourse(word, activeCourseId)).map((word) => word.normalizedTerm),
     previewLimit,
+    activeCourseId,
   ) : [], [activeCourse.capabilities.recommendations, activeCourseId, preferences, previewLimit, words]);
 
   if (wasCompleteOnEntry) return <Redirect href="/(tabs)" />;
@@ -76,12 +80,13 @@ export default function OnboardingScreen() {
   const maxNavigableStep = Math.min(furthestStep, maxValidStep);
 
   const goToStep = (nextStep: number) => {
-    if (nextStep < 0 || nextStep >= stepCount || nextStep > maxNavigableStep) return;
+    if (busy || nextStep < 0 || nextStep >= stepCount || nextStep > maxNavigableStep) return;
     setTransitionDirection(nextStep < step ? 'backward' : 'forward');
     setStep(nextStep);
   };
 
   const continueFlow = async () => {
+    if (busy) return;
     if (step < stepCount - 1) {
       const nextStep = step + 1;
       setTransitionDirection('forward');
@@ -89,6 +94,8 @@ export default function OnboardingScreen() {
       setStep(nextStep);
       return;
     }
+    // Library updates arrive before navigation finishes; retain the set being saved.
+    setSubmittedPreview(preview);
     setBusy(true);
     try {
       const count = await completePersonalizedOnboarding(
@@ -96,8 +103,10 @@ export default function OnboardingScreen() {
         showVoiceStep ? voicePreference : 'device',
       );
       router.replace({ pathname: '/onboarding-ready', params: { count: String(count) } } as never);
-    } finally {
+    } catch (error) {
+      setSubmittedPreview(null);
       setBusy(false);
+      Alert.alert('Could not create your set', error instanceof Error ? error.message : 'Please try again.');
     }
   };
 
@@ -109,7 +118,7 @@ export default function OnboardingScreen() {
       </View>
       <View style={styles.progress} accessibilityLabel={`Onboarding progress, step ${step + 1} of ${stepCount}`}>
         {stepNames.map((name, index) => {
-          const unavailable = index > maxNavigableStep;
+          const unavailable = busy || index > maxNavigableStep;
           const current = index === step;
           return <Pressable
             key={name}
@@ -159,7 +168,7 @@ export default function OnboardingScreen() {
           </View> : null}
           {step === levelStep ? <View style={styles.section}>
             <StepHeading eyebrow="YOUR STARTING POINT" title="Which levels feel right?" body="Choose one level or combine a few. You can change this later."/>
-            <LevelSelection selected={levels} onToggle={toggleLevel}/>
+            <LevelSelection selected={levels} onToggle={toggleLevel} disabledLevels={Object.fromEntries(Object.entries(catalogAvailability.levels).flatMap(([level, state]) => state === 'available' ? [] : [[level, state === 'unsupported-by-source' ? 'Currently unavailable' : 'Not yet available']]))}/>
             <AppText variant="caption" style={{ color: theme.muted }}>{activeCourse.capabilities.recommendations
               ? 'Levels set the difficulty boundary for every recommendation.'
               : describeCatalogAvailability(getCourseCatalogAvailability(activeCourseId))}</AppText>
@@ -174,7 +183,7 @@ export default function OnboardingScreen() {
           </View> : null}
           {step === reviewStep ? <ReviewStep
             preferences={preferences}
-            preview={preview}
+            preview={submittedPreview ?? preview}
             voicePreference={showVoiceStep ? voicePreference : 'device'}
             course={activeCourse}
           /> : null}
@@ -237,13 +246,15 @@ function ReviewStep({ preferences, preview, voicePreference, course }: {
         : 'Your Spanish course is ready for manual and imported words. Your choices can be edited at any time.'}/>
     <View style={[styles.summaryCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
       <SummaryRow icon="language-outline" label="Language" value={course.directionLabel}/>
-      <View style={[styles.divider, { backgroundColor: theme.border }]}/>
-      <SummaryRow
-        icon="volume-high-outline"
-        label="Preferred voice"
-        value={voicePreference === 'neural-en-US' ? neuralVoiceLabel('en-US')
-          : voicePreference === 'neural-en-GB' ? neuralVoiceLabel('en-GB') : 'Phone voice'}
-      />
+      {courseSupportsPronunciation(course) ? <>
+        <View style={[styles.divider, { backgroundColor: theme.border }]}/>
+        <SummaryRow
+          icon="volume-high-outline"
+          label="Preferred voice"
+          value={voicePreference === 'neural-en-US' ? neuralVoiceLabel('en-US')
+            : voicePreference === 'neural-en-GB' ? neuralVoiceLabel('en-GB') : 'Phone voice'}
+        />
+      </> : null}
       <View style={[styles.divider, { backgroundColor: theme.border }]}/>
       <SummaryRow icon="speedometer-outline" label="Levels" value={preferences.levels.map((level) => `${level} · ${cefrLevelDescriptions[level]}`).join('\n')}/>
       {course.capabilities.recommendations ? <>
@@ -259,7 +270,7 @@ function ReviewStep({ preferences, preview, voicePreference, course }: {
           ? 'Your current library is full. Unlock unlimited words later to add recommendations.'
           : availability.total > 0
             ? `Browse Library → Discover and choose a level with entries. ${describeCatalogAvailability(availability)} Words are added only when you choose them.`
-            : 'Add Spanish words manually or import them. The built-in A1–C2 catalog stays hidden until every entry has approved provenance and independent editorial review.'}</AppText>
+            : 'Add Spanish words manually or import them. The built-in A1–C2 catalog stays hidden until its provenance, automated Spanish QA, AI cross-review, and separately reviewed Slovak translations meet the release gates. Automated Spanish checks are not native-speaker review.'}</AppText>
     </View>
     {voicePreference === 'device' || preview.length === 0 ? null : <View style={[styles.note, { backgroundColor: theme.primarySoft }]}>
       <Ionicons name="cloud-download-outline" color={theme.primary} size={20}/>
@@ -267,6 +278,7 @@ function ReviewStep({ preferences, preview, voicePreference, course }: {
         {preview.length === 1 ? 'This word will' : `Your first ${preview.length} words will`} be ready to hear offline in {voicePreference === 'neural-en-US' ? 'Ava’s' : 'Ryan’s'} voice.
       </AppText>
     </View>}
+    <RecommendationFallbackNote recommendations={preview}/>
     <View style={styles.previewGrid}>{preview.map(({ entry }) => <View key={entry.id} style={[styles.wordChip, { backgroundColor: theme.primarySoft }]}><AppText variant="label" style={{ color: theme.primary }}>{entry.term}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{entry.level}</AppText></View>)}</View>
     <AppText variant="caption" style={{ color: theme.muted }}>Existing words are never removed. Future recommendations will follow the same preferences.</AppText>
   </View>;
