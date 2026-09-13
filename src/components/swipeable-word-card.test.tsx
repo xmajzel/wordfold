@@ -2,6 +2,7 @@ import { act, fireEvent, render } from '@testing-library/react-native';
 import { Pressable, Text } from 'react-native';
 import { useAnimatedStyle, useReducedMotion, withTiming } from 'react-native-reanimated';
 
+import { WordCardContent } from './word-card-content';
 import type { Word } from '@/domain/types';
 
 import {
@@ -13,6 +14,8 @@ import {
 interface MockPan {
   enabled: jest.Mock<MockPan>;
   minDistance: jest.Mock<MockPan>;
+  activeOffsetX: jest.Mock<MockPan>;
+  failOffsetY: jest.Mock<MockPan>;
   onBegin: jest.Mock<MockPan>;
   onUpdate: jest.Mock<MockPan, [(event: { translationX: number; translationY: number }) => void]>;
   onEnd: jest.Mock<MockPan, [(event: { translationX: number; velocityX: number; translationY?: number; velocityY?: number }) => void]>;
@@ -21,6 +24,8 @@ interface MockPan {
 
 const mockPan = {} as MockPan;
 mockPan.enabled = jest.fn(() => mockPan);
+mockPan.activeOffsetX = jest.fn(() => mockPan);
+mockPan.failOffsetY = jest.fn(() => mockPan);
 mockPan.minDistance = jest.fn(() => mockPan);
 mockPan.onBegin = jest.fn(() => mockPan);
 mockPan.onUpdate = jest.fn<MockPan, [(event: { translationX: number; translationY: number }) => void]>(() => mockPan);
@@ -30,8 +35,9 @@ mockPan.onFinalize = jest.fn(() => mockPan);
 jest.mock('react-native-gesture-handler', () => {
   const React = jest.requireActual('react');
   const { View } = jest.requireActual('react-native');
+  const native = { enabled: () => native, simultaneousWithExternalGesture: () => native };
   return {
-    Gesture: { Pan: jest.fn(() => mockPan) },
+    Gesture: { Pan: jest.fn(() => mockPan), Native: () => native },
     GestureDetector: ({ children }: { children: React.ReactNode }) => React.createElement(View, null, children),
   };
 });
@@ -217,4 +223,37 @@ describe('SwipeableWordCard', () => {
     screen.getByText('Stop reviews', { includeHiddenElements: true });
     expect(mockPan.minDistance).toHaveBeenCalledWith(SWIPE_ACTIVE_OFFSET);
   });
+});
+
+
+it('scrolls overflowing content without navigating, keeps horizontal ratings, and restores vertical navigation when it fits', async () => {
+  const onSwipe = jest.fn();
+  const onNavigate = jest.fn();
+  const view = await render(<SwipeableWordCard word={word} active disabled={false} canGoNext
+    onSwipe={onSwipe} onNavigate={onNavigate}>
+    <WordCardContent dense><Text>Long explanation</Text></WordCardContent>
+  </SwipeableWordCard>);
+  await fireEvent(view.getByTestId('swipe-card-word'), 'layout', {
+    nativeEvent: { layout: { width: 300, height: 600 } },
+  });
+  const content = view.getByTestId('word-card-content');
+  await fireEvent(content, 'layout', { nativeEvent: { layout: { height: 250 } } });
+  await fireEvent(content, 'contentSizeChange', 300, 600);
+  expect(content.props.scrollEnabled).toBe(true);
+  expect(mockPan.activeOffsetX).toHaveBeenCalledWith([-SWIPE_ACTIVE_OFFSET, SWIPE_ACTIVE_OFFSET]);
+  expect(mockPan.failOffsetY).toHaveBeenCalledWith([-SWIPE_ACTIVE_OFFSET, SWIPE_ACTIVE_OFFSET]);
+  jest.mocked(withTiming).mockClear();
+  await act(() => mockPan.onEnd.mock.lastCall![0]({ translationX: 0, velocityX: 0, translationY: -300, velocityY: -900 }));
+  expect(withTiming).not.toHaveBeenCalled();
+  expect(onNavigate).not.toHaveBeenCalled();
+  expect(onSwipe).not.toHaveBeenCalled();
+  await act(() => mockPan.onEnd.mock.lastCall![0]({ translationX: -120, velocityX: 0, translationY: 0, velocityY: 0 }));
+  await act(() => jest.mocked(withTiming).mock.lastCall![2]!(true));
+  expect(onSwipe).toHaveBeenCalledWith('understood');
+  mockPan.activeOffsetX.mockClear();
+  mockPan.failOffsetY.mockClear();
+  await fireEvent(content, 'contentSizeChange', 300, 200);
+  expect(content.props.scrollEnabled).toBe(false);
+  expect(mockPan.activeOffsetX).not.toHaveBeenCalled();
+  expect(mockPan.failOffsetY).not.toHaveBeenCalled();
 });

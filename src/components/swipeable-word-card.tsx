@@ -18,6 +18,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { getCardLayerStyle, restingCardMotion, type CardStackMotion } from '@/components/card-stack-motion';
+import { WordCardScrollContext } from '@/components/word-card-content';
 import { AppText } from '@/components/app-text';
 import type { LearningRating, Word } from '@/domain/types';
 import { getNextReviewIntervalRange } from '@/features/learning/algorithm';
@@ -72,6 +73,7 @@ export function SwipeableWordCard({
   const theme = useAppTheme();
   const reduceMotion = useReducedMotion();
   const screenReaderEnabled = useScreenReaderEnabled();
+  const [contentScrollable, setContentScrollable] = useState(false);
   const localMotion = useSharedValue(restingCardMotion(cardIndex));
   const motion = stackMotion ?? localMotion;
   const axis = useSharedValue<'x' | 'y' | null>(null);
@@ -153,6 +155,7 @@ export function SwipeableWordCard({
         axis.set(Math.abs(event.translationX) > Math.abs(event.translationY) ? 'x' : 'y');
       }
       if (axis.get() === 'y') {
+        if (contentScrollable) return;
         const backward = event.translationY > 0;
         const allowed = backward ? canGoBack : canGoNext;
         // Positive Y pulls the previous layer down; the current layer stays still.
@@ -171,6 +174,7 @@ export function SwipeableWordCard({
       if (committed.get() || current.index !== cardIndex) return;
       const vertical = axis.get() === 'y' || (axis.get() === null && Math.abs(event.translationY) > Math.abs(event.translationX));
       if (vertical) {
+        if (contentScrollable) { springBack(); return; }
         const direction = event.translationY < 0 ? 'next' : 'previous';
         const allowed = direction === 'next' ? canGoNext : canGoBack;
         const deliberate = getSwipeRating(event.translationY, event.velocityY, current.height);
@@ -200,6 +204,10 @@ export function SwipeableWordCard({
     .onFinalize((_event, success) => {
       if (!success && !committed.get() && motion.get().index === cardIndex) springBack();
     });
+
+  // Fail vertical pans before activation so reading never skips an overflowing word.
+  if (contentScrollable) pan.activeOffsetX([-SWIPE_ACTIVE_OFFSET, SWIPE_ACTIVE_OFFSET])
+    .failOffsetY([-SWIPE_ACTIVE_OFFSET, SWIPE_ACTIVE_OFFSET]);
 
   const cardStyle = useAnimatedStyle(() => stackMotion ? {} : getCardLayerStyle(cardIndex, motion.value, reduceMotion));
   const keepLearningStyle = useAnimatedStyle(() => {
@@ -240,7 +248,9 @@ export function SwipeableWordCard({
         }}
         style={[styles.card, cardStyle]}
         testID={`swipe-card-${word?.id ?? 'end'}`}>
-        {typeof children === 'function' ? children(animateButtonRating) : children}
+        <WordCardScrollContext.Provider value={{ pan, setContentScrollable }}>
+          {typeof children === 'function' ? children(animateButtonRating) : children}
+        </WordCardScrollContext.Provider>
         {nextReviewRange ? <><SwipeOverlay
           align="right"
           color={theme.primary}

@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react-native';
+import { fireEvent, render, within } from '@testing-library/react-native';
 
 import type { Word } from '@/domain/types';
 
@@ -140,5 +140,32 @@ describe('WordCard learning actions', () => {
     await fireEvent.press(screen.getByLabelText('Need a Slovak hint?'));
 
     screen.getByText('rozsah');
+  });
+});
+
+
+describe('WordCard content overflow', () => {
+  it.each(['en', 'es'])('keeps complete %s content scrollable and actions outside the reading area', async (sourceLanguageCode) => {
+    const longWord = { ...word, sourceLanguageCode,
+      definition: 'A long explanation with enough detail to wrap across several lines. '.repeat(5),
+      example: 'This example sentence includes additional context that must remain readable. '.repeat(4),
+      translation: 'A longer translated hint. '.repeat(8),
+    };
+    const onRate = jest.fn();
+    const view = await render(<WordCard word={longWord} dense showPronunciation onRate={onRate}/>);
+    const content = view.getByTestId('word-card-content');
+    expect(view.getByText(longWord.definition).props.numberOfLines).toBeUndefined();
+    expect(view.getByText(longWord.example).props.numberOfLines).toBeUndefined();
+    expect(within(content).queryByRole('button', { name: /Keep learning/ })).toBeNull();
+    await fireEvent(content, 'layout', { nativeEvent: { layout: { height: 250 } } });
+    await fireEvent(content, 'contentSizeChange', 300, 600);
+    expect(content.props.scrollEnabled).toBe(true);
+    await fireEvent.press(view.getByLabelText('Need a Slovak hint?'));
+    within(content).getByText(longWord.translation);
+    await fireEvent.press(view.getByRole('button', { name: /Keep learning/ }));
+    expect(onRate).toHaveBeenCalledWith('understood');
+    // Rotation or a larger viewport can remove the need to scroll.
+    await fireEvent(content, 'layout', { nativeEvent: { layout: { height: 700 } } });
+    expect(content.props.scrollEnabled).toBe(false);
   });
 });

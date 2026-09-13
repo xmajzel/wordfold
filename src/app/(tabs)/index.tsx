@@ -118,7 +118,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
   const translatingIds = useRef(new Set<string>());
   const viewportHeight = stackHeight || Math.max(390, height - 241);
   // Leave room inside the viewport for the card's downward shadow.
-  const cardHeight = viewportHeight - spacing.xxl;
+  const cardHeight = viewportHeight - spacing.md;
   const denseCards = cardHeight < 500;
   const categoryWords = useMemo(() => filterWordsByLearningCategory(activeWords, filter), [activeWords, filter]);
   const currentWords = useMemo(() => Object.fromEntries(words.map((word) => [word.id, word])), [words]);
@@ -341,7 +341,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
           <Ionicons name="arrow-down" size={18} color={theme.primary}/><AppText variant="caption">Back</AppText>
         </Pressable>
         <AppText variant="caption" style={[styles.position, { color: theme.muted }]}>
-          {atBatchEnd ? 'End of batch · swipe down to go back' : `${currentIndex + 1} of ${sessionFeed.length} · swipe up to skip`}
+          {atBatchEnd ? 'End of batch · swipe down to go back' : `${currentIndex + 1} of ${sessionFeed.length} · Skip to move on`}
         </AppText>
         {!atBatchEnd ? <Pressable accessibilityRole="button" accessibilityLabel="Skip word"
           onPress={() => navigateTo(currentIndex, currentIndex + 1)} style={styles.navigationButton}>
@@ -462,7 +462,7 @@ function categoryWordLabel(filter: LearningFilter, singular = false) {
 const styles = StyleSheet.create({
   screen: { paddingHorizontal: spacing.lg }, headerBlock: { gap: spacing.sm, paddingBottom: spacing.sm }, header: { minHeight: 76, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   wordStack: { flex: 1, marginHorizontal: -spacing.lg, overflow: 'hidden' },
-  stackContent: { flex: 1, marginHorizontal: spacing.lg, marginBottom: spacing.xxl },
+  stackContent: { flex: 1, marginHorizontal: spacing.lg, marginBottom: spacing.md },
   batchEnd: { flex: 1 },
   batchEndSurface: { borderRadius: radii.sheet, overflow: 'hidden' },
   navigation: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.xs },
