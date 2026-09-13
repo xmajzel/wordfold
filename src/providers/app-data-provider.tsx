@@ -182,6 +182,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     ? new SyncCutoverService(appDatabase, new SupabaseGuestImportRemote(supabase), powerSyncDatabase)
     : null);
   const [databaseMutationQueue] = useState(createSerialMutationQueue);
+  const [reminderQueue] = useState(createSerialMutationQueue);
   const [translationQueue] = useState(createSerialMutationQueue);
   const translationTasks = useRef(new Map<string, Promise<void>>());
   const lastScheduleDay = useRef<string | null>(null);
@@ -431,12 +432,13 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   }, [refreshGuestImport, syncHasSynced, syncPhase]);
 
   const reschedule = useCallback(async (nextWords?: Word[], nextSettings?: ReminderSettings) => {
-    return runDatabaseMutation(async () => {
+    // Native notification calls must not hold up vocabulary writes.
+    return reminderQueue.run(async () => {
       const scheduleWords = nextWords ?? await vocabularyStore.listWords();
       const scheduleSettings = nextSettings ?? await repository.getReminderSettings(appDatabase);
-      return rebuildReminderSchedule(appDatabase, scheduleWords, scheduleSettings, activeCourseId);
+      return rebuildReminderSchedule(appDatabase, scheduleWords, scheduleSettings, activeCourseId, runDatabaseMutation);
     });
-  }, [activeCourseId, appDatabase, runDatabaseMutation, vocabularyStore]);
+  }, [activeCourseId, appDatabase, reminderQueue, runDatabaseMutation, vocabularyStore]);
 
   const refreshReminderSchedule = useCallback(async (force = false) => {
     const settings = await repository.getReminderSettings(appDatabase);
@@ -644,7 +646,8 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
           pronunciationVoicePreference,
         ));
       });
-      await refresh(); await reschedule();
+      await refresh();
+      void reschedule().catch((error) => console.warn('Could not refresh reminders after adding recommendations.', error));
       return recommendations.length;
     },
     noteNotificationOpen: async (wordId) => {
