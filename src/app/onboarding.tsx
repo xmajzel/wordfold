@@ -39,6 +39,7 @@ export default function OnboardingScreen() {
   const [topics, setTopics] = useState<ContentPackId[]>([]);
   const [voicePreference, setVoicePreference] = useState<PronunciationVoicePreference>(activeCourseId === 'en-sk' ? 'neural-en-US' : 'device');
   const [busy, setBusy] = useState(false);
+  const [submittedPreview, setSubmittedPreview] = useState<ReturnType<typeof buildRecommendations> | null>(null);
   const [switchingCourse, setSwitchingCourse] = useState(false);
   const showVoiceStep = activeCourse.capabilities.offlinePronunciation && Platform.OS !== 'web' && neuralPreviewFeatureEnabled();
   const showInterestsStep = activeCourse.capabilities.recommendations;
@@ -79,12 +80,13 @@ export default function OnboardingScreen() {
   const maxNavigableStep = Math.min(furthestStep, maxValidStep);
 
   const goToStep = (nextStep: number) => {
-    if (nextStep < 0 || nextStep >= stepCount || nextStep > maxNavigableStep) return;
+    if (busy || nextStep < 0 || nextStep >= stepCount || nextStep > maxNavigableStep) return;
     setTransitionDirection(nextStep < step ? 'backward' : 'forward');
     setStep(nextStep);
   };
 
   const continueFlow = async () => {
+    if (busy) return;
     if (step < stepCount - 1) {
       const nextStep = step + 1;
       setTransitionDirection('forward');
@@ -92,6 +94,8 @@ export default function OnboardingScreen() {
       setStep(nextStep);
       return;
     }
+    // Library updates arrive before navigation finishes; retain the set being saved.
+    setSubmittedPreview(preview);
     setBusy(true);
     try {
       const count = await completePersonalizedOnboarding(
@@ -99,8 +103,10 @@ export default function OnboardingScreen() {
         showVoiceStep ? voicePreference : 'device',
       );
       router.replace({ pathname: '/onboarding-ready', params: { count: String(count) } } as never);
-    } finally {
+    } catch (error) {
+      setSubmittedPreview(null);
       setBusy(false);
+      Alert.alert('Could not create your set', error instanceof Error ? error.message : 'Please try again.');
     }
   };
 
@@ -112,7 +118,7 @@ export default function OnboardingScreen() {
       </View>
       <View style={styles.progress} accessibilityLabel={`Onboarding progress, step ${step + 1} of ${stepCount}`}>
         {stepNames.map((name, index) => {
-          const unavailable = index > maxNavigableStep;
+          const unavailable = busy || index > maxNavigableStep;
           const current = index === step;
           return <Pressable
             key={name}
@@ -177,7 +183,7 @@ export default function OnboardingScreen() {
           </View> : null}
           {step === reviewStep ? <ReviewStep
             preferences={preferences}
-            preview={preview}
+            preview={submittedPreview ?? preview}
             voicePreference={showVoiceStep ? voicePreference : 'device'}
             course={activeCourse}
           /> : null}
