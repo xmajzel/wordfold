@@ -1,7 +1,9 @@
 import { getPackTerms } from '@/data/catalog';
-import { getCefrEntries } from '@/data/cefr-catalog';
+import { getCourseCatalogEntries, type CourseCatalogEntry } from '@/data/course-catalog';
+import type { CourseId } from '@/domain/courses';
 import { cefrLevels } from '@/data/cefr-levels';
-import type { CefrCatalogEntry, CefrLevel, ContentPackId, LearningPreferences } from '@/domain/types';
+import type { CefrLevel, ContentPackId, LearningPreferences } from '@/domain/types';
+import spanishTopicIndex from '../../../assets/catalog/spanish/course-topic-index.json';
 
 const topicOrder: ContentPackId[] = ['spoken', 'business', 'academic'];
 
@@ -11,6 +13,8 @@ const priorityTerms: Record<ContentPackId, string[]> = {
   academic: ['methodology', 'empirical', 'inference', 'validity', 'synthesis', 'hypothesis', 'variable', 'qualitative', 'quantitative', 'framework', 'correlation', 'parameter'],
 };
 
+const spanishTopics = spanishTopicIndex.topicsByConcept as Record<string, readonly ContentPackId[]>;
+
 export const topicOptions: { id: ContentPackId; title: string; description: string; icon: 'chatbubbles-outline' | 'briefcase-outline' | 'school-outline' }[] = [
   { id: 'spoken', title: 'Everyday conversations', description: 'Social situations and practical daily language', icon: 'chatbubbles-outline' },
   { id: 'business', title: 'Work and business', description: 'Meetings, projects, collaboration, and decisions', icon: 'briefcase-outline' },
@@ -18,7 +22,7 @@ export const topicOptions: { id: ContentPackId; title: string; description: stri
 ];
 
 export interface Recommendation {
-  entry: CefrCatalogEntry;
+  entry: CourseCatalogEntry;
   topic: ContentPackId | null;
 }
 
@@ -37,24 +41,32 @@ export function buildRecommendations(
   rawPreferences: LearningPreferences,
   existingNormalizedTerms: Iterable<string>,
   limit = 10,
+  courseId: CourseId = 'en-sk',
 ): Recommendation[] {
   const preferences = normalizeLearningPreferences(rawPreferences);
   if (limit <= 0 || preferences.levels.length === 0 || preferences.topics.length === 0) return [];
 
   const existing = new Set(existingNormalizedTerms);
   const selectedLevels = new Set(preferences.levels);
-  const entries = preferences.levels.flatMap(getCefrEntries);
+  const entries = preferences.levels.flatMap((level) => getCourseCatalogEntries(courseId, level));
   const byTerm = new Map(entries.map((entry) => [entry.normalizedTerm, entry]));
   const result: Recommendation[] = [];
   const added = new Set(existing);
+  for (const entry of entries) {
+    if (entry.alternativeTerms?.some((term) => existing.has(term.toLocaleLowerCase('es')))) {
+      added.add(entry.normalizedTerm);
+    }
+  }
 
   const queues = preferences.topics.flatMap((topic) => preferences.levels.map((level) => ({
     topic,
     level,
-    entries: uniqueTerms(topic).flatMap((term) => {
-      const entry = byTerm.get(term);
-      return entry?.level === level ? [entry] : [];
-    }),
+    entries: courseId === 'es-sk'
+      ? entries.filter((entry) => entry.level === level && spanishTopics[entry.catalogSenseId ?? '']?.includes(topic))
+      : uniqueTerms(topic).flatMap((term) => {
+        const entry = byTerm.get(term);
+        return entry?.level === level ? [entry] : [];
+      }),
     index: 0,
   })));
 
@@ -75,7 +87,7 @@ export function buildRecommendations(
 
   if (result.length < limit) {
     const fallbackQueues = preferences.levels.map((level) => ({
-      entries: getCefrEntries(level),
+      entries: getCourseCatalogEntries(courseId, level),
       index: 0,
     }));
     progressed = true;

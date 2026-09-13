@@ -139,9 +139,9 @@ function recommendationsToInputs(
     catalogSenseId: entry.catalogSenseId,
     cefrLevel: entry.level,
     source: topic ?? 'manual',
-    sourceLanguageCode: 'en',
-    targetLanguageCode: 'sk',
-    sourcePronunciationLocale: locale,
+    sourceLanguageCode: entry.sourceLanguageCode,
+    targetLanguageCode: entry.targetLanguageCode,
+    sourcePronunciationLocale: entry.courseId === 'en-sk' ? locale : getCourseDefinition(entry.courseId).defaultSourcePronunciationLocale,
     targetPronunciationLocale: 'sk-SK',
   }));
 }
@@ -598,7 +598,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       const recommendations = getCourseDefinition(activeCourseId).capabilities.recommendations
         ? buildRecommendations(preferences, existing
           .filter((word) => wordBelongsToCourse(word, activeCourseId))
-          .map((word) => word.normalizedTerm), starterLimit)
+          .map((word) => word.normalizedTerm), starterLimit, activeCourseId)
         : [];
       await runDatabaseMutation(async () => {
         assertWordCapacity((await vocabularyStore.listWords()).length, recommendations.length, purchase.unlimited);
@@ -632,7 +632,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       const existing = await vocabularyStore.listWords();
       const recommendations = buildRecommendations(learningPreferences, existing
         .filter((word) => wordBelongsToCourse(word, activeCourseId))
-        .map((word) => word.normalizedTerm), limit);
+        .map((word) => word.normalizedTerm), purchase.unlimited ? limit : Math.min(limit, getWordCapacity(existing.length, false).remaining ?? 0), activeCourseId);
       if (recommendations.length === 0) return 0;
       await runDatabaseMutation(async () => {
         assertWordCapacity((await vocabularyStore.listWords()).length, recommendations.length, purchase.unlimited);

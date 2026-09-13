@@ -116,8 +116,8 @@ function recommendationsToWords(
     definition: entry.definition, example: entry.example, partOfSpeech: entry.partOfSpeech,
     translation: entry.translation,
     catalogSenseId: entry.catalogSenseId, cefrLevel: entry.level, source: topic ?? 'manual',
-    sourceLanguageCode: 'en', targetLanguageCode: 'sk',
-    sourcePronunciationLocale: locale, targetPronunciationLocale: 'sk-SK',
+    sourceLanguageCode: entry.sourceLanguageCode, targetLanguageCode: entry.targetLanguageCode,
+    sourcePronunciationLocale: entry.courseId === 'en-sk' ? locale : getCourseDefinition(entry.courseId).defaultSourcePronunciationLocale, targetPronunciationLocale: 'sk-SK',
   }));
 }
 
@@ -235,7 +235,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
     completePersonalizedOnboarding: async (preferences, preference) => {
       const normalized = normalizeLearningPreferences(preferences);
       const recommendations = getCourseDefinition(activeCourseId).capabilities.recommendations
-        ? buildRecommendations(normalized, activeWords.map((word) => word.normalizedTerm), 10)
+        ? buildRecommendations(normalized, activeWords.map((word) => word.normalizedTerm), Math.min(10, getWordCapacity(words.length, false).remaining ?? 0), activeCourseId)
         : [];
       setLearningPreferences(normalized);
       setPronunciationVoicePreference(preference);
@@ -249,7 +249,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
     },
     addRecommendedWords: async (limit = 10) => {
       if (!getCourseDefinition(activeCourseId).capabilities.recommendations) return 0;
-      const recommendations = buildRecommendations(learningPreferences, activeWords.map((word) => word.normalizedTerm), limit);
+      const recommendations = buildRecommendations(learningPreferences, activeWords.map((word) => word.normalizedTerm), Math.min(limit, getWordCapacity(words.length, false).remaining ?? 0), activeCourseId);
       setWords((current) => [...recommendationsToWords(recommendations, pronunciationVoicePreference), ...current]);
       return recommendations.length;
     },

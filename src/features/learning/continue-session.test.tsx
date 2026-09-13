@@ -36,6 +36,8 @@ const mockThirdWord = baseWord({ id: 'third', term: 'pace', normalizedTerm: 'pac
 const mockRecommendedWord = baseWord({ id: 'recommended', term: 'negotiate', normalizedTerm: 'negotiate', cefrLevel: 'B2', source: 'business' });
 const mockRecommendationBatch = Array.from({ length: 10 }, (_, index): Recommendation => ({
   entry: {
+    courseId: 'en-sk', sourceLanguageCode: 'en', targetLanguageCode: 'sk',
+    publicationStatus: 'production', learnerContentReviewStatus: 'approved', hintReviewStatus: 'approved', levelEvidence: 'test',
     id: `recommendation-${index}`,
     term: `recommended ${index + 1}`,
     normalizedTerm: `recommended ${index + 1}`,
@@ -133,7 +135,7 @@ jest.mock('@/providers/app-data-provider', () => ({
     words: mockWords,
     activeCourseId: mockActiveCourseId,
     activeCourse: mockActiveCourseId === 'es-sk'
-      ? { sourceLanguageCode: 'es', capabilities: { recommendations: false } }
+      ? { sourceLanguageCode: 'es', capabilities: { recommendations: true } }
       : { sourceLanguageCode: 'en', capabilities: { recommendations: true } },
     collections: [{ id: 'my-words', name: 'My words' }],
     learningFilter: mockLearningFilter,
@@ -154,7 +156,7 @@ describe('continued learning session', () => {
     mockActiveCourseId = 'en-sk';
     mockWords = [mockFirstWord, mockNextWord];
     mockLearningFilter = 'all';
-    mockLearningPreferences = { levels: [], topics: [] };
+    mockLearningPreferences = { levels: ['B2'], topics: ['business'] };
     mockWordCapacity = { limit: 100, count: 2, remaining: 98, unlimited: false, shouldShowNotice: false };
     mockRateWord.mockImplementation(async () => undefined);
     mockAddRecommendedWords.mockResolvedValue(0);
@@ -320,22 +322,26 @@ describe('continued learning session', () => {
     expect(StyleSheet.flatten(browseButton.props.style).borderColor).not.toBe('transparent');
   });
 
-  it('shows connected first-word actions when the active course has no words', async () => {
+  it('lets existing Spanish users finish their recommendation preferences', async () => {
     mockActiveCourseId = 'es-sk';
+    mockLearningPreferences = { levels: ['A1'], topics: [] };
     mockBuildLearningFeed.mockReturnValue([]);
     mockBuildContinuedLearningFeed.mockReturnValue([]);
     const view = await render(<LearnScreen/>);
+    view.getByText('Personalize your Spanish words');
+    await fireEvent.press(view.getByRole('button', { name: 'Choose my preferences' }));
+    expect(mockRouterPush).toHaveBeenCalledWith('/preferences');
+  });
 
-    view.getByTestId('today-course-empty');
-    view.getByText('No Spanish words yet');
-    view.getByText('Each language keeps its own library and progress.');
-    view.getByText('Start your Spanish library');
-    expect(view.queryByRole('button', { name: 'Browse library' })).toBeNull();
-
-    await fireEvent.press(view.getByRole('button', { name: 'Add a Spanish word' }));
-    expect(mockRouterPush).toHaveBeenCalledWith('/word/new');
-    await fireEvent.press(view.getByRole('button', { name: 'Bulk paste' }));
-    expect(mockRouterPush).toHaveBeenCalledWith('/import');
+  it('offers the shared add-words action for Spanish', async () => {
+    mockActiveCourseId = 'es-sk';
+    mockBuildLearningFeed.mockReturnValue([]);
+    mockBuildContinuedLearningFeed.mockReturnValue([]);
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch.slice(0, 1));
+    const view = await render(<LearnScreen/>);
+    view.getByTestId('today-recommendations');
+    await fireEvent.press(view.getByTestId('add-today-recommendations'));
+    expect(mockAddRecommendedWords).toHaveBeenCalledWith(1);
   });
 
   it('keeps the existing library fallback for an empty course that supports recommendations', async () => {

@@ -7,6 +7,7 @@ import Animated, { FadeInDown, FadeOut, ReduceMotion } from 'react-native-reanim
 import { AppText } from '@/components/app-text';
 import { EmptyState } from '@/components/empty-state';
 import { PrimaryButton } from '@/components/primary-button';
+import { RecommendationFallbackNote } from '@/components/recommendation-fallback-note';
 import { Screen } from '@/components/screen';
 import { SwipeableWordCard } from '@/components/swipeable-word-card';
 import { WordCard } from '@/components/word-card';
@@ -134,7 +135,8 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     learningPreferences,
     activeWords.map((word) => word.normalizedTerm),
     10,
-  ) : [], [activeCourse.capabilities.recommendations, activeWords, learningPreferences]);
+    activeCourseId,
+  ) : [], [activeCourseId, activeCourse.capabilities.recommendations, activeWords, learningPreferences]);
   const hasRecommendationPreferences = learningPreferences.levels.length > 0
     && learningPreferences.topics.length > 0;
   const recommendationAddCount = wordCapacity.remaining === null
@@ -364,6 +366,12 @@ function LearningEmptyState({ title, message, recommendations, learningPreferenc
       </Animated.View>
     </ScrollView>;
   }
+  if (recommendations.length === 0 && !showManualCourseSetup
+    && (learningPreferences.levels.length === 0 || learningPreferences.topics.length === 0)) {
+    return <EmptyState title={`Personalize your ${learnedLanguage} words`}
+      message="Choose your levels and interests to get your next set of words."
+      actionLabel="Choose my preferences" onAction={() => router.push('/preferences')}/>;
+  }
   if (recommendations.length === 0) {
     return <EmptyState title={title} message={message} actionLabel="Browse library" actionVariant="secondary" compactAction onAction={() => router.push('/(tabs)/library')}/>;
   }
@@ -398,6 +406,7 @@ function LearningEmptyState({ title, message, recommendations, learningPreferenc
               <AppText variant="caption" style={{ color: theme.muted }}>{topics} · {recommendations.length} {wordLabel}</AppText>
             </View>
           </View>
+          <RecommendationFallbackNote recommendations={recommendations}/>
           <View style={styles.recommendationWords}>{recommendations.slice(0, 3).map(({ entry }) => <View key={entry.id} style={[styles.recommendationWord, { backgroundColor: theme.primarySoft }]}><AppText variant="label">{entry.term}</AppText><AppText variant="caption">{entry.level}</AppText></View>)}</View>
           <PrimaryButton testID="add-today-recommendations" label={`Add ${recommendations.length} ${wordLabel} & start learning`} loading={busy} onPress={onAdd} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/>
         </View>

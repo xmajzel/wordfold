@@ -6,10 +6,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeInDown, ReduceMotion, ZoomIn } from 'react-native-reanimated';
 
 import { AppText } from '@/components/app-text';
-import { describeCatalogAvailability } from '@/components/catalog-availability';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
-import { getCourseCatalogAvailability } from '@/data/course-catalog';
 import { requestReminderPermission } from '@/features/reminders/scheduler';
 import { useOfflinePronunciationDownloads } from '@/features/pronunciation/offline-downloads-provider';
 import { useAppTheme } from '@/hooks/use-app-theme';
@@ -48,7 +46,6 @@ export default function OnboardingReadyScreen() {
   const [busy, setBusy] = useState(false);
   const [reminderState, setReminderState] = useState<ReminderSetupState>({ status: 'idle' });
   const wordCount = Number.isFinite(Number(count)) ? Number(count) : 0;
-  const catalogAvailability = getCourseCatalogAvailability(activeCourse.id);
   const pronunciationLocale = pronunciationVoicePreference === 'neural-en-US'
     ? 'en-US'
     : pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : null;
@@ -159,11 +156,7 @@ export default function OnboardingReadyScreen() {
           <AppText variant="display" style={styles.center}>{wordCount > 0 ? 'Your first words are ready.' : `Your ${activeCourse.directionLabel} plan is ready.`}</AppText>
           <AppText style={[styles.center, { color: theme.muted }]}>{wordCount > 0
             ? `${wordCount} carefully selected ${wordCount === 1 ? 'word is' : 'words are'} waiting in your library.`
-            : activeCourse.id === 'es-sk'
-              ? catalogAvailability.total > 0
-                ? `Open Library → Discover and choose a level with entries. ${describeCatalogAvailability(catalogAvailability)} Add the words you want to practice to My words.`
-                : 'Add Spanish words manually or import your own definitions, examples, and Slovak hints. Reviewed built-in content will appear only after the catalog quality gate.'
-              : 'No new words were added. Your existing vocabulary and learning preferences are unchanged.'}</AppText>
+            : 'No new words were added. Your existing vocabulary is ready in your library.'}</AppText>
         </Animated.View>
         {Platform.OS !== 'web' && pronunciationLocale ? <Animated.View
           accessibilityLiveRegion="polite"

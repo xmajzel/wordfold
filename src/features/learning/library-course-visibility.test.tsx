@@ -53,7 +53,7 @@ jest.mock('@/providers/app-data-provider', () => ({
     activeCourse: {
       id: mockActiveCourseId,
       sourceLanguageCode: mockActiveCourseId === 'es-sk' ? 'es' : 'en', targetLanguageCode: 'sk',
-      capabilities: { bundledCatalog: true, recommendations: mockActiveCourseId === 'en-sk' },
+      capabilities: { bundledCatalog: true, recommendations: true },
     },
     learningPreferences: { levels: [], topics: [] },
     wordCapacity: { remaining: 99, shouldShowNotice: false },
@@ -101,15 +101,18 @@ describe('library course visibility', () => {
     expect(screen.queryByText('Baum')).toBeNull();
   });
 
-  it('enables Spanish A1 while visibly gating later levels', async () => {
+  it('enables Spanish A1–C1 while visibly gating C2', async () => {
     mockActiveCourseId = 'es-sk';
     const screen = await render(<LibraryScreen/>);
 
     expect(screen.getByTestId('catalog-level-A1').props.accessibilityState).toEqual({ disabled: false });
-    expect(screen.getByTestId('catalog-level-A2').props.accessibilityState).toEqual({ disabled: true });
+    for (const level of ['A2', 'B1', 'B2', 'C1']) {
+      expect(screen.getByTestId(`catalog-level-${level}`).props.accessibilityState).toEqual({ disabled: false });
+    }
     expect(screen.getByTestId('catalog-level-C2').props.accessibilityState).toEqual({ disabled: true });
-    screen.getAllByText('Not yet available');
-    screen.getByText('Unsupported by the current source');
-    screen.getByText('Spanish A1 catalog is available');
+    expect(screen.queryByText('Not yet available')).toBeNull();
+    screen.getByText('Currently unavailable');
+    screen.getByText('Recommended for you');
+    screen.getByRole('button', { name: 'Choose learning preferences' });
   });
 });

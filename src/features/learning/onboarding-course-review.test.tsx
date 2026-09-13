@@ -2,9 +2,11 @@ import { fireEvent, render, waitFor } from '@testing-library/react-native';
 
 import OnboardingScreen from '@/app/onboarding';
 
-const mockComplete = jest.fn(async () => 0);
+const mockComplete = jest.fn(async () => 10);
 const mockReplace = jest.fn();
 let mockCourseId = 'es-sk';
+let mockWords: { normalizedTerm: string; sourceLanguageCode: string; targetLanguageCode: string }[] = [];
+let mockRemaining = 100;
 
 jest.mock('expo-router', () => ({ Redirect: () => null, router: { replace: (...args: unknown[]) => mockReplace(...args) } }));
 jest.mock('react-native-safe-area-context', () => ({
@@ -14,10 +16,10 @@ jest.mock('react-native-safe-area-context', () => ({
 jest.mock('@/components/pronunciation-voice-picker', () => ({ PronunciationVoicePicker: () => null }));
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
-    words: [], onboardingComplete: false, activeCourseId: mockCourseId,
-    activeCourse: { id: mockCourseId, directionLabel: mockCourseId === 'es-sk' ? 'Slovak → Spanish' : 'Slovak → English', sourceLanguageCode: mockCourseId === 'es-sk' ? 'es' : 'en', capabilities: { recommendations: mockCourseId === 'en-sk', devicePronunciation: mockCourseId === 'en-sk', publicNeuralPronunciation: false, privateNeuralPronunciation: false, offlinePronunciation: false } },
+    words: mockWords, onboardingComplete: false, activeCourseId: mockCourseId,
+    activeCourse: { id: mockCourseId, directionLabel: mockCourseId === 'es-sk' ? 'Slovak → Spanish' : 'Slovak → English', sourceLanguageCode: mockCourseId === 'es-sk' ? 'es' : 'en', capabilities: { recommendations: true, devicePronunciation: mockCourseId === 'en-sk', publicNeuralPronunciation: false, privateNeuralPronunciation: false, offlinePronunciation: false } },
     switchActiveCourse: jest.fn(), completePersonalizedOnboarding: mockComplete,
-    wordCapacity: { remaining: 100 },
+    wordCapacity: { remaining: mockRemaining },
   }),
 }));
 jest.mock('react-native-reanimated', () => {
@@ -34,21 +36,27 @@ jest.mock('react-native-reanimated', () => {
   };
 });
 
-beforeEach(() => { jest.clearAllMocks(); mockCourseId = 'es-sk'; });
+beforeEach(() => { jest.clearAllMocks(); mockComplete.mockResolvedValue(10); mockCourseId = 'es-sk'; mockWords = []; mockRemaining = 100; });
 
-it('saves Spanish preferences without promising an automatically created starter set', async () => {
+it('offers Spanish interests and the same ten-word starter set as English', async () => {
   const view = await render(<OnboardingScreen/>);
   await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
-  expect(view.getByTestId('level-A2').props.accessibilityState).toMatchObject({ disabled: true });
+  for (const level of ['A2', 'B1', 'B2', 'C1']) {
+    expect(view.getByTestId(`level-${level}`).props.accessibilityState.disabled).not.toBe(true);
+  }
   expect(view.getByTestId('level-C2').props.accessibilityState).toMatchObject({ disabled: true });
-  await fireEvent.press(view.getByTestId('level-A1'));
+  await fireEvent.press(view.getByTestId('level-B2'));
   await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
+  expect(view.getByText('What will you use Spanish for?')).toBeTruthy();
+  await fireEvent.press(view.getByTestId('topic-business'));
+  await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
+  expect(view.getByText('Your first 10 words')).toBeTruthy();
   expect(view.queryByText('Preferred voice')).toBeNull();
   expect(view.queryByText('Phone voice')).toBeNull();
-  expect(view.queryByRole('button', { name: 'Create my set' })).toBeNull();
-  await fireEvent.press(view.getByRole('button', { name: 'Save my preferences' }));
-  await waitFor(() => expect(mockComplete).toHaveBeenCalledWith(expect.objectContaining({ levels: ['A1'] }), 'device'));
-  expect(mockReplace).toHaveBeenCalledWith({ pathname: '/onboarding-ready', params: { count: '0' } });
+  expect(view.queryByText(/entries/)).toBeNull();
+  await fireEvent.press(view.getByRole('button', { name: 'Create my set' }));
+  await waitFor(() => expect(mockComplete).toHaveBeenCalledWith(expect.objectContaining({ levels: ['B2'] }), 'device'));
+  expect(mockReplace).toHaveBeenCalledWith({ pathname: '/onboarding-ready', params: { count: '10' } });
 });
 
 it('keeps the English starter-set action', async () => {

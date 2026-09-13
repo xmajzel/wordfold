@@ -38,6 +38,7 @@ jest.mock('expo-sqlite', () => ({
 
 jest.mock('@/data/repository', () => ({
   listWords: jest.fn(async () => []),
+  completeOnboardingSetup: jest.fn(async () => undefined),
   listCollections: jest.fn(async () => []),
   getStats: jest.fn(async () => ({
     totalWords: 0,
@@ -149,8 +150,30 @@ function CourseProbe() {
   </Pressable>;
 }
 
+function StarterProbe() {
+  const { activeCourseId, completePersonalizedOnboarding } = useAppData();
+  return <Pressable onPress={() => void completePersonalizedOnboarding({ levels: ['A1'], topics: ['spoken'] }, 'device')}>
+    <Text>{`Create ${activeCourseId} starter`}</Text>
+  </Pressable>;
+}
+
 describe('AppDataProvider', () => {
   beforeEach(() => jest.clearAllMocks());
+
+  it('saves Spanish starter words with course metadata within the remaining capacity', async () => {
+    jest.mocked(repository.getActiveCourseId).mockResolvedValue('es-sk');
+    jest.mocked(repository.listWords).mockResolvedValue(Array.from({ length: 97 }, (_, index) => ({ ...word, id: String(index) })));
+    const view = await render(<AppDataProvider><StarterProbe/></AppDataProvider>);
+    await waitFor(() => view.getByText('Create es-sk starter'));
+    await fireEvent.press(view.getByText('Create es-sk starter'));
+    await waitFor(() => expect(repository.completeOnboardingSetup).toHaveBeenCalled());
+    const args = jest.mocked(repository.completeOnboardingSetup).mock.calls[0];
+    expect(args[3]).toHaveLength(3);
+    expect(args[3].every((input) => input.sourceLanguageCode === 'es' && input.sourcePronunciationLocale === 'es-ES' && input.cefrLevel === 'A1')).toBe(true);
+    expect(args[4]).toBe('es-sk');
+    jest.mocked(repository.listWords).mockResolvedValue([]);
+    jest.mocked(repository.getActiveCourseId).mockResolvedValue('en-sk');
+  });
 
   it('uses Suspense for only one SQLite provider', async () => {
     const providerTree = AppDataProvider({ children: <Text>Ready</Text> }) as ReactElement<{

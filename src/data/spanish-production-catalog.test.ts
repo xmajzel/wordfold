@@ -27,7 +27,7 @@ describe('bundled Spanish A1–C1 production catalog', () => {
         term: 'cabeza', translation: 'hlava', publicationStatus: 'production',
       });
       expect(courses.getCourseDefinition('es-sk').capabilities).toMatchObject({
-        bundledCatalog: true, recommendations: false, devicePronunciation: false,
+        bundledCatalog: true, recommendations: true, devicePronunciation: false,
       });
       expect(cefrLevels.slice(0, 5).every((level) => catalog.getCourseCatalogEntries('es-sk', level).length > 0)).toBe(true);
       expect(catalog.getCourseCatalogEntries('es-sk', 'C2')).toEqual([]);

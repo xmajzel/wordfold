@@ -62,7 +62,7 @@ export const courseDefinitions: readonly CourseDefinition[] = [
     catalogId: 'spanish-cefr',
     capabilities: {
       bundledCatalog: true,
-      recommendations: false,
+      recommendations: true,
       onDeviceTranslation: true,
       devicePronunciation: false,
       publicNeuralPronunciation: false,

@@ -11,6 +11,7 @@ import { describeCatalogAvailability } from '@/components/catalog-availability';
 import { CourseSelector } from '@/components/course-selector';
 import { LevelSelection, TopicSelection } from '@/components/preference-cards';
 import { PrimaryButton } from '@/components/primary-button';
+import { RecommendationFallbackNote } from '@/components/recommendation-fallback-note';
 import { PronunciationVoicePicker } from '@/components/pronunciation-voice-picker';
 import { Screen } from '@/components/screen';
 import { cefrLevelDescriptions } from '@/data/cefr-levels';
@@ -59,6 +60,7 @@ export default function OnboardingScreen() {
     preferences,
     words.filter((word) => wordBelongsToCourse(word, activeCourseId)).map((word) => word.normalizedTerm),
     previewLimit,
+    activeCourseId,
   ) : [], [activeCourse.capabilities.recommendations, activeCourseId, preferences, previewLimit, words]);
 
   if (wasCompleteOnEntry) return <Redirect href="/(tabs)" />;
@@ -160,7 +162,7 @@ export default function OnboardingScreen() {
           </View> : null}
           {step === levelStep ? <View style={styles.section}>
             <StepHeading eyebrow="YOUR STARTING POINT" title="Which levels feel right?" body="Choose one level or combine a few. You can change this later."/>
-            <LevelSelection selected={levels} onToggle={toggleLevel} disabledLevels={Object.fromEntries(Object.entries(catalogAvailability.levels).flatMap(([level, state]) => state === 'available' ? [] : [[level, state === 'unsupported-by-source' ? 'Unsupported by the current source' : 'Not yet available']]))}/>
+            <LevelSelection selected={levels} onToggle={toggleLevel} disabledLevels={Object.fromEntries(Object.entries(catalogAvailability.levels).flatMap(([level, state]) => state === 'available' ? [] : [[level, state === 'unsupported-by-source' ? 'Currently unavailable' : 'Not yet available']]))}/>
             <AppText variant="caption" style={{ color: theme.muted }}>{activeCourse.capabilities.recommendations
               ? 'Levels set the difficulty boundary for every recommendation.'
               : describeCatalogAvailability(getCourseCatalogAvailability(activeCourseId))}</AppText>
@@ -270,6 +272,7 @@ function ReviewStep({ preferences, preview, voicePreference, course }: {
         {preview.length === 1 ? 'This word will' : `Your first ${preview.length} words will`} be ready to hear offline in {voicePreference === 'neural-en-US' ? 'Ava’s' : 'Ryan’s'} voice.
       </AppText>
     </View>}
+    <RecommendationFallbackNote recommendations={preview}/>
     <View style={styles.previewGrid}>{preview.map(({ entry }) => <View key={entry.id} style={[styles.wordChip, { backgroundColor: theme.primarySoft }]}><AppText variant="label" style={{ color: theme.primary }}>{entry.term}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{entry.level}</AppText></View>)}</View>
     <AppText variant="caption" style={{ color: theme.muted }}>Existing words are never removed. Future recommendations will follow the same preferences.</AppText>
   </View>;
