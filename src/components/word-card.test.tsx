@@ -48,6 +48,16 @@ const word: Word = {
 };
 
 describe('WordCard learning actions', () => {
+  it('opens reporting without rating or changing the displayed word', async () => {
+    const onRate = jest.fn();
+    const onReport = jest.fn();
+    const screen = await render(<WordCard word={word} onRate={onRate} onReport={onReport}/>);
+    await fireEvent.press(screen.getByRole('button', { name: 'Report an issue with this word' }));
+    expect(onReport).toHaveBeenCalledTimes(1);
+    expect(onRate).not.toHaveBeenCalled();
+    expect(screen.getByText('scope')).toBeTruthy();
+  });
+
   it('hides learning history while keeping it on compact library cards', async () => {
     const learningCard = await render(<WordCard word={word}/>);
 

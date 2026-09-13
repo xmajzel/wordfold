@@ -15,8 +15,8 @@ import { getNextReviewIntervalRange } from '@/features/learning/algorithm';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { radii, spacing } from '@/theme/tokens';
 
-export const WordCard = memo(function WordCard({ word, collectionName, onRate, onRetryTranslation, sessionRating, translationStatus, compact = false, dense = false, showPronunciation = false, pronunciationActive = true, animateEntrance = true }:
-  { word: Word; collectionName?: string; onRate?(rating: LearningRating): void; onRetryTranslation?(): void; sessionRating?: LearningRating; translationStatus?: 'loading' | 'error'; compact?: boolean; dense?: boolean; showPronunciation?: boolean; pronunciationActive?: boolean; animateEntrance?: boolean }) {
+export const WordCard = memo(function WordCard({ onReport, word, collectionName, onRate, onRetryTranslation, sessionRating, translationStatus, compact = false, dense = false, showPronunciation = false, pronunciationActive = true, animateEntrance = true }:
+  { onReport?(): void; word: Word; collectionName?: string; onRate?(rating: LearningRating): void; onRetryTranslation?(): void; sessionRating?: LearningRating; translationStatus?: 'loading' | 'error'; compact?: boolean; dense?: boolean; showPronunciation?: boolean; pronunciationActive?: boolean; animateEntrance?: boolean }) {
   const theme = useAppTheme();
   const [showTranslation, setShowTranslation] = useState(false);
   const nextReviewRange = getNextReviewIntervalRange(word);
@@ -35,7 +35,7 @@ export const WordCard = memo(function WordCard({ word, collectionName, onRate, o
   return (
     <Animated.View entering={animateEntrance ? FadeInDown.springify().damping(18).reduceMotion(ReduceMotion.System) : undefined} style={[styles.card, dense && styles.denseCard, { backgroundColor: theme.surface, shadowColor: theme.shadow }]}>
       <LinearGradient colors={theme.primaryGradient} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.accentLine}/>
-      <View style={styles.topRow}><StateBadge state={word.state}/><View style={styles.cardMeta}>{collectionName ? <AppText variant="caption" style={{ color: theme.muted }}>{collectionName}</AppText> : null}{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}</View></View>
+      <View style={styles.topRow}><StateBadge state={word.state}/><View style={styles.cardMeta}>{collectionName ? <AppText variant="caption" style={{ color: theme.muted }}>{collectionName}</AppText> : null}{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}{onReport ? <Pressable accessibilityRole="button" accessibilityLabel="Report an issue with this word" onPress={onReport} style={{ minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }}><Ionicons name="flag-outline" size={18} color={theme.muted}/></Pressable> : null}</View></View>
       <View style={styles.wordSection}><AppText variant="display" style={[styles.word, dense && styles.denseWord]}>{word.term}</AppText>{word.partOfSpeech ? <AppText variant="label" style={{ color: theme.accent }}>{word.partOfSpeech}</AppText> : null}{showPronunciation && wordSupportsPronunciation(word) ? <PronunciationControls text={word.term} sourceLanguageCode={word.sourceLanguageCode} locale={word.sourcePronunciationLocale} catalogSenseId={word.catalogSenseId} compact={dense} active={pronunciationActive}/> : null}</View>
       <AppText numberOfLines={dense ? 2 : undefined} style={styles.definition}>{word.definition}</AppText>
       {word.example ? <View style={[styles.example, dense && styles.denseExample, { backgroundColor: theme.raised }]}><Ionicons name="chatbubble-ellipses-outline" size={18} color={theme.primary}/><AppText accessibilityLabel={word.example} numberOfLines={dense ? 1 : undefined} style={styles.exampleText}>{word.example}</AppText></View> : null}

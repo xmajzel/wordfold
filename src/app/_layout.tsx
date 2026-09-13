@@ -15,6 +15,7 @@ import { AuthProvider } from '@/providers/auth-provider';
 import { SyncProvider } from '@/providers/sync-provider';
 import { PurchaseProvider } from '@/providers/purchase-provider';
 import { LaunchScreen } from '@/components/launch-screen';
+import { FeedbackCoordinator } from '@/features/feedback/feedback-coordinator';
 import { AppUpdateGate } from '@/features/updates/app-update-gate';
 import { getNotificationWordTarget } from '@/features/reminders/notification-navigation';
 import { PronunciationCacheScopeProvider } from '@/features/pronunciation/cache-scope-provider';
@@ -68,6 +69,7 @@ function Navigation() {
         <Stack.Screen name="onboarding" options={{ gestureEnabled: false }} />
         <Stack.Screen name="onboarding-ready" options={{ gestureEnabled: false }} />
         <Stack.Screen name="preferences" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="feedback" options={{ presentation: 'modal' }} />
         <Stack.Screen name="settings" options={{ presentation: 'modal' }} />
         <Stack.Screen name="sources" options={{ presentation: 'modal' }} />
         <Stack.Screen name="offline-pronunciation" options={{ presentation: 'modal' }} />
@@ -109,7 +111,7 @@ function AppReadyGate({ fontsLoaded }: { fontsLoaded: boolean }) {
 
   return (
     <View style={styles.root}>
-      {ready ? <AppUpdateGate><PronunciationLibraryDownloadCoordinator/><Navigation /></AppUpdateGate> : null}
+      {ready ? <AppUpdateGate><FeedbackCoordinator/><PronunciationLibraryDownloadCoordinator/><Navigation /></AppUpdateGate> : null}
       {showLaunch ? <LaunchScreen ready={releaseLaunch} onFinish={finishLaunch}/> : null}
     </View>
   );

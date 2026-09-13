@@ -176,3 +176,48 @@ See [content attribution](assets/licenses/CONTENT_SOURCES.md) for sources, licen
 - `src/providers`: application data boundary
 - `modules/wordfold-translate`: narrow Expo native module for ML Kit
 - `assets/catalog`: bundled read-only dictionary and discovery data
+
+## Feedback and Resend
+
+Feedback is available from Settings, Today, and word details. Guests can submit without an
+account. The app saves reports in a separate AsyncStorage queue, retries on launch, foreground,
+and every minute while active, and removes a local report only after server acknowledgement.
+The feedback screen shows pending or rejected reports and supports retry/removal. Unsubmitted
+form drafts are not persisted. Keep the app installed to preserve pending reports.
+
+The `feedback_reports` Supabase table is private (no anon/authenticated table access). A bounded,
+validated guest endpoint accepts up to 20 reports per installation/day, 50 per network/hour,
+and 200 globally/day. The global limit is a beta abuse backstop, including when network headers
+are unavailable or installation identifiers are rotated. Review reports in Supabase Table Editor;
+update `status` as needed. Full context is in `report`; `email_status` tracks notification delivery.
+Feedback does not participate in PowerSync or change vocabulary/learning records.
+
+To enable the backend after reviewing/applying the feedback migration:
+
+1. Verify `wordfold.app` in Resend using the DNS records provided by Resend.
+2. Set server-only Supabase function secrets `RESEND_API_KEY`,
+   `FEEDBACK_FROM_EMAIL` = `Wordfold <feedback@wordfold.app>`, and a random
+   `FEEDBACK_WORKER_SECRET` (at least 32 random bytes). Never put these in Expo public variables.
+3. Deploy `feedback-submit` and `feedback-notify` using their checked-in `verify_jwt = false`
+   configuration. The submission endpoint allows guests; the notification endpoint requires
+   the worker secret. No Resend API key is shipped in the app.
+4. In Supabase Vault, create `feedback_notify_url` with the deployed
+   `https://<project-ref>.supabase.co/functions/v1/feedback-notify` URL and
+   `feedback_worker_secret` with exactly the same worker secret as step 2. The migration creates
+   a one-minute pg_cron job; until both Vault entries exist it does nothing.
+5. Publish the updated privacy page before enabling feedback in a distributed build.
+6. Send an explicitly approved smoke-test report and check the table, Resend delivery status,
+   and `jozefmajzel1@gmail.com`. Resend acceptance is not proof of inbox delivery.
+
+The worker claims at most 10 notifications with five-minute leases and uses stable Resend
+idempotency keys. It retries up to 12 times within 23 hours of the first attempt, preserving
+reports if email fails. It stops ambiguous retries before Resend's 24-hour deduplication window
+expires; inspect `email_status = 'failed'` and Resend delivery logs before manually retrying.
+Do not change the sender during an active retry window, because Resend requires identical payloads
+for the same idempotency key. Email failures never roll back an accepted feedback report.
+Reports/email copies are independent of cloud account deletion; handle feedback deletion requests
+in both the table and inbox. The client provides an optional reply address, not verified identity.
+
+Local verification: run `pnpm test -- --runTestsByPath` with the feedback test files, `pnpm typecheck`,
+`pnpm lint`, and `pnpm db:test` against a local Supabase instance. Never run database tests against
+production. The notification worker tests use a fake provider and do not send email.

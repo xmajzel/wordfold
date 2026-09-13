@@ -1,3 +1,5 @@
+import { rememberFeedbackOrigin } from '@/features/feedback/context';
+import { FeedbackLink } from '@/features/feedback/feedback-link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -303,7 +305,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
                 && isOnDeviceTranslationPairSupported(word.sourceLanguageCode, word.targetLanguageCode)
                 ? translationStates[word.id] ?? 'loading'
                 : undefined;
-              return <WordCard animateEntrance={false} word={word}
+              return <WordCard onReport={() => { router.push({ pathname: '/feedback', params: { origin: rememberFeedbackOrigin('today', word) } } as never); }} animateEntrance={false} word={word}
                 collectionName={collectionNames[word.collectionId]} dense={denseCards}
                 sessionRating={sessionRating} showPronunciation pronunciationActive={active}
                 translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(word)}
@@ -443,6 +445,7 @@ function Header({ filter, availableFilters, learnedLanguage, onSelectFilter }: {
   const theme = useAppTheme();
   return <View style={styles.headerBlock}>
     <View style={styles.header}><View><AppText variant="title">Today’s {learnedLanguage.toLowerCase()}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Showing {filter === 'all' ? `all ${learnedLanguage.toLowerCase()} words` : categoryWordLabel(filter)}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Open settings" onPress={() => router.push('/settings')} style={({ pressed }) => [styles.settings, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.7 : 1 }]}><Ionicons name="options-outline" color={theme.primary} size={22}/></Pressable></View>
+    <FeedbackLink screen="today" label="Help improve Wordfold"/>
     <ScrollView horizontal accessibilityRole="tablist" showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filters}>
       {filterOptions.filter((option) => availableFilters.includes(option.id)).map((option) => <Pressable key={option.id} accessibilityRole="tab" accessibilityLabel={`Show ${option.label} words`} accessibilityState={{ selected: filter === option.id }} aria-selected={filter === option.id} onPress={() => void onSelectFilter(option.id)} style={[styles.filter, { backgroundColor: filter === option.id ? theme.primary : theme.surface, borderColor: filter === option.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: filter === option.id ? '#FFFFFF' : theme.text }}>{option.label}</AppText></Pressable>)}
     </ScrollView>

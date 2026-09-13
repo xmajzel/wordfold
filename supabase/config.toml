@@ -388,6 +388,13 @@ verify_jwt = true
 [functions.pronunciation-private-cleanup]
 verify_jwt = false
 
+# Guest feedback is validated and rate-limited by feedback-submit. The worker uses its own secret.
+[functions.feedback-submit]
+verify_jwt = false
+
+[functions.feedback-notify]
+verify_jwt = false
+
 # [edge_runtime.secrets]
 # secret_key = "env(SECRET_VALUE)"
 

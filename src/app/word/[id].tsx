@@ -1,3 +1,4 @@
+import { FeedbackLink } from '@/features/feedback/feedback-link';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -189,6 +190,9 @@ export default function WordDetailScreen() {
   return (
     <Screen scroll>
       <Header />
+      <FeedbackLink screen="word-detail" word={{ ...word, term, definition, translation, example,
+        sourceLanguageCode, targetLanguageCode, catalogSenseId: catalogAssociationRemoved ? null : word.catalogSenseId,
+      }} label="Report an issue with this word"/>
       <View style={styles.titleRow}><View style={styles.titleText}><AppText variant="display">{word.term}</AppText><AppText style={{ color: theme.muted }}>{collections.find((item) => item.id === word.collectionId)?.name}</AppText></View><StateBadge state={word.state}/></View>
       {languagePairSupportsPronunciation(sourceLanguageCode, targetLanguageCode) ? <PronunciationControls
         text={term || word.term}
