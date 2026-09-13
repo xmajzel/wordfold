@@ -6,6 +6,7 @@ import type { CefrCatalogEntry, CefrLevel } from '@/domain/types';
 
 const mockCreateWord = jest.fn(async () => 'word-1');
 let mockSpanishCourse = false;
+let mockBundledCatalog = false;
 let mockMemberSearch = false;
 let mockLevelState: 'available' | 'not-yet-available' | 'unsupported-by-source' = 'available';
 let mockLevel: CefrLevel = 'A1';
@@ -46,8 +47,10 @@ jest.mock('react-native-reanimated', () => {
 });
 
 jest.mock('@/data/course-catalog', () => ({
-  getCourseCatalogLevelState: () => mockLevelState,
-  getCourseCatalogEntriesForNormalizedTerm: (_courseId: string, normalizedTerm: string) => normalizedTerm === 'fotografía' ? [{
+  getCourseCatalogLevelState: (courseId: string, level: string) => mockBundledCatalog
+    ? jest.requireActual('@/data/course-catalog').getCourseCatalogLevelState(courseId, level) : mockLevelState,
+  getCourseCatalogEntriesForNormalizedTerm: (courseId: string, normalizedTerm: string) => mockBundledCatalog
+    ? jest.requireActual('@/data/course-catalog').getCourseCatalogEntriesForNormalizedTerm(courseId, normalizedTerm) : normalizedTerm === 'fotografía' ? [{
     ...mockEntry,
     id: 'es-cefr:fotografia', catalogSenseId: 'es-sk:a1:i57211',
     term: 'fotografía', normalizedTerm: 'fotografía', translation: 'fotografia',
@@ -56,7 +59,8 @@ jest.mock('@/data/course-catalog', () => ({
     publicationStatus: 'production', learnerContentReviewStatus: 'approved', hintReviewStatus: 'approved',
     levelEvidence: 'ELELex A1 level assignment', alternativeTerms: ['foto'],
   }] : [],
-  getCourseCatalogEntries: () => [{
+  getCourseCatalogEntries: (courseId: string, level: string) => mockBundledCatalog
+    ? jest.requireActual('@/data/course-catalog').getCourseCatalogEntries(courseId, level) : [{
     ...mockEntry,
     courseId: 'en-sk', sourceLanguageCode: 'en', targetLanguageCode: 'sk',
     publicationStatus: 'production', learnerContentReviewStatus: 'approved',
@@ -96,6 +100,7 @@ describe('CEFR catalog word translation', () => {
     jest.clearAllMocks();
     jest.spyOn(Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 1, fontScale: 1 });
     mockSpanishCourse = false;
+    mockBundledCatalog = false;
     mockMemberSearch = false;
     mockLevelState = 'available';
     mockLevel = 'A1';
@@ -153,6 +158,25 @@ describe('CEFR catalog word translation', () => {
     await fireEvent.press(view.getByRole('button', { name: 'Add to My words' }));
     await waitFor(() => expect(mockCreateWord).toHaveBeenCalledWith(expect.objectContaining({
       term: 'fotografía', translation: 'fotografia', catalogSenseId: 'es-sk:a1:i57211',
+    })));
+  });
+
+  it.each(['A2', 'B1', 'B2', 'C1'] as const)('browses, searches and adds a real bundled Spanish %s word', async (level) => {
+    mockSpanishCourse = true;
+    mockBundledCatalog = true;
+    mockLevel = level;
+    const catalog = jest.requireActual<typeof import('@/data/course-catalog')>('@/data/course-catalog');
+    const entry = catalog.getCourseCatalogEntries('es-sk', level)[0];
+    const view = await render(<CefrLevelScreen/>);
+    view.getByText(`${catalog.getCourseCatalogEntries('es-sk', level).length.toLocaleString()} offline words with Spanish definitions and Slovak hints`);
+    await fireEvent.changeText(view.getByPlaceholderText('Word or meaning'), entry.term);
+    view.getAllByText(entry.term);
+    view.getAllByText(`Slovak hint: ${entry.translation}`);
+    await fireEvent.press(view.getAllByRole('button', { name: 'Add to My words' })[0]);
+    await waitFor(() => expect(mockCreateWord).toHaveBeenCalledWith(expect.objectContaining({
+      term: entry.term, definition: entry.definition, translation: entry.translation,
+      catalogSenseId: entry.catalogSenseId, cefrLevel: level,
+      sourceLanguageCode: 'es', targetLanguageCode: 'sk',
     })));
   });
 

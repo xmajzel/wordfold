@@ -1,4 +1,4 @@
-import spanishA1Json from '../../assets/catalog/spanish/a1-course.json';
+import spanishJson from '../../assets/catalog/spanish/course.json';
 
 import type { CourseId } from '@/domain/courses';
 import type { CefrCatalogEntry, CefrLevel } from '@/domain/types';
@@ -33,7 +33,7 @@ export interface CourseCatalogEntry extends CefrCatalogEntry {
   alternativeTerms?: string[];
 }
 
-const spanishAsset = spanishA1Json as SpanishCourseAsset;
+const spanishAsset = spanishJson as SpanishCourseAsset;
 const spanishRuntime = createSpanishCourseRuntime(spanishAsset);
 
 function englishEntry(entry: CefrCatalogEntry): CourseCatalogEntry {
@@ -58,7 +58,7 @@ function spanishEntry(entry: SpanishRuntimeCatalogEntry): CourseCatalogEntry {
     publicationStatus: 'production',
     learnerContentReviewStatus: 'approved',
     hintReviewStatus: 'approved',
-    levelEvidence: 'ELELex A1 level assignment',
+    levelEvidence: `ELELex ${entry.level} level assignment`,
   };
 }
 

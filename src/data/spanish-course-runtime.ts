@@ -31,7 +31,7 @@ export interface SpanishCourseMember {
 export interface SpanishCourseConcept {
   id: string;
   notHumanReview: true;
-  level: 'A1';
+  level: Exclude<CefrLevel, 'C2'>;
   partOfSpeech: string;
   courseOrder: number;
   sharedSlovakHint: string;
@@ -64,6 +64,7 @@ export interface SpanishCourseAsset {
     ownerPendingConcepts: number;
   };
   levels: Record<CefrLevel, SpanishCourseLevelState>;
+  excludedConcepts?: { id: string; level: Exclude<CefrLevel, 'A1' | 'C2'>; reason: 'pending-owner-verdict' | 'stale-slovak-hint' }[];
   concepts: SpanishCourseConcept[];
 }
 
@@ -83,24 +84,27 @@ export function validateSpanishCourseAsset(asset: SpanishCourseAsset) {
   assert(asset.status === 'non-distributable-staging' || asset.status === 'production', 'Invalid Spanish course status.');
   assert(asset.status !== 'production' || !asset.distributionBlocker, 'A production Spanish course cannot retain a distribution blocker.');
   assert(asset.reviewDisclosure === SPANISH_DEFINITION_REVIEW_DISCLOSURE, 'Spanish review disclosure must use the approved wording.');
-  assert(asset.pronunciationEnabled === false, 'Spanish pronunciation must remain disabled for the initial A1 release.');
+  assert(asset.pronunciationEnabled === false, 'Spanish pronunciation must remain disabled.');
   assert(asset.levels.A1 === (asset.status === 'production' ? 'available' : 'blocked-pending-owner-review'), 'A1 availability does not match the asset status.');
   assert(asset.levels.C2 === 'unavailable-no-elelex-source-level', 'Spanish C2 must remain unavailable without a source level.');
 
   const conceptIds = new Set<string>();
   const memberIds = new Set<string>();
-  let previousOrder = 0;
+  const previousOrderByLevel = new Map<CefrLevel, number>();
+  const excludedIds = new Set(asset.excludedConcepts?.map((concept) => concept.id));
   let termCount = 0;
   let reviewedCount = 0;
   let requiredCount = 0;
   let resolvedRequiredCount = 0;
   for (const concept of asset.concepts) {
     assert(!conceptIds.has(concept.id), `Duplicate Spanish concept ID: ${concept.id}`);
-    assert(concept.notHumanReview === true && concept.level === 'A1', `${concept.id}: invalid review or level metadata.`);
-    assert(concept.courseOrder === previousOrder + 1, `${concept.id}: course order must be contiguous.`);
+    assert(!excludedIds.has(concept.id), `${concept.id}: a pending review finding cannot be bundled.`);
+    assert(concept.notHumanReview === true && ['A1', 'A2', 'B1', 'B2', 'C1'].includes(concept.level), `${concept.id}: invalid review or level metadata.`);
+    assert(['available', 'blocked-pending-owner-review'].includes(asset.levels[concept.level]), `${concept.id}: content cannot belong to an unavailable level.`);
+    assert(concept.courseOrder === (previousOrderByLevel.get(concept.level) ?? 0) + 1, `${concept.id}: course order must be contiguous within its level.`);
     assert(concept.members.length > 0, `${concept.id}: concept has no members.`);
     conceptIds.add(concept.id);
-    previousOrder = concept.courseOrder;
+    previousOrderByLevel.set(concept.level, concept.courseOrder);
     if (concept.review.slovakOwnerVerdict) reviewedCount += 1;
     if (concept.review.slovakOwnerVerdictRequired) {
       requiredCount += 1;
@@ -115,6 +119,9 @@ export function validateSpanishCourseAsset(asset: SpanishCourseAsset) {
       memberIds.add(member.entryId);
       termCount += 1;
     }
+  }
+  for (const [level, state] of Object.entries(asset.levels)) {
+    assert(state !== 'available' || previousOrderByLevel.has(level as CefrLevel), `${level}: an available level must contain concepts.`);
   }
   assert(asset.counts.concepts === asset.concepts.length, 'Spanish concept count does not match the manifest.');
   assert(asset.counts.terms === termCount, 'Spanish term count does not match the manifest.');
@@ -139,7 +146,7 @@ function presentation(concept: SpanishCourseConcept, member: SpanishCourseMember
     translation: member.slovakHint,
     catalogSenseId: concept.id,
     source: 'wordfold-original-spanish',
-    sourceVersion: 'elelex-a1-v1',
+    sourceVersion: `elelex-${concept.level.toLowerCase()}-v1`,
     sourcePartOfSpeech: [member.partOfSpeech],
     alternativeTerms: concept.members.filter((candidate) => candidate.entryId !== member.entryId).map((candidate) => candidate.term),
   };
@@ -167,11 +174,11 @@ export function createSpanishCourseRuntime(asset: SpanishCourseAsset) {
     },
     entry(catalogSenseId: string | null) {
       const concept = catalogSenseId ? conceptById.get(catalogSenseId) : undefined;
-      return concept ? presentation(concept, concept.members[0]) : null;
+      return concept && asset.levels[concept.level] === 'available' ? presentation(concept, concept.members[0]) : null;
     },
     entriesForNormalizedTerm(normalizedTerm: string) {
-      if (asset.levels.A1 !== 'available') return [];
       return (matchesByNormalizedTerm.get(normalizedTerm) ?? [])
+        .filter(({ concept }) => asset.levels[concept.level] === 'available')
         .map(({ concept, member }) => presentation(concept, member));
     },
   };

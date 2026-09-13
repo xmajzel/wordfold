@@ -18,15 +18,15 @@ describe('course-aware catalog', () => {
     expect(cefrLevels.every((level) => getCourseCatalogLevelState('en-sk', level) === 'available')).toBe(true);
   });
 
-  it('bundles the approved Spanish A1 concepts and no unreleased later-level data', () => {
+  it('bundles Spanish A1–C1 while leaving C2 unsupported', () => {
     expect(getCourseCatalogEntries('es-sk', 'A1')).toHaveLength(1599);
-    expect(cefrLevels.slice(1).flatMap((level) => getCourseCatalogEntries('es-sk', level))).toEqual([]);
+    expect(getCourseCatalogEntries('es-sk', 'C2')).toHaveLength(0);
     expect(getCourseCatalogAvailability('es-sk')).toEqual({
-      total: 1599,
-      counts: { A1: 1599, A2: 0, B1: 0, B2: 0, C1: 0, C2: 0 },
+      total: 5888,
+      counts: { A1: 1599, A2: 1763, B1: 1272, B2: 723, C1: 531, C2: 0 },
       levels: {
-        A1: 'available', A2: 'not-yet-available', B1: 'not-yet-available',
-        B2: 'not-yet-available', C1: 'not-yet-available', C2: 'unsupported-by-source',
+        A1: 'available', A2: 'available', B1: 'available',
+        B2: 'available', C1: 'available', C2: 'unsupported-by-source',
       },
       state: 'available',
     });
@@ -47,7 +47,7 @@ describe('course-aware catalog', () => {
     expect(asset).toMatchObject({
       status: 'production',
       pronunciationEnabled: false,
-      counts: { concepts: 1599, terms: 1687, ownerVerdictRequiredConcepts: 47, ownerPendingConcepts: 0 },
+      counts: { concepts: 5888, terms: 6086, ownerVerdictRequiredConcepts: 47, ownerPendingConcepts: 0 },
     });
   });
 });

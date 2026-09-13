@@ -142,6 +142,7 @@
     "spanish:a2:quality:verify-corrections": "node scripts/spanish-a1-quality-qa.mjs analyze --level A2 --learner-manifest .artifacts/spanish-a2-learner-content/full/manifest.json --output-dir .artifacts/spanish-a2-post-correction-quality-qa --group external",
     "spanish:cefr:build": "node scripts/build-spanish-cefr-catalog.mjs",
     "spanish:cefr:order": "node scripts/build-spanish-cefr-order.mjs",
+    "spanish:course:build": "node scripts/build-spanish-course.mjs",
     "spanish:expansion:validate": "node scripts/spanish-expansion-pipeline.mjs validate",
     "spanish:expansion:review-template": "node scripts/spanish-expansion-pipeline.mjs review-template",
     "spanish:expansion:compile-preview": "node scripts/spanish-expansion-pipeline.mjs compile-preview",

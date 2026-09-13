@@ -70,6 +70,28 @@ test('keeps all entries inaccessible while a staged asset is distribution-blocke
   expect(runtime.levelState('A1')).toBe('blocked-pending-owner-review');
   expect(runtime.entries('A1')).toEqual([]);
   expect(runtime.entriesForNormalizedTerm('coche')).toEqual([]);
+  expect(runtime.entry('es-sk:a1:i1')).toBeNull();
+});
+
+test('supports later levels with their own order, lookup and source metadata', () => {
+  const asset = fixture();
+  asset.concepts[1].level = 'B2';
+  asset.concepts[1].courseOrder = 1;
+  asset.levels.B2 = 'available';
+  const runtime = createSpanishCourseRuntime(asset);
+  expect(runtime.entries('A1')).toHaveLength(1);
+  expect(runtime.entries('B2')).toHaveLength(1);
+  expect(runtime.entriesForNormalizedTerm('ave')[0]).toMatchObject({ level: 'B2', sourceVersion: 'elelex-b2-v1' });
+  expect(runtime.entry('es-sk:a1:i2')).toMatchObject({ level: 'B2', term: 'ave' });
+});
+
+test('rejects empty available levels and concepts with pending verdicts', () => {
+  const asset = fixture();
+  asset.levels.A2 = 'available';
+  expect(() => validateSpanishCourseAsset(asset)).toThrow('an available level must contain concepts');
+  asset.levels.A2 = 'not-generated';
+  asset.excludedConcepts = [{ id: asset.concepts[0].id, level: 'A2', reason: 'pending-owner-verdict' }];
+  expect(() => validateSpanishCourseAsset(asset)).toThrow('a pending review finding cannot be bundled');
 });
 
 test('rejects production assets that retain a distribution blocker', () => {
