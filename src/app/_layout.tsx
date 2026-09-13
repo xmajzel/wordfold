@@ -15,6 +15,7 @@ import { AuthProvider } from '@/providers/auth-provider';
 import { SyncProvider } from '@/providers/sync-provider';
 import { PurchaseProvider } from '@/providers/purchase-provider';
 import { LaunchScreen } from '@/components/launch-screen';
+import { AppUpdateGate } from '@/features/updates/app-update-gate';
 import { getNotificationWordTarget } from '@/features/reminders/notification-navigation';
 import { PronunciationCacheScopeProvider } from '@/features/pronunciation/cache-scope-provider';
 import { OfflinePronunciationDownloadsProvider } from '@/features/pronunciation/offline-downloads-provider';
@@ -108,7 +109,7 @@ function AppReadyGate({ fontsLoaded }: { fontsLoaded: boolean }) {
 
   return (
     <View style={styles.root}>
-      {ready ? <><PronunciationLibraryDownloadCoordinator/><Navigation /></> : null}
+      {ready ? <AppUpdateGate><PronunciationLibraryDownloadCoordinator/><Navigation /></AppUpdateGate> : null}
       {showLaunch ? <LaunchScreen ready={releaseLaunch} onFinish={finishLaunch}/> : null}
     </View>
   );

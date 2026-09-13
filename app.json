@@ -3,6 +3,12 @@
     "name": "Wordfold",
     "slug": "wordfold",
     "version": "1.0.0",
+    "runtimeVersion": { "policy": "fingerprint" },
+    "updates": {
+      "url": "https://u.expo.dev/fc5de0e8-254c-4485-a4e2-159f8ea0cedc",
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
+    },
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "wordfold",

@@ -80,6 +80,68 @@ with the compact Phone voice fallback; and signed-in private-pronunciation conse
 The owner also confirmed the approved Azure budget notifications. iOS remains deferred because no
 physical iOS device is currently available and is not a blocker for the Android-first release.
 
+## App updates
+
+The app includes `expo-updates`, using fingerprint runtime compatibility and separate
+`preview` and `production` EAS channels. Compatible updates download at launch without
+blocking startup and apply on the next cold start. Native changes still require a new
+store binary. See [Expo SDK 56 Updates](https://docs.expo.dev/versions/v56.0.0/sdk/updates/).
+
+Apply `20260913120000_create_app_release_policies.sql` to the intended Supabase project
+before announcing releases. Its public table is readable by guests and signed-in users;
+only trusted administrators can write it. It is deliberately unseeded. A missing row
+means no store prompt; deleting a row revokes its policy on the next successful check.
+
+After a store release is available to all intended users, upsert its policy through the
+Supabase SQL editor. Example only: replace build numbers with verified released builds.
+
+```sql
+insert into public.app_release_policies
+  (application_id, platform, channel, latest_build, minimum_supported_build, message, store_url)
+values
+  ('com.jozefmajzel.wordfold', 'android', 'production', 6, 5,
+   'A new version of Wordfold is available.',
+   'https://play.google.com/store/apps/details?id=com.jozefmajzel.wordfold')
+on conflict (application_id, platform, channel) do update set
+  latest_build = excluded.latest_build,
+  minimum_supported_build = excluded.minimum_supported_build,
+  message = excluded.message,
+  store_url = excluded.store_url;
+```
+
+Builds below `latest_build` receive a prompt with a 24-hour reminder option. Builds below
+`minimum_supported_build` receive a non-dismissible update dialog. Reserve that threshold
+for releases that must replace unsupported versions, and raise it only after full store
+availability, including supported device/OS coverage. This is a client UI gate, not a
+server API security boundary. Vocabulary and queued sync data are preserved.
+
+Checks run at startup and on foreground (at most once per minute). Requests time out
+after five seconds. A failed request preserves the last validated cached policy; without
+a cache the app remains usable offline. Invalid responses never replace the cache.
+The required dialog includes a retry action so a revoked policy can be refreshed.
+
+Policies are scoped by application ID, platform, and EAS channel. Builds without an EAS
+channel use `preview`; development and web bypass the gate. Preview builds must use the
+intended non-production Supabase environment. For future iOS releases, use monotonically
+increasing integer `ios.buildNumber` values and a verified `apps.apple.com` listing URL;
+unknown/non-integer native builds skip the gate. No iOS policy is preconfigured.
+
+The first binary containing this implementation must be installed through the store;
+older binaries cannot acquire the update mechanism remotely. Increment `android.versionCode`
+before that release. Regenerate ignored native folders from app config before a local
+build; existing generated folders may still have updates disabled. Cloud builds use
+the checked-in config when native folders are excluded from the upload.
+
+For compatible OTA releases, use `eas update --channel production --environment production`
+with the same native runtime and public environment as the installed binary. Test on
+the preview channel first. Do not automatically reload during a learning session.
+Publishing OTA updates is a separate release action; EAS service usage limits still apply.
+
+Verify optional, required, dismissed, offline, and revoked policies with a release-mode
+preview build against a test policy. Verify a compatible preview OTA download followed
+by a cold restart before the first production rollout. Expo Go does not exercise this
+native release flow.
+
 ## Verification order
 
 ```bash
