@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, type PropsWithChildren } from 'react';
+import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import { AccessibilityInfo, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as Haptics from 'expo-haptics';
@@ -8,6 +8,7 @@ import Animated, {
   interpolate,
   ReduceMotion,
   runOnJS,
+  runOnUI,
   useAnimatedStyle,
   useReducedMotion,
   useSharedValue,
@@ -47,20 +48,26 @@ export function getSwipeRating(
 export function SwipeableWordCard({
   word,
   active,
+  inViewport = active,
   disabled,
   onSwipe,
   children,
-}: PropsWithChildren<{
+  nextCard,
+}: {
   word: Word;
   active: boolean;
+  inViewport?: boolean;
   disabled: boolean;
   onSwipe(rating: LearningRating): void;
-}>) {
+  nextCard?: ReactNode;
+  children: ReactNode | ((animateRating: (rating: LearningRating) => void) => ReactNode);
+}) {
   const theme = useAppTheme();
   const reduceMotion = useReducedMotion();
   const screenReaderEnabled = useScreenReaderEnabled();
   const [cardWidth, setCardWidth] = useState(0);
   const translationX = useSharedValue(0);
+  const opacity = useSharedValue(1);
   const committed = useSharedValue(false);
   const thresholdHapticSent = useSharedValue(false);
   const nextReviewRange = getNextReviewIntervalRange(word);
@@ -72,29 +79,57 @@ export function SwipeableWordCard({
 
   const finishSwipe = useCallback((rating: LearningRating) => {
     onSwipe(rating);
-    requestAnimationFrame(() => {
-      translationX.set(0);
-      committed.set(false);
-      thresholdHapticSent.set(false);
-    });
-  }, [committed, onSwipe, thresholdHapticSent, translationX]);
+  }, [onSwipe]);
 
   useEffect(() => {
-    if (active) return;
+    // React can advance before the native list scroll reaches the next row.
+    // Preserve the completed exit and its underlay until this row is offscreen.
+    if (active || inViewport) return;
     translationX.set(0);
+    opacity.set(1);
     committed.set(false);
     thresholdHapticSent.set(false);
-  }, [active, committed, thresholdHapticSent, translationX]);
+  }, [active, committed, inViewport, opacity, thresholdHapticSent, translationX]);
+
+  const animateRating = (rating: LearningRating, fade = false) => {
+    'worklet';
+    if (!active || disabled || committed.get()) return;
+    committed.set(true);
+    if (fade) {
+      translationX.set(0);
+      opacity.set(withTiming(0, {
+        duration: reduceMotion ? 70 : 220,
+        reduceMotion: ReduceMotion.System,
+      }, (finished) => {
+        if (finished) runOnJS(finishSwipe)(rating);
+      }));
+      return;
+    }
+    const direction = rating === 'understood' ? -1 : 1;
+    const exitDistance = Math.max(cardWidth + 100, 420);
+    translationX.set(withTiming(direction * exitDistance, {
+      duration: reduceMotion ? 70 : 140,
+      reduceMotion: ReduceMotion.System,
+    }, (finished) => {
+      if (finished) runOnJS(finishSwipe)(rating);
+    }));
+  };
+
+  // Serialize taps with gestures on the UI thread so only the first action commits.
+  const animateButtonRating = (rating: LearningRating) => {
+    runOnUI(animateRating)(rating, true);
+  };
 
   const pan = Gesture.Pan()
     .enabled(gestureEnabled)
     .activeOffsetX([-SWIPE_ACTIVE_OFFSET, SWIPE_ACTIVE_OFFSET])
     .failOffsetY([-SWIPE_VERTICAL_FAILURE_OFFSET, SWIPE_VERTICAL_FAILURE_OFFSET])
     .onBegin(() => {
-      committed.set(false);
+      if (committed.get()) return;
       thresholdHapticSent.set(false);
     })
     .onUpdate((event) => {
+      if (committed.get()) return;
       translationX.set(event.translationX);
       const threshold = cardWidth * SWIPE_DISTANCE_RATIO;
       if (!thresholdHapticSent.get() && threshold > 0 && Math.abs(event.translationX) >= threshold) {
@@ -103,6 +138,7 @@ export function SwipeableWordCard({
       }
     })
     .onEnd((event) => {
+      if (committed.get()) return;
       const rating = getSwipeRating(event.translationX, event.velocityX, cardWidth);
       if (!rating) {
         translationX.set(withSpring(0, {
@@ -116,15 +152,7 @@ export function SwipeableWordCard({
         thresholdHapticSent.set(true);
         runOnJS(triggerThresholdHaptic)();
       }
-      committed.set(true);
-      const direction = event.translationX < 0 ? -1 : 1;
-      const exitDistance = Math.max(cardWidth + 100, 420);
-      translationX.set(withTiming(direction * exitDistance, {
-        duration: reduceMotion ? 70 : 180,
-        reduceMotion: ReduceMotion.System,
-      }, (finished) => {
-        if (finished) runOnJS(finishSwipe)(rating);
-      }));
+      animateRating(rating);
     })
     .onFinalize((_event, success) => {
       if (!success && !committed.get()) {
@@ -141,7 +169,7 @@ export function SwipeableWordCard({
     const rotation = reduceMotion
       ? 0
       : interpolate(translationX.value, [-width, 0, width], [-5, 0, 5], Extrapolation.CLAMP);
-    return { transform: [{ translateX: translationX.value }, { rotate: `${rotation}deg` }] };
+    return { opacity: opacity.value, transform: [{ translateX: translationX.value }, { rotate: `${rotation}deg` }] };
   });
   const keepLearningStyle = useAnimatedStyle(() => {
     const threshold = Math.max(cardWidth * SWIPE_DISTANCE_RATIO, 96);
@@ -167,32 +195,44 @@ export function SwipeableWordCard({
   });
 
   return (
-    <GestureDetector gesture={pan}>
-      <Animated.View
-        onLayout={(event) => setCardWidth(Math.round(event.nativeEvent.layout.width))}
-        style={[styles.card, cardStyle]}
-        testID={`swipe-card-${word.id}`}>
-        {children}
-        <SwipeOverlay
-          align="right"
-          color={theme.primary}
-          detail={`Review in ${nextReviewRange.minDays}–${nextReviewRange.maxDays} days`}
-          icon="calendar-outline"
-          label="Keep learning"
-          style={keepLearningStyle}
-          testID="keep-learning-swipe-overlay"
-        />
-        <SwipeOverlay
-          align="left"
-          color={theme.success}
-          detail="Stop reviews"
-          icon="checkmark-circle-outline"
-          label="I know this"
-          style={knowThisStyle}
-          testID="know-this-swipe-overlay"
-        />
-      </Animated.View>
-    </GestureDetector>
+    <View style={styles.card}>
+      {(active || inViewport) && nextCard ? <View
+        style={StyleSheet.absoluteFill}
+        pointerEvents="none"
+        accessibilityElementsHidden
+        importantForAccessibility="no-hide-descendants"
+        aria-hidden
+        testID="next-word-preview">
+        {nextCard}
+      </View> : null}
+      <GestureDetector gesture={pan}>
+        <Animated.View
+          needsOffscreenAlphaCompositing
+          onLayout={(event) => setCardWidth(Math.round(event.nativeEvent.layout.width))}
+          style={[styles.card, cardStyle]}
+          testID={`swipe-card-${word.id}`}>
+          {typeof children === 'function' ? children(animateButtonRating) : children}
+          <SwipeOverlay
+            align="right"
+            color={theme.primary}
+            detail={`Review in ${nextReviewRange.minDays}–${nextReviewRange.maxDays} days`}
+            icon="calendar-outline"
+            label="Keep learning"
+            style={keepLearningStyle}
+            testID="keep-learning-swipe-overlay"
+          />
+          <SwipeOverlay
+            align="left"
+            color={theme.success}
+            detail="Stop reviews"
+            icon="checkmark-circle-outline"
+            label="I know this"
+            style={knowThisStyle}
+            testID="know-this-swipe-overlay"
+          />
+        </Animated.View>
+      </GestureDetector>
+    </View>
   );
 }
 

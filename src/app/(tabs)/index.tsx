@@ -104,6 +104,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
   const [sessionWordIds, setSessionWordIds] = useState(() => new Set(initialSession.feed.map((word) => word.id)));
   const [notificationReviewWord, setNotificationReviewWord] = useState<Word | null>(initialSession.reviewWord);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [viewportIndex, setViewportIndex] = useState(0);
   const [sessionComplete, setSessionComplete] = useState(false);
   const [listHeight, setListHeight] = useState(0);
   const [translationStates, setTranslationStates] = useState<Record<string, 'loading' | 'error'>>({});
@@ -196,7 +197,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     const nextIndex = currentIndex + 1;
     if (nextIndex < sessionFeed.length) {
       setCurrentIndex(nextIndex);
-      requestAnimationFrame(() => listRef.current?.scrollToIndex({ index: nextIndex, animated: true }));
+      listRef.current?.scrollToIndex({ index: nextIndex, animated: false });
     } else {
       updateSessionComplete(true);
     }
@@ -227,6 +228,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     sessionFeedLengthRef.current = continuedSessionFeed.length;
     setSessionFeed(continuedSessionFeed);
     setCurrentIndex(0);
+    setViewportIndex(0);
     updateSessionComplete(false);
   };
 
@@ -311,7 +313,18 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
         snapToInterval={cardHeight + spacing.md}
         decelerationRate="fast"
         getItemLayout={(_, index) => ({ length: cardHeight + spacing.md, offset: (cardHeight + spacing.md) * index, index })}
-        onMomentumScrollEnd={(event) => setCurrentIndex(Math.round(event.nativeEvent.contentOffset.y / (cardHeight + spacing.md)))}
+        scrollEventThrottle={16}
+        onScroll={(event) => {
+          const offset = event.nativeEvent.contentOffset.y;
+          const index = Math.round(offset / (cardHeight + spacing.md));
+          // Only release an outgoing card once the native viewport reaches a row.
+          if (Math.abs(offset - index * (cardHeight + spacing.md)) < 1) setViewportIndex(index);
+        }}
+        onMomentumScrollEnd={(event) => {
+          const index = Math.round(event.nativeEvent.contentOffset.y / (cardHeight + spacing.md));
+          setCurrentIndex(index);
+          setViewportIndex(index);
+        }}
         renderItem={({ item, index }) => {
           const currentWord = currentWords[item.id] ?? item;
           const sessionRating = submittedRatings.current.get(currentWord.id);
@@ -319,7 +332,20 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
             && isOnDeviceTranslationPairSupported(currentWord.sourceLanguageCode, currentWord.targetLanguageCode)
             ? translationStates[currentWord.id] ?? 'loading'
             : undefined;
-          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><SwipeableWordCard word={currentWord} active={index === currentIndex} disabled={sessionRating !== undefined} onSwipe={(rating) => handleRating(currentWord, rating)}><WordCard word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} sessionRating={sessionRating} showPronunciation pronunciationActive={index === currentIndex} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={sessionRating === undefined ? (rating) => handleRating(currentWord, rating) : undefined}/></SwipeableWordCard></View>;
+          const nextItem = sessionFeed[index + 1];
+          const nextWord = nextItem ? currentWords[nextItem.id] ?? nextItem : null;
+          const nextCard = nextWord ? <WordCard
+            key={nextWord.id}
+            word={nextWord}
+            collectionName={collectionNames[nextWord.collectionId]}
+            dense={denseCards}
+            animateEntrance={false}
+            showPronunciation
+            pronunciationActive={false}
+            sessionRating={submittedRatings.current.get(nextWord.id)}
+            onRate={() => undefined}
+          /> : undefined;
+          return <View style={{ height: cardHeight, marginBottom: spacing.md }}><SwipeableWordCard nextCard={nextCard} word={currentWord} active={index === currentIndex} inViewport={index === viewportIndex} disabled={sessionRating !== undefined} onSwipe={(rating) => handleRating(currentWord, rating)}>{(animateRating) => <WordCard animateEntrance={false} word={currentWord} collectionName={collectionNames[currentWord.collectionId]} dense={denseCards} sessionRating={sessionRating} showPronunciation pronunciationActive={index === currentIndex} translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(currentWord)} onRate={sessionRating === undefined ? animateRating : undefined}/>}</SwipeableWordCard></View>;
         }}
       />
       <AppText variant="caption" style={[styles.position, { color: theme.muted }]}>{Math.min(currentIndex + 1, sessionFeed.length)} of {sessionFeed.length} due now · scroll to skip</AppText>

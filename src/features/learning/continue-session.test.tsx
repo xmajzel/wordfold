@@ -1,5 +1,5 @@
 import { act, fireEvent, render, waitFor, within } from '@testing-library/react-native';
-import { Alert, StyleSheet } from 'react-native';
+import { Alert, FlatList, StyleSheet } from 'react-native';
 
 import LearnScreen from '@/app/(tabs)';
 import type { LearningFilter, LearningPreferences, LearningRating, Word } from '@/domain/types';
@@ -119,14 +119,17 @@ jest.mock('@/components/swipeable-word-card', () => {
   const React = jest.requireActual('react');
   const { View } = jest.requireActual('react-native');
   return {
-    SwipeableWordCard: ({ children, disabled, word }: {
-      children: React.ReactNode;
+    SwipeableWordCard: ({ children, disabled, word, onSwipe, inViewport }: {
+      children: (onRate: (rating: LearningRating) => void) => React.ReactNode;
+      onSwipe: (rating: LearningRating) => void;
+      inViewport: boolean;
       disabled: boolean;
       word: { id: string };
     }) => React.createElement(View, {
       accessibilityState: { disabled },
+      inViewport,
       testID: `swipe-wrapper-${word.id}`,
-    }, children),
+    }, children(onSwipe)),
   };
 });
 
@@ -235,6 +238,35 @@ describe('continued learning session', () => {
       ['next', 'learned'],
       ['third', 'learned'],
     ]);
+  });
+
+  it('advances ratings without vertical animation and preserves scrolling to skip', async () => {
+    const scroll = jest.spyOn(FlatList.prototype, 'scrollToIndex').mockImplementation(() => undefined);
+    mockBuildLearningFeed.mockReturnValue([mockFirstWord, mockNextWord, mockThirdWord]);
+    const view = await render(<LearnScreen/>);
+    await fireEvent(view.getByTestId('today-words-list'), 'layout', {
+      nativeEvent: { layout: { height: 600 } },
+    });
+    await fireEvent.press(within(view.getByTestId('swipe-wrapper-first'))
+      .getByRole('button', { name: /I know this/ }));
+    expect(scroll).toHaveBeenLastCalledWith({ index: 1, animated: false });
+    expect(view.getByTestId('swipe-wrapper-first').props.inViewport).toBe(true);
+    await fireEvent(view.getByTestId('today-words-list'), 'scroll', {
+      nativeEvent: { contentOffset: { x: 0, y: 600 + spacing.md },
+        layoutMeasurement: { width: 300, height: 600 },
+        contentSize: { width: 300, height: 3 * (600 + spacing.md) } },
+    });
+    expect(view.getByTestId('swipe-wrapper-first').props.inViewport).toBe(false);
+    expect(view.getByTestId('swipe-wrapper-next').props.inViewport).toBe(true);
+    await fireEvent(view.getByTestId('today-words-list'), 'momentumScrollEnd', {
+      nativeEvent: { contentOffset: { y: 2 * (600 + spacing.md) } },
+    });
+    expect(view.getByText(/^3 of 3 due now/)).toBeTruthy();
+    await fireEvent.press(within(view.getByTestId('swipe-wrapper-third'))
+      .getByRole('button', { name: /Keep learning/ }));
+    await waitFor(() => expect(mockRateWord).toHaveBeenCalledTimes(2));
+    expect(mockRateWord.mock.calls.map(([word]) => word.id)).toEqual(['first', 'third']);
+    scroll.mockRestore();
   });
 
   it('returns a failed rating at the end of the current session', async () => {
