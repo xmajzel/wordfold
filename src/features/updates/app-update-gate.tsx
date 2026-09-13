@@ -1,7 +1,6 @@
 import { type PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
 import { AppState, Linking, Modal, Platform, ScrollView, StyleSheet, View } from 'react-native';
 import * as Application from 'expo-application';
-import * as Updates from 'expo-updates';
 
 import { AppText } from '@/components/app-text';
 import { PrimaryButton } from '@/components/primary-button';
@@ -14,6 +13,9 @@ function getTarget(): ReleaseTarget | null {
   const build = parseBuild(Application.nativeBuildVersion);
   if (__DEV__ || (Platform.OS !== 'android' && Platform.OS !== 'ios')
     || !build || !Application.applicationId) return null;
+  // Development clients may not include ExpoUpdates; only releases need the channel.
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const Updates: typeof import('expo-updates') = require('expo-updates');
   return {
     platform: Platform.OS, build, applicationId: Application.applicationId,
     channel: Updates.channel || 'preview',

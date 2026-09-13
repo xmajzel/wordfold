@@ -1,6 +1,6 @@
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
-import { AppState, type AppStateStatus, Linking, Text } from 'react-native';
-import { ReleaseGate } from './app-update-gate';
+import { AppState, type AppStateStatus, Linking, Platform, Text } from 'react-native';
+import { AppUpdateGate, ReleaseGate } from './app-update-gate';
 import { fetchReleasePolicy, readStoredValue, writeStoredValue } from './release-policy-client';
 import { REMIND_AFTER_MS, type ReleaseTarget } from './release-policy';
 
@@ -23,6 +23,22 @@ beforeEach(() => {
   (fetchReleasePolicy as jest.Mock).mockResolvedValue(policy);
 });
 afterEach(() => jest.restoreAllMocks());
+
+it('uses the native updates channel for release policy checks', async () => {
+  const development = __DEV__;
+  const platform = Platform.OS;
+  try {
+    (globalThis as typeof globalThis & { __DEV__: boolean }).__DEV__ = false;
+    Platform.OS = 'android';
+    const view = await render(<AppUpdateGate><Text>Learn</Text></AppUpdateGate>);
+    await waitFor(() => expect(fetchReleasePolicy).toHaveBeenCalledWith(target));
+    expect(view.getByText('Learn')).toBeTruthy();
+    await view.unmount();
+  } finally {
+    (globalThis as typeof globalThis & { __DEV__: boolean }).__DEV__ = development;
+    Platform.OS = platform;
+  }
+});
 
 it('opens the store and persists an optional reminder dismissal', async () => {
   const open = jest.spyOn(Linking, 'openURL').mockResolvedValue(undefined);
