@@ -30,16 +30,22 @@ describe('original Spanish C2 pilot', () => {
     expect(new Set(candidates.entries.flatMap(entry => entry.objectiveIds)).size).toBe(8);
   });
 
-  it('pins the compared baseline and does not introduce pilot entries into production', () => {
-    const bytes = readFileSync(resolve(root, candidates.baseline.path));
+  it('pins the compared A1–C1 baseline and keeps distinct C2 identities', () => {
+    const baseline = spawnSync(process.execPath, ['--input-type=module', '-e', `
+      import { buildSpanishCourseBase } from './scripts/build-spanish-course-base.mjs';
+      process.stdout.write(JSON.stringify(buildSpanishCourseBase(), null, 2) + '\\n');
+    `], { cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+    expect({ status: baseline.status, stderr: baseline.stderr }).toEqual({ status: 0, stderr: '' });
+    const bytes = baseline.stdout;
     expect(createHash('sha256').update(bytes).digest('hex')).toBe(candidates.baseline.sha256);
-    const productionTerms = new Set(course.concepts.flatMap(concept => concept.members.map(member => member.normalizedTerm)));
-    const productionIds = new Set(course.concepts.flatMap(concept => concept.members.map(member => member.entryId)));
+    const productionTerms = new Set(course.concepts.filter(concept => concept.level !== 'C2').flatMap(concept => concept.members.map(member => member.normalizedTerm)));
+    const productionIds = new Set(course.concepts.filter(concept => concept.level !== 'C2').flatMap(concept => concept.members.map(member => member.entryId)));
     for (const entry of candidates.entries) {
       expect(productionTerms.has(entry.normalizedTerm)).toBe(false);
       expect(productionIds.has(entry.id)).toBe(false);
     }
-    expect(course.levels.C2).toBe('unavailable-no-elelex-source-level');
+    expect(course.levels.C2).toBe('available');
+    expect(course.c2Release.notHumanApproval).toBe(true);
   });
 
   it('reproduces the partial preview only from resolved independent reviews of the final content', () => {

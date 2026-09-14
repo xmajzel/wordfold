@@ -112,7 +112,7 @@ describe('Spanish recommendations', () => {
     expect(result.every(({ entry }) => entry.courseId === 'es-sk' && ['A1', 'A2'].includes(entry.level))).toBe(true);
   });
 
-  it('excludes existing words, respects capacity, and does not offer C2', () => {
+  it('excludes existing words and respects capacity', () => {
     const preferences = { levels: ['A1'] as const, topics: ['spoken'] as const };
     const input = { levels: [...preferences.levels], topics: [...preferences.topics] };
     const first = buildRecommendations(input, [], 10, 'es-sk');
@@ -120,7 +120,7 @@ describe('Spanish recommendations', () => {
     expect(next).toHaveLength(3);
     expect(next.every(({ entry }) => !first.some((item) => item.entry.catalogSenseId === entry.catalogSenseId))).toBe(true);
     expect(buildRecommendations(input, [], 0, 'es-sk')).toEqual([]);
-    expect(buildRecommendations({ levels: ['C2'], topics: ['spoken'] }, [], 10, 'es-sk')).toEqual([]);
+
   });
 
   it('returns only the remaining words when the catalog is nearly exhausted', () => {
@@ -130,4 +130,14 @@ describe('Spanish recommendations', () => {
     const remaining = buildRecommendations(preferences, all.slice(2).map(({ entry }) => entry.normalizedTerm), 10, 'es-sk');
     expect(remaining).toEqual(all.slice(0, 2));
   });
+  it('offers all 801 C2 entries through general fallback without inventing reviewed interest tags', () => {
+    const input = { levels: ['C2'] as const, topics: ['academic'] as const };
+    const preferences = { levels: [...input.levels], topics: [...input.topics] };
+    const all = buildRecommendations(preferences, [], 10000, 'es-sk');
+    expect(all).toHaveLength(801);
+    expect(all.every(({ entry, topic }) => entry.level === 'C2' && topic === null)).toBe(true);
+    const next = buildRecommendations(preferences, all.slice(0, 10).map(({ entry }) => entry.normalizedTerm), 3, 'es-sk');
+    expect(next).toEqual(all.slice(10, 13));
+  });
+
 });

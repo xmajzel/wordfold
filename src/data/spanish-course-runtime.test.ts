@@ -120,3 +120,32 @@ test('rejects unapproved disclosure copy and enabled pronunciation', () => {
   expect(() => validateSpanishCourseAsset({ ...fixture(), pronunciationEnabled: true }))
     .toThrow('must remain disabled');
 });
+
+test('requires a reviewed C2 release and retains its distinct source and learner metadata', () => {
+  const asset = fixture();
+  const concept = asset.concepts[1];
+  concept.level = 'C2';
+  concept.courseOrder = 1;
+  asset.levels.C2 = 'available';
+  expect(() => validateSpanishCourseAsset(asset)).toThrow('release manifest');
+  asset.c2Release = {
+    schemaVersion: 1, entryCount: 1, notHumanApproval: true, placementStatus: 'provisional', curriculumCoverage: 'partial',
+    entriesSha256: 'a'.repeat(64), spanishReviewSha256: 'b'.repeat(64), slovakReviewSha256: 'c'.repeat(64),
+  };
+  expect(() => validateSpanishCourseAsset(asset)).toThrow('both language reviews');
+  concept.review.spanish = 'independent-ai-review';
+  concept.review.slovak = 'independent-ai-review';
+  expect(() => validateSpanishCourseAsset(asset)).toThrow('own source');
+  concept.sourceVersion = 'wordfold-spanish-c2-test';
+  concept.levelEvidence = 'Provisional PCIC-referenced placement';
+  concept.members[0].gender = 'feminine';
+  concept.members[0].alternativeForms = [];
+  const runtime = createSpanishCourseRuntime(asset);
+  expect(runtime.entries('C2')).toHaveLength(1);
+  expect(runtime.entry(concept.id)).toMatchObject({
+    level: 'C2', sourceVersion: 'wordfold-spanish-c2-test', gender: 'feminine', alternativeForms: [],
+    levelEvidence: 'Provisional PCIC-referenced placement', translation: 'vták',
+  });
+  asset.c2Release.entryCount = 2;
+  expect(() => validateSpanishCourseAsset(asset)).toThrow('count is stale');
+});

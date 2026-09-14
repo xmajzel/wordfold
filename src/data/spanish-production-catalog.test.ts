@@ -2,7 +2,7 @@ import { cefrLevels } from './cefr-levels';
 import a1Asset from '../../assets/catalog/spanish/a1-course.json';
 import { getCourseCatalogEntry, getCourseCatalogEntriesForNormalizedTerm, getSpanishCourseAsset } from './course-catalog';
 
-describe('bundled Spanish A1–C1 production catalog', () => {
+describe('bundled Spanish A1–C2 production catalog', () => {
   it('preserves every A1 identity and presentation while excluding pending later concepts', () => {
     const asset = getSpanishCourseAsset();
     expect(asset.concepts.filter((concept) => concept.level === 'A1')).toEqual(a1Asset.concepts);
@@ -29,8 +29,8 @@ describe('bundled Spanish A1–C1 production catalog', () => {
       expect(courses.getCourseDefinition('es-sk').capabilities).toMatchObject({
         bundledCatalog: true, recommendations: true, devicePronunciation: false,
       });
-      expect(cefrLevels.slice(0, 5).every((level) => catalog.getCourseCatalogEntries('es-sk', level).length > 0)).toBe(true);
-      expect(catalog.getCourseCatalogEntries('es-sk', 'C2')).toEqual([]);
+      expect(cefrLevels.every((level) => catalog.getCourseCatalogEntries('es-sk', level).length > 0)).toBe(true);
+      expect(catalog.getCourseCatalogEntries('es-sk', 'C2')).toHaveLength(801);
     });
   });
 });

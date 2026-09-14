@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "notHumanApproval": true,
+  "previewSha256": "cee563ab694a51f83e444edfb2ecc5af04c1895ad23ac2c1f229e2cd001dcf87",
+  "changes": [
+    {
+      "entryId": "es-sk:c2:exp-cervantes-i68775",
+      "field": "example",
+      "before": "La hidrografía de la región incluye numerosos ríos cortos.",
+      "after": "La hidrografía permite describir los ríos y lagos de una región.",
+      "reason": "The example selects the separate sense meaning a regional network of waters; the definition and pinned reference select the scientific discipline. Keep one sense aligned. DLE distinguishes these senses: https://dle.rae.es/hidrograf%C3%ADa",
+      "review": "spanish"
+    },
+    {
+      "entryId": "es-sk:c2:exp-cervantes-i1105",
+      "field": "definition",
+      "before": "Que actúa con un atrevimiento poco respetuoso.",
+      "after": "Que muestra un atrevimiento poco respetuoso.",
+      "reason": "The definition restricts the adjective to an acting person, while the example describes a comment. A definition covering the disrespectful attitude also fits the supplied adjectival sense.",
+      "review": "spanish"
+    },
+    {
+      "entryId": "es-sk:c2:exp-cervantes-i91262",
+      "field": "example",
+      "before": "El filósofo materialista discutía la existencia de entidades inmateriales.",
+      "after": "El materialista discutía la existencia de entidades inmateriales.",
+      "reason": "The selected part of speech is NOUN, but materialista modifies filósofo adjectivally in the example. Use it as the noun denoting the adherent.",
+      "review": "spanish"
+    },
+    {
+      "entryId": "es-sk:c2:exp-cervantes-i93141",
+      "field": "gender",
+      "before": "masculine",
+      "after": "common",
+      "reason": "The selected wine-service occupation is common in gender, el sumiller / la sumiller, not masculine-only. Confirmed by DLE sense 1: https://dle.rae.es/sumiller",
+      "review": "spanish"
+    },
+    {
+      "entryId": "es-sk:c2:exp-cervantes-i55296",
+      "field": "translation",
+      "before": "dverové kukátko",
+      "after": "priezor na dverách",
+      "reason": "Kukátko is a nonstandard Czech-derived expression in Slovak. Use the standard name for a door peephole.",
+      "review": "slovak"
+    }
+  ]
+}

@@ -3,7 +3,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
-import { conceptInput, hash, prepare, RUBRIC, runtimeIndex, validateRuntimeIndex, validateArtifact, validateOutput } from './spanish-topic-classification.mjs';
+import { conceptInput, courseForTopicReview, hash, prepare, RUBRIC, runtimeIndex, validateRuntimeIndex, validateArtifact, validateOutput } from './spanish-topic-classification.mjs';
 
 const concept = {
   id: 'es-sk:a2:amigo', level: 'A2', partOfSpeech: 'ADJ',
@@ -56,4 +56,17 @@ test('the runtime index retains meaning IDs and is bound to its full review arti
   review.entries[0].topics = ['business'];
   assert.notEqual(runtimeIndex(review).reviewSha256, index.reviewSha256);
   assert.throws(() => validateRuntimeIndex(review, index), /does not match/);
+});
+
+
+test('preserves reviewed A1–C1 topics without claiming C2 coverage or accepting earlier-content drift', () => {
+  const read = name => JSON.parse(readFileSync(new URL('../assets/catalog/spanish/' + name, import.meta.url), 'utf8'));
+  const course = read('course.json');
+  const review = read('course-topics.json');
+  const scoped = courseForTopicReview(course, review);
+  assert.equal(scoped.concepts.length, 5888);
+  assert.equal(course.concepts.length - scoped.concepts.length, 801);
+  assert.equal(hash(JSON.stringify(scoped, null, 2) + '\n'), review.courseSha256);
+  course.concepts[0].members[0].definition = 'Changed meaning';
+  assert.throws(() => courseForTopicReview(course, review), /Earlier topic-reviewed course content changed/);
 });

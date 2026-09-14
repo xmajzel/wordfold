@@ -92,14 +92,14 @@ it('restores editing and current recommendations after a failed save', async () 
   alert.mockRestore();
 });
 
-it('offers Spanish interests and the same ten-word starter set as English', async () => {
+it.each(['B2', 'C2'] as const)('offers a Spanish %s ten-word starter set', async (level) => {
   const view = await render(<OnboardingScreen/>);
   await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
   for (const level of ['A2', 'B1', 'B2', 'C1']) {
     expect(view.getByTestId(`level-${level}`).props.accessibilityState.disabled).not.toBe(true);
   }
-  expect(view.getByTestId('level-C2').props.accessibilityState).toMatchObject({ disabled: true });
-  await fireEvent.press(view.getByTestId('level-B2'));
+  expect(view.getByTestId('level-C2').props.accessibilityState.disabled).not.toBe(true);
+  await fireEvent.press(view.getByTestId(`level-${level}`));
   await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
   expect(view.getByText('What will you use Spanish for?')).toBeTruthy();
   await fireEvent.press(view.getByTestId('topic-business'));
@@ -109,7 +109,7 @@ it('offers Spanish interests and the same ten-word starter set as English', asyn
   expect(view.queryByText('Phone voice')).toBeNull();
   expect(view.queryByText(/entries/)).toBeNull();
   await fireEvent.press(view.getByRole('button', { name: 'Create my set' }));
-  await waitFor(() => expect(mockComplete).toHaveBeenCalledWith(expect.objectContaining({ levels: ['B2'] }), 'device'));
+  await waitFor(() => expect(mockComplete).toHaveBeenCalledWith(expect.objectContaining({ levels: [level] }), 'device'));
   expect(mockReplace).toHaveBeenCalledWith({ pathname: '/onboarding-ready', params: { count: '10' } });
 });
 

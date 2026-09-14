@@ -101,7 +101,7 @@ describe('library course visibility', () => {
     expect(screen.queryByText('Baum')).toBeNull();
   });
 
-  it('enables Spanish A1–C1 while visibly gating C2', async () => {
+  it('enables every released Spanish level including C2', async () => {
     mockActiveCourseId = 'es-sk';
     const screen = await render(<LibraryScreen/>);
 
@@ -109,9 +109,9 @@ describe('library course visibility', () => {
     for (const level of ['A2', 'B1', 'B2', 'C1']) {
       expect(screen.getByTestId(`catalog-level-${level}`).props.accessibilityState).toEqual({ disabled: false });
     }
-    expect(screen.getByTestId('catalog-level-C2').props.accessibilityState).toEqual({ disabled: true });
+    expect(screen.getByTestId('catalog-level-C2').props.accessibilityState).toEqual({ disabled: false });
     expect(screen.queryByText('Not yet available')).toBeNull();
-    screen.getByText('Currently unavailable');
+    expect(screen.queryByText('Currently unavailable')).toBeNull();
     screen.getByText('Recommended for you');
     screen.getByRole('button', { name: 'Choose learning preferences' });
   });

@@ -58,7 +58,7 @@ function spanishEntry(entry: SpanishRuntimeCatalogEntry): CourseCatalogEntry {
     publicationStatus: 'production',
     learnerContentReviewStatus: 'approved',
     hintReviewStatus: 'approved',
-    levelEvidence: `ELELex ${entry.level} level assignment`,
+    levelEvidence: entry.levelEvidence,
   };
 }
 

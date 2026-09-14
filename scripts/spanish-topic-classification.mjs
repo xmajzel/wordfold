@@ -1,8 +1,10 @@
+import { Buffer } from 'node:buffer';
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
+import { buildSpanishCourseBase } from './build-spanish-course-base.mjs';
 
 export const TOPICS = ['spoken', 'business', 'academic'];
 export const RUBRIC_VERSION = 'spanish-sense-topics-v1';
@@ -182,7 +184,16 @@ export function compile(runDirectory, outputPath, indexPath) {
   if (indexPath) write(indexPath, runtimeIndex(artifact));
   return { concepts: entries.length, changed: entries.filter((entry) => JSON.stringify(entry.topics) !== JSON.stringify(entry.classification.topics)).length, usage };
 }
+// C2 currently uses the selector's general level fallback. Do not relabel it as topic-reviewed.
+export function courseForTopicReview(course, artifact) {
+  if (!course.c2Release || artifact.entries.some(entry => entry.level === 'C2')) return course;
+  const baseline = buildSpanishCourseBase();
+  assert(hash(course.concepts.filter(concept => concept.level !== 'C2')) === hash(baseline.concepts), 'Earlier topic-reviewed course content changed.');
+  return baseline;
+}
+
 export function validateArtifact(course, artifact) {
+  course = courseForTopicReview(course, artifact);
   assert(artifact.schemaVersion === 1 && artifact.courseId === 'es-sk' && artifact.reviewKind === 'two-pass-ai-not-human', 'Invalid topic artifact.');
   assert(artifact.rubricSha256 === hash(RUBRIC), 'Stale topic rubric.');
   const input = course.concepts.map(conceptInput);
@@ -218,8 +229,12 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
   else if (command === 'compile') console.log(compile(directory, outputPath, resolve(options.index ?? 'assets/catalog/spanish/course-topic-index.json')));
   else if (command === 'validate') {
     const artifact = read(outputPath);
-    assert(artifact.courseSha256 === hash(readFileSync(coursePath)), 'Stale topic course version.');
+    const courseBytes = readFileSync(coursePath);
+    const course = JSON.parse(courseBytes);
+    const reviewedCourse = courseForTopicReview(course, artifact);
+    const reviewedBytes = reviewedCourse === course ? courseBytes : JSON.stringify(reviewedCourse, null, 2) + '\n';
+    assert(artifact.courseSha256 === hash(reviewedBytes), 'Stale topic course version.');
     validateRuntimeIndex(artifact, read(resolve(options.index ?? 'assets/catalog/spanish/course-topic-index.json')));
-    console.log(validateArtifact(read(coursePath), artifact));
+    console.log({ ...validateArtifact(reviewedCourse, artifact), unclassifiedConcepts: course.concepts.length - reviewedCourse.concepts.length });
   } else throw new Error('Use prepare, classify, review, run, compile or validate.');
 }

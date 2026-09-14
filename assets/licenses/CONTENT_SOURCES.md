@@ -51,9 +51,9 @@ UCLouvain/CENTAL.
 - Required acknowledgement: “Spanish vocabulary level data is based in part on ELELex,
   a CEFR-graded lexical resource developed as part of the CEFRLex project at
   UCLouvain/CENTAL.”
-- Level coverage: A1-C1. The current release bundles A1 only; A2-C1 are not yet
-  available. ELELex does not publish a C2 column, so C2 is unsupported by the current
-  source and no C2 entries are synthesized from the C1 tail.
+- Level coverage: A1-C1, all bundled in the current course. ELELex does not publish
+  a C2 column. The separate C2 collection described below uses PCIC reference
+  classifications and reviewed lexical evidence; it is not synthesized from the C1 tail.
 - ShareAlike status: resolved for the described Wordfold use; see the consolidated
   ShareAlike legal-review records below.
 - Restrictions: the authorization does not imply endorsement, certification, or
@@ -370,6 +370,52 @@ No Oxford, Cambridge, British Council, Headway, or other publisher vocabulary li
 The short project and business definitions in `assets/catalog/curated-senses.json` are original Wordfold content. They are ranked ahead of dictionary senses where a modern work-related meaning is more useful to this app's starter audience.
 
 ## Original Spanish supplemental curriculum
+
+### Cervantes-guided C2 draft expansion
+
+`assets/catalog/spanish/c2-cervantes-candidates.json` contains original Wordfold
+learner text linked to the separately licensed OMW Spanish 2.0 and WordNet 3.0
+English sense evidence described above. PCIC's C2 specific-notions column supplies
+reference classification under the recorded framework permission. The source
+screening records term occurrence separately from local AI judgment of the selected
+meaning; it does not certify every meaning of a listed word as C2.
+
+The Spanish headwords and sense references retain the MCR/OMW CC BY 3.0 and
+WordNet notices above. Definitions for learners, examples, and Slovak hints are
+original AI-authored text. Protected PCIC explanatory prose is not bundled.
+The source screening and local language review are recorded in
+`assets/catalog/spanish/reviews/c2-cervantes-source-screening.json` and
+`assets/catalog/spanish/reviews/c2-cervantes-local-review.json`.
+
+`c2-cervantes-expanded-preview.json` preserves the preceding C2 draft and adds
+only entries retained by this local review; `c2-cervantes-held.json` records its
+exclusions. These assets are unpublished drafts. The new language review is a
+single local AI pass, not independent AI review, human review, endorsement, or
+release approval. Earlier entries retain their original review limitations.
+
+### C2 vocabulary release (2026-09-14)
+
+The owner approved independent Spanish/Slovak review, app integration, and local
+release verification. `course.json` now includes 801 C2 entries: the retained 271-entry
+baseline plus 530 Cervantes-guided additions. The historical draft assets above
+remain unchanged. `c2-release-amendments.json` records five learner corrections.
+`reviews/c2-release-spanish-review.json` and `reviews/c2-release-slovak-review.json`
+bind final verdicts to every exact entry; first-round reports retain the findings.
+Spanish coverage comprises 533 fresh assessments and 268 authenticated previous
+verdicts; Slovak coverage comprises 801 fresh assessments. Both independent reviewers
+rechecked all five amended entries. These are AI assessments, not native-speaker
+attestations or official C2 certification.
+
+`build-spanish-course.mjs` reproduces the existing A1–C1 course and appends C2 only
+when source/draft checks and both final language reviews pass. C2 IDs, Slovak hints,
+gender and alternative forms are preserved. Runtime source metadata identifies the
+Wordfold C2 collection, never an ELELex C2 level. PCIC placements remain provisional
+and vocabulary coverage remains partial: 801 entries do not establish a complete
+C2 language course. A1–C1 topic classifications remain unchanged; C2 recommendations
+currently use the existing general level fallback rather than reviewed interest tags.
+Spanish pronunciation remains disabled. Cloud builds and publishing are separate.
+
+### Historical supplemental preview
 
 `assets/catalog/spanish/expansion-candidates.json` contains 185 independently
 AI-authored Wordfold senses selected against the PCIC/CEFR reference framework,

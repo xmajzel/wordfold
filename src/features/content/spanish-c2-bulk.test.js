@@ -29,7 +29,7 @@ describe('Spanish C2 bulk draft review boundary', () => {
   it('retains provisional provenance and excludes existing catalog and draft terms', () => {
     const course = read('course');
     const existingTerms = new Set([
-      ...course.concepts.flatMap(concept => concept.members.map(member => member.normalizedTerm)),
+      ...course.concepts.filter(concept => concept.level !== 'C2').flatMap(concept => concept.members.map(member => member.normalizedTerm)),
       ...read('c2-pilot-candidates').entries.map(entry => entry.normalizedTerm),
       ...read('expansion-candidates').entries.map(entry => entry.normalizedTerm),
     ]);
@@ -46,8 +46,14 @@ describe('Spanish C2 bulk draft review boundary', () => {
       expect(entry.lowerLevelComparison.trim().length).toBeGreaterThan(0);
       for (const reference of entry.placementReferenceIds) expect(references.has(reference)).toBe(true);
     }
-    expect(course.levels.C2).toBe('unavailable-no-elelex-source-level');
-    const bytes = readFileSync(resolve(root, accepted.baseline.path));
+    expect(course.levels.C2).toBe('available');
+    expect(course.c2Release.notHumanApproval).toBe(true);
+    const baseline = spawnSync(process.execPath, ['--input-type=module', '-e', `
+      import { buildSpanishCourseBase } from './scripts/build-spanish-course-base.mjs';
+      process.stdout.write(JSON.stringify(buildSpanishCourseBase(), null, 2) + '\\n');
+    `], { cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+    expect({ status: baseline.status, stderr: baseline.stderr }).toEqual({ status: 0, stderr: '' });
+    const bytes = baseline.stdout;
     expect(createHash('sha256').update(bytes).digest('hex')).toBe(accepted.baseline.sha256);
     expect(accepted.baseline).toEqual(authored.baseline);
   });

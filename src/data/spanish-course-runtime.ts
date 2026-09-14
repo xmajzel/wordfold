@@ -19,6 +19,8 @@ export interface SpanishCourseMember {
   slovakHint: string;
   hintSource: string;
   courseOrder: number;
+  gender?: string;
+  alternativeForms?: { form: string; type: string; note?: string }[];
   provenanceAliases?: {
     retiredEntryId: string;
     sourceForms: string[];
@@ -31,13 +33,16 @@ export interface SpanishCourseMember {
 export interface SpanishCourseConcept {
   id: string;
   notHumanReview: true;
-  level: Exclude<CefrLevel, 'C2'>;
+  level: CefrLevel;
   partOfSpeech: string;
   courseOrder: number;
+  sourceVersion?: string;
+  levelEvidence?: string;
   sharedSlovakHint: string;
   members: SpanishCourseMember[];
   review: {
     spanish: string;
+    slovak?: string;
     slovakOwnerVerdict: string | null;
     slovakOwnerVerdictProvenance: 'historical-owner-accepted' | 'ai-assisted-owner-accepted' | null;
     slovakOwnerVerdictRequired: boolean;
@@ -65,6 +70,16 @@ export interface SpanishCourseAsset {
   };
   levels: Record<CefrLevel, SpanishCourseLevelState>;
   excludedConcepts?: { id: string; level: Exclude<CefrLevel, 'A1' | 'C2'>; reason: 'pending-owner-verdict' | 'stale-slovak-hint' }[];
+  c2Release?: {
+    schemaVersion: 1;
+    entryCount: number;
+    notHumanApproval: true;
+    placementStatus: 'provisional';
+    curriculumCoverage: 'partial';
+    entriesSha256: string;
+    spanishReviewSha256: string;
+    slovakReviewSha256: string;
+  };
   concepts: SpanishCourseConcept[];
 }
 
@@ -72,6 +87,9 @@ export interface SpanishRuntimeCatalogEntry extends CefrCatalogEntry {
   conceptId: string;
   memberEntryId: string;
   alternativeTerms: string[];
+  levelEvidence: string;
+  gender?: string;
+  alternativeForms?: { form: string; type: string; note?: string }[];
 }
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -86,7 +104,15 @@ export function validateSpanishCourseAsset(asset: SpanishCourseAsset) {
   assert(asset.reviewDisclosure === SPANISH_DEFINITION_REVIEW_DISCLOSURE, 'Spanish review disclosure must use the approved wording.');
   assert(asset.pronunciationEnabled === false, 'Spanish pronunciation must remain disabled.');
   assert(asset.levels.A1 === (asset.status === 'production' ? 'available' : 'blocked-pending-owner-review'), 'A1 availability does not match the asset status.');
-  assert(asset.levels.C2 === 'unavailable-no-elelex-source-level', 'Spanish C2 must remain unavailable without a source level.');
+  assert(['available', 'unavailable-no-elelex-source-level'].includes(asset.levels.C2), 'Invalid Spanish C2 availability.');
+  if (asset.levels.C2 === 'available') {
+    const release = asset.c2Release;
+    assert(asset.status === 'production' && release?.schemaVersion === 1 && release.notHumanApproval === true,
+      'Available C2 requires an AI-reviewed release manifest.');
+    assert(release.placementStatus === 'provisional' && release.curriculumCoverage === 'partial', 'C2 must retain its placement and coverage limitations.');
+    assert([release.entriesSha256, release.spanishReviewSha256, release.slovakReviewSha256].every(hash => /^[a-f0-9]{64}$/.test(hash)), 'C2 review hashes are missing.');
+    assert(release.entryCount === asset.concepts.filter(concept => concept.level === 'C2').length, 'C2 release count is stale.');
+  }
 
   const conceptIds = new Set<string>();
   const memberIds = new Set<string>();
@@ -99,10 +125,14 @@ export function validateSpanishCourseAsset(asset: SpanishCourseAsset) {
   for (const concept of asset.concepts) {
     assert(!conceptIds.has(concept.id), `Duplicate Spanish concept ID: ${concept.id}`);
     assert(!excludedIds.has(concept.id), `${concept.id}: a pending review finding cannot be bundled.`);
-    assert(concept.notHumanReview === true && ['A1', 'A2', 'B1', 'B2', 'C1'].includes(concept.level), `${concept.id}: invalid review or level metadata.`);
+    assert(concept.notHumanReview === true && ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'].includes(concept.level), `${concept.id}: invalid review or level metadata.`);
     assert(['available', 'blocked-pending-owner-review'].includes(asset.levels[concept.level]), `${concept.id}: content cannot belong to an unavailable level.`);
     assert(concept.courseOrder === (previousOrderByLevel.get(concept.level) ?? 0) + 1, `${concept.id}: course order must be contiguous within its level.`);
     assert(concept.members.length > 0, `${concept.id}: concept has no members.`);
+    if (concept.level === 'C2') {
+      assert(concept.review.spanish === 'independent-ai-review' && concept.review.slovak === 'independent-ai-review', `${concept.id}: C2 requires both language reviews.`);
+      assert(concept.sourceVersion?.startsWith('wordfold-spanish-c2-') && concept.levelEvidence?.trim(), `${concept.id}: C2 requires its own source and placement metadata.`);
+    }
     conceptIds.add(concept.id);
     previousOrderByLevel.set(concept.level, concept.courseOrder);
     if (concept.review.slovakOwnerVerdict) reviewedCount += 1;
@@ -146,7 +176,10 @@ function presentation(concept: SpanishCourseConcept, member: SpanishCourseMember
     translation: member.slovakHint,
     catalogSenseId: concept.id,
     source: 'wordfold-original-spanish',
-    sourceVersion: `elelex-${concept.level.toLowerCase()}-v1`,
+    sourceVersion: concept.sourceVersion ?? `elelex-${concept.level.toLowerCase()}-v1`,
+    levelEvidence: concept.levelEvidence ?? `ELELex ${concept.level} level assignment`,
+    ...(member.gender ? { gender: member.gender } : {}),
+    ...(member.alternativeForms ? { alternativeForms: member.alternativeForms } : {}),
     sourcePartOfSpeech: [member.partOfSpeech],
     alternativeTerms: concept.members.filter((candidate) => candidate.entryId !== member.entryId).map((candidate) => candidate.term),
   };

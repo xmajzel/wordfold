@@ -8,9 +8,12 @@ the revealable hint language.
 
 `assets/catalog/spanish/cefr-pilot.json` is original Wordfold draft content retained
 as historical, non-gating evidence for the retired six-entry pilot. Normal catalog
-APIs exclude it. The runtime imports the promoted A1-only production asset at
-`assets/catalog/spanish/a1-course.json`; A2-C1 remain not yet available and C2 is
-unsupported by the current ELELex source.
+APIs exclude it. The runtime imports `assets/catalog/spanish/course.json`, containing
+5,888 A1–C1 concepts and the separately approved 801-entry C2 vocabulary collection.
+ELELex supports A1–C1 only; C2 uses PCIC reference classifications and reviewed lexical
+evidence with provisional placement. The independent Spanish and Slovak release
+reviews are hash-bound and do not constitute human or native-speaker approval.
+See `SPANISH_CATALOG_EXPANSION.md` for the additive C2 release gate.
 
 ## Instituto Cervantes reference boundary
 

@@ -3,7 +3,7 @@ const { spawnSync } = require('node:child_process');
 const { resolve } = require('node:path');
 
 describe('published Spanish topic classifications', () => {
-  it('covers the exact course content with two AI passes and a matching runtime index', () => {
+  it('preserves the exact A1–C1 topic coverage and matching runtime index', () => {
     const result = spawnSync(process.execPath, ['scripts/spanish-topic-classification.mjs', 'validate'], {
       cwd: resolve(__dirname, '../../..'),
       encoding: 'utf8',

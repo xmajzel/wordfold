@@ -55,8 +55,8 @@ export default function PreferencesScreen() {
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
         <View style={styles.section}><View><AppText variant="heading">{learnedLanguage} levels</AppText><AppText style={{ color: theme.muted }}>{activeCourse.capabilities.recommendations ? 'Recommendations always stay inside these levels.' : 'Choose from the Spanish levels currently included in the app.'}</AppText></View><LevelSelection selected={levels} onToggle={toggleLevel} disabledLevels={Object.fromEntries(Object.entries(availability.levels).flatMap(([level, state]) => state === 'available' ? [] : [[level, state === 'unsupported-by-source' ? 'Currently unavailable' : 'Not yet available']]))}/></View>
         {activeCourse.capabilities.recommendations ? <View style={styles.section}><View><AppText variant="heading">Your interests</AppText><AppText style={{ color: theme.muted }}>We prioritize matching words where the catalog has them.</AppText></View><TopicSelection selected={topics} onToggle={toggleTopic}/></View> : <View style={styles.section}>
-          <AppText variant="heading">Spanish A1–C1 is available</AppText>
-          <AppText style={{ color: theme.muted }}>Choose levels from A1 through C1. Concepts with pending review findings are excluded, and C2 is unsupported by the current ELELex source. Spanish definitions and Slovak hints are AI cross-reviewed, not natively reviewed.</AppText>
+          <AppText variant="heading">Spanish A1–C2 is available</AppText>
+          <AppText style={{ color: theme.muted }}>Choose levels from A1 through C2. C2 is a provisional vocabulary collection; it does not cover every C2 language skill. Spanish definitions and Slovak hints are AI cross-reviewed, not natively reviewed.</AppText>
         </View>}
         <AppText variant="caption" style={{ color: theme.muted }}>Changing these choices never removes words or learning history already in your library.</AppText>
       </ScrollView>
