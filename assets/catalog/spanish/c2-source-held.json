@@ -1,0 +1,310 @@
+{
+  "schemaVersion": 1,
+  "courseId": "es-sk",
+  "publicationStatus": "draft",
+  "placementStatus": "provisional",
+  "curriculumCoverage": "partial",
+  "notHumanApproval": true,
+  "baselinePreviewSha256": "d8fa026ed6a54de434d3c38f2a038759871856ef87a4c6a1347127e1cd68f0fd",
+  "priorAuditSha256": "32b44bb23f7adad36d49289e3259b6a52bfb8a78addbfb1b2a326402814a83a6",
+  "resolutionReviewSha256": "e60de7f96bcf140bcdb94cef56abdba9a5b6d0f0c70f4a6561925de73c54aecc",
+  "sourceBatches": [
+    {
+      "key": "pilot",
+      "datasetPath": "assets/catalog/spanish/c2-pilot-candidates.json",
+      "datasetSha256": "c83a53d967fd8e748260d372f09e555d47133f84b53858a2bc2b6faef953f984",
+      "originalBatchId": "c2-pilot-2026-09-13",
+      "spanishReviewSha256": "f7072af84d403ae42baec06c4557cfdee9e52cd786c5ca96e0edd91635b172cb",
+      "slovakReviewSha256": "84f279048685ef7e7e94c3c384ced18b89565e86db83056414283fcb9aea5b8c"
+    },
+    {
+      "key": "bulk",
+      "datasetPath": "assets/catalog/spanish/c2-bulk-reviewed-candidates.json",
+      "datasetSha256": "c71c721155b99276e0f4470ae738cb4967a2d5376a05896f84771b2fdd363225",
+      "originalBatchId": "c2-bulk-2026-09-13",
+      "spanishReviewSha256": "28b4da0d81cc4b54aebde9f3715d732de001f08d2da0c2300c80059258ef0a1a",
+      "slovakReviewSha256": "1130cc6d5ff074c2fcbf16aa4167b9f7ff033f90f3f9f398cbc2d57fabeee016"
+    },
+    {
+      "key": "source",
+      "datasetPath": "assets/catalog/spanish/c2-source-reviewed-candidates.json",
+      "datasetSha256": "0b3802f04086e0702a0a87731d0c583ed196adb26b4a162e9627ad26f2225b31",
+      "originalBatchId": "c2-source-2026-09-13",
+      "spanishReviewSha256": "75b9a87dd160d1c6bd2d718feddbe76ddec9879c6ed6366fff77e4e0041fdf73",
+      "slovakReviewSha256": "2ccd90d65e5f1ee7fb46ca095d29c2d0051939c8ae5d2d4130bdb01bab26bd8c"
+    },
+    {
+      "key": "placement",
+      "datasetPath": "assets/catalog/spanish/c2-placement-reviewed-candidates.json",
+      "datasetSha256": "32aa25e7a4ec90c4410fe8fe507235ecc68c34733a69e2315cc51b9ca94188bb",
+      "originalBatchId": "c2-placement-adjudicated-2026-09-13",
+      "spanishReviewSha256": "039140e76abc3bf0d7aa9cf5014a54b1db4e706fed3c932f306055c55cb68d59",
+      "slovakReviewSha256": "3165e7e7566f4ac7449a7c3df2b965d57c1b2706b33ec7034bfce7e2d3234506"
+    }
+  ],
+  "placementAuditSha256": "4190e80ba5f6051aaf46aeefaa917f59f91f5b09e306e4411f9980363c0f9de5",
+  "reviewStatus": "original-ai-language-reviews-with-local-source-checks-and-amendments",
+  "evidenceNote": "Evidence remains heterogeneous and scoped per entry. Original independent AI reviews cover original text only; contentAmendments have local AI review and have not been independently rereviewed. sourceEntrySha256 identifies the original batch entry, not amended content. No source certifies C2 placement.",
+  "batchId": "c2-source-held-2026-09-14",
+  "count": 6,
+  "entries": [
+    {
+      "id": "es-sk:c2:exp-bulk-138-dejar-el-liston-alto",
+      "catalogSenseId": "es-sk:c2:exp-bulk-138-dejar-el-liston-alto:verb:1",
+      "term": "dejar el listón alto",
+      "normalizedTerm": "dejar el listón alto",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Alcanzar un resultado que fija un nivel difícil de superar.",
+      "example": "La primera actuación logró dejar el listón alto para el resto del festival.",
+      "translation": "nastaviť latku vysoko",
+      "levelRationale": "Figurative performance benchmark, not a literal sporting bar. Editorial selection for advanced contextual vocabulary practice; C2 placement is provisional, not an exclusive acquisition level or an official word-level assignment.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-bulk-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "objectiveIds": [
+        "C2-leisure"
+      ],
+      "register": "general or journalistic; sport and recreation",
+      "placementStatus": "provisional",
+      "placementRationale": "The first performance establishes a difficult comparison standard for others, rather than literally moving equipment.",
+      "originalBatchId": "c2-bulk-2026-09-13",
+      "sourceEntrySha256": "f83e03ec9b7de3ed61d8594c52f431d4a776aa20c8a9124a922e91af4a7c9660",
+      "lexicalEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "sourceResolution": {
+        "entryId": "es-sk:c2:exp-bulk-138-dejar-el-liston-alto",
+        "term": "dejar el listón alto",
+        "baselineEntrySha256": "ad2e46f668078f02c98c4e9115decc63e75ab168b0b6350a0370c3e0f80e814d",
+        "decision": "hold",
+        "reason": "The primary-source excerpt attests use, but does not directly explain the full pragmatic meaning. Held pending stronger semantic evidence; this is not a judgment that the expression is incorrect.",
+        "evidence": [
+          {
+            "kind": "primary-search-excerpt-read",
+            "url": "https://www.fundeu.es/noticia/la-fundeu-asegura-haber-dejado-el-liston-alto-en-los-cursos-de-verano-de-la-universidad-de-cadiz-espana-2352/",
+            "senseLocator": "Usage attestation only",
+            "paraphrase": "The expression occurs in this primary publication; its function would require contextual inference.",
+            "observedAt": "2026-09-14"
+          }
+        ],
+        "changes": []
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-bulk-211-dicho-sea-de-paso",
+      "catalogSenseId": "es-sk:c2:exp-bulk-211-dicho-sea-de-paso:adv:1",
+      "term": "dicho sea de paso",
+      "normalizedTerm": "dicho sea de paso",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "locución adverbial",
+      "definition": "Se usa para introducir un comentario relacionado pero secundario.",
+      "example": "El informe, dicho sea de paso, llegó después de que se tomara la decisión.",
+      "translation": "mimochodom",
+      "levelRationale": "Marks an aside, not the main inferential reason. Editorial selection for advanced contextual vocabulary practice; C2 placement is provisional, not an exclusive acquisition level or an official word-level assignment.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-bulk-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "objectiveIds": [
+        "C2-discourse"
+      ],
+      "register": "general discourse formula",
+      "placementStatus": "provisional",
+      "placementRationale": "The late-report aside manages a secondary but evaluatively relevant comment within the main discourse.",
+      "originalBatchId": "c2-bulk-2026-09-13",
+      "sourceEntrySha256": "fec43a96650a4d22ebc2fe3b904b60eea5d1dce7d59de3cb642238eb78cb9400",
+      "lexicalEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "sourceResolution": {
+        "entryId": "es-sk:c2:exp-bulk-211-dicho-sea-de-paso",
+        "term": "dicho sea de paso",
+        "baselineEntrySha256": "f304097ecf03423a908eabb35f1f307a88630b31ce8ee02cba99b5f8af76e6f9",
+        "decision": "hold",
+        "reason": "The primary-source excerpt attests use, but does not directly explain the full pragmatic meaning. Held pending stronger semantic evidence; this is not a judgment that the expression is incorrect.",
+        "evidence": [
+          {
+            "kind": "primary-search-excerpt-read",
+            "url": "https://revistas.rae.es/brae/article/view/136/272",
+            "senseLocator": "Usage attestation only",
+            "paraphrase": "The expression occurs in this primary publication; its function would require contextual inference.",
+            "observedAt": "2026-09-14"
+          }
+        ],
+        "changes": []
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-bulk-213-no-en-vano",
+      "catalogSenseId": "es-sk:c2:exp-bulk-213-no-en-vano:adv:1",
+      "term": "no en vano",
+      "normalizedTerm": "no en vano",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "locución adverbial",
+      "definition": "Se usa para señalar una razón que explica o justifica lo dicho.",
+      "example": "Conocía bien el edificio; no en vano había trabajado allí durante veinte años.",
+      "translation": "nie nadarmo; veď nie bez dôvodu",
+      "levelRationale": "Explanatory justification, not a promise of successful effort. Editorial selection for advanced contextual vocabulary practice; C2 placement is provisional, not an exclusive acquisition level or an official word-level assignment.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-bulk-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "objectiveIds": [
+        "C2-discourse"
+      ],
+      "register": "general or formal discourse formula",
+      "placementStatus": "provisional",
+      "placementRationale": "The long employment provides explanatory support for prior knowledge rather than describing wasted effort literally.",
+      "originalBatchId": "c2-bulk-2026-09-13",
+      "sourceEntrySha256": "97ecf1983fea7751b1800acb02970268f9aa07892200af9056a6467e0ac114d0",
+      "lexicalEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "sourceResolution": {
+        "entryId": "es-sk:c2:exp-bulk-213-no-en-vano",
+        "term": "no en vano",
+        "baselineEntrySha256": "2d4e0b770d6ca685cde27e5506ac999fdcba295996cec166d5de463c7f1feeb5",
+        "decision": "hold",
+        "reason": "The primary-source excerpt attests use, but does not directly explain the full pragmatic meaning. Held pending stronger semantic evidence; this is not a judgment that the expression is incorrect.",
+        "evidence": [
+          {
+            "kind": "primary-search-excerpt-read",
+            "url": "https://www.fundeu.es/recomendacion/mediapunta-y-media-punta-el-valor-de-los-espacios/",
+            "senseLocator": "Usage attestation only",
+            "paraphrase": "The expression occurs in this primary publication; its function would require contextual inference.",
+            "observedAt": "2026-09-14"
+          }
+        ],
+        "changes": []
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-bulk-214-sea-como-fuere",
+      "catalogSenseId": "es-sk:c2:exp-bulk-214-sea-como-fuere:adv:1",
+      "term": "sea como fuere",
+      "normalizedTerm": "sea como fuere",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "locución adverbial",
+      "definition": "Se usa para continuar con una conclusión que se mantiene pese a lo discutido antes.",
+      "example": "No sabemos quién dio la orden; sea como fuere, habrá que revisar el procedimiento.",
+      "translation": "nech je to akokoľvek",
+      "levelRationale": "Conclusion maintained while bracketing an unresolved issue. Editorial selection for advanced contextual vocabulary practice; C2 placement is provisional, not an exclusive acquisition level or an official word-level assignment.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-bulk-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "objectiveIds": [
+        "C2-discourse"
+      ],
+      "register": "formal discourse formula",
+      "placementStatus": "provisional",
+      "placementRationale": "The decision to review remains despite unresolved attribution, marking continuity of conclusion under uncertainty.",
+      "originalBatchId": "c2-bulk-2026-09-13",
+      "sourceEntrySha256": "6e97c7d55f4ae76d907d20f2b946470768f7caebbffdc47ef995ccef116b4782",
+      "lexicalEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "sourceResolution": {
+        "entryId": "es-sk:c2:exp-bulk-214-sea-como-fuere",
+        "term": "sea como fuere",
+        "baselineEntrySha256": "9cdde45013b70faba7ccdd96b15f95e8896f2b2283cd2d9a2a0d75c983e748fd",
+        "decision": "hold",
+        "reason": "The primary-source excerpt attests use, but does not directly explain the full pragmatic meaning. Held pending stronger semantic evidence; this is not a judgment that the expression is incorrect.",
+        "evidence": [
+          {
+            "kind": "primary-search-excerpt-read",
+            "url": "https://webfrl.rae.es/BRAE_DB_PDF/TOMO_LXXXVII/CCXCV/Quiros_123_142.pdf",
+            "senseLocator": "Usage attestation only",
+            "paraphrase": "The expression occurs in this primary publication; its function would require contextual inference.",
+            "observedAt": "2026-09-14"
+          }
+        ],
+        "changes": []
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-bulk-220-salvo-mejor-criterio",
+      "catalogSenseId": "es-sk:c2:exp-bulk-220-salvo-mejor-criterio:adv:1",
+      "term": "salvo mejor criterio",
+      "normalizedTerm": "salvo mejor criterio",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "locución adverbial",
+      "definition": "Se usa para presentar una propuesta admitiendo que otra valoración puede ser preferible.",
+      "example": "Salvo mejor criterio, propongo aplazar la decisión hasta disponer del informe completo.",
+      "translation": "s výhradou prípadného lepšieho posúdenia",
+      "levelRationale": "Formal deference that leaves a recommendation open to revision. Editorial selection for advanced contextual vocabulary practice; C2 placement is provisional, not an exclusive acquisition level or an official word-level assignment.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-bulk-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "objectiveIds": [
+        "C2-discourse"
+      ],
+      "register": "formal; deferential",
+      "placementStatus": "provisional",
+      "placementRationale": "The proposal explicitly remains open to a better judgment, combining an assertion with interpersonal qualification.",
+      "originalBatchId": "c2-bulk-2026-09-13",
+      "sourceEntrySha256": "fad5a889d012b905c069b4f387caa4e82d6533cedffb9c12b441fd66dbc11485",
+      "lexicalEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "sourceResolution": {
+        "entryId": "es-sk:c2:exp-bulk-220-salvo-mejor-criterio",
+        "term": "salvo mejor criterio",
+        "baselineEntrySha256": "3dff0ed5d0961221cd9d550650559e618e008ceb9addc1d5a1336751956fdc7c",
+        "decision": "hold",
+        "reason": "The primary-source excerpt attests use, but does not directly explain the full pragmatic meaning. Held pending stronger semantic evidence; this is not a judgment that the expression is incorrect.",
+        "evidence": [
+          {
+            "kind": "primary-search-excerpt-read",
+            "url": "https://boe.es/boe/dias/2025/10/30/pdfs/BOE-B-2025-39527.pdf",
+            "senseLocator": "Usage attestation only",
+            "paraphrase": "The expression occurs in this primary publication; its function would require contextual inference.",
+            "observedAt": "2026-09-14"
+          }
+        ],
+        "changes": []
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-bulk-252-por-asi-decirlo",
+      "catalogSenseId": "es-sk:c2:exp-bulk-252-por-asi-decirlo:adv:1",
+      "term": "por así decirlo",
+      "normalizedTerm": "por así decirlo",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "locución adverbial",
+      "definition": "Se usa para indicar que una expresión es aproximada o figurada.",
+      "example": "El archivo era, por así decirlo, la memoria externa de todo el departamento.",
+      "translation": "takpovediac",
+      "levelRationale": "Marks nonliteral or approximate phrasing, not correction of a factual error. Editorial selection for advanced contextual vocabulary practice; C2 placement is provisional, not an exclusive acquisition level or an official word-level assignment.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-bulk-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "objectiveIds": [
+        "C2-pragmatics"
+      ],
+      "register": "general discourse formula; approximation",
+      "placementStatus": "provisional",
+      "placementRationale": "The external-memory metaphor is explicitly qualified as approximate or figurative wording.",
+      "originalBatchId": "c2-bulk-2026-09-13",
+      "sourceEntrySha256": "68a77d116f64c9f813f7604ab1fdf3465d110af8ce35a7ebadf927fdaba5cecc",
+      "lexicalEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "sourceResolution": {
+        "entryId": "es-sk:c2:exp-bulk-252-por-asi-decirlo",
+        "term": "por así decirlo",
+        "baselineEntrySha256": "a38b656758f73663212cc15c71a56f76344d854cf0c2f6b65c57416c398c3dad",
+        "decision": "hold",
+        "reason": "The primary-source excerpt attests use, but does not directly explain the full pragmatic meaning. Held pending stronger semantic evidence; this is not a judgment that the expression is incorrect.",
+        "evidence": [
+          {
+            "kind": "primary-search-excerpt-read",
+            "url": "https://letras.rae.es/libros-electronicos/141-guzman-de-alfarache-libro-digital.html",
+            "senseLocator": "Usage attestation only",
+            "paraphrase": "The expression occurs in this primary publication; its function would require contextual inference.",
+            "observedAt": "2026-09-14"
+          }
+        ],
+        "changes": []
+      }
+    }
+  ]
+}

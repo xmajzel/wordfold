@@ -1,0 +1,321 @@
+{
+  "schemaVersion": 1,
+  "reviewerType": "ai",
+  "kind": "spanish",
+  "reviewerId": "codex-chatgpt-spanish-c2-source-2026-09-13",
+  "reviewedAt": "2026-09-13T21:28:08.759Z",
+  "notHumanApproval": true,
+  "batchId": "c2-source-2026-09-13",
+  "datasetSha256": "0b3802f04086e0702a0a87731d0c583ed196adb26b4a162e9627ad26f2225b31",
+  "scope": "Spanish sense, definition, example, morphology, register and provisional placement; no audio review.",
+  "entries": [
+    {
+      "entryId": "es-sk:c2:exp-source-i2775",
+      "catalogSenseId": "es-sk:c2:exp-source-i2775:adj:1",
+      "level": "C2",
+      "entrySha256": "e6220c0e89542786eaf64dbd7cbe0acc9a569154de5325579f49c582c9b2f629",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i3140",
+      "catalogSenseId": "es-sk:c2:exp-source-i3140:adj:1",
+      "level": "C2",
+      "entrySha256": "62117ea9ab4205596aa0f7bcb0ef18c1315793f24365517805974af649aee097",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i4931",
+      "catalogSenseId": "es-sk:c2:exp-source-i4931:adj:1",
+      "level": "C2",
+      "entrySha256": "3b9d3bad9ed3f8b88d91af148af1b92b5d5bb0e785968034c71d74f27eeabf3b",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i4955",
+      "catalogSenseId": "es-sk:c2:exp-source-i4955:adj:1",
+      "level": "C2",
+      "entrySha256": "0f3d7713e2b3262a293d600316cdf111ed0d8b523d6bb4d2f6405ddbf43b41ec",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i5613",
+      "catalogSenseId": "es-sk:c2:exp-source-i5613:adj:1",
+      "level": "C2",
+      "entrySha256": "5e3af86df2ca7390085f124e51a30e55574c40e2066cef1fc03f7c1aaa542245",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i6716",
+      "catalogSenseId": "es-sk:c2:exp-source-i6716:adj:1",
+      "level": "C2",
+      "entrySha256": "16f6bdfb536bfdc47dda45d6ce2872b283a6d817189b7c6114c1b06f4f815fca",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i7546",
+      "catalogSenseId": "es-sk:c2:exp-source-i7546:adj:1",
+      "level": "C2",
+      "entrySha256": "5a710177eb900a314ae7782ca10aca30beca2c3c8995883cf6a619de3e1b242d",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i9573",
+      "catalogSenseId": "es-sk:c2:exp-source-i9573:adj:1",
+      "level": "C2",
+      "entrySha256": "2e53e84033b7b0e93fcef22b7d421a82c82e139d0ea7b851210a5caf5bcdcd7f",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i10101",
+      "catalogSenseId": "es-sk:c2:exp-source-i10101:adj:1",
+      "level": "C2",
+      "entrySha256": "1f55c94d95b23e8668d4a931fac949a06d370435baaa73dcb5c9fd6f38df5173",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i10318",
+      "catalogSenseId": "es-sk:c2:exp-source-i10318:adj:1",
+      "level": "C2",
+      "entrySha256": "ccdb01bcefd52fc8515d2d4fba0ebdf26d18c97c5bdcb02f8701621a4631d49d",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i11326",
+      "catalogSenseId": "es-sk:c2:exp-source-i11326:adj:1",
+      "level": "C2",
+      "entrySha256": "28d1d64978079bbfa23136ed21dffd3f674738f82b0655f940577ec7f49ce3f5",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i11448",
+      "catalogSenseId": "es-sk:c2:exp-source-i11448:adj:1",
+      "level": "C2",
+      "entrySha256": "819d5dd2034915b48601e9cce03c982dd408be1ab7af62d046039500cc8fa233",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i11681",
+      "catalogSenseId": "es-sk:c2:exp-source-i11681:adj:1",
+      "level": "C2",
+      "entrySha256": "6aa2c91e451c62d185faa72207414e038fc94275c96119fc83eeae75d86de197",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i12307",
+      "catalogSenseId": "es-sk:c2:exp-source-i12307:adj:1",
+      "level": "C2",
+      "entrySha256": "acbf5fb24315114933f0c71f4f21097c953c4d92445952cf4a18ee8aaba5edf0",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i20315",
+      "catalogSenseId": "es-sk:c2:exp-source-i20315:adv:1",
+      "level": "C2",
+      "entrySha256": "6e8ba46a14d74830485dcdd7f7935c5bebdf147bd61ffae03b68741889ea3b19",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i20454",
+      "catalogSenseId": "es-sk:c2:exp-source-i20454:adv:1",
+      "level": "C2",
+      "entrySha256": "5f2e4a9821a695a08cc622112f2da63d9339545a16668f458bd9800848e59f4d",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i21414",
+      "catalogSenseId": "es-sk:c2:exp-source-i21414:adv:1",
+      "level": "C2",
+      "entrySha256": "51743459b4051ae1d9d9ca412d451133d3345bb5f17d54ba1e5d199fe969ddb2",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i25785",
+      "catalogSenseId": "es-sk:c2:exp-source-i25785:verb:1",
+      "level": "C2",
+      "entrySha256": "32f580cda07d7b5e2d6ffa4296264186cba8eb6282818238adc0f4bec58bab40",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i25878",
+      "catalogSenseId": "es-sk:c2:exp-source-i25878:verb:1",
+      "level": "C2",
+      "entrySha256": "f5388d9e9a7459bbd1b5cb25eb783490288720310d78664c7e713463ca4d8c3d",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i30609",
+      "catalogSenseId": "es-sk:c2:exp-source-i30609:verb:1",
+      "level": "C2",
+      "entrySha256": "6dd547fd3423ec5a234bc18da3e495fa55ebeaad179bce82c1cfa7a36cf23f59",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i30750",
+      "catalogSenseId": "es-sk:c2:exp-source-i30750:verb:1",
+      "level": "C2",
+      "entrySha256": "2ebd69ae4ad0f601e6f849e157e182bea87090e83300d5a327379c6c88581660",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i35238",
+      "catalogSenseId": "es-sk:c2:exp-source-i35238:verb:1",
+      "level": "C2",
+      "entrySha256": "24b120bb4c7adb2b2f7fd541d1ce45032d416e473a7fdbdfc4e5ef3f6420b1a6",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i38078",
+      "catalogSenseId": "es-sk:c2:exp-source-i38078:noun:1",
+      "level": "C2",
+      "entrySha256": "49b358a4d1d48190a706beaa4c84ac1f6ec5fdb9435725c5f1c0a689b6429934",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i62389",
+      "catalogSenseId": "es-sk:c2:exp-source-i62389:noun:1",
+      "level": "C2",
+      "entrySha256": "bf4b1eeb15dd7e5fc957cb2fa3bba9d9cb0717de39210e42dd307b6d290f8e8b",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i62630",
+      "catalogSenseId": "es-sk:c2:exp-source-i62630:noun:1",
+      "level": "C2",
+      "entrySha256": "c9784d454a3a15b830cad183cfbf0fac1db2bc6a530c7d233cb5ae5787439702",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i69963",
+      "catalogSenseId": "es-sk:c2:exp-source-i69963:noun:1",
+      "level": "C2",
+      "entrySha256": "946f67e0bd075a40a79ff6748affdede439e2090ca52925ce583c55fa8561345",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i72041",
+      "catalogSenseId": "es-sk:c2:exp-source-i72041:noun:1",
+      "level": "C2",
+      "entrySha256": "f416bb73c9ce6194a5d1d2a807d0eb30d7f745d50ef174108f9119da395ab744",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i76070",
+      "catalogSenseId": "es-sk:c2:exp-source-i76070:noun:1",
+      "level": "C2",
+      "entrySha256": "d8d3e8d59cd136602fb6bcc5300c050192bb4dba390ddc7b508b5bc8b93ee736",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i76103",
+      "catalogSenseId": "es-sk:c2:exp-source-i76103:noun:1",
+      "level": "C2",
+      "entrySha256": "cb6c489d09dc6925a8db532722b6d961cdf748712bcb62836730053009aa26b9",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i80150",
+      "catalogSenseId": "es-sk:c2:exp-source-i80150:noun:1",
+      "level": "C2",
+      "entrySha256": "c40189ad536a402b3943273484719c4ba1d1dc6a84cf1bb0323f64138e45dc08",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i92094",
+      "catalogSenseId": "es-sk:c2:exp-source-i92094:noun:1",
+      "level": "C2",
+      "entrySha256": "1edb4ede5f94592f9a163a4699d4a3d55aa2d2f27cdac2dc0b18a67cbc853ed8",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i106513",
+      "catalogSenseId": "es-sk:c2:exp-source-i106513:noun:1",
+      "level": "C2",
+      "entrySha256": "71da32c4dcd2cdff6c0670f93b97b5ca933362de3b6b49108396879001c9b955",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i110436",
+      "catalogSenseId": "es-sk:c2:exp-source-i110436:noun:1",
+      "level": "C2",
+      "entrySha256": "de2412bda8a06cc5e5faa79b18ab1400ce0948a052fca5c738de78aeb2f88205",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i113162",
+      "catalogSenseId": "es-sk:c2:exp-source-i113162:noun:1",
+      "level": "C2",
+      "entrySha256": "24e5586ae2ababd6cd36982ea1cd0184b4bacf912de87c1fd3910848ed6ae7b8",
+      "decision": "no-issue",
+      "notes": "Passed the independent AI review of the unchanged authored entry and supplied source sense.",
+      "findings": []
+    }
+  ],
+  "providerResultSha256": "9c94bc38cff841eb8f866b3190f8888fc123ae1eb266b3ab415c8edffa9f6745",
+  "derivation": "Exact authored fields retained. Identity and source provenance added deterministically; author placement rationale withheld from reviewers to reduce anchoring."
+}

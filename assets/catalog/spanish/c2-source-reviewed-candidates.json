@@ -1,0 +1,2339 @@
+{
+  "schemaVersion": 1,
+  "courseId": "es-sk",
+  "batchId": "c2-source-2026-09-13",
+  "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+  "publicationStatus": "draft",
+  "entries": [
+    {
+      "id": "es-sk:c2:exp-source-i2775",
+      "catalogSenseId": "es-sk:c2:exp-source-i2775:adj:1",
+      "term": "idiosincrásico",
+      "normalizedTerm": "idiosincrásico",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Propio y singular de una persona o entidad concreta.",
+      "example": "La directora conserva un método idiosincrásico difícil de imitar.",
+      "exampleSurfaceForm": "idiosincrásico",
+      "translation": "idiosynkratický, svojský",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "idiosincrásica",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "register": "culto",
+      "levelRationale": "Requiere distinguir rasgos individualizadores de lo meramente extraño o excéntrico.",
+      "objectiveIds": [
+        "C2-identity"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-idiosincrásico-00493820-a",
+        "lexicalEntryId": "omw-es-idiosincrásico-a",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-00493820-a",
+          "englishSynsetId": "omw-en-00493820-s",
+          "iliId": "i2775",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "peculiar to the individual",
+            "members": [
+              "idiosyncratic"
+            ],
+            "examples": [
+              "we all have our own idiosyncratic gestures",
+              "Michelangelo's highly idiosyncratic style of painting"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-idiosincrásico-00493820-a",
+              "lexicalEntryId": "omw-es-idiosincrásico-a"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i3140",
+      "catalogSenseId": "es-sk:c2:exp-source-i3140:adj:1",
+      "term": "incongruo",
+      "normalizedTerm": "incongruo",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Incompatible o falto de correspondencia con su contexto.",
+      "example": "Su tono jocoso resultó incongruo durante la ceremonia fúnebre.",
+      "exampleSurfaceForm": "incongruo",
+      "translation": "nezlučiteľný, neprimeraný",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "incongrua",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "register": "formal",
+      "levelRationale": "Permite evaluar incompatibilidades contextuales o lógicas con mayor precisión que «inadecuado».",
+      "objectiveIds": [
+        "C2-pragmatics"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-incongruo-00562469-a",
+        "lexicalEntryId": "omw-es-incongruo-a",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-00562469-a",
+          "englishSynsetId": "omw-en-00562469-a",
+          "iliId": "i3140",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "lacking in harmony or compatibility or appropriateness",
+            "members": [
+              "incongruous"
+            ],
+            "examples": [
+              "a plan incongruous with reason",
+              "incongruous behavior",
+              "a joke that was incongruous with polite conversation"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-incongruo-00562469-a",
+              "lexicalEntryId": "omw-es-incongruo-a"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i4931",
+      "catalogSenseId": "es-sk:c2:exp-source-i4931:adj:1",
+      "term": "arcano",
+      "normalizedTerm": "arcano",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Comprensible únicamente mediante conocimientos secretos, raros o misteriosos.",
+      "example": "El tratado emplea un simbolismo arcano reservado a los iniciados.",
+      "exampleSurfaceForm": "arcano",
+      "translation": "tajomný, prístupný iba zasväteným",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "arcana",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "register": "culto",
+      "levelRationale": "Añade la idea de conocimiento reservado o esotérico, no solo de dificultad general.",
+      "objectiveIds": [
+        "C2-belief"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-arcano-00899612-a",
+        "lexicalEntryId": "omw-es-arcano-a",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-00899612-a",
+          "englishSynsetId": "omw-en-00899612-s",
+          "iliId": "i4931",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "requiring secret or mysterious knowledge",
+            "members": [
+              "arcane"
+            ],
+            "examples": [
+              "the arcane science of dowsing"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-arcano-00899612-a",
+              "lexicalEntryId": "omw-es-arcano-a"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i4955",
+      "catalogSenseId": "es-sk:c2:exp-source-i4955:adj:1",
+      "term": "abyecto",
+      "normalizedTerm": "abyecto",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Moralmente despreciable y merecedor del máximo rechazo.",
+      "example": "Fue una maniobra abyecta contra quienes no podían defenderse.",
+      "exampleSurfaceForm": "abyecta",
+      "translation": "podlý, opovrhnutiahodný",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "abyecta",
+          "type": "feminine",
+          "note": "Forma femenina usada en el ejemplo."
+        }
+      ],
+      "register": "culto y condenatorio",
+      "levelRationale": "Condensa una censura moral extrema y requiere dominio de su intensidad retórica.",
+      "objectiveIds": [
+        "C2-argument"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-abyecto-00904745-a",
+        "lexicalEntryId": "omw-es-abyecto-a",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-00904745-a",
+          "englishSynsetId": "omw-en-00904745-s",
+          "iliId": "i4955",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "of the most contemptible kind",
+            "members": [
+              "abject",
+              "low",
+              "low-down",
+              "miserable",
+              "scummy",
+              "scurvy"
+            ],
+            "examples": [
+              "abject cowardice",
+              "a low stunt to pull",
+              "a low-down sneak",
+              "his miserable treatment of his family",
+              "You miserable skunk!",
+              "a scummy rabble",
+              "a scurvy trick"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-abyecto-00904745-a",
+              "lexicalEntryId": "omw-es-abyecto-a"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i5613",
+      "catalogSenseId": "es-sk:c2:exp-source-i5613:adj:1",
+      "term": "acomodaticio",
+      "normalizedTerm": "acomodaticio",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Dispuesto a adaptarse o hacer concesiones por conveniencia.",
+      "example": "El negociador acomodaticio aceptaba cualquier fórmula que evitara el conflicto.",
+      "exampleSurfaceForm": "acomodaticio",
+      "translation": "ústupčivý, prispôsobivý z vypočítavosti",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "acomodaticia",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "register": "culto y frecuentemente crítico",
+      "levelRationale": "Vocablo infrecuente que combina flexibilidad con un posible matiz de conveniencia o falta de firmeza.",
+      "objectiveIds": [
+        "C2-relationships"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-acomodaticio-01026262-a",
+        "lexicalEntryId": "omw-es-acomodaticio-a",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-01026262-a",
+          "englishSynsetId": "omw-en-01026262-a",
+          "iliId": "i5613",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "making or willing to make concessions",
+            "members": [
+              "compromising",
+              "conciliatory",
+              "flexible"
+            ],
+            "examples": [
+              "loneliness tore through him...whenever he thought of...even the compromising Louis du Tillet"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-acomodaticio-01026262-a",
+              "lexicalEntryId": "omw-es-acomodaticio-a"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i6716",
+      "catalogSenseId": "es-sk:c2:exp-source-i6716:adj:1",
+      "term": "oprobioso",
+      "normalizedTerm": "oprobioso",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Que causa deshonra pública o merece una condena vergonzosa.",
+      "example": "El informe documentó un trato oprobioso hacia los detenidos.",
+      "exampleSurfaceForm": "oprobioso",
+      "translation": "hanebný, potupný",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "oprobiosa",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "register": "culto y condenatorio",
+      "levelRationale": "Expresa deshonra pública grave con una intensidad retórica superior a «vergonzoso».",
+      "objectiveIds": [
+        "C2-law"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-oprobioso-01227546-a",
+        "lexicalEntryId": "omw-es-oprobioso-a",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-01227546-a",
+          "englishSynsetId": "omw-en-01227546-s",
+          "iliId": "i6716",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "(used of conduct or character) deserving or bringing disgrace or shame",
+            "members": [
+              "black",
+              "disgraceful",
+              "ignominious",
+              "inglorious",
+              "opprobrious",
+              "shameful"
+            ],
+            "examples": [
+              "\"Man...has written one of his blackest records as a destroyer on the oceanic islands\"- Rachel Carson",
+              "an ignominious retreat",
+              "inglorious defeat",
+              "an opprobrious monument to human greed",
+              "a shameful display of cowardice"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-oprobioso-01227546-a",
+              "lexicalEntryId": "omw-es-oprobioso-a"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i7546",
+      "catalogSenseId": "es-sk:c2:exp-source-i7546:adj:1",
+      "term": "mastodóntico",
+      "normalizedTerm": "mastodóntico",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "De dimensiones enormes y estructura pesada o desmesurada.",
+      "example": "El ministerio arrastra un aparato burocrático mastodóntico e ineficiente.",
+      "exampleSurfaceForm": "mastodóntico",
+      "translation": "mamutí, obrovský a ťažkopádny",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "mastodóntica",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "register": "expresivo",
+      "levelRationale": "Metáfora lexicalizada que combina tamaño descomunal y pesadez, útil en crítica institucional avanzada.",
+      "objectiveIds": [
+        "C2-work"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-mastodóntico-01385773-a",
+        "lexicalEntryId": "omw-es-mastodóntico-a",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-01385773-a",
+          "englishSynsetId": "omw-en-01385773-s",
+          "iliId": "i7546",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "of great mass; huge and bulky",
+            "members": [
+              "elephantine",
+              "gargantuan",
+              "giant",
+              "jumbo"
+            ],
+            "examples": [
+              "a jumbo jet",
+              "jumbo shrimp"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-mastodóntico-01385773-a",
+              "lexicalEntryId": "omw-es-mastodóntico-a"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i9573",
+      "catalogSenseId": "es-sk:c2:exp-source-i9573:adj:1",
+      "term": "contrito",
+      "normalizedTerm": "contrito",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Arrepentido sinceramente por una falta y afligido por haberla cometido.",
+      "example": "El funcionario compareció contrito y pidió perdón a los afectados.",
+      "exampleSurfaceForm": "contrito",
+      "translation": "kajúcny, skrúšený",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "contrita",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "register": "culto, religioso o solemne",
+      "levelRationale": "Distingue el arrepentimiento moral profundo de la mera tristeza o disculpa convencional.",
+      "objectiveIds": [
+        "C2-belief"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-contrito-01743506-a",
+        "lexicalEntryId": "omw-es-contrito-a",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-01743506-a",
+          "englishSynsetId": "omw-en-01743506-s",
+          "iliId": "i9573",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "feeling or expressing pain or sorrow for sins or offenses",
+            "members": [
+              "contrite",
+              "remorseful",
+              "rueful",
+              "ruthful"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-contrito-01743506-a",
+              "lexicalEntryId": "omw-es-contrito-a"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i10101",
+      "catalogSenseId": "es-sk:c2:exp-source-i10101:adj:1",
+      "term": "puntilloso",
+      "normalizedTerm": "puntilloso",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Excesivamente escrupuloso en observar detalles, reglas o formalidades.",
+      "example": "El diplomático era puntilloso hasta con el orden de los saludos.",
+      "exampleSurfaceForm": "puntilloso",
+      "translation": "puntičkársky, úzkostlivo dbajúci na pravidlá",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "puntillosa",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "register": "general con matiz crítico",
+      "levelRationale": "Añade escrupulosidad excesiva respecto de minucias o formalidades, no mera atención cuidadosa.",
+      "objectiveIds": [
+        "C2-pragmatics"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-puntilloso-01838529-a",
+        "lexicalEntryId": "omw-es-puntilloso-a",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-01838529-a",
+          "englishSynsetId": "omw-en-01838529-s",
+          "iliId": "i10101",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "marked by precise accordance with details",
+            "members": [
+              "meticulous",
+              "punctilious"
+            ],
+            "examples": [
+              "meticulous research",
+              "punctilious in his attention to rules of etiquette"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-puntilloso-01838529-a",
+              "lexicalEntryId": "omw-es-puntilloso-a"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i10318",
+      "catalogSenseId": "es-sk:c2:exp-source-i10318:adj:1",
+      "term": "pudibundo",
+      "normalizedTerm": "pudibundo",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Exageradamente recatado ante asuntos relacionados con el sexo o el cuerpo.",
+      "example": "El censor pudibundo eliminó hasta las alusiones más inocentes al deseo.",
+      "exampleSurfaceForm": "pudibundo",
+      "translation": "prudérny, prehnane cudný",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "pudibunda",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "register": "culto y despectivo",
+      "levelRationale": "Designa recato exagerado con ironía o censura, matiz pragmático ausente en «tímido».",
+      "objectiveIds": [
+        "C2-culture"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-pudibundo-01880163-a",
+        "lexicalEntryId": "omw-es-pudibundo-a",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-01880163-a",
+          "englishSynsetId": "omw-en-01880163-s",
+          "iliId": "i10318",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "exaggeratedly proper",
+            "members": [
+              "priggish",
+              "prim",
+              "prissy",
+              "prudish",
+              "puritanical",
+              "square-toed",
+              "straitlaced",
+              "strait-laced",
+              "straightlaced",
+              "straight-laced",
+              "tight-laced",
+              "victorian"
+            ],
+            "examples": [
+              "my straitlaced Aunt Anna doesn't approve of my miniskirts"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-pudibundo-01880163-a",
+              "lexicalEntryId": "omw-es-pudibundo-a"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i11326",
+      "catalogSenseId": "es-sk:c2:exp-source-i11326:adj:1",
+      "term": "antitético",
+      "normalizedTerm": "antitético",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Opuesto radicalmente a otra idea, cualidad o finalidad.",
+      "example": "Ese mecanismo es antitético al principio de transparencia institucional.",
+      "exampleSurfaceForm": "antitético",
+      "translation": "protikladný, antitetický",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "antitética",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "register": "académico",
+      "levelRationale": "Formula oposición conceptual estructural, más rigurosa que una simple diferencia o discrepancia.",
+      "objectiveIds": [
+        "C2-argument"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-antitético-02065404-a",
+        "lexicalEntryId": "omw-es-antitético-a",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-02065404-a",
+          "englishSynsetId": "omw-en-02065404-s",
+          "iliId": "i11326",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "sharply contrasted in character or purpose",
+            "members": [
+              "antithetic",
+              "antithetical"
+            ],
+            "examples": [
+              "practices entirely antithetical to her professed beliefs",
+              "hope is antithetic to despair"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-antitético-02065404-a",
+              "lexicalEntryId": "omw-es-antitético-a"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i11448",
+      "catalogSenseId": "es-sk:c2:exp-source-i11448:adj:1",
+      "term": "subrepticio",
+      "normalizedTerm": "subrepticio",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Realizado a escondidas y procurando no ser descubierto.",
+      "example": "Detectaron un acceso subrepticio a los archivos confidenciales.",
+      "exampleSurfaceForm": "subrepticio",
+      "translation": "tajný, pokradmý",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "subrepticia",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "register": "formal",
+      "levelRationale": "Expresa ocultación deliberada y cautelosa, con frecuente relevancia jurídica o institucional.",
+      "objectiveIds": [
+        "C2-law"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-subrepticio-02088974-a",
+        "lexicalEntryId": "omw-es-subrepticio-a",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-02088974-a",
+          "englishSynsetId": "omw-en-02088974-s",
+          "iliId": "i11448",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "marked by quiet and caution and secrecy; taking pains to avoid being observed",
+            "members": [
+              "furtive",
+              "sneak",
+              "sneaky",
+              "stealthy",
+              "surreptitious"
+            ],
+            "examples": [
+              "a furtive manner",
+              "a sneak attack",
+              "stealthy footsteps",
+              "a surreptitious glance at his watch"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-subrepticio-02088974-a",
+              "lexicalEntryId": "omw-es-subrepticio-a"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i11681",
+      "catalogSenseId": "es-sk:c2:exp-source-i11681:adj:1",
+      "term": "salaz",
+      "normalizedTerm": "salaz",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Dominado por un deseo sexual excesivo o expresado con lascivia.",
+      "example": "La novela caricaturiza a un anciano salaz que acosa a las criadas.",
+      "exampleSurfaceForm": "salaz",
+      "translation": "chlipný, oplzlý",
+      "gender": "invariant",
+      "alternativeForms": [],
+      "register": "culto y despectivo",
+      "levelRationale": "Adjetivo infrecuente de fuerte censura sexual, cuyo matiz no equivale simplemente a «sensual».",
+      "objectiveIds": [
+        "C2-culture"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-salaz-02133779-a",
+        "lexicalEntryId": "omw-es-salaz-a",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-02133779-a",
+          "englishSynsetId": "omw-en-02133779-s",
+          "iliId": "i11681",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "characterized by lust",
+            "members": [
+              "lubricious",
+              "lustful",
+              "prurient",
+              "salacious"
+            ],
+            "examples": [
+              "eluding the lubricious embraces of her employer",
+              "her sensuous grace roused his lustful nature",
+              "prurient literature",
+              "prurient thoughts",
+              "a salacious rooster of a little man"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-salaz-02133779-a",
+              "lexicalEntryId": "omw-es-salaz-a"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i12307",
+      "catalogSenseId": "es-sk:c2:exp-source-i12307:adj:1",
+      "term": "ducho",
+      "normalizedTerm": "ducho",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Muy experimentado y hábil en una actividad concreta.",
+      "example": "Es ducha en detectar contradicciones durante los interrogatorios.",
+      "exampleSurfaceForm": "ducha",
+      "translation": "zbehlý, skúsený",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "ducha",
+          "type": "feminine",
+          "note": "Forma femenina usada en el ejemplo."
+        }
+      ],
+      "register": "culto",
+      "levelRationale": "Adjetivo poco frecuente, normalmente construido con «en», que combina experiencia y destreza acreditadas.",
+      "objectiveIds": [
+        "C2-work"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-ducho-02226162-a",
+        "lexicalEntryId": "omw-es-ducho-a",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-02226162-a",
+          "englishSynsetId": "omw-en-02226162-s",
+          "iliId": "i12307",
+          "spanish": {
+            "definition": "Que tiene mucha experiencia y habilidad en alguna actividad.",
+            "examples": []
+          },
+          "english": {
+            "definition": "having or showing knowledge and skill and aptitude",
+            "members": [
+              "adept",
+              "expert",
+              "good",
+              "practiced",
+              "proficient",
+              "skillful",
+              "skilful"
+            ],
+            "examples": [
+              "adept in handicrafts",
+              "an adept juggler",
+              "an expert job",
+              "a good mechanic",
+              "a practiced marksman",
+              "a proficient engineer",
+              "a lesser-known but no less skillful composer",
+              "the effect was achieved by skillful retouching"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-ducho-02226162-a",
+              "lexicalEntryId": "omw-es-ducho-a"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i20315",
+      "catalogSenseId": "es-sk:c2:exp-source-i20315:adv:1",
+      "term": "ignominiosamente",
+      "normalizedTerm": "ignominiosamente",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "adverbio",
+      "definition": "De manera deshonrosa, humillante o merecedora de desprecio público.",
+      "example": "El ejército fue ignominiosamente expulsado tras abandonar a sus aliados.",
+      "exampleSurfaceForm": "ignominiosamente",
+      "translation": "potupne, hanebne",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "register": "culto y enfático",
+      "levelRationale": "Adverbio infrecuente de fuerte evaluación moral e histórica, más intenso que «vergonzosamente».",
+      "objectiveIds": [
+        "C2-discourse"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-ignominiosamente-00313633-r",
+        "lexicalEntryId": "omw-es-ignominiosamente-r",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-00313633-r",
+          "englishSynsetId": "omw-en-00313633-r",
+          "iliId": "i20315",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "in a dishonorable manner or to a dishonorable degree",
+            "members": [
+              "disgracefully",
+              "ingloriously",
+              "ignominiously",
+              "discreditably",
+              "shamefully",
+              "dishonorably",
+              "dishonourably"
+            ],
+            "examples": [
+              "his grades were disgracefully low"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-ignominiosamente-00313633-r",
+              "lexicalEntryId": "omw-es-ignominiosamente-r"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i20454",
+      "catalogSenseId": "es-sk:c2:exp-source-i20454:adv:1",
+      "term": "pérfidamente",
+      "normalizedTerm": "pérfidamente",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "adverbio",
+      "definition": "Con deslealtad deliberada y quebrantando la confianza depositada.",
+      "example": "El consejero reveló pérfidamente las negociaciones secretas a un rival.",
+      "exampleSurfaceForm": "pérfidamente",
+      "translation": "vierolomne, zradne",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "register": "culto y condenatorio",
+      "levelRationale": "Expresa traición consciente con una censura moral intensa y un marcado tono literario.",
+      "objectiveIds": [
+        "C2-relationships"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-pérfidamente-00335809-r",
+        "lexicalEntryId": "omw-es-pérfidamente-r",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-00335809-r",
+          "englishSynsetId": "omw-en-00335809-r",
+          "iliId": "i20454",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "in a disloyal and faithless manner",
+            "members": [
+              "faithlessly",
+              "traitorously",
+              "treacherously",
+              "treasonably",
+              "false"
+            ],
+            "examples": [
+              "he behaved treacherously",
+              "his wife played him false"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-pérfidamente-00335809-r",
+              "lexicalEntryId": "omw-es-pérfidamente-r"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i21414",
+      "catalogSenseId": "es-sk:c2:exp-source-i21414:adv:1",
+      "term": "subrepticiamente",
+      "normalizedTerm": "subrepticiamente",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "adverbio",
+      "definition": "A escondidas y procurando cuidadosamente evitar ser observado.",
+      "example": "Copió subrepticiamente los archivos antes de devolver el ordenador.",
+      "exampleSurfaceForm": "subrepticiamente",
+      "translation": "pokradme, tajne",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "register": "formal",
+      "levelRationale": "Expresa ocultación deliberada y cautelosa con mayor precisión que «secretamente».",
+      "objectiveIds": [
+        "C2-law"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-subrepticiamente-00471757-r",
+        "lexicalEntryId": "omw-es-subrepticiamente-r",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-00471757-r",
+          "englishSynsetId": "omw-en-00471757-r",
+          "iliId": "i21414",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "in a surreptitious manner",
+            "members": [
+              "surreptitiously",
+              "sneakily"
+            ],
+            "examples": [
+              "he was watching her surreptitiously as she waited in the hotel lobby"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-subrepticiamente-00471757-r",
+              "lexicalEntryId": "omw-es-subrepticiamente-r"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i25785",
+      "catalogSenseId": "es-sk:c2:exp-source-i25785:verb:1",
+      "term": "reconvenir",
+      "normalizedTerm": "reconvenir",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Reprender a alguien por una conducta considerada incorrecta.",
+      "example": "La directora reconvino al empleado por divulgar información confidencial.",
+      "exampleSurfaceForm": "reconvino",
+      "translation": "pokarhať, napomenúť",
+      "gender": "not-applicable",
+      "alternativeForms": [
+        {
+          "form": "reconvino",
+          "type": "preterite",
+          "note": "Pretérito irregular usado en el ejemplo; sigue el patrón de «venir»."
+        }
+      ],
+      "register": "formal",
+      "levelRationale": "Verbo poco frecuente de censura verbal formal, con conjugación irregular y posible confusión jurídica.",
+      "objectiveIds": [
+        "C2-discourse"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-reconvenir-00825975-v",
+        "lexicalEntryId": "omw-es-reconvenir-v",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-00825975-v",
+          "englishSynsetId": "omw-en-00825975-v",
+          "iliId": "i25785",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "express criticism towards",
+            "members": [
+              "reproach",
+              "upbraid"
+            ],
+            "examples": [
+              "The president reproached the general for his irresponsible behavior"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-reconvenir-00825975-v",
+              "lexicalEntryId": "omw-es-reconvenir-v"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i25878",
+      "catalogSenseId": "es-sk:c2:exp-source-i25878:verb:1",
+      "term": "vilipendiar",
+      "normalizedTerm": "vilipendiar",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Desacreditar gravemente a alguien mediante insultos o acusaciones denigrantes.",
+      "example": "La campaña vilipendió a la minoría mediante falsedades repetidas.",
+      "exampleSurfaceForm": "vilipendió",
+      "translation": "hanobiť, hrubo očierňovať",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "register": "culto y condenatorio",
+      "levelRationale": "Verbo infrecuente de denigración pública intensa, útil para analizar propaganda y ataques retóricos.",
+      "objectiveIds": [
+        "C2-media"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-vilipendiar-00847870-v",
+        "lexicalEntryId": "omw-es-vilipendiar-v",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-00847870-v",
+          "englishSynsetId": "omw-en-00847870-v",
+          "iliId": "i25878",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "spread negative information about",
+            "members": [
+              "vilify",
+              "revile",
+              "vituperate",
+              "rail"
+            ],
+            "examples": [
+              "The Nazi propaganda vilified the Jews"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-vilipendiar-00847870-v",
+              "lexicalEntryId": "omw-es-vilipendiar-v"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i30609",
+      "catalogSenseId": "es-sk:c2:exp-source-i30609:verb:1",
+      "term": "execrar",
+      "normalizedTerm": "execrar",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Sentir y expresar una aversión o condena moral extremas.",
+      "example": "La filósofa execraba toda forma de crueldad institucionalizada.",
+      "exampleSurfaceForm": "execraba",
+      "translation": "oškliviť si, zavrhovať",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "register": "culto y enfático",
+      "levelRationale": "Verbo muy marcado que une repugnancia intensa y condena moral, más fuerte que «detestar».",
+      "objectiveIds": [
+        "C2-belief"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-execrar-01774426-v",
+        "lexicalEntryId": "omw-es-execrar-v",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-01774426-v",
+          "englishSynsetId": "omw-en-01774426-v",
+          "iliId": "i30609",
+          "spanish": {
+            "definition": "encontrar repugnante",
+            "examples": []
+          },
+          "english": {
+            "definition": "find repugnant",
+            "members": [
+              "abhor",
+              "loathe",
+              "abominate",
+              "execrate"
+            ],
+            "examples": [
+              "I loathe that man",
+              "She abhors cats"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-execrar-01774426-v",
+              "lexicalEntryId": "omw-es-execrar-v"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i30750",
+      "catalogSenseId": "es-sk:c2:exp-source-i30750:verb:1",
+      "term": "congraciarse",
+      "normalizedTerm": "congraciarse",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Ganarse deliberadamente la simpatía o buena disposición de alguien.",
+      "example": "Intentó congraciarse con el jurado elogiando cada una de sus decisiones.",
+      "exampleSurfaceForm": "congraciarse",
+      "translation": "votrieť sa do priazne",
+      "gender": "not-applicable",
+      "alternativeForms": [
+        {
+          "form": "congraciarse con alguien",
+          "type": "construcción",
+          "note": "La persona cuyo favor se busca se introduce normalmente con «con»."
+        }
+      ],
+      "register": "culto",
+      "levelRationale": "El verbo pronominal expresa una estrategia interpersonal calculada y exige dominar su régimen con «con».",
+      "objectiveIds": [
+        "C2-relationships"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-congraciarse-01804595-v",
+        "lexicalEntryId": "omw-es-congraciarse-v",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-01804595-v",
+          "englishSynsetId": "omw-en-01804595-v",
+          "iliId": "i30750",
+          "spanish": {
+            "definition": "ganarse el favor de alguien por medio de esfuerzos deliberados",
+            "examples": []
+          },
+          "english": {
+            "definition": "gain favor with somebody by deliberate efforts",
+            "members": [
+              "ingratiate"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-congraciarse-01804595-v",
+              "lexicalEntryId": "omw-es-congraciarse-v"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i35238",
+      "catalogSenseId": "es-sk:c2:exp-source-i35238:verb:1",
+      "term": "pulular",
+      "normalizedTerm": "pulular",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Abundar y moverse numerosos seres o elementos en un lugar.",
+      "example": "En los pasillos pululaban asesores, periodistas y agentes de seguridad.",
+      "exampleSurfaceForm": "pululaban",
+      "translation": "hemžiť sa",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "register": "culto, a menudo expresivo",
+      "levelRationale": "Condensa abundancia y movimiento con frecuente carga evaluativa, frente a «haber muchos».",
+      "objectiveIds": [
+        "C2-space"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-pulular-02714974-v",
+        "lexicalEntryId": "omw-es-pulular-v",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-02714974-v",
+          "englishSynsetId": "omw-en-02714974-v",
+          "iliId": "i35238",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "be teeming, be abuzz",
+            "members": [
+              "teem",
+              "pullulate",
+              "swarm"
+            ],
+            "examples": [
+              "The garden was swarming with bees",
+              "The plaza is teeming with undercover policemen",
+              "her mind pullulated with worries"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-pulular-02714974-v",
+              "lexicalEntryId": "omw-es-pulular-v"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i38078",
+      "catalogSenseId": "es-sk:c2:exp-source-i38078:noun:1",
+      "term": "bufonada",
+      "normalizedTerm": "bufonada",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Acción o comportamiento grotesco propio de quien busca provocar risa.",
+      "example": "El solemne acto acabó convertido en una bufonada improvisada.",
+      "exampleSurfaceForm": "bufonada",
+      "translation": "šaškovina, klauniáda",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "register": "despectivo",
+      "levelRationale": "Su fuerte valoración peyorativa y resonancia teatral permiten una crítica estilísticamente marcada.",
+      "objectiveIds": [
+        "C2-culture"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-bufonada-00513401-n",
+        "lexicalEntryId": "omw-es-bufonada-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-00513401-n",
+          "englishSynsetId": "omw-en-00513401-n",
+          "iliId": "i38078",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "acting like a clown or buffoon",
+            "members": [
+              "buffoonery",
+              "clowning",
+              "japery",
+              "frivolity",
+              "harlequinade",
+              "prank"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-bufonada-00513401-n",
+              "lexicalEntryId": "omw-es-bufonada-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i62389",
+      "catalogSenseId": "es-sk:c2:exp-source-i62389:noun:1",
+      "term": "munificencia",
+      "normalizedTerm": "munificencia",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Generosidad extraordinaria al conceder bienes, premios o favores.",
+      "example": "El mecenas sostuvo la compañía teatral con una munificencia insólita.",
+      "exampleSurfaceForm": "munificencia",
+      "translation": "štedrosť, veľkorysá dobročinnosť",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "register": "muy culto o literario",
+      "levelRationale": "Es una denominación infrecuente y solemne de generosidad material excepcional, útil para estilos elevados.",
+      "objectiveIds": [
+        "C2-money"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-munificencia-04832716-n",
+        "lexicalEntryId": "omw-es-munificencia-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-04832716-n",
+          "englishSynsetId": "omw-en-04832716-n",
+          "iliId": "i62389",
+          "spanish": {
+            "definition": "liberalidad al dar regalos extremadamente liberal y generoso de espíritu",
+            "examples": []
+          },
+          "english": {
+            "definition": "liberality in bestowing gifts; extremely liberal and generous of spirit",
+            "members": [
+              "munificence",
+              "largess",
+              "largesse",
+              "magnanimity",
+              "openhandedness"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-munificencia-04832716-n",
+              "lexicalEntryId": "omw-es-munificencia-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i62630",
+      "catalogSenseId": "es-sk:c2:exp-source-i62630:noun:1",
+      "term": "perfidia",
+      "normalizedTerm": "perfidia",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Deslealtad grave que quebranta de forma deliberada la confianza ajena.",
+      "example": "La perfidia del consejero permitió que el enemigo tomara la ciudad.",
+      "exampleSurfaceForm": "perfidia",
+      "translation": "vierolomnosť, zrada dôvery",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "register": "literario o solemne",
+      "levelRationale": "Nombra una traición deliberada con elevada censura moral y marcado valor estilístico.",
+      "objectiveIds": [
+        "C2-relationships"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-perfidia-04879964-n",
+        "lexicalEntryId": "omw-es-perfidia-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-04879964-n",
+          "englishSynsetId": "omw-en-04879964-n",
+          "iliId": "i62630",
+          "spanish": {
+            "definition": "traición de la confianza",
+            "examples": []
+          },
+          "english": {
+            "definition": "betrayal of a trust",
+            "members": [
+              "perfidy",
+              "perfidiousness",
+              "treachery"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-perfidia-04879964-n",
+              "lexicalEntryId": "omw-es-perfidia-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i69963",
+      "catalogSenseId": "es-sk:c2:exp-source-i69963:noun:1",
+      "term": "apólogo",
+      "normalizedTerm": "apólogo",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Relato breve, frecuentemente alegórico, que transmite una enseñanza moral.",
+      "example": "El autor inserta un apólogo sobre la vanidad entre ambos capítulos.",
+      "exampleSurfaceForm": "apólogo",
+      "translation": "mravoučná alegorická bájka",
+      "gender": "masculine",
+      "alternativeForms": [],
+      "register": "literario y técnico",
+      "levelRationale": "Exige diferenciar un género didáctico concreto de la fábula, parábola o alegoría en sentido amplio.",
+      "objectiveIds": [
+        "C2-arts"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-apólogo-06372095-n",
+        "lexicalEntryId": "omw-es-apólogo-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-06372095-n",
+          "englishSynsetId": "omw-en-06372095-n",
+          "iliId": "i69963",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "a short moral story (often with animal characters)",
+            "members": [
+              "fable",
+              "parable",
+              "allegory",
+              "apologue"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-apólogo-06372095-n",
+              "lexicalEntryId": "omw-es-apólogo-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i72041",
+      "catalogSenseId": "es-sk:c2:exp-source-i72041:noun:1",
+      "term": "gambito",
+      "normalizedTerm": "gambito",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Intervención inicial calculada para obtener ventaja en una conversación o negociación.",
+      "example": "Su elogio al adversario fue un gambito para moderar las críticas.",
+      "exampleSurfaceForm": "gambito",
+      "translation": "úvodný taktický ťah",
+      "gender": "masculine",
+      "alternativeForms": [],
+      "register": "culto, figurado",
+      "levelRationale": "Traslada una apertura ajedrecística al manejo estratégico del discurso y exige reconocer esa intención pragmática.",
+      "objectiveIds": [
+        "C2-pragmatics"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-gambito-06765531-n",
+        "lexicalEntryId": "omw-es-gambito-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-06765531-n",
+          "englishSynsetId": "omw-en-06765531-n",
+          "iliId": "i72041",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "an opening remark intended to secure an advantage for the speaker",
+            "members": [
+              "gambit",
+              "ploy"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-gambito-06765531-n",
+              "lexicalEntryId": "omw-es-gambito-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i76070",
+      "catalogSenseId": "es-sk:c2:exp-source-i76070:noun:1",
+      "term": "emulación",
+      "normalizedTerm": "emulación",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Deseo competitivo de igualar o superar los logros ajenos.",
+      "example": "La emulación entre ambos investigadores aceleró sus respectivos hallazgos.",
+      "exampleSurfaceForm": "emulación",
+      "translation": "súťaživá snaha vyrovnať sa",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "register": "culto",
+      "levelRationale": "Nombra una rivalidad imitativa potencialmente productiva, matiz más específico que «competencia» o «ambición».",
+      "objectiveIds": [
+        "C2-work"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-emulación-07484929-n",
+        "lexicalEntryId": "omw-es-emulación-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-07484929-n",
+          "englishSynsetId": "omw-en-07484929-n",
+          "iliId": "i76070",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "ambition to equal or excel",
+            "members": [
+              "emulation"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-emulación-07484929-n",
+              "lexicalEntryId": "omw-es-emulación-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i76103",
+      "catalogSenseId": "es-sk:c2:exp-source-i76103:noun:1",
+      "term": "lascivia",
+      "normalizedTerm": "lascivia",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Deseo sexual excesivo manifestado de manera considerada indecorosa.",
+      "example": "El narrador retrata con crudeza la lascivia del noble decadente.",
+      "exampleSurfaceForm": "lascivia",
+      "translation": "chlípnosť, zmyselná žiadostivosť",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "register": "culto, literario y censurador",
+      "levelRationale": "Conlleva una valoración moral marcada y aparece sobre todo en literatura, religión y crítica cultural.",
+      "objectiveIds": [
+        "C2-psychology"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-lascivia-07490214-n",
+        "lexicalEntryId": "omw-es-lascivia-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-07490214-n",
+          "englishSynsetId": "omw-en-07490214-n",
+          "iliId": "i76103",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "feeling morbid sexual desire or a propensity to lewdness",
+            "members": [
+              "prurience",
+              "pruriency",
+              "lasciviousness",
+              "carnality",
+              "lubricity"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-lascivia-07490214-n",
+              "lexicalEntryId": "omw-es-lascivia-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i80150",
+      "catalogSenseId": "es-sk:c2:exp-source-i80150:noun:1",
+      "term": "hueste",
+      "normalizedTerm": "hueste",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Ejército o conjunto numeroso de partidarios, especialmente en textos antiguos.",
+      "example": "La hueste cruzó el desfiladero antes de que amaneciera.",
+      "exampleSurfaceForm": "hueste",
+      "translation": "vojsko, zástup bojovníkov",
+      "gender": "feminine",
+      "alternativeForms": [
+        {
+          "form": "huestes",
+          "type": "uso frecuente",
+          "note": "El plural se emplea también para grupos numerosos de seguidores."
+        }
+      ],
+      "register": "arcaizante o literario",
+      "levelRationale": "Su reconocimiento permite interpretar narrativa histórica y usos figurados elevados sin confundirla con vocabulario militar actual.",
+      "objectiveIds": [
+        "C2-culture"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-hueste-08183802-n",
+        "lexicalEntryId": "omw-es-hueste-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-08183802-n",
+          "englishSynsetId": "omw-en-08183802-n",
+          "iliId": "i80150",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "archaic terms for army",
+            "members": [
+              "host",
+              "legion"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-hueste-08183802-n",
+              "lexicalEntryId": "omw-es-hueste-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i92094",
+      "catalogSenseId": "es-sk:c2:exp-source-i92094:noun:1",
+      "term": "plutócrata",
+      "normalizedTerm": "plutócrata",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Persona poderosa cuya influencia política procede de su gran riqueza.",
+      "example": "El periódico acusó al plutócrata de financiar leyes favorables a sus empresas.",
+      "exampleSurfaceForm": "plutócrata",
+      "translation": "plutokrat, boháč ovládajúci politiku",
+      "gender": "common",
+      "alternativeForms": [
+        {
+          "form": "el plutócrata",
+          "type": "género",
+          "note": "Forma masculina."
+        },
+        {
+          "form": "la plutócrata",
+          "type": "género",
+          "note": "La misma forma designa a una mujer."
+        }
+      ],
+      "register": "político, culto y peyorativo",
+      "levelRationale": "Condensa riqueza, poder político e influencia oligárquica dentro del análisis crítico de las élites.",
+      "objectiveIds": [
+        "C2-money"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-plutócrata-10443955-n",
+        "lexicalEntryId": "omw-es-plutócrata-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-10443955-n",
+          "englishSynsetId": "omw-en-10443955-n",
+          "iliId": "i92094",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "someone who exercises power by virtue of wealth",
+            "members": [
+              "plutocrat"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-plutócrata-10443955-n",
+              "lexicalEntryId": "omw-es-plutócrata-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i106513",
+      "catalogSenseId": "es-sk:c2:exp-source-i106513:noun:1",
+      "term": "emolumento",
+      "normalizedTerm": "emolumento",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Retribución económica vinculada al ejercicio de un cargo o profesión.",
+      "example": "El informe detalla los emolumentos percibidos por los altos funcionarios.",
+      "exampleSurfaceForm": "emolumentos",
+      "translation": "služobné požitky, odmena za funkciu",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "emolumentos",
+          "type": "uso frecuente",
+          "note": "Se emplea habitualmente en plural para el conjunto de retribuciones."
+        }
+      ],
+      "register": "administrativo o jurídico",
+      "levelRationale": "Es una voz formal para remuneraciones asociadas a un cargo, frecuente en textos legales y financieros complejos.",
+      "objectiveIds": [
+        "C2-money"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-emolumento-13290285-n",
+        "lexicalEntryId": "omw-es-emolumento-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-13290285-n",
+          "englishSynsetId": "omw-en-13290285-n",
+          "iliId": "i106513",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "compensation received by virtue of holding an office or having employment (usually in the form of wages or fees)",
+            "members": [
+              "emolument"
+            ],
+            "examples": [
+              "a clause in the U.S. constitution prevents sitting legislators from receiving emoluments from their own votes"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-emolumento-13290285-n",
+              "lexicalEntryId": "omw-es-emolumento-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i110436",
+      "catalogSenseId": "es-sk:c2:exp-source-i110436:noun:1",
+      "term": "arrebatamiento",
+      "normalizedTerm": "arrebatamiento",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Estado de exaltación en que una emoción domina por completo a alguien.",
+      "example": "Escuchó el aria en un arrebatamiento que le hizo olvidar al público.",
+      "exampleSurfaceForm": "arrebatamiento",
+      "translation": "vytrženie, citové uchvátenie",
+      "gender": "masculine",
+      "alternativeForms": [],
+      "register": "literario",
+      "levelRationale": "Nombra un transporte emocional intenso con resonancia estética o mística, no un simple entusiasmo.",
+      "objectiveIds": [
+        "C2-psychology"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-arrebatamiento-13986372-n",
+        "lexicalEntryId": "omw-es-arrebatamiento-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-13986372-n",
+          "englishSynsetId": "omw-en-13986372-n",
+          "iliId": "i110436",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "a state of being carried away by overwhelming emotion",
+            "members": [
+              "ecstasy",
+              "rapture",
+              "transport",
+              "exaltation",
+              "raptus"
+            ],
+            "examples": [
+              "\"listening to sweet music in a perfect rapture\"- Charles Dickens"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-arrebatamiento-13986372-n",
+              "lexicalEntryId": "omw-es-arrebatamiento-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    },
+    {
+      "id": "es-sk:c2:exp-source-i113162",
+      "catalogSenseId": "es-sk:c2:exp-source-i113162:noun:1",
+      "term": "fastuosidad",
+      "normalizedTerm": "fastuosidad",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Ostentación de riqueza mediante un lujo extraordinario y espectacular.",
+      "example": "La fastuosidad del banquete indignó a una población empobrecida.",
+      "exampleSurfaceForm": "fastuosidad",
+      "translation": "okázalá nádhera, prepych",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "register": "culto",
+      "levelRationale": "Une suntuosidad y exhibición pública de riqueza, matiz evaluativo más fino que «lujo».",
+      "objectiveIds": [
+        "C2-culture"
+      ],
+      "placementReferenceIds": [
+        "wordfold-source-screening-c2-2026-09-13"
+      ],
+      "placementStatus": "provisional",
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original AI-authored Wordfold Spanish definition, example and Slovak hint; licensed WordNet evidence fixes the intended sense. C2 placement is provisional and not officially certified.",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-fastuosidad-14492373-n",
+        "lexicalEntryId": "omw-es-fastuosidad-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-14492373-n",
+          "englishSynsetId": "omw-en-14492373-n",
+          "iliId": "i113162",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "wealth as evidenced by sumptuous living",
+            "members": [
+              "luxury",
+              "luxuriousness",
+              "opulence",
+              "sumptuousness"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-fastuosidad-14492373-n",
+              "lexicalEntryId": "omw-es-fastuosidad-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-independent-ai-review-not-human-verified"
+      }
+    }
+  ],
+  "counts": {
+    "A1": 0,
+    "A2": 0,
+    "B1": 0,
+    "B2": 0,
+    "C1": 0,
+    "C2": 34
+  }
+}

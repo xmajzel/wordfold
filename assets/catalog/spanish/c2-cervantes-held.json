@@ -1,0 +1,355 @@
+{
+  "schemaVersion": 1,
+  "courseId": "es-sk",
+  "publicationStatus": "draft",
+  "placementStatus": "provisional",
+  "notHumanApproval": true,
+  "baselinePreviewSha256": "0073267b11c4cafd6d9b2f4383fc9f9752cb50e9e3428a3c210b60b0d1359bec",
+  "datasetSha256": "baf699b90ec7f899d71c425a92298c43030ce1496f41845a7f6b75c184e06ac8",
+  "screeningSha256": "fb56c3e0af58b9c17a626e006b708082c9daca61e99f98b1cde7a45f94594664",
+  "localReviewSha256": "e56645c36564622bf22a03fe8ea9cd26ee883f41401ffe5fb411130e86ebfa91",
+  "batchId": "c2-cervantes-held-2026-09-14",
+  "count": 5,
+  "entries": [
+    {
+      "id": "es-sk:c2:exp-cervantes-i30609",
+      "catalogSenseId": "es-sk:c2:exp-cervantes-i30609:verb:1",
+      "term": "abominar",
+      "normalizedTerm": "abominar",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Sentir un rechazo profundo hacia algo.",
+      "example": "No hace falta abominar de toda novedad para defender la tradición.",
+      "exampleSurfaceForm": "abominar",
+      "translation": "hlboko nenávidieť; pociťovať odpor",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "register": "formal",
+      "levelRationale": "The term occurs in the C2 column of the PCIC specific-notions inventory. The selected meaning was screened locally against its topic; this is a provisional curriculum placement, not certification of the entry.",
+      "objectiveIds": [
+        "C2-PCIC-specific-notions"
+      ],
+      "placementReferenceIds": [
+        "pcic-specific-notions-c2"
+      ],
+      "placementStatus": "provisional",
+      "placementEvidence": {
+        "source": "Instituto Cervantes PCIC, Nociones específicas, C1–C2 inventory",
+        "column": "C2",
+        "scope": "Exact plain-item term occurrence; source-sense alignment is a separate local AI judgment."
+      },
+      "sourceVersion": "wordfold-spanish-c2-cervantes-draft-2026-09-14",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original Wordfold learner definition, example and Slovak hint authored and reviewed locally by AI using licensed lexical evidence. No human or independent AI review is claimed.",
+      "sourceCandidateSha256": "236ac0cbd60262d84d618a2b3ad07a18e1a402b370572a0559c9d4f4d167c822",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-abominar-01774426-v",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-01774426-v",
+          "englishSynsetId": "omw-en-01774426-v",
+          "iliId": "i30609",
+          "spanish": {
+            "definition": "encontrar repugnante",
+            "examples": []
+          },
+          "english": {
+            "definition": "find repugnant",
+            "members": [
+              "abhor",
+              "loathe",
+              "abominate",
+              "execrate"
+            ],
+            "examples": [
+              "I loathe that man",
+              "She abhors cats"
+            ]
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-abominar-01774426-v"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-local-ai-review-not-independent-or-human"
+      },
+      "holdReason": "The selected ILI is already covered by execrar in the current C2 source batch."
+    },
+    {
+      "id": "es-sk:c2:exp-cervantes-i112062",
+      "catalogSenseId": "es-sk:c2:exp-cervantes-i112062:noun:1",
+      "term": "dislocación",
+      "normalizedTerm": "dislocación",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Desplazamiento de un hueso fuera de su posición normal.",
+      "example": "La caída le produjo una dislocación del hombro.",
+      "exampleSurfaceForm": "dislocación",
+      "translation": "vykĺbenie",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "register": "neutral",
+      "levelRationale": "The term occurs in the C2 column of the PCIC specific-notions inventory. The selected meaning was screened locally against its topic; this is a provisional curriculum placement, not certification of the entry.",
+      "objectiveIds": [
+        "C2-PCIC-specific-notions"
+      ],
+      "placementReferenceIds": [
+        "pcic-specific-notions-c2"
+      ],
+      "placementStatus": "provisional",
+      "placementEvidence": {
+        "source": "Instituto Cervantes PCIC, Nociones específicas, C1–C2 inventory",
+        "column": "C2",
+        "scope": "Exact plain-item term occurrence; source-sense alignment is a separate local AI judgment."
+      },
+      "sourceVersion": "wordfold-spanish-c2-cervantes-draft-2026-09-14",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original Wordfold learner definition, example and Slovak hint authored and reviewed locally by AI using licensed lexical evidence. No human or independent AI review is claimed.",
+      "sourceCandidateSha256": "2abf727503d9dfa226c5065258d85755cfdfae137fc4725a7a920c886855e492",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-dislocación-14291561-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-14291561-n",
+          "englishSynsetId": "omw-en-14291561-n",
+          "iliId": "i112062",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "a displacement of a part (especially a bone) from its normal position (as in the shoulder or the vertebral column)",
+            "members": [
+              "dislocation"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-dislocación-14291561-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-local-ai-review-not-independent-or-human"
+      },
+      "holdReason": "The authored joint-displacement meaning substantially duplicates luxación in this new batch; keep luxación."
+    },
+    {
+      "id": "es-sk:c2:exp-cervantes-i113162",
+      "catalogSenseId": "es-sk:c2:exp-cervantes-i113162:noun:1",
+      "term": "opulencia",
+      "normalizedTerm": "opulencia",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Riqueza manifestada en una forma de vida lujosa.",
+      "example": "La opulencia del palacio contrastaba con las viviendas cercanas.",
+      "exampleSurfaceForm": "opulencia",
+      "translation": "prepych; okázalé bohatstvo",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "register": "formal",
+      "levelRationale": "The term occurs in the C2 column of the PCIC specific-notions inventory. The selected meaning was screened locally against its topic; this is a provisional curriculum placement, not certification of the entry.",
+      "objectiveIds": [
+        "C2-PCIC-specific-notions"
+      ],
+      "placementReferenceIds": [
+        "pcic-specific-notions-c2"
+      ],
+      "placementStatus": "provisional",
+      "placementEvidence": {
+        "source": "Instituto Cervantes PCIC, Nociones específicas, C1–C2 inventory",
+        "column": "C2",
+        "scope": "Exact plain-item term occurrence; source-sense alignment is a separate local AI judgment."
+      },
+      "sourceVersion": "wordfold-spanish-c2-cervantes-draft-2026-09-14",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original Wordfold learner definition, example and Slovak hint authored and reviewed locally by AI using licensed lexical evidence. No human or independent AI review is claimed.",
+      "sourceCandidateSha256": "1036b65167bc48b0599ae300cbfa7958bf92160b63cea54e0857a8d2876e19d4",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-opulencia-14492373-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-14492373-n",
+          "englishSynsetId": "omw-en-14492373-n",
+          "iliId": "i113162",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "wealth as evidenced by sumptuous living",
+            "members": [
+              "luxury",
+              "luxuriousness",
+              "opulence",
+              "sumptuousness"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-opulencia-14492373-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-local-ai-review-not-independent-or-human"
+      },
+      "holdReason": "The selected ILI is already covered by fastuosidad in the current C2 placement batch."
+    },
+    {
+      "id": "es-sk:c2:exp-cervantes-i25786",
+      "catalogSenseId": "es-sk:c2:exp-cervantes-i25786:verb:1",
+      "term": "reprender",
+      "normalizedTerm": "reprender",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Expresar desaprobación por la conducta de alguien.",
+      "example": "La directora decidió reprender al alumno por su comportamiento.",
+      "exampleSurfaceForm": "reprender",
+      "translation": "pokarhať",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "register": "formal",
+      "levelRationale": "The term occurs in the C2 column of the PCIC specific-notions inventory. The selected meaning was screened locally against its topic; this is a provisional curriculum placement, not certification of the entry.",
+      "objectiveIds": [
+        "C2-PCIC-specific-notions"
+      ],
+      "placementReferenceIds": [
+        "pcic-specific-notions-c2"
+      ],
+      "placementStatus": "provisional",
+      "placementEvidence": {
+        "source": "Instituto Cervantes PCIC, Nociones específicas, C1–C2 inventory",
+        "column": "C2",
+        "scope": "Exact plain-item term occurrence; source-sense alignment is a separate local AI judgment."
+      },
+      "sourceVersion": "wordfold-spanish-c2-cervantes-draft-2026-09-14",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original Wordfold learner definition, example and Slovak hint authored and reviewed locally by AI using licensed lexical evidence. No human or independent AI review is claimed.",
+      "sourceCandidateSha256": "7069440d82e1c53921b5ce7ee8cdbbdb87afa9f471939ab13f6ccc063b797293",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-reprender-00826201-v",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-00826201-v",
+          "englishSynsetId": "omw-en-00826201-v",
+          "iliId": "i25786",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "express strong disapproval of",
+            "members": [
+              "reprehend"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-reprender-00826201-v"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-local-ai-review-not-independent-or-human"
+      },
+      "holdReason": "The authored reprimanding sense substantially overlaps reconvenir in the current C2 draft."
+    },
+    {
+      "id": "es-sk:c2:exp-cervantes-i86814",
+      "catalogSenseId": "es-sk:c2:exp-cervantes-i86814:noun:1",
+      "term": "satanás",
+      "normalizedTerm": "satanás",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Nombre dado al espíritu del mal en determinadas tradiciones religiosas.",
+      "example": "El grabado representa a Satanás como una figura amenazante.",
+      "exampleSurfaceForm": "satanás",
+      "translation": "Satan",
+      "gender": "masculine",
+      "alternativeForms": [],
+      "register": "formal",
+      "levelRationale": "The term occurs in the C2 column of the PCIC specific-notions inventory. The selected meaning was screened locally against its topic; this is a provisional curriculum placement, not certification of the entry.",
+      "objectiveIds": [
+        "C2-PCIC-specific-notions"
+      ],
+      "placementReferenceIds": [
+        "pcic-specific-notions-c2"
+      ],
+      "placementStatus": "provisional",
+      "placementEvidence": {
+        "source": "Instituto Cervantes PCIC, Nociones específicas, C1–C2 inventory",
+        "column": "C2",
+        "scope": "Exact plain-item term occurrence; source-sense alignment is a separate local AI judgment."
+      },
+      "sourceVersion": "wordfold-spanish-c2-cervantes-draft-2026-09-14",
+      "publicationStatus": "draft",
+      "originalContent": true,
+      "originalContentDeclaration": "Original Wordfold learner definition, example and Slovak hint authored and reviewed locally by AI using licensed lexical evidence. No human or independent AI review is claimed.",
+      "sourceCandidateSha256": "9900e69e217c5fbdcf6480f266d14f0a8faabe01b6f9c176c4b793a2a2148f07",
+      "lexicalEvidence": {
+        "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+        "sourceIds": [
+          "omw-es:2.0",
+          "omw-en:2.0"
+        ],
+        "selectedSenseId": "omw-es-Satanás-09543353-n",
+        "semanticReference": {
+          "spanishSynsetId": "omw-es-09543353-n",
+          "englishSynsetId": "omw-en-09543353-n",
+          "iliId": "i86814",
+          "spanish": {
+            "definition": null,
+            "examples": []
+          },
+          "english": {
+            "definition": "(Judeo-Christian and Islamic religions) chief spirit of evil and adversary of God; tempter of mankind; master of Hell",
+            "members": [
+              "Satan",
+              "Old Nick",
+              "Devil",
+              "Lucifer",
+              "Beelzebub",
+              "the Tempter",
+              "Prince of Darkness"
+            ],
+            "examples": []
+          },
+          "sourceSenseAliases": [
+            {
+              "senseId": "omw-es-Satanás-09543353-n"
+            }
+          ]
+        },
+        "verificationStatus": "pinned-source-linked-with-local-ai-review-not-independent-or-human"
+      },
+      "holdReason": "A religious proper name is outside the prioritized general vocabulary expansion; casing and noun type also require separate treatment."
+    }
+  ]
+}

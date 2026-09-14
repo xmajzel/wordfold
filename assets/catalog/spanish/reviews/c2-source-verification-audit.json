@@ -1,0 +1,4342 @@
+{
+  "schemaVersion": 1,
+  "courseId": "es-sk",
+  "publicationStatus": "draft",
+  "reviewerType": "ai",
+  "reviewerId": "codex-current-task-local-source-adjudication",
+  "notHumanApproval": true,
+  "reviewedAt": "2026-09-14",
+  "placementStatus": "provisional",
+  "scope": "Source-sense verification of the 160 previously unverified entries retained in the consolidated draft. Exact cached lemma/POS retrieval is followed by AI sense comparison against the definition, example and existing Slovak hint; targeted primary-page checks fill some gaps. Source absence is not evidence that a word is invalid. No new independent Slovak review, official CEFR grading, learner-text edit or production publication.",
+  "inputSha256": "283fd3835e1e0b0ae741a94d2cd04e6785b2eac227bb24ec41d21f3f936b31e1",
+  "draftSha256": "d8fa026ed6a54de434d3c38f2a038759871856ef87a4c6a1347127e1cd68f0fd",
+  "bulkSha256": "c71c721155b99276e0f4470ae738cb4967a2d5376a05896f84771b2fdd363225",
+  "sourceManifestSha256": "738cf1f96a7d9a4245dff3dcfe383b6d0b72efed368a3e493e0b0c346e55ae79",
+  "sourceManifestPath": "assets/catalog/spanish/c1-source-manifest.json",
+  "sources": [
+    {
+      "id": "omw-es:2.0",
+      "version": "2.0",
+      "url": "https://github.com/omwn/omw-data/releases/download/v2.0/omw-es-2.0.tar.xz",
+      "sha256": "d8450d42885cd51f3db39fe64219a7a003eeb432b4caa00428285fe6ab224303",
+      "license": "CC BY 3.0",
+      "attribution": "Multilingual Central Repository 3.0 (release 2016), González-Agirre, Laparra and Rigau (2012), packaged by Open Multilingual Wordnet 2.0.",
+      "redistributionScope": "Commercial reuse, redistribution, and adaptation are permitted with attribution. Only the Spanish omw-es module is extracted.",
+      "transformations": [
+        "Extract Spanish lemma, universal POS, lexical-entry ID, sense ID, synset ID, ILI and any source definition/examples as review evidence.",
+        "Match the fixed ELELex-derived course catalog by normalized Spanish lemma and compatible POS.",
+        "Retain original source identifiers; do not copy source glosses into learner content."
+      ]
+    },
+    {
+      "id": "omw-en:2.0",
+      "version": "2.0",
+      "url": "https://github.com/omwn/omw-data/releases/download/v2.0/omw-en-2.0.tar.xz",
+      "sha256": "0e09dfb7f096bc3f10b9de68ffecf13839fa22ae46fd9b227cec890d204ca1dc",
+      "license": "WordNet 3.0 license",
+      "licensePath": "assets/licenses/WORDNET_3_0_LICENSE.txt",
+      "copyright": "WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+      "attribution": "Princeton WordNet 3.0, packaged as OMW English 2.0; Fellbaum, Christiane (ed.), WordNet: An Electronic Lexical Database, MIT Press, 1998.",
+      "redistributionScope": "Review-support definitions, examples and synset members only. Preserve the complete copyright, license and disclaimer on all copies, including internal modifications. Princeton University or Princeton may not be used in advertising or publicity pertaining to distribution.",
+      "transformations": [
+        "Extract English definitions, examples and member lemmas verbatim as review evidence only.",
+        "Match Spanish offsets and POS, with exact-offset adjective a to satellite s fallback only when the direct ID is absent; require equal non-empty ILIs.",
+        "Group Spanish choices by synset, retaining source-order canonical sense IDs and every original source-sense alias."
+      ]
+    }
+  ],
+  "reproduce": "node scripts/verify-spanish-c2-source-audit.mjs",
+  "counts": {
+    "total": 160,
+    "supported": 101,
+    "unresolved": 59,
+    "pinnedLibrary": 68,
+    "primaryPage": 33
+  },
+  "entries": [
+    {
+      "entryId": "es-sk:c2:exp-bulk-001-untuoso",
+      "term": "untuoso",
+      "inputEntrySha256": "aeed351bb935e43ca2c12a48c387ccebee1373ec048c040d51360d2960edffea",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Fatty/creamy physical texture supports the purée use; the false-sweetness figurative sense is excluded.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/untuoso",
+          "senseLocator": "1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Fatty/creamy physical texture supports the purée use; the false-sweetness figurative sense is excluded."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-002-astringente",
+      "term": "astringente",
+      "inputEntrySha256": "978dd2e8b2dec2b041a5fb71229e9665da96fb72f512a53a38f8bcada398324a",
+      "candidateSensesSha256": "cc976d025a98a69c81e5532f96ffcf9999beec3d3b457c231d52d143726d7516",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Tongue dryness with a bitter/rough sensation supports the wine example and mouth-contracting hint.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/astringente",
+          "senseLocator": "1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Tongue dryness with a bitter/rough sensation supports the wine example and mouth-contracting hint."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-005-correoso",
+      "term": "correoso",
+      "inputEntrySha256": "7d4b3445fc7fb5cd8022fafa88f6c0c663f84beac60e26de7ade5ac45070ff88",
+      "candidateSensesSha256": "b598f95cb5c7fb9399026926dc48e9511a357eae82fb3c1200934ad80941487d",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Chewing resistance matches the squid example and the Slovak chewy/tough hint.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-correoso-02445978-a",
+            "lexicalEntryId": "omw-es-correoso-a",
+            "spanishSynsetId": "omw-es-02445978-a",
+            "englishSynsetId": "omw-en-02445978-s",
+            "iliId": "i13555",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "requiring much chewing",
+              "members": [
+                "chewy"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-correoso-02445978-a",
+                "lexicalEntryId": "omw-es-correoso-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-008-ligar-una-salsa",
+      "term": "ligar una salsa",
+      "inputEntrySha256": "239c6e710b209d484489f9ee66261acb266cf8ae32cf0617654cb592a6b5189b",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "The DLE ligar sense 4 supports homogeneous mixing, but the added thickening/body claim and Slovak zahustiť need culinary evidence.",
+      "evidence": [
+        {
+          "kind": "primary-page-read-insufficient-support",
+          "url": "https://dle.rae.es/ligar",
+          "observedAt": "2026-09-14",
+          "paraphrase": "The DLE ligar sense 4 supports homogeneous mixing, but the added thickening/body claim and Slovak zahustiť need culinary evidence."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-011-desvencijado",
+      "term": "desvencijado",
+      "inputEntrySha256": "f987adfeb9ffae760aafeb1749f79e9101b7a046fe03ff3d968aab256726aded",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached lemma/POS match; the attempted DLE page did not return an entry. Participial evidence under desvencijar remains to be checked.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-012-destartalado",
+      "term": "destartalado",
+      "inputEntrySha256": "830b72427cd42b08d03aa3c7596bd23bbfbded3e7b159d04453863504ee346ec",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Disordered and dilapidated appearance supports the neglected vestibule, without importing the Mexico-only deprivation sense.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/destartalado",
+          "senseLocator": "1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Disordered and dilapidated appearance supports the neglected vestibule, without importing the Mexico-only deprivation sense."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-018-asentamiento",
+      "term": "asentamiento",
+      "inputEntrySha256": "66b6ba340389e476e360b12b3f52dec637dfc1574d33e2f5e7c956d43ec055c3",
+      "candidateSensesSha256": "dd78b01e1d133e53f057aeb89f1266a43595eb0a5296ca35aac60eedf7d552d7",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "Cached senses concern residence/settlement. DLE asentamiento refers back to asentar but does not itself establish compression of foundations; construction-specific evidence is still needed.",
+      "evidence": [
+        {
+          "kind": "primary-page-read-insufficient-support",
+          "url": "https://dle.rae.es/asentamiento",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Cached senses concern residence/settlement. DLE asentamiento refers back to asentar but does not itself establish compression of foundations; construction-specific evidence is still needed."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-021-achaque",
+      "term": "achaque",
+      "inputEntrySha256": "541213e274c88cd207e0c8032bc974ad241a2e9859db9f3661d7575cac0f0989",
+      "candidateSensesSha256": "97f7ad8c0c27d4e738e10685439dccc3f2140d0e329d4f063914a45e6fdc0754",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Persistent bodily complaint matches an age-associated minor ailment, not a pretext.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-achaque-14055408-n",
+            "lexicalEntryId": "omw-es-achaque-n",
+            "spanishSynsetId": "omw-es-14055408-n",
+            "englishSynsetId": "omw-en-14055408-n",
+            "iliId": "i110789",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "an often persistent bodily disorder or disease; a cause for complaining",
+              "members": [
+                "ailment",
+                "complaint",
+                "ill"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-achaque-14055408-n",
+                "lexicalEntryId": "omw-es-achaque-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-022-postracion",
+      "term": "postración",
+      "inputEntrySha256": "ea464c68503b98d2749296cd9ae0dcf8f7d99824a3d6522a1f2bd3ff14914709",
+      "candidateSensesSha256": "39b92309bd7586df8994e08b6b41cdb883e1625a74605de9aaf5e3cc20e70dd3",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Illness-related debility directly supports exhaustion after infection.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/postraci%C3%B3n",
+          "senseLocator": "2",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Illness-related debility directly supports exhaustion after infection."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-023-vahido",
+      "term": "vahído",
+      "inputEntrySha256": "42ca4f82c604e0eb308284d8cca665f1d77991c514fb2df1cca7d1d41caf7e68",
+      "candidateSensesSha256": "5dbfd4b895246383b10e835d03af0a907fe789f1f153a2adebf9ecd0eddde3e1",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Reeling/falling sensation supports the near-fainting example without claiming actual loss of consciousness.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-vahído-14372513-n",
+            "lexicalEntryId": "omw-es-vahído-n",
+            "spanishSynsetId": "omw-es-14372513-n",
+            "englishSynsetId": "omw-en-14372513-n",
+            "iliId": "i112532",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "a reeling sensation; a feeling that you are about to fall",
+              "members": [
+                "dizziness",
+                "giddiness",
+                "lightheadedness",
+                "vertigo"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-vahído-14372513-n",
+                "lexicalEntryId": "omw-es-vahído-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-024-embotamiento",
+      "term": "embotamiento",
+      "inputEntrySha256": "d1fa6ff0962704b3bc0129e03950c91b0bdb8c0004a4f4a6fd268bbfa0ecbc54",
+      "candidateSensesSha256": "4449b426db2da957d2f4c0986350962cf79d5a05b7a05c475bef7a04f8ff80a6",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Mental dullness matches loss of concentration and Slovak otupenosť.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-embotamiento-05681252-n",
+            "lexicalEntryId": "omw-es-embotamiento-n",
+            "spanishSynsetId": "omw-es-05681252-n",
+            "englishSynsetId": "omw-en-05681252-n",
+            "iliId": "i66772",
+            "spanish": {
+              "definition": "letargo mental o embotamiento",
+              "examples": []
+            },
+            "english": {
+              "definition": "mental lethargy or dullness",
+              "members": [
+                "hebetude"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-embotamiento-05681252-n",
+                "lexicalEntryId": "omw-es-embotamiento-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-025-recrudecerse",
+      "term": "recrudecerse",
+      "inputEntrySha256": "21944fcff47c1b11d70f72ae21cecec341bb19b1dc57b45090066d70240bdf5e",
+      "candidateSensesSha256": "25c4f915ac484b7386e50f1ef7d1e55e1b3645284ff77ffc92626350b4d6d29a",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "The cached sense is unrelated. DLE requires renewed worsening after improvement; the example includes that sequence but the learner definition does not. Definition precision needs editorial resolution.",
+      "evidence": [
+        {
+          "kind": "primary-page-read-insufficient-support",
+          "url": "https://dle.rae.es/recrudecer",
+          "observedAt": "2026-09-14",
+          "paraphrase": "The cached sense is unrelated. DLE requires renewed worsening after improvement; the example includes that sequence but the learner definition does not. Definition precision needs editorial resolution."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-028-secuela",
+      "term": "secuela",
+      "inputEntrySha256": "1ce805731d6aa88742f31439fe2d4797c77bf8a4615284e69dbc27fe30a10934",
+      "candidateSensesSha256": "04f2df64e103cd6dd86a533a62f7874ece7f91410b2d1191d4a209897618286a",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "The disease/injury aftermath sense directly matches the hearing-loss example.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-secuela-14550614-n",
+            "lexicalEntryId": "omw-es-secuela-n",
+            "spanishSynsetId": "omw-es-14550614-n",
+            "englishSynsetId": "omw-en-14550614-n",
+            "iliId": "i113468",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "any abnormality following or resulting from a disease or injury or treatment",
+              "members": [
+                "sequela"
+              ],
+              "examples": [
+                "paralysis is one of the sequelae of poliomyelitis"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-secuela-14550614-n",
+                "lexicalEntryId": "omw-es-secuela-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-030-remision",
+      "term": "remisión",
+      "inputEntrySha256": "69f568b8b2c8bcda4436a83c918b7ed08edd4b560bc6f8fb39b46757c6eec540",
+      "candidateSensesSha256": "19ac395b73a754e37ed1c4f51657bf113a1a1124d140ec4cdee849799ac79f7c",
+      "cachedCandidateCount": 5,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "Cached senses concern cures, references and payments. DLE remisión refers back to remitir; the clinical disease-remission sense needs direct evidence.",
+      "evidence": [
+        {
+          "kind": "primary-page-read-insufficient-support",
+          "url": "https://dle.rae.es/remisi%C3%B3n",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Cached senses concern cures, references and payments. DLE remisión refers back to remitir; the clinical disease-remission sense needs direct evidence."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-032-vicisitud",
+      "term": "vicisitud",
+      "inputEntrySha256": "d1401e1e2ee2316faf0ecd9d7707e4b9145c00cffa197c534ec3595113147323",
+      "candidateSensesSha256": "9b6d04335ca16a5f180624011872d008387a4d11e611b4a025bbc65d818dc92a",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Successive changes in experience support travel vicissitudes and unexpected turns.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-vicisitud-04741655-n",
+            "lexicalEntryId": "omw-es-vicisitud-n",
+            "spanishSynsetId": "omw-es-04741655-n",
+            "englishSynsetId": "omw-en-04741655-n",
+            "iliId": "i61944",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "mutability in life or nature (especially successive alternation from one condition to another)",
+              "members": [
+                "vicissitude"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-vicisitud-04741655-n",
+                "lexicalEntryId": "omw-es-vicisitud-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-034-intempestivo",
+      "term": "intempestivo",
+      "inputEntrySha256": "d56139d8f62796e79ffb8818a8288ffb31dcff73ff806ea757b5cf5e1dd2b481",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Inopportune timing supports arrival at an inconvenient hour.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/intempestivo",
+          "senseLocator": "1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Inopportune timing supports arrival at an inconvenient hour."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-041-amainar",
+      "term": "amainar",
+      "inputEntrySha256": "c6f9dfa7ea7f9f4b4c86b98bdb16887bacd62314a71bbd0e64dd6a6d06660b36",
+      "candidateSensesSha256": "889f9b572e9a2a1ae345ae40a66c60a8fe7de9f774220c43a41baa0dad994b0b",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Reduction in intensity supports a storm abating; no transitive causation is asserted.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-amainar-00245059-v",
+            "lexicalEntryId": "omw-es-amainar-v",
+            "spanishSynsetId": "omw-es-00245059-v",
+            "englishSynsetId": "omw-en-00245059-v",
+            "iliId": "i22942",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "become less in amount or intensity",
+              "members": [
+                "abate",
+                "let up",
+                "slack off",
+                "slack",
+                "die away"
+              ],
+              "examples": [
+                "The storm abated",
+                "The rain let up after a few hours"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-amainar-00245059-v",
+                "lexicalEntryId": "omw-es-amainar-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-042-arreciar",
+      "term": "arreciar",
+      "inputEntrySha256": "fda19207d38b11af25bc46b28995abe39284565faa04ab9540d5058c3da840e0",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Increasing force explicitly includes storms and wind.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/arreciar",
+          "senseLocator": "3",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Increasing force explicitly includes storms and wind."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-045-calima",
+      "term": "calima",
+      "inputEntrySha256": "3160d092d03d0649fe7627b82635d91f4263e72bdc9135bb11a51b7585fd5881",
+      "candidateSensesSha256": "614217072101a93fc2e80c5d9cec614dfd10b2a822ed74f2212b26a6fd42ce8e",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Suspended dust or sand reducing visibility supports dry atmospheric haze, not the cache's condensation fog.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/calima",
+          "senseLocator": "calima 1, sense 1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Suspended dust or sand reducing visibility supports dry atmospheric haze, not the cache's condensation fog."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-046-escorrentia",
+      "term": "escorrentía",
+      "inputEntrySha256": "7edb8b032bcbbd9056a169b18074785dffb66ae24320d9263f8e22995b3edf1f",
+      "candidateSensesSha256": "9e0274ba25c1a4c85656e1907bac038a0654fac6e37c6cd555d9ee376130a46a",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Rainwater flowing across terrain directly supports the hillside runoff example.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/escorrent%C3%ADa",
+          "senseLocator": "1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Rainwater flowing across terrain directly supports the hillside runoff example."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-048-sotavento",
+      "term": "sotavento",
+      "inputEntrySha256": "80f11b391f800a0559479376500768afd509fa3d093e068aaeb88c730f56c763",
+      "candidateSensesSha256": "02ed6c6c8e9ab29d2e5100141258dd28488c0298b1a754370e00ef077976c384",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Sheltered side matches tents placed on the lee side of a hill.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-sotavento-08592352-n",
+            "lexicalEntryId": "omw-es-sotavento-n",
+            "spanishSynsetId": "omw-es-08592352-n",
+            "englishSynsetId": "omw-en-08592352-n",
+            "iliId": "i82132",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "the side of something that is sheltered from the wind",
+              "members": [
+                "lee",
+                "lee side",
+                "leeward"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-sotavento-08592352-n",
+                "lexicalEntryId": "omw-es-sotavento-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-051-oneroso",
+      "term": "oneroso",
+      "inputEntrySha256": "0eeb3bea6ad6968e9eb08a8d4a5ba685b7e4c1d160a36e83b16db392f7d480a1",
+      "candidateSensesSha256": "53c59f012ea9041d5b58d05e084358e83c51c77412a6e88ee8ba12d2bfbe357c",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "A burdensome cost is a contextual application of the difficult-to-bear sense.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-oneroso-01189109-a",
+            "lexicalEntryId": "omw-es-oneroso-a",
+            "spanishSynsetId": "omw-es-01189109-a",
+            "englishSynsetId": "omw-en-01189109-s",
+            "iliId": "i6505",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "not easily borne; wearing",
+              "members": [
+                "burdensome",
+                "onerous",
+                "taxing"
+              ],
+              "examples": [
+                "the burdensome task of preparing the income tax return",
+                "my duties weren't onerous; I only had to greet the guests",
+                "a taxing schedule"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-oneroso-01189109-a",
+                "lexicalEntryId": "omw-es-oneroso-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-052-exorbitante",
+      "term": "exorbitante",
+      "inputEntrySha256": "0738c882e0bb39c39cc2d3508563bd40a12157e29006a7c04649f8772eea25c6",
+      "candidateSensesSha256": "db7432db00277819dec0f63cbb0fcc40f6bd7e3e9d3587a2c6fe9941a94416e7",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Exceeding reasonable bounds matches the excessive repair price.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-exorbitante-01534282-a",
+            "lexicalEntryId": "omw-es-exorbitante-a",
+            "spanishSynsetId": "omw-es-01534282-a",
+            "englishSynsetId": "omw-en-01534282-s",
+            "iliId": "i8424",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "greatly exceeding bounds of reason or moderation",
+              "members": [
+                "exorbitant",
+                "extortionate",
+                "outrageous",
+                "steep",
+                "unconscionable",
+                "usurious"
+              ],
+              "examples": [
+                "exorbitant rent",
+                "extortionate prices",
+                "spends an outrageous amount on entertainment",
+                "usurious interest rate",
+                "unconscionable spending"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-exorbitante-01534282-a",
+                "lexicalEntryId": "omw-es-exorbitante-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-053-irrisorio",
+      "term": "irrisorio",
+      "inputEntrySha256": "7a2b9a9e583510887e1e33b5ae675810aa86b645654a61b7f37667c48b5949ae",
+      "candidateSensesSha256": "76948e9d69f301655137bed26f9d1a701f006ca2cbc839e16506619ba9be19cc",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Negligible smallness supports the inadequate compensation, not verbal ridicule.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/irrisorio",
+          "senseLocator": "2",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Negligible smallness supports the inadequate compensation, not verbal ridicule."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-054-gravoso",
+      "term": "gravoso",
+      "inputEntrySha256": "647c2bee633751448e84b7e9f2abf54696dbfa44ac75d1d092918515ee17ff10",
+      "candidateSensesSha256": "ec320e83eededc0604c05f6bdb099f3e26a98e4df45baef97b17dc005bcd9b66",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Difficult-to-bear burden matches the requirement imposed on small businesses.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-gravoso-01189109-a",
+            "lexicalEntryId": "omw-es-gravoso-a",
+            "spanishSynsetId": "omw-es-01189109-a",
+            "englishSynsetId": "omw-en-01189109-s",
+            "iliId": "i6505",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "not easily borne; wearing",
+              "members": [
+                "burdensome",
+                "onerous",
+                "taxing"
+              ],
+              "examples": [
+                "the burdensome task of preparing the income tax return",
+                "my duties weren't onerous; I only had to greet the guests",
+                "a taxing schedule"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-gravoso-01189109-a",
+                "lexicalEntryId": "omw-es-gravoso-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-057-quebranto",
+      "term": "quebranto",
+      "inputEntrySha256": "e0df45863a275103db0bf41c3c3c61f55a3895163d672a853ae21af882775817",
+      "candidateSensesSha256": "890882d1b1ef9427a5261ee602e80ecb3562b5c8f1afc0cff24ecf85d4dee5f0",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Economic loss is the contextual application of losing; no specialized legal mechanism is asserted.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-quebranto-00067526-n",
+            "lexicalEntryId": "omw-es-quebranto-n",
+            "spanishSynsetId": "omw-es-00067526-n",
+            "englishSynsetId": "omw-en-00067526-n",
+            "iliId": "i35762",
+            "spanish": {
+              "definition": "acto de perder",
+              "examples": []
+            },
+            "english": {
+              "definition": "the act of losing someone or something",
+              "members": [
+                "loss"
+              ],
+              "examples": [
+                "everyone expected him to win so his loss was a shock"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-quebranto-00067526-n",
+                "lexicalEntryId": "omw-es-quebranto-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-058-resarcir",
+      "term": "resarcir",
+      "inputEntrySha256": "b38a2b9790f1fc0e93d093dc4a1b504697195817fa6fd5fd4dc3fd36a5bef5f5",
+      "candidateSensesSha256": "43aaf8f1ccb09b418cc4ff2dde64c2329d0b603c249cdb4abf98f9cc9449b4c1",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Compensating a loss directly supports reimbursement of customers.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-resarcir-02249591-v",
+            "lexicalEntryId": "omw-es-resarcir-v",
+            "spanishSynsetId": "omw-es-02249591-v",
+            "englishSynsetId": "omw-en-02249591-v",
+            "iliId": "i32985",
+            "spanish": {
+              "definition": "restituirse o compensar, como de una pérdida",
+              "examples": []
+            },
+            "english": {
+              "definition": "reimburse or compensate (someone), as for a loss",
+              "members": [
+                "recoup",
+                "reimburse"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-resarcir-02249591-v",
+                "lexicalEntryId": "omw-es-resarcir-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-059-prorratear",
+      "term": "prorratear",
+      "inputEntrySha256": "50805ce3079613d1989cf3bec8b07fb203de7e8f93584dd91a235f1d07b01986",
+      "candidateSensesSha256": "102fd5917262e3d09171a6e8129af070fce7dc1c01452dc718851e794f229fa3",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Proportional division matches allocation by days of use.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-prorratear-00639148-v",
+            "lexicalEntryId": "omw-es-prorratear-v",
+            "spanishSynsetId": "omw-es-00639148-v",
+            "englishSynsetId": "omw-en-00639148-v",
+            "iliId": "i24930",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "divide or assess proportionally",
+              "members": [
+                "prorate"
+              ],
+              "examples": [
+                "The rent was prorated for the rest of the month"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-prorratear-00639148-v",
+                "lexicalEntryId": "omw-es-prorratear-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-060-a-fondo-perdido",
+      "term": "a fondo perdido",
+      "inputEntrySha256": "ecbed15fa6fd96ddc2b866e947cb5fa73264dc4f74bc7608f10093a06bb5c831",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Money delivered without recovery supports the non-repayable grant sense.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/fondo",
+          "senseLocator": "a fondo perdido",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Money delivered without recovery supports the non-repayable grant sense."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-063-perentorio",
+      "term": "perentorio",
+      "inputEntrySha256": "52aa3b9af5621986a120a60f5cf40b201265b585e0caa949a4611e11913f8ca5",
+      "candidateSensesSha256": "02ae1a6168f9dc8f5deb0f2cfbf595d03ed32ec01afe15711c4e7f443a0013c6",
+      "cachedCandidateCount": 4,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Demanding attention supports the urgent response sense, not the authoritarian senses.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-perentorio-00712877-a",
+            "lexicalEntryId": "omw-es-perentorio-a",
+            "spanishSynsetId": "omw-es-00712877-a",
+            "englishSynsetId": "omw-en-00712877-s",
+            "iliId": "i3955",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "demanding attention",
+              "members": [
+                "clamant",
+                "crying",
+                "exigent",
+                "insistent",
+                "instant"
+              ],
+              "examples": [
+                "clamant needs",
+                "a crying need",
+                "\"regarded literary questions as exigent and momentous\"- H.L.Mencken",
+                "insistent hunger",
+                "an instant need"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-perentorio-00712877-a",
+                "lexicalEntryId": "omw-es-perentorio-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-065-a-la-sazon",
+      "term": "a la sazón",
+      "inputEntrySha256": "5dff0b7a680994cee8d688a607c6a2bebc120c418fa5a435596e9d80a0c0637e",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Reference to the time being narrated supports the former archive-director role.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/saz%C3%B3n",
+          "senseLocator": "a la sazón",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Reference to the time being narrated supports the former archive-director role."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-067-con-cuentagotas",
+      "term": "con cuentagotas",
+      "inputEntrySha256": "e7f8a1f1f2270a282b20005600e6bc19c3bfe12f8c06bab304f49a548e14f856",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Scarce or slow delivery supports information released piecemeal.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/cuentagotas",
+          "senseLocator": "con cuentagotas",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Scarce or slow delivery supports information released piecemeal."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-068-a-raudales",
+      "term": "a raudales",
+      "inputEntrySha256": "87ecb1e57d5dcd7591685ead8adbb526f464396f151440fe6d2c70e2d6ca1af7",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Abundance supports the many proposals in the meeting.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/raudal",
+          "senseLocator": "a raudales",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Abundance supports the many proposals in the meeting."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-069-por-un-pelo",
+      "term": "por un pelo",
+      "inputEntrySha256": "763090174b5039c8b4ac64756b14ab163085b1e92b086937e20c636d9d7455d0",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; the narrow-margin idiom needs a phrase-level dictionary check.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-070-a-todas-luces",
+      "term": "a todas luces",
+      "inputEntrySha256": "76a83ed406dc60875ae64f5629487af94eeff560128b18a776dc7cbada1cc352",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Evident certainty supports the plainly inadequate budget.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/luz",
+          "senseLocator": "a toda luz / a todas luces, sense 2",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Evident certainty supports the plainly inadequate budget."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-071-desavenencia",
+      "term": "desavenencia",
+      "inputEntrySha256": "e8d08e7d24d4de887d42d9197d80fc394e83f46aef876ef131c8cc9a70329c90",
+      "candidateSensesSha256": "d9ee4fdc4306585183950226fe27fec377ca55f8662da6db47593893792d404a",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Disagreement between people supports the task-allocation conflict.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-desavenencia-07180787-n",
+            "lexicalEntryId": "omw-es-desavenencia-n",
+            "spanishSynsetId": "omw-es-07180787-n",
+            "englishSynsetId": "omw-en-07180787-n",
+            "iliId": "i74388",
+            "spanish": {
+              "definition": "acto de habla a través del cual se desaviene, discute o disputa",
+              "examples": []
+            },
+            "english": {
+              "definition": "the speech act of disagreeing or arguing or disputing",
+              "members": [
+                "disagreement"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-desavenencia-07180787-n",
+                "lexicalEntryId": "omw-es-desavenencia-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-072-desarraigo",
+      "term": "desarraigo",
+      "inputEntrySha256": "7bbfa8915f0295ab7f8684937cae4b83355c0b8c38477d92df904989635b97da",
+      "candidateSensesSha256": "7bb5d7382f67dbb6d51171e843802841fce436a0597301c77649826433baee6f",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "Cached eradication/destruction is not evidence for social uprootedness. The personal-belonging sense needs another source.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-073-arraigo",
+      "term": "arraigo",
+      "inputEntrySha256": "c51aae0ef8b4fb2245b7481306d24f353e0735526e22c76ea83e38d2964db9d6",
+      "candidateSensesSha256": "fdd11831f5d441e4f1d5daa17e099864371974debdc7c592a81a02806715edd5",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "Cached botanical rooting does not establish stable social ties; the social sense needs direct evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-074-avenirse",
+      "term": "avenirse",
+      "inputEntrySha256": "e7d3d4f0f6f60a158081c2fd918a964bab08c45ace6584d80dc67fddbad66004",
+      "candidateSensesSha256": "1beeb31093973d6e2d9dc066c420b9922b385a0d2f11c230fcbad6e94a056583",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Reaching agreement supports agreeing to review the allocation of costs.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-avenirse-01035530-v",
+            "lexicalEntryId": "omw-es-avenirse-v",
+            "spanishSynsetId": "omw-es-01035530-v",
+            "englishSynsetId": "omw-en-01035530-v",
+            "iliId": "i26751",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "achieve harmony of opinion, feeling, or purpose",
+              "members": [
+                "agree"
+              ],
+              "examples": [
+                "No two of my colleagues would agree on whom to elect chairman"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-avenirse-01035530-v",
+                "lexicalEntryId": "omw-es-avenirse-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-077-limar-asperezas",
+      "term": "limar asperezas",
+      "inputEntrySha256": "b14b8d07fd62e7ad40381509e58ebb43cc3811f84a702a3f04b6d0fb44bc0207",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Reconciling opposed views and difficulties supports reducing interpersonal tensions.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/aspereza",
+          "senseLocator": "limar asperezas",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Reconciling opposed views and difficulties supports reducing interpersonal tensions."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-078-dar-el-brazo-a-torcer",
+      "term": "dar el brazo a torcer",
+      "inputEntrySha256": "5ec07d8872f0ea24dc804b20a9c5268e774b86cee88d3dc1688ee614a06d24da",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "DLE records dar alguien su brazo a torcer and its yielding meaning. The draft's article variant dar el brazo a torcer needs explicit variant evidence before marking the exact expression supported.",
+      "evidence": [
+        {
+          "kind": "primary-page-read-insufficient-support",
+          "url": "https://dle.rae.es/brazo",
+          "observedAt": "2026-09-14",
+          "paraphrase": "DLE records dar alguien su brazo a torcer and its yielding meaning. The draft's article variant dar el brazo a torcer needs explicit variant evidence before marking the exact expression supported."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-079-hacer-oidos-sordos",
+      "term": "hacer oídos sordos",
+      "inputEntrySha256": "6276ca1e318cb8dd84ca69684ff5987bfebe6997164a92219493de9ad2793a05",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Deliberately not attending to what is said supports management ignoring complaints.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/o%C3%ADdo",
+          "senseLocator": "hacer alguien oídos sordos",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Deliberately not attending to what is said supports management ignoring complaints."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-080-poner-tierra-de-por-medio",
+      "term": "poner tierra de por medio",
+      "inputEntrySha256": "76c9a090f0f300aefa415f46e9eff4c54961c9806e5713625632f7a71d0cd4d3",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; the targeted search within DLE tierra did not locate this wording. A phrase-level source remains needed.",
+      "evidence": [
+        {
+          "kind": "primary-page-read-insufficient-support",
+          "url": "https://dle.rae.es/tierra",
+          "observedAt": "2026-09-14",
+          "paraphrase": "No exact cached expression match; the targeted search within DLE tierra did not locate this wording. A phrase-level source remains needed."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-082-dilucidar",
+      "term": "dilucidar",
+      "inputEntrySha256": "f133fdf2a64a6d9689569d364b30d73a9f23e3abb96e39017e3cccee02ea2696",
+      "candidateSensesSha256": "383e9ccfd2087ed12f0338457b091765b77c6ec37700a26ea851f0a8e8b63f2b",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Removal of ambiguity matches clarification of how data was lost.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-dilucidar-00621058-v",
+            "lexicalEntryId": "omw-es-dilucidar-v",
+            "spanishSynsetId": "omw-es-00621058-v",
+            "englishSynsetId": "omw-en-00621058-v",
+            "iliId": "i24859",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "make free from confusion or ambiguity; make clear",
+              "members": [
+                "clear",
+                "clear up",
+                "shed light on",
+                "crystallize",
+                "crystallise",
+                "crystalize",
+                "crystalise",
+                "straighten out",
+                "sort out",
+                "enlighten",
+                "illuminate",
+                "elucidate"
+              ],
+              "examples": [
+                "Could you clarify these remarks?",
+                "Clear up the question of who is at fault"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-dilucidar-00621058-v",
+                "lexicalEntryId": "omw-es-dilucidar-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-083-refutar",
+      "term": "refutar",
+      "inputEntrySha256": "7d019c280a58207df1fc2c9227175b37d6e13acc5c669d2fe7f002230eb72743",
+      "candidateSensesSha256": "3864ef814f772f6982d615a03da00f6afe0520081e35ee07d476401eea7e1bca",
+      "cachedCandidateCount": 4,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Argument/evidence-based disproof matches the research hypothesis example.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-refutar-00814850-v",
+            "lexicalEntryId": "omw-es-refutar-v",
+            "spanishSynsetId": "omw-es-00814850-v",
+            "englishSynsetId": "omw-en-00814850-v",
+            "iliId": "i25736",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "overthrow by argument, evidence, or proof",
+              "members": [
+                "refute",
+                "rebut"
+              ],
+              "examples": [
+                "The speaker refuted his opponent's arguments"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-refutar-00814850-v",
+                "lexicalEntryId": "omw-es-refutar-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-084-aducir",
+      "term": "aducir",
+      "inputEntrySha256": "463ff68f21664c891583ad999f8f7bb35676f32dd151e682412e3a6cc30d340b",
+      "candidateSensesSha256": "6f0d51d9cf22efb100c07fd690466bc66d56c350e8381b745b2c9ab8da3bdc0e",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Advancing evidence supports adducing a reason for a position.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-aducir-01015866-v",
+            "lexicalEntryId": "omw-es-aducir-v",
+            "spanishSynsetId": "omw-es-01015866-v",
+            "englishSynsetId": "omw-en-01015866-v",
+            "iliId": "i26658",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "advance evidence for",
+              "members": [
+                "adduce",
+                "abduce",
+                "cite"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-aducir-01015866-v",
+                "lexicalEntryId": "omw-es-aducir-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-085-redundar",
+      "term": "redundar",
+      "inputEntrySha256": "d045e36d3bcabac7c04e85c9d75842cd7454e366de9f2008c6e13e6caa6c3103",
+      "candidateSensesSha256": "8a0f28cb523bed4fdb454d620c3dfe8ae05e94e17dbca1491bced4be782216f0",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Effect for good or ill directly supports redundar en beneficio.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-redundar-00138217-v",
+            "lexicalEntryId": "omw-es-redundar-v",
+            "spanishSynsetId": "omw-es-00138217-v",
+            "englishSynsetId": "omw-en-00138217-v",
+            "iliId": "i22411",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "have an effect for good or ill",
+              "members": [
+                "redound"
+              ],
+              "examples": [
+                "Her efforts will redound to the general good"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-redundar-00138217-v",
+                "lexicalEntryId": "omw-es-redundar-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-086-menoscabar",
+      "term": "menoscabar",
+      "inputEntrySha256": "59e1167efc96e14395fdbbbbccd43d1d1eab549684e617e757829966535b7226",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached lemma/POS match; reduction of trust or integrity needs primary lexical evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-089-mordaz",
+      "term": "mordaz",
+      "inputEntrySha256": "a5536c44edce51536da4844ef12ec5cf26f0cab20d5bb44cf070b8a12e942914",
+      "candidateSensesSha256": "ef1d14da00c9a6da19a1ab45301642b04dc217bcfe51a2daaa50b3bbf991aebc",
+      "cachedCandidateCount": 10,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Corrosive tone supports the sharply critical column; other literal sensory senses are excluded.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-mordaz-01802165-a",
+            "lexicalEntryId": "omw-es-mordaz-a",
+            "spanishSynsetId": "omw-es-01802165-a",
+            "englishSynsetId": "omw-en-01802165-s",
+            "iliId": "i9899",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "harsh or corrosive in tone",
+              "members": [
+                "acerb",
+                "acerbic",
+                "acid",
+                "acrid",
+                "bitter",
+                "blistering",
+                "caustic",
+                "sulfurous",
+                "sulphurous",
+                "virulent",
+                "vitriolic"
+              ],
+              "examples": [
+                "an acerbic tone piercing otherwise flowery prose",
+                "a barrage of acid comments",
+                "her acrid remarks make her many enemies",
+                "bitter words",
+                "blistering criticism",
+                "caustic jokes about political assassination, talk-show hosts and medical ethics",
+                "a sulfurous denunciation",
+                "a vitriolic critique"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-mordaz-01802165-a",
+                "lexicalEntryId": "omw-es-mordaz-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-090-acerbo",
+      "term": "acerbo",
+      "inputEntrySha256": "5721e2dc3f518b033f71a559a8553abf9c7c15f2a7c86a40045cf142caace5c5",
+      "candidateSensesSha256": "bcb3599f15abec8e9248c40c5cbe11c66c44ca1cc9a90e62bfb872bce2d1af32",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Cruel severity supports the harsh critical comment, not literal bitter taste.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/acerbo",
+          "senseLocator": "2",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Cruel severity supports the harsh critical comment, not literal bitter taste."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-091-sardonico",
+      "term": "sardónico",
+      "inputEntrySha256": "4aba630e967b5ff753f2654c740089c406cd1e2cef2408c1f0a93bb7775766db",
+      "candidateSensesSha256": "9f95c60945bdd52686c6c76e4e642c3d8ff054f5b981be82426ba92c5e6a531c",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Scornful ironic humor supports the bitter smile at a broken promise.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-sardónico-02079830-a",
+            "lexicalEntryId": "omw-es-sardónico-a",
+            "spanishSynsetId": "omw-es-02079830-a",
+            "englishSynsetId": "omw-en-02079830-s",
+            "iliId": "i11396",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "disdainfully or ironically humorous; scornful and mocking",
+              "members": [
+                "sardonic"
+              ],
+              "examples": [
+                "\"his rebellion is the bitter, sardonic laughter of all great satirists\"- Frank Schoenberner",
+                "\"a wry pleasure to be...reminded of all that one is missing\"- Irwin Edman"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-sardónico-02079830-a",
+                "lexicalEntryId": "omw-es-sardónico-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-092-pastiche",
+      "term": "pastiche",
+      "inputEntrySha256": "0c662ef6c49adf455c055c108b31b8c67708dffbc7c927e407ad20147917c9fe",
+      "candidateSensesSha256": "a1ad06ec430e53362062509d1258a75a2dbac6ad3c057d7130d4784be9c15d5b",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Imitation of prior artistic styles supports the film's recognizable genre mixture.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-pastiche-03897520-n",
+            "lexicalEntryId": "omw-es-pastiche-n",
+            "spanishSynsetId": "omw-es-03897520-n",
+            "englishSynsetId": "omw-en-03897520-n",
+            "iliId": "i57040",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "a work of art that imitates the style of some previous work",
+              "members": [
+                "pastiche"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-pastiche-03897520-n",
+                "lexicalEntryId": "omw-es-pastiche-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-094-conculcar",
+      "term": "conculcar",
+      "inputEntrySha256": "36b3e5f27fb2281160d1ebb3323ee13d5e717509ccde2123ff934ec54d4c76ab",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached lemma/POS match; violation of rights/norms needs primary lexical evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-095-connivencia",
+      "term": "connivencia",
+      "inputEntrySha256": "4a58a3cdd43fa4c5f2681a134d580a80a94f1717d595383c037677c87aba15af",
+      "candidateSensesSha256": "9ea9820bfe23e7ff774c3fe21f87f0d22fed55c84ea50f4e64f29e4046e330fb",
+      "cachedCandidateCount": 4,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Tacit approval of wrongdoing supports supervisors tolerating fraud.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-connivencia-06689125-n",
+            "lexicalEntryId": "omw-es-connivencia-n",
+            "spanishSynsetId": "omw-es-06689125-n",
+            "englishSynsetId": "omw-en-06689125-n",
+            "iliId": "i71635",
+            "spanish": {
+              "definition": "tácita aprovación del crimen de alguien",
+              "examples": []
+            },
+            "english": {
+              "definition": "(law) tacit approval of someone's wrongdoing",
+              "members": [
+                "connivance",
+                "secret approval",
+                "tacit consent"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-connivencia-06689125-n",
+                "lexicalEntryId": "omw-es-connivencia-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-096-dogmatismo",
+      "term": "dogmatismo",
+      "inputEntrySha256": "ff39b4233f9aacf0c304270ac9e330c9f55c89b968b92acfa248704d448f000c",
+      "candidateSensesSha256": "4597ba9dc652e2ccffd5329c673b8ec7173e9eea33e70ca5b2e0c688114485b6",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Treating one's assertions as unquestionable truths supports the closed debate attitude.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/dogmatismo",
+          "senseLocator": "1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Treating one's assertions as unquestionable truths supports the closed debate attitude."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-097-proselitismo",
+      "term": "proselitismo",
+      "inputEntrySha256": "f2f3a2a2e8e81e1a2075d3262360fcf261555950c87a593e441393c8af55e5e1",
+      "candidateSensesSha256": "d3a7905411286ca7022fc8a5dbf3e5634c60e9671d86978a08336a6adfc604c4",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Effort to gain followers supports recruiting people to a belief or cause, not merely being a convert.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/proselitismo",
+          "senseLocator": "1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Effort to gain followers supports recruiting people to a belief or cause, not merely being a convert."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-098-obcecacion",
+      "term": "obcecación",
+      "inputEntrySha256": "fe7ddd00e724bb2052cf4e6c53ab1ddf1678989d17dc420e9134fecd1a13c166",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached lemma/POS match; persistent mental blindness needs primary lexical evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-100-desgarbado",
+      "term": "desgarbado",
+      "inputEntrySha256": "0acf8a2049394b0e507e979c3ffe21bc2d71cf3ffc59f3ddc51b7082743e662c",
+      "candidateSensesSha256": "4274566382e407f598b7eedebf6ff14d9a2e456152c81ffc56b7bb10f9938637",
+      "cachedCandidateCount": 6,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Ungraceful movement matches the awkward gait, not merely thinness or ragged clothing.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-desgarbado-01140896-a",
+            "lexicalEntryId": "omw-es-desgarbado-a",
+            "spanishSynsetId": "omw-es-01140896-a",
+            "englishSynsetId": "omw-en-01140896-s",
+            "iliId": "i6240",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "lacking grace in movement or posture",
+              "members": [
+                "gawky",
+                "clumsy",
+                "clunky",
+                "ungainly",
+                "unwieldy"
+              ],
+              "examples": [
+                "a gawky lad with long ungainly legs",
+                "clumsy fingers",
+                "what an ungainly creature a giraffe is",
+                "heaved his unwieldy figure out of his chair"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-desgarbado-01140896-a",
+                "lexicalEntryId": "omw-es-desgarbado-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-101-semblante",
+      "term": "semblante",
+      "inputEntrySha256": "a228135dcb6e89f26145d8aa953c615deb82ae5ef9d3d626e6e3733c3e6fa1f9",
+      "candidateSensesSha256": "487c29d8a23058ab5bd4b83417f7df30ba70691f320b5e6d3eee79d0bbd5d687",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Facial appearance expressing a reaction matches the letter-reading example.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-semblante-04679549-n",
+            "lexicalEntryId": "omw-es-semblante-n",
+            "spanishSynsetId": "omw-es-04679549-n",
+            "englishSynsetId": "omw-en-04679549-n",
+            "iliId": "i61645",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "the appearance conveyed by a person's face",
+              "members": [
+                "countenance",
+                "visage"
+              ],
+              "examples": [
+                "a pleasant countenance",
+                "a stern visage"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-semblante-04679549-n",
+                "lexicalEntryId": "omw-es-semblante-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-102-imperterrito",
+      "term": "impertérrito",
+      "inputEntrySha256": "227a35ac61888dd0365d77329488730de9a8089c39d6972fe6c0c40b8b17e0a0",
+      "candidateSensesSha256": "ebb8883f1b96e916ca96bb1a4a956cc91c9d20ecaa552b50dda11df3c64a52e0",
+      "cachedCandidateCount": 5,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Emotionally unmoved matches remaining visibly unperturbed during shouting.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-impertérrito-01560320-a",
+            "lexicalEntryId": "omw-es-impertérrito-a",
+            "spanishSynsetId": "omw-es-01560320-a",
+            "englishSynsetId": "omw-en-01560320-a",
+            "iliId": "i8563",
+            "spanish": {
+              "definition": "emocionalmente insensible",
+              "examples": []
+            },
+            "english": {
+              "definition": "emotionally unmoved",
+              "members": [
+                "unmoved",
+                "unaffected",
+                "untouched"
+              ],
+              "examples": [
+                "always appeared completely unmoved and imperturbable"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-impertérrito-01560320-a",
+                "lexicalEntryId": "omw-es-impertérrito-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-104-adusto",
+      "term": "adusto",
+      "inputEntrySha256": "76878e7cdc4fd41a5e924dab6f86984a5ae423ae751053cbf7855d0efe63f914",
+      "candidateSensesSha256": "ee46faaecd20126db70e82df29f3fb63efbfa346977d722b7ef1219c4d33d514",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Uninviting manner/appearance supports the stern facial gesture.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-adusto-01802932-a",
+            "lexicalEntryId": "omw-es-adusto-a",
+            "spanishSynsetId": "omw-es-01802932-a",
+            "englishSynsetId": "omw-en-01802932-s",
+            "iliId": "i9901",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "harshly uninviting or formidable in manner or appearance",
+              "members": [
+                "dour",
+                "forbidding",
+                "grim"
+              ],
+              "examples": [
+                "a dour, self-sacrificing life",
+                "a forbidding scowl",
+                "a grim man loving duty more than humanity",
+                "\"undoubtedly the grimmest part of him was his iron claw\"- J.M.Barrie"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-adusto-01802932-a",
+                "lexicalEntryId": "omw-es-adusto-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-106-esbozar-una-sonrisa",
+      "term": "esbozar una sonrisa",
+      "inputEntrySha256": "0fcebbb59c036296964d5e80649e79a1557b491a2a86fe799bbff749e8a291f1",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached phrase match; slight initiation of a smile needs collocational evidence under esbozar.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-107-desestimar",
+      "term": "desestimar",
+      "inputEntrySha256": "770dc0058e6da05343597bb5904cb96e3102ea151e1ea537da7393223a64dd7d",
+      "candidateSensesSha256": "0b513d28a70b9f35d0a3b3c4c887c5528045d4c5082f90a1debcce89ca06e215",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Refusal to accept supports rejecting the incomplete application.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-desestimar-02237338-v",
+            "lexicalEntryId": "omw-es-desestimar-v",
+            "spanishSynsetId": "omw-es-02237338-v",
+            "englishSynsetId": "omw-en-02237338-v",
+            "iliId": "i32927",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "refuse to accept",
+              "members": [
+                "refuse",
+                "reject",
+                "pass up",
+                "turn down",
+                "decline"
+              ],
+              "examples": [
+                "He refused my offer of hospitality"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-desestimar-02237338-v",
+                "lexicalEntryId": "omw-es-desestimar-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-108-cotejar",
+      "term": "cotejar",
+      "inputEntrySha256": "6835e06ba67f902ca209073e1c50dad0574f4ea097e3e723f774ea9468440754",
+      "candidateSensesSha256": "f0e313d276478288da8837b00cb03cc59834284dbc771448b7c690dd4bb58364",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Critical comparison of texts supports checking report figures against original records.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-cotejar-00661713-v",
+            "lexicalEntryId": "omw-es-cotejar-v",
+            "spanishSynsetId": "omw-es-00661713-v",
+            "englishSynsetId": "omw-en-00661713-v",
+            "iliId": "i25035",
+            "spanish": {
+              "definition": "comparar críticamente de textos",
+              "examples": []
+            },
+            "english": {
+              "definition": "compare critically; of texts",
+              "members": [
+                "collate"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-cotejar-00661713-v",
+                "lexicalEntryId": "omw-es-cotejar-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-109-compulsar",
+      "term": "compulsar",
+      "inputEntrySha256": "fd6efd6997d8022176528928583b6db49730ca958b79e8128c96ab7f552f585f",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "DLE supports comparing a copy to its original, but the extra claim of recording/certifying the match needs documentary evidence.",
+      "evidence": [
+        {
+          "kind": "primary-page-read-insufficient-support",
+          "url": "https://dle.rae.es/compulsar",
+          "observedAt": "2026-09-14",
+          "paraphrase": "DLE supports comparing a copy to its original, but the extra claim of recording/certifying the match needs documentary evidence."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-111-diligencia",
+      "term": "diligencia",
+      "inputEntrySha256": "54a1dec28f7bf5bdcd1110459030208a0c72f3a828ee3633e8b33fcc6b0d74cd",
+      "candidateSensesSha256": "13dcc6bb49e67e5154c808b502d0fab59fc82d5cc6a64568e391d6f70ff888a3",
+      "cachedCandidateCount": 7,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "The written record of an administrative action directly supports the receipt annotation.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/diligencia",
+          "senseLocator": "3",
+          "observedAt": "2026-09-14",
+          "paraphrase": "The written record of an administrative action directly supports the receipt annotation."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-112-fe-de-erratas",
+      "term": "fe de erratas",
+      "inputEntrySha256": "bd338a81cc3bf9111ef29eac4e307f3d4664cf9feb10888e96dd15f9bc4aec02",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; the list-of-corrections sense needs phrase-level evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-113-suplantacion",
+      "term": "suplantación",
+      "inputEntrySha256": "21ec7e8c233b554ef36b97af3b44751268b592e05631d02ea8f3b453445422c1",
+      "candidateSensesSha256": "2e50f5a0bc96483b1c44f4bb907cd3e2925d232372e5da35ddf8a9c4f5e5bef5",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "Cached replacement by underhand tactics is broader than impersonation. Identity-assumption evidence is still required.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-115-baremo",
+      "term": "baremo",
+      "inputEntrySha256": "00da91072c426d881969e45d3cc6b9eb5cc9d22f28a0ec107494834be392d73f",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached lemma/POS match; the scoring-criteria sense needs primary lexical evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-116-aprovechamiento",
+      "term": "aprovechamiento",
+      "inputEntrySha256": "bab46b1dccee610169b8ba6f08e65f901e5a14fdef118a55ac2aedcb5fd8a347",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached lemma/POS match; educational attainment must be distinguished from general use or profit.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-118-discernir",
+      "term": "discernir",
+      "inputEntrySha256": "697578985634d9dd47eeb2ce4a3fa50b68995da1345083c21a66e158ee40d84d",
+      "candidateSensesSha256": "1308854fb3d09874978e7fb2be780549aabaef907749bf80addc265687287e98",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Distinguishing things supports discriminating reliable evidence from presentation.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-discernir-00650353-v",
+            "lexicalEntryId": "omw-es-discernir-v",
+            "spanishSynsetId": "omw-es-00650353-v",
+            "englishSynsetId": "omw-en-00650353-v",
+            "iliId": "i24985",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "mark as different",
+              "members": [
+                "distinguish",
+                "separate",
+                "differentiate",
+                "secern",
+                "secernate",
+                "severalize",
+                "severalise",
+                "tell",
+                "tell apart"
+              ],
+              "examples": [
+                "We distinguish several kinds of maple"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-discernir-00650353-v",
+                "lexicalEntryId": "omw-es-discernir-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-120-disertar",
+      "term": "disertar",
+      "inputEntrySha256": "3e2ed803f727d582f6add9a9ee0e5ecbd38ea84148328a53cee7936148df0543",
+      "candidateSensesSha256": "092c8a954eab626c8483c384309d478e64cc9663b0a711f5c36790c3f43f3f64",
+      "cachedCandidateCount": 4,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Formal extended discussion supports the invited academic exposition.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-disertar-00814621-v",
+            "lexicalEntryId": "omw-es-disertar-v",
+            "spanishSynsetId": "omw-es-00814621-v",
+            "englishSynsetId": "omw-en-00814621-v",
+            "iliId": "i25735",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "talk at length and formally about a topic",
+              "members": [
+                "hold forth",
+                "discourse",
+                "dissertate"
+              ],
+              "examples": [
+                "The speaker dissertated about the social politics in 18th century England"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-disertar-00814621-v",
+                "lexicalEntryId": "omw-es-disertar-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-121-glosar",
+      "term": "glosar",
+      "inputEntrySha256": "b7942c29b77fd5667a0ef9f356e3b0eaa5838b69cba8de5ba45f72e2d08424bb",
+      "candidateSensesSha256": "ed335a53f73daa4c1cb444acd8cf6cf3e8c8faa2064ada4cc775b9f862fed86f",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Annotation and expanded commentary support explaining a text's meaning beyond the cache's narrow interlinear translation sense.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/glosar",
+          "senseLocator": "1 and 2",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Annotation and expanded commentary support explaining a text's meaning beyond the cache's narrow interlinear translation sense."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-122-aprendizaje-vicario",
+      "term": "aprendizaje vicario",
+      "inputEntrySha256": "2d8d3b65257fd834231e1b8632755ee6e8e008f3d0c8953c33538fce85d7e31d",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; observational learning needs a psychology source defining the mechanism.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-123-interinidad",
+      "term": "interinidad",
+      "inputEntrySha256": "100e3044e0d7f48480877d17a06eb03fd31ac22bad4a71bff0a28c573ef33d7e",
+      "candidateSensesSha256": "bc5926d40f3559496360b0780e6e8e09207d51340ae7b1a1a175400000e55d48",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "DLE supports temporary office-holding but marks the term Spain. The draft has no assessed regional label; record that qualification before resolving this entry.",
+      "evidence": [
+        {
+          "kind": "primary-page-read-insufficient-support",
+          "url": "https://dle.rae.es/interinidad",
+          "observedAt": "2026-09-14",
+          "paraphrase": "DLE supports temporary office-holding but marks the term Spain. The draft has no assessed regional label; record that qualification before resolving this entry."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-125-finiquito",
+      "term": "finiquito",
+      "inputEntrySha256": "9bfcc5b627d6d04c95aeee0b8e36a11d244c34672612e5119138a7ef7611ff93",
+      "candidateSensesSha256": "0b4453476eeb43330c170f5f036846961347abf1784d6b277cb59e8ea25e4b2d",
+      "cachedCandidateCount": 4,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Final account settlement and its certification support both the definition and signing the settlement document; employment is the contextual application.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/finiquito",
+          "senseLocator": "1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Final account settlement and its certification support both the definition and signing the settlement document; employment is the contextual application."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-126-subrogar",
+      "term": "subrogar",
+      "inputEntrySha256": "d37e4201159b2f7ee915815ba65cc3758df5e2af4671075fc85399e4dfad2347",
+      "candidateSensesSha256": "e94ed4814ce5b16a33a37b99bf4b02531df01ee6e22c9c244229e387e84dabd4",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "The explicitly legal substitution sense supports replacement of a party in obligations.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/subrogar",
+          "senseLocator": "1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "The explicitly legal substitution sense supports replacement of a party in obligations."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-128-injerencia",
+      "term": "injerencia",
+      "inputEntrySha256": "3d75ba205486449ea4bec99a66d8f096dd9c6085ffe210c842de3cb405d1e362",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached lemma/POS match; improper interference in others' affairs needs primary lexical evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-130-aplomo",
+      "term": "aplomo",
+      "inputEntrySha256": "a5b41e6cb082fec2ff3cca18a21bc3a6e30d6486f8e3fb33ba3445d9756009bb",
+      "candidateSensesSha256": "34bdd90a234c9f86ad4846d97c517b03d427fa9aed60d67cff0240398bfbc5a8",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Composure under strain supports confident interview responses.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-aplomo-04904162-n",
+            "lexicalEntryId": "omw-es-aplomo-n",
+            "spanishSynsetId": "omw-es-04904162-n",
+            "englishSynsetId": "omw-en-04904162-n",
+            "iliId": "i62759",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "great coolness and composure under strain",
+              "members": [
+                "aplomb",
+                "assuredness",
+                "cool",
+                "poise",
+                "sang-froid"
+              ],
+              "examples": [
+                "keep your cool"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-aplomo-04904162-n",
+                "lexicalEntryId": "omw-es-aplomo-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-133-renido",
+      "term": "reñido",
+      "inputEntrySha256": "d1f53bbf501a7dc324394646c754e846d13933d1180f63de2c353ba1b643e9a5",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached adjective match; close competition must be distinguished from quarreling or hostility.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-136-resarcirse",
+      "term": "resarcirse",
+      "inputEntrySha256": "a5a24eab013f95e57a8cc357e1003b2c066b72ec1ccb3f688fdb9a9fedfebd7f",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached pronominal match; recovering satisfaction after disappointment needs explicit pronominal-sense evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-137-aguerrido",
+      "term": "aguerrido",
+      "inputEntrySha256": "c7b468690522403757342247b1af7c89d000950f7a5998cacb6a3cda02dd1cc4",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached adjective match; competitive fighting spirit needs evidence beyond a military origin.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-138-dejar-el-liston-alto",
+      "term": "dejar el listón alto",
+      "inputEntrySha256": "f83e03ec9b7de3ed61d8594c52f431d4a776aa20c8a9124a922e91af4a7c9660",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; the achievement-standard metaphor needs collocational evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-139-desmentido",
+      "term": "desmentido",
+      "inputEntrySha256": "bb616c6ce0fc95c5545571521d974e176120c708da575e847340aba5550c5a9e",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached noun match; public denial must be distinguished from a participial form of desmentir.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-141-rectificacion",
+      "term": "rectificación",
+      "inputEntrySha256": "9cc1f35fe4c80cbed28d7f68f6dbb96bfb247a151e4bfb2fa6b34d3dd670a901",
+      "candidateSensesSha256": "c93eeabbf4ed5778546d93a2c95274dd9fbccc74c8acf4d91d28a78179f856f3",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Correction of a mistake supports the public correction of an inaccurate broadcast.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-rectificación-00258854-n",
+            "lexicalEntryId": "omw-es-rectificación-n",
+            "spanishSynsetId": "omw-es-00258854-n",
+            "englishSynsetId": "omw-en-00258854-n",
+            "iliId": "i36756",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "the act of offering an improvement to replace a mistake; setting right",
+              "members": [
+                "correction",
+                "rectification"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-rectificación-00258854-n",
+                "lexicalEntryId": "omw-es-rectificación-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-142-descontextualizar",
+      "term": "descontextualizar",
+      "inputEntrySha256": "6e80dbbe80f38d9fdfaa262319549b3b90fe19b794588e8a08dfa220ea42d820",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached verb match; removal of interpretive context needs primary lexical evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-143-tendencioso",
+      "term": "tendencioso",
+      "inputEntrySha256": "b1e620d7f965bf10e5d986007a86f666d46bdc5f9fdfe08c4bc810d389d2d2d5",
+      "candidateSensesSha256": "ff6da69fa74896ee441d497151ec15e5be66a97f4f326f61e4bc683b04b36e08",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Favoring a side supports the selectively presented headline.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-tendencioso-01723091-a",
+            "lexicalEntryId": "omw-es-tendencioso-a",
+            "spanishSynsetId": "omw-es-01723091-a",
+            "englishSynsetId": "omw-en-01723091-s",
+            "iliId": "i9455",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "favoring one person or side over another",
+              "members": [
+                "biased",
+                "colored",
+                "coloured",
+                "one-sided",
+                "slanted"
+              ],
+              "examples": [
+                "a biased account of the trial",
+                "a decision that was partial to the defendant"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-tendencioso-01723091-a",
+                "lexicalEntryId": "omw-es-tendencioso-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-145-verosimil",
+      "term": "verosímil",
+      "inputEntrySha256": "746fae65d77e8263fc381710150396d45068e01181c0eb1714a2913134451540",
+      "candidateSensesSha256": "a6b77448b86e57a6db40e92cec81c7495f0a061a092946ae2373fbe96a6cce5d",
+      "cachedCandidateCount": 4,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Appearing true supports plausibility while explicitly withholding proof.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-verosímil-01413763-a",
+            "lexicalEntryId": "omw-es-verosímil-a",
+            "spanishSynsetId": "omw-es-01413763-a",
+            "englishSynsetId": "omw-en-01413763-s",
+            "iliId": "i7711",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "appearing to be true or real",
+              "members": [
+                "verisimilar"
+              ],
+              "examples": [
+                "a verisimilar tale"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-verosímil-01413763-a",
+                "lexicalEntryId": "omw-es-verosímil-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-146-escudarse",
+      "term": "escudarse",
+      "inputEntrySha256": "8fb17ce835254580701afbbd4746d5f7edf75127f84e6bf66dc462e8e9126b92",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached pronominal match; using a pretext to evade responsibility needs figurative-sense evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-148-acuse-de-recibo",
+      "term": "acuse de recibo",
+      "inputEntrySha256": "62988aac1c31b59a1d97f9779c9bf4054013b64a92a7e9b1f576ef7231018ea5",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; acknowledgement of receipt needs phrase-level evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-150-apostilla",
+      "term": "apostilla",
+      "inputEntrySha256": "923c471e28867db5ece7b31528012f01cd9f601a07d2cfd5196db6fcb9ebe15c",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached noun match; the brief-comment sense must be distinguished from official authentication.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-153-desabastecimiento",
+      "term": "desabastecimiento",
+      "inputEntrySha256": "c5cc5d3b117500c8cee055e9df0ffcadc47f9cb68f4eb950fc04f204a69bf339",
+      "candidateSensesSha256": "9a077c2d1ae6cd07514ff9ec1b9bf06ba30a2d98801a68d639bea9357db2cba9",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Insufficient quantity is instantiated as missing fuel supplies after a road closure.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-desabastecimiento-05117140-n",
+            "lexicalEntryId": "omw-es-desabastecimiento-n",
+            "spanishSynsetId": "omw-es-05117140-n",
+            "englishSynsetId": "omw-en-05117140-n",
+            "iliId": "i63882",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "an insufficient quantity or number",
+              "members": [
+                "dearth",
+                "paucity"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-desabastecimiento-05117140-n",
+                "lexicalEntryId": "omw-es-desabastecimiento-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-164-indumentaria",
+      "term": "indumentaria",
+      "inputEntrySha256": "a90fbbf3740f1a9251db72575b6a06c08e41606ebc081c7ed2ad5289f8126785",
+      "candidateSensesSha256": "b1f337e5a3a9774128475b923c7873908a99c74a88108d5c6000687c2ec97cbf",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Body-worn clothing supports the collection of occupational garments.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-indumentaria-03051540-n",
+            "lexicalEntryId": "omw-es-indumentaria-n",
+            "spanishSynsetId": "omw-es-03051540-n",
+            "englishSynsetId": "omw-en-03051540-n",
+            "iliId": "i52057",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "a covering designed to be worn on a person's body",
+              "members": [
+                "clothing",
+                "article of clothing",
+                "vesture",
+                "wear",
+                "wearable",
+                "habiliment"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-indumentaria-03051540-n",
+                "lexicalEntryId": "omw-es-indumentaria-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-165-sobrio",
+      "term": "sobrio",
+      "inputEntrySha256": "c2e26bb2caa5fc24adcd36f591247a9879601ba40f822f0bceaf7939c2cd7593",
+      "candidateSensesSha256": "ed83b89aa1c2b34595c4d98400ad19d6107b7fa3379365fdc03eb6d6f82260a9",
+      "cachedCandidateCount": 4,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Not showy matches the restrained suit without bright decoration.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-sobrio-01849170-a",
+            "lexicalEntryId": "omw-es-sobrio-a",
+            "spanishSynsetId": "omw-es-01849170-a",
+            "englishSynsetId": "omw-en-01849170-s",
+            "iliId": "i10160",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "not showy or obtrusive",
+              "members": [
+                "quiet",
+                "restrained"
+              ],
+              "examples": [
+                "clothes in quiet good taste"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-sobrio-01849170-a",
+                "lexicalEntryId": "omw-es-sobrio-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-166-recargado",
+      "term": "recargado",
+      "inputEntrySha256": "67ad6cbebc3f67c19ab5118ceff8580afe7dc75c5c562f68b11ff1d008e9f864",
+      "candidateSensesSha256": "8b698a763386c0d57e74dfeeae7dc0e639ca2cf71ad95df878799deed23113bd",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Excessive ornamentation matches the overloaded dress.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-recargado-01794771-a",
+            "lexicalEntryId": "omw-es-recargado-a",
+            "spanishSynsetId": "omw-es-01794771-a",
+            "englishSynsetId": "omw-en-01794771-s",
+            "iliId": "i9859",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "elaborately or excessively ornamented",
+              "members": [
+                "aureate",
+                "florid",
+                "flamboyant"
+              ],
+              "examples": [
+                "flamboyant handwriting",
+                "the senator's florid speech"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-recargado-01794771-a",
+                "lexicalEntryId": "omw-es-recargado-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-168-falsable",
+      "term": "falsable",
+      "inputEntrySha256": "5ba79ed77f22b09677e0d35be52f668d90a375d6b8138094b28e590e8ff1636d",
+      "candidateSensesSha256": "7fddfa2e48c5bc2af0c65384d639c8c3a68cfe268be79a261ed2528d1a84ea4d",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Experimental/observational testability supports the example of a possible counter-observation; falsifiability is the selected branch of the source gloss.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-falsable-00859453-a",
+            "lexicalEntryId": "omw-es-falsable-a",
+            "spanishSynsetId": "omw-es-00859453-a",
+            "englishSynsetId": "omw-en-00859453-s",
+            "iliId": "i4715",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "capable of being tested (verified or falsified) by experiment or observation",
+              "members": [
+                "confirmable",
+                "verifiable",
+                "falsifiable"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-falsable-00859453-a",
+                "lexicalEntryId": "omw-es-falsable-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-169-replicable",
+      "term": "replicable",
+      "inputEntrySha256": "76f9d72dfac2337864192f20330b4e811e16a83e57322f07a64a6643aaaaa944",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached adjective match; repeating a study to check results needs research-methodology evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-170-extrapolar",
+      "term": "extrapolar",
+      "inputEntrySha256": "b8b1888f7811cbc0c203e51b495148c75ea3a50fbf9185c42d000f0d2c8ca5bb",
+      "candidateSensesSha256": "5cff88937fa3b780277ca81e9e19022c15bc10c540d3baaa47a315ed7536a066",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Generalizing specific cases supports extending one city's findings beyond that city.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-extrapolar-01022420-v",
+            "lexicalEntryId": "omw-es-extrapolar-v",
+            "spanishSynsetId": "omw-es-01022420-v",
+            "englishSynsetId": "omw-en-01022420-v",
+            "iliId": "i26688",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "draw from specific cases for more general cases",
+              "members": [
+                "generalize",
+                "generalise",
+                "extrapolate",
+                "infer"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-extrapolar-01022420-v",
+                "lexicalEntryId": "omw-es-extrapolar-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-171-correlacion",
+      "term": "correlación",
+      "inputEntrySha256": "ed82560b272ab2d4ebd518673185483cef47b0bf5928514b99d1258affe29403",
+      "candidateSensesSha256": "e8dd8f5e9eceab71464ffa68aebc71681be80c2f1ed85dd27f86533fc6edad1c",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Covariation of two variables supports correlation; learner text correctly avoids a causal claim.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-correlación-06032246-n",
+            "lexicalEntryId": "omw-es-correlación-n",
+            "spanishSynsetId": "omw-es-06032246-n",
+            "englishSynsetId": "omw-en-06032246-n",
+            "iliId": "i68472",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "a statistic representing how closely two variables co-vary; it can vary from -1 (perfect negative correlation) through 0 (no correlation) to +1 (perfect positive correlation)",
+              "members": [
+                "correlation coefficient",
+                "coefficient of correlation",
+                "correlation"
+              ],
+              "examples": [
+                "what is the correlation between those two variables?"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-correlación-06032246-n",
+                "lexicalEntryId": "omw-es-correlación-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-172-incertidumbre",
+      "term": "incertidumbre",
+      "inputEntrySha256": "490d60ee3df6dddab90675465c2f35f61f64ddba44b3a7a101abc67961d6adfe",
+      "candidateSensesSha256": "a7f5daae2df2c77fba203ed41d913f16f2aa41c4d25806bebd702d0d68e75b71",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "Cached uncertainty/doubt does not establish the metrological quantity. A measurement-specific source is required.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-176-obsolescencia",
+      "term": "obsolescencia",
+      "inputEntrySha256": "a410521c713f9b2c3c803beba3639d7a928c17e222aa792f7558d248041f6220",
+      "candidateSensesSha256": "bb574ae2f76e1ea4cf499a37cf58ae83a6a107e368a716b6ecf8b75b82b97cd4",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Becoming obsolete supports the file format falling out of use.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-obsolescencia-13523983-n",
+            "lexicalEntryId": "omw-es-obsolescencia-n",
+            "spanishSynsetId": "omw-es-13523983-n",
+            "englishSynsetId": "omw-en-13523983-n",
+            "iliId": "i107788",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "the process of becoming obsolete; falling into disuse or becoming out of date",
+              "members": [
+                "obsolescence"
+              ],
+              "examples": [
+                "a policy of planned obsolescence"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-obsolescencia-13523983-n",
+                "lexicalEntryId": "omw-es-obsolescencia-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-177-promulgar",
+      "term": "promulgar",
+      "inputEntrySha256": "52735f72e830e2a3fbecf45413f53664a7e6d1f6be2f3b1cd5e0323abe26eb1b",
+      "candidateSensesSha256": "788a20c4cce45eb0f46984d345e21f33eaffc80f573946728b6732ec1877fec3",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Formal declaration of a law supports promulgation after approval; this is lexical evidence, not procedural legal advice.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-promulgar-00861560-v",
+            "lexicalEntryId": "omw-es-promulgar-v",
+            "spanishSynsetId": "omw-es-00861560-v",
+            "englishSynsetId": "omw-en-00861560-v",
+            "iliId": "i25937",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "put a law into effect by formal declaration",
+              "members": [
+                "promulgate"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-promulgar-00861560-v",
+                "lexicalEntryId": "omw-es-promulgar-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-178-derogar",
+      "term": "derogar",
+      "inputEntrySha256": "055329b9c131b268169070abbfc3ed432c13b2ec53b308adce5e092160bd2a89",
+      "candidateSensesSha256": "075efde9fbb65ab138d3a9138cf47a4fc91f68054b67261e2731e3075786ae3d",
+      "cachedCandidateCount": 4,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Formal revocation supports removing the validity of requirements.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-derogar-02478584-v",
+            "lexicalEntryId": "omw-es-derogar-v",
+            "spanishSynsetId": "omw-es-02478584-v",
+            "englishSynsetId": "omw-en-02478584-v",
+            "iliId": "i34112",
+            "spanish": {
+              "definition": "revocar formalmente",
+              "examples": []
+            },
+            "english": {
+              "definition": "revoke formally",
+              "members": [
+                "abrogate"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-derogar-02478584-v",
+                "lexicalEntryId": "omw-es-derogar-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-179-prevaricacion",
+      "term": "prevaricación",
+      "inputEntrySha256": "485963b6bab960a2075356a6d570a5b2b4e40eec385e564c8bfcb059a77526c0",
+      "candidateSensesSha256": "111f6b8fd87dc9917916148560deab258becbc60b4847ebdd870552875f1c4d3",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "A knowingly unjust official resolution directly supports the selected sense; the cache's truth-evasion sense is rejected.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/prevaricaci%C3%B3n",
+          "senseLocator": "1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "A knowingly unjust official resolution directly supports the selected sense; the cache's truth-evasion sense is rejected."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-180-cautelar",
+      "term": "cautelar",
+      "inputEntrySha256": "8c873d378c95fc2ff4eda8212c374e0860e63427bc93691227898f6996efcc3e",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached adjective match; the provisional protective-measure sense needs direct lexical evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-181-alegacion",
+      "term": "alegación",
+      "inputEntrySha256": "1c601e1c64943f45987f63bbca6d7dc12a987dac89359c55f41fd9c158f36f7e",
+      "candidateSensesSha256": "c1824ff7fe8b774ddf4baa17907729d67e4c28333ffcef557ca922bdeeaf3796",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Statement on behalf of a party in a proceeding supports an argument in the submitted document.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-alegación-06559365-n",
+            "lexicalEntryId": "omw-es-alegación-n",
+            "spanishSynsetId": "omw-es-06559365-n",
+            "englishSynsetId": "omw-en-06559365-n",
+            "iliId": "i70931",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "(law) a statement in legal and logical form stating something on behalf of a party to a legal proceeding",
+              "members": [
+                "pleading"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-alegación-06559365-n",
+                "lexicalEntryId": "omw-es-alegación-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-182-atenuante",
+      "term": "atenuante",
+      "inputEntrySha256": "c5132f5a24df8cfc854d9807259d958ef85eed1d6f5933955468493a52ac1b81",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached noun match; the mitigating-circumstance sense needs direct lexical evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-183-agravante",
+      "term": "agravante",
+      "inputEntrySha256": "a5441959556c1295e544be19c1a88effaa574631438a9ff085ffe9b6948292b2",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached noun match; the aggravating-circumstance sense needs direct lexical evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-184-probatorio",
+      "term": "probatorio",
+      "inputEntrySha256": "9be7954270f580058bab7e7b32306b4b904a53579fc8603184de23dcbca60e8e",
+      "candidateSensesSha256": "737452eb3922748b03420652190674461e1fb39f21e296d4e188b3554034a39a",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Constituting evidence supports a document's probative value.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-probatorio-02723723-a",
+            "lexicalEntryId": "omw-es-probatorio-a",
+            "spanishSynsetId": "omw-es-02723723-a",
+            "englishSynsetId": "omw-en-02723723-a",
+            "iliId": "i15309",
+            "spanish": {
+              "definition": "Que pertenece o que constituyen una prueba",
+              "examples": [
+                "La técnica probatoria"
+              ]
+            },
+            "english": {
+              "definition": "pertaining to or constituting evidence",
+              "members": [
+                "evidentiary"
+              ],
+              "examples": [
+                "evidentiary technique",
+                "an evidentiary fact"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-probatorio-02723723-a",
+                "lexicalEntryId": "omw-es-probatorio-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-185-reincidir",
+      "term": "reincidir",
+      "inputEntrySha256": "750e85be61a1781a1c42335a3652ae9baf7725f7697ccb87fbd8564f4c40967f",
+      "candidateSensesSha256": "d3ba6b2c1c25438827576b237579f0817b9e2ba0684519c49b511a9aa5d73d11",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Returning to bad behavior supports repeated noncompliance.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-reincidir-00093327-v",
+            "lexicalEntryId": "omw-es-reincidir-v",
+            "spanishSynsetId": "omw-es-00093327-v",
+            "englishSynsetId": "omw-en-00093327-v",
+            "iliId": "i22237",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "go back to bad behavior",
+              "members": [
+                "relapse",
+                "lapse",
+                "recidivate",
+                "regress",
+                "retrogress",
+                "fall back"
+              ],
+              "examples": [
+                "Those who recidivate are often minor criminals"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-reincidir-00093327-v",
+                "lexicalEntryId": "omw-es-reincidir-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-186-indulto",
+      "term": "indulto",
+      "inputEntrySha256": "7791b498607f1716f59d1692da273d9c3b1484ed7130345386c7dc09838f4ec9",
+      "candidateSensesSha256": "6fe30c8fa2d29e95d5b6c98ad52e13fd0744ea84656c7cf2edf5c78b763657a3",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Release from punishment supports the pardon example; it does not assert innocence.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-indulto-06552639-n",
+            "lexicalEntryId": "omw-es-indulto-n",
+            "spanishSynsetId": "omw-es-06552639-n",
+            "englishSynsetId": "omw-en-06552639-n",
+            "iliId": "i70899",
+            "spanish": {
+              "definition": "Autorización que permite la liberación del castigo por un delito",
+              "examples": [
+                "El periodista tuvo el indulto tras una intensa campaña internacional"
+              ]
+            },
+            "english": {
+              "definition": "a warrant granting release from punishment for an offense",
+              "members": [
+                "pardon",
+                "amnesty"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-indulto-06552639-n",
+                "lexicalEntryId": "omw-es-indulto-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-187-claroscuro",
+      "term": "claroscuro",
+      "inputEntrySha256": "80c20ebb561c1dcd5f55e48c9cd46dab194e8c0128bcd8539ea3ba9b033d4f3e",
+      "candidateSensesSha256": "615d2429b997cd3c043a862414691607b51e583ada42b5c323d7983fccbc39fe",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Strong light/shadow contrast in painting supports the portrait example; the cache's monochrome picture is a different sense.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/claroscuro",
+          "senseLocator": "1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Strong light/shadow contrast in painting supports the portrait example; the cache's monochrome picture is a different sense."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-188-contrapunto",
+      "term": "contrapunto",
+      "inputEntrySha256": "b092690d62ae1f998fe52b8feefa3cb3327ed6357d7ecefd3d7bd8f081c151e1",
+      "candidateSensesSha256": "f55e2434007da4e2aece4ff6607bb713fc829c9a4002aac5ae9335836befc23d",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Simultaneous distinct melodies directly match the musical definition and example.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-contrapunto-07025419-n",
+            "lexicalEntryId": "omw-es-contrapunto-n",
+            "spanishSynsetId": "omw-es-07025419-n",
+            "englishSynsetId": "omw-en-07025419-n",
+            "iliId": "i73572",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "a musical form involving the simultaneous sound of two or more melodies",
+              "members": [
+                "counterpoint"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-contrapunto-07025419-n",
+                "lexicalEntryId": "omw-es-contrapunto-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-189-disonancia",
+      "term": "disonancia",
+      "inputEntrySha256": "a54a7eef2aeca1bbd0c6d66e6c4d6a0a80dd780afbc36a55d4ad5f3f098b061f",
+      "candidateSensesSha256": "5995d509eed1a8e17e7e4a92662432c20ce72fa3ce6293f45bace0cbf1653e12",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "Cached unpleasant/noisy sound does not establish musical tension resolving to consonance. Music-specific evidence is required.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-191-presagio",
+      "term": "presagio",
+      "inputEntrySha256": "973465ad5dfab876b70018793e3e2da1687dec6feedf9135b8ad998498de6386",
+      "candidateSensesSha256": "c1a1fe49f6ddc50e2cc575f8b961d3ad9a3b5158aea43ab581220807259460b7",
+      "cachedCandidateCount": 4,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "An interpreted sign of a future event supports the broken-window literary foreshadowing.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-presagio-07286368-n",
+            "lexicalEntryId": "omw-es-presagio-n",
+            "spanishSynsetId": "omw-es-07286368-n",
+            "englishSynsetId": "omw-en-07286368-n",
+            "iliId": "i74979",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "a sign of something about to happen",
+              "members": [
+                "omen",
+                "portent",
+                "presage",
+                "prognostic",
+                "prognostication",
+                "prodigy"
+              ],
+              "examples": [
+                "he looked for an omen before going into battle"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-presagio-07286368-n",
+                "lexicalEntryId": "omw-es-presagio-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-193-socarron",
+      "term": "socarrón",
+      "inputEntrySha256": "5406714b7d5b342b62928392b625106405e61ef2e435bc9d11186fcc5289184d",
+      "candidateSensesSha256": "fc850992a975209d9775fa12ad800e0991f25819277bb375cf06047a7d021a47",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "The linked noun supplies concealed mockery/dissembling, supporting the apparently serious joke about the stopped clock.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/socarr%C3%B3n",
+          "senseLocator": "socarrón 1 and socarronería 1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "The linked noun supplies concealed mockery/dissembling, supporting the apparently serious joke about the stopped clock."
+        },
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/socarroner%C3%ADa",
+          "senseLocator": "socarrón 1 and socarronería 1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "The linked noun supplies concealed mockery/dissembling, supporting the apparently serious joke about the stopped clock."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-194-leitmotiv",
+      "term": "leitmotiv",
+      "inputEntrySha256": "fb6c525ac119479f183af17f47f460bad7f032c8d5c6452e5ead2e025e1c698a",
+      "candidateSensesSha256": "4d53365d74fa97f3bed6e479cba03fef51605bc226abecc0d10bd50eefc8beff",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "A recurring central motif in literary or cinematic work supports the bridge image across three stories.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/leitmotiv",
+          "senseLocator": "2",
+          "observedAt": "2026-09-14",
+          "paraphrase": "A recurring central motif in literary or cinematic work supports the bridge image across three stories."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-195-laicismo",
+      "term": "laicismo",
+      "inputEntrySha256": "e3518a1775940c7027a8f6a74abf342b185e76fdb9dc72f107fad186a07f05e4",
+      "candidateSensesSha256": "70f626f99c48dcb84d3079316e6539056d59487a10a11e882a01fd3576babf8c",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Independence of the state from religious organizations supports institutional secularism without equating it with personal unbelief.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/laicismo",
+          "senseLocator": "1",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Independence of the state from religious organizations supports institutional secularism without equating it with personal unbelief."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-197-agnosticismo",
+      "term": "agnosticismo",
+      "inputEntrySha256": "020f8e30995fc2af580866364fb85738ce09514ea7821ab8771f4751914ec25b",
+      "candidateSensesSha256": "5d2ba0b4ef9cd6c14a4292fe75f68d627e7206698c6ed992cb45938f001423fb",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Denial of ultimate knowledge about God's existence matches the epistemic stance.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-agnosticismo-06222508-n",
+            "lexicalEntryId": "omw-es-agnosticismo-n",
+            "spanishSynsetId": "omw-es-06222508-n",
+            "englishSynsetId": "omw-en-06222508-n",
+            "iliId": "i69234",
+            "spanish": {
+              "definition": "orientación religiosa relativa a la duda negación del conocimiento último de la existencia de Dios",
+              "examples": []
+            },
+            "english": {
+              "definition": "a religious orientation of doubt; a denial of ultimate knowledge of the existence of God",
+              "members": [
+                "agnosticism"
+              ],
+              "examples": [
+                "agnosticism holds that you can neither prove nor disprove God's existence"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-agnosticismo-06222508-n",
+                "lexicalEntryId": "omw-es-agnosticismo-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-198-fatalismo",
+      "term": "fatalismo",
+      "inputEntrySha256": "e8fce2aec153e4f2d4882929fca6c718b2a81cc5bec989caeda8dc0fd2322125",
+      "candidateSensesSha256": "c0fea2d38ac2c05d026326c80a050b1fddedd9f9946b130496cf35212ead8321",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Acceptance of inevitable events supports the neighborhood example and the selected attitude sense.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-fatalismo-06194030-n",
+            "lexicalEntryId": "omw-es-fatalismo-n",
+            "spanishSynsetId": "omw-es-06194030-n",
+            "englishSynsetId": "omw-en-06194030-n",
+            "iliId": "i69082",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "a submissive mental attitude resulting from acceptance of the doctrine that everything that happens is predetermined and inevitable",
+              "members": [
+                "fatalism"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-fatalismo-06194030-n",
+                "lexicalEntryId": "omw-es-fatalismo-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-199-escrupulo",
+      "term": "escrúpulo",
+      "inputEntrySha256": "1371ab2647b3142e8581e22d004aa972756459dc31c5eb37d917eb72c75a0e6c",
+      "candidateSensesSha256": "44faa36ef45478025ba87614f537dbb4912504ac6cce8b37977d2266911a49c4",
+      "cachedCandidateCount": 4,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "A moral principle inhibiting action matches hesitation over a gift tied to a vote.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-escrúpulo-05957737-n",
+            "lexicalEntryId": "omw-es-escrúpulo-n",
+            "spanishSynsetId": "omw-es-05957737-n",
+            "englishSynsetId": "omw-en-05957737-n",
+            "iliId": "i68132",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "an ethical or moral principle that inhibits action",
+              "members": [
+                "scruple"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-escrúpulo-05957737-n",
+                "lexicalEntryId": "omw-es-escrúpulo-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-200-abjurar",
+      "term": "abjurar",
+      "inputEntrySha256": "73387c621c08a7fc7a0efec7554e2d16b4c9d2df0b6acbfeb5a8f15282b0afdf",
+      "candidateSensesSha256": "95548b2b903a976a28ea71f6a76621fe19501faec7ce8603a86709f9c1542255",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Explicit rejection of a formerly held belief supports the refused renunciation under pressure.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-abjurar-00798717-v",
+            "lexicalEntryId": "omw-es-abjurar-v",
+            "spanishSynsetId": "omw-es-00798717-v",
+            "englishSynsetId": "omw-en-00798717-v",
+            "iliId": "i25670",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "formally reject or disavow a formerly held belief, usually under pressure",
+              "members": [
+                "abjure",
+                "recant",
+                "forswear",
+                "retract",
+                "resile"
+              ],
+              "examples": [
+                "He retracted his earlier statements about his religion",
+                "She abjured her beliefs"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-abjurar-00798717-v",
+                "lexicalEntryId": "omw-es-abjurar-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-201-colindante",
+      "term": "colindante",
+      "inputEntrySha256": "4107055d03ff63037d6b3b2d97e52607f52d138482a56cb74e2978363d52590b",
+      "candidateSensesSha256": "eaa380eaaafb690aa563a8e4583a1473ab8bf7872dceef624610993c0d8bb947",
+      "cachedCandidateCount": 4,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Common boundary directly matches neighboring plots sharing an edge.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-colindante-00566342-a",
+            "lexicalEntryId": "omw-es-colindante-a",
+            "spanishSynsetId": "omw-es-00566342-a",
+            "englishSynsetId": "omw-en-00566342-s",
+            "iliId": "i3158",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "having a common boundary or edge; abutting; touching",
+              "members": [
+                "adjacent",
+                "conterminous",
+                "contiguous",
+                "neighboring"
+              ],
+              "examples": [
+                "Rhode Island has two bordering states; Massachusetts and Conncecticut",
+                "the side of Germany conterminous with France",
+                "Utah and the contiguous state of Idaho",
+                "neighboring cities"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-colindante-00566342-a",
+                "lexicalEntryId": "omw-es-colindante-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-207-insoslayable",
+      "term": "insoslayable",
+      "inputEntrySha256": "7de250aae8092563dd6a2731608dedcf92efffbfffcf24b9a8a256ff0557f046",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached adjective match; unavoidable consideration needs primary lexical evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-208-taxativo",
+      "term": "taxativo",
+      "inputEntrySha256": "c3eb3d6525c7e3448f9e6a55800f7bd77591827c587ed93038df7d8b5d6a6bfa",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached adjective match; categorical exclusion of flexibility needs primary lexical evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-209-por-ende",
+      "term": "por ende",
+      "inputEntrySha256": "a426b14c85afa1747ea03569231340af410a78f674a4ff065b5582d10c696e8c",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "The consequence connector supports the inference from an unrepresentative sample.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/ende",
+          "senseLocator": "por ende",
+          "observedAt": "2026-09-14",
+          "paraphrase": "The consequence connector supports the inference from an unrepresentative sample."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-210-en-su-defecto",
+      "term": "en su defecto",
+      "inputEntrySha256": "af792c5344c8e0ca052c49677a3423258d6bf959b66d2a844ff48b3a59fe4191",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Absence of the previously mentioned thing supports providing a copy when the original is unavailable.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/defecto",
+          "senseLocator": "en su defecto",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Absence of the previously mentioned thing supports providing a copy when the original is unavailable."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-211-dicho-sea-de-paso",
+      "term": "dicho sea de paso",
+      "inputEntrySha256": "fec43a96650a4d22ebc2fe3b904b60eea5d1dce7d59de3cb642238eb78cb9400",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "DLE de paso gives brief/incidental treatment, but the full discourse formula's secondary-comment function still needs explicit evidence.",
+      "evidence": [
+        {
+          "kind": "primary-page-read-insufficient-support",
+          "url": "https://dle.rae.es/paso",
+          "observedAt": "2026-09-14",
+          "paraphrase": "DLE de paso gives brief/incidental treatment, but the full discourse formula's secondary-comment function still needs explicit evidence."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-212-a-fin-de-cuentas",
+      "term": "a fin de cuentas",
+      "inputEntrySha256": "5ca9632bc6576101895cf9fe157dd4394019cd59532e970da9d4c8ca1914701f",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; the concluding evaluative discourse function needs phrase-level evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-213-no-en-vano",
+      "term": "no en vano",
+      "inputEntrySha256": "97ecf1983fea7751b1800acb02970268f9aa07892200af9056a6467e0ac114d0",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "DLE en vano includes absence of reason, but the explanatory function of the negated connector still needs direct evidence.",
+      "evidence": [
+        {
+          "kind": "primary-page-read-insufficient-support",
+          "url": "https://dle.rae.es/vano",
+          "observedAt": "2026-09-14",
+          "paraphrase": "DLE en vano includes absence of reason, but the explanatory function of the negated connector still needs direct evidence."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-214-sea-como-fuere",
+      "term": "sea como fuere",
+      "inputEntrySha256": "6e97c7d55f4ae76d907d20f2b946470768f7caebbffdc47ef995ccef116b4782",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; the concessive continuation function needs phrase-level evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-215-bien-mirado",
+      "term": "bien mirado",
+      "inputEntrySha256": "7af8ae843e23523cbe649abc3e1db45c1174bfb965decfc2d87e0ac9bb5fb797",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; reconsidered evaluation needs phrase-level evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-217-maxime",
+      "term": "máxime",
+      "inputEntrySha256": "de4e12ca965b01a588734beda77dc5217f2beeabf23fb589ddb1f349a41bc8c3",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached adverb match; the reinforcing circumstance usage needs primary lexical evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-218-a-tenor-de",
+      "term": "a tenor de",
+      "inputEntrySha256": "5203908479618d44df04ee78ca7dbce44d6f6a0a66e93aa7f834a480ff0a62e1",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; accordance/inference from information needs phrase-level evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-219-so-pena-de",
+      "term": "so pena de",
+      "inputEntrySha256": "37c5b8960c438f25a8946f3294f75c842c1ac697f8f9d049e560c5ec011e0097",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; threatened consequence needs phrase-level evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-220-salvo-mejor-criterio",
+      "term": "salvo mejor criterio",
+      "inputEntrySha256": "fad5a889d012b905c069b4f387caa4e82d6533cedffb9c12b441fd66dbc11485",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; deferential qualification of a proposal needs phrase-level evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-221-mutatis-mutandis",
+      "term": "mutatis mutandis",
+      "inputEntrySha256": "ec9d623a1d607f0929ed8bf4a5e3d50313e4e3d5ae1730a4dba4b01b81dbc7b2",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached Latin-expression match; comparison with necessary adaptations needs primary evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-222-ceteris-paribus",
+      "term": "ceteris paribus",
+      "inputEntrySha256": "b086d8bdcb4ddb6daf67abe5229ce9fcee51be25987b03076aa0c8f70f9ffecc",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached Latin-expression match; the all-else-equal condition needs economics or dictionary evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-225-tasacion",
+      "term": "tasación",
+      "inputEntrySha256": "bb2277b9a8113f74f83b40df5c2e49eff0934fb1d1fb25302e7574e0b5d0c214",
+      "candidateSensesSha256": "07bff4ce8b9d8b8873685b66b0255185de7a7f63000b064c44440f9f53533ea6",
+      "cachedCandidateCount": 5,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Appraisal of value supports independent valuation before a sale.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-tasación-05736149-n",
+            "lexicalEntryId": "omw-es-tasación-n",
+            "spanishSynsetId": "omw-es-05736149-n",
+            "englishSynsetId": "omw-en-05736149-n",
+            "iliId": "i67050",
+            "spanish": {
+              "definition": "Una evaluación del valor de algo",
+              "examples": [
+                "Puso una alta valoración en la amistad"
+              ]
+            },
+            "english": {
+              "definition": "an appraisal of the value of something",
+              "members": [
+                "evaluation",
+                "valuation",
+                "rating"
+              ],
+              "examples": [
+                "he set a high valuation on friendship"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-tasación-05736149-n",
+                "lexicalEntryId": "omw-es-tasación-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-226-remanente",
+      "term": "remanente",
+      "inputEntrySha256": "216f9e8376e29f9095a4f8369ba2b0d2df4f27cf93000a1275d5c76da0d3e355",
+      "candidateSensesSha256": "a2ec11dd22dcacb851c4706a68275e1e4396c35952c66e793f94bee80ae419d7",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "What remains after removal supports residual stock, not royalty payments.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-remanente-13810818-n",
+            "lexicalEntryId": "omw-es-remanente-n",
+            "spanishSynsetId": "omw-es-13810818-n",
+            "englishSynsetId": "omw-en-13810818-n",
+            "iliId": "i109481",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "something left after other parts have been taken away",
+              "members": [
+                "remainder",
+                "balance",
+                "residual",
+                "residue",
+                "residuum",
+                "rest"
+              ],
+              "examples": [
+                "there was no remainder",
+                "he threw away the rest",
+                "he took what he wanted and I got the balance"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-remanente-13810818-n",
+                "lexicalEntryId": "omw-es-remanente-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-227-rescindir",
+      "term": "rescindir",
+      "inputEntrySha256": "c4afa205a353945eeab7fc269a6907d9e12c47ddc13c90c99cc6987b38fbbb90",
+      "candidateSensesSha256": "9c7c7798db2065ba68cf52d895c740ac5b5d0f5dada17a41967aa7eaa519058f",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Official cancellation supports termination of the supply contract.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-rescindir-00799798-v",
+            "lexicalEntryId": "omw-es-rescindir-v",
+            "spanishSynsetId": "omw-es-00799798-v",
+            "englishSynsetId": "omw-en-00799798-v",
+            "iliId": "i25674",
+            "spanish": {
+              "definition": "anular al suprimir o rescindir",
+              "examples": []
+            },
+            "english": {
+              "definition": "cancel officially",
+              "members": [
+                "revoke",
+                "annul",
+                "lift",
+                "countermand",
+                "reverse",
+                "repeal",
+                "overturn",
+                "rescind",
+                "vacate"
+              ],
+              "examples": [
+                "He revoked the ban on smoking",
+                "lift an embargo",
+                "vacate a death sentence"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-rescindir-00799798-v",
+                "lexicalEntryId": "omw-es-rescindir-v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-228-leonino",
+      "term": "leonino",
+      "inputEntrySha256": "1dda6d9c24b7d03bc842e472996ffdb84f046d06ef1036976605b6279cc71734",
+      "candidateSensesSha256": "f1f90c9400eceff56fd485809305bbdae45849b4cfbdacd368287840d5eecb17",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "An unfairly one-sided contractual condition supports the penalty clause example, not resemblance to a lion.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/leonino",
+          "senseLocator": "leonino 1, sense 2",
+          "observedAt": "2026-09-14",
+          "paraphrase": "An unfairly one-sided contractual condition supports the penalty clause example, not resemblance to a lion."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-230-devolucion-en-especie",
+      "term": "devolución en especie",
+      "inputEntrySha256": "07cb3b1293d4ac0031beea710781d4f5d143d97e6c4d9a5d7c2c2e5f002670b2",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; restitution in goods must be supported compositionally or by a direct source.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-232-a-cuenta-de",
+      "term": "a cuenta de",
+      "inputEntrySha256": "418d4657d2ee1916a9475ab7964f93d6ea48e359bac6830acc05e3438cb14f82",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; advance partial payment must be distinguished from expense charged to somebody.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-233-ecuanimidad",
+      "term": "ecuanimidad",
+      "inputEntrySha256": "891d25f9fa3b70e595a8bf78740adb4fe71be3dece72585aa053ed19922847bc",
+      "candidateSensesSha256": "5a6bacdb61ce9dbfe0e989602bb87b1d79f67702956f55d848251a67995a6a41",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Weighing both views equally supports impartial judgment despite friendship.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-ecuanimidad-06202686-n",
+            "lexicalEntryId": "omw-es-ecuanimidad-n",
+            "spanishSynsetId": "omw-es-06202686-n",
+            "englishSynsetId": "omw-en-06202686-n",
+            "iliId": "i69126",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "an inclination to weigh both views or opinions equally",
+              "members": [
+                "impartiality",
+                "nonpartisanship"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-ecuanimidad-06202686-n",
+                "lexicalEntryId": "omw-es-ecuanimidad-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-234-pusilanime",
+      "term": "pusilánime",
+      "inputEntrySha256": "aa5b4de8aa3710fe689a84b8451d37142fe9f595fa17860c32b3ab9a913bc64f",
+      "candidateSensesSha256": "46c6fdbfeeb8e54ec1580e252a420aa90698e418ad6a9ab406e0821f46d478f0",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Faint-heartedness matches reluctance to defend a companion.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-pusilánime-00264776-a",
+            "lexicalEntryId": "omw-es-pusilánime-a",
+            "spanishSynsetId": "omw-es-00264776-a",
+            "englishSynsetId": "omw-en-00264776-a",
+            "iliId": "i1483",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "lacking courage; ignobly timid and faint-hearted",
+              "members": [
+                "cowardly",
+                "fearful"
+              ],
+              "examples": [
+                "\"cowardly dogs, ye will not aid me then\"- P.B.Shelley"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-pusilánime-00264776-a",
+                "lexicalEntryId": "omw-es-pusilánime-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-236-aprension",
+      "term": "aprensión",
+      "inputEntrySha256": "397836f0f4f82d51bd441dda28b9d3c25c669e60a71d0836ecccbd7a138effd4",
+      "candidateSensesSha256": "5c8dea28d4868d67b1cdc3da9d9dc85662940edd48444fc939da09244c0b0810",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Fearful anticipation matches entering while awaiting unwelcome news.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-aprensión-07521674-n",
+            "lexicalEntryId": "omw-es-aprensión-n",
+            "spanishSynsetId": "omw-es-07521674-n",
+            "englishSynsetId": "omw-en-07521674-n",
+            "iliId": "i76280",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "fearful expectation or anticipation",
+              "members": [
+                "apprehension",
+                "apprehensiveness",
+                "dread"
+              ],
+              "examples": [
+                "the student looked around the examination room with apprehension"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-aprensión-07521674-n",
+                "lexicalEntryId": "omw-es-aprensión-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-237-desazon",
+      "term": "desazón",
+      "inputEntrySha256": "5dccd34e8a12dbcf0c40c6b33428fb69d9da41fec32c70fba16d5aba47b45dc7",
+      "candidateSensesSha256": "c895a4d69a9f7c33717d29d39328a123b71651ba95bdc8dde84243fc62f3fa32",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Interior unease directly supports the lingering distress after a conversation.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/desaz%C3%B3n",
+          "senseLocator": "3",
+          "observedAt": "2026-09-14",
+          "paraphrase": "Interior unease directly supports the lingering distress after a conversation."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-238-indolencia",
+      "term": "indolencia",
+      "inputEntrySha256": "281a6245725aea8431ab692625ff72a17d860dd6ed8a060c1d9ee2d80e36bd2f",
+      "candidateSensesSha256": "266a4c956ae7f8ee6860f8827a3cbec22d87680a745ec690f4e52e4e37a7acba",
+      "cachedCandidateCount": 2,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Inactivity from dislike of work supports habitually postponing effort.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-indolencia-04637108-n",
+            "lexicalEntryId": "omw-es-indolencia-n",
+            "spanishSynsetId": "omw-es-04637108-n",
+            "englishSynsetId": "omw-en-04637108-n",
+            "iliId": "i61442",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "inactivity resulting from a dislike of work",
+              "members": [
+                "indolence",
+                "laziness"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-indolencia-04637108-n",
+                "lexicalEntryId": "omw-es-indolencia-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-239-circunspecto",
+      "term": "circunspecto",
+      "inputEntrySha256": "d879dbab8ef4f1151f97805ab906e12c54c841e179580860eaeb787f99148027",
+      "candidateSensesSha256": "4ba9fcabfcad41ca4ba353b0816cace278c8960f452534ae7e4c8dea5861d6af",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Attention to consequences supports reserved comment on unconfirmed news.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-circunspecto-01898490-a",
+            "lexicalEntryId": "omw-es-circunspecto-a",
+            "spanishSynsetId": "omw-es-01898490-a",
+            "englishSynsetId": "omw-en-01898490-s",
+            "iliId": "i10409",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "heedful of potential consequences",
+              "members": [
+                "circumspect",
+                "discreet"
+              ],
+              "examples": [
+                "circumspect actions",
+                "physicians are now more circumspect about recommending its use",
+                "a discreet investor"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-circunspecto-01898490-a",
+                "lexicalEntryId": "omw-es-circunspecto-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-240-veleidoso",
+      "term": "veleidoso",
+      "inputEntrySha256": "420f811182b1dfcb85b79337ffa6d6109ac53a9f6c15ebba66740f86a56957b5",
+      "candidateSensesSha256": "2872c1d57353722bfb41e4312eb6b7ca4ef88e751a44ca708773db1fadc67de6",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "Changeable desires/attachments support uncertainty about keeping a plan.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-veleidoso-00584626-a",
+            "lexicalEntryId": "omw-es-veleidoso-a",
+            "spanishSynsetId": "omw-es-00584626-a",
+            "englishSynsetId": "omw-en-00584626-s",
+            "iliId": "i3250",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "marked by erratic changeableness in affections or attachments",
+              "members": [
+                "fickle",
+                "volatile"
+              ],
+              "examples": [
+                "fickle friends",
+                "a flirt's volatile affections"
+              ]
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-veleidoso-00584626-a",
+                "lexicalEntryId": "omw-es-veleidoso-a"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-243-sobreentendido",
+      "term": "sobreentendido",
+      "inputEntrySha256": "bab98517e19cdf3fdb67d50b1fce24cae49262bec8dad3ff00e200885e0c92c1",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached noun match; implicit shared assumption needs primary lexical evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-245-presuposicion",
+      "term": "presuposición",
+      "inputEntrySha256": "939e4209a235829e947a95c7fa1dd2bea33ffb8db4dac00dbe2dde3f4e930323",
+      "candidateSensesSha256": "a10cf613f40959a0c8238eb076344b2f71f49ad1de21075864e6c96c403cfcbd",
+      "cachedCandidateCount": 1,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "An assumed starting point supports the question treating a breach as already established.",
+      "evidence": [
+        {
+          "kind": "pinned-library-sense",
+          "sense": {
+            "senseId": "omw-es-presuposición-05893356-n",
+            "lexicalEntryId": "omw-es-presuposición-n",
+            "spanishSynsetId": "omw-es-05893356-n",
+            "englishSynsetId": "omw-en-05893356-n",
+            "iliId": "i67815",
+            "spanish": {
+              "definition": null,
+              "examples": []
+            },
+            "english": {
+              "definition": "an assumption that is taken for granted",
+              "members": [
+                "given",
+                "presumption",
+                "precondition"
+              ],
+              "examples": []
+            },
+            "sourceSenseAliases": [
+              {
+                "senseId": "omw-es-presuposición-05893356-n",
+                "lexicalEntryId": "omw-es-presuposición-n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-247-equivoco",
+      "term": "equívoco",
+      "inputEntrySha256": "884a5e0eb1cad53fb161303b5faf7dab80f1391848b7d100f8da47a2d0dc5e27",
+      "candidateSensesSha256": "b53465570ef6169af7f0ab30bc2ab150ba327016d7a2be8b273df8c36d2565f4",
+      "cachedCandidateCount": 3,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "supported",
+      "reason": "The masculine noun for confusion supports misunderstanding which project was meant, without implying deliberate evasion.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/equ%C3%ADvoco",
+          "senseLocator": "2",
+          "observedAt": "2026-09-14",
+          "paraphrase": "The masculine noun for confusion supports misunderstanding which project was meant, without implying deliberate evasion."
+        }
+      ]
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-248-con-segundas",
+      "term": "con segundas",
+      "inputEntrySha256": "786f9b1afe148014dd899842196c47aa0f20409d2357b0339a167b5a9d887877",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; concealed communicative intention needs phrase-level evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-249-a-buen-seguro",
+      "term": "a buen seguro",
+      "inputEntrySha256": "3b3a04fde93f7da52ef4053739e82961a46c7049232512fded20500a5b0b527a",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; strong epistemic confidence needs phrase-level evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-250-que-conste",
+      "term": "que conste",
+      "inputEntrySha256": "e775795596757880ca944c5659403fde708ca412ab7c899e825f76db4e52b9fa",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; emphatic clarification needs phrase-level evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-251-ni-que-decir-tiene",
+      "term": "ni que decir tiene",
+      "inputEntrySha256": "82b7d4d939bd3c7acd216b4085b9865b417bb6634d5f58c9547f3192f814bbbb",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; presenting a claim as shared or obvious needs phrase-level evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-252-por-asi-decirlo",
+      "term": "por así decirlo",
+      "inputEntrySha256": "68a77d116f64c9f813f7604ab1fdf3465d110af8ce35a7ebadf927fdaba5cecc",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "No exact cached expression match; approximation or figurative wording needs phrase-level evidence.",
+      "evidence": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-254-no-es-de-recibo",
+      "term": "no es de recibo",
+      "inputEntrySha256": "f7cd65ba10328ff65665ec3ac034e12f42ce7357ae813a69bd86b77eb189b25d",
+      "candidateSensesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "cachedCandidateCount": 0,
+      "previousEvidenceStatus": "ai-reviewed-not-individually-source-verified",
+      "decision": "unresolved",
+      "reason": "DLE ser de recibo defines acceptability under custom, law or contract. The draft's broader negative evaluative formula still needs usage evidence.",
+      "evidence": [
+        {
+          "kind": "primary-page-read-insufficient-support",
+          "url": "https://dle.rae.es/recibo",
+          "observedAt": "2026-09-14",
+          "paraphrase": "DLE ser de recibo defines acceptability under custom, law or contract. The draft's broader negative evaluative formula still needs usage evidence."
+        }
+      ]
+    }
+  ]
+}

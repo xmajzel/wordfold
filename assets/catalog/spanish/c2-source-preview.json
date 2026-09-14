@@ -1,0 +1,714 @@
+{
+  "schemaVersion": 1,
+  "courseId": "es-sk",
+  "publicationStatus": "draft",
+  "batchId": "c2-source-2026-09-13",
+  "reviewStatus": "ai-reviewed-not-human-approved",
+  "curriculumCoverage": "partial",
+  "datasetSha256": "0b3802f04086e0702a0a87731d0c583ed196adb26b4a162e9627ad26f2225b31",
+  "reviews": {
+    "spanish": "75b9a87dd160d1c6bd2d718feddbe76ddec9879c6ed6366fff77e4e0041fdf73",
+    "slovak": "2ccd90d65e5f1ee7fb46ca095d29c2d0051939c8ae5d2d4130bdb01bab26bd8c"
+  },
+  "counts": {
+    "A1": 0,
+    "A2": 0,
+    "B1": 0,
+    "B2": 0,
+    "C1": 0,
+    "C2": 34
+  },
+  "entries": [
+    {
+      "id": "es-sk:c2:exp-source-i2775",
+      "catalogSenseId": "es-sk:c2:exp-source-i2775:adj:1",
+      "term": "idiosincrásico",
+      "normalizedTerm": "idiosincrásico",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Propio y singular de una persona o entidad concreta.",
+      "example": "La directora conserva un método idiosincrásico difícil de imitar.",
+      "translation": "idiosynkratický, svojský",
+      "levelRationale": "Requiere distinguir rasgos individualizadores de lo meramente extraño o excéntrico.",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "idiosincrásica",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i3140",
+      "catalogSenseId": "es-sk:c2:exp-source-i3140:adj:1",
+      "term": "incongruo",
+      "normalizedTerm": "incongruo",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Incompatible o falto de correspondencia con su contexto.",
+      "example": "Su tono jocoso resultó incongruo durante la ceremonia fúnebre.",
+      "translation": "nezlučiteľný, neprimeraný",
+      "levelRationale": "Permite evaluar incompatibilidades contextuales o lógicas con mayor precisión que «inadecuado».",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "incongrua",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i4931",
+      "catalogSenseId": "es-sk:c2:exp-source-i4931:adj:1",
+      "term": "arcano",
+      "normalizedTerm": "arcano",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Comprensible únicamente mediante conocimientos secretos, raros o misteriosos.",
+      "example": "El tratado emplea un simbolismo arcano reservado a los iniciados.",
+      "translation": "tajomný, prístupný iba zasväteným",
+      "levelRationale": "Añade la idea de conocimiento reservado o esotérico, no solo de dificultad general.",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "arcana",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i4955",
+      "catalogSenseId": "es-sk:c2:exp-source-i4955:adj:1",
+      "term": "abyecto",
+      "normalizedTerm": "abyecto",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Moralmente despreciable y merecedor del máximo rechazo.",
+      "example": "Fue una maniobra abyecta contra quienes no podían defenderse.",
+      "translation": "podlý, opovrhnutiahodný",
+      "levelRationale": "Condensa una censura moral extrema y requiere dominio de su intensidad retórica.",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "abyecta",
+          "type": "feminine",
+          "note": "Forma femenina usada en el ejemplo."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i5613",
+      "catalogSenseId": "es-sk:c2:exp-source-i5613:adj:1",
+      "term": "acomodaticio",
+      "normalizedTerm": "acomodaticio",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Dispuesto a adaptarse o hacer concesiones por conveniencia.",
+      "example": "El negociador acomodaticio aceptaba cualquier fórmula que evitara el conflicto.",
+      "translation": "ústupčivý, prispôsobivý z vypočítavosti",
+      "levelRationale": "Vocablo infrecuente que combina flexibilidad con un posible matiz de conveniencia o falta de firmeza.",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "acomodaticia",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i6716",
+      "catalogSenseId": "es-sk:c2:exp-source-i6716:adj:1",
+      "term": "oprobioso",
+      "normalizedTerm": "oprobioso",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Que causa deshonra pública o merece una condena vergonzosa.",
+      "example": "El informe documentó un trato oprobioso hacia los detenidos.",
+      "translation": "hanebný, potupný",
+      "levelRationale": "Expresa deshonra pública grave con una intensidad retórica superior a «vergonzoso».",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "oprobiosa",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i7546",
+      "catalogSenseId": "es-sk:c2:exp-source-i7546:adj:1",
+      "term": "mastodóntico",
+      "normalizedTerm": "mastodóntico",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "De dimensiones enormes y estructura pesada o desmesurada.",
+      "example": "El ministerio arrastra un aparato burocrático mastodóntico e ineficiente.",
+      "translation": "mamutí, obrovský a ťažkopádny",
+      "levelRationale": "Metáfora lexicalizada que combina tamaño descomunal y pesadez, útil en crítica institucional avanzada.",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "mastodóntica",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i9573",
+      "catalogSenseId": "es-sk:c2:exp-source-i9573:adj:1",
+      "term": "contrito",
+      "normalizedTerm": "contrito",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Arrepentido sinceramente por una falta y afligido por haberla cometido.",
+      "example": "El funcionario compareció contrito y pidió perdón a los afectados.",
+      "translation": "kajúcny, skrúšený",
+      "levelRationale": "Distingue el arrepentimiento moral profundo de la mera tristeza o disculpa convencional.",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "contrita",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i10101",
+      "catalogSenseId": "es-sk:c2:exp-source-i10101:adj:1",
+      "term": "puntilloso",
+      "normalizedTerm": "puntilloso",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Excesivamente escrupuloso en observar detalles, reglas o formalidades.",
+      "example": "El diplomático era puntilloso hasta con el orden de los saludos.",
+      "translation": "puntičkársky, úzkostlivo dbajúci na pravidlá",
+      "levelRationale": "Añade escrupulosidad excesiva respecto de minucias o formalidades, no mera atención cuidadosa.",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "puntillosa",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i10318",
+      "catalogSenseId": "es-sk:c2:exp-source-i10318:adj:1",
+      "term": "pudibundo",
+      "normalizedTerm": "pudibundo",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Exageradamente recatado ante asuntos relacionados con el sexo o el cuerpo.",
+      "example": "El censor pudibundo eliminó hasta las alusiones más inocentes al deseo.",
+      "translation": "prudérny, prehnane cudný",
+      "levelRationale": "Designa recato exagerado con ironía o censura, matiz pragmático ausente en «tímido».",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "pudibunda",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i11326",
+      "catalogSenseId": "es-sk:c2:exp-source-i11326:adj:1",
+      "term": "antitético",
+      "normalizedTerm": "antitético",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Opuesto radicalmente a otra idea, cualidad o finalidad.",
+      "example": "Ese mecanismo es antitético al principio de transparencia institucional.",
+      "translation": "protikladný, antitetický",
+      "levelRationale": "Formula oposición conceptual estructural, más rigurosa que una simple diferencia o discrepancia.",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "antitética",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i11448",
+      "catalogSenseId": "es-sk:c2:exp-source-i11448:adj:1",
+      "term": "subrepticio",
+      "normalizedTerm": "subrepticio",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Realizado a escondidas y procurando no ser descubierto.",
+      "example": "Detectaron un acceso subrepticio a los archivos confidenciales.",
+      "translation": "tajný, pokradmý",
+      "levelRationale": "Expresa ocultación deliberada y cautelosa, con frecuente relevancia jurídica o institucional.",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "subrepticia",
+          "type": "feminine",
+          "note": "Forma femenina."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i11681",
+      "catalogSenseId": "es-sk:c2:exp-source-i11681:adj:1",
+      "term": "salaz",
+      "normalizedTerm": "salaz",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Dominado por un deseo sexual excesivo o expresado con lascivia.",
+      "example": "La novela caricaturiza a un anciano salaz que acosa a las criadas.",
+      "translation": "chlipný, oplzlý",
+      "levelRationale": "Adjetivo infrecuente de fuerte censura sexual, cuyo matiz no equivale simplemente a «sensual».",
+      "gender": "invariant",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i12307",
+      "catalogSenseId": "es-sk:c2:exp-source-i12307:adj:1",
+      "term": "ducho",
+      "normalizedTerm": "ducho",
+      "level": "C2",
+      "partOfSpeech": "ADJ",
+      "displayPartOfSpeech": "adjetivo",
+      "definition": "Muy experimentado y hábil en una actividad concreta.",
+      "example": "Es ducha en detectar contradicciones durante los interrogatorios.",
+      "translation": "zbehlý, skúsený",
+      "levelRationale": "Adjetivo poco frecuente, normalmente construido con «en», que combina experiencia y destreza acreditadas.",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "ducha",
+          "type": "feminine",
+          "note": "Forma femenina usada en el ejemplo."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i20315",
+      "catalogSenseId": "es-sk:c2:exp-source-i20315:adv:1",
+      "term": "ignominiosamente",
+      "normalizedTerm": "ignominiosamente",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "adverbio",
+      "definition": "De manera deshonrosa, humillante o merecedora de desprecio público.",
+      "example": "El ejército fue ignominiosamente expulsado tras abandonar a sus aliados.",
+      "translation": "potupne, hanebne",
+      "levelRationale": "Adverbio infrecuente de fuerte evaluación moral e histórica, más intenso que «vergonzosamente».",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i20454",
+      "catalogSenseId": "es-sk:c2:exp-source-i20454:adv:1",
+      "term": "pérfidamente",
+      "normalizedTerm": "pérfidamente",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "adverbio",
+      "definition": "Con deslealtad deliberada y quebrantando la confianza depositada.",
+      "example": "El consejero reveló pérfidamente las negociaciones secretas a un rival.",
+      "translation": "vierolomne, zradne",
+      "levelRationale": "Expresa traición consciente con una censura moral intensa y un marcado tono literario.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i21414",
+      "catalogSenseId": "es-sk:c2:exp-source-i21414:adv:1",
+      "term": "subrepticiamente",
+      "normalizedTerm": "subrepticiamente",
+      "level": "C2",
+      "partOfSpeech": "ADV",
+      "displayPartOfSpeech": "adverbio",
+      "definition": "A escondidas y procurando cuidadosamente evitar ser observado.",
+      "example": "Copió subrepticiamente los archivos antes de devolver el ordenador.",
+      "translation": "pokradme, tajne",
+      "levelRationale": "Expresa ocultación deliberada y cautelosa con mayor precisión que «secretamente».",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i25785",
+      "catalogSenseId": "es-sk:c2:exp-source-i25785:verb:1",
+      "term": "reconvenir",
+      "normalizedTerm": "reconvenir",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Reprender a alguien por una conducta considerada incorrecta.",
+      "example": "La directora reconvino al empleado por divulgar información confidencial.",
+      "translation": "pokarhať, napomenúť",
+      "levelRationale": "Verbo poco frecuente de censura verbal formal, con conjugación irregular y posible confusión jurídica.",
+      "gender": "not-applicable",
+      "alternativeForms": [
+        {
+          "form": "reconvino",
+          "type": "preterite",
+          "note": "Pretérito irregular usado en el ejemplo; sigue el patrón de «venir»."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i25878",
+      "catalogSenseId": "es-sk:c2:exp-source-i25878:verb:1",
+      "term": "vilipendiar",
+      "normalizedTerm": "vilipendiar",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Desacreditar gravemente a alguien mediante insultos o acusaciones denigrantes.",
+      "example": "La campaña vilipendió a la minoría mediante falsedades repetidas.",
+      "translation": "hanobiť, hrubo očierňovať",
+      "levelRationale": "Verbo infrecuente de denigración pública intensa, útil para analizar propaganda y ataques retóricos.",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i30609",
+      "catalogSenseId": "es-sk:c2:exp-source-i30609:verb:1",
+      "term": "execrar",
+      "normalizedTerm": "execrar",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Sentir y expresar una aversión o condena moral extremas.",
+      "example": "La filósofa execraba toda forma de crueldad institucionalizada.",
+      "translation": "oškliviť si, zavrhovať",
+      "levelRationale": "Verbo muy marcado que une repugnancia intensa y condena moral, más fuerte que «detestar».",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i30750",
+      "catalogSenseId": "es-sk:c2:exp-source-i30750:verb:1",
+      "term": "congraciarse",
+      "normalizedTerm": "congraciarse",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Ganarse deliberadamente la simpatía o buena disposición de alguien.",
+      "example": "Intentó congraciarse con el jurado elogiando cada una de sus decisiones.",
+      "translation": "votrieť sa do priazne",
+      "levelRationale": "El verbo pronominal expresa una estrategia interpersonal calculada y exige dominar su régimen con «con».",
+      "gender": "not-applicable",
+      "alternativeForms": [
+        {
+          "form": "congraciarse con alguien",
+          "type": "construcción",
+          "note": "La persona cuyo favor se busca se introduce normalmente con «con»."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i35238",
+      "catalogSenseId": "es-sk:c2:exp-source-i35238:verb:1",
+      "term": "pulular",
+      "normalizedTerm": "pulular",
+      "level": "C2",
+      "partOfSpeech": "VERB",
+      "displayPartOfSpeech": "verbo",
+      "definition": "Abundar y moverse numerosos seres o elementos en un lugar.",
+      "example": "En los pasillos pululaban asesores, periodistas y agentes de seguridad.",
+      "translation": "hemžiť sa",
+      "levelRationale": "Condensa abundancia y movimiento con frecuente carga evaluativa, frente a «haber muchos».",
+      "gender": "not-applicable",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i38078",
+      "catalogSenseId": "es-sk:c2:exp-source-i38078:noun:1",
+      "term": "bufonada",
+      "normalizedTerm": "bufonada",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Acción o comportamiento grotesco propio de quien busca provocar risa.",
+      "example": "El solemne acto acabó convertido en una bufonada improvisada.",
+      "translation": "šaškovina, klauniáda",
+      "levelRationale": "Su fuerte valoración peyorativa y resonancia teatral permiten una crítica estilísticamente marcada.",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i62389",
+      "catalogSenseId": "es-sk:c2:exp-source-i62389:noun:1",
+      "term": "munificencia",
+      "normalizedTerm": "munificencia",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Generosidad extraordinaria al conceder bienes, premios o favores.",
+      "example": "El mecenas sostuvo la compañía teatral con una munificencia insólita.",
+      "translation": "štedrosť, veľkorysá dobročinnosť",
+      "levelRationale": "Es una denominación infrecuente y solemne de generosidad material excepcional, útil para estilos elevados.",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i62630",
+      "catalogSenseId": "es-sk:c2:exp-source-i62630:noun:1",
+      "term": "perfidia",
+      "normalizedTerm": "perfidia",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Deslealtad grave que quebranta de forma deliberada la confianza ajena.",
+      "example": "La perfidia del consejero permitió que el enemigo tomara la ciudad.",
+      "translation": "vierolomnosť, zrada dôvery",
+      "levelRationale": "Nombra una traición deliberada con elevada censura moral y marcado valor estilístico.",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i69963",
+      "catalogSenseId": "es-sk:c2:exp-source-i69963:noun:1",
+      "term": "apólogo",
+      "normalizedTerm": "apólogo",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Relato breve, frecuentemente alegórico, que transmite una enseñanza moral.",
+      "example": "El autor inserta un apólogo sobre la vanidad entre ambos capítulos.",
+      "translation": "mravoučná alegorická bájka",
+      "levelRationale": "Exige diferenciar un género didáctico concreto de la fábula, parábola o alegoría en sentido amplio.",
+      "gender": "masculine",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i72041",
+      "catalogSenseId": "es-sk:c2:exp-source-i72041:noun:1",
+      "term": "gambito",
+      "normalizedTerm": "gambito",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Intervención inicial calculada para obtener ventaja en una conversación o negociación.",
+      "example": "Su elogio al adversario fue un gambito para moderar las críticas.",
+      "translation": "úvodný taktický ťah",
+      "levelRationale": "Traslada una apertura ajedrecística al manejo estratégico del discurso y exige reconocer esa intención pragmática.",
+      "gender": "masculine",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i76070",
+      "catalogSenseId": "es-sk:c2:exp-source-i76070:noun:1",
+      "term": "emulación",
+      "normalizedTerm": "emulación",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Deseo competitivo de igualar o superar los logros ajenos.",
+      "example": "La emulación entre ambos investigadores aceleró sus respectivos hallazgos.",
+      "translation": "súťaživá snaha vyrovnať sa",
+      "levelRationale": "Nombra una rivalidad imitativa potencialmente productiva, matiz más específico que «competencia» o «ambición».",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i76103",
+      "catalogSenseId": "es-sk:c2:exp-source-i76103:noun:1",
+      "term": "lascivia",
+      "normalizedTerm": "lascivia",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Deseo sexual excesivo manifestado de manera considerada indecorosa.",
+      "example": "El narrador retrata con crudeza la lascivia del noble decadente.",
+      "translation": "chlípnosť, zmyselná žiadostivosť",
+      "levelRationale": "Conlleva una valoración moral marcada y aparece sobre todo en literatura, religión y crítica cultural.",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i80150",
+      "catalogSenseId": "es-sk:c2:exp-source-i80150:noun:1",
+      "term": "hueste",
+      "normalizedTerm": "hueste",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Ejército o conjunto numeroso de partidarios, especialmente en textos antiguos.",
+      "example": "La hueste cruzó el desfiladero antes de que amaneciera.",
+      "translation": "vojsko, zástup bojovníkov",
+      "levelRationale": "Su reconocimiento permite interpretar narrativa histórica y usos figurados elevados sin confundirla con vocabulario militar actual.",
+      "gender": "feminine",
+      "alternativeForms": [
+        {
+          "form": "huestes",
+          "type": "uso frecuente",
+          "note": "El plural se emplea también para grupos numerosos de seguidores."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i92094",
+      "catalogSenseId": "es-sk:c2:exp-source-i92094:noun:1",
+      "term": "plutócrata",
+      "normalizedTerm": "plutócrata",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Persona poderosa cuya influencia política procede de su gran riqueza.",
+      "example": "El periódico acusó al plutócrata de financiar leyes favorables a sus empresas.",
+      "translation": "plutokrat, boháč ovládajúci politiku",
+      "levelRationale": "Condensa riqueza, poder político e influencia oligárquica dentro del análisis crítico de las élites.",
+      "gender": "common",
+      "alternativeForms": [
+        {
+          "form": "el plutócrata",
+          "type": "género",
+          "note": "Forma masculina."
+        },
+        {
+          "form": "la plutócrata",
+          "type": "género",
+          "note": "La misma forma designa a una mujer."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i106513",
+      "catalogSenseId": "es-sk:c2:exp-source-i106513:noun:1",
+      "term": "emolumento",
+      "normalizedTerm": "emolumento",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Retribución económica vinculada al ejercicio de un cargo o profesión.",
+      "example": "El informe detalla los emolumentos percibidos por los altos funcionarios.",
+      "translation": "služobné požitky, odmena za funkciu",
+      "levelRationale": "Es una voz formal para remuneraciones asociadas a un cargo, frecuente en textos legales y financieros complejos.",
+      "gender": "masculine",
+      "alternativeForms": [
+        {
+          "form": "emolumentos",
+          "type": "uso frecuente",
+          "note": "Se emplea habitualmente en plural para el conjunto de retribuciones."
+        }
+      ],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i110436",
+      "catalogSenseId": "es-sk:c2:exp-source-i110436:noun:1",
+      "term": "arrebatamiento",
+      "normalizedTerm": "arrebatamiento",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Estado de exaltación en que una emoción domina por completo a alguien.",
+      "example": "Escuchó el aria en un arrebatamiento que le hizo olvidar al público.",
+      "translation": "vytrženie, citové uchvátenie",
+      "levelRationale": "Nombra un transporte emocional intenso con resonancia estética o mística, no un simple entusiasmo.",
+      "gender": "masculine",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    },
+    {
+      "id": "es-sk:c2:exp-source-i113162",
+      "catalogSenseId": "es-sk:c2:exp-source-i113162:noun:1",
+      "term": "fastuosidad",
+      "normalizedTerm": "fastuosidad",
+      "level": "C2",
+      "partOfSpeech": "NOUN",
+      "displayPartOfSpeech": "sustantivo",
+      "definition": "Ostentación de riqueza mediante un lujo extraordinario y espectacular.",
+      "example": "La fastuosidad del banquete indignó a una población empobrecida.",
+      "translation": "okázalá nádhera, prepych",
+      "levelRationale": "Une suntuosidad y exhibición pública de riqueza, matiz evaluativo más fino que «lujo».",
+      "gender": "feminine",
+      "alternativeForms": [],
+      "sourceVersion": "wordfold-spanish-c2-source-draft-2026-09-13",
+      "publicationStatus": "draft"
+    }
+  ]
+}

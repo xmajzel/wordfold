@@ -1,0 +1,371 @@
+{
+  "schemaVersion": 1,
+  "publicationStatus": "deferred",
+  "placementAuditSha256": "4190e80ba5f6051aaf46aeefaa917f59f91f5b09e306e4411f9980363c0f9de5",
+  "entries": [
+    {
+      "entryId": "es-sk:c2:exp-bulk-004-enranciarse",
+      "term": "enranciarse",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "ffc7d12e02f18d8a65de58a87f8f0ed41fc34c36f74487e0bb4810ffe3b4fff5",
+      "reason": "The current storage example identifies a literal deterioration process without enough additional interpretive demand for this batch."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-006-desleir",
+      "term": "desleír",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "e594dfb2486d149787cedcfe13ef595c10e0c69f2b270eee04eb227cb8183e0d",
+      "reason": "The recipe instruction does not yet establish enough added learning value beyond a literal mixing operation."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-007-atemperar",
+      "term": "atemperar",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "404d2ee9127938f45d38484a41984f3a90154b0624e8f4abe7e8c6fc78ab0368",
+      "reason": "The current instruction concerns adjusting serving temperature; no wider figurative or evaluative sense is credited."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-010-desgrasar",
+      "term": "desgrasar",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "a974e43f8faa340186fe0bca9ccae2a72bc5d446c9c98878dc92fc02df9954d5",
+      "reason": "The example is a transparent instruction to remove fat; the current text does not establish further priority."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-013-insalubre",
+      "term": "insalubre",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "feb95cf54672c662cfbc17f17912720dbf4f7a682fe7c344fc1176038913f2fa",
+      "reason": "The ventilation example states a general health hazard without developing an additional nuance or advanced use."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-015-resquicio",
+      "term": "resquicio",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "25dcb982db4fa7805b419bd246912db96a6659b63d7432b54c9a898c80b6278d",
+      "reason": "Only a literal narrow opening is taught here; do not credit figurative opportunity or loophole senses."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-016-desconchado",
+      "term": "desconchado",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "15bd6fcd8cb166603a9224265d82cf5d9c17fded3fbfa67f8d3fba968ac48621",
+      "reason": "The current wall example is a concrete damage label with insufficient additional priority for this extension."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-017-filtracion",
+      "term": "filtración",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "560ab813a5875d9b7cd9457c52704c27507c9b016a10c3c3cc4f0e38b457d1f1",
+      "reason": "Only ordinary water ingress is selected; an information-leak sense cannot justify this entry."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-019-acometer-una-reforma",
+      "term": "acometer una reforma",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "9755ee7a3124da95851b67a9a3421599dc39cbc3efbe26d9d24cbd91000d652e",
+      "reason": "The phrase primarily supplies a formal synonym for undertaking renovation; its current example does not establish a distinct phrase-level objective."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-020-apuntalar",
+      "term": "apuntalar",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "a8df967de569bd5ffdb4a01197974f087fdf337a6bda0d1680b2e6c5b392936b",
+      "reason": "The literal emergency-support action does not yet demonstrate enough added learning value; no figurative argument-support sense is credited."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-026-agarrotamiento",
+      "term": "agarrotamiento",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "d5fa07d9642182bc6d52f2adaab1a4cc910bd52111f6d96fb872cc5672dcccc0",
+      "reason": "The literal stiff-neck example does not yet demonstrate sufficient additional contribution beyond a physical symptom label."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-027-hormigueo",
+      "term": "hormigueo",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "4d69174a8abf1913fb99d131d3df642113bb7b8c8b52c799412ee8574119c67a",
+      "reason": "The everyday symptom example is useful but does not establish current priority in the advanced extension."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-029-tirantez",
+      "term": "tirantez",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "575403f893d260aa88e31d3f7507ba69a2862654ab4760ccf391ed807e7d5f4f",
+      "reason": "The selected physical sensation remains a simple symptom description; do not credit interpersonal tension."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-031-periplo",
+      "term": "periplo",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "965d34de2c4abdb3af117c57994d5acf78e768acdb3071b1cb59175e694d4317",
+      "reason": "The island itinerary is chiefly a long-journey label; formality alone does not establish sufficient priority."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-035-impracticable",
+      "term": "impracticable",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "5789fa972a8b7175c3031c2d1c9c12d8190903f3b210957c8cb1b2b087aad1c5",
+      "reason": "The snow-blocked access example is a straightforward inability to use a route, without a stronger advanced contribution."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-037-desandar",
+      "term": "desandar",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "ac03d9e5feb575f39f0e81ff3f7809d6fe8957e5fe12d96b3cc8f8947a38a666",
+      "reason": "The backpack example is literal retracing; no reconsideration-of-decisions sense is credited."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-038-circunvalar",
+      "term": "circunvalar",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "607008191aa8728aceb37268cb3e0e7986ee37edb0c3542a9ee0080779b528fa",
+      "reason": "The bus detour supplies a literal route action only; its specificity alone does not establish priority."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-039-arribar",
+      "term": "arribar",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "dbe7c73ea7b4f7a12666bdda42f2e0c62da0b0dbe710f1573e63175f4e6ebe09",
+      "reason": "The port-arrival example relies mainly on a nautical register label, with limited additional learning value."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-040-quedar-varado",
+      "term": "quedar varado",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "88531f7327474cfea5d1f1fecd76f6e056540082ddddbf7c00600356ea7a1e8f",
+      "reason": "Only physical grounding is taught here; do not use figurative immobilization to justify placement."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-043-azotar",
+      "term": "azotar",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "e34c83a659ceb4d527af6b608c7b5dd6f1ad2d4e39656dcc4f17ebd108e27c00",
+      "reason": "The facade example largely intensifies a weather impact already covered by other weather entries; defer for coverage economy."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-044-relente",
+      "term": "relente",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "f5e3ac8c4f287203aa7823b67611218d010f660a9f81e2f0c50403d23c17a8ab",
+      "reason": "The example identifies cold nighttime dampness; current priority rests too heavily on a narrow environmental label."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-049-yermo",
+      "term": "yermo",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "314e17048e32ede20dc61e16ae025eacc6ca04873fc2e78143adb9bb4d8528c7",
+      "reason": "The abandoned-land example mainly names barrenness; no further connotative distinction is developed."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-050-escarpado",
+      "term": "escarpado",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "4a0b4ad4630e6bae884f4fdb048cd0b5df574dcaa9581d7e39341f3f5e14a302",
+      "reason": "The literal steep-route example does not add enough beyond a terrain description for current priority."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-055-desembolso",
+      "term": "desembolso",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "1ec33c6d6d44b9a612c4f919b7dc1a54a4608c8e03396bd6f51f7619e4702895",
+      "reason": "The repair payment example chiefly names expenditure without a further developed advanced distinction."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-056-recargo",
+      "term": "recargo",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "e9115e03f90bc8114c667b185ed605408f6cc5459c8220bcaf96fe0c8c869e84",
+      "reason": "The overdue-bill example is a standard surcharge label; no additional priority is established in the supplied text."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-066-a-destiempo",
+      "term": "a destiempo",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "fb67d61d0e5967ba420f43643227b461de6b9db663e5bb00bcf6a30966009ca7",
+      "reason": "The late apology example conveys unsuitable timing but adds limited coverage beyond the retained intempestivo."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-087-solapar",
+      "term": "solapar",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "241da7d84076e62144739c7ac6da110e5739dbd8df27d7ac7673dec4c6c2e455",
+      "reason": "The scheduling example describes literal temporal overlap with limited added demand in the current entry."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-099-enjuto",
+      "term": "enjuto",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "4f2ed8967559c56d8de21e5f7fbc5ff4264939f760a75a2f28b8c0bd66d0fb3d",
+      "reason": "The guide's body description mainly offers a marked adjective for leanness; no further advanced contribution is developed."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-110-consignar",
+      "term": "consignar",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "7fed3619e4ad03abf28c845064f69cab51558c7786943751e3e72a33bf9a18ff",
+      "reason": "The address instruction is a routine form-completion use; formality alone does not establish enough priority."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-117-absentismo",
+      "term": "absentismo",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "11302f9fc1fce60f4d07b554e76e19cfa8d8f8c983af23b521ccfa7f39ed7de6",
+      "reason": "The school example identifies repeated absence without developing a further distinction; current priority is insufficient."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-119-interdisciplinar",
+      "term": "interdisciplinar",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "128cb70719c06c92f3471994e20834fcf4244c07c3befa74313c2c2ba7c11935",
+      "reason": "The project example mainly lists collaborating disciplines; transparent composition and an academic label are insufficient alone."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-124-preaviso",
+      "term": "preaviso",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "1f60ed9f1244caed0233f6a3c22b69f27ae435109fa9484db7374a726ae0bc6a",
+      "reason": "The termination letter supplies a routine advance-notice label with insufficient additional learning value in the current entry."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-127-cometido",
+      "term": "cometido",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "5ac23852789ca15e7361f0a975f281e329c3cbd0084eb2d6d26efa349cb0f71b",
+      "reason": "The coordination assignment is a general responsibility label; the text does not establish enough additional priority."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-135-zancadilla",
+      "term": "zancadilla",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "55ab66db5276537727d1a55cdf313b505b5c7219c9f3b4fe460ec63b3072e30f",
+      "reason": "Only the physical sporting trip is taught; an obstructive figurative maneuver is not part of this entry."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-140-bulo",
+      "term": "bulo",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "f65fb3aed5066f50bbc9bf984913e33d9aed291422d0cd01f921baee99d1bab8",
+      "reason": "The message example identifies a false rumor but adds limited specificity beyond general misinformation for current priority."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-147-membrete",
+      "term": "membrete",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "79a21755e551e794b17fb8f5f8e5b4f20c87087ab75dff081b02e1b3a252ef74",
+      "reason": "The letterhead example names a document feature; the observation about a missing signature does not make the term itself an advanced use."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-154-saneamiento",
+      "term": "saneamiento",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "53062afee32d9d35a35f640f8f9d2bd511315bef18c5165b90085ed63cd06124",
+      "reason": "Only the wastewater infrastructure label is selected; do not justify placement using organizational or financial cleanup senses."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-158-aforo",
+      "term": "aforo",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "ae6a3bc757b0d4245bfe541c9afa3a8249aaf545540ad1cc352f5f448cec010d",
+      "reason": "The authorized-capacity example is a straightforward venue limit; it does not establish sufficient current priority."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-159-deshilacharse",
+      "term": "deshilacharse",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "e71eaa8e0cd5928325dc3292d7bbecc5f69f18230769ec1defd43f4562c3094a",
+      "reason": "The worn cuff example is a literal material change with insufficient further contribution for this extension."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-160-destenir",
+      "term": "desteñir",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "b144038b8cc2bdfb9839b1313ad394a6b795ba89d6e648d7f30391e5318b333a",
+      "reason": "The laundry example teaches a practical color-change property but does not demonstrate enough advanced contribution."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-161-entallado",
+      "term": "entallado",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "108bba00dfc337b6133c60251966ee9227b0489db4892d6984d8ef1feede65d3",
+      "reason": "The coat example primarily labels garment fit without further interpretive demand."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-163-raido",
+      "term": "raído",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "c3edb7c7e6b2936b33796efb24b26ab185c47e43ea705835ff04c6c60128a18c",
+      "reason": "The worn-elbow description supplies another deterioration adjective; defer for coverage economy rather than asserting an official level."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-167-aleatorio",
+      "term": "aleatorio",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "8316507ab8e21316181b83e369f064992c111c36f5d74a2be4d260a2f9c5619d",
+      "reason": "The question-order example shows an ordinary random arrangement without developing a further methodological distinction."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-202-aledano",
+      "term": "aledaño",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "bb46c0a2fa76e468bae75c9d60330e29d28710a3d21a3b4c0e12ba056f89e54c",
+      "reason": "The nearby streets example is a general proximity label with limited extra contribution beyond other spatial vocabulary."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-203-recondito",
+      "term": "recóndito",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "2fedee692866789a279c76acebb675878fb3d0dad322735fd614b496a8722337",
+      "reason": "The hidden letter example conveys secluded location without a further developed figurative or evaluative use."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-204-tortuoso",
+      "term": "tortuoso",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "dabd6ce92b05635fb5202f26b6a0243d7a596c28d0b4a3dced207c4040f231c5",
+      "reason": "Only a winding physical route is taught; do not credit indirect reasoning or deceitful behavior."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-205-oblicuo",
+      "term": "oblicuo",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "31c03e319904e914cb90b86ca5a8cd48553b3b18f4d8ad1e1b621c2f4c49f48d",
+      "reason": "The literal light angle is geometrically precise but does not demonstrate enough further learning priority in this batch."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-224-tara",
+      "term": "tara",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "a2dd84537ca1f071d691248fb43d5c2f98132f17355ab0006775aca0ba32b965",
+      "reason": "The damaged lining example is chiefly a retail defect label; current additional priority is insufficient."
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-235-irascible",
+      "term": "irascible",
+      "sourceKey": "bulk",
+      "inputEntrySha256": "2ab21147fa206a6b3e96bbf3bda25e8dac60ed01bd88f0510c113fc3f01e5588",
+      "reason": "The tiredness example primarily states easy anger without a further developed contrast or advanced use."
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i20454",
+      "term": "pérfidamente",
+      "sourceKey": "source",
+      "inputEntrySha256": "5f2e4a9821a695a08cc622112f2da63d9339545a16668f458bd9800848e59f4d",
+      "reason": "The betrayal manner directly repeats the perfidia objective already retained; no distinct advanced function is developed by this example."
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i21414",
+      "term": "subrepticiamente",
+      "sourceKey": "source",
+      "inputEntrySha256": "51743459b4051ae1d9d9ca412d451133d3345bb5f17d54ba1e5d199fe969ddb2",
+      "reason": "The hidden file-copying example repeats the retained subrepticio objective in a transparent adverbial form."
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i76103",
+      "term": "lascivia",
+      "sourceKey": "source",
+      "inputEntrySha256": "cb6c489d09dc6925a8db532722b6d961cdf748712bcb62836730053009aa26b9",
+      "reason": "The narrator's condemnation substantially repeats the retained salaz objective; defer this additional noun pending a distinct contrast."
+    }
+  ]
+}

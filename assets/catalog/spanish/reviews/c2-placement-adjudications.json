@@ -1,0 +1,1836 @@
+{
+  "schemaVersion": 1,
+  "reviewerType": "ai",
+  "reviewerId": "local-codex-placement-adjudicator-v1",
+  "notHumanApproval": true,
+  "reviewScope": "Placement only. No learner fields changed. Review of 77 entries with placement-only Spanish findings and an unchanged passing independent Slovak review. This is an editorial curriculum decision, not proof of an exclusive or officially assigned word-level C2 classification.",
+  "rubric": {
+    "version": "c2-extension-placement-v1",
+    "referenceUrl": "https://www.coe.int/en/web/common-european-framework-reference-languages/table-3-cefr-3.3-common-reference-levels-qualitative-aspects-of-spoken-language-use",
+    "criteria": [
+      "Source sense and learner content must have no unresolved non-placement findings.",
+      "The actual supplied definition and example must support a specific nuance, register function, idiomatic or figurative use, or useful precise cultural distinction.",
+      "Compare the learning contribution with actual earlier-course and C2-draft coverage; absence alone is insufficient.",
+      "Neither a formal/rare label nor an unsupported C1 assertion decides inclusion.",
+      "Do not credit unwritten senses or count transparent related forms without a distinct learning contribution."
+    ],
+    "decisionMeaning": {
+      "include": "Prioritize this unchanged entry as a provisional C2 curriculum extension.",
+      "defer": "Insufficient priority or unresolved contribution for this batch; not a certified lower-level assignment."
+    }
+  },
+  "provenance": {
+    "manifestSha256": "76b2589a214028af2b80254d7537c3a99ac3a834dbb8fe2fbc43c285f00e105e",
+    "spanishProviderResultSha256": "9c94bc38cff841eb8f866b3190f8888fc123ae1eb266b3ab415c8edffa9f6745",
+    "slovakProviderResultSha256": "c757017da7e22398dbd982fd1ed21e1859b4562693f14aa386269f74f564ddb9",
+    "triageSha256": "303edddd3c9fb349561c946689dae1a3459fcdba21410aa2aa4aed53855555a6",
+    "courseSha256": "8cf35c6ef312f22aa254642159086b2e32d77601c3dcc4336cca98ccc34b59ac",
+    "baselineDraftSha256": "7338476c8a15f63622d37c0e2e70589c651776c84b0b6809dae6a9fd041057f5",
+    "sourceDraftSha256": "7895513c86ca3017ecdcb67db832b21afcb0456bb4bddc1e20f60df56f2a5d60"
+  },
+  "counts": {
+    "assessed": 77,
+    "include": 33,
+    "defer": 44
+  },
+  "entries": [
+    {
+      "id": "i1041",
+      "term": "ominoso",
+      "authoredEntrySha256": "2f5c3cf79e691f952274c2f33057782e29ea057488b9d9bfb05817835278e44a",
+      "sourceEvidenceSha256": "c23b4c9c0ee077e90a872d8b410febb9b7fa6d823c8a39b582dce4428d8fcbe3",
+      "previousSpanishFinding": "Correspondencia y redacción correctas, pero «ominoso» es vocabulario culto de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "peligroso",
+        "presagio"
+      ],
+      "reason": "The silence example conveys anticipation of misfortune, beyond a general danger label; a useful connotative distinction in narrative interpretation.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:040661c5fe7d6e72",
+          "term": "peligroso",
+          "level": "A1",
+          "definition": "Que puede causar daño o producir un riesgo."
+        },
+        {
+          "id": "es-sk:c2:exp-bulk-191-presagio",
+          "term": "presagio",
+          "level": "C2",
+          "definition": "Señal que se interpreta como anuncio de algo que ocurrirá después."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i1635",
+      "term": "indolente",
+      "authoredEntrySha256": "dff5733215fc52cfda054fed69244a1e3d20ca54bda5656d9ae2cdd25177012b",
+      "sourceEvidenceSha256": "418bb50b28eae06540898044270f01723210b02a4b54c056312eb76ffebd7776",
+      "previousSpanishFinding": "«Indolente» y este sentido de pereza son propios de C1; el registro formal no justifica C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "indolencia"
+      ],
+      "reason": "The existing C2 noun already teaches the disposition; the adjective example adds no sufficiently distinct learning point in this batch.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-bulk-238-indolencia",
+          "term": "indolencia",
+          "level": "C2",
+          "definition": "Falta de disposición para esforzarse o actuar."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i3460",
+      "term": "depravado",
+      "authoredEntrySha256": "07efc2120f4f670c31c2e70d12de152743e5a0fae9ad510deb6a6f808b41004c",
+      "sourceEvidenceSha256": "45428569a1f4518310d3360e5ab3fdd4b095fb2318c177f8bbfd0d38e0932d47",
+      "previousSpanishFinding": "«Depravado» corresponde a la fuente, pero es vocabulario asentado de nivel C1, no provisionalmente C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "abyecto"
+      ],
+      "reason": "The selected moral condemnation substantially overlaps the retained abyecto; defer pending a purposeful contrast activity.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-source-i4955",
+          "term": "abyecto",
+          "level": "C2",
+          "definition": "Moralmente despreciable y merecedor del máximo rechazo."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i4055",
+      "term": "prescriptivo",
+      "authoredEntrySha256": "3dfc37ad0cd52b171b11100829d0a6f04e119f7ae4620d1d4e0cfde437c4911b",
+      "sourceEvidenceSha256": "f2b747bd9b93ffd4ae8ec755181b89eb5a05e4061d1e8d1508d085088f0ec2cd",
+      "previousSpanishFinding": "«Prescriptivo» es un término académico habitual de nivel C1; su carácter técnico no basta para situarlo en C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "obligatorio"
+      ],
+      "reason": "The language-manual example distinguishes a norm-setting approach from something merely required; useful for advanced discussion of rules and usage.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:8b3e2a192ded2a9b",
+          "term": "obligatorio",
+          "level": "A2",
+          "definition": "Exigido por una norma o regla."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i4360",
+      "term": "preponderante",
+      "authoredEntrySha256": "18c75f3f11396e9d1818d2851e7d3bee24fd0b2673c8afc69031cdcf40562f15",
+      "sourceEvidenceSha256": "38475d8249b5ab9a1657b846fb36e0178c4e657b3a4a7d5cbdf4aade759c06d8",
+      "previousSpanishFinding": "«Preponderante» es vocabulario formal habitual de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "dominante"
+      ],
+      "reason": "The economic-pressure example expresses relative causal weight among factors, providing a precise argumentation use beyond general control.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:4ba275fcd0da95b6",
+          "term": "dominante",
+          "level": "B1",
+          "definition": "Que ejerce una gran influencia o control sobre otros."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i4505",
+      "term": "incipiente",
+      "authoredEntrySha256": "ff5e7b4e9b83541e6a2751ea460042c341cccf94894ec7aa38043baf19834ecf",
+      "sourceEvidenceSha256": "676c406a9093fb38caaa8924acba4378cf971560256b6aad55af560c250adfe4",
+      "previousSpanishFinding": "«Incipiente» es vocabulario formal frecuente de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "inicial"
+      ],
+      "reason": "The current definition and conflict example primarily express an early stage; a stronger learning contribution has not been established.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:42b60f17d797502d",
+          "term": "inicial",
+          "level": "A2",
+          "definition": "Que ocurre o se encuentra al principio."
+        },
+        {
+          "id": "es-cefr:6c2ce993fba4e2dc",
+          "term": "inicial",
+          "level": "B2",
+          "definition": "Primera letra de una palabra, especialmente de un nombre propio."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i4724",
+      "term": "conjetural",
+      "authoredEntrySha256": "5839299e5cf838ab3a5a986fcee506d2b11529cd48fb46b4216d4715a11f4097",
+      "sourceEvidenceSha256": "7175e7b09fc5d50d74a3d1e800fe3a1f9ea4bfeff1ee50b9ad0e8e17ebb181d9",
+      "previousSpanishFinding": "«Conjetural» corresponde bien a la fuente, pero es léxico académico de nivel C1; la especialización no justifica C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "suponer"
+      ],
+      "reason": "The manuscript attribution example explicitly limits evidential certainty; useful for interpreting qualified academic claims.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:2ed3bced7656b3f4",
+          "term": "suponer",
+          "level": "A2",
+          "definition": "Aceptar algo como verdadero sin comprobarlo."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i4916",
+      "term": "inequívoco",
+      "authoredEntrySha256": "0af6bc97ecbe74adf14bb3f6bd22d3e791e525c8443c0eff134c3bbe9f2b4cde",
+      "sourceEvidenceSha256": "3ecbb072abdaf22d95999287ec46e458cfaf8ca58bd1bd4cc85b94962df663ea",
+      "previousSpanishFinding": "«Inequívoco» es vocabulario formal frecuente de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "claro",
+        "equívoco"
+      ],
+      "reason": "The entry excludes alternative interpretations rather than merely describing clarity; useful precision for reading signals and assertions.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:6a38d7eab77cca59",
+          "term": "claro",
+          "level": "A1",
+          "definition": "Como se espera o se considera natural."
+        },
+        {
+          "id": "es-cefr:1c1b610004afc7c1",
+          "term": "claro",
+          "level": "A1",
+          "definition": "Fácil de entender o reconocer."
+        },
+        {
+          "id": "es-sk:c2:exp-bulk-247-equivoco",
+          "term": "equívoco",
+          "level": "C2",
+          "definition": "Confusión que surge al interpretar de forma distinta una palabra o una situación."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i4962",
+      "term": "laudatorio",
+      "authoredEntrySha256": "fba96930d69f7ac18cd269b05ce570ee2259375503e808a6bb7a40eea06f604e",
+      "sourceEvidenceSha256": "aa05c5357cf1b997438be145b7b0d3161babaa7d92080f43c37687b737741fd1",
+      "previousSpanishFinding": "«Laudatorio» es culto, pero transparente y propio de C1; no hay dificultad suficiente para C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "panegírico"
+      ],
+      "reason": "The evaluative adjective applies to a critical comment rather than naming a praise text; supports recognition of an author's stance in criticism.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-pilot-049-panegirico",
+          "term": "panegírico",
+          "level": "C2",
+          "definition": "Discurso o escrito dedicado a elogiar ampliamente a alguien o algo."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i5329",
+      "term": "demodé",
+      "authoredEntrySha256": "3d546e924b0536e484123757d28840e785500fe7d2d19a4080094ab1fae017e9",
+      "sourceEvidenceSha256": "8f07dd9557ba9f9465b0e98e037ec81be8d87141c35b4979d9328e9a613c0bb4",
+      "previousSpanishFinding": "«Demodé» es un préstamo estilístico conocido y de significado elemental, defendible como C1 pero no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "antiguo"
+      ],
+      "reason": "The example supplies little beyond out-of-fashion status; the loanword label alone does not establish priority for the extension.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:54e5fe22982318be",
+          "term": "antiguo",
+          "level": "A1",
+          "definition": "Que existe desde hace mucho tiempo y no es nuevo."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i5536",
+      "term": "arquetípico",
+      "authoredEntrySha256": "c728958b366a96d084bc2768cba3dd6ce4f3d51d523aabad36a30d20e3b48ad6",
+      "sourceEvidenceSha256": "6945d9ea0e35e59d805decbb5751649b665c335926e6ddc3bf08098ab4d2b831",
+      "previousSpanishFinding": "«Arquetípico» es vocabulario académico y cultural habitual de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "típico"
+      ],
+      "reason": "The hero example refers to an underlying cultural narrative model, rather than an ordinary representative instance; a useful literary distinction.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:c6eeaa7057172373",
+          "term": "típico",
+          "level": "A1",
+          "definition": "Que muestra las características propias de un grupo o categoría."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i5749",
+      "term": "desventurado",
+      "authoredEntrySha256": "4dd7c61731f69e72b1e0b6449a1f48dd07092ba90a0751ba8c5982b1eacfd714",
+      "sourceEvidenceSha256": "1e67fc86eb7c7d03916983aee2a23c3068ab6dd499e7b9dce48192359745c73d",
+      "previousSpanishFinding": "«Desventurado» es literario, pero ampliamente comprensible y propio de B2/C1; el registro literario no basta para C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "malo"
+      ],
+      "reason": "The example conveys misfortune and sympathy but no further developed contrast; literary marking alone is insufficient for current priority.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:c81b2f81ca3c8359",
+          "term": "malo",
+          "level": "A1",
+          "definition": "Que tiene cualidades negativas o no deseadas."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i7448",
+      "term": "extasiado",
+      "authoredEntrySha256": "08a372bdd6a5e68752719b0b0ef118fc3ab7d99745a9e7fea1478a8636d8cedb",
+      "sourceEvidenceSha256": "0c08805e070870b5403f388be28e20d0d993c79ca4533ba5cea05e853322c409",
+      "previousSpanishFinding": "«Extasiado» es vocabulario expresivo común de nivel B2/C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "encantado",
+        "arrebatamiento"
+      ],
+      "reason": "The stronger emotional absorption overlaps the retained arrebatamiento; defer until a distinct contrast is needed.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:109d2648da6db5d1",
+          "term": "encantado",
+          "level": "A2",
+          "definition": "Muy contento o satisfecho por algo."
+        },
+        {
+          "id": "es-sk:c2:exp-source-i110436",
+          "term": "arrebatamiento",
+          "level": "C2",
+          "definition": "Estado de exaltación en que una emoción domina por completo a alguien."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i8707",
+      "term": "magnánimo",
+      "authoredEntrySha256": "f7ebdd2d4df205a2c78af016ff8c6c71cbf765679c494c94375d24fd133400e8",
+      "sourceEvidenceSha256": "787ac9cad8e2728a207575bd5951270d7964344098720429bab2ddbad0d5a0d6",
+      "previousSpanishFinding": "«Magnánimo» es formal pero habitual y normalmente C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "generoso",
+        "munificencia"
+      ],
+      "reason": "The winner's treatment of a rival demonstrates generosity in judgment and forgiveness, distinct from material giving in munificencia.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:a2f8dbeb1fa36c5d",
+          "term": "generoso",
+          "level": "A1",
+          "definition": "Dispuesto a dar y compartir sin egoísmo."
+        },
+        {
+          "id": "es-sk:c2:exp-source-i62389",
+          "term": "munificencia",
+          "level": "C2",
+          "definition": "Generosidad extraordinaria al conceder bienes, premios o favores."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i8733",
+      "term": "aberrante",
+      "authoredEntrySha256": "7faf91b7cb7c19f99a66f207edcfc00fb17eb435773a7acbba3c321cd9ffbcc8",
+      "sourceEvidenceSha256": "fa35a71ef376c9d94940a51506a069c6dccd463f154fff73f856982038558409",
+      "previousSpanishFinding": "«Aberrante» es vocabulario formal relativamente común de nivel C1; el posible uso técnico no basta para C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "extraño"
+      ],
+      "reason": "The laboratory example mainly labels marked deviation; the technical setting alone does not establish a useful advanced contrast.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:7d5324b8bd487cb7",
+          "term": "extraño",
+          "level": "A1",
+          "definition": "Diferente de lo normal o esperado."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i8859",
+      "term": "axiomático",
+      "authoredEntrySha256": "6c7b5377b49970afe289d1034b836dede3e80da30b6b4f26bcf6feb34a1c8145",
+      "sourceEvidenceSha256": "c681b57750f053c212cd52adb976ad7ad60d3364402586284ed7234a34bfeb40",
+      "previousSpanishFinding": "«Axiomático» es terminología académica transparente y habitual de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "evidente"
+      ],
+      "reason": "The commission example treats a proposition as an unquestioned premise, distinct from perceptual obviousness; useful in argumentative analysis.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:f8943b1c9807f6e5",
+          "term": "evidente",
+          "level": "A2",
+          "definition": "Que se percibe o comprende con facilidad."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i9609",
+      "term": "intachable",
+      "authoredEntrySha256": "8bcf859ad392bb5762d08db8d500ffee2edf5049e0dac0d3a5bdc40799032a3c",
+      "sourceEvidenceSha256": "b6ff0fe99af521261c91dc3a620b1fe369c4fea08a3442ca6364299a09732c5b",
+      "previousSpanishFinding": "«Intachable» es vocabulario formal frecuente de nivel B2/C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "perfecto"
+      ],
+      "reason": "The audit career example concerns an absence of grounds for reproach, adding a reputational and ethical assessment beyond general perfection.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:bd11c6cef45ac002",
+          "term": "perfecto",
+          "level": "A1",
+          "definition": "Completo y sin ningún defecto."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i9663",
+      "term": "irrevocable",
+      "authoredEntrySha256": "bf114ecd9800c4cef6c83c1e8ff2209c6318cf4d6f3b6d72085700221ec1ef66",
+      "sourceEvidenceSha256": "b41de56c5ddcd4f690fe128dfb0e20723b75318d42d51062ae61974aad98c595",
+      "previousSpanishFinding": "«Irrevocable» es vocabulario formal y jurídico habitual de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "definitivo"
+      ],
+      "reason": "The accepted-resignation example specifies that a formal act cannot be annulled, rather than merely being final.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:8002a7f669e4ef60",
+          "term": "definitivo",
+          "level": "B1",
+          "definition": "Que resuelve o concluye un asunto de manera final."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i10372",
+      "term": "altivo",
+      "authoredEntrySha256": "028e5d4d717f50ab76a6132ae2eb8bae61aad2966c1fcfaaba5d407b19649b6d",
+      "sourceEvidenceSha256": "12cc0165cf4639089dc116ca9553e107af81a47fa59e706dfe37ba638a8bd153",
+      "previousSpanishFinding": "«Altivo» es vocabulario literario o formal bien asentado de nivel B2/C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "orgulloso"
+      ],
+      "reason": "The smile example marks superiority and social distance toward others, contrasting with the course's positive pride sense.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:d9331c0b4797c060",
+          "term": "orgulloso",
+          "level": "A1",
+          "definition": "Que siente satisfacción y respeto por algo propio o cercano."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i10429",
+      "term": "punitivo",
+      "authoredEntrySha256": "c1668aaa9494f9ea084e84c5f38a134b1e629e4622ac2b5dcc83359710598c14",
+      "sourceEvidenceSha256": "458babd8dc353d127d14950a6ca0fb13b77b4bf881283925fb60d323efc98644",
+      "previousSpanishFinding": "«Punitivo» es un término jurídico frecuente y transparente de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "castigo"
+      ],
+      "reason": "The compensation example identifies punishment as a measure's purpose; useful precision when distinguishing punitive from other remedies.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:8bf46e9b611cd49a",
+          "term": "castigo",
+          "level": "B1",
+          "definition": "Acción o medida aplicada a alguien por haber actuado mal."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i11306",
+      "term": "traicionero",
+      "authoredEntrySha256": "b835b4b94d09627383b02f9498f8a0950096239b296243c1f044c796155db60d",
+      "sourceEvidenceSha256": "689cb14e72e01ba497141a5268cbc1ef9582742277c1d603565ad0630fdd28fa",
+      "previousSpanishFinding": "El sentido figurado es correcto, pero «traicionero» es vocabulario general de nivel B2, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "peligroso"
+      ],
+      "reason": "The terrain example is useful but gives too little evidence of a learning contribution beyond general unpredictable danger for this extension.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:040661c5fe7d6e72",
+          "term": "peligroso",
+          "level": "A1",
+          "definition": "Que puede causar daño o producir un riesgo."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i11814",
+      "term": "amorfo",
+      "authoredEntrySha256": "a41845e4d8f63ab4157c1a6cc969251aaa2ff7bd6fa52f560973fe591ad72dd3",
+      "sourceEvidenceSha256": "21ad1fa91311e629754ed59a1cb34e33195b79d75f3c68d223dfa57842b6cb06",
+      "previousSpanishFinding": "«Amorfo» es vocabulario general y científico habitual de nivel B2/C1; el contexto microscópico no justifica C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "extraño"
+      ],
+      "reason": "The current microscopic example supplies a literal shape label; no additional advanced use is demonstrated.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:7d5324b8bd487cb7",
+          "term": "extraño",
+          "level": "A1",
+          "definition": "Diferente de lo normal o esperado."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i12957",
+      "term": "preeminente",
+      "authoredEntrySha256": "870bfebd5f33ca227c9e6450208a2be409436035088ea2e363e571567ae7b04f",
+      "sourceEvidenceSha256": "e9189e9315587fcace061f688187d1d52ceb583060a8849c472abd5ed2f13631",
+      "previousSpanishFinding": "«Preeminente» es vocabulario formal habitual de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "dominante",
+        "preponderante"
+      ],
+      "reason": "The archaeologist example concerns standing and recognized excellence, distinguishable from causal influence or control.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:4ba275fcd0da95b6",
+          "term": "dominante",
+          "level": "B1",
+          "definition": "Que ejerce una gran influencia o control sobre otros."
+        }
+      ],
+      "coCandidateComparisons": [
+        {
+          "id": "i4360",
+          "term": "preponderante",
+          "status": "same-adjudication-candidate"
+        }
+      ]
+    },
+    {
+      "id": "i13589",
+      "term": "maleable",
+      "authoredEntrySha256": "1347161b52de9f5becd4a178c08f326b82724a9d7f440b56a9bf43b59097e39d",
+      "sourceEvidenceSha256": "63954c3fae7c98760e6db686d236b6dc3f49db2cd8e0764ad92459cdaca55d78",
+      "previousSpanishFinding": "«Maleable» en sentido figurado es vocabulario común de nivel B2/C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "flexible"
+      ],
+      "reason": "The political-candidate example expresses susceptibility to manipulation rather than beneficial adaptability, a meaningful figurative evaluative distinction.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:52748fca044a2fef",
+          "term": "flexible",
+          "level": "B1",
+          "definition": "Que puede cambiarse o adaptarse según las necesidades."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i14311",
+      "term": "conventual",
+      "authoredEntrySha256": "eaa61d7dbf0087add8ae93fc9d4fb20097df57d265bd4fbaa5bc2e828ece96d8",
+      "sourceEvidenceSha256": "3cc4d9f2d59f98d9eddb5b6b41cc6114101d7938dd4422d7a2039ef1c7f7335d",
+      "previousSpanishFinding": "La correspondencia es correcta, pero es vocabulario histórico-religioso estrecho; la rareza temática por sí sola no sustenta C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "religión"
+      ],
+      "reason": "The example mainly identifies a religious institution or lifestyle; domain specificity alone does not establish current priority.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:a139e727adfbc918",
+          "term": "religión",
+          "level": "A2",
+          "definition": "Institución organizada que expresa la creencia en un poder divino."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i14325",
+      "term": "decrépito",
+      "authoredEntrySha256": "ef02d625e419aee49efd8ef993bbbc1037918c1dda3896dbe339d5b59d659b39",
+      "sourceEvidenceSha256": "e09ceada6893fe6f0eb26a70b4d3b59661e0cae61fdc3e42e791a6c469a89db0",
+      "previousSpanishFinding": "«Decrépito» es vocabulario expresivo asentado de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "desvencijado",
+        "destartalado"
+      ],
+      "reason": "The worn-out vehicle sense overlaps existing deterioration vocabulary; defer rather than inflate coverage with another near-synonym.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-bulk-011-desvencijado",
+          "term": "desvencijado",
+          "level": "C2",
+          "definition": "Que tiene sus piezas flojas o separadas por el uso o el deterioro."
+        },
+        {
+          "id": "es-sk:c2:exp-bulk-012-destartalado",
+          "term": "destartalado",
+          "level": "C2",
+          "definition": "Que presenta un aspecto deteriorado, desordenado o mal compuesto."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i18355",
+      "term": "per se",
+      "authoredEntrySha256": "8763ad3e8ec97c7709c932363cc90079a8db957f8f715011c5867176311e3aae",
+      "sourceEvidenceSha256": "3d038c2f09adda64492ec2eafb0b2f9b5b508d56498f72cfe7bab06bbdfa515b",
+      "previousSpanishFinding": "«Per se» es una locución formal muy extendida y normalmente C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "ceteris paribus"
+      ],
+      "reason": "The negligence example separates an intrinsic evidential property from surrounding factors; it serves a different argumentative function from holding other factors constant.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-bulk-222-ceteris-paribus",
+          "term": "ceteris paribus",
+          "level": "C2",
+          "definition": "Si las demás condiciones relevantes permanecen iguales."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i19643",
+      "term": "inexorablemente",
+      "authoredEntrySha256": "5fb9717c66a44d38690a00b9fd4bbab2d5adc2745ea9a1289490cdf1318fb06f",
+      "sourceEvidenceSha256": "eb67354435e28a2fe5f51bda3f53471bde44b9dca3f75694402b9ecf5458ac2f",
+      "previousSpanishFinding": "«Inexorablemente» es una derivación transparente y de uso formal relativamente común; no tiene dificultad propia de C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "insoslayable"
+      ],
+      "reason": "The current process example adds limited coverage beyond inevitability already represented; derivational length is not a reason for promotion.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-bulk-207-insoslayable",
+          "term": "insoslayable",
+          "level": "C2",
+          "definition": "Que no puede dejarse de lado al tratar un asunto."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i20334",
+      "term": "despectivamente",
+      "authoredEntrySha256": "f9ca773cb40b0c3bebddb3cc66cfbd2f2cddc5dd016427d15fd7be76bbce351b",
+      "sourceEvidenceSha256": "8901b2100faa126bbda085b00369e1e3bf9bc96ff61ef834fd1c79f3b2027316",
+      "previousSpanishFinding": "«Despectivamente» es una derivación transparente y frecuente de nivel B2/C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "oprobioso"
+      ],
+      "reason": "The current example labels contempt but does not establish enough additional learning value to prioritize this adverb.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-source-i6716",
+          "term": "oprobioso",
+          "level": "C2",
+          "definition": "Que causa deshonra pública o merece una condena vergonzosa."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i20658",
+      "term": "imperceptiblemente",
+      "authoredEntrySha256": "8801d963970aec01db9cdbe0a89ebdd0489a023151dfe389213755e91bac766a",
+      "sourceEvidenceSha256": "a4002c7937ef751787e4a695a368bda08f0efe50ac95e7d70e498db27c8f65cf",
+      "previousSpanishFinding": "«Imperceptiblemente» es una formación transparente y de uso común en C1; la longitud morfológica no justifica C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "pequeño"
+      ],
+      "reason": "The gradual-light-change example is straightforward; no sufficiently developed advanced contrast is shown.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:931e59839a433d08",
+          "term": "pequeño",
+          "level": "A1",
+          "definition": "De tamaño, cantidad o extensión inferior al promedio."
+        },
+        {
+          "id": "es-cefr:b8b85b780e84d87f",
+          "term": "pequeño",
+          "level": "A2",
+          "definition": "Miembro de menor edad dentro de un grupo."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i20986",
+      "term": "suntuosamente",
+      "authoredEntrySha256": "e058cc5b029766c162671ab9a16d811a3eb729ce54b6c8f8a77d239078de4b5f",
+      "sourceEvidenceSha256": "e63fbe68c0d34cda932d8899bf15262595b1929e32da6fe7574881df73cdd3be",
+      "previousSpanishFinding": "«Suntuosamente» corresponde a la fuente, pero es una derivación transparente de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "lujoso",
+        "fastuosidad"
+      ],
+      "reason": "The furnishing example repeats luxury and ostentation already covered; the adverbial form alone does not add a distinct objective.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:1dbf10b41ba83fc3",
+          "term": "lujoso",
+          "level": "A2",
+          "definition": "Elegante, cómodo y de gran calidad."
+        },
+        {
+          "id": "es-sk:c2:exp-source-i113162",
+          "term": "fastuosidad",
+          "level": "C2",
+          "definition": "Ostentación de riqueza mediante un lujo extraordinario y espectacular."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i21408",
+      "term": "sumariamente",
+      "authoredEntrySha256": "c5af266fcf9d125059d82fc9d6c802a995806430355baeb0b4e488ce07588982",
+      "sourceEvidenceSha256": "b401070691f07833b827d94d5a068e5e986afba88fdb06cbd01524c539c95f95",
+      "previousSpanishFinding": "El sentido jurídico está bien expresado, pero «sumariamente» es vocabulario formal de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "diligencia"
+      ],
+      "reason": "The trial example makes abbreviated procedure and omitted fuller examination central; this is more specific than simple speed.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-bulk-111-diligencia",
+          "term": "diligencia",
+          "level": "C2",
+          "definition": "Anotación formal que deja constancia de una actuación en un expediente."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i21421",
+      "term": "tácitamente",
+      "authoredEntrySha256": "262e0f29efaeda7149867d054cb26b9ef7f0d9becca836793218e4aad6160b6a",
+      "sourceEvidenceSha256": "c9686275b3c2fb44432814593b0f4b21aa64badd01fd64c2640f1b29b2994338",
+      "previousSpanishFinding": "«Tácitamente» es vocabulario formal y jurídico frecuente de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "sobreentendido"
+      ],
+      "reason": "The contract-extension example conveys assent inferred without explicit declaration; this is a useful applied distinction from a generally understood implication.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-bulk-243-sobreentendido",
+          "term": "sobreentendido",
+          "level": "C2",
+          "definition": "Información que se considera compartida sin haberla expresado de forma explícita."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i22115",
+      "term": "rezumar",
+      "authoredEntrySha256": "b939ed0bc5fda96424386c7194bce87a34eff816e057208f44a21a8d0ba1def5",
+      "sourceEvidenceSha256": "5f457af1c40b53a4cd0beed1f88e608b0bd4155671234262037c8fefa2483d70",
+      "previousSpanishFinding": "«Rezumaba una resina» es natural y corresponde a la fuente, pero «rezumar» es léxico descriptivo de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "filtración"
+      ],
+      "reason": "The literal resin example teaches a physical process but does not yet establish sufficient priority for this extension; no figurative sense is credited.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-bulk-017-filtracion",
+          "term": "filtración",
+          "level": "C2",
+          "definition": "Entrada lenta de agua a través de una pared, un techo u otro material."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i23626",
+      "term": "chamuscar",
+      "authoredEntrySha256": "de7f3f00d228a4c0a6b5615217e1c71cba44bedaa35164e8b1078ef60f25d909",
+      "sourceEvidenceSha256": "f579a42432535579eabf27720f32ad38fcfa81fae00ba0127fa861fba76416a7",
+      "previousSpanishFinding": "«Chamuscar» es vocabulario general concreto de nivel B2, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "quemar"
+      ],
+      "reason": "The superficial-burning distinction is useful, but the current everyday example does not justify prioritizing it in this C2 extension.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:f9e12817528b4c38",
+          "term": "quemar",
+          "level": "A2",
+          "definition": "Hacer que algo arda mediante fuego o calor."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i24147",
+      "term": "adulterar",
+      "authoredEntrySha256": "a55920d3ac07eed529ba6cf63fd666ccbe5281fe443e6877ef30f12c97731591",
+      "sourceEvidenceSha256": "b0028da34000971b171e39109478d7cfc67c7ab218d46ffe48eeb411a00930f7",
+      "previousSpanishFinding": "«Adulterar» en este sentido es vocabulario formal habitual de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "cambiar"
+      ],
+      "reason": "The oil example combines alteration, inferior added material and fraud; useful semantic precision for product authenticity and wrongdoing.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:e79c872fd71cbb10",
+          "term": "cambiar",
+          "level": "A1",
+          "definition": "Hacer que algo sea diferente."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i24910",
+      "term": "conjeturar",
+      "authoredEntrySha256": "b2c7d3230bda70107c38d011b7878619fbbc64a6a6b8027926288531a5349b27",
+      "sourceEvidenceSha256": "dcc0b813a5d6b8d824b976bfcc1670cea20fbf08476ca085bd1ec7ddd1e400f3",
+      "previousSpanishFinding": "«Conjeturar» corresponde a la fuente, pero es vocabulario formal de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "conjetural"
+      ],
+      "reason": "Retain the adjective's evidential qualification in this batch; the verb adds little beyond the same inference distinction.",
+      "baselineComparisons": [],
+      "coCandidateComparisons": [
+        {
+          "id": "i4724",
+          "term": "conjetural",
+          "status": "same-adjudication-candidate"
+        }
+      ]
+    },
+    {
+      "id": "i25285",
+      "term": "presuponer",
+      "authoredEntrySha256": "25df875670d7881ae83f4c5534b10d2c818749db7cf3846562a1a8eea044e3a6",
+      "sourceEvidenceSha256": "484c768ce8acd6cf276865f5c4e622f009442c0daddaded2b5fc2b4a7702db6b",
+      "previousSpanishFinding": "«Presuponer» es vocabulario académico habitual de nivel B2/C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "presuposición"
+      ],
+      "reason": "The existing C2 noun already addresses the assumption prerequisite; defer the closely related verb pending a distinct use.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-bulk-245-presuposicion",
+          "term": "presuposición",
+          "level": "C2",
+          "definition": "Información que una expresión da por aceptada como punto de partida."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i25870",
+      "term": "denigrar",
+      "authoredEntrySha256": "ac1161c42c07e13973d74a24e393f2a9e8e81741020cd70e85b4cb37b68a7f3b",
+      "sourceEvidenceSha256": "465aea4c0f44d21d16048e5c33b165f2eea0923c261e3b3892b8e06c89b6c03f",
+      "previousSpanishFinding": "«Denigrar» es vocabulario formal frecuente de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "vilipendiar"
+      ],
+      "reason": "The reputation-damaging example substantially overlaps retained verbal condemnation vocabulary; defer without declaring an official lower level.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-source-i25878",
+          "term": "vilipendiar",
+          "level": "C2",
+          "definition": "Desacreditar gravemente a alguien mediante insultos o acusaciones denigrantes."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i27240",
+      "term": "sitiar",
+      "authoredEntrySha256": "7cc4a52e5e2757821ca14badd875b25b1faaee598f20ea3dd1c08267501e8858",
+      "sourceEvidenceSha256": "9a77620426eafd7cae46e76f36c43402bea1f023bbbf3b5c72847a58307a57e5",
+      "previousSpanishFinding": "«Sitiar» es vocabulario histórico-militar básico de nivel B2/C1; el dominio especializado no justifica C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "rodear"
+      ],
+      "reason": "The military operation is precise but the literal fortification example alone does not justify current C2 priority.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:784ebd07ec568600",
+          "term": "rodear",
+          "level": "A1",
+          "definition": "Estar o ponerse alrededor de algo por todos sus lados."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i28591",
+      "term": "intercalar",
+      "authoredEntrySha256": "88ccc9dd79fab9ab6fe3d7f25dc9dc2369791dda20d5665d85dc18d55d520ccf",
+      "sourceEvidenceSha256": "3e56fbd429b178b1c2a44c6d9bc8da8bb4a6586533b40669a2b3ecb15c052430",
+      "previousSpanishFinding": "«Intercalar» es vocabulario formal habitual de nivel B2/C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "incluir"
+      ],
+      "reason": "The insertion example is clear but does not demonstrate enough extra interpretive or expressive demand for current priority.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:205d874d611c00c1",
+          "term": "incluir",
+          "level": "A1",
+          "definition": "Añadir algo como parte de un conjunto o grupo."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i29332",
+      "term": "desenmarañar",
+      "authoredEntrySha256": "2a1d27e523386e69c69c9a075f28d0e7fa95a459112b4f5d575ed697fc70768c",
+      "sourceEvidenceSha256": "9d2c80272852e4037a46b57030dafad0e096bb1ecedd39df6f308e82d6c419be",
+      "previousSpanishFinding": "«Desenmarañar» es vocabulario general concreto de nivel B2/C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "separar"
+      ],
+      "reason": "The literal thread example establishes a concrete action only; do not credit an unwritten figurative problem-solving use.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:025b3521f054f41b",
+          "term": "separar",
+          "level": "A1",
+          "definition": "Hacer que dos o más cosas queden apartadas."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i29983",
+      "term": "engendrar",
+      "authoredEntrySha256": "fa000cb113d73af43de4970c2553ee3d321072a0b1447c78a9f8a974fed04a22",
+      "sourceEvidenceSha256": "46bd189088236508324d895e7985f7061bf2e72a4240f53f89dfabbfc097b2d0",
+      "previousSpanishFinding": "«Engendrar» en el sentido de originar consecuencias es formal pero habitual en C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "causar"
+      ],
+      "reason": "The exclusion-and-resentment example frames an abstract consequence as arising from conditions, adding a figurative causal use beyond the course's general cause verb.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:268871165ad491c6",
+          "term": "causar",
+          "level": "A2",
+          "definition": "Hacer que algo suceda, a veces sin intención."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i30652",
+      "term": "turbar",
+      "authoredEntrySha256": "6e9d259b505462b6a9bf88e76f6afda2db5e4785651a7d009e4a135f88e7656a",
+      "sourceEvidenceSha256": "bd9016cc277fbb65654826a412e16d44ebd8710a101890de8b16e2ff86263e7c",
+      "previousSpanishFinding": "«Turbar» es vocabulario formal o literario asentado de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "molestar",
+        "aplomo"
+      ],
+      "reason": "The accusation example concerns disruption of composure rather than irritation, adding a precise psychological distinction in formal narration.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:5d58b174d7abb90a",
+          "term": "molestar",
+          "level": "A2",
+          "definition": "Causar enfado o incomodidad mediante pequeñas irritaciones."
+        },
+        {
+          "id": "es-sk:c2:exp-bulk-130-aplomo",
+          "term": "aplomo",
+          "level": "C2",
+          "definition": "Seguridad y serenidad al actuar, especialmente bajo presión."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i30742",
+      "term": "deplorar",
+      "authoredEntrySha256": "7077b2cf8e263ede2c3459bd7af02135433b2f10f36ac86cbc0f023d510cad87",
+      "sourceEvidenceSha256": "d4c7ab37ad30795c2e26d53723cf916366fee9fbf07fd30bc4554a2f3b9ff1bf",
+      "previousSpanishFinding": "«Deplorar» es vocabulario formal común de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "lamentar"
+      ],
+      "reason": "The source-supported grief example closely overlaps the course's lamentar; do not credit a different condemnation sense to gain inclusion.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:192dca32f133bda8",
+          "term": "lamentar",
+          "level": "B2",
+          "definition": "Sentir un pesar profundo por un hecho o una pérdida."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i31123",
+      "term": "retozar",
+      "authoredEntrySha256": "6b855ae72bfd641ab65790b773434e2129b4e9a8e1481034bfc48e62d070993c",
+      "sourceEvidenceSha256": "02d0e1970ffaf4664248abca7ce4889ed3fc4e029323894da1602092fddba103",
+      "previousSpanishFinding": "«Retozar» es literario o descriptivo, pero de significado concreto y propio de C1; la rareza estilística no basta para C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "jugar"
+      ],
+      "reason": "The lively animal-motion example is descriptive but adds no sufficiently developed advanced objective in this batch.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:8587f9801fe30e89",
+          "term": "jugar",
+          "level": "A1",
+          "definition": "Participar en un juego o deporte."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i32672",
+      "term": "reverberar",
+      "authoredEntrySha256": "4a2b2b913bb23a096033aa511298571b6617ab5d50debaab9ff6297b18833889",
+      "sourceEvidenceSha256": "39ba4ce4b04af70becb955f48d60c9e717a0c985e574a2a0e4591c5cc61c363c",
+      "previousSpanishFinding": "«Reverberar» corresponde a la fuente, pero es léxico descriptivo o acústico de nivel C1; su especialización no basta para C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "sonar"
+      ],
+      "reason": "The echoing-bells example is accurate but a literal acoustic process alone does not establish current priority.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:af22166ed98ab396",
+          "term": "sonar",
+          "level": "A1",
+          "definition": "Producir o emitir un ruido."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i35041",
+      "term": "emular",
+      "authoredEntrySha256": "35cde4dfaefd4f34235f7d462a95224af2f33bec1d9c9a0585cd2817eecbd9df",
+      "sourceEvidenceSha256": "ed7832d9a6dfe482b109cb2ea2d1bbff657fa2bbb3313a59d6579e689cd536f5",
+      "previousSpanishFinding": "«Emular» es vocabulario formal relativamente frecuente de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "emulación"
+      ],
+      "reason": "The existing new draft already teaches competitive emulation; defer the related verb pending a distinct contrast objective.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-source-i76070",
+          "term": "emulación",
+          "level": "C2",
+          "definition": "Deseo competitivo de igualar o superar los logros ajenos."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i35148",
+      "term": "encarnar",
+      "authoredEntrySha256": "ef2988c2ae7a8ecdec20554f07714aa4f4fe9b49cc0e6586f4beab872e5ea067",
+      "sourceEvidenceSha256": "5072afaf428f3b773c22704fafb5962bb60142e1c65414ad8fc26935d5e43d4d",
+      "previousSpanishFinding": "El sentido figurado está respaldado por la fuente, pero «encarnar» es vocabulario habitual de nivel B2/C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "representar"
+      ],
+      "reason": "The judge-and-integrity example personifies an abstract quality, distinct from the course's acting-as-spokesperson sense of representar.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:307b15bc9d6ebddc",
+          "term": "representar",
+          "level": "A2",
+          "definition": "Actuar como portavoz de alguien y defender sus intereses."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i35326",
+      "term": "gravitar",
+      "authoredEntrySha256": "eed0dba8d72724eabb39bdfeb8eec5d636b9ee8a35929b08860e59bdf236a9be",
+      "sourceEvidenceSha256": "19a1f915405cff858f2737cf0a1bb1b95eea6b8adf87a10ae509d7cfe0314a59",
+      "previousSpanishFinding": "El ejemplo y la fuente inglesa respaldan el uso figurado, pero «gravitar hacia» es una construcción formal habitual de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "causar"
+      ],
+      "reason": "The debate example uses a physical attraction metaphor for the changing focus of discourse; useful figurative interpretation without switching source sense.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:268871165ad491c6",
+          "term": "causar",
+          "level": "A2",
+          "definition": "Hacer que algo suceda, a veces sin intención."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i41312",
+      "term": "imposición",
+      "authoredEntrySha256": "95587c859fe0c787d58399e7a773359c8519859a083ea99bd1d2c93650886098",
+      "sourceEvidenceSha256": "8d7cd3c2215266d4bedf3911c4fedc71a43c5c43868188a00955bfb2292659bd",
+      "previousSpanishFinding": "«Imposición» es un sustantivo frecuente de nivel B2/C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "obligatorio"
+      ],
+      "reason": "The embargo example supplies a common administrative action; its formal context alone does not establish sufficient priority.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:8b3e2a192ded2a9b",
+          "term": "obligatorio",
+          "level": "A2",
+          "definition": "Exigido por una norma o regla."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i53488",
+      "term": "aguafuerte",
+      "authoredEntrySha256": "e561bd63dd89fc80c2375d807470c12e809f37b33ab8e42bc6268c88a0c77040",
+      "sourceEvidenceSha256": "278f4008bb358d027abfa12f535eb81e8a5029137277051477562e059e709622",
+      "previousSpanishFinding": "La entrada es correcta, pero «aguafuerte» es terminología artística estrecha; esa rareza técnica por sí sola no justifica C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "arte"
+      ],
+      "reason": "The source fixes a particular acid-etched print, and the museum example supports cultural identification of the resulting artwork rather than generic visual art.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:d751d33ae1a2a85b",
+          "term": "arte",
+          "level": "A1",
+          "definition": "Creación de cosas bellas o importantes mediante la imaginación."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i53563",
+      "term": "facsímil",
+      "authoredEntrySha256": "bf66ef5df2d9026f4bd5005d99fd6b9e9f3710592650959a82a7231e7a9aed7c",
+      "sourceEvidenceSha256": "04a0628dec69da14d82179ae48b37e98aee827b05106541f7403970a1808d98b",
+      "previousSpanishFinding": "«Facsímil» es vocabulario formal bastante extendido de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "copia"
+      ],
+      "reason": "The manuscript example specifies exact documentary reproduction, a useful distinction for discussing editions and historical evidence.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:316820f71c8622ce",
+          "term": "copia",
+          "level": "B1",
+          "definition": "Objeto hecho para ser semejante o idéntico a otro."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i61517",
+      "term": "taciturnidad",
+      "authoredEntrySha256": "6434f2162bf890f7e1cd876940c10d5d376a61ec4599c94e5d0d7df3731d5567",
+      "sourceEvidenceSha256": "f2c960fb8669c221a93806e01d25212581f39341775e8e8f0b42eee5f8f2084f",
+      "previousSpanishFinding": "«Taciturnidad» es culto pero una derivación semánticamente transparente de «taciturno»; resulta más defendible en C1 que en C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "callar"
+      ],
+      "reason": "The disposition is distinct from an act of silence, but the current example does not establish enough added coverage for current priority.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:f2a624758b86e7ff",
+          "term": "callar",
+          "level": "A1",
+          "definition": "Dejar de hablar o negarse a hacerlo."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i61643",
+      "term": "verosimilitud",
+      "authoredEntrySha256": "c408c418ba0d4d269a1fd2d12ed51cbbd6247f25aa5bda075056c8ec62258f48",
+      "sourceEvidenceSha256": "51451ceb6f9995956e82d856c7c1f73486d9019636799ebad7fa48696bc7d602",
+      "previousSpanishFinding": "«Verosimilitud» es vocabulario académico y literario habitual de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "verosímil"
+      ],
+      "reason": "The existing C2 adjective already teaches apparent credibility; adding the noun alone would largely duplicate that learning objective.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-bulk-145-verosimil",
+          "term": "verosímil",
+          "level": "C2",
+          "definition": "Que parece posible o creíble por la forma en que se presenta."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i62479",
+      "term": "depravación",
+      "authoredEntrySha256": "455da20f902e953d7c7582a0613bee337e3242de911c1075f1ee0842316cc729",
+      "sourceEvidenceSha256": "f04800fecb6dcb5e42848533c348499d2d395d409010798b4d01c5c1bbedd030",
+      "previousSpanishFinding": "«Depravación» corresponde a la fuente, pero es vocabulario formal asentado de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "abyecto"
+      ],
+      "reason": "The moral-corruption sense overlaps retained condemnation vocabulary; defer until a focused distinction warrants it.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-source-i4955",
+          "term": "abyecto",
+          "level": "C2",
+          "definition": "Moralmente despreciable y merecedor del máximo rechazo."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i62640",
+      "term": "ascetismo",
+      "authoredEntrySha256": "34bf91a9e54458c6d80c69d0b5816d4e7e9e53e3eb122794fc303b3312e0b405",
+      "sourceEvidenceSha256": "88d715735299677db7d79833ab0e5cd270dd86a1d8cd1dc9b6baa007058abc2b",
+      "previousSpanishFinding": "«Ascetismo» es vocabulario cultural y religioso habitual de nivel C1; el dominio culto no basta para C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "religión",
+        "sobrio"
+      ],
+      "reason": "The refusal of luxury exemplifies deliberate renunciation as a practice, beyond general religious affiliation or an unadorned style.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:a139e727adfbc918",
+          "term": "religión",
+          "level": "A2",
+          "definition": "Institución organizada que expresa la creencia en un poder divino."
+        },
+        {
+          "id": "es-sk:c2:exp-bulk-165-sobrio",
+          "term": "sobrio",
+          "level": "C2",
+          "definition": "Que evita adornos llamativos y ofrece una apariencia contenida."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i63334",
+      "term": "reverberación",
+      "authoredEntrySha256": "f82b6500a871a7f7303ebb9c2ea493a13ab0801dd40a5ccf18342aa45c8fcfd2",
+      "sourceEvidenceSha256": "23eb68275792152524fbbcb446655bf50e9ed10ef92ff59702cd67c87360c9a4",
+      "previousSpanishFinding": "«Reverberación» es terminología acústica de nivel C1; la especialización técnica no basta por sí sola para C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "sonar"
+      ],
+      "reason": "The acoustics explanation is useful but its technical specificity alone does not establish current C2 priority.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:af22166ed98ab396",
+          "term": "sonar",
+          "level": "A1",
+          "definition": "Producir o emitir un ruido."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i66537",
+      "term": "virtuosismo",
+      "authoredEntrySha256": "8cec0b3751137c32ede569b52b2871f6cb41e53b998fc71b166ba2d5ff1802ea",
+      "sourceEvidenceSha256": "3c7d60d85f56b5d3351773d78c16cd984f797f2cbbc975596ebedc3724b142a8",
+      "previousSpanishFinding": "«Virtuosismo» es vocabulario artístico habitual de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "arte",
+        "ducho"
+      ],
+      "reason": "The concert example identifies exceptional demonstrated artistic technique, distinguishable from general experience or skill.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:d751d33ae1a2a85b",
+          "term": "arte",
+          "level": "A1",
+          "definition": "Creación de cosas bellas o importantes mediante la imaginación."
+        },
+        {
+          "id": "es-sk:c2:exp-source-i12307",
+          "term": "ducho",
+          "level": "C2",
+          "definition": "Muy experimentado y hábil en una actividad concreta."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i71674",
+      "term": "zalamería",
+      "authoredEntrySha256": "ba4bd1a9934b678a6598357c82f0d8cca466db2a4ca687094fa4b4aef00c2e86",
+      "sourceEvidenceSha256": "0c64dba44ceba0c67c3b12e624141975c4121dc9a244bee91fd136f5311b0c40",
+      "previousSpanishFinding": "«Zalamería» corresponde a la fuente, pero es vocabulario expresivo de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "congraciarse"
+      ],
+      "reason": "The signature example makes interested affectionate flattery the means of persuasion, rather than merely the goal of gaining favor.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-source-i30750",
+          "term": "congraciarse",
+          "level": "C2",
+          "definition": "Ganarse deliberadamente la simpatía o buena disposición de alguien."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i74260",
+      "term": "perogrullada",
+      "authoredEntrySha256": "20e5b4fcf035139450e1227a336b55294eababb44b10118a91d42e81c62c80d6",
+      "sourceEvidenceSha256": "9e0c8363ed00a539b89c49218a62b4e872bb73358797dc385acd7e3e23f73063",
+      "previousSpanishFinding": "«Perogrullada» es idiomático, pero de uso suficientemente extendido y significado simple para C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "obvio"
+      ],
+      "reason": "The example evaluates a statement as pointlessly self-evident, adding an ironic discourse function beyond labeling something obvious.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:36a2643f3887614c",
+          "term": "obvio",
+          "level": "B1",
+          "definition": "Fácil de percibir o comprender."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i74393",
+      "term": "disensión",
+      "authoredEntrySha256": "d9cdc8d3bc1986cdb7b6bdaff2ce56592cb1c5b1d0d7bcea08991b497b2a48f3",
+      "sourceEvidenceSha256": "cf5179eaa7acda5e5f829f7772eede5b054bb030ebf6a04cf0c5a7896e6f967c",
+      "previousSpanishFinding": "«Disensión» es vocabulario formal habitual de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "desacuerdo",
+        "desavenencia"
+      ],
+      "reason": "The coalition example foregrounds division within a body expected to cooperate, a useful institutional distinction from general disagreement.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:818b4c55c1e680d0",
+          "term": "desacuerdo",
+          "level": "B2",
+          "definition": "Conflicto entre las opiniones, acciones o caracteres de varias personas."
+        },
+        {
+          "id": "es-sk:c2:exp-bulk-071-desavenencia",
+          "term": "desavenencia",
+          "level": "C2",
+          "definition": "Falta de acuerdo que altera la relación entre personas."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i74558",
+      "term": "lamentación",
+      "authoredEntrySha256": "67643e854552b86af15109f0fc965f8cc8a6f48c55f5ecb108e7ea6b5f64322d",
+      "sourceEvidenceSha256": "00f33e440a0d9d9d7dea9688fa836b52a7b0bac00bb0a45f4d5f8e30370a77ec",
+      "previousSpanishFinding": "«Lamentación» es vocabulario común o literario de nivel B2/C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "llorar",
+        "lamentar"
+      ],
+      "reason": "The funeral example adds audible expression but does not establish enough new coverage beyond existing grief vocabulary.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:fd43e06a12f48051",
+          "term": "llorar",
+          "level": "A1",
+          "definition": "Derramar lágrimas por tristeza, rabia o dolor."
+        },
+        {
+          "id": "es-cefr:192dca32f133bda8",
+          "term": "lamentar",
+          "level": "B2",
+          "definition": "Sentir un pesar profundo por un hecho o una pérdida."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i75774",
+      "term": "vorágine",
+      "authoredEntrySha256": "cc614551940ed31eea33a53f039e54583b2aefcde967f2bccfb47b4d6cfab877",
+      "sourceEvidenceSha256": "41ee65ece36dd0fed2278f6de6284af0b12ef014e07305a5b3745d4a4078e9d0",
+      "previousSpanishFinding": "El sentido literal corresponde a la fuente, pero «vorágine» es vocabulario literario conocido de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "escorrentía"
+      ],
+      "reason": "Only the literal whirlpool is source-supported here; do not use a more general figurative turmoil sense to justify admission.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-bulk-046-escorrentia",
+          "term": "escorrentía",
+          "level": "C2",
+          "definition": "Agua de lluvia que corre por la superficie del terreno sin infiltrarse en él."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i76429",
+      "term": "beligerancia",
+      "authoredEntrySha256": "290d6ee2acd3909bc976deb9c0d2070cbfd7e1e790bf1dbeffea42349ca00984",
+      "sourceEvidenceSha256": "8bb052185be17f06b2985d1c13928c4c83c82d4b8b64aa92305584e727867240",
+      "previousSpanishFinding": "«Beligerancia» es vocabulario político y argumentativo frecuente de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "reñido"
+      ],
+      "reason": "The failed-conciliation example expresses a sustained disposition toward confrontation, useful for describing public debate rather than a close contest.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-bulk-133-renido",
+          "term": "reñido",
+          "level": "C2",
+          "definition": "En el que los participantes tienen posibilidades muy próximas de ganar."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i79170",
+      "term": "pira",
+      "authoredEntrySha256": "edd0c8c889e67fee71fab0a56c81d1031f19c8d0939ed7634f7f95f3cdf1545a",
+      "sourceEvidenceSha256": "d03106eba7bd2dabe4c0b23a4a40fcf708f55223c1da7e636c9da24ab94ab508",
+      "previousSpanishFinding": "«Pira» es léxico histórico-cultural concreto y conocido en C1; su contexto ritual estrecho no justifica C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "quemar"
+      ],
+      "reason": "The funeral structure is culturally specific, but the current example supplies an object label without enough further learning value for this batch.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:f9e12817528b4c38",
+          "term": "quemar",
+          "level": "A2",
+          "definition": "Hacer que algo arda mediante fuego o calor."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i81091",
+      "term": "posteridad",
+      "authoredEntrySha256": "f1e9f37d27b4e810daa70f44a6b7613fd7221c8309150702e909a6ddd84f713a",
+      "sourceEvidenceSha256": "9a1ebf2e8bc451386e806905f5f750b36ec7106457f16d3d645de014644b76b0",
+      "previousSpanishFinding": "«Posteridad» es vocabulario formal común de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "futuro"
+      ],
+      "reason": "The future-generations distinction is clear, but the current example does not establish enough additional priority; no official lower-level claim is made.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:d8d873b11689384f",
+          "term": "futuro",
+          "level": "A1",
+          "definition": "Tiempo que todavía no ha llegado."
+        },
+        {
+          "id": "es-cefr:c6af51111299d6ac",
+          "term": "futuro",
+          "level": "A2",
+          "definition": "Que todavía no existe o sucederá más adelante."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i90484",
+      "term": "heraldo",
+      "authoredEntrySha256": "eac313a4e1153791f0c69a465a8e81a751477ba0c0e2ff6cc320dedf3c7e69e7",
+      "sourceEvidenceSha256": "a9a84884c3a6aa8972d799fdcced0978448a8b617696193df2ff7e6f5d395adb",
+      "previousSpanishFinding": "«Heraldo» es léxico histórico-literario conocido de nivel C1; la ambientación antigua no basta para C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "mensajero"
+      ],
+      "reason": "The historical role is distinct but the example depends principally on an old setting; defer without treating historical vocabulary as inherently C2.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:97883fd60a182f19",
+          "term": "mensajero",
+          "level": "B1",
+          "definition": "Persona encargada de llevar un mensaje a su destinatario."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i90490",
+      "term": "eremita",
+      "authoredEntrySha256": "0cb4e567374d336b9598dbd0d30cd94dbf13ec71ca033465e40179cf0b42af0f",
+      "sourceEvidenceSha256": "f373efbea26b5b73b3e7d424eb15c2a21203219cab44a182137aa3e62923e2cd",
+      "previousSpanishFinding": "«Eremita» es vocabulario culto pero ampliamente reconocible y de significado concreto; resulta C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "solitario"
+      ],
+      "reason": "The isolation example adds little beyond solitude and does not require a specifically religious practice.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:805ea4a64b2a34be",
+          "term": "solitario",
+          "level": "B1",
+          "definition": "Que está sin compañía."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i91968",
+      "term": "encarnación",
+      "authoredEntrySha256": "e873e782629713d3d6a391f641a42cf8adf8ab1ed3bb9284829d3056c4abfd98",
+      "sourceEvidenceSha256": "bf029dea3c35e5f9597099d5ac2f4c9ac0da06be6d456c9f2cf69dbb625c0102",
+      "previousSpanishFinding": "«Encarnación» en sentido figurado es vocabulario habitual de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "encarnar"
+      ],
+      "reason": "Keep the source-supported figurative verb in this batch; defer the noun's nearly identical personification objective.",
+      "baselineComparisons": [],
+      "coCandidateComparisons": [
+        {
+          "id": "i35148",
+          "term": "encarnar",
+          "status": "same-adjudication-candidate"
+        }
+      ]
+    },
+    {
+      "id": "i92517",
+      "term": "anacoreta",
+      "authoredEntrySha256": "4ee5a5f927b9f5b2cde49635c0b3e6d5d3b00383e2086405f23bc1bbb1baeb95",
+      "sourceEvidenceSha256": "57fad8cc738033a5251997723386d3a0013c623c3a584e4e403428f35260b1a5",
+      "previousSpanishFinding": "La entrada es correcta, pero «anacoreta» es rareza histórico-religiosa estrecha; esa especialización por sí sola no sustenta C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "ascetismo"
+      ],
+      "reason": "The religious-solitude example is more specific, but this batch prioritizes the broader renunciation practice over another role label.",
+      "baselineComparisons": [],
+      "coCandidateComparisons": [
+        {
+          "id": "i62640",
+          "term": "ascetismo",
+          "status": "same-adjudication-candidate"
+        }
+      ]
+    },
+    {
+      "id": "i109735",
+      "term": "antítesis",
+      "authoredEntrySha256": "575c81200258959e0b02c72696d317c78ab3e79fef021b70d08d2d55314bf678",
+      "sourceEvidenceSha256": "dbbac3735b054613c33d78d92418f33ac9550456514b7575d4276b5134e30ea6",
+      "previousSpanishFinding": "«Antítesis» con el sentido de opuesto exacto es vocabulario académico común de nivel B2/C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "antitético"
+      ],
+      "reason": "The retained adjective already expresses radical opposition; the noun example supplies little additional learning value.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-source-i11326",
+          "term": "antitético",
+          "level": "C2",
+          "definition": "Opuesto radicalmente a otra idea, cualidad o finalidad."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i110711",
+      "term": "voracidad",
+      "authoredEntrySha256": "97c692db81a3bc3d729f96e16ca644b462a05cb9777799b01c822f6b97e30a1d",
+      "sourceEvidenceSha256": "7749fe3d778faaadab44577367fd56d32be6e96725bdfb4b81de81809584b306",
+      "previousSpanishFinding": "«Voracidad» y su sentido alimentario son vocabulario general de nivel B2/C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "hambre"
+      ],
+      "reason": "The literal eating example develops intensity of appetite only; no figurative acquisitiveness is credited.",
+      "baselineComparisons": [
+        {
+          "id": "es-cefr:1f48e2d869560d9f",
+          "term": "hambre",
+          "level": "A1",
+          "definition": "Necesidad física de comer por falta de alimento."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i112643",
+      "term": "frenesí",
+      "authoredEntrySha256": "5a2ff978028b21ba693643bb71b4a3639919982c48201c8fbc27e6f42b810e5c",
+      "sourceEvidenceSha256": "a6210dea2ddf2e08b82b91b5d2a8e2b564bf01f23874d684e677b1c18f11b616",
+      "previousSpanishFinding": "«Frenesí» es vocabulario expresivo frecuente de nivel B2/C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "arrebatamiento"
+      ],
+      "reason": "The uncontrolled-activity sense is useful, but overlaps the existing emotional-exaltation cluster enough to defer in this batch.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-source-i110436",
+          "term": "arrebatamiento",
+          "level": "C2",
+          "definition": "Estado de exaltación en que una emoción domina por completo a alguien."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i112823",
+      "term": "ostracismo",
+      "authoredEntrySha256": "a6fcc7c486fb30a7b284c43eaeed2097c90de06ac4caeecef21809e2795ac305",
+      "sourceEvidenceSha256": "5e57303fcc3e2e12361ebd650aefd3840e6950182df2f31bc20e5fc436c9f9c8",
+      "previousSpanishFinding": "«Ostracismo» en el sentido de exclusión social es vocabulario formal habitual de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "desarraigo"
+      ],
+      "reason": "The scientist's exclusion by colleagues is deliberate social rejection, distinct from loss of roots or belonging without an excluding agent.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-bulk-072-desarraigo",
+          "term": "desarraigo",
+          "level": "C2",
+          "definition": "Pérdida o ausencia de vínculos con el lugar o el entorno al que se pertenece."
+        }
+      ],
+      "coCandidateComparisons": []
+    },
+    {
+      "id": "i112867",
+      "term": "preeminencia",
+      "authoredEntrySha256": "f10743f692e5756880a001c41029020dac345f90e15d7b5da44298d06f373aad",
+      "sourceEvidenceSha256": "76f2717eb66d2998b3626607cc9ede1069f0bb89fe681b559ef92bb761efc436",
+      "previousSpanishFinding": "«Preeminencia» corresponde a la fuente, pero es una formación formal transparente y propia de C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "defer",
+      "comparisonTerms": [
+        "preeminente"
+      ],
+      "reason": "Keep the distinction in the adjective first; the related noun does not require another counted entry in this batch.",
+      "baselineComparisons": [],
+      "coCandidateComparisons": [
+        {
+          "id": "i12957",
+          "term": "preeminente",
+          "status": "same-adjudication-candidate"
+        }
+      ]
+    },
+    {
+      "id": "i117504",
+      "term": "interludio",
+      "authoredEntrySha256": "a95424afc441d4eb248965d10566974b694bc3a119478d7f6e1432e6759eddda",
+      "sourceEvidenceSha256": "568108cadb2645d6f63adb8f3a9526a5cc28ed87561a5e8bed6332b70db3704f",
+      "previousSpanishFinding": "«Interludio» literal o figurado es vocabulario cultural de nivel C1, no C2.",
+      "previousSlovakPass": true,
+      "decision": "include",
+      "comparisonTerms": [
+        "contrapunto"
+      ],
+      "reason": "The truce example treats an intervening episode as a temporary interruption of a larger sequence, adding a source-supported figurative temporal function.",
+      "baselineComparisons": [
+        {
+          "id": "es-sk:c2:exp-bulk-188-contrapunto",
+          "term": "contrapunto",
+          "level": "C2",
+          "definition": "Combinación de líneas melódicas distintas que suenan a la vez."
+        }
+      ],
+      "coCandidateComparisons": []
+    }
+  ]
+}

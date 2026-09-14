@@ -1,0 +1,1063 @@
+{
+  "schemaVersion": 1,
+  "courseId": "es-sk",
+  "publicationStatus": "draft",
+  "placementStatus": "provisional",
+  "reviewerType": "ai-local",
+  "notHumanApproval": true,
+  "reviewedAt": "2026-09-14",
+  "baselinePreviewSha256": "d8fa026ed6a54de434d3c38f2a038759871856ef87a4c6a1347127e1cd68f0fd",
+  "priorAuditSha256": "32b44bb23f7adad36d49289e3259b6a52bfb8a78addbfb1b2a326402814a83a6",
+  "scope": "Resolve the 59 outstanding source-sense gaps. Page reads and search excerpts are distinguished. Sources support lexical interpretation, not official CEFR placement or human approval. Six usage-only attestations remain held. No external model calls were made for this pass.",
+  "counts": {
+    "total": 59,
+    "supported": 50,
+    "amended": 3,
+    "held": 6
+  },
+  "entries": [
+    {
+      "entryId": "es-sk:c2:exp-bulk-008-ligar-una-salsa",
+      "term": "ligar una salsa",
+      "baselineEntrySha256": "260c77abe9aca2d536fa521d9cdaf9a57b368532a2952b483c1d35d0de33df3e",
+      "decision": "supported",
+      "reason": "Sauce binding gives a liquid body; starch and finishing with butter support the selected cooking sense.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://laroussecocina.mx/palabra/ligar/",
+          "senseLocator": "Cooking dictionary: ligar",
+          "paraphrase": "Sauce binding gives a liquid body; starch and finishing with butter support the selected cooking sense.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-011-desvencijado",
+      "term": "desvencijado",
+      "baselineEntrySha256": "ec93e4756ba4d454f66a24f668193ca05a1b49da2883d15bfe8e317ece258d6c",
+      "decision": "supported",
+      "reason": "Loosened or separated joined parts and the recorded participle support the unstable chair.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/desvencijar",
+          "senseLocator": "1 and participle",
+          "paraphrase": "Loosened or separated joined parts and the recorded participle support the unstable chair.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-018-asentamiento",
+      "term": "asentamiento",
+      "baselineEntrySha256": "01ebc6c48ffabc879d0785754ed5120061de9371c5ef8035aed274f47d20dc95",
+      "decision": "supported",
+      "reason": "Structural loads deform or compress soil, causing settlement; excessive settlement can cause cracking. Evidence supports this technical sense, not all meanings of settlement.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://repositorio.ues.edu.sv/bitstreams/297782f8-b412-44fc-b745-ae99b7d5bc9e/download",
+          "senseLocator": "University engineering thesis: foundation settlements",
+          "paraphrase": "Structural loads deform or compress soil, causing settlement; excessive settlement can cause cracking. Evidence supports this technical sense, not all meanings of settlement.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-025-recrudecerse",
+      "term": "recrudecerse",
+      "baselineEntrySha256": "e3e3aa18c91a1e90aa8e00416d82c1258141f9b27ddf77b40313328127ad9b6b",
+      "decision": "amended",
+      "reason": "Renewed worsening follows an initial improvement. The revised definition makes that condition explicit, matching the existing example and Slovak hint.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/recrudecer",
+          "senseLocator": "1, pronominal use",
+          "paraphrase": "Renewed worsening follows an initial improvement. The revised definition makes that condition explicit, matching the existing example and Slovak hint.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": [
+        {
+          "field": "definition",
+          "before": "Volverse más intenso un mal que ya estaba presente.",
+          "after": "Volver a intensificarse un mal después de haber empezado a disminuir."
+        }
+      ],
+      "amendmentReview": {
+        "reviewerType": "ai-local",
+        "independentlyRereviewed": false,
+        "alignment": "The definition refinement or usage note was checked locally against the recorded source, existing example and Slovak hint. Earlier independent AI reviews apply to the original text only."
+      }
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-030-remision",
+      "term": "remisión",
+      "baselineEntrySha256": "cb2881441e2256753a70c1e13cf4729217b5cddba572b478d51c4e325bae24ba",
+      "decision": "supported",
+      "reason": "Partial or complete disappearance of signs and symptoms supports clinical remission. The source concerns cancer and does not imply cure.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://www.cancer.gov/espanol/publicaciones/diccionarios/diccionario-cancer/def/remision",
+          "senseLocator": "NCI cancer dictionary: remission",
+          "paraphrase": "Partial or complete disappearance of signs and symptoms supports clinical remission. The source concerns cancer and does not imply cure.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-069-por-un-pelo",
+      "term": "por un pelo",
+      "baselineEntrySha256": "de6028ce6f83b5b0f9380c5367076ec2642281a0b17ff12a43701ef6b74959f3",
+      "decision": "supported",
+      "reason": "The dictionary's tiny-margin example explicitly uses por un pelo, supporting the narrowly caught train.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/pelo",
+          "senseLocator": "un pelo, sense 1 and example",
+          "paraphrase": "The dictionary's tiny-margin example explicitly uses por un pelo, supporting the narrowly caught train.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-072-desarraigo",
+      "term": "desarraigo",
+      "baselineEntrySha256": "f680a59d4ee8b04a488be284e237071e5140fa1d2abbe5e649b8726dd9444eeb",
+      "decision": "supported",
+      "reason": "Separation from one's home environment and emotional bonds supports loss of rootedness.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/desarraigar",
+          "senseLocator": "3; noun desarraigo derives from this verb",
+          "paraphrase": "Separation from one's home environment and emotional bonds supports loss of rootedness.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-073-arraigo",
+      "term": "arraigo",
+      "baselineEntrySha256": "7a141d85d5f3d01dcded4a7fa9f0ebf6f14ffa35da167da8a21b063b49e0e0f8",
+      "decision": "supported",
+      "reason": "Permanent settlement with bonds to people and things supports belonging to a place.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/arraigar",
+          "senseLocator": "3; noun arraigo derives from this verb",
+          "paraphrase": "Permanent settlement with bonds to people and things supports belonging to a place.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-078-dar-el-brazo-a-torcer",
+      "term": "dar el brazo a torcer",
+      "baselineEntrySha256": "e7eb1158268602b356a353cfaf2d142e60d22ee4872312a633321c527c3c80e9",
+      "decision": "supported",
+      "reason": "The dictionary explicitly gives the article-bearing expression for yielding to an idea, proposal or situation.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://dem.colmex.mx/ver/brazo",
+          "senseLocator": "I.3, dar el brazo a torcer",
+          "paraphrase": "The dictionary explicitly gives the article-bearing expression for yielding to an idea, proposal or situation.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-080-poner-tierra-de-por-medio",
+      "term": "poner tierra de por medio",
+      "baselineEntrySha256": "0a440f51cc8b4636bad1ae04322d8ca824d660469515986293feeaeb4ada5ace",
+      "decision": "supported",
+      "reason": "Leaving a place or situation to avoid something supports distancing oneself from a conflict.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://www.fundeu.es/consulta/poner-tierra-de-por-medio/",
+          "senseLocator": "Consultation on the expression and its variants",
+          "paraphrase": "Leaving a place or situation to avoid something supports distancing oneself from a conflict.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-086-menoscabar",
+      "term": "menoscabar",
+      "baselineEntrySha256": "6272d44a2d4813cb90b7c7fa042593b7c7c0259278d2df4c4f5cf3f27d2f13a6",
+      "decision": "supported",
+      "reason": "Reduction and damage to esteem support weakened trust in the process.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/menoscabar",
+          "senseLocator": "1–3",
+          "paraphrase": "Reduction and damage to esteem support weakened trust in the process.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-094-conculcar",
+      "term": "conculcar",
+      "baselineEntrySha256": "412ba13d5aa9d4743d2b98f91d0a277eaa34f162e7e438b970925af925b0807b",
+      "decision": "supported",
+      "reason": "Violation of a law, obligation or principle supports infringing the right to be heard.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/conculcar",
+          "senseLocator": "2",
+          "paraphrase": "Violation of a law, obligation or principle supports infringing the right to be heard.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-098-obcecacion",
+      "term": "obcecación",
+      "baselineEntrySha256": "33830e9dcd9243e098df5fc21ebd437def923d4b301da46c2def7da389a05b02",
+      "decision": "supported",
+      "reason": "Persistent mental obscuration supports stubborn inability to consider contrary reasons.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/obcecación",
+          "senseLocator": "1",
+          "paraphrase": "Persistent mental obscuration supports stubborn inability to consider contrary reasons.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-106-esbozar-una-sonrisa",
+      "term": "esbozar una sonrisa",
+      "baselineEntrySha256": "fb3be57d355530c0be5b22a61d145381f81bd09325ba1b64e96bdb577ac86fb2",
+      "decision": "supported",
+      "reason": "The entry explicitly illustrates initiating a facial gesture with a smile.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/esbozar",
+          "senseLocator": "2",
+          "paraphrase": "The entry explicitly illustrates initiating a facial gesture with a smile.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-109-compulsar",
+      "term": "compulsar",
+      "baselineEntrySha256": "cecd8aee9d511dc82fa6214744b6813e07eb786f70e3015d86491ed1bfaf1fdd",
+      "decision": "supported",
+      "reason": "Compulsa accredits that a copy matches the original, supporting both comparison and certification.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://www.exteriores.gob.es/Consulados/guadalajara/es/Comunicacion/Noticias/Paginas/Articulos/HOMOLOGACIONES.aspx",
+          "senseLocator": "Consular explanation distinguishing compulsa from homologacion",
+          "paraphrase": "Compulsa accredits that a copy matches the original, supporting both comparison and certification.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-112-fe-de-erratas",
+      "term": "fe de erratas",
+      "baselineEntrySha256": "e57934b3272f3cfe7b39d1ae1887b58b12bfc7796d3e93ad8cb5af08b5793fb7",
+      "decision": "supported",
+      "reason": "A list of textual errors with their corrections supports the publisher's date corrections.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/fe",
+          "senseLocator": "fe de erratas",
+          "paraphrase": "A list of textual errors with their corrections supports the publisher's date corrections.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-113-suplantacion",
+      "term": "suplantación",
+      "baselineEntrySha256": "0dc36e504e4b375f0b93918b8477e4a7c6db82be6c02b461abd9f7bac452be37",
+      "decision": "supported",
+      "reason": "Fraud that simulates a legitimate source supports the identity impersonation sense in the email example.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://www.fundeu.es/recomendacion/suplantacion-de-identidad-alternativa-a-spoofing/",
+          "senseLocator": "Recommendation: identity spoofing",
+          "paraphrase": "Fraud that simulates a legitimate source supports the identity impersonation sense in the email example.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-115-baremo",
+      "term": "baremo",
+      "baselineEntrySha256": "c08c18eb66b6146e7f31c9d217e25afbf44adad8f0c32ef7b88b2f702a7de3b2",
+      "decision": "supported",
+      "reason": "A graded framework for evaluating personal merits supports the experience scoring example.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/baremo",
+          "senseLocator": "1",
+          "paraphrase": "A graded framework for evaluating personal merits supports the experience scoring example.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-116-aprovechamiento",
+      "term": "aprovechamiento",
+      "baselineEntrySha256": "8195278bbe2476795c3bb7f942ee8a6d1b765df1f8ff11199be81f108143887f",
+      "decision": "supported",
+      "reason": "The noun links to the verb's explicit progress-in-studies sense, supporting educational attainment. The noun links to the verb's explicit progress-in-studies sense, supporting educational attainment.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/aprovechamiento",
+          "senseLocator": "aprovechamiento 1; aprovechar 4",
+          "paraphrase": "The noun links to the verb's explicit progress-in-studies sense, supporting educational attainment.",
+          "observedAt": "2026-09-14"
+        },
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/aprovechar",
+          "senseLocator": "aprovechamiento 1; aprovechar 4",
+          "paraphrase": "The noun links to the verb's explicit progress-in-studies sense, supporting educational attainment.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-122-aprendizaje-vicario",
+      "term": "aprendizaje vicario",
+      "baselineEntrySha256": "3bb7e66d14c761c0055a9e50aa09417784d6f0904164344e61ad03b143bdd6c9",
+      "decision": "supported",
+      "reason": "Learning by observation is explicitly named aprendizaje vicario. Observation of others' consequences is a local AI interpretation of the learning mechanism, not a quotation or a separately certified subclaim.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://portal.uned.es/EadmonGuiasWeb/htdocs/abrir_fichero/abrir_fichero.jsp?idGuia=56931",
+          "senseLocator": "UNED course guide: observational learning",
+          "paraphrase": "Learning by observation is explicitly named aprendizaje vicario. Observation of others' consequences is a local AI interpretation of the learning mechanism, not a quotation or a separately certified subclaim.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-123-interinidad",
+      "term": "interinidad",
+      "baselineEntrySha256": "5b8659ad536e01a3cf175e630626426134da160d676e9bbf36c19e9ba8a92850",
+      "decision": "amended",
+      "reason": "Provisional occupancy of a post is supported. Record the dictionary's Spain label without asserting that the word occurs exclusively in Spain.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/interinidad",
+          "senseLocator": "1–2, Spain usage label",
+          "paraphrase": "Provisional occupancy of a post is supported. Record the dictionary's Spain label without asserting that the word occurs exclusively in Spain.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": [
+        {
+          "field": "usageNote",
+          "before": null,
+          "after": "Uso documentado con la marca España en el DLE; no se afirma exclusividad regional."
+        }
+      ],
+      "amendmentReview": {
+        "reviewerType": "ai-local",
+        "independentlyRereviewed": false,
+        "alignment": "The definition refinement or usage note was checked locally against the recorded source, existing example and Slovak hint. Earlier independent AI reviews apply to the original text only."
+      }
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-128-injerencia",
+      "term": "injerencia",
+      "baselineEntrySha256": "e492059be448cfbe5de5c2413ec2fc7deb6841c2624c7af54b72b2df8d4185ee",
+      "decision": "supported",
+      "reason": "The intrusion/intromission sense supports unwelcome intervention in the team's affairs.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/injerencia",
+          "senseLocator": "1 and synonyms",
+          "paraphrase": "The intrusion/intromission sense supports unwelcome intervention in the team's affairs.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-133-renido",
+      "term": "reñido",
+      "baselineEntrySha256": "0328bce0a60f8d8be3be7a6be0b2379d4ee7c74710f08fc2c11e5a7d86927ae5",
+      "decision": "supported",
+      "reason": "Strong rivalry and the equal-match synonym support the narrowly decided contest.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/reñido",
+          "senseLocator": "2",
+          "paraphrase": "Strong rivalry and the equal-match synonym support the narrowly decided contest.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-136-resarcirse",
+      "term": "resarcirse",
+      "baselineEntrySha256": "24490ca3429949360e13f3af2a5ee44167055fe443be7f40695390d3305c7ad2",
+      "decision": "supported",
+      "reason": "Compensation for injury or grievance is explicitly pronominal and includes desquitarse, supporting recovery after defeat.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/resarcir",
+          "senseLocator": "1, pronominal use",
+          "paraphrase": "Compensation for injury or grievance is explicitly pronominal and includes desquitarse, supporting recovery after defeat.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-137-aguerrido",
+      "term": "aguerrido",
+      "baselineEntrySha256": "406a42e3969ba6fc1ca12f38fee4785566d3aa4c7c331a7ea18eea9d6a40e938",
+      "decision": "supported",
+      "reason": "Courage and combativeness support the team's fighting spirit; military experience is not required for this sense.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/aguerrido",
+          "senseLocator": "3",
+          "paraphrase": "Courage and combativeness support the team's fighting spirit; military experience is not required for this sense.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-138-dejar-el-liston-alto",
+      "term": "dejar el listón alto",
+      "baselineEntrySha256": "ad2e46f668078f02c98c4e9115decc63e75ab168b0b6350a0370c3e0f80e814d",
+      "decision": "hold",
+      "reason": "The primary-source excerpt attests use, but does not directly explain the full pragmatic meaning. Held pending stronger semantic evidence; this is not a judgment that the expression is incorrect.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://www.fundeu.es/noticia/la-fundeu-asegura-haber-dejado-el-liston-alto-en-los-cursos-de-verano-de-la-universidad-de-cadiz-espana-2352/",
+          "senseLocator": "Usage attestation only",
+          "paraphrase": "The expression occurs in this primary publication; its function would require contextual inference.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-139-desmentido",
+      "term": "desmentido",
+      "baselineEntrySha256": "e8440e74464eca6021da4a54bffc5272ba40af21eb205adf3395be5bca59b118",
+      "decision": "supported",
+      "reason": "A public denial statement directly matches the newspaper example.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/desmentido",
+          "senseLocator": "2",
+          "paraphrase": "A public denial statement directly matches the newspaper example.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-142-descontextualizar",
+      "term": "descontextualizar",
+      "baselineEntrySha256": "ca600b0c75d2da4991815c2d72578d84d7a566accef13d6814893bd53621627f",
+      "decision": "supported",
+      "reason": "Removing something from its context explicitly includes people's words.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/descontextualizar",
+          "senseLocator": "1",
+          "paraphrase": "Removing something from its context explicitly includes people's words.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-146-escudarse",
+      "term": "escudarse",
+      "baselineEntrySha256": "8bf880c969a1944b6c71385a091e5d9bea82a57200bdcbd44932ad3624b2b426",
+      "decision": "supported",
+      "reason": "Pronominal use means taking protection in a means or excuse to justify oneself or escape a threat.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/escudar",
+          "senseLocator": "3",
+          "paraphrase": "Pronominal use means taking protection in a means or excuse to justify oneself or escape a threat.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-148-acuse-de-recibo",
+      "term": "acuse de recibo",
+      "baselineEntrySha256": "76c7eeb03a197a3e3ac669e27f45e43a2a3094f850e140e027df0747ad24b1cd",
+      "decision": "supported",
+      "reason": "The noun explicitly refers to acknowledging receipt of letters. This supports the notification function of the phrase.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/acuse",
+          "senseLocator": "1, acknowledgment of receipt; compare acusar 6",
+          "paraphrase": "The noun explicitly refers to acknowledging receipt of letters. This supports the notification function of the phrase.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-150-apostilla",
+      "term": "apostilla",
+      "baselineEntrySha256": "13316ef65815993797f2ef0a156922386b8e08149565057d73483e0cec4d4663",
+      "decision": "supported",
+      "reason": "An annotation interpreting or completing text supports the brief email clarification.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/apostilla",
+          "senseLocator": "1",
+          "paraphrase": "An annotation interpreting or completing text supports the brief email clarification.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-169-replicable",
+      "term": "replicable",
+      "baselineEntrySha256": "825f74f2739bb37586be86c841838fbfa7fd51b49422e78cabef9de5f4470033",
+      "decision": "amended",
+      "reason": "The research-methods distinction uses new data for replication. The amended definition adopts this convention and asks about compatible results rather than promising identical outcomes; terminology can vary across disciplines.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://redc.revistas.csic.es/index.php/redc/article/download/1516/2288?inline=1",
+          "senseLocator": "Salvador-Olivan et al. (2023), introduction: replication versus reproduction",
+          "paraphrase": "The research-methods distinction uses new data for replication. The amended definition adopts this convention and asks about compatible results rather than promising identical outcomes; terminology can vary across disciplines.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": [
+        {
+          "field": "definition",
+          "before": "Que puede repetirse siguiendo un procedimiento para comprobar sus resultados.",
+          "after": "Dicho de un estudio: Que puede repetirse con nuevos datos para comprobar si se obtienen resultados compatibles."
+        }
+      ],
+      "amendmentReview": {
+        "reviewerType": "ai-local",
+        "independentlyRereviewed": false,
+        "alignment": "The definition refinement or usage note was checked locally against the recorded source, existing example and Slovak hint. Earlier independent AI reviews apply to the original text only."
+      }
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-172-incertidumbre",
+      "term": "incertidumbre",
+      "baselineEntrySha256": "e8f23a59dc2fc4234352dbbd7dda27e23f7be51727fe91179f49ec8e274063cb",
+      "decision": "supported",
+      "reason": "Measurement uncertainty characterizes dispersion of values attributed to a quantity. The learner definition is a qualitative simplification, not a formula or operational metrology guidance.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://www.cem.es/sites/default/files/recomendaciones_cem_ensenanza_metrologia_sep_2014_v01.pdf",
+          "senseLocator": "CEM teaching recommendations, p. 12, VIM 2.26",
+          "paraphrase": "Measurement uncertainty characterizes dispersion of values attributed to a quantity. The learner definition is a qualitative simplification, not a formula or operational metrology guidance.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-180-cautelar",
+      "term": "cautelar",
+      "baselineEntrySha256": "6fac6339310fecccd3f7c03ef5859489c8cddd889c4a33f3e8824fc8d7495a06",
+      "decision": "supported",
+      "reason": "Preventive or precautionary legal measures support temporary protection pending resolution.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/cautelar",
+          "senseLocator": "cautelar 2, senses 1–2",
+          "paraphrase": "Preventive or precautionary legal measures support temporary protection pending resolution.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-182-atenuante",
+      "term": "atenuante",
+      "baselineEntrySha256": "968eac7aca12519746d394a9a8b0816aeaa99a89693384979ed08ce84acd0bcf",
+      "decision": "supported",
+      "reason": "A circumstance reducing seriousness is explicitly a noun, with feminine legal use supported.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/atenuante",
+          "senseLocator": "2–3",
+          "paraphrase": "A circumstance reducing seriousness is explicitly a noun, with feminine legal use supported.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-183-agravante",
+      "term": "agravante",
+      "baselineEntrySha256": "63ca0dd2f5fba46e0ec322e3362f1dc62b15b4137c822672f36c377743ad1977",
+      "decision": "supported",
+      "reason": "A circumstance increasing seriousness is explicitly a noun, with feminine legal use supported.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/agravante",
+          "senseLocator": "2–3",
+          "paraphrase": "A circumstance increasing seriousness is explicitly a noun, with feminine legal use supported.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-189-disonancia",
+      "term": "disonancia",
+      "baselineEntrySha256": "9a2ddd69d09922a4b4d07a051c96904cdc272ae92f93bae4632e75543273acbc",
+      "decision": "supported",
+      "reason": "Musical dissonance relates to contextual tension and resolution; the definition does not claim that every such combination is universally unpleasant.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://www.eumus.edu.uy/eme/ensenanza/acustica/presentaciones/afyesc/generalidades/cons0.html",
+          "senseLocator": "University music acoustics teaching: consonance and dissonance",
+          "paraphrase": "Musical dissonance relates to contextual tension and resolution; the definition does not claim that every such combination is universally unpleasant.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-207-insoslayable",
+      "term": "insoslayable",
+      "baselineEntrySha256": "ff12ffe88c7057d4c8ad963c0e111e06a0784cc39a2f89eb9e59e9bc6b3234c2",
+      "decision": "supported",
+      "reason": "The unavoidable/ineludible sense supports a funding issue that cannot be ignored.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/insoslayable",
+          "senseLocator": "1",
+          "paraphrase": "The unavoidable/ineludible sense supports a funding issue that cannot be ignored.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-208-taxativo",
+      "term": "taxativo",
+      "baselineEntrySha256": "9d9551ea58732df5932bab9410f26c1425e279c1308304cd3a02dc3927f5d348",
+      "decision": "supported",
+      "reason": "Categorical, discussion-closing assertion supports the uncompromising report conclusion.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/taxativo",
+          "senseLocator": "2",
+          "paraphrase": "Categorical, discussion-closing assertion supports the uncompromising report conclusion.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-211-dicho-sea-de-paso",
+      "term": "dicho sea de paso",
+      "baselineEntrySha256": "f304097ecf03423a908eabb35f1f307a88630b31ce8ee02cba99b5f8af76e6f9",
+      "decision": "hold",
+      "reason": "The primary-source excerpt attests use, but does not directly explain the full pragmatic meaning. Held pending stronger semantic evidence; this is not a judgment that the expression is incorrect.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://revistas.rae.es/brae/article/view/136/272",
+          "senseLocator": "Usage attestation only",
+          "paraphrase": "The expression occurs in this primary publication; its function would require contextual inference.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-212-a-fin-de-cuentas",
+      "term": "a fin de cuentas",
+      "baselineEntrySha256": "a67791a1737dff78c6e56752d5f107cad2c8ff4b53213de72770e4f610ed1319",
+      "decision": "supported",
+      "reason": "The conclusive/definitive evaluation supports the essential consideration about understandable information.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/fin",
+          "senseLocator": "a fin de cuentas",
+          "paraphrase": "The conclusive/definitive evaluation supports the essential consideration about understandable information.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-213-no-en-vano",
+      "term": "no en vano",
+      "baselineEntrySha256": "2d4e0b770d6ca685cde27e5506ac999fdcba295996cec166d5de463c7f1feeb5",
+      "decision": "hold",
+      "reason": "The primary-source excerpt attests use, but does not directly explain the full pragmatic meaning. Held pending stronger semantic evidence; this is not a judgment that the expression is incorrect.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://www.fundeu.es/recomendacion/mediapunta-y-media-punta-el-valor-de-los-espacios/",
+          "senseLocator": "Usage attestation only",
+          "paraphrase": "The expression occurs in this primary publication; its function would require contextual inference.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-214-sea-como-fuere",
+      "term": "sea como fuere",
+      "baselineEntrySha256": "9cdde45013b70faba7ccdd96b15f95e8896f2b2283cd2d9a2a0d75c983e748fd",
+      "decision": "hold",
+      "reason": "The primary-source excerpt attests use, but does not directly explain the full pragmatic meaning. Held pending stronger semantic evidence; this is not a judgment that the expression is incorrect.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://webfrl.rae.es/BRAE_DB_PDF/TOMO_LXXXVII/CCXCV/Quiros_123_142.pdf",
+          "senseLocator": "Usage attestation only",
+          "paraphrase": "The expression occurs in this primary publication; its function would require contextual inference.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-215-bien-mirado",
+      "term": "bien mirado",
+      "baselineEntrySha256": "316be7817f7e459b37657f951c2a9c303aca4723a95249fa30dcf46973b3f0ac",
+      "decision": "supported",
+      "reason": "Explicit careful reconsideration supports reassessing the benefit of the delay.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/mirar",
+          "senseLocator": "bien mirado",
+          "paraphrase": "Explicit careful reconsideration supports reassessing the benefit of the delay.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-217-maxime",
+      "term": "máxime",
+      "baselineEntrySha256": "a1908ffcb48b6f3556093a558ad2a72d24cfb5b4a489eb6fcad7b4715f2ea3b8",
+      "decision": "supported",
+      "reason": "The especially/above-all adverb supports highlighting shared data as a stronger reason for documenting changes.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/máxime",
+          "senseLocator": "1",
+          "paraphrase": "The especially/above-all adverb supports highlighting shared data as a stronger reason for documenting changes.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-218-a-tenor-de",
+      "term": "a tenor de",
+      "baselineEntrySha256": "5d7b3457fcd3b284e8feab99f4abf63c3aa0379f941b29f8d68ae04e38da6e07",
+      "decision": "supported",
+      "reason": "Accordance with information supports the inference drawn from results.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/tenor",
+          "senseLocator": "a tenor de / al tenor de",
+          "paraphrase": "Accordance with information supports the inference drawn from results.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-219-so-pena-de",
+      "term": "so pena de",
+      "baselineEntrySha256": "08d69325435ac781a1944e20d43e44d53c57208b5023772dec1edce41095adcf",
+      "decision": "supported",
+      "reason": "Otherwise exposing oneself to a consequence supports losing access if a copy is not kept.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/pena",
+          "senseLocator": "so pena de, sense 1",
+          "paraphrase": "Otherwise exposing oneself to a consequence supports losing access if a copy is not kept.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-220-salvo-mejor-criterio",
+      "term": "salvo mejor criterio",
+      "baselineEntrySha256": "3dff0ed5d0961221cd9d550650559e618e008ceb9addc1d5a1336751956fdc7c",
+      "decision": "hold",
+      "reason": "The primary-source excerpt attests use, but does not directly explain the full pragmatic meaning. Held pending stronger semantic evidence; this is not a judgment that the expression is incorrect.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://boe.es/boe/dias/2025/10/30/pdfs/BOE-B-2025-39527.pdf",
+          "senseLocator": "Usage attestation only",
+          "paraphrase": "The expression occurs in this primary publication; its function would require contextual inference.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-221-mutatis-mutandis",
+      "term": "mutatis mutandis",
+      "baselineEntrySha256": "11aea318ede278dc315c854102cd287b88dbd13f5ca3ce24f0fd8470ee78776f",
+      "decision": "supported",
+      "reason": "The Latin expression requires the necessary changes when transferring an argument or comparison.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://www.fundeu.es/recomendacion/mutatis-mutandis-mutandi/",
+          "senseLocator": "Recommendation: mutatis mutandis",
+          "paraphrase": "The Latin expression requires the necessary changes when transferring an argument or comparison.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-222-ceteris-paribus",
+      "term": "ceteris paribus",
+      "baselineEntrySha256": "dd6270a729f4bf46c59cc49b66a1d482f60cee59772203732cae21dca1275183",
+      "decision": "supported",
+      "reason": "Other factors remain unchanged in the comparison. This is an expert explanatory dictionary source, not a CEFR assignment.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://economipedia.com/definiciones/ceteris-paribus.html",
+          "senseLocator": "Original economics dictionary explanation",
+          "paraphrase": "Other factors remain unchanged in the comparison. This is an expert explanatory dictionary source, not a CEFR assignment.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-230-devolucion-en-especie",
+      "term": "devolución en especie",
+      "baselineEntrySha256": "48ae9e530f79e21f6bcacc3be0e704e6ec70f56875dd5d7e334ef74d814da7f7",
+      "decision": "supported",
+      "reason": "The expression en especie means in goods rather than money. Applying this to repayment is compositional; no separate fixed-expression headword is claimed.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/especie",
+          "senseLocator": "en especie",
+          "paraphrase": "The expression en especie means in goods rather than money. Applying this to repayment is compositional; no separate fixed-expression headword is claimed.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-232-a-cuenta-de",
+      "term": "a cuenta de",
+      "baselineEntrySha256": "96457012d34ef30bf4c586f76eadebae36883d8b29ca2c87284a95b0e7e750e7",
+      "decision": "supported",
+      "reason": "An advance toward a sum to be settled supports the partial repair payment, not merely charging expenses to someone.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/cuenta",
+          "senseLocator": "a cuenta de 1; a cuenta 1",
+          "paraphrase": "An advance toward a sum to be settled supports the partial repair payment, not merely charging expenses to someone.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-243-sobreentendido",
+      "term": "sobreentendido",
+      "baselineEntrySha256": "766ec0e0ee5a3ae85ddd270a69a7102b274ea11e0e6ddd96e06880941931c328",
+      "decision": "supported",
+      "reason": "The noun is an unexpressed assumption in a statement or conversation; the longer spelling is explicitly accepted.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/sobrentendido",
+          "senseLocator": "2 and explicit variant sobreentendido",
+          "paraphrase": "The noun is an unexpressed assumption in a statement or conversation; the longer spelling is explicitly accepted.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-248-con-segundas",
+      "term": "con segundas",
+      "baselineEntrySha256": "2165aad99934d7b7e36ab2e1cf5cb6cb9663bbbb3592583edc7b1741fb2ba3e8",
+      "decision": "supported",
+      "reason": "The expression is explicitly used for a second intention, supporting the question's hidden reproach.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/segundo",
+          "senseLocator": "10 and example",
+          "paraphrase": "The expression is explicitly used for a second intention, supporting the question's hidden reproach.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-249-a-buen-seguro",
+      "term": "a buen seguro",
+      "baselineEntrySha256": "c381d76639f406cd3827d7b295cbf96503b6e69a0fbcfbc8a5c16d648d67b63b",
+      "decision": "supported",
+      "reason": "The certainty adverb supports strong confidence about future questions.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/seguro",
+          "senseLocator": "a buen seguro",
+          "paraphrase": "The certainty adverb supports strong confidence about future questions.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-250-que-conste",
+      "term": "que conste",
+      "baselineEntrySha256": "35704d83f6aafc90d4cd2c2f30491fd5cd0afcd766c6d2b29e388e60fd8dc579",
+      "decision": "supported",
+      "reason": "The formula makes something clear without doubt or emphasizes that a warning was given, supporting the clarification example.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://dem.colmex.mx/ver/constar",
+          "senseLocator": "I.3, (Que) conste (que)",
+          "paraphrase": "The formula makes something clear without doubt or emphasizes that a warning was given, supporting the clarification example.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-251-ni-que-decir-tiene",
+      "term": "ni que decir tiene",
+      "baselineEntrySha256": "383d18eff31c71c09a50b561d70025c2ac64879053e18f979a7b37aae7132c3b",
+      "decision": "supported",
+      "reason": "Explicitly marks something as evident or shared knowledge.",
+      "evidence": [
+        {
+          "kind": "primary-page-read",
+          "url": "https://dle.rae.es/decir",
+          "senseLocator": "ni que decir tiene",
+          "paraphrase": "Explicitly marks something as evident or shared knowledge.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-252-por-asi-decirlo",
+      "term": "por así decirlo",
+      "baselineEntrySha256": "a38b656758f73663212cc15c71a56f76344d854cf0c2f6b65c57416c398c3dad",
+      "decision": "hold",
+      "reason": "The primary-source excerpt attests use, but does not directly explain the full pragmatic meaning. Held pending stronger semantic evidence; this is not a judgment that the expression is incorrect.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://letras.rae.es/libros-electronicos/141-guzman-de-alfarache-libro-digital.html",
+          "senseLocator": "Usage attestation only",
+          "paraphrase": "The expression occurs in this primary publication; its function would require contextual inference.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-bulk-254-no-es-de-recibo",
+      "term": "no es de recibo",
+      "baselineEntrySha256": "5fe623f322a48c78ec32c5ed615b32132655c20b73654146ecadb99d10734553",
+      "decision": "supported",
+      "reason": "Failure to meet the requirements for acceptance supports the negative expression's evaluative use.",
+      "evidence": [
+        {
+          "kind": "primary-search-excerpt-read",
+          "url": "https://www.fundeu.es/consulta/no-ser-de-recibo-1768/",
+          "senseLocator": "Consultation: no ser de recibo",
+          "paraphrase": "Failure to meet the requirements for acceptance supports the negative expression's evaluative use.",
+          "observedAt": "2026-09-14"
+        }
+      ],
+      "changes": []
+    }
+  ]
+}

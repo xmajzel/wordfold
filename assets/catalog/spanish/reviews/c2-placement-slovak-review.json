@@ -1,0 +1,311 @@
+{
+  "schemaVersion": 1,
+  "reviewerType": "ai",
+  "kind": "slovak",
+  "reviewerId": "codex-chatgpt-slovak-c2-source-2026-09-13",
+  "reviewedAt": "2026-09-13T21:29:12.766Z",
+  "notHumanApproval": true,
+  "batchId": "c2-placement-adjudicated-2026-09-13",
+  "datasetSha256": "32aa25e7a4ec90c4410fe8fe507235ecc68c34733a69e2315cc51b9ca94188bb",
+  "scope": "Slovak hint accuracy and alignment with the selected Spanish sense; no audio review.",
+  "entries": [
+    {
+      "entryId": "es-sk:c2:exp-source-i1041",
+      "catalogSenseId": "es-sk:c2:exp-source-i1041:adj:1",
+      "level": "C2",
+      "entrySha256": "99dcf55ad6dd08e7ebc0b92bd80ea9bda2406bf0bb06444bc6053d8d6e3c7f30",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i4055",
+      "catalogSenseId": "es-sk:c2:exp-source-i4055:adj:1",
+      "level": "C2",
+      "entrySha256": "cd1ec2ca7965d8ff21ee17d6fa7d8ee38eaa88bc3c8b2b98378b479f4db54699",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i4360",
+      "catalogSenseId": "es-sk:c2:exp-source-i4360:adj:1",
+      "level": "C2",
+      "entrySha256": "7369227c9cded942d76710faebf366bd023b750bc85f5d9eaf7963e8a8709a24",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i4724",
+      "catalogSenseId": "es-sk:c2:exp-source-i4724:adj:1",
+      "level": "C2",
+      "entrySha256": "dbbff739af3f5e742ddd352620281ec9f3d9f9effc921a5763b598f68e0230ec",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i4916",
+      "catalogSenseId": "es-sk:c2:exp-source-i4916:adj:1",
+      "level": "C2",
+      "entrySha256": "48f1c1171f86a39e3d63e61c0fee6103f42be4a3ebac8910b0f56f8ab0d85dc3",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i4962",
+      "catalogSenseId": "es-sk:c2:exp-source-i4962:adj:1",
+      "level": "C2",
+      "entrySha256": "4e22866a7998d5e52b1f4731a56bdef7ec83f2ad33b644630601205d323e7431",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i5536",
+      "catalogSenseId": "es-sk:c2:exp-source-i5536:adj:1",
+      "level": "C2",
+      "entrySha256": "8a378b11a3f691e53c7f95abaf4bb787d6a0ed152b7d1fcf172ac04955f670b3",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i8707",
+      "catalogSenseId": "es-sk:c2:exp-source-i8707:adj:1",
+      "level": "C2",
+      "entrySha256": "5d3a07465933502ebb56c5ce27dcef7cd665b841a083d79ec9590398e3973df1",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i8859",
+      "catalogSenseId": "es-sk:c2:exp-source-i8859:adj:1",
+      "level": "C2",
+      "entrySha256": "d0c5df657a09a1a67ae9428bc1788e9f32d1ae3460d5f0a96da93b1ef49dc843",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i9609",
+      "catalogSenseId": "es-sk:c2:exp-source-i9609:adj:1",
+      "level": "C2",
+      "entrySha256": "a4a2cb78a8922c1f2f1c94c1afb80bbb9f8c142528c7cb19f43b3263ee085df7",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i9663",
+      "catalogSenseId": "es-sk:c2:exp-source-i9663:adj:1",
+      "level": "C2",
+      "entrySha256": "0b9ddbceebcd02d5f638f7922e74770574aadd0fa9bd496fcc79b13791b0d9ba",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i10372",
+      "catalogSenseId": "es-sk:c2:exp-source-i10372:adj:1",
+      "level": "C2",
+      "entrySha256": "5690079342e68892eee4775ea0e154a554f4a449ace10a9760c7708e91eb16f2",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i10429",
+      "catalogSenseId": "es-sk:c2:exp-source-i10429:adj:1",
+      "level": "C2",
+      "entrySha256": "cf26cde59475e84518b3dc13e5961e4546d44bf3eb2b1241587c0041f8199109",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i12957",
+      "catalogSenseId": "es-sk:c2:exp-source-i12957:adj:1",
+      "level": "C2",
+      "entrySha256": "cf05b7b85eb7c56d91167a7f99a8c819c372f79721730a81224559d1ee604387",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i13589",
+      "catalogSenseId": "es-sk:c2:exp-source-i13589:adj:1",
+      "level": "C2",
+      "entrySha256": "1405739d1cc7197c4bceb9dc22a7418f67afa2afbfae8bf6cf126a0ace40e52d",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i18355",
+      "catalogSenseId": "es-sk:c2:exp-source-i18355:adv:1",
+      "level": "C2",
+      "entrySha256": "e49c9ed2f413a07b95dfd8837d63f8df009551b7b0c9dd07b7debb3bc3c9bb4f",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i21408",
+      "catalogSenseId": "es-sk:c2:exp-source-i21408:adv:1",
+      "level": "C2",
+      "entrySha256": "e9e2cbfa21dc50a911f6f1b60b9ef763b3ac75b41808021fc12c21679d17c1a0",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i21421",
+      "catalogSenseId": "es-sk:c2:exp-source-i21421:adv:1",
+      "level": "C2",
+      "entrySha256": "e76631497fd6fd28b8f1d11bbdc23e7244ce2e50bc828dc4d7b4ec3a1094b787",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i24147",
+      "catalogSenseId": "es-sk:c2:exp-source-i24147:verb:1",
+      "level": "C2",
+      "entrySha256": "22d153f7b4c05e9ca0c8541c1118c8ec0297ea1c93ac92d9c68a8cbda5893bca",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i29983",
+      "catalogSenseId": "es-sk:c2:exp-source-i29983:verb:1",
+      "level": "C2",
+      "entrySha256": "5b35029d2d4ff71171bfe84a6e20bbb22af7ece46906c2e727d65928469fb6ba",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i30652",
+      "catalogSenseId": "es-sk:c2:exp-source-i30652:verb:1",
+      "level": "C2",
+      "entrySha256": "1290adab35e51892c0135a339aa2404c3f0e1f9dcdb50f063e347a5589aeab4b",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i35148",
+      "catalogSenseId": "es-sk:c2:exp-source-i35148:verb:1",
+      "level": "C2",
+      "entrySha256": "cbd35816a232215464709e4341eb0628db6d95744834eba34aa934b7fc40a0f8",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i35326",
+      "catalogSenseId": "es-sk:c2:exp-source-i35326:verb:1",
+      "level": "C2",
+      "entrySha256": "39875bc0c22c2b9120f5d3a2c518fa742386b69900d22de8e5ad2c62ba834281",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i53488",
+      "catalogSenseId": "es-sk:c2:exp-source-i53488:noun:1",
+      "level": "C2",
+      "entrySha256": "6de539a6c7c90e9eb21a7e4a52d4377109b25d77c9c623e998db2fb3dfd154a5",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i53563",
+      "catalogSenseId": "es-sk:c2:exp-source-i53563:noun:1",
+      "level": "C2",
+      "entrySha256": "6a9bdf9986b3d5d517c2794253f35cbc389e10fe7a81b322f3879478895ae024",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i62640",
+      "catalogSenseId": "es-sk:c2:exp-source-i62640:noun:1",
+      "level": "C2",
+      "entrySha256": "546217036fd315d25dc099f1a356843b036670cdc7f84ee3d71a2331f2ff7576",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i66537",
+      "catalogSenseId": "es-sk:c2:exp-source-i66537:noun:1",
+      "level": "C2",
+      "entrySha256": "c2d3607036dfe73bcf7034a141b5c5473dc7ba2a6b6e0017bcd6bc34a4b27fc1",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i71674",
+      "catalogSenseId": "es-sk:c2:exp-source-i71674:noun:1",
+      "level": "C2",
+      "entrySha256": "fc822bdbf02b6cbd416faf1127fae1e23ee37dbf478dd67ba4f4a15154f4ead0",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i74260",
+      "catalogSenseId": "es-sk:c2:exp-source-i74260:noun:1",
+      "level": "C2",
+      "entrySha256": "e3941791170b6cf8e775c8393d88f74996d74ab58242bf84c44f25788a8a4a85",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i74393",
+      "catalogSenseId": "es-sk:c2:exp-source-i74393:noun:1",
+      "level": "C2",
+      "entrySha256": "8b3d7537f55a3fc9c82504cd55af3951476c36d37bb13fdd5e678f40958b95e2",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i76429",
+      "catalogSenseId": "es-sk:c2:exp-source-i76429:noun:1",
+      "level": "C2",
+      "entrySha256": "3b6df5467158b70bbc50ad3e2d0def4edbf38a5ae963a8562ad6569b59241e7f",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i112823",
+      "catalogSenseId": "es-sk:c2:exp-source-i112823:noun:1",
+      "level": "C2",
+      "entrySha256": "695cc9ea7c556599a1e1a33b6d375f761ed45833b92e2fa2615c10dce456d1ad",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    },
+    {
+      "entryId": "es-sk:c2:exp-source-i117504",
+      "catalogSenseId": "es-sk:c2:exp-source-i117504:noun:1",
+      "level": "C2",
+      "entrySha256": "962d668fee8148a181bdeba834cf4baca4efd5c8591699fed192123550d9e579",
+      "decision": "no-issue",
+      "notes": "Original independent Slovak pass reused for byte-identical learner content.",
+      "findings": []
+    }
+  ],
+  "providerResultSha256": "c757017da7e22398dbd982fd1ed21e1859b4562693f14aa386269f74f564ddb9"
+}
