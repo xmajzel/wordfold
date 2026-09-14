@@ -194,5 +194,5 @@ const styles = StyleSheet.create({
   capacityNotice: { minHeight: 76, borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   levelGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, levelCard: { width: '48.5%', flexGrow: 1, minHeight: 178, borderWidth: 1, borderRadius: radii.card, padding: spacing.md, gap: spacing.sm }, levelTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   progressPairs: { flexDirection: 'row', flexWrap: 'wrap', columnGap: spacing.sm, rowGap: spacing.xs },
-  levelBadge: { width: 52, height: 52, borderRadius: 18, alignItems: 'center', justifyContent: 'center' }, levelText: { flex: 1, gap: spacing.xs }, levelProgress: { height: 8, flexDirection: 'row', borderRadius: radii.pill, overflow: 'hidden', marginTop: spacing.xs },
+  levelBadge: { width: 52, height: 52, borderRadius: 18, alignItems: 'center', justifyContent: 'center' }, levelText: { gap: spacing.xs }, levelProgress: { height: 8, flexDirection: 'row', borderRadius: radii.pill, overflow: 'hidden', marginTop: spacing.xs },
 });
