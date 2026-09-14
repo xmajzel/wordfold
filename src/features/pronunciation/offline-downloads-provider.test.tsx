@@ -19,6 +19,7 @@ jest.mock('@/data/cefr-catalog', () => ({
 }));
 
 jest.mock('@/features/pronunciation/offline-manifest', () => ({
+  spanishManifestConfigured: () => false,
   fetchOfflineManifestIndex: jest.fn(async () => ({
     shards: {
       'en-US': { sha256: 'a'.repeat(64) },

@@ -1,6 +1,7 @@
 import { createAzureSpeechSynthesizer } from '../../../supabase/functions/pronunciation-public/azure';
 import {
   CONTENT_TYPE,
+  createRequestKey,
   SYNTHESIS_VERSION,
   handlePronunciationRequest,
   type AssetRecord,
@@ -312,4 +313,27 @@ describe('Azure pronunciation adapter', () => {
     await expect(synthesize({ text: 'able', locale: 'en-US', voiceId: 'en-US-AvaNeural' }))
       .rejects.toMatchObject({ message: 'provider_unavailable' });
   });
+});
+
+it.each([['es-ES', 'es-ES-ElviraNeural'], ['es-MX', 'es-MX-JorgeNeural']] as const)('synthesizes Spanish with its pinned %s voice', async (locale, voiceId) => {
+  const { dependencies } = harness();
+  dependencies.repository.getCatalogInput = jest.fn(async catalogSenseId => ({ catalogSenseId, text: 'anfibología', sourceLanguageCode: 'es' }));
+  const response = await handlePronunciationRequest(request({ catalogSenseId: 'spanish-c2', locale }), dependencies);
+  expect(response.status).toBe(200);
+  expect(dependencies.synthesize).toHaveBeenCalledWith({ text: 'anfibología', locale, voiceId });
+});
+it('rejects a catalog language mismatch before claiming or synthesizing', async () => {
+  const { dependencies } = harness();
+  const response = await handlePronunciationRequest(request({ catalogSenseId: 'english-word', locale: 'es-ES' }), dependencies);
+  expect(response.status).toBe(404);
+  expect(dependencies.repository.claim).not.toHaveBeenCalled();
+  expect(dependencies.synthesize).not.toHaveBeenCalled();
+});
+
+it('keeps same-spelling Spanish senses separately addressable without changing English cache keys', async () => {
+  const first = await createRequestKey('seguro', 'es-ES', 'es-ES-ElviraNeural', 'sense-one');
+  const second = await createRequestKey('seguro', 'es-ES', 'es-ES-ElviraNeural', 'sense-two');
+  expect(first).not.toBe(second);
+  expect(await createRequestKey('safe', 'en-US', 'en-US-AvaNeural', 'sense-one'))
+    .toBe(await createRequestKey('safe', 'en-US', 'en-US-AvaNeural', 'sense-two'));
 });

@@ -114,11 +114,11 @@ test('rejects a required verdict that loses AI-assisted provenance', () => {
   expect(() => validateSpanishCourseAsset(asset)).toThrow('must retain AI-assisted provenance');
 });
 
-test('rejects unapproved disclosure copy and enabled pronunciation', () => {
+test('rejects unapproved disclosure copy and accepts the approved pronunciation capability', () => {
   expect(() => validateSpanishCourseAsset({ ...fixture(), reviewDisclosure: 'Automatically reviewed.' }))
     .toThrow('must use the approved wording');
   expect(() => validateSpanishCourseAsset({ ...fixture(), pronunciationEnabled: true }))
-    .toThrow('must remain disabled');
+    .not.toThrow();
 });
 
 test('requires a reviewed C2 release and retains its distinct source and learner metadata', () => {

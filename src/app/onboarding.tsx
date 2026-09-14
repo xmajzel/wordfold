@@ -1,3 +1,4 @@
+import { preferenceLocale } from '@/domain/pronunciation-voices';
 import { useMemo, useState } from 'react';
 import { Alert, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -251,8 +252,7 @@ function ReviewStep({ preferences, preview, voicePreference, course }: {
         <SummaryRow
           icon="volume-high-outline"
           label="Preferred voice"
-          value={voicePreference === 'neural-en-US' ? neuralVoiceLabel('en-US')
-            : voicePreference === 'neural-en-GB' ? neuralVoiceLabel('en-GB') : 'Phone voice'}
+          value={preferenceLocale(voicePreference) ? neuralVoiceLabel(preferenceLocale(voicePreference)!) : 'Phone voice'}
         />
       </> : null}
       <View style={[styles.divider, { backgroundColor: theme.border }]}/>
@@ -275,7 +275,7 @@ function ReviewStep({ preferences, preview, voicePreference, course }: {
     {voicePreference === 'device' || preview.length === 0 ? null : <View style={[styles.note, { backgroundColor: theme.primarySoft }]}>
       <Ionicons name="cloud-download-outline" color={theme.primary} size={20}/>
       <AppText variant="caption" style={styles.flex}>
-        {preview.length === 1 ? 'This word will' : `Your first ${preview.length} words will`} be ready to hear offline in {voicePreference === 'neural-en-US' ? 'Ava’s' : 'Ryan’s'} voice.
+        {preview.length === 1 ? 'This word will' : `Your first ${preview.length} words will`} download for offline playback in your selected voice when audio is available.
       </AppText>
     </View>}
     <RecommendationFallbackNote recommendations={preview}/>

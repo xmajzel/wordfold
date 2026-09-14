@@ -96,3 +96,14 @@ it('offers only the exact Spanish phone voice when requested', async () => {
   view.getByRole('radio', { name: 'Choose Phone voice · Spanish · Spain' });
   view.getByText('Test Spanish · Spain phone voice');
 });
+
+it('offers only Spanish neural voices and plays the selected regional sample', async () => {
+  mockPlaySample.mockResolvedValue(undefined);
+  const onChange = jest.fn();
+  const view = await render(<PronunciationVoicePicker value="device" onChange={onChange} sourceLanguageCode="es" pronunciationLocale="es-ES"/>);
+  expect(view.queryByText('Ava · US English')).toBeNull();
+  await fireEvent.press(view.getByRole('radio', { name: 'Choose Jorge · Mexico Spanish' }));
+  expect(onChange).toHaveBeenCalledWith('neural-es-MX');
+  await fireEvent.press(view.getByRole('button', { name: 'Test Elvira · Spain Spanish' }));
+  expect(mockPlaySample).toHaveBeenCalledWith('es-ES', expect.any(Object), expect.anything());
+});

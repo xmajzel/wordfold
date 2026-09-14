@@ -6,15 +6,16 @@ import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import process from 'node:process';
 import { pathToFileURL } from 'node:url';
+import { loadSpanishPronunciationCatalog } from './spanish-pronunciation-catalog.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const CATALOG_PATH = resolve(ROOT, 'assets/catalog/cefr-catalog.json');
 const CATALOG_MANIFEST_PATH = resolve(ROOT, 'assets/catalog/cefr-catalog-manifest.json');
-const DEFAULT_OUTPUT = resolve(ROOT, '.artifacts/pronunciation-offline-manifest');
+let DEFAULT_OUTPUT = resolve(ROOT, '.artifacts/pronunciation-offline-manifest');
 const SUPABASE_BIN = resolve(ROOT, 'node_modules/.bin/supabase');
 
 export const SCHEMA_VERSION = 1;
-export const CATALOG_SHA256 = '7a2bddcc85b7c638af7acef0209763871a8b94d37b4dbf4eee71bc458301ed8b';
+export let CATALOG_SHA256 = '7a2bddcc85b7c638af7acef0209763871a8b94d37b4dbf4eee71bc458301ed8b';
 export const SYNTHESIS_VERSION = 'azure-public-preview-v1';
 export const PROVIDER = 'azure';
 export const MODEL_TIER = 'Standard Neural S0';
@@ -22,14 +23,14 @@ export const OUTPUT_FORMAT = 'audio-24khz-96kbitrate-mono-mp3';
 export const CONTENT_TYPE = 'audio/mpeg';
 export const BUCKET = 'pron-manifests';
 export const MAX_MANIFEST_BYTES = 8 * 1024 * 1024;
-export const VOICES = {
+export let VOICES = {
   'en-US': 'en-US-AvaNeural',
   'en-GB': 'en-GB-RyanNeural',
 };
-export const LOCALES = Object.keys(VOICES).sort();
+export let LOCALES = Object.keys(VOICES).sort();
 
 const SHA256_PATTERN = /^[a-f0-9]{64}$/;
-const ROW_QUERY = `
+let ROW_QUERY = `
 select
   a.catalog_sense_id,
   a.locale,
@@ -98,7 +99,9 @@ function catalogEntries(payload) {
   return Array.isArray(payload) ? payload : payload?.entries;
 }
 
+let spanishCatalog = null;
 async function loadCatalog() {
+  if (spanishCatalog) return { entries: spanishCatalog.entries, ids: spanishCatalog.entries.map(entry => entry.catalogSenseId).sort() };
   const [catalogBytes, catalogManifest] = await Promise.all([
     readFile(CATALOG_PATH),
     readJson(CATALOG_MANIFEST_PATH),
@@ -472,7 +475,7 @@ async function publishArtifacts(input, publication) {
 function printHelp() {
   console.log(`Wordfold pronunciation offline manifest
 
-Commands:
+Commands (add --course es-sk for Spanish):
   build --input asset-rows.json [--output directory]
   export --linked [--output directory]
   verify [--input directory]
@@ -487,6 +490,16 @@ async function main() {
     assertOptions(options, []);
     return printHelp();
   }
+  if (options.course && !['en-sk', 'es-sk'].includes(options.course)) throw new Error('Unsupported course.');
+  if (options.course === 'es-sk') {
+    spanishCatalog = await loadSpanishPronunciationCatalog();
+    CATALOG_SHA256 = spanishCatalog.catalogSha256;
+    VOICES = { 'es-ES': 'es-ES-ElviraNeural', 'es-MX': 'es-MX-JorgeNeural' };
+    LOCALES = Object.keys(VOICES).sort();
+    DEFAULT_OUTPUT = resolve(ROOT, '.artifacts/spanish-pronunciation-offline-manifest');
+  }
+  delete options.course;
+  ROW_QUERY = ROW_QUERY.replace('order by', `where c.catalog_sha256 = '${CATALOG_SHA256}'\norder by`);
   const catalog = await loadCatalog();
   if (command === 'build') {
     assertOptions(options, ['input', 'output']);

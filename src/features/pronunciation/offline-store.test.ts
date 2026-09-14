@@ -1,3 +1,5 @@
+import { getCourseCatalogEntries } from '@/data/course-catalog';
+import { pronunciationCatalogHash } from './offline-manifest';
 import {
   buildOfflinePackPlan,
   downloadOfflinePack,
@@ -6,6 +8,7 @@ import {
   inspectOfflinePack,
   reconcileOfflineLibrary,
   removeOfflinePack,
+  removeOfflineLibraryLocale,
 } from './offline-store';
 import type { OfflineManifestShard } from './offline-manifest';
 
@@ -159,6 +162,20 @@ describe('durable offline pronunciation store', () => {
       `https://project.supabase.co/storage/v1/object/public/pron-public/azure-public-preview-v1/${secondHash}.mp3`,
       secondAudio,
     );
+  });
+
+  it('downloads and retrieves a Spanish C2 library word without using English assets', async () => {
+    const entry = getCourseCatalogEntries('es-sk', 'C2')[0];
+    const spanishShard: OfflineManifestShard = {
+      ...shard, catalogSha256: pronunciationCatalogHash('es-MX'), locale: 'es-MX', voiceId: 'es-MX-JorgeNeural',
+      assetCount: 1, totalAudioBytes: 128, assets: [{ ...shard.assets[0], catalogSenseId: entry.catalogSenseId }],
+    };
+    const result = await reconcileOfflineLibrary(spanishShard, 'c'.repeat(64), [entry.catalogSenseId], { signal: new AbortController().signal });
+    expect(result.downloadedCount).toBe(1);
+    expect(await getOfflinePronunciationFile(entry.catalogSenseId, 'es-MX')).not.toBeNull();
+    expect(await getOfflinePronunciationFile(entry.catalogSenseId, 'en-US')).toBeNull();
+    removeOfflineLibraryLocale('es-MX');
+    expect(await getOfflinePronunciationFile(entry.catalogSenseId, 'es-MX')).toBeNull();
   });
 
   it('builds an exact level plan and reports it as partial before audio is downloaded', async () => {

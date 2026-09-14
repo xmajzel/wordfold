@@ -1,3 +1,4 @@
+import { preferenceLocale } from '@/domain/pronunciation-voices';
 import { useMemo, useState } from 'react';
 import { Alert, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -28,9 +29,7 @@ export default function ImportScreen() {
     pronunciationVoicePreference,
     activeCourse,
   } = useAppData();
-  const sourcePronunciationLocale = activeCourse.sourceLanguageCode === 'en'
-    ? pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : 'en-US'
-    : activeCourse.defaultSourcePronunciationLocale;
+  const sourcePronunciationLocale = preferenceLocale(pronunciationVoicePreference) ?? activeCourse.defaultSourcePronunciationLocale;
   const [input, setInput] = useState('');
   const [collectionId, setCollectionId] = useState(collections[0]?.id ?? 'my-words');
   const [reviewed, setReviewed] = useState<ReviewedLine[] | null>(null);

@@ -96,3 +96,10 @@ describe('private neural pronunciation cloud contract', () => {
     expect(invoke).toHaveBeenCalledWith('pronunciation-private', { method: 'DELETE' });
   });
 });
+
+it.each(['es-ES', 'es-MX'])('accepts private Spanish text only with its matching language (%s)', locale => {
+  const input = { text: 'mi palabra', sourceLanguageCode: 'es', locale, catalogSenseId: null, featureEnabled: true };
+  expect(getPrivateNeuralPronunciationEligibility(input)).toEqual({ text: 'mi palabra', locale });
+  expect(getPrivateNeuralPronunciationEligibility({ ...input, sourceLanguageCode: 'en' })).toBeNull();
+  expect(getPrivateNeuralPronunciationEligibility({ ...input, featureEnabled: false })).toBeNull();
+});

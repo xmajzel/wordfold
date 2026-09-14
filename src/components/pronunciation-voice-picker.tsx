@@ -1,3 +1,4 @@
+import { neuralVoices, type NeuralLocale } from '@/domain/pronunciation-voices';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -7,7 +8,6 @@ import { PronunciationButton, type PronunciationStatus } from '@/components/pron
 import { languageLabel, pronunciationLocaleLabel } from '@/domain/languages';
 import type { PronunciationVoicePreference } from '@/domain/types';
 import {
-  neuralVoiceLabel,
   type NeuralPronunciationLocale,
 } from '@/features/pronunciation/cloud';
 import {
@@ -18,27 +18,7 @@ import {
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { radii, spacing } from '@/theme/tokens';
 
-const englishChoices: {
-  id: PronunciationVoicePreference;
-  title: string;
-  detail: string;
-  locale: NeuralPronunciationLocale | null;
-  recommended?: boolean;
-}[] = [
-  {
-    id: 'neural-en-US',
-    title: neuralVoiceLabel('en-US'),
-    detail: 'Recommended. Your added catalog words download automatically, then play offline.',
-    locale: 'en-US',
-    recommended: true,
-  },
-  {
-    id: 'neural-en-GB',
-    title: neuralVoiceLabel('en-GB'),
-    detail: 'Your added catalog words download automatically, then play offline.',
-    locale: 'en-GB',
-  },
-];
+type VoiceChoice = { id: PronunciationVoicePreference; title: string; detail: string; locale: NeuralPronunciationLocale | null; recommended?: boolean };
 
 const deviceSampleText: Record<string, string> = {
   en: BUNDLED_VOICE_SAMPLE_TEXT,
@@ -71,8 +51,13 @@ export function PronunciationVoicePicker({
   const samplesBusy = testing !== null || phoneStatus !== 'idle';
   useEffect(() => () => { sampleRequest.current?.abort(); }, [sourceLanguageCode]);
   const pronunciationLabel = `${languageLabel(sourceLanguageCode)} · ${pronunciationLocaleLabel(sourceLanguageCode, pronunciationLocale)}`;
-  const choices: typeof englishChoices = [
-    ...(sourceLanguageCode === 'en' ? englishChoices : []),
+  const choices: VoiceChoice[] = [
+    ...Object.entries(neuralVoices).filter(([locale]) => locale.split('-')[0] === sourceLanguageCode).map(([locale, voice]) => ({
+      id: `neural-${locale}` as PronunciationVoicePreference, title: voice.label,
+      detail: sourceLanguageCode === 'en' ? 'Your added catalog words download automatically, then play offline.' : 'Your added catalog words download when audio is available, then play offline.',
+      recommended: locale === 'en-US',
+      locale: locale as NeuralLocale,
+    })),
     {
       id: 'device' as const,
       title: `Phone voice · ${pronunciationLabel}`,

@@ -1,3 +1,5 @@
+import { getCourseCatalogEntries } from '@/data/course-catalog';
+import type { PronunciationVoicePreference } from '@/domain/types';
 import { Platform } from 'react-native';
 import { fireEvent, render } from '@testing-library/react-native';
 
@@ -9,7 +11,7 @@ const mockCacheScope: { type: 'guest' | 'account'; userId?: string } = {
 let mockHasOfflineAsset = false;
 let mockConsentStatus: 'loading' | 'disabled' | 'enabled' | 'deletion_pending' = 'disabled';
 let mockConsentUserId: string | null = 'reader';
-let mockVoicePreference: 'device' | 'neural-en-US' | 'neural-en-GB' = 'device';
+let mockVoicePreference: PronunciationVoicePreference = 'device';
 const mockNeuralRender = jest.fn();
 const mockDeviceRender = jest.fn();
 
@@ -98,6 +100,23 @@ describe('PronunciationControls', () => {
     const screen = await render(<PronunciationControls {...props}/>);
     expect(screen.getByLabelText('Phone voice')).toBeTruthy();
     expect(screen.queryByLabelText('neural')).toBeNull();
+  });
+
+  it('uses Mexico audio for a Spanish C2 word and keeps the fallback in that region', async () => {
+    mockVoicePreference = 'neural-es-MX';
+    const entry = getCourseCatalogEntries('es-sk', 'C2')[0];
+    const screen = await render(<PronunciationControls text={entry.term} sourceLanguageCode="es" locale="es-ES" catalogSenseId={entry.catalogSenseId}/>);
+    expect(mockNeuralRender).toHaveBeenCalledWith('es-MX');
+    await fireEvent.press(screen.getByLabelText('neural'));
+    expect(mockDeviceRender).toHaveBeenCalledWith(expect.objectContaining({ locale: 'es-MX', idleLabel: 'Use phone voice instead' }));
+  });
+
+  it('does not use a stale English choice for Spanish catalog audio', async () => {
+    mockVoicePreference = 'neural-en-US';
+    const entry = getCourseCatalogEntries('es-sk', 'A1')[0];
+    const screen = await render(<PronunciationControls text={entry.term} sourceLanguageCode="es" locale="es-ES" catalogSenseId={entry.catalogSenseId}/>);
+    expect(screen.queryByLabelText('neural')).toBeNull();
+    expect(mockDeviceRender).toHaveBeenCalledWith(expect.objectContaining({ locale: 'es-ES' }));
   });
 
   it('uses the preferred natural locale for English playback', async () => {

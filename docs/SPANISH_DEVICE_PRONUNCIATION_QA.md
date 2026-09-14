@@ -1,18 +1,43 @@
 # Spanish device pronunciation: launch scope and QA
 
-## Launch contract
+## Approved pronunciation scope
 
-The initial production A1 release will keep Spanish pronunciation disabled. Enabling
-it remains a later release change and still requires all physical-device and listening
-evidence below; text-course release approval must not be presented as audio approval.
+The owner approved Phone / Elvira (es-ES) / Jorge (es-MX) for the A1–C2 course on 2026-09-14.
+Jozef rated Elvira 30/30 acceptable for Spain and Erik rated Jorge 30/30 acceptable for Mexico,
+with no wrong-locale flags. Additional listening review was explicitly waived by the owner.
+This is owner approval with limited screening evidence; C2 has not been listening-reviewed.
+The physical-device checks below remain unperformed evidence, not a request for another listening gate.
 
-- The approved Slovak → Spanish course pronunciation locale is `es-ES`.
-- `es-MX` remains implemented only for backward-compatible playback of previously stored vocabulary. It is not selectable for new or edited Spanish course words until it passes its own device and native-speaker quality gate.
-- Wordfold compares canonicalized BCP 47 locale tags and selects only an installed exact match. An `es-MX`, generic `es`, or any non-Spanish voice must never satisfy an `es-ES` request.
-- Among exact matches, an enhanced system voice is preferred. Wordfold does not substitute another region or language when no exact voice is installed.
-- Spanish does not use the English neural voices or English offline pronunciation packs. It uses the phone voice selected by the operating system.
+- Spain remains the default phone locale; Mexico is available when explicitly selected.
+- Phone playback requires the exact installed locale, preferring an enhanced voice, and does not silently substitute another region.
+- Public catalog playback uses the pinned regional Azure voice, with verified downloads for offline use.
+- Private text retains the existing account consent, cleanup, and budget controls.
+- English and Spanish preferences and audio manifests are separate.
 
-The device path retains native file synthesis, per-user/guest caching, the 64 MiB cache limit, invalid-file cleanup, and a single live-speech fallback after cached-file playback or synthesis fails. Web uses live browser speech and does not use the native file cache.
+## Generation and publication
+
+The full A1–C2 Spanish audio catalog was generated and published on 2026-09-14: 6,689 Elvira
+clips and 6,689 Jorge clips. Every stored file passed SHA-256, byte-length, MP3, 24 kHz, and mono
+checks. The batch used 103,860 characters with no retries (estimated $3.1158 at the planning rate);
+normal request limits were restored and the temporary generation account was removed.
+`node scripts/build-pronunciation-catalog-sql.mjs --spanish --check` verifies the canonical Spanish
+pronunciation inputs against the current A1–C2 course. Alternate terms sharing a concept use phone
+playback when they differ from that concept's canonical audio text.
+`node scripts/pronunciation-backfill.mjs plan --course es-sk --json` calculates the paid batch without
+sending requests. Generation still requires explicit approval of that batch and its cost.
+The Spanish runner uses a conservative $30/million-character planning rate and a $5 hard ceiling;
+English retains its existing rate and $2 ceiling. Attempt accounting uses the selected plan's rate.
+
+For future approved generation, the manifest tool supports `--course es-sk` for build, export,
+verify, and publish. Spanish manifests must cover the entire pinned catalog with the selected voices.
+After publication verification, set `assets/pronunciation/spanish-publication.json`'s `index` to the
+verified publication's index descriptor (objectPath, sha256, byteLength). The current pin is
+`30a48b8668314a2df9b568ee7615efe80cb0e001677b23d50a83d3b19ea960de`; its index and both shards
+were downloaded again and verified after upload. An app release containing this pin is still required
+for existing installations. English retains its existing immutable manifest.
+
+The bundled Spanish Test voice clips reuse the reviewed phrase-01 recordings from the Azure bakeoff.
+They are voice previews, not additional C2 review evidence.
 
 ## Offline wording
 
@@ -41,7 +66,7 @@ For each successful playback, a Slovak-native Spanish reviewer should also rate:
 - the sample and representative A1–C2 words are natural at rate `0.9` and pitch `1`;
 - accessibility labels announce Spanish and Spain, and missing-voice instructions name the exact region.
 
-The course sample is: “Hola. Aprender un idioma nuevo abre la puerta a nuevas ideas, lugares y conversaciones.” Its copy and rendered voice both require native-speaker sign-off before release.
+The course sample is: “Hola. Aprender un idioma nuevo abre la puerta a nuevas ideas, lugares y conversaciones.” Additional native-speaker sign-off was waived by the owner; this sample has no new listening attestation.
 
 ## Browser limitations
 

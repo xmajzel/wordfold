@@ -1,3 +1,4 @@
+import { preferenceLocale, voiceSupportsCourse } from '@/domain/pronunciation-voices';
 import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 
 import { defaultCourseId, getCourseDefinition, isCourseId, wordBelongsToCourse, type CourseDefinition, type CourseId } from '@/domain/courses';
@@ -82,7 +83,7 @@ function readWebLearningPreferences(courseId: CourseId): LearningPreferences {
 function readWebVoicePreference(courseId: CourseId): PronunciationVoicePreference {
   if (typeof window === 'undefined') return 'device';
   const value = window.localStorage.getItem(webCourseKey('pronunciationVoice', courseId));
-  if (courseId === 'en-sk' && (value === 'neural-en-US' || value === 'neural-en-GB')) return value;
+  if ((value === 'neural-en-US' || value === 'neural-en-GB' || value === 'neural-es-ES' || value === 'neural-es-MX') && voiceSupportsCourse(value, courseId)) return value;
   return 'device';
 }
 
@@ -110,14 +111,14 @@ function recommendationsToWords(
   recommendations: Recommendation[],
   preference: PronunciationVoicePreference,
 ) {
-  const locale = preference === 'neural-en-GB' ? 'en-GB' : 'en-US';
+  const locale = preferenceLocale(preference);
   return recommendations.map(({ entry, topic }) => toWord({
     collectionId: 'my-words', term: entry.term, normalizedTerm: entry.normalizedTerm,
     definition: entry.definition, example: entry.example, partOfSpeech: entry.partOfSpeech,
     translation: entry.translation,
     catalogSenseId: entry.catalogSenseId, cefrLevel: entry.level, source: topic ?? 'manual',
     sourceLanguageCode: entry.sourceLanguageCode, targetLanguageCode: entry.targetLanguageCode,
-    sourcePronunciationLocale: entry.courseId === 'en-sk' ? locale : getCourseDefinition(entry.courseId).defaultSourcePronunciationLocale, targetPronunciationLocale: 'sk-SK',
+    sourcePronunciationLocale: (voiceSupportsCourse(preference, entry.courseId) ? locale : null) ?? getCourseDefinition(entry.courseId).defaultSourcePronunciationLocale, targetPronunciationLocale: 'sk-SK',
   }));
 }
 
@@ -224,7 +225,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
       setLearningPreferences(normalized);
     },
     savePronunciationVoicePreference: async (preference) => {
-      if (activeCourseId !== defaultCourseId && preference !== 'device') {
+      if (!voiceSupportsCourse(preference, activeCourseId)) {
         throw new Error(`Choose a pronunciation voice supported by ${getCourseDefinition(activeCourseId).displayName}.`);
       }
       if (typeof window !== 'undefined') {
@@ -233,6 +234,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
       setPronunciationVoicePreference(preference);
     },
     completePersonalizedOnboarding: async (preferences, preference) => {
+      if (!voiceSupportsCourse(preference, activeCourseId)) throw new Error('Choose a pronunciation voice supported by this course.');
       const normalized = normalizeLearningPreferences(preferences);
       const recommendations = getCourseDefinition(activeCourseId).capabilities.recommendations
         ? buildRecommendations(normalized, activeWords.map((word) => word.normalizedTerm), Math.min(10, getWordCapacity(words.length, false).remaining ?? 0), activeCourseId)

@@ -1,3 +1,4 @@
+import { preferenceLocale } from '@/domain/pronunciation-voices';
 import { useState } from 'react';
 import { Linking, Platform, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -46,11 +47,9 @@ export default function OnboardingReadyScreen() {
   const [busy, setBusy] = useState(false);
   const [reminderState, setReminderState] = useState<ReminderSetupState>({ status: 'idle' });
   const wordCount = Number.isFinite(Number(count)) ? Number(count) : 0;
-  const pronunciationLocale = pronunciationVoicePreference === 'neural-en-US'
-    ? 'en-US'
-    : pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : null;
+  const pronunciationLocale = preferenceLocale(pronunciationVoicePreference);
   const pronunciationIds = [...new Set(words.flatMap((word) => (
-    word.sourceLanguageCode === 'en' && word.catalogSenseId ? [word.catalogSenseId] : []
+    word.sourceLanguageCode === activeCourse.sourceLanguageCode && word.catalogSenseId ? [word.catalogSenseId] : []
   )))];
   const availablePronunciations = pronunciationLocale
     ? pronunciationIds.filter((id) => downloads.hasAsset(id, pronunciationLocale)).length

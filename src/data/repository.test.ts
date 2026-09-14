@@ -245,3 +245,13 @@ describe('word repository', () => {
     expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining('onboarding_complete'));
   });
 });
+
+  it('persists Spanish voices per course and rejects voices from another language', async () => {
+    const mockDatabase = { runAsync: jest.fn(), getFirstAsync: jest.fn(async () => ({ value: 'neural-es-MX' })) };
+    const database = mockDatabase as never;
+    await expect(getPronunciationVoicePreference(database, 'es-sk')).resolves.toBe('neural-es-MX');
+    await savePronunciationVoicePreference(database, 'neural-es-ES', 'es-sk');
+    expect(mockDatabase.runAsync).toHaveBeenCalledWith(expect.any(String), 'pronunciation_voice_preference:es-sk', 'neural-es-ES');
+    await expect(savePronunciationVoicePreference(database, 'neural-es-MX', 'en-sk')).rejects.toThrow('supported');
+    await expect(getPronunciationVoicePreference(database, 'en-sk')).resolves.toBe('device');
+  });

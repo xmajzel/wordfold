@@ -12,6 +12,21 @@ export const SAMPLES = [
   { locale: 'en-GB', voiceId: 'en-GB-RyanNeural', fileName: 'ryan-en-GB.mp3' },
 ];
 
+export const SPANISH_SAMPLES = [
+  {
+    "locale": "es-ES",
+    "voiceId": "es-ES-ElviraNeural",
+    "fileName": "elvira-es-ES.mp3",
+    "text": "¿Podría ayudarme, por favor?"
+  },
+  {
+    "locale": "es-MX",
+    "voiceId": "es-MX-JorgeNeural",
+    "fileName": "jorge-es-MX.mp3",
+    "text": "¿Podría ayudarme, por favor?"
+  }
+];
+
 const OUTPUT_DIRECTORY = resolve(import.meta.dirname, '../assets/pronunciation/voice-samples');
 
 function escapeXml(value) {
@@ -47,7 +62,7 @@ async function synthesize({ key, region }, sample) {
       'X-Microsoft-OutputFormat': OUTPUT_FORMAT,
       'User-Agent': 'wordfold-voice-samples/1.0',
     },
-    body: `<speak version="1.0" xml:lang="${sample.locale}"><voice name="${sample.voiceId}">${escapeXml(SAMPLE_TEXT)}</voice></speak>`,
+    body: `<speak version="1.0" xml:lang="${sample.locale}"><voice name="${sample.voiceId}">${escapeXml(sample.text ?? SAMPLE_TEXT)}</voice></speak>`,
   });
   if (!response.ok) throw new Error(`Azure synthesis failed for ${sample.locale} with HTTP ${response.status}.`);
   const contentType = response.headers.get('content-type')?.split(';')[0]?.trim().toLowerCase();
@@ -67,11 +82,12 @@ async function main() {
   }
   const configuration = validateConfiguration();
   await mkdir(OUTPUT_DIRECTORY, { recursive: true });
-  const generated = await Promise.all(SAMPLES.map(async (sample) => {
+  const spanish = process.argv.includes('--spanish');
+  const generated = await Promise.all((spanish ? SPANISH_SAMPLES : SAMPLES).map(async (sample) => {
     const bytes = await synthesize(configuration, sample);
     return {
       ...sample,
-      text: SAMPLE_TEXT,
+      text: sample.text ?? SAMPLE_TEXT,
       outputFormat: OUTPUT_FORMAT,
       byteLength: bytes.byteLength,
       sha256: sha256(bytes),
@@ -84,7 +100,7 @@ async function main() {
     await writeFile(temporaryPath, sample.bytes);
     await rename(temporaryPath, outputPath);
   }
-  const manifestPath = resolve(OUTPUT_DIRECTORY, 'manifest.json');
+  const manifestPath = resolve(OUTPUT_DIRECTORY, spanish ? 'manifest-spanish.json' : 'manifest.json');
   const manifestSamples = generated.map(({ bytes: _bytes, ...sample }) => sample);
   await writeFile(manifestPath, `${JSON.stringify({ schemaVersion: 1, samples: manifestSamples }, null, 2)}\n`, 'utf8');
   for (const sample of generated) {

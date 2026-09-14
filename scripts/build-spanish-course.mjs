@@ -5,7 +5,7 @@ import { buildSpanishCourseBase } from './build-spanish-course-base.mjs';
 import { appendSpanishC2Release } from './release-spanish-c2.mjs';
 
 export function buildSpanishCourse() {
-  return appendSpanishC2Release(buildSpanishCourseBase());
+  return { ...appendSpanishC2Release(buildSpanishCourseBase()), pronunciationEnabled: true };
 }
 
 if (process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.meta.url) {

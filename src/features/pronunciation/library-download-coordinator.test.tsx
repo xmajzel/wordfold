@@ -54,6 +54,12 @@ describe('PronunciationLibraryDownloadCoordinator', () => {
     delete process.env.EXPO_PUBLIC_PRONUNCIATION_NEURAL_PREVIEW_ENABLED;
   });
 
+  it('reconciles only Spanish catalog words when the Mexico voice is selected', async () => {
+    mockAppData.pronunciationVoicePreference = 'neural-es-MX';
+    await render(<PronunciationLibraryDownloadCoordinator/>);
+    await waitFor(() => expect(mockReconcileLibrary).toHaveBeenCalledWith('es-MX', ['spanish-sense']));
+  });
+
   it('reconciles unique English catalog words for the preferred natural voice', async () => {
     await render(<PronunciationLibraryDownloadCoordinator/>);
 

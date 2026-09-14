@@ -5,7 +5,7 @@ export const PRIVATE_NEURAL_CONTENT_TYPE = 'audio/mpeg';
 export const PRIVATE_NEURAL_MAXIMUM_BYTES = 1_048_576;
 export const PRIVATE_NEURAL_SIGNED_URL_SECONDS = 60;
 
-export type PrivateNeuralPronunciationLocale = 'en-US' | 'en-GB' | 'sk-SK';
+export type PrivateNeuralPronunciationLocale = 'en-US' | 'en-GB' | 'sk-SK' | 'es-ES' | 'es-MX';
 
 export type PrivateNeuralPronunciationAssetMetadata = {
   id: string;
@@ -63,11 +63,11 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
 }
 
 function isPrivateLocale(value: string): value is PrivateNeuralPronunciationLocale {
-  return value === 'en-US' || value === 'en-GB' || value === 'sk-SK';
+  return value === 'en-US' || value === 'en-GB' || value === 'sk-SK' || value === 'es-ES' || value === 'es-MX';
 }
 
 function localeMatchesLanguage(locale: PrivateNeuralPronunciationLocale, languageCode: string) {
-  return locale === 'sk-SK' ? languageCode === 'sk' : languageCode === 'en';
+  return locale.split('-')[0] === languageCode;
 }
 
 export function privateNeuralPreviewFeatureEnabled() {

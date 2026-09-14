@@ -96,13 +96,6 @@ export default function WordDetailScreen() {
       );
       return;
     }
-    if (sourceLanguageCode === 'es' && sourcePronunciationLocale !== 'es-ES') {
-      Alert.alert(
-        'Choose Spain pronunciation',
-        'Spanish course editing currently supports only the reviewed es-ES locale. Mexico Spanish will be selectable after its own device and native-speaker quality gate.',
-      );
-      return;
-    }
     const duplicates = potentialWordDuplicates(
       words, sourceLanguageCode, normalizeTerm(term, sourceLanguageCode), word.id,
     );
@@ -202,7 +195,7 @@ export default function WordDetailScreen() {
       /> : null}
       <View style={[styles.trail, { backgroundColor: theme.surface, borderColor: theme.border }]}><Trail value={word.viewCount} label="times seen"/><Trail value={word.lapseCount} label="misses"/><Trail value={word.understoodStreak} label="recall steps"/></View>
       {word.state === 'learned' ? <PrimaryButton label="Practice this word again" variant="secondary" onPress={() => void resetWord(word.id)} icon={<Ionicons name="refresh-outline" color={theme.primary} size={18}/>}/> : null}
-      <LanguageSelector label="Learning language" languageCode={sourceLanguageCode} pronunciationLocale={sourcePronunciationLocale} allowedPronunciationLocales={sourceLanguageCode === 'es' ? ['es-ES'] : undefined} onChange={changeSourceLanguage}/>
+      <LanguageSelector label="Learning language" languageCode={sourceLanguageCode} pronunciationLocale={sourcePronunciationLocale} onChange={changeSourceLanguage}/>
       <LanguageSelector label="Hint language" languageCode={targetLanguageCode} pronunciationLocale={targetPronunciationLocale} onChange={changeTargetLanguage}/>
       <FormField label={`${languageLabel(sourceLanguageCode)} word or phrase`} value={term} onChangeText={(value) => { translationController.current?.abort(); setTerm(value); }}/>
       <FormField label="Definition" value={definition} onChangeText={setDefinition} multiline/>

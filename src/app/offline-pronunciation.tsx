@@ -1,3 +1,4 @@
+import { preferenceLocale } from '@/domain/pronunciation-voices';
 import { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
@@ -29,6 +30,8 @@ import { radii, spacing } from '@/theme/tokens';
 const localeDetails: Record<NeuralPronunciationLocale, { title: string; voice: string }> = {
   'en-US': { title: 'English · United States', voice: neuralVoiceLabel('en-US') },
   'en-GB': { title: 'English · United Kingdom', voice: neuralVoiceLabel('en-GB') },
+  'es-ES': { title: 'Spanish · Spain', voice: neuralVoiceLabel('es-ES') },
+  'es-MX': { title: 'Spanish · Mexico', voice: neuralVoiceLabel('es-MX') },
 };
 
 function formatBytes(bytes: number | null) {
@@ -59,12 +62,10 @@ export default function OfflinePronunciationScreen() {
   )}`;
   const prepareManifests = downloads.prepareManifests;
   const [savingVoice, setSavingVoice] = useState(false);
-  const selectedLocale: NeuralPronunciationLocale | null = pronunciationVoicePreference === 'neural-en-US'
-    ? 'en-US'
-    : pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : null;
+  const selectedLocale = preferenceLocale(pronunciationVoicePreference);
   const catalogSenseIds = useMemo(() => [...new Set(words.flatMap((word) => (
-    word.sourceLanguageCode === 'en' && word.catalogSenseId ? [word.catalogSenseId] : []
-  )))], [words]);
+    word.sourceLanguageCode === activeCourse.sourceLanguageCode && word.catalogSenseId ? [word.catalogSenseId] : []
+  )))], [words, activeCourse.sourceLanguageCode]);
   const availableLibraryCount = selectedLocale
     ? catalogSenseIds.filter((id) => downloads.hasAsset(id, selectedLocale)).length
     : 0;
@@ -175,7 +176,7 @@ export default function OfflinePronunciationScreen() {
       <View style={[styles.notice, { backgroundColor: theme.primarySoft }]}>
         <Ionicons name="cloud-download-outline" color={theme.primary} size={22}/>
         <View style={styles.flex}>
-          <AppText>Choose who pronounces your English words. Natural voice audio is downloaded for your library automatically and then works offline.</AppText>
+          <AppText>Choose who pronounces your words. Natural voice audio downloads for your library when available and then works offline.</AppText>
           {downloads.availableDiskBytes != null ? <AppText variant="caption" style={{ color: theme.muted }}>
             {formatBytes(downloads.availableDiskBytes)} available on this device
           </AppText> : null}
@@ -259,7 +260,7 @@ export default function OfflinePronunciationScreen() {
         </AppText>
       </View>
 
-      {OFFLINE_PRONUNCIATION_LOCALES.map((locale) => <LocaleSection
+      {OFFLINE_PRONUNCIATION_LOCALES.filter((locale) => locale.split('-')[0] === activeCourse.sourceLanguageCode).map((locale) => <LocaleSection
         key={locale}
         locale={locale}
         busy={downloads.job !== null || downloads.libraryJob !== null}

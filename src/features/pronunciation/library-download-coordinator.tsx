@@ -1,7 +1,7 @@
+import { preferenceLocale } from '@/domain/pronunciation-voices';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AppState, Platform } from 'react-native';
 
-import type { NeuralPronunciationLocale } from '@/features/pronunciation/cloud';
 import { useOfflinePronunciationDownloads } from '@/features/pronunciation/offline-downloads-provider';
 import { neuralPreviewFeatureEnabled } from '@/features/pronunciation/cloud';
 import { useAppData } from '@/providers/app-data-provider';
@@ -11,12 +11,10 @@ export function PronunciationLibraryDownloadCoordinator() {
   const downloads = useOfflinePronunciationDownloads();
   const [activation, setActivation] = useState(0);
   const attempted = useRef<string | null>(null);
-  const locale: NeuralPronunciationLocale | null = pronunciationVoicePreference === 'neural-en-US'
-    ? 'en-US'
-    : pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : null;
+  const locale = preferenceLocale(pronunciationVoicePreference);
   const catalogSenseIds = useMemo(() => [...new Set(words.flatMap((word) => (
-    word.sourceLanguageCode === 'en' && word.catalogSenseId ? [word.catalogSenseId] : []
-  )))].sort(), [words]);
+    word.sourceLanguageCode === locale?.split('-')[0] && word.catalogSenseId ? [word.catalogSenseId] : []
+  )))].sort(), [words, locale]);
   const packSignature = Object.values(downloads.packs)
     .map((pack) => `${pack.locale}:${pack.level}:${pack.downloadedCount}`)
     .join('|');

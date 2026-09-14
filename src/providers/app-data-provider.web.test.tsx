@@ -1,6 +1,8 @@
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { Pressable, Text } from 'react-native';
 
+import { getCourseCatalogEntry } from '@/data/course-catalog';
+import { calculateCefrProgress } from '@/features/learning/cefr-progress';
 import { buildRecommendations } from '@/features/recommendations/selector';
 
 import { AppDataProvider, useAppData } from './app-data-provider.web';
@@ -64,13 +66,15 @@ function SpanishLookupProbe() {
 
 const mockSavedWords = jest.fn();
 function StarterProbe() {
-  const { activeCourseId, words, switchActiveCourse, completePersonalizedOnboarding, addRecommendedWords } = useAppData();
+  const { activeCourseId, words, switchActiveCourse, completePersonalizedOnboarding, addRecommendedWords, rateWord } = useAppData();
   mockSavedWords(words);
   return <>
     <Text>{`${activeCourseId}:${words.length}`}</Text>
     <Pressable onPress={() => void switchActiveCourse('es-sk')}><Text>Spanish starter</Text></Pressable>
     <Pressable onPress={() => void completePersonalizedOnboarding({ levels: ['A1'], topics: ['spoken'] }, 'device')}><Text>Create starter</Text></Pressable>
     <Pressable onPress={() => void addRecommendedWords(10)}><Text>Next batch</Text></Pressable>
+    <Pressable onPress={() => void completePersonalizedOnboarding({ levels: ['C2'], topics: ['academic'] }, 'device')}><Text>Create C2 starter</Text></Pressable>
+    <Pressable onPress={() => void rateWord(words[0], 'learned')}><Text>Learn first word</Text></Pressable>
   </>;
 }
 
@@ -138,6 +142,35 @@ describe('web app data provider', () => {
     await waitFor(() => view.getByText('es-sk:20'));
     const all = mockSavedWords.mock.calls.at(-1)![0];
     expect(new Set(all.map((word: { catalogSenseId: string }) => word.catalogSenseId)).size).toBe(20);
+  });
+
+  it('adds and studies C2 with exact reviewed hints while preserving existing A1 progress', async () => {
+    const view = await render(<AppDataProvider><StarterProbe/></AppDataProvider>);
+    await fireEvent.press(view.getByText('Spanish starter'));
+    await waitFor(() => view.getByText('es-sk:0'));
+    await fireEvent.press(view.getByText('Create starter'));
+    await waitFor(() => view.getByText('es-sk:10'));
+    await fireEvent.press(view.getByText('Learn first word'));
+    await waitFor(() => expect(mockSavedWords.mock.calls.at(-1)![0][0].state).toBe('learned'));
+    const previous = mockSavedWords.mock.calls.at(-1)![0];
+    await fireEvent.press(view.getByText('Create C2 starter'));
+    await waitFor(() => view.getByText('es-sk:20'));
+    const all = mockSavedWords.mock.calls.at(-1)![0];
+    expect(all.filter((word: { cefrLevel: string }) => word.cefrLevel === 'A1')).toEqual(previous);
+    const c2 = all.filter((word: { cefrLevel: string }) => word.cefrLevel === 'C2');
+    expect(c2).toHaveLength(10);
+    for (const word of c2) {
+      expect(getCourseCatalogEntry('es-sk', word.catalogSenseId)).toMatchObject({
+        definition: word.definition, example: word.example, translation: word.translation, level: 'C2',
+      });
+    }
+    await fireEvent.press(view.getByText('Learn first word'));
+    await waitFor(() => expect(mockSavedWords.mock.calls.at(-1)![0][0].state).toBe('learned'));
+    const studied = mockSavedWords.mock.calls.at(-1)![0];
+    expect(calculateCefrProgress(c2, studied).known).toBe(1);
+    await fireEvent.press(view.getByText('Next batch'));
+    await waitFor(() => view.getByText('es-sk:30'));
+    expect(new Set(mockSavedWords.mock.calls.at(-1)![0].map((word: { catalogSenseId: string }) => word.catalogSenseId)).size).toBe(30);
   });
 
 });

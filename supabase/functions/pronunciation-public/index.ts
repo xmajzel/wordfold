@@ -27,12 +27,12 @@ function createRepository(supabaseAdmin: any) {
     async getCatalogInput(catalogSenseId: string) {
       const { data, error } = await supabaseAdmin
         .from('pronunciation_catalog_inputs')
-        .select('catalog_sense_id,text')
+        .select('catalog_sense_id,text,source_language_code')
         .eq('catalog_sense_id', catalogSenseId)
         .eq('enabled', true)
         .maybeSingle();
       if (error) throw error;
-      return data ? { catalogSenseId: data.catalog_sense_id, text: data.text } : null;
+      return data ? { catalogSenseId: data.catalog_sense_id, text: data.text, sourceLanguageCode: data.source_language_code } : null;
     },
 
     async claim(input: any) {

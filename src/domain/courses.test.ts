@@ -21,7 +21,7 @@ describe('course registry', () => {
       defaultSourcePronunciationLocale: 'es-ES',
       defaultTargetPronunciationLocale: 'sk-SK',
       catalogId: 'spanish-cefr',
-      capabilities: { bundledCatalog: true, devicePronunciation: false },
+      capabilities: { bundledCatalog: true, devicePronunciation: true },
     });
     expect(getCourseDefinition('en-sk').capabilities.devicePronunciation).toBe(true);
   });
@@ -43,7 +43,7 @@ describe('course registry', () => {
   it('exposes pronunciation only for courses with an approved delivery path', () => {
     expect(courseSupportsPronunciation(getCourseDefinition('en-sk'))).toBe(true);
     expect(languagePairSupportsPronunciation('en', 'sk')).toBe(true);
-    expect(wordSupportsPronunciation({ sourceLanguageCode: 'es', targetLanguageCode: 'sk' })).toBe(false);
+    expect(wordSupportsPronunciation({ sourceLanguageCode: 'es', targetLanguageCode: 'sk' })).toBe(true);
     expect(languagePairSupportsPronunciation('es', 'en')).toBe(true);
   });
 });

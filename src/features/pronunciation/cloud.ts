@@ -1,15 +1,16 @@
 import { FunctionsHttpError, type SupabaseClient } from '@supabase/supabase-js';
 
-import { getCefrEntry } from '@/data/cefr-catalog';
+import { getCourseCatalogEntry } from '@/data/course-catalog';
+import { neuralVoices, isNeuralLocale, type NeuralLocale } from '@/domain/pronunciation-voices';
 
 export const NEURAL_SYNTHESIS_VERSION = 'azure-public-preview-v1';
 export const NEURAL_CONTENT_TYPE = 'audio/mpeg';
 export const NEURAL_MAXIMUM_BYTES = 1_048_576;
 
-export type NeuralPronunciationLocale = 'en-US' | 'en-GB';
+export type NeuralPronunciationLocale = NeuralLocale;
 
 export function neuralVoiceLabel(locale: NeuralPronunciationLocale) {
-  return locale === 'en-US' ? 'Ava · US English' : 'Ryan · UK English';
+  return neuralVoices[locale].label;
 }
 
 export type NeuralPronunciationAsset = {
@@ -73,10 +74,10 @@ export function getNeuralPronunciationEligibility(input: NeuralEligibilityInput)
 } | null {
   const enabled = input.featureEnabled ?? neuralPreviewFeatureEnabled();
   if (!enabled
-    || input.sourceLanguageCode !== 'en'
-    || (input.locale !== 'en-US' && input.locale !== 'en-GB')
+    || !isNeuralLocale(input.locale)
+    || input.locale.split('-')[0] !== input.sourceLanguageCode
     || !input.catalogSenseId) return null;
-  const entry = getCefrEntry(input.catalogSenseId);
+  const entry = getCourseCatalogEntry(neuralVoices[input.locale].courseId, input.catalogSenseId);
   if (!entry || entry.term !== input.text) return null;
   return { catalogSenseId: entry.catalogSenseId, locale: input.locale };
 }

@@ -155,7 +155,7 @@ export default function SettingsScreen() {
         <View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="cloud-download-outline" color={theme.primary} size={24}/></View>
         <View style={styles.flex}>
           <AppText variant="heading">Offline pronunciation</AppText>
-          <AppText variant="caption" style={{ color: theme.muted }}>Download US or UK neural voices by CEFR level</AppText>
+          <AppText variant="caption" style={{ color: theme.muted }}>Download neural voices for this course by CEFR level</AppText>
         </View>
         <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
       </Pressable>}
@@ -190,7 +190,7 @@ function PrivatePronunciationSettingsCard() {
   if (!privateNeuralPreviewFeatureEnabled()
     && (consent.status === 'disabled' || consent.status === 'loading')) return null;
   const detail = consent.status === 'enabled'
-    ? 'On · private neural voice for US English, UK English, and Slovak'
+    ? 'On · private neural voice for US English, UK English, Spanish, and Slovak'
     : consent.status === 'deletion_pending'
       ? 'Off · private audio deletion needs attention'
       : consent.status === 'loading'

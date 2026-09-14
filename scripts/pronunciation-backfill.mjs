@@ -7,12 +7,13 @@ import { resolve } from 'node:path';
 import process from 'node:process';
 import { createInterface } from 'node:readline/promises';
 import { pathToFileURL } from 'node:url';
+import { loadSpanishPronunciationCatalog } from './spanish-pronunciation-catalog.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const CATALOG_PATH = resolve(ROOT, 'assets/catalog/cefr-catalog.json');
 const MANIFEST_PATH = resolve(ROOT, 'assets/catalog/cefr-catalog-manifest.json');
-const CHECKPOINT_PATH = resolve(ROOT, '.artifacts/pronunciation-backfill/checkpoint.json');
-const ATTEMPT_JOURNAL_PATH = resolve(ROOT, '.artifacts/pronunciation-backfill/attempts.ndjson');
+let CHECKPOINT_PATH = resolve(ROOT, '.artifacts/pronunciation-backfill/checkpoint.json');
+let ATTEMPT_JOURNAL_PATH = resolve(ROOT, '.artifacts/pronunciation-backfill/attempts.ndjson');
 const SUPABASE_BIN = resolve(ROOT, 'node_modules/.bin/supabase');
 
 export const CATALOG_SHA256 = '7a2bddcc85b7c638af7acef0209763871a8b94d37b4dbf4eee71bc458301ed8b';
@@ -264,7 +265,7 @@ export async function executeBackfill({
 
 export async function createAttemptBudget(plan, journalPath, maxCostUsd) {
   const maximumCharacters = Math.floor(
-    maxCostUsd * 1_000_000 / PRICE_USD_PER_MILLION_CHARACTERS,
+    maxCostUsd * 1_000_000 / (plan.priceUsdPerMillionCharacters ?? PRICE_USD_PER_MILLION_CHARACTERS),
   );
   const characterByKey = new Map(plan.entries.flatMap((entry) => plan.locales.map((locale) => [
     workKey(entry.catalogSenseId, locale),
@@ -576,8 +577,8 @@ function assertPaidExecution(options, plan) {
   if (!Number.isFinite(maximum) || maximum <= 0) {
     throw new Error('--max-cost-usd must be a positive number.');
   }
-  if (maximum > HARD_COST_CEILING_USD) {
-    throw new Error(`--max-cost-usd cannot exceed the hard $${HARD_COST_CEILING_USD} ceiling.`);
+  if (maximum > plan.hardCostCeilingUsd) {
+    throw new Error(`--max-cost-usd cannot exceed the hard $${plan.hardCostCeilingUsd} ceiling.`);
   }
   if (plan.estimatedCostUsd > maximum) {
     throw new Error(`Estimated $${plan.estimatedCostUsd} cost exceeds the supplied $${maximum} cap.`);
@@ -593,7 +594,7 @@ Commands:
   restore-limits
 
 Only run --execute can contact the pronunciation function and incur Azure usage.
-The runner is pinned to 8,300 catalog entries, en-US + en-GB, concurrency 4, and a $2 ceiling.`);
+English defaults to its pinned 8,300 entries. Add --course es-sk for the pinned Spanish A1–C2 catalog. Concurrency is 4; hard ceilings are $2 for English and $5 for Spanish.`);
 }
 
 async function main() {
@@ -609,7 +610,23 @@ async function main() {
     return;
   }
   const catalogPath = options.catalog ? resolve(options.catalog) : CATALOG_PATH;
-  const plan = await loadPlan(catalogPath);
+  if (options.course && !['en-sk', 'es-sk'].includes(options.course)) throw new Error('Unsupported course.');
+  let plan;
+  if (options.course === 'es-sk') {
+    if (options.catalog) throw new Error('Spanish uses the pinned course catalog.');
+    const catalog = await loadSpanishPronunciationCatalog();
+    const charactersPerLocale = catalog.entries.reduce((total, entry) => total + entry.term.length, 0);
+    plan = {
+      schemaVersion: 1, catalogSha256: catalog.catalogSha256, synthesisVersion: SYNTHESIS_VERSION,
+      locales: ['es-ES', 'es-MX'], catalogEntries: catalog.entries.length, requests: catalog.entries.length * 2,
+      charactersPerLocale, billableCharacters: charactersPerLocale * 2,
+      priceUsdPerMillionCharacters: 30, estimatedCostUsd: charactersPerLocale * 2 * 30 / 1_000_000,
+      hardCostCeilingUsd: 5, entries: catalog.entries,
+    };
+    CHECKPOINT_PATH = resolve(ROOT, '.artifacts/spanish-pronunciation-backfill/checkpoint.json');
+    ATTEMPT_JOURNAL_PATH = resolve(ROOT, '.artifacts/spanish-pronunciation-backfill/attempts.ndjson');
+  } else plan = await loadPlan(catalogPath);
+  delete options.course;
   if (command === 'plan') {
     assertOptions(options, ['json', 'catalog']);
     if (options.json) console.log(JSON.stringify(publicPlan(plan), null, 2));

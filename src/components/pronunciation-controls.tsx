@@ -1,3 +1,4 @@
+import { preferenceLocale } from '@/domain/pronunciation-voices';
 import { useState } from 'react';
 import { ActivityIndicator, Platform, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
@@ -36,11 +37,9 @@ export function PronunciationControls(props: PronunciationControlsProps) {
   const cacheScope = usePronunciationCacheScope();
   const offlineDownloads = useOfflinePronunciationDownloads();
   const [failedNaturalKey, setFailedNaturalKey] = useState<string | null>(null);
-  const naturalVoiceSelected = pronunciationVoicePreference !== 'device';
-  const preferredLocale = props.sourceLanguageCode === 'en'
-    ? pronunciationVoicePreference === 'neural-en-US' ? 'en-US'
-      : pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : props.locale
-    : props.locale;
+  const selectedLocale = preferenceLocale(pronunciationVoicePreference);
+  const naturalVoiceSelected = selectedLocale !== null && selectedLocale.split('-')[0] === props.sourceLanguageCode;
+  const preferredLocale = selectedLocale?.split('-')[0] === props.sourceLanguageCode ? selectedLocale : props.locale;
   const effectiveProps = { ...props, locale: preferredLocale };
   const publicEligibility = Platform.OS === 'web' ? null : getNeuralPronunciationEligibility(effectiveProps);
   const naturalVoiceAvailable = naturalVoiceSelected && publicEligibility !== null
@@ -67,7 +66,7 @@ export function PronunciationControls(props: PronunciationControlsProps) {
     {!naturalVoiceAvailable || showDeviceFallback ? <PronunciationButton
       text={props.text}
       active={active}
-      locale={props.locale}
+      locale={props.sourceLanguageCode === 'es' ? preferredLocale : props.locale}
       compact={showDeviceFallback || props.compact}
       idleLabel={showDeviceFallback ? 'Use phone voice instead' : 'Phone voice'}
     /> : null}

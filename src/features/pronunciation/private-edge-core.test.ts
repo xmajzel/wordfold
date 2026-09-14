@@ -123,6 +123,8 @@ describe('private pronunciation Edge Function core', () => {
   it.each([
     ['en-US', 'en-US-AvaNeural'],
     ['en-GB', 'en-GB-RyanNeural'],
+    ['es-ES', 'es-ES-ElviraNeural'],
+    ['es-MX', 'es-MX-JorgeNeural'],
     ['sk-SK', 'sk-SK-ViktoriaNeural'],
   ] as const)('generates %s with its pinned private voice without persisting raw text', async (
     locale,

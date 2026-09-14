@@ -56,14 +56,14 @@ select is(
 );
 
 select is(
-  (select count(*) from public.pronunciation_catalog_inputs),
+  (select count(*) from public.pronunciation_catalog_inputs where source_language_code = 'en'),
   8300::bigint,
   'the deterministic migration seeds all public CEFR pronunciation inputs'
 );
 select is(
-  (select count(distinct catalog_sha256) from public.pronunciation_catalog_inputs),
+  (select count(distinct catalog_sha256) from public.pronunciation_catalog_inputs where source_language_code = 'en'),
   1::bigint,
-  'all seeded pronunciation inputs identify one exact catalog build'
+  'English pronunciation inputs identify one exact catalog build'
 );
 
 select ok(

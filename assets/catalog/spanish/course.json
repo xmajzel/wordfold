@@ -7,7 +7,7 @@
   "targetLanguageCode": "sk",
   "title": "Wordfold Spanish A1–C2 vocabulary catalog",
   "reviewDisclosure": "Spanish definitions are generated and automatically verified against reference sources; they have not been reviewed by native Spanish speakers. Slovak hints are checked against linked lexical references where available and independently AI cross-reviewed; they have not been reviewed by native Slovak speakers. Flagged A1 hints carry AI-assisted, owner-accepted verdicts. Spanish–Slovak sense correspondence has not been verified by a native bilingual reviewer.",
-  "pronunciationEnabled": false,
+  "pronunciationEnabled": true,
   "counts": {
     "concepts": 6689,
     "terms": 6887,

@@ -10,12 +10,13 @@ import {
 } from 'react';
 import { Platform } from 'react-native';
 
-import { getCefrEntries, getCefrEntry } from '@/data/cefr-catalog';
+import { pronunciationEntries, pronunciationEntry } from './catalog';
 import { cefrLevels } from '@/data/cefr-levels';
 import type { CefrLevel } from '@/domain/types';
 import type { NeuralPronunciationLocale } from '@/features/pronunciation/cloud';
 import {
   fetchOfflineManifestIndex,
+  spanishManifestConfigured,
   fetchOfflineManifestShard,
 } from '@/features/pronunciation/offline-manifest';
 import {
@@ -34,7 +35,7 @@ import {
   type OfflinePackPlan,
 } from '@/features/pronunciation/offline-store';
 
-export const OFFLINE_PRONUNCIATION_LOCALES = ['en-US', 'en-GB'] as const;
+export const OFFLINE_PRONUNCIATION_LOCALES = ['en-US', 'en-GB', 'es-ES', 'es-MX'] as const;
 
 export type OfflinePackViewState = Omit<OfflinePackInspection, 'plan' | 'availableCatalogSenseIds'>;
 export type OfflineLibraryViewState = Omit<OfflineLibraryInspection, 'availableCatalogSenseIds'>;
@@ -91,7 +92,7 @@ function emptyPacks() {
       locale,
       level,
       state: 'not_downloaded' as const,
-      assetCount: getCefrEntries(level).length,
+      assetCount: pronunciationEntries(locale, level).length,
       totalAudioBytes: null,
       downloadedCount: 0,
       downloadedBytes: 0,
@@ -118,6 +119,8 @@ export function OfflinePronunciationDownloadsProvider({ children }: { children: 
   const [library, setLibrary] = useState<Record<NeuralPronunciationLocale, OfflineLibraryViewState>>({
     'en-US': { locale: 'en-US', requiredCount: 0, requiredBytes: 0, downloadedCount: 0, downloadedBytes: 0 },
     'en-GB': { locale: 'en-GB', requiredCount: 0, requiredBytes: 0, downloadedCount: 0, downloadedBytes: 0 },
+    'es-ES': { locale: 'es-ES', requiredCount: 0, requiredBytes: 0, downloadedCount: 0, downloadedBytes: 0 },
+    'es-MX': { locale: 'es-MX', requiredCount: 0, requiredBytes: 0, downloadedCount: 0, downloadedBytes: 0 },
   });
   const [libraryJob, setLibraryJob] = useState<OfflineLibraryDownloadJob | null>(null);
   const [libraryError, setLibraryError] = useState<string | null>(null);
@@ -183,12 +186,17 @@ export function OfflinePronunciationDownloadsProvider({ children }: { children: 
       setPreparing(true);
       setPreparationError(null);
       try {
-        const index = await fetchOfflineManifestIndex();
-        const shards = await Promise.all(OFFLINE_PRONUNCIATION_LOCALES.map(async (locale) => ({
-          locale,
-          shard: await fetchOfflineManifestShard(index, locale),
-          sha256: index.shards[locale].sha256,
-        })));
+        const courses = spanishManifestConfigured() ? ['en-sk', 'es-sk'] as const : ['en-sk'] as const;
+        const results = await Promise.allSettled(courses.map(async courseId => {
+          const index = courseId === 'en-sk' ? await fetchOfflineManifestIndex() : await fetchOfflineManifestIndex(fetch, courseId);
+          const locales = OFFLINE_PRONUNCIATION_LOCALES.filter(locale => locale.startsWith(courseId === 'es-sk' ? 'es-' : 'en-'));
+          return Promise.all(locales.map(async locale => ({
+            locale,
+            shard: await fetchOfflineManifestShard(index, locale),
+            sha256: index.shards[locale]!.sha256,
+          })));
+        }));
+        const shards = results.flatMap(result => result.status === 'fulfilled' ? result.value : []);
         for (const { locale, shard, sha256 } of shards) {
           shardsRef.current.set(locale, { shard, sha256 });
           for (const level of cefrLevels) {
@@ -215,6 +223,8 @@ export function OfflinePronunciationDownloadsProvider({ children }: { children: 
             }));
           }
         }
+        const failure = results.find(result => result.status === 'rejected');
+        if (failure?.status === 'rejected') throw failure.reason;
       } catch (error) {
         setPreparationError(errorMessage(error));
         throw error;
@@ -232,8 +242,11 @@ export function OfflinePronunciationDownloadsProvider({ children }: { children: 
     locale: NeuralPronunciationLocale,
     levels: CefrLevel[],
   ) => {
+    if (locale.startsWith('es-') && !spanishManifestConfigured()) throw new Error('Spanish pronunciation downloads are not available yet.');
     if (levels.some((level) => !plansRef.current.has(offlinePackKey(locale, level)))) {
-      await prepareManifests();
+      await prepareManifests().catch(error => {
+        if (levels.some(level => !plansRef.current.has(offlinePackKey(locale, level)))) throw error;
+      });
     }
     return levels.map((level) => {
       const plan = plansRef.current.get(offlinePackKey(locale, level));
@@ -356,17 +369,20 @@ export function OfflinePronunciationDownloadsProvider({ children }: { children: 
         applyLibraryInspection(await inspectOfflineLibrary(locale));
         return;
       }
-      if (!shardsRef.current.has(locale)) await prepareManifests();
+      if (locale.startsWith('es-') && !spanishManifestConfigured()) throw new Error('Spanish pronunciation downloads are not available yet.');
+      if (!shardsRef.current.has(locale)) await prepareManifests().catch(error => {
+        if (!shardsRef.current.has(locale)) throw error;
+      });
       const manifest = shardsRef.current.get(locale);
       if (!manifest) throw new Error(`The ${locale} pronunciation manifest is unavailable.`);
       const uniqueIds = [...new Set(catalogSenseIds)];
       const relevantLevels = [...new Set(uniqueIds.flatMap((id) => {
-        const entry = getCefrEntry(id);
+        const entry = pronunciationEntry(locale, id);
         return entry ? [entry.level] : [];
       }))];
       await Promise.all(relevantLevels.map((level) => refreshPack(locale, level)));
       const desired = uniqueIds.filter((id) => {
-        const entry = getCefrEntry(id);
+        const entry = pronunciationEntry(locale, id);
         return entry && !inspectionsRef.current
           .get(offlinePackKey(locale, entry.level))
           ?.availableCatalogSenseIds.includes(id);
@@ -423,7 +439,7 @@ export function OfflinePronunciationDownloadsProvider({ children }: { children: 
   }, [applyLibraryInspection]);
 
   const hasAsset = useCallback((catalogSenseId: string, locale: NeuralPronunciationLocale) => {
-    const entry = getCefrEntry(catalogSenseId);
+    const entry = pronunciationEntry(locale, catalogSenseId);
     if (!entry) return false;
     return inspectionsRef.current
       .get(offlinePackKey(locale, entry.level))

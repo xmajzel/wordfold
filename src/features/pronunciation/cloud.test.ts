@@ -1,3 +1,4 @@
+import { getCourseCatalogEntries } from '@/data/course-catalog';
 import {
   getNeuralPronunciationEligibility,
   isExpectedPronunciationPublicUrl,
@@ -73,4 +74,15 @@ describe('neural pronunciation cloud contract', () => {
       body: { catalogSenseId: 'wordfold:scope:business', locale: 'en-US' },
     });
   });
+});
+
+it.each(['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const)('supports the canonical Spanish %s term in both Spanish regions only', level => {
+  const entry = getCourseCatalogEntries('es-sk', level)[0];
+  expect(entry).toBeDefined();
+  for (const locale of ['es-ES', 'es-MX']) {
+    const input = { text: entry.term, catalogSenseId: entry.catalogSenseId, sourceLanguageCode: 'es', locale, featureEnabled: true };
+    expect(getNeuralPronunciationEligibility(input)).toEqual({ catalogSenseId: entry.catalogSenseId, locale });
+    expect(getNeuralPronunciationEligibility({ ...input, text: entry.term + ' alterado' })).toBeNull();
+    expect(getNeuralPronunciationEligibility({ ...input, locale: 'en-US' })).toBeNull();
+  }
 });

@@ -1,3 +1,4 @@
+import { voiceSupportsCourse } from '@/domain/pronunciation-voices';
 import type { SQLiteDatabase } from 'expo-sqlite';
 
 import { defaultCourseId, getCourseDefinition, isCourseId, type CourseId } from '@/domain/courses';
@@ -398,7 +399,7 @@ export async function saveLearningPreferences(
 }
 
 export function isPronunciationVoicePreference(value: unknown): value is PronunciationVoicePreference {
-  return value === 'device' || value === 'neural-en-US' || value === 'neural-en-GB';
+  return value === 'device' || value === 'neural-en-US' || value === 'neural-en-GB' || value === 'neural-es-ES' || value === 'neural-es-MX';
 }
 
 export async function getPronunciationVoicePreference(
@@ -409,12 +410,12 @@ export async function getPronunciationVoicePreference(
     'SELECT value FROM app_metadata WHERE key = ?',
     courseMetadataKey('pronunciation_voice_preference', courseId),
   );
-  if (isPronunciationVoicePreference(courseRow?.value)) return courseRow.value;
+  if (isPronunciationVoicePreference(courseRow?.value) && voiceSupportsCourse(courseRow.value, courseId)) return courseRow.value;
   if (courseId !== defaultCourseId) return 'device';
   const legacyRow = await database.getFirstAsync<{ value: string }>(
     "SELECT value FROM app_metadata WHERE key = 'pronunciation_voice_preference'",
   );
-  return isPronunciationVoicePreference(legacyRow?.value) ? legacyRow.value : 'device';
+  return isPronunciationVoicePreference(legacyRow?.value) && voiceSupportsCourse(legacyRow.value, courseId) ? legacyRow.value : 'device';
 }
 
 export async function savePronunciationVoicePreference(
@@ -423,7 +424,7 @@ export async function savePronunciationVoicePreference(
   courseId: CourseId = defaultCourseId,
 ) {
   if (!isPronunciationVoicePreference(preference)) throw new Error('Choose a supported pronunciation voice.');
-  if (courseId !== defaultCourseId && preference !== 'device') {
+  if (!voiceSupportsCourse(preference, courseId)) {
     throw new Error(`Choose a pronunciation voice supported by ${getCourseDefinition(courseId).displayName}.`);
   }
   await database.runAsync(

@@ -1,3 +1,4 @@
+import { preferenceLocale } from '@/domain/pronunciation-voices';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -25,7 +26,7 @@ import { radii, spacing } from '@/theme/tokens';
 export default function NewWordScreen() {
   const theme = useAppTheme();
   const { words, collections, findSenses, createWord, pronunciationVoicePreference, activeCourse } = useAppData();
-  const preferredEnglishLocale = pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : 'en-US';
+  const preferredLocale = preferenceLocale(pronunciationVoicePreference);
   const [collectionId, setCollectionId] = useState(collections[0]?.id ?? 'my-words');
   const [term, setTerm] = useState('');
   const [translation, setTranslation] = useState('');
@@ -38,9 +39,7 @@ export default function NewWordScreen() {
   const [sourceLanguageCode, setSourceLanguageCode] = useState(activeCourse.sourceLanguageCode);
   const [targetLanguageCode, setTargetLanguageCode] = useState(activeCourse.targetLanguageCode);
   const [sourcePronunciationLocale, setSourcePronunciationLocale] = useState(
-    activeCourse.sourceLanguageCode === 'en'
-      ? preferredEnglishLocale
-      : activeCourse.defaultSourcePronunciationLocale,
+    preferredLocale ?? activeCourse.defaultSourcePronunciationLocale,
   );
   const [targetPronunciationLocale, setTargetPronunciationLocale] = useState(
     activeCourse.defaultTargetPronunciationLocale,
@@ -147,7 +146,7 @@ export default function NewWordScreen() {
     translationController.current?.abort();
     const languageChanged = languageCode !== sourceLanguageCode;
     setSourceLanguageCode(languageCode);
-    setSourcePronunciationLocale(languageCode === 'en' ? preferredEnglishLocale : locale);
+    setSourcePronunciationLocale(languageChanged && preferredLocale?.split('-')[0] === languageCode ? preferredLocale : locale);
     if (!languageChanged) return;
     setSenses([]); setSelectedSenseId(null); setHasLookedUp(false);
     setDefinition(''); setExample(''); setPartOfSpeech('');
@@ -168,7 +167,7 @@ export default function NewWordScreen() {
   return (
     <Screen scroll>
       <ModalHeader title="Add a word" />
-      <LanguageSelector label="Learning language" languageCode={sourceLanguageCode} pronunciationLocale={sourcePronunciationLocale} allowedLanguageCodes={[activeCourse.sourceLanguageCode]} allowedPronunciationLocales={activeCourse.sourceLanguageCode === 'es' ? ['es-ES'] : undefined} onChange={changeSourceLanguage}/>
+      <LanguageSelector label="Learning language" languageCode={sourceLanguageCode} pronunciationLocale={sourcePronunciationLocale} allowedLanguageCodes={[activeCourse.sourceLanguageCode]} onChange={changeSourceLanguage}/>
       <LanguageSelector label="Hint language" languageCode={targetLanguageCode} pronunciationLocale={targetPronunciationLocale} allowedLanguageCodes={[activeCourse.targetLanguageCode]} onChange={changeTargetLanguage}/>
       <FormField label={`${languageLabel(sourceLanguageCode)} word or phrase`} value={term} onChangeText={(value) => { translationController.current?.abort(); setTerm(value); setSenses([]); setSelectedSenseId(null); setHasLookedUp(false); }} placeholder={sourceLanguageCode === 'es' ? 'corazón' : 'stakeholder'} autoCapitalize="none" returnKeyType="search" onSubmitEditing={() => void lookup()}/>
       {canLookupCatalog

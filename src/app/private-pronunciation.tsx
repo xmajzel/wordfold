@@ -119,7 +119,7 @@ export default function PrivatePronunciationScreen() {
       <DisclosureRow
         icon="language-outline"
         title="Current coverage"
-        body="The private neural preview currently supports US English, UK English, and Slovak. Its voices are synthetic learning references, not human recordings."
+        body="The private neural preview currently supports US English, UK English, Spain Spanish, Mexico Spanish, and Slovak. Its voices are synthetic learning references, not human recordings."
       />
       <DisclosureRow
         icon="trash-outline"

@@ -20,6 +20,8 @@ export const PRIVATE_SIGNED_URL_SECONDS = 60;
 export const PRIVATE_VOICES = {
   'en-US': 'en-US-AvaNeural',
   'en-GB': 'en-GB-RyanNeural',
+  'es-ES': 'es-ES-ElviraNeural',
+  'es-MX': 'es-MX-JorgeNeural',
   'sk-SK': 'sk-SK-ViktoriaNeural',
 } as const;
 

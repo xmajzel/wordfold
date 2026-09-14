@@ -102,7 +102,7 @@ export function validateSpanishCourseAsset(asset: SpanishCourseAsset) {
   assert(asset.status === 'non-distributable-staging' || asset.status === 'production', 'Invalid Spanish course status.');
   assert(asset.status !== 'production' || !asset.distributionBlocker, 'A production Spanish course cannot retain a distribution blocker.');
   assert(asset.reviewDisclosure === SPANISH_DEFINITION_REVIEW_DISCLOSURE, 'Spanish review disclosure must use the approved wording.');
-  assert(asset.pronunciationEnabled === false, 'Spanish pronunciation must remain disabled.');
+  assert(typeof asset.pronunciationEnabled === 'boolean', 'Invalid Spanish pronunciation capability.');
   assert(asset.levels.A1 === (asset.status === 'production' ? 'available' : 'blocked-pending-owner-review'), 'A1 availability does not match the asset status.');
   assert(['available', 'unavailable-no-elelex-source-level'].includes(asset.levels.C2), 'Invalid Spanish C2 availability.');
   if (asset.levels.C2 === 'available') {

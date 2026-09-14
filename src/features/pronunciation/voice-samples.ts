@@ -13,6 +13,8 @@ export const BUNDLED_VOICE_SAMPLE_TEXT = 'Hello! Learning a new language opens t
 const sampleModules: Record<NeuralPronunciationLocale, number> = {
   'en-US': require('../../../assets/pronunciation/voice-samples/ava-en-US.mp3'),
   'en-GB': require('../../../assets/pronunciation/voice-samples/ryan-en-GB.mp3'),
+  'es-ES': require('../../../assets/pronunciation/voice-samples/elvira-es-ES.mp3'),
+  'es-MX': require('../../../assets/pronunciation/voice-samples/jorge-es-MX.mp3'),
 };
 
 const sampleAssets = new Map<NeuralPronunciationLocale, Promise<Asset>>();

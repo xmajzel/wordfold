@@ -1,3 +1,4 @@
+import { preferenceLocale } from '@/domain/pronunciation-voices';
 import { useMemo, useState } from 'react';
 import { Alert, FlatList, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -32,9 +33,7 @@ export default function CefrLevelScreen() {
   const {
     words, collections, activeCourse, activeCourseId, createWord, pronunciationVoicePreference,
   } = useAppData();
-  const preferredSourceLocale = activeCourseId === 'en-sk' && pronunciationVoicePreference === 'neural-en-GB'
-    ? 'en-GB'
-    : activeCourse.defaultSourcePronunciationLocale;
+  const preferredSourceLocale = preferenceLocale(pronunciationVoicePreference) ?? activeCourse.defaultSourcePronunciationLocale;
   const learnedLanguage = languageLabel(activeCourse.sourceLanguageCode);
   const [query, setQuery] = useState('');
   const [busyId, setBusyId] = useState<string | null>(null);

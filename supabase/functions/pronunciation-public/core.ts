@@ -9,6 +9,8 @@ export const MAX_REQUEST_BYTES = 1_024;
 export const VOICES = {
   'en-US': 'en-US-AvaNeural',
   'en-GB': 'en-GB-RyanNeural',
+  'es-ES': 'es-ES-ElviraNeural',
+  'es-MX': 'es-MX-JorgeNeural',
 } as const;
 
 export type PronunciationLocale = keyof typeof VOICES;
@@ -25,6 +27,7 @@ export type FailureCode =
 export type CatalogInput = {
   catalogSenseId: string;
   text: string;
+  sourceLanguageCode?: string;
 };
 
 export type AssetRecord = {
@@ -183,9 +186,13 @@ export async function createRequestKey(
   text: string,
   locale: PronunciationLocale,
   voiceId = VOICES[locale],
+  catalogSenseId?: string,
 ): Promise<string> {
+  if (locale.startsWith('es-') && !catalogSenseId) throw new SafePronunciationError('internal', 500);
   return sha256Hex(JSON.stringify({
     synthesisVersion: SYNTHESIS_VERSION,
+    // Spanish contains homographs with distinct catalog identities. Keep each manifest row addressable.
+    ...(locale.startsWith('es-') ? { catalogSenseId } : {}),
     text,
     locale,
     provider: PROVIDER,
@@ -256,7 +263,8 @@ export async function handlePronunciationRequest(
   let activeLease: { requestKey: string; leaseToken: string } | null = null;
   try {
     const canonical = await dependencies.repository.getCatalogInput(parsed.catalogSenseId);
-    if (!canonical || canonical.catalogSenseId !== parsed.catalogSenseId) {
+    if (!canonical || canonical.catalogSenseId !== parsed.catalogSenseId
+      || (canonical.sourceLanguageCode ?? 'en') !== parsed.locale.split('-')[0]) {
       return errorResponse('not_found', 404);
     }
     if (canonical.text.length < 1 || canonical.text.length > 200 || canonical.text !== canonical.text.trim()) {
@@ -264,7 +272,7 @@ export async function handlePronunciationRequest(
     }
 
     const voiceId = VOICES[parsed.locale];
-    const requestKey = await createRequestKey(canonical.text, parsed.locale, voiceId);
+    const requestKey = await createRequestKey(canonical.text, parsed.locale, voiceId, canonical.catalogSenseId);
     const asset = await dependencies.repository.claim({
       catalogSenseId: canonical.catalogSenseId,
       locale: parsed.locale,

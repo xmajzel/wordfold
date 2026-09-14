@@ -17,7 +17,7 @@ export interface LearningPreferences {
   topics: ContentPackId[];
 }
 
-export type PronunciationVoicePreference = 'device' | 'neural-en-US' | 'neural-en-GB';
+export type PronunciationVoicePreference = 'device' | 'neural-en-US' | 'neural-en-GB' | 'neural-es-ES' | 'neural-es-MX';
 
 export interface CefrCatalogEntry {
   id: string;

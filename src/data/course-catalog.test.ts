@@ -46,7 +46,7 @@ describe('course-aware catalog', () => {
     expect(() => validateSpanishCourseAsset(asset)).not.toThrow();
     expect(asset).toMatchObject({
       status: 'production',
-      pronunciationEnabled: false,
+      pronunciationEnabled: true,
       counts: { concepts: 6689, terms: 6887, ownerVerdictRequiredConcepts: 47, ownerPendingConcepts: 0 },
     });
   });

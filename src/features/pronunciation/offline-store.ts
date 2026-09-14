@@ -1,7 +1,7 @@
 import { Directory, File, Paths } from 'expo-file-system';
 import * as Crypto from 'expo-crypto';
 
-import { getCefrEntries, getCefrEntry } from '@/data/cefr-catalog';
+import { pronunciationEntries, pronunciationEntry } from './catalog';
 import type { CefrLevel } from '@/domain/types';
 import {
   NEURAL_MAXIMUM_BYTES,
@@ -10,7 +10,7 @@ import {
 } from '@/features/pronunciation/cloud';
 import { PRONUNCIATION_CACHE_DIRECTORY } from '@/features/pronunciation/cache';
 import {
-  OFFLINE_MANIFEST_CATALOG_SHA256,
+  pronunciationCatalogHash,
   offlineAudioPublicUrl,
   type OfflineManifestAsset,
   type OfflineManifestShard,
@@ -29,7 +29,7 @@ const LIBRARY_INDEX_FILE_NAME = 'index.json';
 
 export type OfflinePackPlan = {
   schemaVersion: typeof OFFLINE_PACK_SCHEMA_VERSION;
-  catalogSha256: typeof OFFLINE_MANIFEST_CATALOG_SHA256;
+  catalogSha256: string;
   synthesisVersion: typeof NEURAL_SYNTHESIS_VERSION;
   shardSha256: string;
   locale: NeuralPronunciationLocale;
@@ -70,7 +70,7 @@ export type OfflineLibraryInspection = {
 
 type OfflineLibraryIndex = {
   schemaVersion: typeof OFFLINE_LIBRARY_SCHEMA_VERSION;
-  catalogSha256: typeof OFFLINE_MANIFEST_CATALOG_SHA256;
+  catalogSha256: string;
   synthesisVersion: typeof NEURAL_SYNTHESIS_VERSION;
   shardSha256: string;
   locale: NeuralPronunciationLocale;
@@ -95,8 +95,8 @@ function hasExactKeys(value: Record<string, unknown>, expected: string[]) {
   return Object.keys(value).sort().join(',') === [...expected].sort().join(',');
 }
 
-function expectedCatalogSenseIds(level: CefrLevel) {
-  return getCefrEntries(level).map((entry) => entry.catalogSenseId).sort();
+function expectedCatalogSenseIds(locale: NeuralPronunciationLocale, level: CefrLevel) {
+  return pronunciationEntries(locale, level).map((entry) => entry.catalogSenseId).sort();
 }
 
 function packDirectory(locale: NeuralPronunciationLocale, level: CefrLevel) {
@@ -182,7 +182,7 @@ function parseStoredPlan(value: unknown, locale: NeuralPronunciationLocale, leve
     'schemaVersion', 'catalogSha256', 'synthesisVersion', 'shardSha256',
     'locale', 'level', 'assetCount', 'totalAudioBytes', 'assets',
   ]) || value.schemaVersion !== OFFLINE_PACK_SCHEMA_VERSION
-    || value.catalogSha256 !== OFFLINE_MANIFEST_CATALOG_SHA256
+    || value.catalogSha256 !== pronunciationCatalogHash(locale)
     || value.synthesisVersion !== NEURAL_SYNTHESIS_VERSION
     || value.locale !== locale
     || value.level !== level
@@ -192,7 +192,7 @@ function parseStoredPlan(value: unknown, locale: NeuralPronunciationLocale, leve
     || !Number.isInteger(value.totalAudioBytes)
     || !Array.isArray(value.assets)) return null;
 
-  const expectedIds = expectedCatalogSenseIds(level);
+  const expectedIds = expectedCatalogSenseIds(locale, level);
   if (value.assetCount !== expectedIds.length || value.assets.length !== expectedIds.length) return null;
   const assets: OfflineManifestAsset[] = [];
   const contentHashes = new Set<string>();
@@ -286,7 +286,7 @@ function parseStoredLibraryIndex(
   if (!isPlainObject(value) || !hasExactKeys(value, [
     'schemaVersion', 'catalogSha256', 'synthesisVersion', 'shardSha256', 'locale', 'assets',
   ]) || value.schemaVersion !== OFFLINE_LIBRARY_SCHEMA_VERSION
-    || value.catalogSha256 !== OFFLINE_MANIFEST_CATALOG_SHA256
+    || value.catalogSha256 !== pronunciationCatalogHash(locale)
     || value.synthesisVersion !== NEURAL_SYNTHESIS_VERSION
     || value.locale !== locale
     || typeof value.shardSha256 !== 'string'
@@ -298,7 +298,7 @@ function parseStoredLibraryIndex(
   for (const tuple of value.assets) {
     if (!Array.isArray(tuple) || tuple.length !== 4) return null;
     const [catalogSenseId, contentHash, sha256, byteLength] = tuple;
-    if (typeof catalogSenseId !== 'string' || !getCefrEntry(catalogSenseId)
+    if (typeof catalogSenseId !== 'string' || !pronunciationEntry(locale, catalogSenseId)
       || ids.has(catalogSenseId)
       || typeof contentHash !== 'string' || !SHA256_PATTERN.test(contentHash)
       || hashes.has(contentHash)
@@ -416,7 +416,7 @@ export async function reconcileOfflineLibrary(
   const exactAssets = assets as OfflineManifestAsset[];
   const index: OfflineLibraryIndex = {
     schemaVersion: OFFLINE_LIBRARY_SCHEMA_VERSION,
-    catalogSha256: OFFLINE_MANIFEST_CATALOG_SHA256,
+    catalogSha256: pronunciationCatalogHash(shard.locale),
     synthesisVersion: NEURAL_SYNTHESIS_VERSION,
     shardSha256,
     locale: shard.locale,
@@ -471,11 +471,11 @@ export function buildOfflinePackPlan(
   shardSha256: string,
 ): OfflinePackPlan {
   if (!SHA256_PATTERN.test(shardSha256)) throw new Error('Offline pronunciation shard identity is invalid.');
-  const expectedIds = new Set(expectedCatalogSenseIds(level));
+  const expectedIds = new Set(expectedCatalogSenseIds(shard.locale, level));
   const assets = shard.assets.filter((asset) => expectedIds.has(asset.catalogSenseId));
   const plan: OfflinePackPlan = {
     schemaVersion: OFFLINE_PACK_SCHEMA_VERSION,
-    catalogSha256: OFFLINE_MANIFEST_CATALOG_SHA256,
+    catalogSha256: pronunciationCatalogHash(shard.locale),
     synthesisVersion: NEURAL_SYNTHESIS_VERSION,
     shardSha256,
     locale: shard.locale,
@@ -503,7 +503,7 @@ function emptyInspection(locale: NeuralPronunciationLocale, level: CefrLevel): O
     locale,
     level,
     state: 'not_downloaded',
-    assetCount: expectedCatalogSenseIds(level).length,
+    assetCount: expectedCatalogSenseIds(locale, level).length,
     totalAudioBytes: null,
     downloadedCount: 0,
     downloadedBytes: 0,
@@ -713,7 +713,7 @@ export async function getOfflinePronunciationFile(
   catalogSenseId: string,
   locale: NeuralPronunciationLocale,
 ) {
-  const entry = getCefrEntry(catalogSenseId);
+  const entry = pronunciationEntry(locale, catalogSenseId);
   if (!entry) return null;
   const plan = await readPlan(locale, entry.level);
   const packAsset = plan?.assets.find((candidate) => candidate.catalogSenseId === catalogSenseId);
@@ -736,7 +736,7 @@ export async function deleteOfflinePronunciationFile(
   catalogSenseId: string,
   locale: NeuralPronunciationLocale,
 ) {
-  const entry = getCefrEntry(catalogSenseId);
+  const entry = pronunciationEntry(locale, catalogSenseId);
   if (!entry) return;
   const plan = await readPlan(locale, entry.level);
   const asset = plan?.assets.find((candidate) => candidate.catalogSenseId === catalogSenseId);

@@ -1,3 +1,4 @@
+import { preferenceLocale, voiceSupportsCourse } from '@/domain/pronunciation-voices';
 import { createContext, PropsWithChildren, Suspense, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { AppState, StyleSheet, View } from 'react-native';
 import { SQLiteProvider, useSQLiteContext, type SQLiteDatabase } from 'expo-sqlite';
@@ -127,7 +128,7 @@ function recommendationsToInputs(
   collectionId: string,
   pronunciationVoicePreference: PronunciationVoicePreference,
 ): repository.NewWordInput[] {
-  const locale = pronunciationVoicePreference === 'neural-en-GB' ? 'en-GB' : 'en-US';
+  const locale = preferenceLocale(pronunciationVoicePreference);
   return recommendations.map(({ entry, topic }) => ({
     collectionId,
     term: entry.term,
@@ -141,7 +142,7 @@ function recommendationsToInputs(
     source: topic ?? 'manual',
     sourceLanguageCode: entry.sourceLanguageCode,
     targetLanguageCode: entry.targetLanguageCode,
-    sourcePronunciationLocale: entry.courseId === 'en-sk' ? locale : getCourseDefinition(entry.courseId).defaultSourcePronunciationLocale,
+    sourcePronunciationLocale: (voiceSupportsCourse(pronunciationVoicePreference, entry.courseId) ? locale : null) ?? getCourseDefinition(entry.courseId).defaultSourcePronunciationLocale,
     targetPronunciationLocale: 'sk-SK',
   }));
 }
