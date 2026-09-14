@@ -6,7 +6,7 @@ Deno.serve(async (request) => {
   const secret = Deno.env.get('FEEDBACK_WORKER_SECRET');
   if (!secret || request.headers.get('x-feedback-worker-secret') !== secret) return new Response(null, { status: 401 });
   if (request.method !== 'POST') return new Response(null, { status: 405 });
-  const apiKey = Deno.env.get('RESEND_API_KEY');
+  const apiKey = Deno.env.get('RESEND_FEEDBACK_API_KEY');
   const from = Deno.env.get('FEEDBACK_FROM_EMAIL');
   if (!apiKey || !from) return Response.json({ error: 'Email is not configured' }, { status: 503 });
   const client = createClient(Deno.env.get('SUPABASE_URL'), Deno.env.get('SUPABASE_SERVICE_ROLE_KEY'), { auth: { persistSession: false } });

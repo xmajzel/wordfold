@@ -194,9 +194,9 @@ Feedback does not participate in PowerSync or change vocabulary/learning records
 
 To enable the backend after reviewing/applying the feedback migration:
 
-1. Verify `wordfold.app` in Resend using the DNS records provided by Resend.
-2. Set server-only Supabase function secrets `RESEND_API_KEY`,
-   `FEEDBACK_FROM_EMAIL` = `Wordfold <feedback@wordfold.app>`, and a random
+1. Verify `feedback.wordfold.app` in Resend using the DNS records provided by Resend.
+2. Set server-only Supabase function secrets `RESEND_FEEDBACK_API_KEY`,
+   `FEEDBACK_FROM_EMAIL` = `Wordfold <notifications@feedback.wordfold.app>`, and a random
    `FEEDBACK_WORKER_SECRET` (at least 32 random bytes). Never put these in Expo public variables.
 3. Deploy `feedback-submit` and `feedback-notify` using their checked-in `verify_jwt = false`
    configuration. The submission endpoint allows guests; the notification endpoint requires

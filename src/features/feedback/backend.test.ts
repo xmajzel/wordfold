@@ -53,7 +53,7 @@ it('distinguishes requested learning languages from hint languages', () => {
 });
 
 it('sends only to the configured owner with optional reply-to and plain-text context', () => {
-  const email = feedbackEmail(feedbackFixture({ contactEmail: 'learner@example.com', message: '<script>test</script>' }), 'Wordfold <feedback@wordfold.app>');
+  const email = feedbackEmail(feedbackFixture({ contactEmail: 'learner@example.com', message: '<script>test</script>' }), 'Wordfold <notifications@feedback.wordfold.app>');
   expect(email.to).toEqual(['jozefmajzel1@gmail.com']);
   expect(email.reply_to).toBe('learner@example.com');
   expect(email.text).toContain('<script>test</script>');
