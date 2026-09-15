@@ -70,6 +70,7 @@ function Navigation() {
         <Stack.Screen name="onboarding-ready" options={{ gestureEnabled: false }} />
         <Stack.Screen name="preferences" options={{ presentation: 'modal' }} />
         <Stack.Screen name="feedback" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="feedback-history" options={{ presentation: 'modal' }} />
         <Stack.Screen name="settings" options={{ presentation: 'modal' }} />
         <Stack.Screen name="sources" options={{ presentation: 'modal' }} />
         <Stack.Screen name="offline-pronunciation" options={{ presentation: 'modal' }} />

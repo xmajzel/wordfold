@@ -181,9 +181,13 @@ See [content attribution](assets/licenses/CONTENT_SOURCES.md) for sources, licen
 
 Feedback is available from Settings, Today, and word details. Guests can submit without an
 account. The app saves reports in a separate AsyncStorage queue, retries on launch, foreground,
-and every minute while active, and removes a local report only after server acknowledgement.
-The feedback screen shows pending or rejected reports and supports retry/removal. Unsubmitted
-form drafts are not persisted. Keep the app installed to preserve pending reports.
+and every minute while active. After server acknowledgement, reports remain in device-local
+history as Sent and are excluded from retries. Open My feedback at the top-right of Send feedback,
+or View my feedback after submitting, to see messages, categories, dates, and delivery status.
+History supports retrying unsent reports and removing local entries; removal does not delete
+server reports. History is not synchronized across devices, and reports sent before this feature
+cannot be recovered locally. Older pending reports retain their content but have no known submission
+date. Unsubmitted form drafts are not persisted. Keep the app installed to preserve local history.
 
 The `feedback_reports` Supabase table is private (no anon/authenticated table access). A bounded,
 validated guest endpoint accepts up to 20 reports per installation/day, 50 per network/hour,

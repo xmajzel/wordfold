@@ -95,11 +95,16 @@ export default function FeedbackScreen() {
   const submittedRow = pending.find((row) => row.report.id === submitted);
   return <KeyboardAvoidingView style={styles.root} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
     <Screen scroll>
-      <View style={styles.header}><AppText variant="title">Send feedback</AppText><Pressable accessibilityRole="button" accessibilityLabel="Close feedback" onPress={close} style={styles.close}><AppText style={{ color: theme.primary }}>Close</AppText></Pressable></View>
+      <View style={styles.header}>
+        <Pressable accessibilityRole="button" accessibilityLabel="Close feedback" onPress={close} style={styles.close}><AppText style={{ color: theme.primary }}>Close</AppText></Pressable>
+        <Pressable accessibilityRole="button" accessibilityLabel="My feedback" onPress={() => router.push('/feedback-history' as never)} style={styles.close}><AppText style={{ color: theme.primary }}>My feedback</AppText></Pressable>
+      </View>
+      <AppText variant="title">Send feedback</AppText>
       {submitted ? <>
         <AppText variant="heading">{submittedRow?.error ? 'Feedback needs attention' : submittedRow ? 'Saved — waiting to send' : 'Feedback sent'}</AppText>
         <AppText>{submittedRow ? 'Your report is saved on this device. Keep Wordfold installed and open it when connected to send it.' : 'Thank you for helping improve Wordfold. You can return to where you left off.'}</AppText>
         <AppText selectable variant="caption">Reference: {submitted}</AppText>
+        <PrimaryButton label="View my feedback" variant="secondary" onPress={() => router.push('/feedback-history' as never)}/>
         <PrimaryButton label="Done" onPress={() => router.back()}/>
       </> : <>
         <AppText style={{ color: theme.muted }}>Help improve Wordfold. No account needed.</AppText>
