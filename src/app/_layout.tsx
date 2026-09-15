@@ -87,15 +87,16 @@ function Navigation() {
 }
 
 export default function RootLayout() {
-  const [fontsLoaded] = useFonts({ Fraunces_600SemiBold, Inter_400Regular, Inter_600SemiBold });
-  return <GestureHandlerRootView style={styles.root}><AuthProvider><PurchaseProvider><PrivatePronunciationConsentProvider><OfflinePronunciationDownloadsProvider><PronunciationCacheScopeProvider><SyncProvider><AppDataProvider><AppReadyGate fontsLoaded={fontsLoaded}/></AppDataProvider></SyncProvider></PronunciationCacheScopeProvider></OfflinePronunciationDownloadsProvider></PrivatePronunciationConsentProvider></PurchaseProvider></AuthProvider></GestureHandlerRootView>;
+  return <GestureHandlerRootView style={styles.root}><AuthProvider><PurchaseProvider><PrivatePronunciationConsentProvider><OfflinePronunciationDownloadsProvider><PronunciationCacheScopeProvider><SyncProvider><AppDataProvider><AppReadyGate/></AppDataProvider></SyncProvider></PronunciationCacheScopeProvider></OfflinePronunciationDownloadsProvider></PrivatePronunciationConsentProvider></PurchaseProvider></AuthProvider></GestureHandlerRootView>;
 }
 
-function AppReadyGate({ fontsLoaded }: { fontsLoaded: boolean }) {
+function AppReadyGate() {
+  // Keep font state below SQLiteProvider, which memoizes its children.
+  const [fontsLoaded, fontError] = useFonts({ Fraunces_600SemiBold, Inter_400Regular, Inter_600SemiBold });
   const { onboardingComplete } = useAppData();
   const [releaseLaunch, setReleaseLaunch] = useState(false);
   const [showLaunch, setShowLaunch] = useState(true);
-  const ready = fontsLoaded && onboardingComplete !== null;
+  const ready = (fontsLoaded || fontError !== null) && onboardingComplete !== null;
   const nativeSplashHidden = useRef(false);
   const finishLaunch = useCallback(() => setShowLaunch(false), []);
 
