@@ -142,6 +142,24 @@ preview build against a test policy. Verify a compatible preview OTA download fo
 by a cold restart before the first production rollout. Expo Go does not exercise this
 native release flow.
 
+## Publish checklist
+
+Every request to publish a new Android store build includes the version bump; the owner
+must not need to request it separately.
+
+1. Inspect the current source and the highest version code already uploaded to Google Play.
+2. Before building, increment `expo.version` in `app.json` and the matching `version` in
+   `package.json` (use the next patch version unless another version was requested).
+   Set `expo.android.versionCode` higher than every previously uploaded build, including drafts.
+3. Run the applicable checks below, then build the signed production bundle. Regenerate
+   ignored native folders when building directly from them.
+4. Verify the generated binary's package, version name, version code, and `production`
+   EAS channel before uploading. Publish to the track requested by the owner.
+5. Confirm Google Play shows the release available to all intended testers/users.
+6. Activate and read back the optional production update policy as required by `AGENTS.md`
+   and **App updates** above. Preserve the minimum supported build and store URL.
+7. Report the published version/build, verification results, and update-policy status.
+
 ## Verification order
 
 ```bash

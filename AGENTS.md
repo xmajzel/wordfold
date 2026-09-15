@@ -22,6 +22,9 @@ When proposing EAS, clearly state that it consumes the project's limited monthly
 ## Store publishing and update notifications
 
 Read `docs/ANDROID_PRODUCTION_RELEASE.md` (especially **App updates**) before publishing.
+Every Android store publish request includes a version bump without a separate reminder.
+Follow the release guide’s **Publish checklist**: advance the matching app/package version
+and choose an Android version code above all previously uploaded builds before building.
 Google Play publishing alone does not activate the app's update prompt: an authorized production
 release workflow must also update and verify the Supabase release policy.
 
