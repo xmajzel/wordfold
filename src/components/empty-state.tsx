@@ -18,11 +18,12 @@ export function EmptyState({ title, message, actionLabel, actionVariant = 'prima
   const action = actionLabel && onAction
     ? <PrimaryButton label={actionLabel} variant={actionVariant} onPress={onAction}/>
     : null;
-  return <View style={styles.container}><Ionicons name="layers-outline" size={38} color={theme.primary} /><AppText variant="heading">{title}</AppText><AppText style={[styles.message, { color: theme.muted }]}>{message}</AppText>{action && compactAction ? <View testID="empty-state-compact-action" style={styles.compactAction}>{action}</View> : action}</View>;
+  return <View style={styles.container}><Ionicons name="layers-outline" size={38} color={theme.primary} /><AppText variant="heading">{title}</AppText><AppText style={[styles.message, { color: theme.muted }]}>{message}</AppText>{action ? <View testID={compactAction ? 'empty-state-compact-action' : undefined} style={[styles.action, compactAction && styles.compactAction]}>{action}</View> : null}</View>;
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: spacing.md, padding: spacing.xxl },
   message: { textAlign: 'center' },
+  action: { flexGrow: 0, flexShrink: 0, maxWidth: '100%' },
   compactAction: { width: '100%', maxWidth: 200 },
 });
