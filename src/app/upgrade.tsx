@@ -16,6 +16,7 @@ export default function UpgradeScreen() {
   const theme = useAppTheme();
   const purchase = usePurchase();
   const [busy, setBusy] = useState<'purchase' | 'restore' | null>(null);
+  const [showDiagnostics, setShowDiagnostics] = useState(false);
 
   const buy = async () => {
     setBusy('purchase');
@@ -33,7 +34,7 @@ export default function UpgradeScreen() {
     setBusy('restore');
     try {
       const result = await purchase.restorePurchases();
-      Alert.alert(result.ok ? 'Purchase restored' : 'Nothing to restore', result.message, result.ok
+      Alert.alert(result.ok ? 'Purchase restored' : 'Purchase not restored', result.message, result.ok
         ? [{ text: 'Continue', onPress: () => router.back() }]
         : undefined);
     } finally {
@@ -66,7 +67,7 @@ export default function UpgradeScreen() {
           testID="lifetime-purchase-button"
           label={purchase.priceLabel ? `Unlock forever · ${purchase.priceLabel}` : 'Unlock forever with Google Play'}
           loading={busy === 'purchase'}
-          disabled={purchase.status !== 'ready'}
+          disabled={purchase.status !== 'ready' || busy !== null}
           onPress={() => void buy()}
         />
       )}
@@ -76,10 +77,26 @@ export default function UpgradeScreen() {
         label="Restore purchase"
         variant="secondary"
         loading={busy === 'restore'}
-        disabled={purchase.status === 'loading'}
+        disabled={purchase.status === 'loading' || busy !== null}
         onPress={() => void restore()}
       />
       <AppText variant="caption" style={[styles.center, { color: theme.muted }]}>Your purchase is handled by Google Play. A Wordfold cloud account is not required.</AppText>
+      {purchase.restoreDiagnostics ? (
+        <>
+          <PrimaryButton
+            testID="purchase-diagnostics-button"
+            label={showDiagnostics ? 'Hide purchase diagnostics' : 'Purchase diagnostics'}
+            variant="secondary"
+            onPress={() => setShowDiagnostics((shown) => !shown)}
+          />
+          {showDiagnostics ? (
+            <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+              <AppText variant="caption">Details from your latest restore attempt. Select the text to copy it for support.</AppText>
+              <AppText testID="purchase-diagnostics" selectable variant="caption">{purchase.restoreDiagnostics}</AppText>
+            </View>
+          ) : null}
+        </>
+      ) : null}
     </Screen>
   );
 }

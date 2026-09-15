@@ -16,6 +16,7 @@ import Purchases, {
 } from 'react-native-purchases';
 
 import { hasActiveEntitlement, isPurchaseCancellation } from '@/features/purchases/entitlement';
+import { describeRestore, formatRestoreDiagnostics } from '@/features/purchases/restore-diagnostics';
 
 export const LIFETIME_PRODUCT_ID = 'wordfold_lifetime';
 export const UNLIMITED_WORDS_ENTITLEMENT = 'unlimited_words';
@@ -29,6 +30,7 @@ type PurchaseContextValue = {
   unlimited: boolean;
   priceLabel: string | null;
   message: string | null;
+  restoreDiagnostics: string | null;
   purchaseLifetime(): Promise<PurchaseActionResult>;
   restorePurchases(): Promise<PurchaseActionResult>;
 };
@@ -54,6 +56,7 @@ export function PurchaseProvider({ children }: PropsWithChildren) {
   const [status, setStatus] = useState<PurchaseContextValue['status']>(available ? 'loading' : 'unavailable');
   const [unlimited, setUnlimited] = useState(false);
   const [lifetimePackage, setLifetimePackage] = useState<PurchasesPackage | null>(null);
+  const [restoreDiagnostics, setRestoreDiagnostics] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(available ? null : unavailableMessage());
 
   const applyCustomerInfo = useCallback((customerInfo: CustomerInfo) => {
@@ -123,14 +126,17 @@ export function PurchaseProvider({ children }: PropsWithChildren) {
 
   const restorePurchases = useCallback(async (): Promise<PurchaseActionResult> => {
     if (!available) return { ok: false, message: unavailableMessage() };
+    setRestoreDiagnostics(null);
+    // A diagnostic lookup must not prevent restoration if it fails.
+    const appUserId = await Purchases.getAppUserID().catch(() => null);
     try {
       const customerInfo = await Purchases.restorePurchases();
       applyCustomerInfo(customerInfo);
-      return hasUnlimitedEntitlement(customerInfo)
-        ? { ok: true, message: 'Your lifetime purchase has been restored.' }
-        : { ok: false, message: 'No lifetime purchase was found for this Google Play account.' };
-    } catch {
-      return { ok: false, message: 'Purchases could not be restored. Check your connection and Google Play account.' };
+      setRestoreDiagnostics(formatRestoreDiagnostics(appUserId, customerInfo));
+      return describeRestore(customerInfo, LIFETIME_PRODUCT_ID, UNLIMITED_WORDS_ENTITLEMENT);
+    } catch (error) {
+      setRestoreDiagnostics(formatRestoreDiagnostics(appUserId, null, error));
+      return { ok: false, message: 'The restore request failed. Check your connection and try again. Purchase diagnostics contains the error code; this failure does not mean you do not own the lifetime unlock.' };
     }
   }, [applyCustomerInfo, available]);
 
@@ -139,9 +145,10 @@ export function PurchaseProvider({ children }: PropsWithChildren) {
     unlimited,
     priceLabel: lifetimePackage?.product.priceString ?? null,
     message,
+    restoreDiagnostics,
     purchaseLifetime,
     restorePurchases,
-  }), [lifetimePackage?.product.priceString, message, purchaseLifetime, restorePurchases, status, unlimited]);
+  }), [lifetimePackage?.product.priceString, message, restoreDiagnostics, purchaseLifetime, restorePurchases, status, unlimited]);
 
   return <PurchaseContext.Provider value={value}>{children}</PurchaseContext.Provider>;
 }
