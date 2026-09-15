@@ -10,7 +10,7 @@ import { isLearningFilter } from '@/data/cefr-levels';
 import { normalizeTerm } from '@/features/import/parser';
 import { applyRating } from '@/features/learning/algorithm';
 import { getWordCapacity } from '@/features/purchases/capacity';
-import { buildRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
+import { resolveRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
 import { emptyGuestImportCounts, type GuestImportConflictResolution, type GuestImportViewModel } from '@/data/sync/guest-import-types';
 import type { SyncCutoverViewModel } from '@/data/sync/cutover-types';
 import { isOnDeviceTranslationPairSupported } from '@/features/translation/translator';
@@ -38,8 +38,8 @@ interface AppDataValue {
   updateLearningFilter(filter: LearningFilter): Promise<void>;
   saveLearningPreferences(preferences: LearningPreferences): Promise<void>;
   savePronunciationVoicePreference(preference: PronunciationVoicePreference): Promise<void>;
-  completePersonalizedOnboarding(preferences: LearningPreferences, preference: PronunciationVoicePreference): Promise<number>;
-  addRecommendedWords(limit?: number): Promise<number>;
+  completePersonalizedOnboarding(preferences: LearningPreferences, preference: PronunciationVoicePreference, preview?: readonly Recommendation[]): Promise<number>;
+  addRecommendedWords(limit?: number, preview?: readonly Recommendation[]): Promise<number>;
   noteNotificationOpen(wordId: string | null): Promise<void>;
   guestImport: GuestImportViewModel;
   prepareGuestImport(): Promise<void>;
@@ -233,11 +233,11 @@ export function AppDataProvider({ children }: PropsWithChildren) {
       }
       setPronunciationVoicePreference(preference);
     },
-    completePersonalizedOnboarding: async (preferences, preference) => {
+    completePersonalizedOnboarding: async (preferences, preference, preview) => {
       if (!voiceSupportsCourse(preference, activeCourseId)) throw new Error('Choose a pronunciation voice supported by this course.');
       const normalized = normalizeLearningPreferences(preferences);
       const recommendations = getCourseDefinition(activeCourseId).capabilities.recommendations
-        ? buildRecommendations(normalized, activeWords.map((word) => word.normalizedTerm), Math.min(10, getWordCapacity(words.length, false).remaining ?? 0), activeCourseId)
+        ? resolveRecommendations(normalized, activeWords.map((word) => word.normalizedTerm), Math.min(10, getWordCapacity(words.length, false).remaining ?? 0), activeCourseId, preview)
         : [];
       setLearningPreferences(normalized);
       setPronunciationVoicePreference(preference);
@@ -249,9 +249,9 @@ export function AppDataProvider({ children }: PropsWithChildren) {
       setOnboardingComplete(true);
       return recommendations.length;
     },
-    addRecommendedWords: async (limit = 10) => {
+    addRecommendedWords: async (limit = 10, preview) => {
       if (!getCourseDefinition(activeCourseId).capabilities.recommendations) return 0;
-      const recommendations = buildRecommendations(learningPreferences, activeWords.map((word) => word.normalizedTerm), Math.min(limit, getWordCapacity(words.length, false).remaining ?? 0), activeCourseId);
+      const recommendations = resolveRecommendations(learningPreferences, activeWords.map((word) => word.normalizedTerm), Math.min(limit, getWordCapacity(words.length, false).remaining ?? 0), activeCourseId, preview);
       setWords((current) => [...recommendationsToWords(recommendations, pronunciationVoicePreference), ...current]);
       return recommendations.length;
     },

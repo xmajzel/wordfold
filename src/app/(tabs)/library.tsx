@@ -78,7 +78,7 @@ export default function LibraryScreen() {
         router.push('/upgrade' as never);
         return;
       }
-      const count = await addRecommendedWords(recommendationAddCount);
+      const count = await addRecommendedWords(recommendationAddCount, recommendationPreview.slice(0, recommendationAddCount));
       Alert.alert(count > 0 ? 'Recommendations added' : 'You are caught up', count > 0
         ? `${count} ${count === 1 ? 'word is' : 'words are'} ready to practice.`
         : 'There are no unused recommendations for these preferences right now.');

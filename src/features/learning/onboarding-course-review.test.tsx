@@ -38,7 +38,8 @@ jest.mock('react-native-reanimated', () => {
   };
 });
 
-beforeEach(() => { jest.clearAllMocks(); mockComplete.mockResolvedValue(10); mockCourseId = 'es-sk'; mockWords = []; mockRemaining = 100; });
+afterEach(() => jest.restoreAllMocks());
+beforeEach(() => { jest.spyOn(Math, 'random').mockReturnValue(0.999999); jest.clearAllMocks(); mockComplete.mockResolvedValue(10); mockCourseId = 'es-sk'; mockWords = []; mockRemaining = 100; });
 
 async function openReview() {
   const view = await render(<OnboardingScreen/>);
@@ -56,7 +57,9 @@ it.each(['en-sk', 'es-sk'] as const)('keeps the %s preview through saving and na
   let finish!: (count: number) => void;
   mockComplete.mockImplementationOnce(() => new Promise<number>((resolve) => { finish = resolve; }));
   const view = await openReview();
+  jest.mocked(Math.random).mockReturnValue(0.2);
   await fireEvent.press(view.getByRole('button', { name: 'Create my set' }));
+  expect(mockComplete).toHaveBeenCalledWith({ levels: ['A1'], topics: ['spoken'] }, 'device', first);
   mockWords = first.map(({ entry }) => entry);
   await view.rerender(<OnboardingScreen/>);
   for (const { entry } of first) expect(view.getByText(entry.term)).toBeTruthy();
@@ -109,7 +112,7 @@ it.each(['B2', 'C2'] as const)('offers a Spanish %s ten-word starter set', async
   expect(view.queryByText('Phone voice')).toBeNull();
   expect(view.queryByText(/entries/)).toBeNull();
   await fireEvent.press(view.getByRole('button', { name: 'Create my set' }));
-  await waitFor(() => expect(mockComplete).toHaveBeenCalledWith(expect.objectContaining({ levels: [level] }), 'device'));
+  await waitFor(() => expect(mockComplete).toHaveBeenCalledWith(expect.objectContaining({ levels: [level] }), 'device', expect.any(Array)));
   expect(mockReplace).toHaveBeenCalledWith({ pathname: '/onboarding-ready', params: { count: '10' } });
 });
 

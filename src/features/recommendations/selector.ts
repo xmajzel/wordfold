@@ -7,7 +7,7 @@ import spanishTopicIndex from '../../../assets/catalog/spanish/course-topic-inde
 
 const topicOrder: ContentPackId[] = ['spoken', 'business', 'academic'];
 
-const priorityTerms: Record<ContentPackId, string[]> = {
+const supplementalTerms: Record<ContentPackId, string[]> = {
   spoken: ['agree', 'available', 'benefit', 'choice', 'conversation', 'explain', 'focus', 'quality', 'reason', 'support', 'understand', 'wonder'],
   business: ['stakeholder', 'deliverable', 'milestone', 'governance', 'dependency', 'alignment', 'benchmark', 'collaboration', 'constraint', 'forecast', 'portfolio', 'strategy'],
   academic: ['methodology', 'empirical', 'inference', 'validity', 'synthesis', 'hypothesis', 'variable', 'qualitative', 'quantitative', 'framework', 'correlation', 'parameter'],
@@ -34,7 +34,16 @@ export function normalizeLearningPreferences(preferences: LearningPreferences): 
 }
 
 function uniqueTerms(topic: ContentPackId) {
-  return [...new Set([...priorityTerms[topic], ...getPackTerms(topic)].map((term) => term.toLocaleLowerCase('en')))];
+  return [...new Set([...supplementalTerms[topic], ...getPackTerms(topic)].map((term) => term.toLocaleLowerCase('en')))];
+}
+
+function shuffled<T>(items: T[], random: () => number): T[] {
+  const result = [...items];
+  for (let index = result.length - 1; index > 0; index -= 1) {
+    const other = Math.floor(random() * (index + 1));
+    [result[index], result[other]] = [result[other], result[index]];
+  }
+  return result;
 }
 
 export function buildRecommendations(
@@ -42,6 +51,7 @@ export function buildRecommendations(
   existingNormalizedTerms: Iterable<string>,
   limit = 10,
   courseId: CourseId = 'en-sk',
+  random: () => number = Math.random,
 ): Recommendation[] {
   const preferences = normalizeLearningPreferences(rawPreferences);
   if (limit <= 0 || preferences.levels.length === 0 || preferences.topics.length === 0) return [];
@@ -61,12 +71,12 @@ export function buildRecommendations(
   const queues = preferences.topics.flatMap((topic) => preferences.levels.map((level) => ({
     topic,
     level,
-    entries: courseId === 'es-sk'
+    entries: shuffled(courseId === 'es-sk'
       ? entries.filter((entry) => entry.level === level && spanishTopics[entry.catalogSenseId ?? '']?.includes(topic))
       : uniqueTerms(topic).flatMap((term) => {
         const entry = byTerm.get(term);
         return entry?.level === level ? [entry] : [];
-      }),
+      }), random),
     index: 0,
   })));
 
@@ -87,7 +97,7 @@ export function buildRecommendations(
 
   if (result.length < limit) {
     const fallbackQueues = preferences.levels.map((level) => ({
-      entries: getCourseCatalogEntries(courseId, level),
+      entries: shuffled(getCourseCatalogEntries(courseId, level), random),
       index: 0,
     }));
     progressed = true;
@@ -106,5 +116,29 @@ export function buildRecommendations(
     }
   }
 
+  return result;
+}
+
+/** Save the reviewed selection, rechecking eligibility without filling it with unseen words. */
+export function resolveRecommendations(
+  preferences: LearningPreferences,
+  existingNormalizedTerms: Iterable<string>,
+  limit: number,
+  courseId: CourseId,
+  preview?: readonly Recommendation[],
+): Recommendation[] {
+  if (!preview) return buildRecommendations(preferences, existingNormalizedTerms, limit, courseId);
+  if (limit <= 0 || preview.length === 0) return [];
+  const eligible = new Map(buildRecommendations(
+    preferences, existingNormalizedTerms, Infinity, courseId, () => 0,
+  ).map((recommendation) => [recommendation.entry.id, recommendation]));
+  const result: Recommendation[] = [];
+  for (const { entry } of preview) {
+    const recommendation = eligible.get(entry.id);
+    if (entry.courseId !== courseId || !recommendation) continue;
+    result.push(recommendation);
+    eligible.delete(entry.id);
+    if (result.length >= limit) break;
+  }
   return result;
 }

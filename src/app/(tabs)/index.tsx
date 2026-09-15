@@ -228,7 +228,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
     if (!canAddRecommendations || recommendationsBusy) return;
     setRecommendationsBusy(true);
     try {
-      const count = await addRecommendedWords(recommendationAddCount);
+      const count = await addRecommendedWords(recommendationAddCount, recommendationPreview.slice(0, recommendationAddCount));
       if (count === 0) {
         Alert.alert('Recommendations unavailable', 'There are no unused recommendations for these preferences right now.');
         return;

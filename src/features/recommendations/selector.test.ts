@@ -1,4 +1,4 @@
-import { buildRecommendations, normalizeLearningPreferences } from './selector';
+import { buildRecommendations, normalizeLearningPreferences, resolveRecommendations } from './selector';
 import { getCourseCatalogEntries } from '@/data/course-catalog';
 import type { ContentPackId } from '@/domain/types';
 import spanishTopicIndex from '../../../assets/catalog/spanish/course-topic-index.json';
@@ -6,6 +6,9 @@ import spanishTopicIndex from '../../../assets/catalog/spanish/course-topic-inde
 const reviewedTopics = spanishTopicIndex.topicsByConcept as Record<string, readonly ContentPackId[]>;
 const spanishLevels = ['A1', 'A2', 'B1', 'B2', 'C1'] as const;
 const interests = ['spoken', 'business', 'academic'] as const;
+
+beforeEach(() => jest.spyOn(Math, 'random').mockReturnValue(0.999999));
+afterEach(() => jest.restoreAllMocks());
 
 describe('recommendation selector', () => {
   it('keeps levels as a strict boundary while prioritizing selected topics', () => {
@@ -140,4 +143,53 @@ describe('Spanish recommendations', () => {
     expect(next).toEqual(all.slice(10, 13));
   });
 
+});
+
+describe.each(['en-sk', 'es-sk'] as const)('%s randomized batches', (courseId) => {
+  const preferences = { levels: ['B2'] as const, topics: ['business'] as const };
+  const input = { levels: [...preferences.levels], topics: [...preferences.topics] };
+
+  it('changes the selected words with randomness, without duplicates or catalog mutation', () => {
+    const original = getCourseCatalogEntries(courseId, 'B2').map((entry) => entry.id);
+    const first = buildRecommendations(input, [], 10, courseId, () => 0.1);
+    const other = buildRecommendations(input, [], 10, courseId, () => 0.8);
+    expect(first).toHaveLength(10);
+    expect(other).toHaveLength(10);
+    expect(new Set(first.map(({ entry }) => entry.id))).not.toEqual(new Set(other.map(({ entry }) => entry.id)));
+    expect(new Set(first.map(({ entry }) => entry.normalizedTerm)).size).toBe(10);
+    expect(first.every(({ entry }) => entry.level === 'B2' && entry.courseId === courseId)).toBe(true);
+    expect(buildRecommendations(input, [], 10, courseId, () => 0.1)).toEqual(first);
+    expect(getCourseCatalogEntries(courseId, 'B2').map((entry) => entry.id)).toEqual(original);
+  });
+
+  it('saves the preview in order even when randomness changes, respecting existing words and capacity', () => {
+    const preview = buildRecommendations(input, [], 10, courseId, () => 0.2);
+    jest.mocked(Math.random).mockReturnValue(0.7);
+    expect(resolveRecommendations(input, [], 10, courseId, preview)).toEqual(preview);
+    const remaining = resolveRecommendations(input, [preview[0].entry.normalizedTerm], 3, courseId, preview);
+    expect(remaining.map(({ entry }) => entry.id)).toEqual(preview.slice(1, 4).map(({ entry }) => entry.id));
+    expect(resolveRecommendations(input, [], 10, courseId, [])).toEqual([]);
+    expect(resolveRecommendations(input, [], 10, courseId, [preview[0], preview[0]])).toHaveLength(1);
+    expect(resolveRecommendations({ levels: ['A1'], topics: ['business'] }, [], 10, courseId, preview)).toEqual([]);
+    expect(resolveRecommendations(input, [], 10, courseId === 'en-sk' ? 'es-sk' : 'en-sk', preview)).toEqual([]);
+  });
+});
+
+it.each([
+  { courseId: 'en-sk', level: 'C1', topic: 'spoken' },
+  { courseId: 'es-sk', level: 'C2', topic: 'academic' },
+] as const)('randomizes general fallback for $courseId and returns only unused remaining words', ({ courseId, level, topic }) => {
+  const preferences = { levels: [level], topics: [topic] };
+  const first = buildRecommendations(preferences, [], 10, courseId, () => 0.1);
+  const second = buildRecommendations(preferences, [], 10, courseId, () => 0.8);
+  expect(first).toHaveLength(10);
+  expect(second).toHaveLength(10);
+  expect(first.every(({ topic }) => topic === null)).toBe(true);
+  expect(new Set(first.map(({ entry }) => entry.id))).not.toEqual(new Set(second.map(({ entry }) => entry.id)));
+  const remainingTerms = new Set(first.slice(0, 3).map(({ entry }) => entry.normalizedTerm));
+  const existing = getCourseCatalogEntries(courseId, level)
+    .filter((entry) => !remainingTerms.has(entry.normalizedTerm)).map((entry) => entry.normalizedTerm);
+  const remaining = buildRecommendations(preferences, existing, 10, courseId, () => 0.3);
+  expect(remaining).toHaveLength(3);
+  expect(new Set(remaining.map(({ entry }) => entry.normalizedTerm))).toEqual(remainingTerms);
 });

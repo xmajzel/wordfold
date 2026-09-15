@@ -273,7 +273,7 @@ describe('continued learning session', () => {
     view.getByText('Start a fresh batch');
     expect(view.queryByRole('button', { name: 'Continue learning' })).toBeNull();
     await fireEvent.press(view.getByRole('button', { name: 'Add 10 words & start learning' }));
-    expect(mockAddRecommendedWords).toHaveBeenCalledWith(10);
+    expect(mockAddRecommendedWords).toHaveBeenCalledWith(10, mockRecommendationBatch.slice(0, 10));
     expect(mockRateWord).not.toHaveBeenCalled();
   });
 
@@ -283,7 +283,7 @@ describe('continued learning session', () => {
     const view = await render(<LearnScreen/>);
     await fireEvent.press(view.getByRole('button', { name: 'Skip word' }));
     await fireEvent.press(view.getByRole('button', { name: 'Add 3 words & start learning' }));
-    expect(mockAddRecommendedWords).toHaveBeenCalledWith(3);
+    expect(mockAddRecommendedWords).toHaveBeenCalledWith(3, mockRecommendationBatch.slice(0, 3));
   });
 
   it('explains the full library at batch end without adding words beyond capacity', async () => {
@@ -431,7 +431,7 @@ describe('continued learning session', () => {
     const view = await render(<LearnScreen/>);
     view.getByTestId('today-recommendations');
     await fireEvent.press(view.getByTestId('add-today-recommendations'));
-    expect(mockAddRecommendedWords).toHaveBeenCalledWith(1);
+    expect(mockAddRecommendedWords).toHaveBeenCalledWith(1, mockRecommendationBatch.slice(0, 1));
   });
 
   it('keeps the existing library fallback for an empty course that supports recommendations', async () => {
@@ -469,7 +469,7 @@ describe('continued learning session', () => {
 
     await fireEvent.press(view.getByRole('button', { name: 'Add 10 words & start learning' }));
 
-    await waitFor(() => expect(mockAddRecommendedWords).toHaveBeenCalledWith(10));
+    await waitFor(() => expect(mockAddRecommendedWords).toHaveBeenCalledWith(10, mockRecommendationBatch.slice(0, 10)));
     expect(mockUpdateLearningFilter).toHaveBeenCalledWith('all');
     view.rerender(<LearnScreen/>);
     await waitFor(() => view.getByText('negotiate'));

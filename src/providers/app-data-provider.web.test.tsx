@@ -65,14 +65,16 @@ function SpanishLookupProbe() {
 }
 
 const mockSavedWords = jest.fn();
+const starterPreview = buildRecommendations({ levels: ['A1'], topics: ['spoken'] }, [], 10, 'es-sk', () => 0.2);
+const nextPreview = buildRecommendations({ levels: ['A1'], topics: ['spoken'] }, starterPreview.map(({ entry }) => entry.normalizedTerm), 10, 'es-sk', () => 0.3);
 function StarterProbe() {
   const { activeCourseId, words, switchActiveCourse, completePersonalizedOnboarding, addRecommendedWords, rateWord } = useAppData();
   mockSavedWords(words);
   return <>
     <Text>{`${activeCourseId}:${words.length}`}</Text>
     <Pressable onPress={() => void switchActiveCourse('es-sk')}><Text>Spanish starter</Text></Pressable>
-    <Pressable onPress={() => void completePersonalizedOnboarding({ levels: ['A1'], topics: ['spoken'] }, 'device')}><Text>Create starter</Text></Pressable>
-    <Pressable onPress={() => void addRecommendedWords(10)}><Text>Next batch</Text></Pressable>
+    <Pressable onPress={() => void completePersonalizedOnboarding({ levels: ['A1'], topics: ['spoken'] }, 'device', starterPreview)}><Text>Create starter</Text></Pressable>
+    <Pressable onPress={() => void addRecommendedWords(10, words.some((word) => word.cefrLevel === 'C2') ? undefined : nextPreview)}><Text>Next batch</Text></Pressable>
     <Pressable onPress={() => void completePersonalizedOnboarding({ levels: ['C2'], topics: ['academic'] }, 'device')}><Text>Create C2 starter</Text></Pressable>
     <Pressable onPress={() => void rateWord(words[0], 'learned')}><Text>Learn first word</Text></Pressable>
   </>;
@@ -135,13 +137,14 @@ describe('web app data provider', () => {
     await fireEvent.press(view.getByText('Create starter'));
     await waitFor(() => view.getByText('es-sk:10'));
     const first = mockSavedWords.mock.calls.at(-1)![0];
-    const preview = buildRecommendations({ levels: ['A1'], topics: ['spoken'] }, [], 10, 'es-sk');
+    const preview = starterPreview;
     expect(first.map((word: { catalogSenseId: string }) => word.catalogSenseId)).toEqual(preview.map(({ entry }) => entry.catalogSenseId));
     expect(first).toEqual(expect.arrayContaining([expect.objectContaining({ sourceLanguageCode: 'es', targetLanguageCode: 'sk', sourcePronunciationLocale: 'es-ES' })]));
     await fireEvent.press(view.getByText('Next batch'));
     await waitFor(() => view.getByText('es-sk:20'));
     const all = mockSavedWords.mock.calls.at(-1)![0];
     expect(new Set(all.map((word: { catalogSenseId: string }) => word.catalogSenseId)).size).toBe(20);
+    expect(all.slice(0, 10).map((word: { catalogSenseId: string }) => word.catalogSenseId)).toEqual(nextPreview.map(({ entry }) => entry.catalogSenseId));
   });
 
   it('adds and studies C2 with exact reviewed hints while preserving existing A1 progress', async () => {

@@ -28,7 +28,7 @@ import { requestCloudAccountDeletion } from '@/features/auth/account-deletion';
 import { assertWordCapacity, getWordCapacity } from '@/features/purchases/capacity';
 import { isOnDeviceTranslationPairSupported, translateOnDevice } from '@/features/translation/translator';
 import { clearPronunciationAccountCache } from '@/features/pronunciation/cache';
-import { buildRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
+import { resolveRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
 import { clearScheduledReminders, rebuildReminderSchedule } from '@/features/reminders/scheduler';
 import { buildTodayWordWidgetTimeline } from '@/features/widgets/today-word';
 import { syncTodayWordWidget } from '@/features/widgets/widget-sync';
@@ -71,8 +71,9 @@ interface AppDataValue {
   completePersonalizedOnboarding(
     preferences: LearningPreferences,
     pronunciationVoicePreference: PronunciationVoicePreference,
+    preview?: readonly Recommendation[],
   ): Promise<number>;
-  addRecommendedWords(limit?: number): Promise<number>;
+  addRecommendedWords(limit?: number, preview?: readonly Recommendation[]): Promise<number>;
   noteNotificationOpen(wordId: string | null): Promise<void>;
   guestImport: GuestImportViewModel;
   prepareGuestImport(): Promise<void>;
@@ -593,15 +594,15 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       await runDatabaseMutation(() => repository.savePronunciationVoicePreference(appDatabase, preference, activeCourseId));
       setPronunciationVoicePreference(preference);
     },
-    completePersonalizedOnboarding: async (preferences, voicePreference) => {
+    completePersonalizedOnboarding: async (preferences, voicePreference, preview) => {
       const existing = await vocabularyStore.listWords();
       const starterLimit = purchase.unlimited
         ? 10
         : Math.min(10, Math.max(0, getWordCapacity(existing.length, false).remaining ?? 0));
       const recommendations = getCourseDefinition(activeCourseId).capabilities.recommendations
-        ? buildRecommendations(preferences, existing
+        ? resolveRecommendations(preferences, existing
           .filter((word) => wordBelongsToCourse(word, activeCourseId))
-          .map((word) => word.normalizedTerm), starterLimit, activeCourseId)
+          .map((word) => word.normalizedTerm), starterLimit, activeCourseId, preview)
         : [];
       await runDatabaseMutation(async () => {
         assertWordCapacity((await vocabularyStore.listWords()).length, recommendations.length, purchase.unlimited);
@@ -630,12 +631,12 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       await refresh(); await reschedule();
       return recommendations.length;
     },
-    addRecommendedWords: async (limit = 10) => {
+    addRecommendedWords: async (limit = 10, preview) => {
       if (!getCourseDefinition(activeCourseId).capabilities.recommendations) return 0;
       const existing = await vocabularyStore.listWords();
-      const recommendations = buildRecommendations(learningPreferences, existing
+      const recommendations = resolveRecommendations(learningPreferences, existing
         .filter((word) => wordBelongsToCourse(word, activeCourseId))
-        .map((word) => word.normalizedTerm), purchase.unlimited ? limit : Math.min(limit, getWordCapacity(existing.length, false).remaining ?? 0), activeCourseId);
+        .map((word) => word.normalizedTerm), purchase.unlimited ? limit : Math.min(limit, getWordCapacity(existing.length, false).remaining ?? 0), activeCourseId, preview);
       if (recommendations.length === 0) return 0;
       await runDatabaseMutation(async () => {
         assertWordCapacity((await vocabularyStore.listWords()).length, recommendations.length, purchase.unlimited);

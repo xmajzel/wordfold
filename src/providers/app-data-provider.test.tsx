@@ -2,6 +2,7 @@ import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import type { ReactElement, ReactNode } from 'react';
 import { Pressable, Text } from 'react-native';
 
+import { buildRecommendations, type Recommendation } from '@/features/recommendations/selector';
 import type { Word } from '@/domain/types';
 import * as repository from '@/data/repository';
 
@@ -158,9 +159,9 @@ function StarterProbe() {
   </Pressable>;
 }
 
-function RecommendationProbe({ onComplete }: { onComplete(count: number): void }) {
+function RecommendationProbe({ onComplete, preview }: { onComplete(count: number): void; preview?: Recommendation[] }) {
   const { activeCourseId, words, addRecommendedWords } = useAppData();
-  return <Pressable onPress={() => void addRecommendedWords(10).then(onComplete)}>
+  return <Pressable onPress={() => void addRecommendedWords(10, preview).then(onComplete)}>
     <Text>{`Add ${activeCourseId} batch: ${words.length}`}</Text>
   </Pressable>;
 }
@@ -173,6 +174,7 @@ describe('AppDataProvider', () => {
     const stalledSchedule = new Promise<number>((resolve) => { releaseSchedule = resolve; });
     let storedWords: Word[] = [];
     const onComplete = jest.fn();
+    const preview = buildRecommendations({ levels: ['A1'], topics: ['spoken'] }, [], 10, 'es-sk', () => 0.2);
     jest.mocked(repository.getActiveCourseId).mockResolvedValue('es-sk');
     jest.mocked(repository.getLearningPreferences).mockResolvedValue({ levels: ['A1'], topics: ['spoken'] });
     jest.mocked(repository.listCollections).mockResolvedValue([
@@ -186,13 +188,14 @@ describe('AppDataProvider', () => {
     if (stage === 'startup') mockRebuildReminderSchedule.mockImplementationOnce(() => stalledSchedule);
     else mockRebuildReminderSchedule.mockResolvedValueOnce(0).mockImplementationOnce(() => stalledSchedule);
 
-    const view = await render(<AppDataProvider><RecommendationProbe onComplete={onComplete}/></AppDataProvider>);
+    const view = await render(<AppDataProvider><RecommendationProbe onComplete={onComplete} preview={preview}/></AppDataProvider>);
     try {
       await waitFor(() => expect(mockRebuildReminderSchedule).toHaveBeenCalled());
       await fireEvent.press(view.getByText('Add es-sk batch: 0'));
       await waitFor(() => expect(onComplete).toHaveBeenCalledWith(10));
       view.getByText('Add es-sk batch: 10');
       expect(repository.addWords).toHaveBeenCalledTimes(1);
+      expect(storedWords.map((item) => item.catalogSenseId)).toEqual(preview.map(({ entry }) => entry.catalogSenseId));
       expect(storedWords.every((item) => item.sourceLanguageCode === 'es' && item.translation && item.cefrLevel === 'A1')).toBe(true);
     } finally {
       await act(async () => { releaseSchedule(0); });

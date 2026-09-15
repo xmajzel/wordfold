@@ -1,8 +1,9 @@
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Alert, Dimensions, StyleSheet } from 'react-native';
 
 import LibraryScreen from '@/app/(tabs)/library';
-import type { Word } from '@/domain/types';
+import { buildRecommendations } from '@/features/recommendations/selector';
+import type { LearningPreferences, Word } from '@/domain/types';
 
 const mockOtherWord: Word = {
   id: 'other-word', collectionId: 'my-words', term: 'Baum', normalizedTerm: 'baum',
@@ -13,6 +14,9 @@ const mockOtherWord: Word = {
   understoodStreak: 0, lapseCount: 0, viewCount: 0, lastViewedAt: null, lastRatedAt: null,
   nextReviewAt: null, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z',
 };
+const mockWords = [mockOtherWord];
+let mockPreferences: LearningPreferences = { levels: [], topics: [] };
+const mockAddRecommendedWords = jest.fn(async (..._args: unknown[]) => 10);
 let mockActiveCourseId: 'en-sk' | 'es-sk' = 'en-sk';
 
 jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
@@ -47,7 +51,7 @@ jest.mock('react-native-reanimated', () => {
 });
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
-    words: [mockOtherWord],
+    words: mockWords,
     collections: [{ id: 'my-words', name: 'My words' }],
     activeCourseId: mockActiveCourseId,
     activeCourse: {
@@ -55,16 +59,18 @@ jest.mock('@/providers/app-data-provider', () => ({
       sourceLanguageCode: mockActiveCourseId === 'es-sk' ? 'es' : 'en', targetLanguageCode: 'sk',
       capabilities: { bundledCatalog: true, recommendations: true },
     },
-    learningPreferences: { levels: [], topics: [] },
+    learningPreferences: mockPreferences,
     wordCapacity: { remaining: 99, shouldShowNotice: false },
     createCollection: jest.fn(async () => 'collection'),
-    addRecommendedWords: jest.fn(async () => 0),
+    addRecommendedWords: mockAddRecommendedWords,
   }),
 }));
 
 describe('library course visibility', () => {
   beforeEach(() => {
     mockActiveCourseId = 'en-sk';
+    mockPreferences = { levels: [], topics: [] };
+    mockAddRecommendedWords.mockClear();
     jest.spyOn(Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 1, fontScale: 1 });
   });
   afterEach(() => jest.restoreAllMocks());
@@ -115,4 +121,20 @@ describe('library course visibility', () => {
     screen.getByText('Recommended for you');
     screen.getByRole('button', { name: 'Choose learning preferences' });
   });
+});
+
+it.each(['en-sk', 'es-sk'] as const)('adds exactly the stable %s Library preview', async (courseId) => {
+  mockActiveCourseId = courseId;
+  mockPreferences = { levels: ['B2'], topics: ['business'] };
+  jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
+  jest.spyOn(Math, 'random').mockReturnValue(0.2);
+  const preview = buildRecommendations(mockPreferences, [], 10, courseId);
+  const screen = await render(<LibraryScreen/>);
+  for (const { entry } of preview) screen.getByText(entry.term);
+  jest.mocked(Math.random).mockReturnValue(0.8);
+  await screen.rerender(<LibraryScreen/>);
+  for (const { entry } of preview) screen.getByText(entry.term);
+  await fireEvent.press(screen.getByRole('button', { name: 'Add 10 recommended words' }));
+  expect(mockAddRecommendedWords).toHaveBeenCalledWith(10, preview);
+  jest.restoreAllMocks();
 });

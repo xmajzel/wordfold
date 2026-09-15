@@ -102,6 +102,7 @@ export default function OnboardingScreen() {
       const count = await completePersonalizedOnboarding(
         preferences,
         showVoiceStep ? voicePreference : 'device',
+        preview,
       );
       router.replace({ pathname: '/onboarding-ready', params: { count: String(count) } } as never);
     } catch (error) {
