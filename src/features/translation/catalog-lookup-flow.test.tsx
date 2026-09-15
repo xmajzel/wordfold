@@ -155,8 +155,8 @@ describe('catalog Slovak lookup flows', () => {
     };
     const view = await render(<NewWordScreen/>);
 
-    expect(view.getByRole('button', { name: 'Learning language pronunciation: Spain' })).toBeTruthy();
-    expect(view.queryByRole('button', { name: 'Learning language pronunciation: Mexico' })).toBeNull();
+    expect(view.getByRole('button', { name: 'Learning language pronunciation: Spain' }).props.accessibilityState.selected).toBe(true);
+    expect(view.getByRole('button', { name: 'Learning language pronunciation: Mexico' }).props.accessibilityState.selected).toBe(false);
 
     await fireEvent.changeText(view.getByLabelText('Spanish word or phrase'), 'corazón');
     await fireEvent.changeText(view.getByLabelText('Definition'), 'Órgano que impulsa la sangre.');

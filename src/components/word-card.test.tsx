@@ -103,7 +103,7 @@ describe('WordCard learning actions', () => {
     expect(visible.getByText('Phone voice')).toBeTruthy();
   });
 
-  it('does not expose pronunciation for the Spanish course', async () => {
+  it('shows exact-locale device pronunciation for the Spanish course', async () => {
     const spanishWord = {
       ...word,
       term: 'carro',
@@ -114,8 +114,10 @@ describe('WordCard learning actions', () => {
     };
     const screen = await render(<WordCard word={spanishWord} showPronunciation/>);
 
-    expect(screen.queryByRole('button', { name: /pronunciation/ })).toBeNull();
-    expect(screen.queryByText('Phone voice')).toBeNull();
+    expect(screen.getByRole('button', {
+      name: 'Play Spanish · Spain device pronunciation for carro',
+    })).toBeTruthy();
+    expect(screen.getByText('Phone voice')).toBeTruthy();
   });
 
   it('shows translation preparation for an untranslated word', async () => {
