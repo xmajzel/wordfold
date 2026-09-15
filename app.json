@@ -106,6 +106,9 @@
       "./plugins/with-revenuecat-android",
       "expo-asset",
       "expo-audio",
+      "expo-font",
+      "expo-image",
+      "expo-status-bar",
       "expo-web-browser"
     ],
     "experiments": {
