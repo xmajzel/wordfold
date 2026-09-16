@@ -17,6 +17,7 @@ const mockRouterSetParams = jest.fn();
 let mockSearchParams: { notificationWordId?: string } = {};
 let mockActiveCourseId: 'en-sk' | 'es-sk' = 'en-sk';
 let mockLearningFilter: LearningFilter = 'all';
+let mockCollections = [{ id: 'my-words', name: 'My words' }];
 let mockLearningPreferences: LearningPreferences = { levels: [], topics: [] };
 let mockWordCapacity = { limit: 100, count: 2, remaining: 98 as number | null, unlimited: false, shouldShowNotice: false };
 
@@ -71,7 +72,14 @@ jest.mock('expo-haptics', () => ({
 
 jest.mock('react-native-reanimated', () => {
   const React = jest.requireActual('react');
-  const { View } = jest.requireActual('react-native');
+  const { View, Text } = jest.requireActual('react-native');
+  const AnimatedView = (props: { testID?: string; onLayout?: () => void }) => {
+    const mountedProps = React.useRef(props);
+    React.useLayoutEffect(() => {
+      if (mountedProps.current.testID === 'today-subtitle-face') mountedProps.current.onLayout?.();
+    }, []);
+    return React.createElement(View, props);
+  };
   const transition = {
     damping: () => transition,
     duration: () => transition,
@@ -80,20 +88,25 @@ jest.mock('react-native-reanimated', () => {
   };
   return {
     __esModule: true,
-    default: { View, createAnimatedComponent: (Component: unknown) => Component },
+    default: { View: AnimatedView, Text, createAnimatedComponent: (Component: unknown) => Component },
     FadeIn: transition,
     FadeInDown: transition,
     FadeOut: transition,
     ReduceMotion: { System: 'system' },
     useReducedMotion: () => false,
     runOnUI: (callback: () => void) => callback,
+    runOnJS: (callback: (...args: unknown[]) => void) => callback,
     cancelAnimation: jest.fn(),
     interpolate: (_value: number, _input: number[], output: number[]) => output[0],
+    interpolateColor: (value: number, _input: number[], output: string[]) => output[value >= 0.5 ? 1 : 0],
     useAnimatedStyle: (factory: () => object) => factory(),
     useSharedValue: (value: unknown) => React.useRef({ value, get() { return this.value; }, set(next: unknown) { this.value = next; } }).current,
     withRepeat: (value: unknown) => value,
     withSpring: (value: unknown) => value,
-    withTiming: (value: unknown) => value,
+    withTiming: (value: unknown, _config: unknown, callback?: (finished: boolean) => void) => {
+      if (callback) callback(true);
+      return value;
+    },
   };
 });
 
@@ -143,7 +156,7 @@ jest.mock('@/providers/app-data-provider', () => ({
     activeCourse: mockActiveCourseId === 'es-sk'
       ? { sourceLanguageCode: 'es', capabilities: { recommendations: true } }
       : { sourceLanguageCode: 'en', capabilities: { recommendations: true } },
-    collections: [{ id: 'my-words', name: 'My words' }],
+    collections: mockCollections,
     learningFilter: mockLearningFilter,
     learningPreferences: mockLearningPreferences,
     wordCapacity: mockWordCapacity,
@@ -162,6 +175,7 @@ describe('continued learning session', () => {
     mockActiveCourseId = 'en-sk';
     mockWords = [mockFirstWord, mockNextWord];
     mockLearningFilter = 'all';
+    mockCollections = [{ id: 'my-words', name: 'My words' }];
     mockLearningPreferences = { levels: ['B2'], topics: ['business'] };
     mockWordCapacity = { limit: 100, count: 2, remaining: 98, unlimited: false, shouldShowNotice: false };
     mockRateWord.mockImplementation(async () => undefined);
@@ -197,6 +211,75 @@ describe('continued learning session', () => {
     await fireEvent.press(view.getByRole('button', { name: /I know this/ }));
     expect(mockRateWord).toHaveBeenCalledTimes(2);
   });
+
+  it('keeps the header and filter scroller mounted across rapid filter changes and empty sessions', async () => {
+    const longName = 'NC1 Custom Collection with a long lesson name';
+    mockCollections = [{ id: 'my-words', name: 'My words' }, { id: 'lessons', name: longName }];
+    mockWords = [{ ...mockFirstWord, cefrLevel: null }, { ...mockNextWord, collectionId: 'lessons' }];
+    const view = await render(<LearnScreen/>);
+    const title = view.getByText('Today’s english');
+    const scroller = view.getByTestId('today-filter-scroll');
+    for (const label of ['Personal', 'My words', longName, 'All']) {
+      // Include the transition into an empty filtered session and back.
+      mockBuildLearningFeed.mockReturnValue(label === longName ? [] : [mockFirstWord]);
+      await fireEvent.press(view.getByRole('tab', { name: `Show ${label} words` }));
+      await view.rerender(<LearnScreen/>);
+      expect(view.getByText('Today’s english')).toBe(title);
+      expect(view.getByTestId('today-filter-scroll')).toBe(scroller);
+      expect(view.getByRole('tab', { name: `Show ${label} words` }).props.accessibilityState.selected).toBe(true);
+      const subtitle = view.getByText(/^Showing /);
+      expect(subtitle.props.numberOfLines).toBe(1);
+      expect(subtitle.props.ellipsizeMode).toBe('tail');
+      if (label === longName) expect(subtitle.props.accessibilityLabel).toBe(`Showing words in “${longName}”`);
+    }
+  });
+
+  it('shows populated course collections and saves a selection with its readable name', async () => {
+    mockCollections = [{ id: 'lessons', name: 'NC1 Custom Collection' }, { id: 'empty', name: 'Empty collection' }, { id: 'spanish', name: 'Spanish lessons' }];
+    mockWords = [baseWord({ id: 'lesson', collectionId: 'lessons' }), baseWord({ id: 'spanish', collectionId: 'spanish', sourceLanguageCode: 'es' })];
+    const view = await render(<LearnScreen/>);
+    expect(view.queryByRole('tab', { name: 'Show Empty collection words' })).toBeNull();
+    expect(view.queryByRole('tab', { name: 'Show Spanish lessons words' })).toBeNull();
+    await fireEvent.press(view.getByRole('tab', { name: 'Show NC1 Custom Collection words' }));
+    expect(mockUpdateLearningFilter).toHaveBeenCalledWith('collection:lessons');
+    await view.rerender(<LearnScreen/>);
+    expect(view.getByRole('tab', { name: 'Show NC1 Custom Collection words' }).props.accessibilityState.selected).toBe(true);
+    view.getByText('Showing words in “NC1 Custom Collection”');
+    expect(mockBuildLearningFeed).toHaveBeenLastCalledWith(expect.any(Array), expect.any(Date), 'collection:lessons');
+    mockCollections = [{ id: 'lessons', name: 'Renamed lessons' }];
+    await view.rerender(<LearnScreen/>);
+    expect(view.getByRole('tab', { name: 'Show Renamed lessons words' }).props.accessibilityState.selected).toBe(true);
+  });
+
+  it('resets an unavailable collection to All and scopes collection chips to the new course', async () => {
+    mockCollections = [{ id: 'lessons', name: 'English lessons' }, { id: 'spanish', name: 'Spanish lessons' }];
+    mockWords = [baseWord({ id: 'english', collectionId: 'lessons' }), baseWord({ id: 'spanish', collectionId: 'spanish', sourceLanguageCode: 'es' })];
+    mockLearningFilter = 'collection:lessons';
+    const view = await render(<LearnScreen/>);
+    mockActiveCourseId = 'es-sk';
+    await view.rerender(<LearnScreen/>);
+    expect(mockUpdateLearningFilter).toHaveBeenCalledWith('all');
+    expect(view.queryByRole('tab', { name: 'Show English lessons words' })).toBeNull();
+    expect(view.getByRole('tab', { name: 'Show Spanish lessons words' })).toBeTruthy();
+  });
+
+  it('refreshes a collection session when a word moves out and falls back when it becomes empty', async () => {
+    mockCollections = [{ id: 'lessons', name: 'Lessons' }, { id: 'other', name: 'Other' }];
+    mockWords = [baseWord({ id: 'first', collectionId: 'lessons' }), baseWord({ id: 'second', collectionId: 'lessons' })];
+    mockLearningFilter = 'collection:lessons';
+    const view = await render(<LearnScreen/>);
+    mockBuildLearningFeed.mockClear();
+    mockWords = mockWords.map((word) => word.id === 'first' ? { ...word, collectionId: 'other' } : word);
+    await view.rerender(<LearnScreen/>);
+    expect(mockBuildLearningFeed).toHaveBeenCalledWith(mockWords, expect.any(Date), 'collection:lessons');
+    mockWords = mockWords.map((word) => ({ ...word, collectionId: 'other' }));
+    await view.rerender(<LearnScreen/>);
+    expect(mockUpdateLearningFilter).toHaveBeenCalledWith('all');
+    expect(view.queryByRole('tab', { name: 'Show Lessons words' })).toBeNull();
+  });
+
+
+
 
   it('shows a passive result and disables rating swipes on a submitted card', async () => {
     let finishRating!: () => void;

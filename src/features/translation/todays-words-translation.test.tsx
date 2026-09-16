@@ -45,7 +45,14 @@ jest.mock('@/features/pronunciation/offline-downloads-provider', () => ({
 
 jest.mock('react-native-reanimated', () => {
   const React = jest.requireActual('react');
-  const { View } = jest.requireActual('react-native');
+  const { View, Text } = jest.requireActual('react-native');
+  const AnimatedView = (props: { testID?: string; onLayout?: () => void }) => {
+    const mountedProps = React.useRef(props);
+    React.useLayoutEffect(() => {
+      if (mountedProps.current.testID === 'today-subtitle-face') mountedProps.current.onLayout?.();
+    }, []);
+    return React.createElement(View, props);
+  };
   const transition = {
     damping: () => transition,
     duration: () => transition,
@@ -54,19 +61,24 @@ jest.mock('react-native-reanimated', () => {
   };
   return {
     __esModule: true,
-    default: { View, createAnimatedComponent: (Component: unknown) => Component },
+    default: { View: AnimatedView, Text, createAnimatedComponent: (Component: unknown) => Component },
     FadeIn: transition,
     FadeInDown: transition,
     FadeOut: transition,
     ReduceMotion: { System: 'system' },
     useReducedMotion: () => false,
     runOnUI: (callback: () => void) => callback,
+    runOnJS: (callback: (...args: unknown[]) => void) => callback,
     cancelAnimation: jest.fn(),
     interpolate: (_value: number, _input: number[], output: number[]) => output[0],
+    interpolateColor: (value: number, _input: number[], output: string[]) => output[value >= 0.5 ? 1 : 0],
     useAnimatedStyle: (factory: () => object) => factory(),
     useSharedValue: (value: unknown) => React.useRef({ value, get() { return this.value; }, set(next: unknown) { this.value = next; } }).current,
     withRepeat: (value: unknown) => value,
-    withTiming: (value: unknown) => value,
+    withTiming: (value: unknown, _config: unknown, callback?: (finished: boolean) => void) => {
+      if (callback) callback(true);
+      return value;
+    },
   };
 });
 

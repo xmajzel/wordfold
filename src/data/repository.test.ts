@@ -148,6 +148,21 @@ describe('word repository', () => {
     );
   });
 
+  it('round-trips collection filters in course-specific metadata', async () => {
+    const database = createDatabase();
+    const values = new Map<string, string>();
+    database.runAsync = jest.fn(async (_sql, key, value) => {
+      values.set(String(key), String(value));
+      return { changes: 1, lastInsertRowId: 0 };
+    }) as unknown as typeof database.runAsync;
+    database.getFirstAsync = jest.fn(async (_sql, key) => ({ value: values.get(String(key)) })) as unknown as typeof database.getFirstAsync;
+    await saveLearningFilter(database, 'collection:english-lessons', 'en-sk');
+    await saveLearningFilter(database, 'collection:spanish-lessons', 'es-sk');
+    await expect(getLearningFilter(database, 'en-sk')).resolves.toBe('collection:english-lessons');
+    await expect(getLearningFilter(database, 'es-sk')).resolves.toBe('collection:spanish-lessons');
+    values.set('learning_filter:en-sk', 'collection:');
+    await expect(getLearningFilter(database, 'en-sk')).resolves.toBe('all');
+  });
 
   it('defaults invalid active courses to English and persists a supported course', async () => {
     const database = createDatabase();

@@ -6,6 +6,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useLocalSearchParams } from 'expo-router';
 import Animated, { FadeInDown, ReduceMotion } from 'react-native-reanimated';
 
+import { FlippingSubtitle, SlidingFilterTabs } from '@/components/today-filter-motion';
 import { AppText } from '@/components/app-text';
 import { EmptyState } from '@/components/empty-state';
 import { PrimaryButton } from '@/components/primary-button';
@@ -15,7 +16,7 @@ import { WordCardStack } from '@/components/word-card-stack';
 import { WordCard } from '@/components/word-card';
 import { wordBelongsToCourse } from '@/domain/courses';
 import { languageLabel } from '@/domain/languages';
-import type { LearningFilter, LearningPreferences, LearningRating, Word } from '@/domain/types';
+import type { Collection, LearningFilter, LearningPreferences, LearningRating, Word } from '@/domain/types';
 import { buildContinuedLearningFeed, buildLearningFeed, buildNotificationLearningSession, filterWordsByLearningCategory, getAvailableLearningFilters } from '@/features/learning/algorithm';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
 import { WordCapacityExceededError } from '@/features/purchases/capacity';
@@ -25,19 +26,8 @@ import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
 
-const filterOptions: { id: LearningFilter; label: string }[] = [
-  { id: 'all', label: 'All' },
-  { id: 'personal', label: 'Personal' },
-  { id: 'A1', label: 'A1' },
-  { id: 'A2', label: 'A2' },
-  { id: 'B1', label: 'B1' },
-  { id: 'B2', label: 'B2' },
-  { id: 'C1', label: 'C1' },
-  { id: 'C2', label: 'C2' },
-];
-
 export default function LearnScreen() {
-  const { words, activeCourseId, learningFilter, updateLearningFilter } = useAppData();
+  const { words, collections, activeCourse, activeCourseId, learningFilter, updateLearningFilter } = useAppData();
   const activeWords = useMemo(() => words.filter((word) => wordBelongsToCourse(word, activeCourseId)), [activeCourseId, words]);
   const { notificationWordId: notificationWordIdParam } = useLocalSearchParams<{
     notificationWordId?: string | string[];
@@ -49,10 +39,13 @@ export default function LearnScreen() {
     && words.some((word) => word.id === requestedNotificationWordId)
     ? requestedNotificationWordId
     : null;
-  const availableFilters = useMemo(() => getAvailableLearningFilters(activeWords), [activeWords]);
+  const availableFilters = useMemo(() => getAvailableLearningFilters(activeWords, collections), [activeWords, collections]);
   const activeFilter = availableFilters.includes(learningFilter) ? learningFilter : 'all';
   const sessionFilter = notificationWordId ? 'all' : activeFilter;
-  const sessionKey = `${activeCourseId}:${sessionFilter}:${notificationWordId ?? 'regular'}:${activeWords.map((word) => word.id).sort().join(':')}`;
+  const collectionMembership = sessionFilter.startsWith('collection:')
+    ? filterWordsByLearningCategory(activeWords, sessionFilter).map((word) => word.id).sort().join(':')
+    : '';
+  const sessionKey = `${activeCourseId}:${sessionFilter}:${notificationWordId ?? 'regular'}:${collectionMembership}:${activeWords.map((word) => word.id).sort().join(':')}`;
 
   const selectFilter = useCallback(async (filter: LearningFilter) => {
     if (requestedNotificationWordId) router.setParams({ notificationWordId: '' });
@@ -64,18 +57,19 @@ export default function LearnScreen() {
     void updateLearningFilter(activeFilter);
   }, [activeFilter, learningFilter, updateLearningFilter]);
 
-  return <LearningSession
-    key={sessionKey}
-    filter={sessionFilter}
-    availableFilters={availableFilters}
-    notificationWordId={notificationWordId}
-    onSelectFilter={selectFilter}
-  />;
+  return <Screen style={styles.screen}>
+    <Header filter={sessionFilter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={selectFilter}/>
+    <LearningSession
+      key={sessionKey}
+      filter={sessionFilter}
+      notificationWordId={notificationWordId}
+      onSelectFilter={selectFilter}
+    />
+  </Screen>;
 }
 
-function LearningSession({ filter, availableFilters, notificationWordId, onSelectFilter }: {
+function LearningSession({ filter, notificationWordId, onSelectFilter }: {
   filter: LearningFilter;
-  availableFilters: LearningFilter[];
   notificationWordId: string | null;
   onSelectFilter(filter: LearningFilter): Promise<void>;
 }) {
@@ -278,8 +272,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
       ? translationStates[currentNotificationReviewWord.id] ?? 'loading'
       : undefined;
     return (
-      <Screen style={styles.screen}>
-        <Header filter={filter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={onSelectFilter}/>
+      <>
         <View style={styles.notificationReviewIntro}>
           <AppText variant="heading">{canContinue ? 'Already reviewed' : 'You are caught up'}</AppText>
           <AppText style={[styles.notificationReviewMessage, { color: theme.muted }]}>
@@ -301,18 +294,17 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
         {canContinue
           ? <PrimaryButton label="Continue today’s words" onPress={() => setNotificationReviewWord(null)}/>
           : null}
-      </Screen>
+      </>
     );
   }
 
   if (sessionFeed.length === 0) {
     const hasCategoryWords = categoryWords.length > 0;
-    return <Screen><Header filter={filter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={onSelectFilter}/><LearningEmptyState title={hasCategoryWords ? 'You are caught up' : `No ${categoryWordLabel(filter)} yet`} message={hasCategoryWords ? `No ${categoryWordLabel(filter)} are due right now.` : `Add ${languageLabel(activeCourse.sourceLanguageCode).toLowerCase()} words from the library or choose another category.`} recommendations={canAddRecommendations ? recommendationPreview.slice(0, recommendationAddCount) : []} learningPreferences={learningPreferences} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} showManualCourseSetup={activeWords.length === 0 && !activeCourse.capabilities.recommendations} busy={recommendationsBusy} onAdd={() => void addRecommendationsAndContinue()}/></Screen>;
+    return <View style={styles.emptySession}><LearningEmptyState title={hasCategoryWords ? 'You are caught up' : `No ${categoryWordLabel(filter, collections)} yet`} message={hasCategoryWords ? `No ${categoryWordLabel(filter, collections)} are due right now.` : `Add ${languageLabel(activeCourse.sourceLanguageCode).toLowerCase()} words from the library or choose another category.`} recommendations={canAddRecommendations ? recommendationPreview.slice(0, recommendationAddCount) : []} learningPreferences={learningPreferences} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} showManualCourseSetup={activeWords.length === 0 && !activeCourse.capabilities.recommendations} busy={recommendationsBusy} onAdd={() => void addRecommendationsAndContinue()}/></View>;
   }
 
   return (
-    <Screen style={styles.screen}>
-      <Header filter={filter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={onSelectFilter}/>
+    <>
       <View testID="today-words-stack" style={styles.wordStack}
         onLayout={(event) => setStackHeight(Math.round(event.nativeEvent.layout.height))}>
         <View style={styles.stackContent}>
@@ -372,7 +364,7 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
           <AppText variant="caption">Skip</AppText><Ionicons name="arrow-up" size={18} color={theme.primary}/>
         </Pressable> : null}
       </View>
-    </Screen>
+    </>
   );
 }
 
@@ -467,25 +459,36 @@ function LearningEmptyState({ title, message, recommendations, learningPreferenc
 
 function Header({ filter, availableFilters, learnedLanguage, onSelectFilter }: { filter: LearningFilter; availableFilters: LearningFilter[]; learnedLanguage: string; onSelectFilter(filter: LearningFilter): Promise<void> }) {
   const theme = useAppTheme();
+  const { collections } = useAppData();
+  const filterOptions = availableFilters.map((id) => ({
+    id,
+    label: id === 'all' ? 'All' : id === 'personal' ? 'Personal'
+      : id.startsWith('collection:') ? collections.find((item) => item.id === id.slice('collection:'.length))?.name ?? 'Collection' : id,
+  }));
+  const subtitle = `Showing ${filter === 'all' ? `all ${learnedLanguage.toLowerCase()} words` : categoryWordLabel(filter, collections)}`;
   return <View style={styles.headerBlock}>
-    <View style={styles.header}><View><AppText variant="title">Today’s {learnedLanguage.toLowerCase()}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Showing {filter === 'all' ? `all ${learnedLanguage.toLowerCase()} words` : categoryWordLabel(filter)}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Open settings" onPress={() => router.push('/settings')} style={({ pressed }) => [styles.settings, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.7 : 1 }]}><Ionicons name="options-outline" color={theme.primary} size={22}/></Pressable></View>
+    <View style={styles.header}><View style={styles.headerCopy}><AppText variant="title">Today’s {learnedLanguage.toLowerCase()}</AppText><FlippingSubtitle text={subtitle}/></View><Pressable accessibilityRole="button" accessibilityLabel="Open settings" onPress={() => router.push('/settings')} style={({ pressed }) => [styles.settings, { backgroundColor: theme.surface, borderColor: theme.border, opacity: pressed ? 0.7 : 1 }]}><Ionicons name="options-outline" color={theme.primary} size={22}/></Pressable></View>
     <View style={styles.filterRow}>
-      <ScrollView horizontal style={styles.filterScroll} accessibilityRole="tablist" showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filters}>
-        {filterOptions.filter((option) => availableFilters.includes(option.id)).map((option) => <Pressable key={option.id} accessibilityRole="tab" accessibilityLabel={`Show ${option.label} words`} accessibilityState={{ selected: filter === option.id }} aria-selected={filter === option.id} onPress={() => void onSelectFilter(option.id)} style={[styles.filter, { backgroundColor: filter === option.id ? theme.primary : theme.surface, borderColor: filter === option.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: filter === option.id ? '#FFFFFF' : theme.text }}>{option.label}</AppText></Pressable>)}
-      </ScrollView>
+      <SlidingFilterTabs options={filterOptions} selected={filter} onSelect={onSelectFilter}/>
       <FeedbackLink screen="today" label="Help improve Wordfold" iconOnly/>
     </View>
   </View>;
 }
 
-function categoryWordLabel(filter: LearningFilter, singular = false) {
-  const word = singular ? 'word' : 'words';
+function categoryWordLabel(filter: LearningFilter, collections: Collection[]) {
+  const word = 'words';
+  if (filter.startsWith('collection:')) {
+    const name = collections.find((item) => item.id === filter.slice('collection:'.length))?.name;
+    return name ? `words in “${name}”` : 'collection words';
+  }
   if (filter === 'all') return word;
   if (filter === 'personal') return `personal ${word}`;
   return `${filter} ${word}`;
 }
 
 const styles = StyleSheet.create({
+  headerCopy: { flex: 1, paddingRight: spacing.sm },
+  emptySession: { flex: 1, paddingBottom: spacing.md },
   screen: { paddingHorizontal: spacing.lg }, headerBlock: { gap: spacing.sm, paddingBottom: spacing.sm }, header: { minHeight: 76, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   wordStack: { flex: 1, marginHorizontal: -spacing.lg, overflow: 'hidden' },
   stackContent: { flex: 1, marginHorizontal: spacing.lg, marginBottom: spacing.md },
@@ -508,8 +511,7 @@ const styles = StyleSheet.create({
   recommendationText: { flex: 1, gap: 2 },
   recommendationWords: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
   recommendationWord: { minHeight: 48, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderRadius: radii.control, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
-  settings: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 22, borderWidth: 1 }, filters: { gap: spacing.sm },
+  settings: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 22, borderWidth: 1 },
   filterRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
-  filterScroll: { flex: 1 },
-  filter: { minWidth: 44, minHeight: 44, paddingHorizontal: spacing.md, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' }, position: { flex: 1, textAlign: 'center', paddingVertical: spacing.xs },
+  position: { flex: 1, textAlign: 'center', paddingVertical: spacing.xs },
 });

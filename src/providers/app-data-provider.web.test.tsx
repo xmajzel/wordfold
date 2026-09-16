@@ -42,6 +42,8 @@ function CourseProbe() {
   const { activeCourseId, learningFilter, switchActiveCourse, updateLearningFilter } = useAppData();
   return <>
     <Text>{`${activeCourseId}:${learningFilter}`}</Text>
+    <Pressable accessibilityRole="button" onPress={() => void updateLearningFilter('collection:lessons')}><Text>Choose lessons</Text></Pressable>
+    <Pressable accessibilityRole="button" onPress={() => void switchActiveCourse('en-sk')}><Text>Choose English</Text></Pressable>
     <Pressable accessibilityRole="button" onPress={() => void switchActiveCourse('es-sk')}>
       <Text>Choose Spanish</Text>
     </Pressable>
@@ -119,6 +121,23 @@ describe('web app data provider', () => {
 
     expect(window.localStorage.setItem).toHaveBeenCalledWith('wordfold.activeCourseId', 'es-sk');
     expect(window.localStorage.setItem).toHaveBeenCalledWith('wordfold.learningFilter.es-sk', 'A2');
+  });
+
+  it('restores collection filters across remounts and course switches', async () => {
+    const storage = new Map<string, string>();
+    jest.mocked(window.localStorage.getItem).mockImplementation((key) => storage.get(key) ?? null);
+    jest.mocked(window.localStorage.setItem).mockImplementation((key, value) => { storage.set(key, value); });
+    const view = await render(<AppDataProvider><CourseProbe/></AppDataProvider>);
+    await fireEvent.press(view.getByText('Choose lessons'));
+    view.getByText('en-sk:collection:lessons');
+    await fireEvent.press(view.getByText('Choose Spanish'));
+    view.getByText('es-sk:all');
+    await fireEvent.press(view.getByText('Choose A2'));
+    await fireEvent.press(view.getByText('Choose English'));
+    view.getByText('en-sk:collection:lessons');
+    await view.unmount();
+    const reopened = await render(<AppDataProvider><CourseProbe/></AppDataProvider>);
+    await waitFor(() => reopened.getByText('en-sk:collection:lessons'));
   });
 
   it('does not resolve an English catalog sense while Spanish is active', async () => {

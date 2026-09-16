@@ -8,7 +8,7 @@ export type ContentSource = 'manual' | ContentPackId;
 
 export type CefrLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
 
-export type LearningFilter = 'all' | 'personal' | CefrLevel;
+export type LearningFilter = 'all' | 'personal' | CefrLevel | `collection:${string}`;
 
 export type CefrCatalogSource = 'cefr-j' | 'octanove' | 'wordfold-original-spanish';
 

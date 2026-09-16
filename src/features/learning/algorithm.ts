@@ -1,4 +1,4 @@
-import type { LearningFilter, LearningRating, Word } from '@/domain/types';
+import type { Collection, LearningFilter, LearningRating, Word } from '@/domain/types';
 import { cefrLevels } from '@/data/cefr-levels';
 
 const REVIEW_INTERVAL_RANGES = [
@@ -83,12 +83,17 @@ function seededShuffle(words: Word[], seed: string) {
 export function filterWordsByLearningCategory(words: Word[], filter: LearningFilter) {
   if (filter === 'all') return words;
   if (filter === 'personal') return words.filter((word) => word.cefrLevel === null);
+  if (filter.startsWith('collection:')) return words.filter((word) => word.collectionId === filter.slice('collection:'.length));
   return words.filter((word) => word.cefrLevel === filter);
 }
 
-export function getAvailableLearningFilters(words: Word[]): LearningFilter[] {
+export function getAvailableLearningFilters(words: Word[], collections: Pick<Collection, 'id'>[] = []): LearningFilter[] {
   const filters: LearningFilter[] = ['all'];
   if (words.some((word) => word.cefrLevel === null)) filters.push('personal');
+  const usedCollections = new Set(words.map((word) => word.collectionId));
+  for (const collection of collections) {
+    if (usedCollections.has(collection.id)) filters.push(`collection:${collection.id}`);
+  }
   for (const level of cefrLevels) {
     if (words.some((word) => word.cefrLevel === level)) filters.push(level);
   }

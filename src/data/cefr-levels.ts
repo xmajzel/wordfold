@@ -26,7 +26,8 @@ export function isCefrLevel(value: string | undefined): value is CefrLevel {
 }
 
 export function isLearningFilter(value: string | null | undefined): value is LearningFilter {
-  return value === 'all' || value === 'personal' || isCefrLevel(value ?? undefined);
+  return value === 'all' || value === 'personal' || isCefrLevel(value ?? undefined)
+    || (typeof value === 'string' && value.startsWith('collection:') && value.slice('collection:'.length).trim().length > 0);
 }
 
 export function getCefrLevelSummaries() {

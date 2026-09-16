@@ -111,6 +111,25 @@ describe('learning algorithm', () => {
     expect(buildLearningFeed(words, now, 'all')).toHaveLength(3);
   });
 
+  it('filters collections across CEFR levels while preserving due dates and continuation', () => {
+    const words = [
+      baseWord({ id: 'personal', collectionId: 'lessons' }),
+      baseWord({ id: 'catalog', collectionId: 'lessons', cefrLevel: 'C1' }),
+      baseWord({ id: 'other', collectionId: 'other', cefrLevel: 'C1' }),
+      baseWord({ id: 'later', collectionId: 'lessons', state: 'understood', nextReviewAt: '2026-06-25T12:00:00Z' }),
+      baseWord({ id: 'due', collectionId: 'lessons', state: 'understood', nextReviewAt: '2026-06-20T12:00:00Z' }),
+    ];
+    expect(buildLearningFeed(words, now, 'collection:lessons').map((word) => word.id).sort()).toEqual(['catalog', 'due', 'personal']);
+    expect(buildContinuedLearningFeed(words, ['personal'], now, 'collection:lessons').map((word) => word.id)).toEqual(['catalog']);
+    expect(buildLearningFeed(words, now, 'collection:missing')).toEqual([]);
+  });
+
+  it('offers populated existing collections after Personal and before levels', () => {
+    const words = [baseWord({ collectionId: 'lessons' }), baseWord({ id: 'catalog', collectionId: 'lessons', cefrLevel: 'C1' })];
+    expect(getAvailableLearningFilters(words, [{ id: 'empty' }, { id: 'lessons' }])).toEqual(['all', 'personal', 'collection:lessons', 'C1']);
+    expect(getAvailableLearningFilters(words, [])).not.toContain('collection:lessons');
+  });
+
   it('offers only learning filters that have words', () => {
     const words = [
       baseWord({ id: 'c1', cefrLevel: 'C1' }),
