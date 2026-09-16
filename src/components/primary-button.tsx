@@ -30,7 +30,7 @@ export function PrimaryButton({ label, onPress, variant = 'primary', disabled, l
       onPressOut={() => press(1)}
       style={[styles.button, variant === 'secondary' ? styles.outlined : styles.elevated, { opacity: disabled ? 0.45 : 1, borderColor: variant === 'secondary' ? theme.border : 'transparent', shadowColor: theme.shadow }, animatedStyle]}>
       <LinearGradient colors={colors} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.fill}>
-        {loading ? <ActivityIndicator color={color} /> : <View style={styles.content}>{icon}<AppText variant="label" style={{ color }}>{label}</AppText></View>}
+        {loading ? <ActivityIndicator color={color} /> : <View style={styles.content}>{icon}<AppText variant="label" style={[styles.label, { color }]}>{label}</AppText></View>}
       </LinearGradient>
     </AnimatedPressable>
   );
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   button: { minHeight: 50, borderWidth: 1, borderRadius: radii.control, overflow: 'hidden' },
   outlined: { elevation: 0 },
   elevated: { shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.14, shadowRadius: 16, elevation: 4 },
-  fill: { flex: 1, minHeight: 48, paddingHorizontal: spacing.lg, alignItems: 'center', justifyContent: 'center' },
+  fill: { minHeight: 48, paddingVertical: spacing.sm, paddingHorizontal: spacing.lg, alignItems: 'center', justifyContent: 'center' },
   content: { flexDirection: 'row', gap: spacing.sm, alignItems: 'center', justifyContent: 'center' },
+  label: { flexShrink: 1, textAlign: 'center' },
 });

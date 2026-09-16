@@ -18,7 +18,7 @@ export function EmptyState({ title, message, actionLabel, actionVariant = 'prima
   const action = actionLabel && onAction
     ? <PrimaryButton label={actionLabel} variant={actionVariant} onPress={onAction}/>
     : null;
-  return <View style={styles.container}><Ionicons name="layers-outline" size={38} color={theme.primary} /><AppText variant="heading">{title}</AppText><AppText style={[styles.message, { color: theme.muted }]}>{message}</AppText>{action ? <View testID={compactAction ? 'empty-state-compact-action' : undefined} style={[styles.action, compactAction && styles.compactAction]}>{action}</View> : null}</View>;
+  return <View style={styles.container}><Ionicons name="layers-outline" size={38} color={theme.primary} /><AppText variant="heading" style={styles.message}>{title}</AppText><AppText style={[styles.message, { color: theme.muted }]}>{message}</AppText>{action ? <View testID={compactAction ? 'empty-state-compact-action' : undefined} style={[styles.action, compactAction && styles.compactAction]}>{action}</View> : null}</View>;
 }
 
 const styles = StyleSheet.create({
