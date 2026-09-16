@@ -20,7 +20,7 @@ import type { Collection, LearningFilter, LearningPreferences, LearningRating, W
 import { buildContinuedLearningFeed, buildLearningFeed, buildNotificationLearningSession, filterWordsByLearningCategory, getAvailableLearningFilters } from '@/features/learning/algorithm';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
 import { WordCapacityExceededError } from '@/features/purchases/capacity';
-import { buildRecommendations, topicOptions, type Recommendation } from '@/features/recommendations/selector';
+import { buildRecommendations, normalizeLearningPreferences, topicOptions, type Recommendation } from '@/features/recommendations/selector';
 import { isOnDeviceTranslationPairSupported } from '@/features/translation/translator';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
@@ -152,12 +152,20 @@ function LearningSession({ filter, notificationWordId, onSelectFilter }: {
     new Date(),
     filter,
   ), [activeWords, filter, sessionWordIds]);
-  const recommendationPreview = useMemo(() => activeCourse.capabilities.recommendations ? buildRecommendations(
-    learningPreferences,
-    activeWords.map((word) => word.normalizedTerm),
-    10,
-    activeCourseId,
-  ) : [], [activeCourseId, activeCourse.capabilities.recommendations, activeWords, learningPreferences]);
+  // Refreshes and rating/view saves replace objects without changing eligibility.
+  // Keep the random preview (and its wrapped height) stable for equivalent inputs.
+  const recommendationInputs = JSON.stringify({
+    preferences: normalizeLearningPreferences(learningPreferences),
+    terms: [...new Set(activeWords.map((word) => word.normalizedTerm))].sort(),
+  });
+  const recommendationPreview = useMemo(() => {
+    if (!activeCourse.capabilities.recommendations) return [];
+    const { preferences, terms } = JSON.parse(recommendationInputs) as {
+      preferences: LearningPreferences;
+      terms: string[];
+    };
+    return buildRecommendations(preferences, terms, 10, activeCourseId);
+  }, [activeCourseId, activeCourse.capabilities.recommendations, recommendationInputs]);
   const hasRecommendationPreferences = learningPreferences.levels.length > 0
     && learningPreferences.topics.length > 0;
   const recommendationAddCount = wordCapacity.remaining === null
@@ -328,7 +336,8 @@ function LearningSession({ filter, notificationWordId, onSelectFilter }: {
                 onRate={sessionRating === undefined ? rate : undefined}/>;
             }}
             renderEnd={() => <View style={[styles.batchEnd,
-              !canAddRecommendations && [styles.batchEndSurface, { backgroundColor: theme.surface }],
+              !canAddRecommendations && (continuedSessionFeed.length > 0 || hasRecommendationPreferences)
+                && [styles.batchEndSurface, { backgroundColor: theme.surface }],
             ]}>
               {!canAddRecommendations && continuedSessionFeed.length > 0
                 ? <EmptyState title="End of batch"
@@ -410,9 +419,16 @@ function LearningEmptyState({ title, message, recommendations, learningPreferenc
   }
   if (recommendations.length === 0 && !showManualCourseSetup
     && (learningPreferences.levels.length === 0 || learningPreferences.topics.length === 0)) {
-    return <EmptyState title={`Personalize your ${learnedLanguage} words`}
-      message="Choose your levels and interests to get your next set of words."
-      actionLabel="Choose my preferences" onAction={() => router.push('/preferences')}/>;
+    return <ScrollView testID="today-personalize" showsVerticalScrollIndicator={false}
+      style={[styles.batchEnd, styles.batchEndSurface, { backgroundColor: theme.surface }]}
+      contentContainerStyle={styles.personalizeContent}>
+      <Ionicons name="layers-outline" size={38} color={theme.primary}/>
+      <AppText variant="heading" style={styles.notificationReviewMessage}>Personalize your {learnedLanguage} words</AppText>
+      <AppText style={[styles.notificationReviewMessage, { color: theme.muted }]}>Choose your levels and interests to get your next set of words.</AppText>
+      <View style={styles.personalizeAction}>
+        <PrimaryButton label="Choose my preferences" onPress={() => router.push('/preferences')}/>
+      </View>
+    </ScrollView>;
   }
   if (recommendations.length === 0) {
     return <EmptyState title={title} message={message} actionLabel="Browse library" actionVariant="secondary" compactAction onAction={() => router.push('/(tabs)/library')}/>;
@@ -500,6 +516,8 @@ const styles = StyleSheet.create({
   notificationReviewMessage: { textAlign: 'center' },
   notificationReviewCard: { flex: 1, paddingVertical: spacing.sm },
   learningEmptyContent: { flexGrow: 1, justifyContent: 'center', paddingVertical: spacing.xl },
+  personalizeContent: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', padding: spacing.xxl, gap: spacing.md },
+  personalizeAction: { width: '100%', maxWidth: 360, flexGrow: 0, flexShrink: 0 },
   nextBatchCardShadow: { width: '100%', maxWidth: 560, alignSelf: 'center', borderRadius: radii.sheet, shadowOffset: { width: 0, height: 12 }, shadowOpacity: 0.12, shadowRadius: 22, elevation: 4 },
   nextBatchCard: { overflow: 'hidden', borderWidth: 1, borderRadius: radii.sheet },
   completionStatus: { minHeight: 76, flexDirection: 'row', alignItems: 'center', gap: spacing.md, padding: spacing.lg, borderBottomWidth: 1 },

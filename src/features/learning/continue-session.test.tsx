@@ -278,8 +278,50 @@ describe('continued learning session', () => {
     expect(view.queryByRole('tab', { name: 'Show Lessons words' })).toBeNull();
   });
 
+  it('keeps the empty-library preview through an equivalent startup refresh', async () => {
+    mockWords = [];
+    mockBuildLearningFeed.mockReturnValue([]);
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch);
+    const view = await render(<LearnScreen/>);
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch.slice(0, 3));
+    mockWords = [];
+    mockLearningPreferences = { levels: ['B2'], topics: ['business'] };
+    await view.rerender(<LearnScreen/>);
+    expect(view.getAllByText(/^recommended \d+$/)).toHaveLength(10);
+    await fireEvent.press(view.getByTestId('add-today-recommendations'));
+    expect(mockAddRecommendedWords).toHaveBeenCalledWith(10, mockRecommendationBatch);
+  });
 
+  it('keeps the revealed end card and its words when the final rating finishes saving', async () => {
+    let finishRating!: () => void;
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch);
+    mockRateWord.mockImplementationOnce(() => new Promise<void>((resolve) => { finishRating = resolve; }));
+    const view = await render(<LearnScreen/>);
+    const endCard = view.getByTestId('today-recommendations', { includeHiddenElements: true });
+    await fireEvent.press(view.getByRole('button', { name: /I know this/ }));
+    expect(view.getByTestId('today-recommendations')).toBe(endCard);
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch.slice(0, 3));
+    mockWords = mockWords.map((word) => ({ ...word, state: 'learned', viewCount: 1 }));
+    mockLearningPreferences = { levels: ['B2'], topics: ['business'] };
+    await act(async () => finishRating());
+    await view.rerender(<LearnScreen/>);
+    expect(view.getByTestId('today-recommendations')).toBe(endCard);
+    expect(view.getAllByText(/^recommended \d+$/)).toHaveLength(10);
+  });
 
+  it('updates the preview for changed preferences and library terms', async () => {
+    mockBuildLearningFeed.mockReturnValue([]);
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch);
+    const view = await render(<LearnScreen/>);
+    mockLearningPreferences = { levels: ['A1'], topics: ['spoken'] };
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch.slice(0, 3));
+    await view.rerender(<LearnScreen/>);
+    expect(view.getAllByText(/^recommended \d+$/)).toHaveLength(3);
+    mockWords = mockWords.map((word) => ({ ...word, normalizedTerm: `changed-${word.normalizedTerm}` }));
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch.slice(0, 2));
+    await view.rerender(<LearnScreen/>);
+    expect(view.getAllByText(/^recommended \d+$/)).toHaveLength(2);
+  });
 
   it('shows a passive result and disables rating swipes on a submitted card', async () => {
     let finishRating!: () => void;
