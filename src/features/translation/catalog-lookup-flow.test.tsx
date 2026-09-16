@@ -1,4 +1,7 @@
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
+
+import { Alert } from 'react-native';
+import { router } from 'expo-router';
 
 import ImportScreen from '@/app/import';
 import NewWordScreen from '@/app/word/new';
@@ -8,6 +11,12 @@ const mockCreateWord = jest.fn(async () => 'word-1');
 const mockCreateWords = jest.fn(async () => ['word-1']);
 const mockTranslateOnDevice = jest.fn(async (..._args: unknown[]) => 'srdce');
 let mockWords: unknown[] = [];
+let mockCollectionId: string | undefined;
+let mockCollections = [{ id: 'my-words', name: 'My words' }, { id: 'c1', name: 'English C1 lessons' }];
+const mockCreateCollection = jest.fn(async (name: string, _color: string) => {
+  mockCollections = [...mockCollections, { id: 'new-collection', name }];
+  return 'new-collection';
+});
 let mockActiveCourse = {
   id: 'en-sk', sourceLanguageCode: 'en', targetLanguageCode: 'sk',
   defaultSourcePronunciationLocale: 'en-US', defaultTargetPronunciationLocale: 'sk-SK',
@@ -23,7 +32,7 @@ const mockFindSenses = jest.fn(async (): Promise<CatalogSense[]> => [{
   rank: -101,
 }]);
 
-jest.mock('expo-router', () => ({ router: { back: jest.fn(), push: jest.fn() } }));
+jest.mock('expo-router', () => ({ router: { back: jest.fn(), push: jest.fn() }, useLocalSearchParams: () => ({ collectionId: mockCollectionId }) }));
 jest.mock('@/features/translation/translator', () => ({
   isOnDeviceTranslationPairSupported: (source: string, target: string) => (
     (source === 'en' || source === 'es') && target === 'sk'
@@ -34,7 +43,8 @@ jest.mock('@/features/translation/translator', () => ({
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     words: mockWords,
-    collections: [{ id: 'my-words', name: 'My words' }],
+    collections: mockCollections,
+    createCollection: mockCreateCollection,
     wordCapacity: { remaining: null },
     findSenses: mockFindSenses,
     createWord: mockCreateWord,
@@ -63,6 +73,8 @@ describe('catalog Slovak lookup flows', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockWords = [];
+    mockCollectionId = undefined;
+    mockCollections = [{ id: 'my-words', name: 'My words' }, { id: 'c1', name: 'English C1 lessons' }];
     mockActiveCourse = {
       id: 'en-sk', sourceLanguageCode: 'en', targetLanguageCode: 'sk',
       defaultSourcePronunciationLocale: 'en-US', defaultTargetPronunciationLocale: 'sk-SK',
@@ -174,5 +186,98 @@ describe('catalog Slovak lookup flows', () => {
       sourceLanguageCode: 'es', targetLanguageCode: 'sk',
       sourcePronunciationLocale: 'es-ES', targetPronunciationLocale: 'sk-SK',
     })));
+  });
+});
+
+
+describe('new word collections', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockWords = [];
+    mockCollectionId = undefined;
+    mockCollections = [{ id: 'my-words', name: 'My words' }, { id: 'c1', name: 'English C1 lessons' }];
+    mockActiveCourse = {
+      id: 'en-sk', sourceLanguageCode: 'en', targetLanguageCode: 'sk',
+      defaultSourcePronunciationLocale: 'en-US', defaultTargetPronunciationLocale: 'sk-SK',
+      capabilities: { bundledCatalog: true },
+    };
+  });
+  afterEach(() => jest.restoreAllMocks());
+
+  async function draft() {
+    const view = await render(<NewWordScreen/>);
+    await fireEvent.changeText(view.getByLabelText('English word or phrase'), 'nuance');
+    await fireEvent.changeText(view.getByLabelText('Definition'), 'A subtle difference.');
+    return view;
+  }
+
+  it('preselects the library collection and allows choosing another', async () => {
+    mockCollectionId = 'c1';
+    const view = await draft();
+    expect(view.getByRole('button', { name: 'Collection: English C1 lessons' }).props.accessibilityState.selected).toBe(true);
+    await fireEvent.press(view.getByRole('button', { name: 'Collection: My words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Add to my words' }));
+    expect(mockCreateWord).toHaveBeenCalledWith(expect.objectContaining({ collectionId: 'my-words' }));
+  });
+
+  it('falls back to the default for an unknown collection', async () => {
+    mockCollectionId = 'missing';
+    const view = await draft();
+    await fireEvent.press(view.getByRole('button', { name: 'Add to my words' }));
+    expect(mockCreateWord).toHaveBeenCalledWith(expect.objectContaining({ collectionId: 'my-words' }));
+  });
+
+  it('creates and selects a collection without losing the draft', async () => {
+    const view = await draft();
+    await fireEvent.press(view.getByRole('button', { name: 'New collection' }));
+    await fireEvent.changeText(view.getByLabelText('Collection name'), '  Lesson 2  ');
+    await fireEvent.press(view.getByRole('button', { name: 'Create collection' }));
+    expect(mockCreateCollection).toHaveBeenCalledWith('Lesson 2', '#D8902F');
+    expect(view.getByRole('button', { name: 'Collection: Lesson 2' }).props.accessibilityState.selected).toBe(true);
+    await fireEvent.press(view.getByRole('button', { name: 'Add to my words' }));
+    expect(mockCreateWord).toHaveBeenCalledWith(expect.objectContaining({ collectionId: 'new-collection', term: 'nuance', definition: 'A subtle difference.' }));
+  });
+
+  it('rejects blank names and cancels without changing the draft or selection', async () => {
+    mockCollectionId = 'c1';
+    const view = await draft();
+    await fireEvent.press(view.getByRole('button', { name: 'New collection' }));
+    await fireEvent.changeText(view.getByLabelText('Collection name'), '   ');
+    await fireEvent(view.getByLabelText('Collection name'), 'submitEditing');
+    expect(mockCreateCollection).not.toHaveBeenCalled();
+    await fireEvent.press(view.getByRole('button', { name: 'Cancel new collection' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Add to my words' }));
+    expect(mockCreateWord).toHaveBeenCalledWith(expect.objectContaining({ collectionId: 'c1', term: 'nuance' }));
+  });
+
+  it('preserves the draft and collection name after a failure, then allows retry', async () => {
+    const alert = jest.spyOn(Alert, 'alert');
+    mockCreateCollection.mockRejectedValueOnce(new Error('Try again'));
+    const view = await draft();
+    await fireEvent.press(view.getByRole('button', { name: 'New collection' }));
+    await fireEvent.changeText(view.getByLabelText('Collection name'), 'Lesson 3');
+    await fireEvent.press(view.getByRole('button', { name: 'Create collection' }));
+    expect(alert).toHaveBeenCalledWith('Could not create collection', 'Try again');
+    expect(view.getByLabelText('Collection name').props.value).toBe('Lesson 3');
+    expect(view.getByLabelText('English word or phrase').props.value).toBe('nuance');
+    await fireEvent.press(view.getByRole('button', { name: 'Create collection' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Add to my words' }));
+    expect(mockCreateWord).toHaveBeenCalledWith(expect.objectContaining({ collectionId: 'new-collection' }));
+  });
+
+  it('blocks repeated creation and word saving while creation is pending', async () => {
+    let finish!: (id: string) => void;
+    mockCreateCollection.mockImplementationOnce(() => new Promise<string>((resolve) => { finish = resolve; }));
+    const view = await draft();
+    await fireEvent.press(view.getByRole('button', { name: 'New collection' }));
+    await fireEvent.changeText(view.getByLabelText('Collection name'), 'Lesson 4');
+    await fireEvent(view.getByLabelText('Collection name'), 'submitEditing');
+    await fireEvent(view.getByLabelText('Collection name'), 'submitEditing');
+    await fireEvent.press(view.getByRole('button', { name: 'Add to my words' }));
+    expect(mockCreateCollection).toHaveBeenCalledTimes(1);
+    expect(mockCreateWord).not.toHaveBeenCalled();
+    await act(async () => finish('c1'));
+    await fireEvent.press(view.getByRole('button', { name: 'Add to my words' }));
+    expect(router.back).toHaveBeenCalledTimes(1);
   });
 });

@@ -1,6 +1,8 @@
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { Alert, Dimensions, StyleSheet } from 'react-native';
 
+import { router } from 'expo-router';
+
 import LibraryScreen from '@/app/(tabs)/library';
 import { buildRecommendations } from '@/features/recommendations/selector';
 import type { LearningPreferences, Word } from '@/domain/types';
@@ -137,4 +139,33 @@ it.each(['en-sk', 'es-sk'] as const)('adds exactly the stable %s Library preview
   await fireEvent.press(screen.getByRole('button', { name: 'Add 10 recommended words' }));
   expect(mockAddRecommendedWords).toHaveBeenCalledWith(10, preview);
   jest.restoreAllMocks();
+});
+
+
+it('passes only a real collection filter to Add a word', async () => {
+  const screen = await render(<LibraryScreen/>);
+  await fireEvent.press(screen.getByRole('tab', { name: 'Show My words' }));
+  await fireEvent.press(screen.getAllByText('My words').at(-1)!);
+  await fireEvent.press(screen.getByRole('button', { name: 'Add a word' }));
+  expect(router.push).toHaveBeenLastCalledWith({ pathname: '/word/new', params: { collectionId: 'my-words' } });
+  await fireEvent.press(screen.getByText('All collections'));
+  await fireEvent.press(screen.getByRole('button', { name: 'Add a word' }));
+  expect(router.push).toHaveBeenLastCalledWith({ pathname: '/word/new', params: {} });
+  await fireEvent.press(screen.getByText('Other vocabulary (1)'));
+  await fireEvent.press(screen.getByRole('button', { name: 'Add a word' }));
+  expect(router.push).toHaveBeenLastCalledWith({ pathname: '/word/new', params: {} });
+});
+
+
+it('opens, cancels, reopens and closes the collection form after creation', async () => {
+  const view = await render(<LibraryScreen/>);
+  await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+  expect(view.queryByLabelText('Collection name')).toBeNull();
+  await fireEvent.press(view.getByText('New collection'));
+  await fireEvent.changeText(view.getByLabelText('Collection name'), 'C1 lessons');
+  await fireEvent.press(view.getByText('Cancel'));
+  expect(view.queryByLabelText('Collection name')).toBeNull();
+  await fireEvent.press(view.getByText('New collection'));
+  await fireEvent.press(view.getByRole('button', { name: 'Create collection' }));
+  expect(view.queryByLabelText('Collection name')).toBeNull();
 });
