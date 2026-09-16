@@ -1,9 +1,10 @@
 import { FeedbackLink } from '@/features/feedback/feedback-link';
 import { useEffect, useRef, useState } from 'react';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useLocalSearchParams } from 'expo-router';
 
+import { CollectionFormDisclosure } from '@/components/collection-form-disclosure';
 import { AppText } from '@/components/app-text';
 import { EmptyState } from '@/components/empty-state';
 import { FormField } from '@/components/form-field';
@@ -33,7 +34,7 @@ import { radii, spacing } from '@/theme/tokens';
 export default function WordDetailScreen() {
   const theme = useAppTheme();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { words, collections, editWord, removeWord, resetWord } = useAppData();
+  const { words, collections, editWord, removeWord, resetWord, createCollection } = useAppData();
   const word = words.find((item) => item.id === id);
   const [term, setTerm] = useState('');
   const [definition, setDefinition] = useState('');
@@ -41,6 +42,12 @@ export default function WordDetailScreen() {
   const [translation, setTranslation] = useState('');
   const [partOfSpeech, setPartOfSpeech] = useState('');
   const [collectionId, setCollectionId] = useState('my-words');
+  const [showCollectionForm, setShowCollectionForm] = useState(false);
+  const [collectionName, setCollectionName] = useState('');
+  const [creatingCollection, setCreatingCollection] = useState(false);
+  const collectionCreationPending = useRef(false);
+  const wordSavePending = useRef(false);
+  const draftWordId = useRef<string | null>(null);
   const [sourceLanguageCode, setSourceLanguageCode] = useState(defaultSourceLanguageCode);
   const [targetLanguageCode, setTargetLanguageCode] = useState(defaultTargetLanguageCode);
   const [sourcePronunciationLocale, setSourcePronunciationLocale] = useState(
@@ -50,28 +57,75 @@ export default function WordDetailScreen() {
     defaultPronunciationLocale(defaultTargetLanguageCode),
   );
   const [catalogAssociationRemoved, setCatalogAssociationRemoved] = useState(false);
+  const learningPending = useRef(false);
+  const [restarting, setRestarting] = useState(false);
+  const [learningRestarted, setLearningRestarted] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const deletionNavigated = useRef(false);
   const [translating, setTranslating] = useState(false);
   const translationController = useRef<AbortController | null>(null);
 
   useEffect(() => () => translationController.current?.abort(), []);
 
   useEffect(() => {
-    if (!word) return;
-    // Route changes need to replace the editable draft with the newly selected word.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (!word) { draftWordId.current = null; return; }
+    if (draftWordId.current === word.id) return;
+    draftWordId.current = word.id;
+    // Initialize each word's draft once so collection/provider refreshes preserve edits.
     setTerm(word.term); setDefinition(word.definition); setExample(word.example ?? '');
     setTranslation(word.translation ?? ''); setPartOfSpeech(word.partOfSpeech ?? ''); setCollectionId(word.collectionId);
     setSourceLanguageCode(word.sourceLanguageCode); setTargetLanguageCode(word.targetLanguageCode);
     setSourcePronunciationLocale(word.sourcePronunciationLocale);
     setTargetPronunciationLocale(word.targetPronunciationLocale);
     setCatalogAssociationRemoved(false);
+    setLearningRestarted(false);
+    setShowCollectionForm(false); setCollectionName('');
   }, [word]);
 
-  if (!word) return <Screen><Header/><EmptyState title="Word not available" message="It may have been deleted after this reminder was scheduled." actionLabel="Open the feed" onAction={() => router.replace('/(tabs)')}/></Screen>;
+  useEffect(() => {
+    // The provider refreshes words before it finishes rescheduling reminders.
+    if (!deleting || deletionNavigated.current) return;
+    if (!word) {
+      deletionNavigated.current = true;
+      router.replace('/(tabs)/library');
+      if (deleteError) showReminderDeleteError();
+    } else if (deleteError) {
+      // Handle failure after React has applied any word-list refresh from deletion.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setDeleting(false);
+      Alert.alert('Could not delete', deleteError);
+    }
+  }, [deleting, word, deleteError]);
+
+  if (deleting) return <Screen><Header/><View style={styles.deleting}><ActivityIndicator color={theme.primary}/><AppText>Deleting word…</AppText></View></Screen>;
+  if (!word) return <Screen><Header/><EmptyState title="Word not available" message="This word may have been deleted from your library." actionLabel="Open the feed" onAction={() => router.replace('/(tabs)')}/></Screen>;
+
+  const addCollection = async () => {
+    const name = collectionName.trim();
+    if (!name || collectionCreationPending.current || wordSavePending.current) return;
+    const editingWordId = word.id;
+    collectionCreationPending.current = true;
+    setCreatingCollection(true);
+    try {
+      const newId = await createCollection(name, '#D8902F');
+      if (draftWordId.current === editingWordId) {
+        setCollectionId(newId);
+        setCollectionName('');
+        setShowCollectionForm(false);
+      }
+    } catch (error) {
+      Alert.alert('Could not create collection', error instanceof Error ? error.message : 'Please try again.');
+    } finally {
+      collectionCreationPending.current = false;
+      setCreatingCollection(false);
+    }
+  };
 
   const persistWord = async () => {
-    if (!term.trim() || !definition.trim()) return;
+    if (!term.trim() || !definition.trim() || showCollectionForm || collectionCreationPending.current || wordSavePending.current) return;
+    wordSavePending.current = true;
     setSaving(true);
     try {
       await editWord(word.id, {
@@ -84,11 +138,11 @@ export default function WordDetailScreen() {
       });
       router.back();
     } catch (error) { Alert.alert('Could not save', error instanceof Error ? error.message : 'Please check the fields and try again.'); }
-    finally { setSaving(false); }
+    finally { wordSavePending.current = false; setSaving(false); }
   };
 
   const save = () => {
-    if (!term.trim() || !definition.trim()) return;
+    if (!term.trim() || !definition.trim() || showCollectionForm || collectionCreationPending.current || wordSavePending.current) return;
     if (!getCourseForLanguagePair(sourceLanguageCode, targetLanguageCode)) {
       Alert.alert(
         'Choose a supported course pair',
@@ -113,7 +167,35 @@ export default function WordDetailScreen() {
     );
   };
 
-  const confirmDelete = () => Alert.alert('Delete this word?', 'Its learning history will also be removed.', [{ text: 'Cancel', style: 'cancel' }, { text: 'Delete', style: 'destructive', onPress: () => void removeWord(word.id).then(() => router.replace('/(tabs)/library')) }]);
+  const learnAgain = async () => {
+    if (learningPending.current || wordSavePending.current || collectionCreationPending.current) return;
+    learningPending.current = true;
+    setRestarting(true);
+    try {
+      await resetWord(word.id);
+      setLearningRestarted(true);
+    } catch (error) {
+      Alert.alert('Could not restart learning', error instanceof Error ? error.message : 'Please try again.');
+    } finally {
+      learningPending.current = false;
+      setRestarting(false);
+    }
+  };
+
+  const deleteWord = async () => {
+    setDeleteError(null);
+    setDeleting(true);
+    try {
+      await removeWord(word.id);
+    } catch (error) {
+      if (deletionNavigated.current) {
+        showReminderDeleteError();
+      } else {
+        setDeleteError(error instanceof Error ? error.message : 'Please try again.');
+      }
+    }
+  };
+  const confirmDelete = () => Alert.alert('Delete this word?', 'Its learning history will also be removed.', [{ text: 'Cancel', style: 'cancel' }, { text: 'Delete', style: 'destructive', onPress: () => void deleteWord() }]);
   const generateTranslation = async () => {
     if (!isOnDeviceTranslationPairSupported(sourceLanguageCode, targetLanguageCode)) return;
     translationController.current?.abort();
@@ -186,7 +268,26 @@ export default function WordDetailScreen() {
       <FeedbackLink screen="word-detail" word={{ ...word, term, definition, translation, example,
         sourceLanguageCode, targetLanguageCode, catalogSenseId: catalogAssociationRemoved ? null : word.catalogSenseId,
       }} label="Report an issue with this word"/>
-      <View style={styles.titleRow}><View style={styles.titleText}><AppText variant="display">{word.term}</AppText><AppText style={{ color: theme.muted }}>{collections.find((item) => item.id === word.collectionId)?.name}</AppText></View><StateBadge state={word.state}/></View>
+      <View style={styles.titleRow}><View style={styles.titleText}><AppText variant="display">{word.term}</AppText><AppText style={{ color: theme.muted }}>{collections.find((item) => item.id === collectionId)?.name}</AppText></View><StateBadge state={word.state}/></View>
+      {word.state === 'learned' || restarting ? <View style={styles.group}>
+        <PrimaryButton label="Learn again" variant="secondary" loading={restarting} disabled={saving || creatingCollection} onPress={() => void learnAgain()} icon={<Ionicons name="refresh-outline" color={theme.primary} size={18}/>}/>
+        <AppText variant="caption" style={{ color: theme.muted }}>Forgot this word? Add it back to today’s practice.</AppText>
+      </View> : null}
+      {learningRestarted ? <AppText accessibilityLiveRegion="polite" style={{ color: theme.primary }}>Added to today’s practice.</AppText> : null}
+      <View style={styles.group}>
+        <AppText variant="label">Collection</AppText>
+        <View>
+          <View style={styles.chips}>
+            {collections.map((collection) => <Pressable key={collection.id} accessibilityRole="button" accessibilityLabel={`Collection: ${collection.name}`} accessibilityState={{ selected: collectionId === collection.id }} disabled={saving || creatingCollection} onPress={() => setCollectionId(collection.id)} style={[styles.chip, { backgroundColor: collectionId === collection.id ? theme.primary : theme.surface, borderColor: collectionId === collection.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: collectionId === collection.id ? '#FFFFFF' : theme.text }}>{collection.name}</AppText></Pressable>)}
+            <Pressable accessibilityRole="button" accessibilityLabel={showCollectionForm ? 'Cancel new collection' : 'New collection'} disabled={saving || creatingCollection} onPress={() => { setShowCollectionForm((value) => !value); setCollectionName(''); }} style={[styles.chip, { backgroundColor: theme.surface, borderColor: theme.border }]}><AppText variant="label" style={{ color: theme.primary }}>{showCollectionForm ? 'Cancel' : '+ New collection'}</AppText></Pressable>
+          </View>
+          <CollectionFormDisclosure open={showCollectionForm}><View style={[styles.collectionForm, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+            <FormField label="Collection name" value={collectionName} onChangeText={setCollectionName} editable={!creatingCollection} placeholder="English C1 lessons" returnKeyType="done" onSubmitEditing={() => void addCollection()}/>
+            <PrimaryButton label="Create collection" variant="secondary" loading={creatingCollection} disabled={!collectionName.trim()} onPress={() => void addCollection()}/>
+            <AppText variant="caption" style={{ color: theme.muted }}>Create this collection or cancel to continue saving your changes.</AppText>
+          </View></CollectionFormDisclosure>
+        </View>
+      </View>
       {languagePairSupportsPronunciation(sourceLanguageCode, targetLanguageCode) ? <PronunciationControls
         text={term || word.term}
         sourceLanguageCode={sourceLanguageCode}
@@ -194,7 +295,6 @@ export default function WordDetailScreen() {
         catalogSenseId={catalogAssociationRemoved ? null : word.catalogSenseId}
       /> : null}
       <View style={[styles.trail, { backgroundColor: theme.surface, borderColor: theme.border }]}><Trail value={word.viewCount} label="times seen"/><Trail value={word.lapseCount} label="misses"/><Trail value={word.understoodStreak} label="recall steps"/></View>
-      {word.state === 'learned' ? <PrimaryButton label="Practice this word again" variant="secondary" onPress={() => void resetWord(word.id)} icon={<Ionicons name="refresh-outline" color={theme.primary} size={18}/>}/> : null}
       <LanguageSelector label="Learning language" languageCode={sourceLanguageCode} pronunciationLocale={sourcePronunciationLocale} onChange={changeSourceLanguage}/>
       <LanguageSelector label="Hint language" languageCode={targetLanguageCode} pronunciationLocale={targetPronunciationLocale} onChange={changeTargetLanguage}/>
       <FormField label={`${languageLabel(sourceLanguageCode)} word or phrase`} value={term} onChangeText={(value) => { translationController.current?.abort(); setTerm(value); }}/>
@@ -205,18 +305,24 @@ export default function WordDetailScreen() {
         ? <PrimaryButton label={`Generate ${languageLabel(targetLanguageCode)} hint on device`} variant="secondary" loading={translating} disabled={!term.trim()} onPress={() => void generateTranslation()} icon={<Ionicons name="language-outline" color={theme.primary} size={18}/>}/>
         : <AppText variant="caption" style={{ color: theme.muted }}>Automatic on-device translation supports English → Slovak and Spanish → Slovak.</AppText>}
       <FormField label="Part of speech" value={partOfSpeech} onChangeText={setPartOfSpeech}/>
-      <View><AppText variant="label">Collection</AppText><View style={styles.chips}>{collections.map((collection) => <Pressable key={collection.id} onPress={() => setCollectionId(collection.id)} style={[styles.chip, { backgroundColor: collectionId === collection.id ? theme.primary : theme.surface, borderColor: collectionId === collection.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: collectionId === collection.id ? '#FFFFFF' : theme.text }}>{collection.name}</AppText></Pressable>)}</View></View>
-      <PrimaryButton label="Save changes" loading={saving} disabled={!term.trim() || !definition.trim()} onPress={save}/>
-      <PrimaryButton label="Delete word" variant="danger" onPress={confirmDelete}/>
+      <PrimaryButton label="Save changes" loading={saving} disabled={!term.trim() || !definition.trim() || showCollectionForm || creatingCollection || restarting} onPress={save}/>
+      <PrimaryButton label="Delete word" variant="danger" disabled={creatingCollection || saving || restarting} onPress={confirmDelete}/>
       <AppText variant="caption" style={{ color: theme.muted }}>Source: {word.cefrLevel ? `${word.cefrLevel} ${languageLabel(word.sourceLanguageCode)} catalog` : word.source === 'manual' ? 'Your library' : `${word.source} discovery pack`} · Created {new Date(word.createdAt).toLocaleDateString()}</AppText>
     </Screen>
   );
+}
+
+function showReminderDeleteError() {
+  Alert.alert('Word deleted', 'Your word was deleted, but reminders could not be updated. Please try updating your reminder settings.');
 }
 
 function Header() { const theme = useAppTheme(); return <View style={styles.header}><Pressable accessibilityRole="button" accessibilityLabel="Go back" onPress={() => router.back()} style={[styles.back, { backgroundColor: theme.surface }]}><Ionicons name="arrow-back" color={theme.text} size={22}/></Pressable><AppText variant="label">Word details</AppText><View style={styles.back}/></View>; }
 function Trail({ value, label }: { value: number; label: string }) { const theme = useAppTheme(); return <View style={styles.trailItem}><AppText variant="heading" style={{ color: theme.primary }}>{value}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{label}</AppText></View>; }
 
 const styles = StyleSheet.create({
+  group: { gap: spacing.sm },
+  collectionForm: { borderWidth: 1, borderRadius: radii.control, padding: spacing.md, gap: spacing.sm },
+  deleting: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: spacing.md },
   header: { minHeight: 68, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }, back: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' }, titleRow: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.md }, titleText: { flex: 1 },
-  trail: { flexDirection: 'row', borderWidth: 1, borderRadius: radii.card, padding: spacing.lg }, trailItem: { flex: 1, alignItems: 'center', gap: spacing.xs }, chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, marginTop: spacing.sm }, chip: { minHeight: 40, paddingHorizontal: spacing.md, borderWidth: 1, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center' },
+  trail: { flexDirection: 'row', borderWidth: 1, borderRadius: radii.card, padding: spacing.lg }, trailItem: { flex: 1, alignItems: 'center', gap: spacing.xs }, chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, chip: { minHeight: 40, paddingHorizontal: spacing.md, borderWidth: 1, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center' },
 });

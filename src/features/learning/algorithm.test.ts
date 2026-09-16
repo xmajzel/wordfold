@@ -161,3 +161,12 @@ describe('learning algorithm', () => {
     });
   });
 });
+
+it('includes a resumed word even with a full batch of new words', () => {
+  const now = new Date();
+  const resumed = baseWord({ id: 'resumed', state: 'cannot_remember', nextReviewAt: now.toISOString() });
+  const words = Array.from({ length: 20 }, (_, index) => baseWord({ id: `new-${index}` }));
+  const feed = buildLearningFeed([...words, resumed], now);
+  expect(feed).toHaveLength(13);
+  expect(feed.filter((word) => word.id === 'resumed')).toEqual([resumed]);
+});

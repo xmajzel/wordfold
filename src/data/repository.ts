@@ -166,8 +166,8 @@ export async function deleteWord(database: SQLiteDatabase, id: string) {
 export async function resetWord(database: SQLiteDatabase, id: string) {
   const now = new Date().toISOString();
   await database.runAsync(
-    `UPDATE words SET state = 'new', understood_streak = 0, lapse_count = 0, next_review_at = NULL,
-      last_rated_at = NULL, updated_at = ? WHERE id = ?`, now, id,
+    `UPDATE words SET state = 'cannot_remember', understood_streak = 0, next_review_at = ?,
+      updated_at = ? WHERE id = ?`, now, now, id,
   );
 }
 

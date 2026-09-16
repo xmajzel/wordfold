@@ -172,6 +172,32 @@ describe('continued learning session', () => {
     mockBuildContinuedLearningFeed.mockReturnValue([mockNextWord]);
   });
 
+  it.each([false, true])('adds a resumed word to an open session (completed: %s)', async (completed) => {
+    mockWords = [mockFirstWord, { ...mockNextWord, state: 'learned' }];
+    const view = await render(<LearnScreen/>);
+    if (completed) await fireEvent.press(view.getByRole('button', { name: /I know this/ }));
+    mockWords = [mockFirstWord, { ...mockNextWord, state: 'cannot_remember', nextReviewAt: new Date().toISOString() }];
+    await view.rerender(<LearnScreen/>);
+    if (!completed) await fireEvent.press(view.getByRole('button', { name: /I know this/ }));
+    expect(view.getByText('focus')).toBeTruthy();
+    await view.rerender(<LearnScreen/>);
+    expect(view.getByText('2 of 2 · Skip to move on')).toBeTruthy();
+    await fireEvent.press(view.getByRole('button', { name: /I know this/ }));
+    expect(mockRateWord).toHaveBeenLastCalledWith(expect.objectContaining({ id: 'next' }), 'learned');
+  });
+
+  it('allows a word stopped in this session to be learned again once', async () => {
+    const view = await render(<LearnScreen/>);
+    await fireEvent.press(view.getByRole('button', { name: /I know this/ }));
+    mockWords = [{ ...mockFirstWord, state: 'learned' }, mockNextWord];
+    await view.rerender(<LearnScreen/>);
+    mockWords = [{ ...mockFirstWord, state: 'cannot_remember', nextReviewAt: new Date().toISOString() }, mockNextWord];
+    await view.rerender(<LearnScreen/>);
+    expect(view.getByText('1 of 1 · Skip to move on')).toBeTruthy();
+    await fireEvent.press(view.getByRole('button', { name: /I know this/ }));
+    expect(mockRateWord).toHaveBeenCalledTimes(2);
+  });
+
   it('shows a passive result and disables rating swipes on a submitted card', async () => {
     let finishRating!: () => void;
     mockBuildLearningFeed.mockReturnValue([mockFirstWord, mockNextWord]);

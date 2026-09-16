@@ -170,9 +170,9 @@ export async function deleteSyncWord(database: QueryableDatabase, id: string) {
 export async function resetSyncWord(database: QueryableDatabase, id: string) {
   const now = new Date().toISOString();
   await database.execute(
-    `UPDATE words SET state = 'new', understood_streak = 0, lapse_count = 0, next_review_at = NULL,
-      last_rated_at = NULL, updated_at = ? WHERE id = ? AND deleted_at IS NULL`,
-    [now, id],
+    `UPDATE words SET state = 'cannot_remember', understood_streak = 0, next_review_at = ?,
+      updated_at = ? WHERE id = ? AND deleted_at IS NULL`,
+    [now, now, id],
   );
 }
 

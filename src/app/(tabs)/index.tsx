@@ -114,6 +114,30 @@ function LearningSession({ filter, availableFilters, notificationWordId, onSelec
   const viewedIds = useRef(new Set<string>());
   const submittedRatings = useRef(new Map<string, LearningRating>());
   const sessionFeedLengthRef = useRef(sessionFeed.length);
+  const previousWords = useRef(activeWords);
+  useEffect(() => {
+    const previousStates = new Map(previousWords.current.map((word) => [word.id, word.state]));
+    previousWords.current = activeWords;
+    const resumed = filterWordsByLearningCategory(activeWords, filter).filter((word) =>
+      previousStates.get(word.id) === 'learned' && word.state === 'cannot_remember'
+      && word.nextReviewAt !== null && new Date(word.nextReviewAt) <= new Date());
+    if (resumed.length === 0) return;
+    const resumedIds = new Set(resumed.map((word) => word.id));
+    // Keep the current card, removing old occurrences before adding a fresh attempt.
+    const removedBeforeCurrent = sessionFeed.slice(0, currentIndexRef.current)
+      .filter((word) => resumedIds.has(word.id)).length;
+    const nextFeed = [...sessionFeed.filter((word) => !resumedIds.has(word.id)), ...resumed];
+    for (const id of resumedIds) {
+      submittedRatings.current.delete(id);
+      viewedIds.current.delete(id);
+    }
+    sessionFeedLengthRef.current = nextFeed.length;
+    currentIndexRef.current -= removedBeforeCurrent;
+    // A library action can reactivate words while this mounted session is open.
+    setSessionFeed(nextFeed);
+    setCurrentIndex(currentIndexRef.current);
+    setSessionWordIds((current) => new Set([...current, ...resumedIds]));
+  }, [activeWords, filter, sessionFeed]);
   const [mutationQueue] = useState(createSerialMutationQueue);
   const translatingIds = useRef(new Set<string>());
   const viewportHeight = stackHeight || Math.max(390, height - 241);

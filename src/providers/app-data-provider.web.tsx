@@ -201,7 +201,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
       throw new Error('On-device translation needs a Wordfold development build.');
     },
     removeWord: async (id) => setWords((current) => current.filter((word) => word.id !== id)),
-    resetWord: async (id) => setWords((current) => current.map((word) => word.id === id ? { ...word, state: 'new', understoodStreak: 0, nextReviewAt: null } : word)),
+    resetWord: async (id) => setWords((current) => current.map((word) => word.id === id ? { ...word, state: 'cannot_remember', understoodStreak: 0, nextReviewAt: new Date().toISOString(), updatedAt: new Date().toISOString() } : word)),
     createCollection: async (name, color) => { const now = new Date().toISOString(); const id = createId('web-collection'); setCollections((current) => [...current, { id, name, color, createdAt: now, updatedAt: now }]); return id; },
     rateWord: async (word, rating) => setWords((current) => current.map((item) => item.id === word.id ? { ...item, ...applyRating(item, rating) } : item)),
     markViewed: async (id) => setWords((current) => current.map((word) => word.id === id ? { ...word, viewCount: word.viewCount + 1, lastViewedAt: new Date().toISOString() } : word)),

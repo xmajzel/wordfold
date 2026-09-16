@@ -6,6 +6,7 @@ import {
   getSyncStats,
   listSyncWords,
   recordSyncView,
+  resetSyncWord,
   saveSyncRating,
   type SyncRepositoryDatabase,
 } from './repository';
@@ -97,4 +98,18 @@ describe('PowerSync vocabulary repository', () => {
       'DELETE FROM words WHERE id = ? AND deleted_at IS NULL', ['word-1'],
     );
   });
+});
+
+it('makes a stopped synced word due now without clearing history', async () => {
+  const { database: db } = database();
+  await resetSyncWord(db, 'word-1');
+  const [query, params] = jest.mocked(db.execute).mock.calls[0];
+  const [dueAt, updatedAt, id] = params!;
+  expect(query).toContain("state = 'cannot_remember'");
+  expect(query).toContain('understood_streak = 0');
+  expect(query).toContain('deleted_at IS NULL');
+  expect(query).not.toMatch(/lapse_count|last_rated_at|DELETE/);
+  expect(dueAt).toBe(updatedAt);
+  expect(new Date(dueAt as string).getTime()).toBeLessThanOrEqual(Date.now());
+  expect(id).toBe('word-1');
 });

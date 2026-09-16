@@ -86,9 +86,13 @@ describe('word repository', () => {
 
     await resetWord(database, 'word-1');
 
-    const [query, , id] = (database.runAsync as jest.Mock).mock.calls[0];
-    expect(query).toContain("state = 'new'");
-    expect(query).toContain('lapse_count = 0');
+    const [query, dueAt, updatedAt, id] = (database.runAsync as jest.Mock).mock.calls[0];
+    expect(query).toContain("state = 'cannot_remember'");
+    expect(query).toContain('understood_streak = 0');
+    expect(query).not.toContain('lapse_count');
+    expect(query).not.toContain('last_rated_at');
+    expect(dueAt).toBe(updatedAt);
+    expect(new Date(dueAt).getTime()).toBeLessThanOrEqual(Date.now());
     expect(query).not.toContain('DELETE');
     expect(id).toBe('word-1');
   });
@@ -143,6 +147,7 @@ describe('word repository', () => {
       'B2',
     );
   });
+
 
   it('defaults invalid active courses to English and persists a supported course', async () => {
     const database = createDatabase();
