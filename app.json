@@ -2,7 +2,7 @@
   "expo": {
     "name": "Wordfold",
     "slug": "wordfold",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "runtimeVersion": { "policy": "fingerprint" },
     "updates": {
       "url": "https://u.expo.dev/fc5de0e8-254c-4485-a4e2-159f8ea0cedc",
@@ -19,7 +19,7 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 9,
+      "versionCode": 10,
       "adaptiveIcon": {
         "backgroundColor": "#4F4DBB",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
