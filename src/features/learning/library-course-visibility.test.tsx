@@ -22,7 +22,21 @@ let mockPreferences: LearningPreferences = { levels: [], topics: [] };
 const mockAddRecommendedWords = jest.fn(async (..._args: unknown[]) => 10);
 let mockActiveCourseId: 'en-sk' | 'es-sk' = 'en-sk';
 
-jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
+let mockRouteParams: { view?: string } = {};
+jest.mock('expo-router', () => ({
+  router: { push: jest.fn(), setParams: jest.fn((params) => { mockRouteParams = params; }) },
+  useLocalSearchParams: () => mockRouteParams,
+  useFocusEffect: (callback: () => void) => jest.requireActual('react').useEffect(callback, [callback]),
+}));
+beforeEach(() => { mockRouteParams = {}; });
+it('opens My words after import and still allows switching to Discover', async () => {
+  mockRouteParams = { view: 'my-words' };
+  const view = await render(<LibraryScreen/>);
+  expect(view.getByRole('tab', { name: 'Show My words' }).props.accessibilityState.selected).toBe(true);
+  expect(router.setParams).toHaveBeenCalledWith({ view: undefined });
+  await fireEvent.press(view.getByRole('tab', { name: 'Show Discover' }));
+  expect(view.getByRole('tab', { name: 'Show Discover' }).props.accessibilityState.selected).toBe(true);
+});
 jest.mock('expo-haptics', () => ({ selectionAsync: jest.fn(async () => undefined) }));
 jest.mock('react-native-reanimated', () => {
   const { View, Text } = jest.requireActual('react-native');

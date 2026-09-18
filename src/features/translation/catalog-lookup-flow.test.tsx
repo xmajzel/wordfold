@@ -2,6 +2,7 @@ import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 
 import { Alert } from 'react-native';
 import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ImportScreen from '@/app/import';
 import NewWordScreen from '@/app/word/new';
@@ -72,6 +73,23 @@ jest.mock('react-native-reanimated', () => {
 });
 
 describe('catalog Slovak lookup flows', () => {
+  it('starts a guided review directly and protects an unfinished review from replacement', async () => {
+    await AsyncStorage.clear();
+    jest.clearAllMocks();
+    const screen = await render(<ImportScreen />);
+    await fireEvent.changeText(screen.getByPlaceholderText(/stakeholder/), 'tenacity\ntolerance');
+    await fireEvent.press(screen.getByText('Review words one by one'));
+    await waitFor(() => expect(router.push).toHaveBeenCalledWith('/import-review'));
+    jest.mocked(router.push).mockClear();
+    await fireEvent.changeText(screen.getByPlaceholderText(/stakeholder/), 'determination');
+    await fireEvent.press(screen.getByText('Review words one by one'));
+    await waitFor(() => expect(screen.getByText('Replace saved review')).toBeTruthy());
+    expect(router.push).not.toHaveBeenCalled();
+    await fireEvent.press(screen.getByText('Replace saved review'));
+    await waitFor(() => expect(router.push).toHaveBeenCalledWith('/import-review'));
+    await AsyncStorage.clear();
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
     mockWords = [];

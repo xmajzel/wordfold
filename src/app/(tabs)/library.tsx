@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Alert, FlatList, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { router } from 'expo-router';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 
 import { CollectionFormDisclosure } from '@/components/collection-form-disclosure';
 import { AppText } from '@/components/app-text';
@@ -38,6 +38,14 @@ export default function LibraryScreen() {
   const [libraryView, setLibraryView] = useState<LibraryView>('discover');
   const [selectedCollection, setSelectedCollection] = useState('all');
   const [selectedDifficulty, setSelectedDifficulty] = useState<DifficultyFilter>('all');
+  const { view } = useLocalSearchParams<{ view?: string }>();
+  useFocusEffect(useCallback(() => {
+    if (view !== 'my-words') return;
+    setLibraryView('my-words');
+    setSelectedCollection('all');
+    setSelectedDifficulty('all');
+    router.setParams({ view: undefined });
+  }, [view]));
   const hasFilters = selectedCollection !== 'all' || selectedDifficulty !== 'all';
   const [showCollectionForm, setShowCollectionForm] = useState(false);
   const [collectionName, setCollectionName] = useState('');
