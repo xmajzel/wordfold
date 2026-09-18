@@ -36,8 +36,10 @@ verified publication's index descriptor (objectPath, sha256, byteLength). The cu
 were downloaded again and verified after upload. An app release containing this pin is still required
 for existing installations. English retains its existing immutable manifest.
 
-The bundled Spanish Test voice clips reuse the reviewed phrase-01 recordings from the Azure bakeoff.
-They are voice previews, not additional C2 review evidence.
+The bundled Spanish Test voice clips use the same course sample as the phone voice:
+“Hola. Aprender un idioma nuevo abre la puerta a nuevas ideas, lugares y conversaciones.”
+The Elvira and Jorge clips were regenerated for this text; they have no new listening attestation
+and are not additional C2 review evidence.
 
 ## Offline wording
 

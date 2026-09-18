@@ -6,6 +6,7 @@ import { resolve } from 'node:path';
 import process from 'node:process';
 
 export const SAMPLE_TEXT = 'Hello! Learning a new language opens the door to new ideas, new places, and new conversations.';
+export const SPANISH_SAMPLE_TEXT = 'Hola. Aprender un idioma nuevo abre la puerta a nuevas ideas, lugares y conversaciones.';
 export const OUTPUT_FORMAT = 'audio-24khz-96kbitrate-mono-mp3';
 export const SAMPLES = [
   { locale: 'en-US', voiceId: 'en-US-AvaNeural', fileName: 'ava-en-US.mp3' },
@@ -17,13 +18,13 @@ export const SPANISH_SAMPLES = [
     "locale": "es-ES",
     "voiceId": "es-ES-ElviraNeural",
     "fileName": "elvira-es-ES.mp3",
-    "text": "¿Podría ayudarme, por favor?"
+    "text": SPANISH_SAMPLE_TEXT
   },
   {
     "locale": "es-MX",
     "voiceId": "es-MX-JorgeNeural",
     "fileName": "jorge-es-MX.mp3",
-    "text": "¿Podría ayudarme, por favor?"
+    "text": SPANISH_SAMPLE_TEXT
   }
 ];
 

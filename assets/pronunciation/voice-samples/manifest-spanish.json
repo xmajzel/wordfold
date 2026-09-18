@@ -5,19 +5,19 @@
       "locale": "es-ES",
       "voiceId": "es-ES-ElviraNeural",
       "fileName": "elvira-es-ES.mp3",
-      "text": "¿Podría ayudarme, por favor?",
+      "text": "Hola. Aprender un idioma nuevo abre la puerta a nuevas ideas, lugares y conversaciones.",
       "outputFormat": "audio-24khz-96kbitrate-mono-mp3",
-      "byteLength": 31680,
-      "sha256": "46c43b5e076d88da42f2d4f717a60e82975c214f593368e0619f639868c0fa73"
+      "byteLength": 83520,
+      "sha256": "4a201053ea7ad6b754cb191c0b35fa07f2d8bd129a22b3803b300f82850c6b79"
     },
     {
       "locale": "es-MX",
       "voiceId": "es-MX-JorgeNeural",
       "fileName": "jorge-es-MX.mp3",
-      "text": "¿Podría ayudarme, por favor?",
+      "text": "Hola. Aprender un idioma nuevo abre la puerta a nuevas ideas, lugares y conversaciones.",
       "outputFormat": "audio-24khz-96kbitrate-mono-mp3",
-      "byteLength": 33696,
-      "sha256": "139211e5bfc9b473cadcb66f994a3d41b00e3c3071da5d5c367f9d14e39fc335"
+      "byteLength": 84384,
+      "sha256": "f1c1929dbe4ab90116cf6f786a2bd1c49430ccb01771df4cfdff6dc91d6a0f00"
     }
   ]
 }

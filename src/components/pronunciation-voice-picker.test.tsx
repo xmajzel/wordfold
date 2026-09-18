@@ -3,14 +3,20 @@ import { Alert } from 'react-native';
 
 import { PronunciationVoicePicker } from './pronunciation-voice-picker';
 import type { DevicePronunciationCallbacks } from '@/features/pronunciation/device-speech';
+import englishSamples from '../../assets/pronunciation/voice-samples/manifest.json';
+import spanishSamples from '../../assets/pronunciation/voice-samples/manifest-spanish.json';
 
 const mockPlaySample = jest.fn();
 const mockStartPhone = jest.fn();
 const mockStopPhone = jest.fn(async (): Promise<void> => undefined);
 jest.mock('@/features/pronunciation/voice-samples', () => ({
-  BUNDLED_VOICE_SAMPLE_TEXT: 'Hello!',
+  BUNDLED_VOICE_SAMPLE_TEXT: jest.requireActual('@/features/pronunciation/voice-samples').BUNDLED_VOICE_SAMPLE_TEXT,
   playBundledVoiceSample: (...args: unknown[]) => mockPlaySample(...args),
   preloadBundledVoiceSamples: jest.fn(async () => undefined),
+}));
+jest.mock('@/features/pronunciation/audio-player', () => ({
+  playPronunciationFile: jest.fn(),
+  preparePronunciationFilePlayback: jest.fn(),
 }));
 jest.mock('@/features/pronunciation/pronunciation', () => ({
   startPronunciation: (...args: unknown[]) => mockStartPhone(...args),
@@ -23,6 +29,19 @@ jest.mock('@/features/pronunciation/cache-scope', () => ({ usePronunciationCache
 
 beforeEach(() => jest.clearAllMocks());
 afterEach(() => jest.restoreAllMocks());
+
+it.each([
+  { language: 'en', locale: 'en-US', label: /Play English .* device pronunciation/, manifest: englishSamples },
+  { language: 'es', locale: 'es-ES', label: /Play Spanish .* device pronunciation/, manifest: spanishSamples },
+])('uses the same words for every $language voice preview', async ({ language, locale, label, manifest }) => {
+  mockStartPhone.mockResolvedValueOnce({ status: 'started' });
+  const view = await render(<PronunciationVoicePicker value="device" onChange={jest.fn()} sourceLanguageCode={language} pronunciationLocale={locale}/>);
+  await fireEvent.press(view.getByRole('button', { name: label }));
+  expect(mockStartPhone).toHaveBeenCalledTimes(1);
+  const [text, requestedLocale] = mockStartPhone.mock.calls[0];
+  expect(requestedLocale).toBe(locale);
+  for (const sample of manifest.samples) expect(text).toBe(sample.text);
+});
 
 it('shows preparing then playing and locks both competing voices until completion', async () => {
   let callbacks!: DevicePronunciationCallbacks;
