@@ -219,7 +219,7 @@ describe('continued learning session', () => {
     const view = await render(<LearnScreen/>);
     const title = view.getByText('Today’s english');
     const scroller = view.getByTestId('today-filter-scroll');
-    for (const label of ['Personal', 'My words', longName, 'All']) {
+    for (const label of ['No level', 'My words', longName, 'All']) {
       // Include the transition into an empty filtered session and back.
       mockBuildLearningFeed.mockReturnValue(label === longName ? [] : [mockFirstWord]);
       await fireEvent.press(view.getByRole('tab', { name: `Show ${label} words` }));
@@ -234,6 +234,18 @@ describe('continued learning session', () => {
     }
   });
 
+  it('shows the caught-up state and fresh batch after selecting words with no assigned level with nothing due', async () => {
+    mockWords = [baseWord({ cefrLevel: null, state: 'learned' })];
+    mockBuildRecommendations.mockReturnValue(mockRecommendationBatch);
+    const view = await render(<LearnScreen/>);
+    mockBuildLearningFeed.mockReturnValue([]);
+    await fireEvent.press(view.getByRole('tab', { name: 'Show No level words' }));
+    await view.rerender(<LearnScreen/>);
+    view.getByText('You’re caught up');
+    view.getByText('No words with no assigned level are due right now.');
+    view.getByText('Start a fresh batch');
+    expect(view.getByRole('tab', { name: 'Show No level words' }).props.accessibilityState.selected).toBe(true);
+  });
 
   it('shows populated course collections and saves a selection with its readable name', async () => {
     mockCollections = [{ id: 'lessons', name: 'NC1 Custom Collection' }, { id: 'empty', name: 'Empty collection' }, { id: 'spanish', name: 'Spanish lessons' }];

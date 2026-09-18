@@ -66,7 +66,8 @@ describe('WordCard learning actions', () => {
     expect(learningCard.queryByRole('button', { name: /device pronunciation/ })).toBeNull();
 
     const libraryCard = await render(<WordCard word={word} collectionName="My words" compact/>);
-    libraryCard.getByText('My words · seen 2×');
+    libraryCard.getByLabelText('Collection: My words');
+    libraryCard.getByText('Seen 2×');
   });
 
   it('offers keep-learning and the next confirmation', async () => {
@@ -173,6 +174,13 @@ describe('WordCard content overflow', () => {
 });
 
 
+it.each([false, true])('distinguishes collection and difficulty in a word card (compact=%s)', async (compact) => {
+  const collectionName = 'A long custom collection name for business vocabulary';
+  const view = await render(<WordCard word={{ ...word, cefrLevel: 'C2' }} collectionName={collectionName} compact={compact}/>);
+  view.getByLabelText(`Collection: ${collectionName}`);
+  view.getByText('Level C2');
+  expect(view.getByText(collectionName).props.numberOfLines).toBe(1);
+});
 
 it('shows confirmation progress without claiming reviews stopped before the final pass', async () => {
   const screen = await render(<WordCard word={{ ...word, knownStreak: 1 }} sessionRating="learned"/>);

@@ -124,9 +124,9 @@ describe('learning algorithm', () => {
     expect(buildLearningFeed(words, now, 'collection:missing')).toEqual([]);
   });
 
-  it('offers populated existing collections after Personal and before levels', () => {
+  it('offers populated collections before the No level and difficulty filters', () => {
     const words = [baseWord({ collectionId: 'lessons' }), baseWord({ id: 'catalog', collectionId: 'lessons', cefrLevel: 'C1' })];
-    expect(getAvailableLearningFilters(words, [{ id: 'empty' }, { id: 'lessons' }])).toEqual(['all', 'personal', 'collection:lessons', 'C1']);
+    expect(getAvailableLearningFilters(words, [{ id: 'empty' }, { id: 'lessons' }])).toEqual(['all', 'collection:lessons', 'personal', 'C1']);
     expect(getAvailableLearningFilters(words, [])).not.toContain('collection:lessons');
   });
 

@@ -16,7 +16,8 @@ const mockOtherWord: Word = {
   understoodStreak: 0, lapseCount: 0, viewCount: 0, lastViewedAt: null, lastRatedAt: null,
   nextReviewAt: null, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z',
 };
-const mockWords = [mockOtherWord];
+let mockWords = [mockOtherWord];
+let mockCollections = [{ id: 'my-words', name: 'My words' }];
 let mockPreferences: LearningPreferences = { levels: [], topics: [] };
 const mockAddRecommendedWords = jest.fn(async (..._args: unknown[]) => 10);
 let mockActiveCourseId: 'en-sk' | 'es-sk' = 'en-sk';
@@ -24,7 +25,7 @@ let mockActiveCourseId: 'en-sk' | 'es-sk' = 'en-sk';
 jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
 jest.mock('expo-haptics', () => ({ selectionAsync: jest.fn(async () => undefined) }));
 jest.mock('react-native-reanimated', () => {
-  const { View } = jest.requireActual('react-native');
+  const { View, Text } = jest.requireActual('react-native');
   const transition = {
     damping: () => transition,
     duration: () => transition,
@@ -33,7 +34,7 @@ jest.mock('react-native-reanimated', () => {
   };
   return {
     __esModule: true,
-    default: { View, createAnimatedComponent: (component: unknown) => component },
+    default: { View, Text, createAnimatedComponent: (component: unknown) => component },
     FadeIn: transition,
     FadeInDown: transition,
     FadeOut: transition,
@@ -54,7 +55,7 @@ jest.mock('react-native-reanimated', () => {
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     words: mockWords,
-    collections: [{ id: 'my-words', name: 'My words' }],
+    collections: mockCollections,
     activeCourseId: mockActiveCourseId,
     activeCourse: {
       id: mockActiveCourseId,
@@ -168,4 +169,79 @@ it('opens, cancels, reopens and closes the collection form after creation', asyn
   await fireEvent.press(view.getByText('New collection'));
   await fireEvent.press(view.getByRole('button', { name: 'Create collection' }));
   expect(view.queryByLabelText('Collection name')).toBeNull();
+});
+
+
+describe('combined Library filters', () => {
+  beforeEach(() => {
+    mockActiveCourseId = 'en-sk';
+    mockPreferences = { levels: [], topics: [] };
+    mockCollections = [{ id: 'work', name: 'Work' }, { id: 'everyday', name: 'Everyday' }];
+    mockWords = [
+      { ...mockOtherWord, id: 'work-c2', term: 'tenacity', collectionId: 'work', sourceLanguageCode: 'en', cefrLevel: 'C2' },
+      { ...mockOtherWord, id: 'work-a1', term: 'desk', collectionId: 'work', sourceLanguageCode: 'en', cefrLevel: 'A1' },
+      { ...mockOtherWord, id: 'work-none', term: 'custom phrase', collectionId: 'work', sourceLanguageCode: 'en' },
+      { ...mockOtherWord, id: 'everyday-c2', term: 'serendipity', collectionId: 'everyday', sourceLanguageCode: 'en', cefrLevel: 'C2' },
+      { ...mockOtherWord, id: 'spanish-c2', term: 'perspicacia', collectionId: 'work', sourceLanguageCode: 'es', cefrLevel: 'C2' },
+      mockOtherWord,
+    ];
+  });
+  afterEach(() => {
+    mockWords = [mockOtherWord];
+    mockCollections = [{ id: 'my-words', name: 'My words' }];
+    mockActiveCourseId = 'en-sk';
+  });
+
+  it('combines collection and difficulty while allowing either selection to change independently', async () => {
+    const view = await render(<LibraryScreen/>);
+    await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Collection: Work' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Difficulty: C2' }));
+    view.getByText('tenacity');
+    for (const term of ['desk', 'custom phrase', 'serendipity', 'perspicacia', 'Baum']) expect(view.queryByText(term)).toBeNull();
+    expect(view.getByRole('button', { name: 'Collection: Work' }).props.accessibilityState.selected).toBe(true);
+    expect(view.getByRole('button', { name: 'Difficulty: C2' }).props.accessibilityState.selected).toBe(true);
+    await fireEvent.press(view.getByRole('button', { name: 'Collection: All collections' }));
+    view.getByText('tenacity');
+    view.getByText('serendipity');
+    expect(view.queryByText('desk')).toBeNull();
+    await fireEvent.press(view.getByRole('button', { name: 'Collection: Work' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Difficulty: No level' }));
+    view.getByText('custom phrase');
+    expect(view.queryByText('tenacity')).toBeNull();
+    await fireEvent.press(view.getByRole('button', { name: 'Difficulty: All levels' }));
+    for (const term of ['tenacity', 'desk', 'custom phrase']) view.getByText(term);
+    expect(view.queryByText('serendipity')).toBeNull();
+  });
+
+  it('resets both filters from an empty intersection', async () => {
+    const view = await render(<LibraryScreen/>);
+    await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Collection: Work' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Difficulty: A2' }));
+    view.getByText('No words match these filters');
+    await fireEvent.press(view.getByRole('button', { name: 'Reset filters' }));
+    for (const term of ['tenacity', 'desk', 'custom phrase', 'serendipity']) view.getByText(term);
+    expect(view.queryByText('perspicacia')).toBeNull();
+    expect(view.queryByText('Baum')).toBeNull();
+    expect(view.getByRole('button', { name: 'Collection: All collections' }).props.accessibilityState.selected).toBe(true);
+    expect(view.getByRole('button', { name: 'Difficulty: All levels' }).props.accessibilityState.selected).toBe(true);
+  });
+
+  it('keeps combined results inside the active course when switching languages', async () => {
+    const view = await render(<LibraryScreen/>);
+    await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Collection: Work' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Difficulty: C2' }));
+    mockActiveCourseId = 'es-sk';
+    await view.rerender(<LibraryScreen/>);
+    view.getByText('perspicacia');
+    expect(view.queryByText('tenacity')).toBeNull();
+    expect(view.queryByText('Baum')).toBeNull();
+    await fireEvent.press(view.getByRole('button', { name: 'Collection: Other vocabulary (1)' }));
+    view.getByText('No words match these filters');
+    await fireEvent.press(view.getByRole('button', { name: 'Difficulty: No level' }));
+    view.getByText('Baum');
+    expect(view.queryByText('perspicacia')).toBeNull();
+  });
 });

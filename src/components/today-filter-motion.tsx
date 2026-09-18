@@ -1,13 +1,11 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View, useWindowDimensions, type LayoutRectangle } from 'react-native';
-import Animated, { cancelAnimation, interpolateColor, ReduceMotion, runOnJS, useAnimatedStyle, useReducedMotion, useSharedValue, withTiming } from 'react-native-reanimated';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import Animated, { cancelAnimation, ReduceMotion, runOnJS, useAnimatedStyle, useReducedMotion, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { AppText } from '@/components/app-text';
 import type { LearningFilter } from '@/domain/types';
 import { useAppTheme } from '@/hooks/use-app-theme';
-import { spacing, typeScale } from '@/theme/tokens';
-
-const transition = { duration: 250, reduceMotion: ReduceMotion.System };
+import { SlidingFilterRow } from '@/components/sliding-filter-row';
 
 export function FlippingSubtitle({ text }: { text: string }) {
   const theme = useAppTheme();
@@ -81,71 +79,22 @@ export function FlippingSubtitle({ text }: { text: string }) {
   </View>;
 }
 
-interface FilterOption { id: LearningFilter; label: string }
-
 export function SlidingFilterTabs({ options, selected, onSelect }: {
-  options: FilterOption[];
+  options: { id: LearningFilter; label: string }[];
   selected: LearningFilter;
   onSelect(filter: LearningFilter): Promise<void>;
 }) {
-  const theme = useAppTheme();
-  const [layouts, setLayouts] = useState<Record<string, LayoutRectangle>>({});
-  const target = layouts[selected];
-  const x = useSharedValue(0);
-  const width = useSharedValue(0);
-  const height = useSharedValue(44);
-  const positioned = useRef(false);
-
-  useLayoutEffect(() => {
-    if (!target) return;
-    const animate = positioned.current;
-    x.set(animate ? withTiming(target.x, transition) : target.x);
-    width.set(animate ? withTiming(target.width, transition) : target.width);
-    height.set(animate ? withTiming(target.height, transition) : target.height);
-    positioned.current = true;
-    return () => { cancelAnimation(x); cancelAnimation(width); cancelAnimation(height); };
-  }, [target, x, width, height]);
-
-  const pill = useAnimatedStyle(() => ({ width: width.value, height: height.value, transform: [{ translateX: x.value }] }));
-  const measure = (id: string, layout: LayoutRectangle) => setLayouts((current) => {
-    const previous = current[id];
-    if (previous && previous.x === layout.x && previous.width === layout.width && previous.height === layout.height) return current;
-    return { ...current, [id]: layout };
-  });
-
-  return <ScrollView testID="today-filter-scroll" horizontal style={styles.scroll} accessibilityRole="tablist" showsHorizontalScrollIndicator={false}>
-    <View style={styles.tabs}>
-      {options.map(({ id }) => layouts[id] ? <View key={`surface-${id}`} pointerEvents="none" style={[styles.surface, { left: layouts[id].x, width: layouts[id].width, height: layouts[id].height, backgroundColor: theme.surface, borderColor: theme.border }]}/> : null)}
-      <Animated.View testID="today-selection-pill" pointerEvents="none" style={[styles.pill, { backgroundColor: theme.primary, opacity: target ? 1 : 0 }, pill]}/>
-      {options.map((option) => <FilterTab key={option.id} option={option} selected={selected === option.id} onSelect={onSelect} onLayout={(layout) => measure(option.id, layout)}/>)}
-    </View>
-  </ScrollView>;
-}
-
-function FilterTab({ option, selected, onSelect, onLayout }: {
-  option: FilterOption;
-  selected: boolean;
-  onSelect(filter: LearningFilter): Promise<void>;
-  onLayout(layout: LayoutRectangle): void;
-}) {
-  const theme = useAppTheme();
-  const progress = useSharedValue(selected ? 1 : 0);
-  useLayoutEffect(() => {
-    progress.set(withTiming(selected ? 1 : 0, transition));
-    return () => cancelAnimation(progress);
-  }, [selected, progress]);
-  const labelStyle = useAnimatedStyle(() => ({ color: interpolateColor(progress.value, [0, 1], [theme.text, '#FFFFFF']) }));
-  return <Pressable accessibilityRole="tab" accessibilityLabel={`Show ${option.label} words`} accessibilityState={{ selected }} aria-selected={selected} onPress={() => void onSelect(option.id)} onLayout={(event) => onLayout(event.nativeEvent.layout)} style={styles.tab}>
-    <Animated.Text numberOfLines={1} style={[styles.label, labelStyle]}>{option.label}</Animated.Text>
-  </Pressable>;
+  return <SlidingFilterRow
+    testID="today" style={{ flex: 1 }}
+    options={options.map((option) => ({
+      ...option,
+      group: option.id === 'all' ? undefined : option.id.startsWith('collection:') ? 'Collections' : 'Difficulty',
+      folder: option.id.startsWith('collection:'),
+    }))}
+    selected={selected} onSelect={onSelect}
+  />;
 }
 
 const styles = StyleSheet.create({
   subtitleFace: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backfaceVisibility: 'hidden' },
-  scroll: { flex: 1 },
-  tabs: { flexDirection: 'row', gap: spacing.sm, position: 'relative' },
-  surface: { position: 'absolute', top: 0, borderRadius: 22, borderWidth: 1 },
-  pill: { position: 'absolute', top: 0, left: 0, borderRadius: 22 },
-  tab: { minWidth: 44, minHeight: 44, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderWidth: 1, borderColor: 'transparent', borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
-  label: { fontFamily: 'Inter_600SemiBold', fontSize: typeScale.bodySmall, lineHeight: 20 },
 });

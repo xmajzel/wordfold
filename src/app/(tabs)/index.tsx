@@ -481,7 +481,7 @@ function Header({ filter, availableFilters, learnedLanguage, onSelectFilter }: {
   const { collections } = useAppData();
   const filterOptions = availableFilters.map((id) => ({
     id,
-    label: id === 'all' ? 'All' : id === 'personal' ? 'Personal'
+    label: id === 'all' ? 'All' : id === 'personal' ? 'No level'
       : id.startsWith('collection:') ? collections.find((item) => item.id === id.slice('collection:'.length))?.name ?? 'Collection' : id,
   }));
   const subtitle = `Showing ${filter === 'all' ? `all ${learnedLanguage.toLowerCase()} words` : categoryWordLabel(filter, collections)}`;
@@ -501,7 +501,7 @@ function categoryWordLabel(filter: LearningFilter, collections: Collection[]) {
     return name ? `words in “${name}”` : 'collection words';
   }
   if (filter === 'all') return word;
-  if (filter === 'personal') return `personal ${word}`;
+  if (filter === 'personal') return `${word} with no assigned level`;
   return `${filter} ${word}`;
 }
 

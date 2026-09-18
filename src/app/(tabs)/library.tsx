@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Alert, FlatList, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Alert, FlatList, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 
@@ -11,11 +11,13 @@ import { PrimaryButton } from '@/components/primary-button';
 import { RecommendationFallbackNote } from '@/components/recommendation-fallback-note';
 import { ProgressCountLabel } from '@/components/progress-count-label';
 import { Screen } from '@/components/screen';
+import { SlidingFilterRow } from '@/components/sliding-filter-row';
 import { WordCard } from '@/components/word-card';
 import { getCourseCatalogAvailability, getCourseCatalogEntries, getCourseCatalogLevelState } from '@/data/course-catalog';
 import { cefrLevelDescriptions, cefrLevels } from '@/data/cefr-levels';
 import { getCourseForWord, wordBelongsToCourse } from '@/domain/courses';
 import { languageLabel } from '@/domain/languages';
+import type { CefrLevel } from '@/domain/types';
 import { calculateCefrProgress } from '@/features/learning/cefr-progress';
 import { buildRecommendations, topicOptions } from '@/features/recommendations/selector';
 import { WordCapacityExceededError } from '@/features/purchases/capacity';
@@ -24,6 +26,7 @@ import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing, stateColors } from '@/theme/tokens';
 
 type LibraryView = 'discover' | 'my-words';
+type DifficultyFilter = 'all' | 'no-level' | CefrLevel;
 
 export default function LibraryScreen() {
   const theme = useAppTheme();
@@ -34,14 +37,21 @@ export default function LibraryScreen() {
   } = useAppData();
   const [libraryView, setLibraryView] = useState<LibraryView>('discover');
   const [selectedCollection, setSelectedCollection] = useState('all');
+  const [selectedDifficulty, setSelectedDifficulty] = useState<DifficultyFilter>('all');
+  const hasFilters = selectedCollection !== 'all' || selectedDifficulty !== 'all';
   const [showCollectionForm, setShowCollectionForm] = useState(false);
   const [collectionName, setCollectionName] = useState('');
   const [recommendationsBusy, setRecommendationsBusy] = useState(false);
   const activeWords = useMemo(() => words.filter((word) => wordBelongsToCourse(word, activeCourseId)), [activeCourseId, words]);
   const otherWords = useMemo(() => words.filter((word) => !getCourseForWord(word)), [words]);
-  const filteredWords = useMemo(() => selectedCollection === 'other-vocabulary'
-    ? otherWords
-    : selectedCollection === 'all' ? activeWords : activeWords.filter((word) => word.collectionId === selectedCollection), [activeWords, otherWords, selectedCollection]);
+  const filteredWords = useMemo(() => {
+    const collectionWords = selectedCollection === 'other-vocabulary'
+      ? otherWords
+      : selectedCollection === 'all' ? activeWords : activeWords.filter((word) => word.collectionId === selectedCollection);
+    if (selectedDifficulty === 'all') return collectionWords;
+    return collectionWords.filter((word) => selectedDifficulty === 'no-level'
+      ? word.cefrLevel === null : word.cefrLevel === selectedDifficulty);
+  }, [activeWords, otherWords, selectedCollection, selectedDifficulty]);
   const collectionNames = useMemo(() => Object.fromEntries(collections.map((item) => [item.id, item.name])), [collections]);
   const learnedLanguage = languageLabel(activeCourse.sourceLanguageCode);
   const catalogAvailability = getCourseCatalogAvailability(activeCourseId);
@@ -114,11 +124,27 @@ export default function LibraryScreen() {
               <View style={styles.sectionHeader}><AppText variant="heading">Collections</AppText><Pressable onPress={() => setShowCollectionForm((value) => !value)}><AppText variant="label" style={{ color: theme.primary }}>{showCollectionForm ? 'Cancel' : 'New collection'}</AppText></Pressable></View>
               <CollectionFormDisclosure open={showCollectionForm} gap={spacing.lg}><View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><FormField label="Collection name" value={collectionName} onChangeText={setCollectionName} placeholder="Project management" returnKeyType="done" onSubmitEditing={() => void addCollection()}/><PrimaryButton label="Create collection" onPress={() => void addCollection()} disabled={!collectionName.trim()}/></View></CollectionFormDisclosure>
             </View>
-            {collections.length > 1 || otherWords.length > 0 ? <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
-              <FilterChip label="All collections" selected={selectedCollection === 'all'} onPress={() => setSelectedCollection('all')}/>
-              {collections.map((collection) => <FilterChip key={collection.id} label={collection.name} selected={selectedCollection === collection.id} onPress={() => setSelectedCollection(collection.id)}/>) }
-              {otherWords.length > 0 ? <FilterChip label={`Other vocabulary (${otherWords.length})`} selected={selectedCollection === 'other-vocabulary'} onPress={() => setSelectedCollection('other-vocabulary')}/> : null}
-            </ScrollView> : null}
+            <SlidingFilterRow
+              testID="library-collections" style={styles.filterScroll} accessibilityLabel="Collection filters" itemRole="button"
+              options={[
+                { id: 'all', label: 'All collections', accessibilityLabel: 'Collection: All collections' },
+                ...collections.map((collection) => ({ id: collection.id, label: collection.name, folder: true, accessibilityLabel: `Collection: ${collection.name}` })),
+                ...(otherWords.length > 0 ? [{ id: 'other-vocabulary', label: `Other vocabulary (${otherWords.length})`, accessibilityLabel: `Collection: Other vocabulary (${otherWords.length})` }] : []),
+              ]}
+              selected={selectedCollection} onSelect={setSelectedCollection}
+            />
+            <View style={styles.difficultyFilters}>
+              <AppText variant="heading">Difficulty</AppText>
+              <SlidingFilterRow<DifficultyFilter>
+                testID="library-difficulty" style={styles.filterScroll} accessibilityLabel="Difficulty filters" itemRole="button"
+                options={[
+                  { id: 'all', label: 'All levels', accessibilityLabel: 'Difficulty: All levels' },
+                  { id: 'no-level', label: 'No level', accessibilityLabel: 'Difficulty: No level' },
+                  ...cefrLevels.map((level) => ({ id: level, label: level, accessibilityLabel: `Difficulty: ${level}` })),
+                ]}
+                selected={selectedDifficulty} onSelect={setSelectedDifficulty}
+              />
+            </View>
           </> : <>
             <View style={styles.sectionHeader}><View style={styles.sectionCopy}><AppText variant="heading">{learnedLanguage} levels</AppText><AppText variant="caption" style={{ color: theme.muted }}>{catalogAvailability.total > 0
               ? 'Browse the built-in CEFR-aligned catalog and see how far you have come.'
@@ -139,11 +165,16 @@ export default function LibraryScreen() {
             </View>
           </>}
         </View>}
-        ListEmptyComponent={libraryView === 'my-words' ? <View style={styles.empty}><EmptyState title={selectedCollection === 'other-vocabulary' ? 'No other vocabulary' : `No ${learnedLanguage.toLowerCase()} words here yet`} message={selectedCollection === 'other-vocabulary'
-          ? 'Words outside the supported English → Slovak and Spanish → Slovak courses appear here.'
-          : activeCourse.capabilities.recommendations
-          ? 'Add a word here, or switch to Discover for recommendations.'
-          : 'Add a Spanish word manually or bulk paste your own reviewed vocabulary.'}/></View> : null}
+        ListEmptyComponent={libraryView === 'my-words' ? <View style={styles.empty}>
+          {hasFilters ? <EmptyState
+            title="No words match these filters"
+            message="Try another collection or difficulty, or reset the filters to see all words in this course."
+            actionLabel="Reset filters" actionVariant="secondary" compactAction
+            onAction={() => { setSelectedCollection('all'); setSelectedDifficulty('all'); }}/>
+            : <EmptyState title={`No ${learnedLanguage.toLowerCase()} words here yet`} message={activeCourse.capabilities.recommendations
+              ? 'Add a word here, or switch to Discover for recommendations.'
+              : 'Add a Spanish word manually or bulk paste your own reviewed vocabulary.'}/>}
+        </View> : null}
         renderItem={({ item }) => <Pressable onPress={() => router.push(`/word/${item.id}`)}>
           {selectedCollection === 'other-vocabulary' ? <AppText variant="caption" style={{ color: theme.muted }}>{languageLabel(item.targetLanguageCode)} → {languageLabel(item.sourceLanguageCode)}</AppText> : null}
           <WordCard word={item} collectionName={collectionNames[item.collectionId]} compact/>
@@ -181,17 +212,13 @@ function LevelProgressBar({ progress }: { progress: ReturnType<typeof calculateC
   </View>;
 }
 
-function FilterChip({ label, selected, onPress }: { label: string; selected: boolean; onPress(): void }) {
-  const theme = useAppTheme();
-  return <Pressable onPress={onPress} style={[styles.chip, { backgroundColor: selected ? theme.primary : theme.surface, borderColor: selected ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: selected ? '#FFFFFF' : theme.text }}>{label}</AppText></Pressable>;
-}
-
 const styles = StyleSheet.create({
   screen: { paddingHorizontal: 0 }, list: { paddingHorizontal: spacing.lg, paddingBottom: spacing.xxxl }, headerContent: { gap: spacing.lg, marginBottom: spacing.sm }, separator: { height: spacing.sm }, footer: { gap: spacing.lg, marginTop: spacing.lg },
   header: { minHeight: 76, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: spacing.sm }, headerCopy: { flex: 1 }, iconButton: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
   viewTabs: { minHeight: 52, flexDirection: 'row', borderRadius: radii.control, padding: spacing.xs, gap: spacing.xs }, viewTab: { flex: 1, minHeight: 44, borderWidth: 1, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
   actionRow: { flexDirection: 'row', gap: spacing.sm }, action: { flex: 1 }, sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: spacing.sm }, sectionCopy: { flex: 1 },
-  chips: { gap: spacing.sm }, chip: { minHeight: 40, paddingHorizontal: spacing.md, borderRadius: radii.pill, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  filterScroll: { flexGrow: 0 },
+  difficultyFilters: { gap: spacing.sm },
   panel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.lg }, empty: { minHeight: 220 },
   packText: { flex: 1, gap: 2 }, recommendationHeading: { flexDirection: 'row', alignItems: 'center', gap: spacing.md }, recommendationIcon: { width: 44, height: 44, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' }, editPreferences: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }, recommendationWords: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, recommendationWord: { minHeight: 48, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderRadius: radii.control, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   capacityNotice: { minHeight: 76, borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },

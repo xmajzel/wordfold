@@ -99,11 +99,11 @@ export function filterWordsByLearningCategory(words: Word[], filter: LearningFil
 
 export function getAvailableLearningFilters(words: Word[], collections: Pick<Collection, 'id'>[] = []): LearningFilter[] {
   const filters: LearningFilter[] = ['all'];
-  if (words.some((word) => word.cefrLevel === null)) filters.push('personal');
   const usedCollections = new Set(words.map((word) => word.collectionId));
   for (const collection of collections) {
     if (usedCollections.has(collection.id)) filters.push(`collection:${collection.id}`);
   }
+  if (words.some((word) => word.cefrLevel === null)) filters.push('personal');
   for (const level of cefrLevels) {
     if (words.some((word) => word.cefrLevel === level)) filters.push(level);
   }

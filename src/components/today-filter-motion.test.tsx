@@ -1,4 +1,6 @@
 import { act, fireEvent, render } from '@testing-library/react-native';
+import { useState } from 'react';
+import { SlidingFilterRow } from './sliding-filter-row';
 import { StyleSheet } from 'react-native';
 import { withTiming } from 'react-native-reanimated';
 
@@ -166,4 +168,57 @@ it('remeasures the selected pill when a collection label or font size changes', 
   await fireEvent(tab, 'layout', { nativeEvent: { layout: { x: 220, y: 0, width: 330, height: 58 } } });
   await view.rerender(<SlidingFilterTabs options={options} selected="collection:lessons" onSelect={onSelect}/>);
   expect(StyleSheet.flatten(view.getByTestId('today-selection-pill').props.style)).toMatchObject({ width: 330, height: 58, transform: [{ translateX: 220 }] });
+});
+
+
+it('labels collection and difficulty groups without adding extra selectable filters', async () => {
+  const onSelect = jest.fn(async () => undefined);
+  const view = await render(<SlidingFilterTabs options={[
+    { id: 'all', label: 'All' }, { id: 'collection:work', label: 'Work' },
+    { id: 'personal', label: 'No level' }, { id: 'C2', label: 'C2' },
+  ]} selected="collection:work" onSelect={onSelect}/>);
+  view.getByText('Collections');
+  expect(view.getAllByText('Difficulty')).toHaveLength(1);
+  expect(view.getAllByRole('tab')).toHaveLength(4);
+  expect(view.getByRole('tab', { name: 'Show Work words' }).props.accessibilityState.selected).toBe(true);
+  await fireEvent.press(view.getByRole('tab', { name: 'Show No level words' }));
+  expect(onSelect).toHaveBeenCalledWith('personal');
+});
+
+
+it('animates independent collection and difficulty highlights through rapid selections', async () => {
+  function LibraryFilters() {
+    const [collection, setCollection] = useState('all');
+    const [difficulty, setDifficulty] = useState('all');
+    return <>
+      <SlidingFilterRow testID="collections" options={[
+        { id: 'all', label: 'All collections' }, { id: 'work', label: 'Work with a long name', folder: true },
+      ]} selected={collection} onSelect={setCollection}/>
+      <SlidingFilterRow testID="difficulty" options={[
+        { id: 'all', label: 'All levels' }, { id: 'none', label: 'No level' }, { id: 'C2', label: 'C2' },
+      ]} selected={difficulty} onSelect={setDifficulty}/>
+    </>;
+  }
+  const view = await render(<LibraryFilters/>);
+  for (const [label, x, width] of [
+    ['All collections', 0, 140], ['Work with a long name', 148, 220],
+    ['All levels', 0, 100], ['No level', 108, 90], ['C2', 206, 44],
+  ] as const) {
+    await fireEvent(view.getByRole('tab', { name: `Show ${label} words` }), 'layout', { nativeEvent: { layout: { x, y: 0, width, height: 44 } } });
+  }
+  const collectionsScroll = view.getByTestId('collections-filter-scroll');
+  const difficultyScroll = view.getByTestId('difficulty-filter-scroll');
+  await fireEvent.press(view.getByRole('tab', { name: 'Show Work with a long name words' }));
+  await fireEvent.press(view.getByRole('tab', { name: 'Show No level words' }));
+  await fireEvent.press(view.getByRole('tab', { name: 'Show C2 words' }));
+  await fireEvent.press(view.getByRole('tab', { name: 'Show All levels words' }));
+  await fireEvent.press(view.getByRole('tab', { name: 'Show C2 words' }));
+  await view.rerender(<LibraryFilters/>);
+  expect(view.getByRole('tab', { name: 'Show Work with a long name words' }).props.accessibilityState.selected).toBe(true);
+  expect(view.getByRole('tab', { name: 'Show C2 words' }).props.accessibilityState.selected).toBe(true);
+  expect(StyleSheet.flatten(view.getByTestId('collections-selection-pill').props.style)).toMatchObject({ width: 220, transform: [{ translateX: 148 }] });
+  expect(StyleSheet.flatten(view.getByTestId('difficulty-selection-pill').props.style)).toMatchObject({ width: 44, transform: [{ translateX: 206 }] });
+  expect(withTiming).toHaveBeenCalledWith(206, { duration: 250, reduceMotion: 'system' });
+  expect(view.getByTestId('collections-filter-scroll')).toBe(collectionsScroll);
+  expect(view.getByTestId('difficulty-filter-scroll')).toBe(difficultyScroll);
 });

@@ -24,7 +24,7 @@ export const WordCard = memo(function WordCard({ onReport, word, confirmations =
   const hintLanguage = languageLabel(word.targetLanguageCode);
 
   if (compact) {
-    return <Animated.View entering={FadeInDown.duration(320).reduceMotion(ReduceMotion.System)} style={[styles.compactCard, { backgroundColor: theme.surface, shadowColor: theme.shadow }]}><LinearGradient colors={[`${theme.primary}D9`, `${theme.accent}B8`]} style={styles.compactAccent}/><View style={styles.compactTitle}><AppText variant="heading" style={styles.compactWord}>{word.term}</AppText>{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}<StateBadge state={word.state} /></View><AppText numberOfLines={2} style={{ color: theme.muted }}>{word.definition}</AppText>{collectionName ? <AppText variant="caption" style={{ color: theme.muted }}>{collectionName} · seen {word.viewCount}×</AppText> : null}</Animated.View>;
+    return <Animated.View entering={FadeInDown.duration(320).reduceMotion(ReduceMotion.System)} style={[styles.compactCard, { backgroundColor: theme.surface, shadowColor: theme.shadow }]}><LinearGradient colors={[`${theme.primary}D9`, `${theme.accent}B8`]} style={styles.compactAccent}/><View style={styles.compactTitle}><AppText variant="heading" style={styles.compactWord}>{word.term}</AppText><StateBadge state={word.state} /></View><AppText numberOfLines={2} style={{ color: theme.muted }}>{word.definition}</AppText><View style={styles.compactMeta}>{collectionName ? <CollectionBadge name={collectionName}/> : null}{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}</View><AppText variant="caption" style={{ color: theme.muted }}>Seen {word.viewCount}×</AppText></Animated.View>;
   }
 
   const rate = (rating: LearningRating) => {
@@ -36,7 +36,7 @@ export const WordCard = memo(function WordCard({ onReport, word, confirmations =
   return (
     <Animated.View entering={animateEntrance ? FadeInDown.springify().damping(18).reduceMotion(ReduceMotion.System) : undefined} style={[styles.card, dense && styles.denseCard, { backgroundColor: theme.surface, shadowColor: theme.shadow }]}>
       <LinearGradient colors={theme.primaryGradient} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.accentLine}/>
-      <View style={styles.topRow}><StateBadge state={word.state}/><View style={styles.cardMeta}>{collectionName ? <AppText variant="caption" style={{ color: theme.muted }}>{collectionName}</AppText> : null}{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}{onReport ? <Pressable accessibilityRole="button" accessibilityLabel="Report an issue with this word" onPress={onReport} style={{ minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }}><Ionicons name="flag-outline" size={18} color={theme.muted}/></Pressable> : null}</View></View>
+      <View style={styles.topRow}><StateBadge state={word.state}/><View style={styles.cardMeta}>{collectionName ? <CollectionBadge name={collectionName}/> : null}{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}{onReport ? <Pressable accessibilityRole="button" accessibilityLabel="Report an issue with this word" onPress={onReport} style={{ minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }}><Ionicons name="flag-outline" size={18} color={theme.muted}/></Pressable> : null}</View></View>
       <WordCardContent dense={dense}>
         <View style={styles.wordSection}><AppText variant="display" style={[styles.word, dense && styles.denseWord]}>{word.term}</AppText>{word.partOfSpeech ? <AppText variant="label" style={{ color: theme.accent }}>{word.partOfSpeech}</AppText> : null}{showPronunciation && wordSupportsPronunciation(word) ? <PronunciationControls text={word.term} sourceLanguageCode={word.sourceLanguageCode} locale={word.sourcePronunciationLocale} catalogSenseId={word.catalogSenseId} compact={dense} active={pronunciationActive}/> : null}</View>
         <AppText style={styles.definition}>{word.definition}</AppText>
@@ -91,9 +91,17 @@ function RecallButton({ icon, label, detail, color, onPress, dense }: {
   </Pressable>;
 }
 
+function CollectionBadge({ name }: { name: string }) {
+  const theme = useAppTheme();
+  return <View accessible accessibilityLabel={`Collection: ${name}`} style={[styles.collectionBadge, { borderColor: theme.border }]}>
+    <Ionicons name="folder-outline" size={14} color={theme.muted} aria-hidden/>
+    <AppText variant="caption" numberOfLines={1} ellipsizeMode="tail" style={styles.collectionName}>{name}</AppText>
+  </View>;
+}
+
 function CefrBadge({ level }: { level: NonNullable<Word['cefrLevel']> }) {
   const theme = useAppTheme();
-  return <View style={[styles.cefrBadge, { backgroundColor: theme.primarySoft }]}><AppText variant="caption" style={{ color: theme.primary }}>{level}</AppText></View>;
+  return <View style={[styles.cefrBadge, { backgroundColor: theme.primarySoft }]}><AppText variant="caption" style={{ color: theme.primary }}>Level {level}</AppText></View>;
 }
 
 const styles = StyleSheet.create({
@@ -101,7 +109,10 @@ const styles = StyleSheet.create({
   denseCard: { gap: spacing.xs },
   accentLine: { position: 'absolute', top: 0, left: spacing.xxl, right: spacing.xxl, height: 4, borderBottomLeftRadius: 8, borderBottomRightRadius: 8 },
   topRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  cardMeta: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm }, cefrBadge: { minWidth: 34, minHeight: 28, borderRadius: radii.pill, paddingHorizontal: spacing.sm, alignItems: 'center', justifyContent: 'center' },
+  cardMeta: { flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-end', alignItems: 'center', gap: spacing.xs, marginLeft: spacing.sm },
+  compactMeta: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: spacing.sm },
+  collectionBadge: { maxWidth: '100%', flexShrink: 1, flexDirection: 'row', alignItems: 'center', gap: spacing.xs, borderWidth: 1, borderRadius: radii.pill, minHeight: 28, paddingHorizontal: spacing.sm },
+  collectionName: { flexShrink: 1 }, cefrBadge: { minWidth: 34, minHeight: 28, borderRadius: radii.pill, paddingHorizontal: spacing.sm, alignItems: 'center', justifyContent: 'center' },
   wordSection: { gap: spacing.xs, alignItems: 'center' }, word: { textAlign: 'center' }, denseWord: { fontSize: 34, lineHeight: 40 },
   definition: { fontSize: 18, lineHeight: 28, textAlign: 'center' },
   example: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.sm, borderRadius: radii.card, padding: spacing.md }, denseExample: { padding: spacing.sm },
