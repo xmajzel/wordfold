@@ -3,6 +3,8 @@ import { ActivityIndicator, Alert, Pressable, StyleSheet, View } from 'react-nat
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 
+import { PasswordRecoveryForm } from '@/features/auth/password-recovery-form';
+
 import { AppText } from '@/components/app-text';
 import { FormField } from '@/components/form-field';
 import { PrimaryButton } from '@/components/primary-button';
@@ -13,7 +15,7 @@ import { useAppData } from '@/providers/app-data-provider';
 import { useSync } from '@/providers/sync-provider';
 import { radii, spacing } from '@/theme/tokens';
 
-type FormMode = 'signIn' | 'signUp';
+type FormMode = 'signIn' | 'signUp' | 'reset';
 
 function validEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
@@ -151,7 +153,9 @@ export default function AccountScreen() {
         </View>
       ) : null}
 
-      {auth.status === 'signedIn' ? (
+      {auth.status === 'signedIn' && auth.passwordRecovery ? <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><PasswordRecoveryForm key="recovery" recovery onBack={() => void signOut()}/>{formMessage ? <Message text={formMessage} color={theme.danger}/> : null}</View> : null}
+
+      {auth.status === 'signedIn' && !auth.passwordRecovery ? (
         <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
           <View style={[styles.icon, { backgroundColor: theme.primarySoft }]}><Ionicons name="person-circle-outline" color={theme.primary} size={28}/></View>
           <View style={styles.textGroup}>
@@ -211,7 +215,9 @@ export default function AccountScreen() {
         </View>
       ) : null}
 
-      {auth.status === 'signedOut' && !confirmationPending ? (
+      {auth.status === 'signedOut' && mode === 'reset' ? <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><PasswordRecoveryForm key="request" recovery={false} initialEmail={email} onBack={() => changeMode('signIn')}/></View> : null}
+
+      {auth.status === 'signedOut' && !confirmationPending && mode !== 'reset' ? (
         <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
           <View style={styles.segment}>
             <ModeButton selected={mode === 'signIn'} label="Sign in" onPress={() => changeMode('signIn')}/>
@@ -263,6 +269,7 @@ export default function AccountScreen() {
           ) : null}
           {auth.message || formMessage ? <Message text={formMessage ?? auth.message!} color={theme.danger}/> : null}
           <PrimaryButton label={mode === 'signIn' ? 'Sign in' : 'Create account'} loading={submitting} onPress={() => void submit()}/>
+          {mode === 'signIn' ? <PrimaryButton label="Forgot password?" variant="secondary" disabled={submitting} onPress={() => changeMode('reset')}/> : null}
           <AppText variant="caption" style={[styles.centerText, { color: theme.muted }]}>After you confirm the device import, Wordfold works offline and synchronizes changes when connected.</AppText>
         </View>
       ) : null}

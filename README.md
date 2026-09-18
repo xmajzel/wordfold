@@ -225,3 +225,15 @@ in both the table and inbox. The client provides an optional reply address, not 
 Local verification: run `pnpm test -- --runTestsByPath` with the feedback test files, `pnpm typecheck`,
 `pnpm lint`, and `pnpm db:test` against a local Supabase instance. Never run database tests against
 production. The notification worker tests use a fake provider and do not send email.
+
+### Password recovery
+
+Account → Sign in → Forgot password sends a Supabase recovery email. Opening the
+link returns to Account and shows the new-password form; the password is changed
+only after the user submits matching values of at least eight characters.
+
+The Supabase Auth redirect allowlist must contain `wordfold://account` for
+installed builds (including USB development builds), or the
+exact local web/Expo Go callback for local testing (for example,
+`http://localhost:8081/account`). Open the email on the device running the app.
+Email delivery uses the project's existing Supabase email/SMTP configuration.

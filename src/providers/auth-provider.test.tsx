@@ -7,6 +7,8 @@ const mockLinkRemove = jest.fn();
 const mockSignInWithPassword = jest.fn();
 const mockSignUp = jest.fn();
 const mockSignOut = jest.fn();
+const mockResetPassword = jest.fn();
+const mockUpdateUser = jest.fn();
 const mockSetSession = jest.fn();
 const mockStartAutoRefresh = jest.fn();
 const mockStopAutoRefresh = jest.fn();
@@ -23,6 +25,8 @@ const mockSupabase = {
     signUp: mockSignUp,
     signOut: mockSignOut,
     setSession: mockSetSession,
+    resetPasswordForEmail: mockResetPassword,
+    updateUser: mockUpdateUser,
     startAutoRefresh: mockStartAutoRefresh,
     stopAutoRefresh: mockStopAutoRefresh,
   },
@@ -34,7 +38,7 @@ jest.mock('@/data/supabase/client', () => ({
 }));
 
 jest.mock('expo-linking', () => ({
-  createURL: () => 'wordfold://account',
+  createURL: () => 'wordfold://localhost:8081/account',
   getInitialURL: jest.fn(async () => mockInitialUrl),
   addEventListener: jest.fn(() => ({ remove: mockLinkRemove })),
 }));
@@ -54,6 +58,10 @@ function Probe() {
   const auth = useAuth();
   return <>
     <Text testID="status">{auth.status}</Text>
+    <Text testID="recovery">{String(auth.passwordRecovery)}</Text>
+    <Text testID="message">{auth.message}</Text>
+    <Pressable onPress={() => void auth.requestPasswordReset(' READER@EXAMPLE.COM ')}><Text>Reset probe</Text></Pressable>
+    <Pressable onPress={() => void auth.updatePassword('new-password')}><Text>Update probe</Text></Pressable>
     <Text testID="email">{auth.user?.email ?? ''}</Text>
     <Pressable accessibilityRole="button" onPress={() => void auth.signIn('  READER@EXAMPLE.COM ', 'password')}><Text>Sign in probe</Text></Pressable>
     <Pressable accessibilityRole="button" onPress={() => void auth.signUp('  NEW@EXAMPLE.COM ', 'new-password')}><Text>Sign up probe</Text></Pressable>
@@ -65,6 +73,8 @@ describe('AuthProvider', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockInitialUrl = null;
+    mockResetPassword.mockResolvedValue({ error: null });
+    mockUpdateUser.mockResolvedValue({ data: { user: session.user }, error: null });
     mockGetSession.mockResolvedValue({ data: { session: null }, error: null });
     mockSignInWithPassword.mockResolvedValue({ data: { session }, error: null });
     mockSignUp.mockResolvedValue({ data: { session: null }, error: null });
@@ -119,5 +129,40 @@ describe('AuthProvider', () => {
     }));
     expect(mockSetSession).toHaveBeenCalledTimes(1);
     await waitFor(() => expect(view.getByTestId('status').props.children).toBe('signedIn'));
+  });
+});
+
+describe('password recovery', () => {
+  beforeEach(() => {
+    jest.clearAllMocks(); mockInitialUrl = null;
+    mockGetSession.mockResolvedValue({ data: { session: null }, error: null });
+    mockSetSession.mockResolvedValue({ data: { session }, error: null });
+    mockResetPassword.mockResolvedValue({ error: null });
+    mockUpdateUser.mockResolvedValue({ error: null });
+  });
+  it('requests a reset with a normalized email and account redirect', async () => {
+    const view = await render(<AuthProvider><Probe/></AuthProvider>);
+    await fireEvent.press(view.getByText('Reset probe'));
+    expect(mockResetPassword).toHaveBeenCalledWith('reader@example.com', { redirectTo: 'wordfold://account' });
+  });
+  it('opens recovery and only completes it after a successful update', async () => {
+    mockInitialUrl = 'wordfold://account#type=recovery&access_token=a&refresh_token=r';
+    const view = await render(<AuthProvider><Probe/></AuthProvider>);
+    await waitFor(() => expect(view.getByTestId('recovery').props.children).toBe('true'));
+    mockUpdateUser.mockResolvedValueOnce({ error: { code: 'weak_password' } });
+    await fireEvent.press(view.getByText('Update probe'));
+    expect(view.getByTestId('recovery').props.children).toBe('true');
+    await fireEvent.press(view.getByText('Update probe'));
+    expect(mockUpdateUser).toHaveBeenCalledWith({ password: 'new-password' });
+    await waitFor(() => expect(view.getByTestId('recovery').props.children).toBe('false'));
+    expect(view.getByTestId('message').props.children).toBe('Password updated. You are signed in.');
+  });
+  it('rejects expired links and never enables a password change', async () => {
+    mockInitialUrl = 'wordfold://account#error_code=otp_expired';
+    const view = await render(<AuthProvider><Probe/></AuthProvider>);
+    await waitFor(() => expect(view.getByTestId('message').props.children).toContain('expired'));
+    await fireEvent.press(view.getByText('Update probe'));
+    expect(mockSetSession).not.toHaveBeenCalled();
+    expect(mockUpdateUser).not.toHaveBeenCalled();
   });
 });

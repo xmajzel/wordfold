@@ -1,6 +1,6 @@
 export type AuthCallbackResult =
   | { type: 'unrelated' }
-  | { type: 'session'; accessToken: string; refreshToken: string }
+  | { type: 'session'; accessToken: string; refreshToken: string; recovery?: true }
   | { type: 'error'; message: string };
 
 function normalizedTarget(url: URL) {
@@ -28,16 +28,17 @@ export function parseAuthCallbackUrl(value: string, expectedRedirectUrl: string)
   if (normalizedTarget(url) !== normalizedTarget(expected)) return { type: 'unrelated' };
 
   const parameters = callbackParameters(url);
+  if (!parameters.has('error') && !parameters.has('error_code') && !parameters.has('access_token') && !parameters.has('refresh_token')) return { type: 'unrelated' };
   const callbackError = parameters.get('error_code') ?? parameters.get('error');
   if (callbackError) {
-    return { type: 'error', message: 'The email confirmation link could not be completed. Please try signing in.' };
+    return { type: 'error', message: 'This sign-in or password reset link has expired or is invalid. Request a new link.' };
   }
 
   const accessToken = parameters.get('access_token');
   const refreshToken = parameters.get('refresh_token');
   if (!accessToken || !refreshToken) {
-    return { type: 'error', message: 'This confirmation link is incomplete or has expired. Please try signing in.' };
+    return { type: 'error', message: 'This sign-in or password reset link is incomplete or has expired. Request a new link.' };
   }
 
-  return { type: 'session', accessToken, refreshToken };
+  return { type: 'session', accessToken, refreshToken, ...(parameters.get('type') === 'recovery' ? { recovery: true as const } : {}) };
 }

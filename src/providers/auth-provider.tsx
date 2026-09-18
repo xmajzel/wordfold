@@ -3,13 +3,14 @@ import { AppState, Platform } from 'react-native';
 import * as Linking from 'expo-linking';
 import type { AuthError, Session, User } from '@supabase/supabase-js';
 
+import { authRedirectUrl } from '@/data/supabase/auth-redirect';
 import { parseAuthCallbackUrl } from '@/data/supabase/auth-callback';
 import { supabase, supabaseConfigurationError } from '@/data/supabase/client';
 
 export type AuthStatus = 'loading' | 'signedOut' | 'signedIn' | 'unavailable';
 
 export type AuthActionResult =
-  | { ok: true; outcome: 'signedIn' | 'confirmationRequired' | 'signedOut' }
+  | { ok: true; outcome: 'signedIn' | 'confirmationRequired' | 'signedOut' | 'resetEmailSent' | 'passwordUpdated' }
   | { ok: false; message: string };
 
 type AuthContextValue = {
@@ -17,6 +18,9 @@ type AuthContextValue = {
   session: Session | null;
   user: User | null;
   message: string | null;
+  passwordRecovery: boolean;
+  requestPasswordReset(email: string): Promise<AuthActionResult>;
+  updatePassword(password: string): Promise<AuthActionResult>;
   clearMessage(): void;
   signIn(email: string, password: string): Promise<AuthActionResult>;
   signUp(email: string, password: string): Promise<AuthActionResult>;
@@ -25,14 +29,18 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-function safeAuthMessage(error: AuthError | Error, action: 'signIn' | 'signUp' | 'signOut' | 'confirm') {
+function safeAuthMessage(error: AuthError | Error, action: 'signIn' | 'signUp' | 'signOut' | 'confirm' | 'reset' | 'updatePassword') {
   const code = 'code' in error ? error.code : undefined;
   if (code === 'invalid_credentials') return 'The email or password is incorrect.';
   if (code === 'email_not_confirmed') return 'Confirm your email before signing in.';
   if (code === 'over_request_rate_limit' || code === 'over_email_send_rate_limit') return 'Too many attempts. Please wait and try again.';
   if (code === 'signup_disabled') return 'New account creation is currently unavailable.';
+  if (code === 'same_password') return 'Choose a password different from your current password.';
+  if (action === 'updatePassword' && (code === 'session_not_found' || code === 'refresh_token_not_found')) return 'Your reset session has expired. Request a new reset link.';
   if (code === 'weak_password') return 'Choose a stronger password and try again.';
   if (error instanceof TypeError) return 'Account services could not be reached. Check your connection and try again.';
+  if (action === 'reset') return 'The reset email could not be sent. Please try again.';
+  if (action === 'updatePassword') return 'Your password could not be updated. Please try again or request a new reset link.';
   if (action === 'signIn') return 'Sign in could not be completed. Please try again.';
   if (action === 'signUp') return 'Account creation could not be completed. Please try again.';
   if (action === 'signOut') return 'Sign out could not be completed. Please try again.';
@@ -45,11 +53,13 @@ function statusFor(session: Session | null): AuthStatus {
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [status, setStatus] = useState<AuthStatus>(supabase ? 'loading' : 'unavailable');
+  const [passwordRecovery, setPasswordRecovery] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
   const [message, setMessage] = useState<string | null>(supabaseConfigurationError);
   const handledCallbackUrls = useRef(new Set<string>());
 
   const applySession = useCallback((nextSession: Session | null) => {
+    if (!nextSession) setPasswordRecovery(false);
     setSession(nextSession);
     setStatus(statusFor(nextSession));
   }, []);
@@ -61,7 +71,10 @@ export function AuthProvider({ children }: PropsWithChildren) {
     const versionBeforeInitialRead = authEventVersion;
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       authEventVersion += 1;
-      if (active) applySession(nextSession);
+      if (active) {
+        if (_event === 'PASSWORD_RECOVERY') setPasswordRecovery(true);
+        applySession(nextSession);
+      }
     });
 
     void supabase.auth.getSession().then(({ data, error }) => {
@@ -97,7 +110,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   const handleCallback = useCallback(async (url: string) => {
     if (!supabase || handledCallbackUrls.current.has(url)) return;
-    const parsed = parseAuthCallbackUrl(url, Linking.createURL('account'));
+    const parsed = parseAuthCallbackUrl(url, authRedirectUrl());
     if (parsed.type === 'unrelated') return;
     handledCallbackUrls.current.add(url);
     if (parsed.type === 'error') {
@@ -115,7 +128,14 @@ export function AuthProvider({ children }: PropsWithChildren) {
         return;
       }
       applySession(data.session);
-      setMessage('Email confirmed. Your account is now signed in.');
+      setPasswordRecovery(Boolean(parsed.recovery));
+      setMessage(parsed.recovery ? 'Choose a new password below.' : 'Email confirmed. Your account is now signed in.');
+      if (Platform.OS === 'web' && typeof window !== 'undefined') {
+        const cleanUrl = new URL(window.location.href);
+        cleanUrl.hash = '';
+        for (const key of ['access_token', 'refresh_token', 'token_type', 'expires_in', 'expires_at', 'type']) cleanUrl.searchParams.delete(key);
+        window.history.replaceState(window.history.state, '', cleanUrl.pathname + cleanUrl.search);
+      }
     } catch (error) {
       handledCallbackUrls.current.delete(url);
       setMessage(safeAuthMessage(error instanceof Error ? error : new Error(), 'confirm'));
@@ -155,7 +175,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
       const { data, error } = await supabase.auth.signUp({
         email: email.trim().toLowerCase(),
         password,
-        options: { emailRedirectTo: Linking.createURL('account') },
+        options: { emailRedirectTo: authRedirectUrl() },
       });
       if (error) return { ok: false, message: safeAuthMessage(error, 'signUp') };
       if (!data.session) return { ok: true, outcome: 'confirmationRequired' };
@@ -165,6 +185,33 @@ export function AuthProvider({ children }: PropsWithChildren) {
       return { ok: false, message: safeAuthMessage(error instanceof Error ? error : new Error(), 'signUp') };
     }
   }, [applySession]);
+
+  const requestPasswordReset = useCallback(async (email: string): Promise<AuthActionResult> => {
+    if (!supabase) return { ok: false, message: supabaseConfigurationError ?? 'Account services are unavailable.' };
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
+        redirectTo: authRedirectUrl(),
+      });
+      if (error) return { ok: false, message: safeAuthMessage(error, 'reset') };
+      return { ok: true, outcome: 'resetEmailSent' };
+    } catch (error) {
+      return { ok: false, message: safeAuthMessage(error instanceof Error ? error : new Error(), 'reset') };
+    }
+  }, []);
+
+  const updatePassword = useCallback(async (password: string): Promise<AuthActionResult> => {
+    if (!supabase || !session || !passwordRecovery) return { ok: false, message: 'Open a new password reset link from your email first.' };
+    if (password.length < 8) return { ok: false, message: 'Use at least 8 characters for your password.' };
+    try {
+      const { error } = await supabase.auth.updateUser({ password });
+      if (error) return { ok: false, message: safeAuthMessage(error, 'updatePassword') };
+      setPasswordRecovery(false);
+      setMessage('Password updated. You are signed in.');
+      return { ok: true, outcome: 'passwordUpdated' };
+    } catch (error) {
+      return { ok: false, message: safeAuthMessage(error instanceof Error ? error : new Error(), 'updatePassword') };
+    }
+  }, [passwordRecovery, session]);
 
   const signOut = useCallback(async (): Promise<AuthActionResult> => {
     if (!supabase) return { ok: false, message: supabaseConfigurationError ?? 'Account services are unavailable.' };
@@ -184,11 +231,14 @@ export function AuthProvider({ children }: PropsWithChildren) {
     session,
     user: session?.user ?? null,
     message,
+    passwordRecovery,
+    requestPasswordReset,
+    updatePassword,
     clearMessage: () => setMessage(null),
     signIn,
     signUp,
     signOut,
-  }), [message, session, signIn, signOut, signUp, status]);
+  }), [message, session, signIn, signOut, signUp, status, passwordRecovery, requestPasswordReset, updatePassword]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
