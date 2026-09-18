@@ -1,6 +1,6 @@
 import { preferenceLocale, voiceSupportsCourse } from '@/domain/pronunciation-voices';
 import { createContext, PropsWithChildren, Suspense, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { AppState, StyleSheet, View } from 'react-native';
+import { Alert, AppState, StyleSheet, View } from 'react-native';
 import { SQLiteProvider, useSQLiteContext, type SQLiteDatabase } from 'expo-sqlite';
 
 import { defaultCourseId, getCourseDefinition, getCourseForWord, wordBelongsToCourse, type CourseDefinition, type CourseId } from '@/domain/courses';
@@ -173,6 +173,8 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const [learningPreferences, setLearningPreferences] = useState<LearningPreferences>({ levels: [], topics: [] });
   const [pronunciationVoicePreference, setPronunciationVoicePreference] = useState<PronunciationVoicePreference>('device');
   const [learningFilter, setLearningFilter] = useState<LearningFilter>('all');
+  // Session choices take precedence over refreshes that read older persisted values.
+  const selectedFilters = useRef(new Map<CourseId, LearningFilter>());
   const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
   const [guestImport, setGuestImport] = useState<GuestImportViewModel>({
     phase: 'loading', totals: emptyGuestImportCounts, uploaded: emptyGuestImportCounts,
@@ -378,7 +380,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     setLearningPreferences(nextPreferences);
     setPronunciationVoicePreference(nextVoicePreference);
     setOnboardingComplete(nextOnboarding);
-    setLearningFilter(nextLearningFilter);
+    setLearningFilter(selectedFilters.current.get(nextActiveCourseId) ?? nextLearningFilter);
   }, [appDatabase, vocabularyStore]);
 
   const prepareWordTranslation = useCallback((word: Word) => {
@@ -591,11 +593,20 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       setActiveCourseId(courseId);
       setLearningPreferences(preferences);
       setPronunciationVoicePreference(voicePreference);
-      setLearningFilter(filter);
+      setLearningFilter(selectedFilters.current.get(courseId) ?? filter);
       setStats(nextStats);
     },
     updateLearningFilter: async (filter) => {
-      await runDatabaseMutation(() => repository.saveLearningFilter(appDatabase, filter, activeCourseId)); setLearningFilter(filter);
+      const courseId = activeCourseId;
+      selectedFilters.current.set(courseId, filter);
+      setLearningFilter(filter);
+      try {
+        await runDatabaseMutation(() => repository.saveLearningFilter(appDatabase, filter, courseId));
+      } catch {
+        if (selectedFilters.current.get(courseId) === filter) {
+          Alert.alert('Category could not be saved', 'You can keep learning in this category. It may reset when you reopen the app. Tap the category again to retry.');
+        }
+      }
     },
     saveLearningRhythm: async (confirmations) => {
       await runDatabaseMutation(() => repository.saveLearningRhythm(appDatabase, confirmations));

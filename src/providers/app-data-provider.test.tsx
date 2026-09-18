@@ -1,6 +1,6 @@
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import type { ReactElement, ReactNode } from 'react';
-import { Pressable, Text } from 'react-native';
+import { Alert, Pressable, Text } from 'react-native';
 
 import { buildRecommendations, type Recommendation } from '@/features/recommendations/selector';
 import type { Word } from '@/domain/types';
@@ -69,6 +69,7 @@ jest.mock('@/data/repository', () => ({
   savePronunciationVoicePreference: jest.fn(async () => undefined),
   isOnboardingComplete: jest.fn(async () => false),
   getLearningFilter: jest.fn(async () => 'all'),
+  saveLearningFilter: jest.fn(async () => undefined),
   getWord: jest.fn(async () => null),
   saveRating: jest.fn(async () => undefined),
   resetWord: jest.fn(async () => undefined),
@@ -104,6 +105,16 @@ const word: Word = {
   lastViewedAt: '2026-07-17T10:00:00.000Z', lastRatedAt: null, nextReviewAt: null,
   createdAt: '2026-07-01T10:00:00.000Z', updatedAt: '2026-07-17T10:00:00.000Z',
 };
+
+function FilterProbe() {
+  const { learningFilter, updateLearningFilter, refresh, onboardingComplete } = useAppData();
+  return <>
+    <Text>{onboardingComplete === null ? 'Loading filters' : `Selected: ${learningFilter}`}</Text>
+    <Pressable onPress={() => void updateLearningFilter('personal')}><Text>Choose unlevelled</Text></Pressable>
+    <Pressable onPress={() => void updateLearningFilter('C2')}><Text>Choose C2</Text></Pressable>
+    <Pressable onPress={() => void refresh()}><Text>Refresh filters</Text></Pressable>
+  </>;
+}
 
 function StopReviewProbe() {
   const { words, rateWord } = useAppData();
@@ -171,7 +182,40 @@ function RecommendationProbe({ onComplete, preview }: { onComplete(count: number
 describe('AppDataProvider', () => {
   beforeEach(() => jest.clearAllMocks());
 
+  it('selects immediately during a stalled save and keeps the latest tap through refresh and save completion', async () => {
+    let finishSave!: () => void;
+    jest.mocked(repository.saveLearningFilter).mockImplementationOnce(() => new Promise<void>((resolve) => { finishSave = resolve; }));
+    const view = await render(<AppDataProvider><FilterProbe/></AppDataProvider>);
+    await waitFor(() => view.getByText('Selected: all'));
+    await fireEvent.press(view.getByText('Choose unlevelled'));
+    view.getByText('Selected: personal');
+    await waitFor(() => expect(repository.saveLearningFilter).toHaveBeenCalledTimes(1));
+    await fireEvent.press(view.getByText('Choose C2'));
+    view.getByText('Selected: C2');
+    await fireEvent.press(view.getByText('Refresh filters'));
+    view.getByText('Selected: C2');
+    await act(async () => finishSave());
+    await waitFor(() => expect(repository.saveLearningFilter).toHaveBeenLastCalledWith(expect.anything(), 'C2', 'en-sk'));
+    await fireEvent.press(view.getByText('Refresh filters'));
+    view.getByText('Selected: C2');
+    await view.unmount();
+  });
 
+  it('keeps the selected category usable after a failed save and allows retry', async () => {
+    const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
+    jest.mocked(repository.saveLearningFilter).mockRejectedValueOnce(new Error('disk unavailable'));
+    const view = await render(<AppDataProvider><FilterProbe/></AppDataProvider>);
+    await waitFor(() => view.getByText('Selected: all'));
+    await fireEvent.press(view.getByText('Choose unlevelled'));
+    await waitFor(() => expect(alert).toHaveBeenCalledWith('Category could not be saved', expect.any(String)));
+    await fireEvent.press(view.getByText('Refresh filters'));
+    view.getByText('Selected: personal');
+    await fireEvent.press(view.getByText('Choose unlevelled'));
+    await waitFor(() => expect(repository.saveLearningFilter).toHaveBeenCalledTimes(2));
+    expect(alert).toHaveBeenCalledTimes(1);
+    await view.unmount();
+    alert.mockRestore();
+  });
 
   it.each(['startup', 'after adding'] as const)('adds a Spanish batch while reminders stall %s', async (stage) => {
     let releaseSchedule!: (count: number) => void;
