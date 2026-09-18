@@ -354,6 +354,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     const snapshot = await readAccountVocabularySnapshot(powerSyncDatabase, authUserId);
     await replaceGuestVocabularyWithSnapshot(appDatabase, snapshot);
     await requestCloudAccountDeletion();
+    await (await import('@/features/ai/local-data')).clearAiAccountData(authUserId);
     await prepareForSignOut();
     await sync.clearBeforeSignOut();
     const signOutResult = await auth.signOut();

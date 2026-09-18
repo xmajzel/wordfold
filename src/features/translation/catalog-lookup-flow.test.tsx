@@ -6,6 +6,8 @@ import { router } from 'expo-router';
 import ImportScreen from '@/app/import';
 import NewWordScreen from '@/app/word/new';
 import type { CatalogSense } from '@/domain/types';
+jest.mock('@react-native-async-storage/async-storage', () => jest.requireActual('@react-native-async-storage/async-storage/jest/async-storage-mock'));
+jest.mock('@/providers/auth-provider', () => ({ useAuth: () => ({ user: null, status: 'signedOut' }) }));
 
 const mockCreateWord = jest.fn(async () => 'word-1');
 const mockCreateWords = jest.fn(async () => ['word-1']);

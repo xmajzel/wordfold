@@ -1,3 +1,4 @@
+import { SuggestionPanel } from '@/features/ai/suggestion-panel';
 import { preferenceLocale } from '@/domain/pronunciation-voices';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
@@ -26,7 +27,7 @@ import { radii, spacing } from '@/theme/tokens';
 
 export default function NewWordScreen() {
   const theme = useAppTheme();
-  const { words, collections, findSenses, createWord, createCollection, pronunciationVoicePreference, activeCourse } = useAppData();
+  const { words, collections, wordCapacity, findSenses, createWord, createCollection, pronunciationVoicePreference, activeCourse } = useAppData();
   const preferredLocale = preferenceLocale(pronunciationVoicePreference);
   const { collectionId: requestedCollectionId } = useLocalSearchParams<{ collectionId?: string }>();
   const [collectionId, setCollectionId] = useState(() => collections.find((item) => item.id === requestedCollectionId)?.id ?? collections[0]?.id ?? 'my-words');
@@ -214,7 +215,9 @@ export default function NewWordScreen() {
         ? <PrimaryButton label="Find definition offline" variant="secondary" loading={lookingUp} disabled={!term.trim()} onPress={() => void lookup()} icon={<Ionicons name="search-outline" size={18} color={theme.primary}/>}/>
         : <AppText variant="caption" style={{ color: theme.muted }}>Offline definitions are not available for this language pair. Add the definition manually.</AppText>}
       {senses.length > 1 ? <View style={styles.group}><AppText variant="label">Choose the intended meaning</AppText>{senses.map((sense) => <Pressable key={sense.id} onPress={() => selectSense(sense)} style={[styles.sense, { borderColor: selectedSenseId === sense.id ? theme.primary : theme.border, backgroundColor: selectedSenseId === sense.id ? theme.primarySoft : theme.surface }]}><AppText variant="caption" style={{ color: theme.accent }}>{sense.partOfSpeech}</AppText><AppText>{sense.definition}</AppText></Pressable>)}</View> : null}
-      {hasLookedUp && !lookingUp && senses.length === 0 ? <View style={[styles.notice, { backgroundColor: theme.primarySoft }]}><Ionicons name="create-outline" color={theme.primary} size={20}/><AppText style={styles.noticeText}>WordNet has no matching sense. Add a clear definition manually; AI fallback is intentionally outside this MVP.</AppText></View> : null}
+      {hasLookedUp && !lookingUp && senses.length === 0 ? <View style={[styles.notice, { backgroundColor: theme.primarySoft }]}><Ionicons name="create-outline" color={theme.primary} size={20}/><AppText style={styles.noticeText}>No matching offline definition. Add your own definition or ask AI for a suggestion.</AppText></View> : null}
+      <SuggestionPanel term={term} sourceLanguageCode={sourceLanguageCode} targetLanguageCode={targetLanguageCode} disabled={saving || lookingUp || creatingCollection || wordCapacity.remaining === 0}
+        onUse={(suggestion) => { translationController.current?.abort(); setSelectedSenseId(null); selectedSenseTranslation.current = null; setDefinition(suggestion.definition); setTranslation(suggestion.translation); setExample(suggestion.example); setPartOfSpeech(suggestion.partOfSpeech); }}/>
       <FormField label="Definition" value={definition} onChangeText={setDefinition} placeholder="What this word or phrase means" multiline/>
       <FormField label="Example" value={example} onChangeText={setExample} placeholder="Use the word in context" multiline/>
       <FormField label={`${languageLabel(targetLanguageCode)} hint`} value={translation} onChangeText={(value) => { translationController.current?.abort(); setTranslation(value); }} placeholder="Optional translation" hint="Optional. It stays hidden until you ask for a hint."/>

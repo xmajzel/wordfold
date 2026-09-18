@@ -226,6 +226,36 @@ Local verification: run `pnpm test -- --runTestsByPath` with the feedback test f
 `pnpm lint`, and `pnpm db:test` against a local Supabase instance. Never run database tests against
 production. The notification worker tests use a fake provider and do not send email.
 
+### AI vocabulary suggestions
+
+Single-word entry and guided bulk review can request an editable suggestion from the
+`ai-word` Supabase Edge Function. The server uses `gpt-5.6-sol` by default. Dictionary
+lookup and manual entry remain available without AI or an account.
+
+Apply `20260918120000_ai_word_credits.sql`, then deploy `ai-word` to the intended
+Supabase project. Configure server-only secrets `OPENAI_API_KEY` and
+`REVENUECAT_SECRET_API_KEY` (RevenueCat REST API v1 access); `AI_WORD_MODEL` is an
+optional server override. Never prefix these secrets with `EXPO_PUBLIC_`, bundle them,
+or deploy a whole local `.env` file. The function validates authenticated users.
+
+Each account gets 10 one-time credits. A verified production Google Play
+`wordfold_lifetime` purchase with the `unlimited_words` entitlement adds 40 once.
+The app links RevenueCat to a server-generated opaque account identifier; existing
+anonymous purchases are merged according to RevenueCat's identity rules. Existing
+customers may need Restore purchase if their account already has an anonymous alias.
+Review RevenueCat's restore/transfer configuration before activation, and verify a
+real existing purchase and an account switch. Sandbox purchases do not grant the
+production bonus. A purchase fingerprint prevents a transferred or restored purchase
+from granting the bonus again on another account, including after account deletion.
+
+A valid generated suggestion costs one credit even if discarded. Reservations expire
+after two minutes; failures refund once, and retries recover the saved result. The
+function limits new attempts to 30 per account/hour and 2,000 globally/day, including
+failed attempts. Credits and request results are private and are not PowerSync tables.
+Guided-review queues and recoverable suggestion drafts are stored locally by account
+and language pair. The updated privacy page must be published before enabling this
+processing in a released app. No credit packs or recurring grants are implemented.
+
 ### Password recovery
 
 Account → Sign in → Forgot password sends a Supabase recovery email. Opening the

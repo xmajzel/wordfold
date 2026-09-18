@@ -1,3 +1,6 @@
+import { useAuth } from '@/providers/auth-provider';
+import { fetchAiBalance } from '@/features/ai/client';
+import { reconcilePurchaseIdentity, revenuecatIdentity, withPurchaseLock } from '@/features/purchases/identity';
 import {
   createContext,
   useCallback,
@@ -5,6 +8,8 @@ import {
   useEffect,
   useMemo,
   useState,
+  useRef,
+  useLayoutEffect,
   type PropsWithChildren,
 } from 'react';
 import { Platform } from 'react-native';
@@ -51,6 +56,12 @@ function unavailableMessage() {
 }
 
 export function PurchaseProvider({ children }: PropsWithChildren) {
+  const auth = useAuth();
+  const userId = auth.user?.id ?? null;
+  const currentUser = useRef(userId);
+  useLayoutEffect(() => { currentUser.current = userId; }, [userId]);
+  const [boundUser, setBoundUser] = useState<string | null>(null);
+  const identityReady = useRef(false);
   const apiKey = process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_API_KEY?.trim();
   const available = Platform.OS === 'android' && Boolean(apiKey);
   const [status, setStatus] = useState<PurchaseContextValue['status']>(available ? 'loading' : 'unavailable');
@@ -66,53 +77,72 @@ export function PurchaseProvider({ children }: PropsWithChildren) {
   const refresh = useCallback(async () => {
     if (!available) return;
     const customerInfo = await Purchases.getCustomerInfo();
+    if (currentUser.current !== userId) return;
     applyCustomerInfo(customerInfo);
     try {
       const offerings = await Purchases.getOfferings();
+      if (currentUser.current !== userId) return;
       const packageValue = offerings.current?.availablePackages.find(
         (candidate) => candidate.product.identifier === LIFETIME_PRODUCT_ID,
       ) ?? null;
       setLifetimePackage(packageValue);
       setMessage(packageValue ? null : 'The lifetime product is not available from Google Play yet.');
     } catch {
+      if (currentUser.current !== userId) return;
       setLifetimePackage(null);
       setMessage(hasUnlimitedEntitlement(customerInfo)
         ? null
         : 'Google Play products could not be loaded. Try again when you are online.');
     }
+    if (currentUser.current !== userId) return;
+    setBoundUser(userId);
     setStatus('ready');
-  }, [applyCustomerInfo, available]);
+  }, [applyCustomerInfo, available, userId]);
 
   useEffect(() => {
-    if (!available || !apiKey) return;
+    if (!available || !apiKey || auth.status === 'loading') return;
+    identityReady.current = false;
     let active = true;
     const listener = (customerInfo: CustomerInfo) => {
-      if (active) applyCustomerInfo(customerInfo);
+      if (active && identityReady.current) applyCustomerInfo(customerInfo);
     };
-    void (async () => {
+    void withPurchaseLock(async () => {
+      if (!active) return;
+      setStatus('loading'); setUnlimited(false);
       try {
         if (__DEV__) Purchases.setLogLevel(LOG_LEVEL.DEBUG);
         if (!(await Purchases.isConfigured())) Purchases.configure({ apiKey });
+        const identity = userId ? await revenuecatIdentity(userId) : null;
+        if (!active) return;
+        await reconcilePurchaseIdentity(Purchases, identity);
+        if (!active) return;
+        identityReady.current = true;
         Purchases.addCustomerInfoUpdateListener(listener);
         await refresh();
+        if (identity && active) void fetchAiBalance(true).catch(() => undefined);
       } catch {
         if (!active) return;
         setStatus('unavailable');
         setMessage('Google Play purchases could not be reached. Try again when you are online.');
       }
-    })();
+    });
     return () => {
       active = false;
       Purchases.removeCustomerInfoUpdateListener(listener);
     };
-  }, [apiKey, applyCustomerInfo, available, refresh]);
+  }, [apiKey, applyCustomerInfo, available, refresh, userId, auth.status]);
 
   const purchaseLifetime = useCallback(async (): Promise<PurchaseActionResult> => {
-    if (!available || status !== 'ready' || !lifetimePackage) {
+    if (!available || !identityReady.current || status !== 'ready' || !lifetimePackage) {
       return { ok: false, message: message ?? unavailableMessage() };
     }
     try {
-      const result = await Purchases.purchasePackage(lifetimePackage);
+      const result = await withPurchaseLock(async () => {
+        if (currentUser.current !== userId || !identityReady.current) throw new Error('Account changed');
+        return Purchases.purchasePackage(lifetimePackage);
+      });
+      if (currentUser.current !== userId) return { ok: false, message: 'Your account changed. Restore the purchase after signing in.' };
+      if (userId) void fetchAiBalance(true).catch(() => undefined);
       applyCustomerInfo(result.customerInfo);
       if (!hasUnlimitedEntitlement(result.customerInfo)) {
         return { ok: false, message: 'Google Play completed the purchase, but the unlock is still being confirmed. Use Restore purchase in a moment.' };
@@ -122,15 +152,22 @@ export function PurchaseProvider({ children }: PropsWithChildren) {
       if (isCancelledPurchase(error)) return { ok: false, cancelled: true, message: 'Purchase cancelled.' };
       return { ok: false, message: 'The purchase could not be completed. Check Google Play and try again.' };
     }
-  }, [applyCustomerInfo, available, lifetimePackage, message, status]);
+  }, [applyCustomerInfo, available, lifetimePackage, message, status, userId]);
 
   const restorePurchases = useCallback(async (): Promise<PurchaseActionResult> => {
-    if (!available) return { ok: false, message: unavailableMessage() };
+    if (!available || !identityReady.current) return { ok: false, message: 'Purchases are not ready yet. Please try again.' };
     setRestoreDiagnostics(null);
     // A diagnostic lookup must not prevent restoration if it fails.
     const appUserId = await Purchases.getAppUserID().catch(() => null);
     try {
-      const customerInfo = await Purchases.restorePurchases();
+      const customerInfo = await withPurchaseLock(async () => {
+        if (currentUser.current !== userId) throw new Error('Account changed');
+        const identity = userId ? await revenuecatIdentity(userId) : null;
+        await reconcilePurchaseIdentity(Purchases, identity);
+        return Purchases.restorePurchases();
+      });
+      if (currentUser.current !== userId) return { ok: false, message: 'Your account changed. Please try again.' };
+      if (userId) void fetchAiBalance(true).catch(() => undefined);
       applyCustomerInfo(customerInfo);
       setRestoreDiagnostics(formatRestoreDiagnostics(appUserId, customerInfo));
       return describeRestore(customerInfo, LIFETIME_PRODUCT_ID, UNLIMITED_WORDS_ENTITLEMENT);
@@ -138,17 +175,17 @@ export function PurchaseProvider({ children }: PropsWithChildren) {
       setRestoreDiagnostics(formatRestoreDiagnostics(appUserId, null, error));
       return { ok: false, message: 'The restore request failed. Check your connection and try again. Purchase diagnostics contains the error code; this failure does not mean you do not own the lifetime unlock.' };
     }
-  }, [applyCustomerInfo, available]);
+  }, [applyCustomerInfo, available, userId]);
 
   const value = useMemo<PurchaseContextValue>(() => ({
-    status,
-    unlimited,
+    status: available && boundUser !== userId && status !== 'unavailable' ? 'loading' : status,
+    unlimited: boundUser === userId && unlimited,
     priceLabel: lifetimePackage?.product.priceString ?? null,
     message,
     restoreDiagnostics,
     purchaseLifetime,
     restorePurchases,
-  }), [lifetimePackage?.product.priceString, message, restoreDiagnostics, purchaseLifetime, restorePurchases, status, unlimited]);
+  }), [available, boundUser, userId, lifetimePackage?.product.priceString, message, restoreDiagnostics, purchaseLifetime, restorePurchases, status, unlimited]);
 
   return <PurchaseContext.Provider value={value}>{children}</PurchaseContext.Provider>;
 }

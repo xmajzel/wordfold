@@ -1,3 +1,4 @@
+import { CreditSettings } from '@/features/ai/credit-settings';
 import { FeedbackLink } from '@/features/feedback/feedback-link';
 import { useRef, useState } from 'react';
 import { Alert, Linking, Platform, Pressable, StyleSheet, View } from 'react-native';
@@ -89,6 +90,7 @@ export default function SettingsScreen() {
     <Screen scroll>
       <View style={styles.header}><Pressable accessibilityRole="button" accessibilityLabel="Close" onPress={() => router.back()} style={[styles.close, { backgroundColor: theme.surface }]}><Ionicons name="close" color={theme.text} size={22}/></Pressable><AppText variant="title">Settings</AppText><View style={styles.close}/></View>
       <FeedbackLink screen="settings"/>
+      <CreditSettings/>
       <Pressable
         accessibilityRole="button"
         accessibilityLabel="Open account"
