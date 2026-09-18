@@ -123,3 +123,19 @@ describe('PowerSyncUploader', () => {
     expect(context.complete).not.toHaveBeenCalled();
   });
 });
+
+it('uploads new confirmations through v2 while retaining the legacy queued-rating route', async () => {
+  const word = entry(1, 'PATCH', 'words', 'word-1', {
+    state: 'understood', known_streak: 1, understood_streak: 0, lapse_count: 0,
+    last_rated_at: '2026-09-17T12:00:00.000Z', next_review_at: '2026-09-18T12:00:00.000Z',
+  });
+  const event = entry(2, 'PUT', 'learning_events', 'confirmation-1', {
+    word_id: 'word-1', type: 'rating', value: 'learned', occurred_at: '2026-09-17T12:00:00.000Z',
+  });
+  const context = setup([word, event]);
+  await context.uploader.uploadNext(context.database);
+  expect(context.remote.rpc).toHaveBeenCalledWith('apply_word_rating_v2', expect.objectContaining({
+    p_known_streak: 1, p_state: 'understood', p_rating: 'learned', p_event_id: 'confirmation-1',
+  }));
+  expect(context.complete).toHaveBeenCalledTimes(1);
+});

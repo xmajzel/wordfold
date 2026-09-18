@@ -29,7 +29,7 @@ type SyncWordRow = {
   source_pronunciation_locale: string; target_pronunciation_locale: string;
   part_of_speech: string | null; definition: string; example: string | null;
   translation: string | null; catalog_sense_id: string | null; cefr_level: CefrLevel | null;
-  source: Word['source']; state: Word['state']; understood_streak: number; lapse_count: number;
+  source: Word['source']; state: Word['state']; understood_streak: number; known_streak?: number; lapse_count: number;
   view_count: number; last_viewed_at: string | null; last_rated_at: string | null;
   next_review_at: string | null; created_at: string; updated_at: string;
 };
@@ -42,7 +42,7 @@ function toWord(row: SyncWordRow): Word {
     targetPronunciationLocale: row.target_pronunciation_locale,
     partOfSpeech: row.part_of_speech, definition: row.definition, example: row.example,
     translation: row.translation, catalogSenseId: row.catalog_sense_id, cefrLevel: row.cefr_level,
-    source: row.source, state: row.state, understoodStreak: row.understood_streak,
+    source: row.source, state: row.state, understoodStreak: row.understood_streak, knownStreak: row.known_streak ?? 0,
     lapseCount: row.lapse_count, viewCount: row.view_count, lastViewedAt: row.last_viewed_at,
     lastRatedAt: row.last_rated_at, nextReviewAt: row.next_review_at,
     createdAt: row.created_at, updatedAt: row.updated_at,
@@ -113,15 +113,15 @@ export async function replaceGuestVocabularyWithSnapshot(
         `INSERT INTO words (
           id, collection_id, term, normalized_term, source_language_code, target_language_code,
           source_pronunciation_locale, target_pronunciation_locale, part_of_speech, definition,
-          example, translation, catalog_sense_id, cefr_level, source, state, understood_streak,
+          example, translation, catalog_sense_id, cefr_level, source, state, known_streak, understood_streak,
           lapse_count, view_count, last_viewed_at, last_rated_at, next_review_at, created_at, updated_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         word.id, word.collectionId, word.term, word.normalizedTerm,
         word.sourceLanguageCode, word.targetLanguageCode,
         word.sourcePronunciationLocale, word.targetPronunciationLocale,
         word.partOfSpeech, word.definition, word.example, word.translation,
         word.catalogSenseId, word.cefrLevel, word.source, word.state,
-        word.understoodStreak, word.lapseCount, word.viewCount,
+        word.knownStreak ?? 0, word.understoodStreak, word.lapseCount, word.viewCount,
         word.lastViewedAt, word.lastRatedAt, word.nextReviewAt, word.createdAt, word.updatedAt,
       );
     }

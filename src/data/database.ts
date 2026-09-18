@@ -4,7 +4,7 @@ import { normalizeTermForLanguage } from '@/domain/normalize-term';
 
 import { getCefrLevelForCatalogSense } from './cefr-level-lookup';
 
-const DATABASE_VERSION = 7;
+const DATABASE_VERSION = 8;
 
 export async function migrateDatabase(database: SQLiteDatabase) {
   await database.execAsync('PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;');
@@ -289,6 +289,10 @@ export async function migrateDatabase(database: SQLiteDatabase) {
     } finally {
       await database.execAsync('PRAGMA foreign_keys = ON');
     }
+  }
+
+  if (currentVersion < 8) {
+    await database.execAsync('ALTER TABLE words ADD COLUMN known_streak INTEGER NOT NULL DEFAULT 0 CHECK (known_streak >= 0);');
   }
 
   await database.execAsync(`PRAGMA user_version = ${DATABASE_VERSION}`);

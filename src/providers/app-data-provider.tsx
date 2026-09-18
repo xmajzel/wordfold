@@ -4,7 +4,7 @@ import { AppState, StyleSheet, View } from 'react-native';
 import { SQLiteProvider, useSQLiteContext, type SQLiteDatabase } from 'expo-sqlite';
 
 import { defaultCourseId, getCourseDefinition, getCourseForWord, wordBelongsToCourse, type CourseDefinition, type CourseId } from '@/domain/courses';
-import type { CatalogSense, Collection, DashboardStats, LearningFilter, LearningPreferences, LearningRating, LearningState, PronunciationVoicePreference, ReminderSettings, Word } from '@/domain/types';
+import type { LearningConfirmationCount, CatalogSense, Collection, DashboardStats, LearningFilter, LearningPreferences, LearningRating, LearningState, PronunciationVoicePreference, ReminderSettings, Word } from '@/domain/types';
 import { lookupSenses } from '@/data/catalog';
 import {
   finalizeLocalAccountDeletion,
@@ -50,6 +50,9 @@ interface AppDataValue {
   pronunciationVoicePreference: PronunciationVoicePreference;
   learningFilter: LearningFilter;
   onboardingComplete: boolean | null;
+  learningConfirmations: LearningConfirmationCount;
+  rhythmIntroduced: boolean;
+  saveLearningRhythm(confirmations: LearningConfirmationCount): Promise<void>;
   wordCapacity: ReturnType<typeof getWordCapacity>;
   refresh(): Promise<void>;
   findSenses(term: string, courseId?: CourseId): Promise<CatalogSense[]>;
@@ -72,6 +75,7 @@ interface AppDataValue {
     preferences: LearningPreferences,
     pronunciationVoicePreference: PronunciationVoicePreference,
     preview?: readonly Recommendation[],
+    confirmations?: LearningConfirmationCount,
   ): Promise<number>;
   addRecommendedWords(limit?: number, preview?: readonly Recommendation[]): Promise<number>;
   noteNotificationOpen(wordId: string | null): Promise<void>;
@@ -164,6 +168,8 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [reminderSettings, setReminderSettings] = useState<ReminderSettings | null>(null);
   const [activeCourseId, setActiveCourseId] = useState<CourseId>(defaultCourseId);
+  const [learningConfirmations, setLearningConfirmations] = useState<LearningConfirmationCount>(3);
+  const [rhythmIntroduced, setRhythmIntroduced] = useState(false);
   const [learningPreferences, setLearningPreferences] = useState<LearningPreferences>({ levels: [], topics: [] });
   const [pronunciationVoicePreference, setPronunciationVoicePreference] = useState<PronunciationVoicePreference>('device');
   const [learningFilter, setLearningFilter] = useState<LearningFilter>('all');
@@ -356,12 +362,14 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
 
   const refresh = useCallback(async () => {
     const nextActiveCourseId = await repository.getActiveCourseId(appDatabase);
-    const [loadedWords, nextCollections, nextStats, nextSettings, nextPreferences, nextVoicePreference, nextOnboarding, nextLearningFilter] = await Promise.all([
+    const [loadedWords, nextCollections, nextStats, nextSettings, nextPreferences, nextVoicePreference, nextOnboarding, nextLearningFilter, nextRhythm] = await Promise.all([
       vocabularyStore.listWords(), vocabularyStore.listCollections(), vocabularyStore.getStats(nextActiveCourseId),
       repository.getReminderSettings(appDatabase), repository.getLearningPreferences(appDatabase, nextActiveCourseId),
       repository.getPronunciationVoicePreference(appDatabase, nextActiveCourseId), repository.isOnboardingComplete(appDatabase),
-      repository.getLearningFilter(appDatabase, nextActiveCourseId),
+      repository.getLearningFilter(appDatabase, nextActiveCourseId), repository.getLearningRhythm(appDatabase),
     ]);
+    setLearningConfirmations(nextRhythm.confirmations);
+    setRhythmIntroduced(nextRhythm.introduced);
     setWords(loadedWords);
     setCollections(nextCollections);
     setStats(nextStats);
@@ -482,7 +490,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const value = useMemo<AppDataValue>(() => ({
     dataSource, words, collections, stats, reminderSettings, activeCourseId,
     activeCourse: getCourseDefinition(activeCourseId), learningPreferences,
-    pronunciationVoicePreference, learningFilter, onboardingComplete,
+    pronunciationVoicePreference, learningFilter, onboardingComplete, learningConfirmations, rhythmIntroduced,
     wordCapacity: getWordCapacity(words.length, purchase.unlimited), refresh,
     guestImport, prepareGuestImport, resolveGuestImportConflict, runGuestImport, refreshGuestImport, pauseGuestImport,
     cutover, runSyncCutover, resolveSyncCutoverConflict, keepAccountRename, prepareForSignOut, deleteCloudAccount,
@@ -535,9 +543,13 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       const id = await runDatabaseMutation(() => vocabularyStore.createCollection(name, color)); await refresh(); return id;
     },
     rateWord: async (word, rating) => {
-      const currentWord = await vocabularyStore.getWord(word.id) ?? word;
-      const update = applyRating(currentWord, rating);
-      await runDatabaseMutation(() => vocabularyStore.saveRating(word.id, rating, update));
+      const { currentWord, update } = await runDatabaseMutation(async () => {
+        const currentWord = await vocabularyStore.getWord(word.id);
+        if (!currentWord) throw new Error('This word is no longer available.');
+        const update = applyRating(currentWord, rating, new Date(), Math.random, learningConfirmations);
+        await vocabularyStore.saveRating(word.id, rating, update);
+        return { currentWord, update };
+      });
       setWords((current) => current.map((item) => item.id === word.id
         ? { ...item, ...update, updatedAt: update.lastRatedAt }
         : item));
@@ -585,6 +597,11 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     updateLearningFilter: async (filter) => {
       await runDatabaseMutation(() => repository.saveLearningFilter(appDatabase, filter, activeCourseId)); setLearningFilter(filter);
     },
+    saveLearningRhythm: async (confirmations) => {
+      await runDatabaseMutation(() => repository.saveLearningRhythm(appDatabase, confirmations));
+      setLearningConfirmations(confirmations);
+      setRhythmIntroduced(true);
+    },
     saveLearningPreferences: async (preferences) => {
       const normalized = normalizeLearningPreferences(preferences);
       await runDatabaseMutation(() => repository.saveLearningPreferences(appDatabase, normalized, activeCourseId));
@@ -594,7 +611,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       await runDatabaseMutation(() => repository.savePronunciationVoicePreference(appDatabase, preference, activeCourseId));
       setPronunciationVoicePreference(preference);
     },
-    completePersonalizedOnboarding: async (preferences, voicePreference, preview) => {
+    completePersonalizedOnboarding: async (preferences, voicePreference, preview, confirmations = 3) => {
       const existing = await vocabularyStore.listWords();
       const starterLimit = purchase.unlimited
         ? 10
@@ -616,6 +633,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
             voicePreference,
           ));
           await repository.savePronunciationVoicePreference(appDatabase, voicePreference, activeCourseId);
+          await repository.saveLearningRhythm(appDatabase, confirmations);
           await repository.completeOnboarding(appDatabase);
         } else {
           await repository.completeOnboardingSetup(
@@ -623,7 +641,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
             preferences,
             voicePreference,
             recommendationsToInputs(recommendations, collections[0]?.id ?? 'my-words', voicePreference),
-            activeCourseId,
+            activeCourseId, confirmations,
           );
         }
       });
@@ -659,7 +677,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
         setStats((current) => current ? { ...current, notificationOpens: current.notificationOpens + 1 } : current);
       }
     },
-  }), [activeCourseId, appDatabase, catalogDatabase, collections, cutover, dataSource, deleteCloudAccount, guestImport, keepAccountRename, learningFilter, learningPreferences, onboardingComplete, pauseGuestImport, prepareForSignOut, prepareGuestImport, prepareWordTranslation, pronunciationVoicePreference, purchase.unlimited, refresh, refreshGuestImport, reminderSettings, reschedule, resolveGuestImportConflict, resolveSyncCutoverConflict, runDatabaseMutation, runGuestImport, runSyncCutover, stats, vocabularyStore, words]);
+  }), [activeCourseId, appDatabase, catalogDatabase, collections, cutover, dataSource, deleteCloudAccount, guestImport, keepAccountRename, learningFilter, learningPreferences, learningConfirmations, rhythmIntroduced, onboardingComplete, pauseGuestImport, prepareForSignOut, prepareGuestImport, prepareWordTranslation, pronunciationVoicePreference, purchase.unlimited, refresh, refreshGuestImport, reminderSettings, reschedule, resolveGuestImportConflict, resolveSyncCutoverConflict, runDatabaseMutation, runGuestImport, runSyncCutover, stats, vocabularyStore, words]);
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>;
 }

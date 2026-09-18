@@ -45,7 +45,7 @@ describe('account deletion vocabulary snapshot', () => {
     expect(database.withExclusiveTransactionAsync).toHaveBeenCalledTimes(1);
     expect(transaction.execAsync).toHaveBeenCalledWith(expect.stringContaining('DELETE FROM words'));
     const wordInsert = runAsync.mock.calls.find(([sql]) => sql.includes('INSERT INTO words'));
-    expect(wordInsert?.slice(1)).toHaveLength(24);
+    expect(wordInsert?.slice(1)).toHaveLength(25);
     expect(transaction.runAsync).toHaveBeenCalledWith(expect.stringContaining('app_metadata'), 'account_deletion_recovery', expect.stringContaining('user-1'));
   });
 });

@@ -1,3 +1,4 @@
+import { LearningRhythmChoice } from '@/components/learning-rhythm';
 import { preferenceLocale } from '@/domain/pronunciation-voices';
 import { useMemo, useState } from 'react';
 import { Alert, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -18,7 +19,7 @@ import { Screen } from '@/components/screen';
 import { cefrLevelDescriptions } from '@/data/cefr-levels';
 import { getCourseCatalogAvailability } from '@/data/course-catalog';
 import { courseSupportsPronunciation, wordBelongsToCourse, type CourseDefinition, type CourseId } from '@/domain/courses';
-import type { CefrLevel, ContentPackId, LearningPreferences, PronunciationVoicePreference } from '@/domain/types';
+import type { LearningConfirmationCount, CefrLevel, ContentPackId, LearningPreferences, PronunciationVoicePreference } from '@/domain/types';
 import { neuralPreviewFeatureEnabled, neuralVoiceLabel } from '@/features/pronunciation/cloud';
 import { buildRecommendations, normalizeLearningPreferences, topicOptions } from '@/features/recommendations/selector';
 import { useAppTheme } from '@/hooks/use-app-theme';
@@ -30,9 +31,10 @@ export default function OnboardingScreen() {
   const insets = useSafeAreaInsets();
   const {
     words, onboardingComplete, activeCourse, activeCourseId, switchActiveCourse,
-    completePersonalizedOnboarding, wordCapacity,
+    completePersonalizedOnboarding, wordCapacity, learningConfirmations,
   } = useAppData();
   const [wasCompleteOnEntry] = useState(onboardingComplete === true);
+  const [confirmations, setConfirmations] = useState<LearningConfirmationCount>(learningConfirmations);
   const [step, setStep] = useState(0);
   const [furthestStep, setFurthestStep] = useState(0);
   const [transitionDirection, setTransitionDirection] = useState<'forward' | 'backward'>('forward');
@@ -50,11 +52,13 @@ export default function OnboardingScreen() {
     ...(showVoiceStep ? ['Voice'] as const : []),
     'Levels',
     ...(showInterestsStep ? ['Interests'] as const : []),
+    'Learning rhythm',
     'Review',
   ];
   const stepCount = stepNames.length;
   const levelStep = stepNames.indexOf('Levels');
   const interestsStep = stepNames.indexOf('Interests');
+  const rhythmStep = stepNames.indexOf('Learning rhythm');
   const reviewStep = stepNames.indexOf('Review');
   const preferences = useMemo(() => normalizeLearningPreferences({ levels, topics }), [levels, topics]);
   const previewLimit = wordCapacity.remaining === null ? 10 : Math.min(10, wordCapacity.remaining);
@@ -103,6 +107,7 @@ export default function OnboardingScreen() {
         preferences,
         showVoiceStep ? voicePreference : 'device',
         preview,
+        confirmations,
       );
       router.replace({ pathname: '/onboarding-ready', params: { count: String(count) } } as never);
     } catch (error) {
@@ -163,7 +168,12 @@ export default function OnboardingScreen() {
               title="Who should pronounce your words?"
               body="Test each voice now. Natural voices download only the words you add and then work offline."
             />
-            <PronunciationVoicePicker value={voicePreference} onChange={setVoicePreference}/>
+            <PronunciationVoicePicker
+              value={voicePreference}
+              onChange={setVoicePreference}
+              sourceLanguageCode={activeCourse.sourceLanguageCode}
+              pronunciationLocale={activeCourse.defaultSourcePronunciationLocale}
+            />
             <AppText variant="caption" style={{ color: theme.muted }}>
               Small automatic downloads can use Wi-Fi or mobile data. Full level packs remain optional.
             </AppText>
@@ -183,11 +193,13 @@ export default function OnboardingScreen() {
               <AppText variant="caption" style={styles.flex}>If a topic has too few words at your level, we fill the gap with useful general vocabulary at the same level.</AppText>
             </View>
           </View> : null}
+          {step === rhythmStep ? <LearningRhythmChoice value={confirmations} onChange={setConfirmations} disabled={busy}/> : null}
           {step === reviewStep ? <ReviewStep
             preferences={preferences}
             preview={submittedPreview ?? preview}
             voicePreference={showVoiceStep ? voicePreference : 'device'}
             course={activeCourse}
+            confirmations={confirmations}
           /> : null}
         </ScrollView>
       </Animated.View>
@@ -231,11 +243,12 @@ function StepHeading({ eyebrow, title, body, centered = false }: { eyebrow: stri
   </View>;
 }
 
-function ReviewStep({ preferences, preview, voicePreference, course }: {
+function ReviewStep({ preferences, preview, voicePreference, course, confirmations }: {
   preferences: LearningPreferences;
   preview: ReturnType<typeof buildRecommendations>;
   voicePreference: PronunciationVoicePreference;
   course: CourseDefinition;
+  confirmations: LearningConfirmationCount;
 }) {
   const theme = useAppTheme();
   const topicNames = topicOptions.filter((topic) => preferences.topics.includes(topic.id)).map((topic) => topic.title);
@@ -248,6 +261,8 @@ function ReviewStep({ preferences, preview, voicePreference, course }: {
         : 'Your Spanish course is ready for manual and imported words. Your choices can be edited at any time.'}/>
     <View style={[styles.summaryCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
       <SummaryRow icon="language-outline" label="Language" value={course.directionLabel}/>
+      <View style={[styles.divider, { backgroundColor: theme.border }]}/>
+      <SummaryRow icon="checkmark-circle-outline" label="Learning rhythm" value={`${confirmations} ${confirmations === 1 ? 'confirmation' : 'confirmations'}`}/>
       {courseSupportsPronunciation(course) ? <>
         <View style={[styles.divider, { backgroundColor: theme.border }]}/>
         <SummaryRow

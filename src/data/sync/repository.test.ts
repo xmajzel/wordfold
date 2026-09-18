@@ -73,7 +73,7 @@ describe('PowerSync vocabulary repository', () => {
   it('stores a rating state and event in one transaction', async () => {
     const context = database();
     const update: RatingUpdate = {
-      state: 'understood', understoodStreak: 1, lapseCount: 0,
+      state: 'understood', knownStreak: 0, understoodStreak: 1, lapseCount: 0,
       lastRatedAt: '2026-07-20T12:00:00.000Z', nextReviewAt: '2026-07-21T12:00:00.000Z',
     };
 

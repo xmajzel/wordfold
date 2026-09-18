@@ -34,6 +34,7 @@ export interface GuestWordRow {
   source: string;
   state: string;
   understood_streak: number;
+  known_streak?: number;
   lapse_count: number;
   view_count: number;
   last_viewed_at: string | null;

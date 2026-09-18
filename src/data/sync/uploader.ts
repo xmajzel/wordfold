@@ -26,7 +26,7 @@ const MUTABLE_FIELDS = {
     'collection_id', 'term', 'normalized_term', 'source_language_code', 'target_language_code',
     'source_pronunciation_locale', 'target_pronunciation_locale',
     'part_of_speech', 'definition', 'example', 'translation', 'catalog_sense_id', 'cefr_level',
-    'source', 'state', 'understood_streak', 'lapse_count', 'view_count', 'last_viewed_at',
+    'source', 'state', 'known_streak', 'understood_streak', 'lapse_count', 'view_count', 'last_viewed_at',
     'last_rated_at', 'next_review_at', 'updated_at',
   ]),
 } as const;
@@ -126,7 +126,7 @@ export class PowerSyncUploader {
 }
 
 interface CompoundMutation {
-  name: 'apply_word_rating' | 'record_word_view';
+  name: 'apply_word_rating' | 'apply_word_rating_v2' | 'record_word_view';
   parameters: MutableRow;
   event: CrudEntry;
 }
@@ -141,8 +141,9 @@ function compoundMutation(transaction: CrudTransaction): CompoundMutation | null
     'state', 'understood_streak', 'lapse_count', 'last_rated_at', 'next_review_at',
   ])) {
     return {
-      name: 'apply_word_rating', event,
+      name: Object.prototype.hasOwnProperty.call(word.opData, 'known_streak') ? 'apply_word_rating_v2' : 'apply_word_rating', event,
       parameters: {
+        ...(Object.prototype.hasOwnProperty.call(word.opData, 'known_streak') ? { p_known_streak: word.opData?.known_streak } : {}),
         p_word_id: word.id,
         p_event_id: event.id,
         p_rating: event.opData.value,

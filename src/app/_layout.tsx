@@ -10,6 +10,7 @@ import { Inter_400Regular } from '@expo-google-fonts/inter/400Regular';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { LearningRhythmIntroduction } from '@/components/learning-rhythm';
 import { AppDataProvider, useAppData } from '@/providers/app-data-provider';
 import { AuthProvider } from '@/providers/auth-provider';
 import { SyncProvider } from '@/providers/sync-provider';
@@ -68,6 +69,7 @@ function Navigation() {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="onboarding" options={{ gestureEnabled: false }} />
         <Stack.Screen name="onboarding-ready" options={{ gestureEnabled: false }} />
+        <Stack.Screen name="learning-rhythm" options={{ presentation: 'modal' }} />
         <Stack.Screen name="preferences" options={{ presentation: 'modal' }} />
         <Stack.Screen name="feedback" options={{ presentation: 'modal' }} />
         <Stack.Screen name="feedback-history" options={{ presentation: 'modal' }} />
@@ -83,6 +85,7 @@ function Navigation() {
         <Stack.Screen name="word/[id]" />
         <Stack.Screen name="level/[level]" />
       </Stack>
+      <LearningRhythmIntroduction/>
     </ThemeProvider>
   );
 }

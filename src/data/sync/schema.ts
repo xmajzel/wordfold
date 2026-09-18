@@ -27,6 +27,7 @@ const words = new Table({
   source: column.text,
   state: column.text,
   understood_streak: column.integer,
+  known_streak: column.integer,
   lapse_count: column.integer,
   view_count: column.integer,
   last_viewed_at: column.text,

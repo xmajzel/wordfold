@@ -28,6 +28,7 @@ import { radii, spacing } from '@/theme/tokens';
 
 export default function SettingsScreen() {
   const theme = useAppTheme();
+  const { learningConfirmations } = useAppData();
   const auth = useAuth();
   const sync = useSync();
   const {
@@ -104,6 +105,11 @@ export default function SettingsScreen() {
                 ? 'Account services are not configured for this build'
                 : 'Sign in or create an account · data sync is not active yet'}</AppText>
         </View>
+        <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
+      </Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel="Edit learning rhythm" onPress={() => router.push('/learning-rhythm' as never)} style={[styles.preferenceCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+        <View style={[styles.preferenceIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="checkmark-circle-outline" color={theme.primary} size={24}/></View>
+        <View style={styles.flex}><AppText variant="heading">Learning rhythm</AppText><AppText variant="caption" style={{ color: theme.muted }}>{learningConfirmations} consecutive {learningConfirmations === 1 ? 'confirmation' : 'confirmations'} · all languages</AppText></View>
         <Ionicons name="chevron-forward" color={theme.primary} size={20}/>
       </Pressable>
       <View style={styles.section}>

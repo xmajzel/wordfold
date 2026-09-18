@@ -1,14 +1,15 @@
+import { parseLearningRhythm, serializeLearningRhythm } from '@/features/learning/rhythm';
 import { preferenceLocale, voiceSupportsCourse } from '@/domain/pronunciation-voices';
-import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { defaultCourseId, getCourseDefinition, isCourseId, wordBelongsToCourse, type CourseDefinition, type CourseId } from '@/domain/courses';
-import type { CatalogSense, Collection, DashboardStats, LearningFilter, LearningPreferences, LearningRating, PronunciationVoicePreference, ReminderSettings, Word } from '@/domain/types';
+import type { LearningConfirmationCount, CatalogSense, Collection, DashboardStats, LearningFilter, LearningPreferences, LearningRating, PronunciationVoicePreference, ReminderSettings, Word } from '@/domain/types';
 import { getCourseCatalogEntriesForNormalizedTerm } from '@/data/course-catalog';
 import type { NewWordInput } from '@/data/repository';
 import { createId } from '@/data/repository';
 import { isLearningFilter } from '@/data/cefr-levels';
 import { normalizeTerm } from '@/features/import/parser';
-import { applyRating } from '@/features/learning/algorithm';
+import { applyRating, type RatingUpdate } from '@/features/learning/algorithm';
 import { getWordCapacity } from '@/features/purchases/capacity';
 import { resolveRecommendations, normalizeLearningPreferences, type Recommendation } from '@/features/recommendations/selector';
 import { emptyGuestImportCounts, type GuestImportConflictResolution, type GuestImportViewModel } from '@/data/sync/guest-import-types';
@@ -25,6 +26,9 @@ interface AppDataValue {
   pronunciationVoicePreference: PronunciationVoicePreference;
   learningFilter: LearningFilter;
   onboardingComplete: boolean | null;
+  learningConfirmations: LearningConfirmationCount;
+  rhythmIntroduced: boolean;
+  saveLearningRhythm(confirmations: LearningConfirmationCount): Promise<void>;
   wordCapacity: ReturnType<typeof getWordCapacity>;
   refresh(): Promise<void>; findSenses(term: string, courseId?: CourseId): Promise<CatalogSense[]>;
   createWord(input: NewWordInput): Promise<string>; createWords(inputs: NewWordInput[]): Promise<string[]>;
@@ -38,7 +42,7 @@ interface AppDataValue {
   updateLearningFilter(filter: LearningFilter): Promise<void>;
   saveLearningPreferences(preferences: LearningPreferences): Promise<void>;
   savePronunciationVoicePreference(preference: PronunciationVoicePreference): Promise<void>;
-  completePersonalizedOnboarding(preferences: LearningPreferences, preference: PronunciationVoicePreference, preview?: readonly Recommendation[]): Promise<number>;
+  completePersonalizedOnboarding(preferences: LearningPreferences, preference: PronunciationVoicePreference, preview?: readonly Recommendation[], confirmations?: LearningConfirmationCount): Promise<number>;
   addRecommendedWords(limit?: number, preview?: readonly Recommendation[]): Promise<number>;
   noteNotificationOpen(wordId: string | null): Promise<void>;
   guestImport: GuestImportViewModel;
@@ -123,25 +127,33 @@ function recommendationsToWords(
 }
 
 export function AppDataProvider({ children }: PropsWithChildren) {
+  const ratedProgress = useRef(new Map<string, RatingUpdate>());
   const [words, setWords] = useState<Word[]>(initialWords);
   const [collections, setCollections] = useState(initialCollections);
   const [reminderSettings, setReminderSettings] = useState<ReminderSettings>({ enabled: false, countPerDay: 1, windowStartMinutes: 600, windowEndMinutes: 1200, timeZoneId: 'local' });
   const [activeCourseId, setActiveCourseId] = useState<CourseId>(defaultCourseId);
+  const [learningConfirmations, setLearningConfirmations] = useState<LearningConfirmationCount>(3);
+  const [rhythmIntroduced, setRhythmIntroduced] = useState(false);
   const [learningPreferences, setLearningPreferences] = useState<LearningPreferences>({ levels: [], topics: [] });
   const [pronunciationVoicePreference, setPronunciationVoicePreference] = useState<PronunciationVoicePreference>('device');
   const [learningFilter, setLearningFilter] = useState<LearningFilter>('all');
-  const [onboardingComplete, setOnboardingComplete] = useState(false);
+  const [onboardingComplete, setOnboardingComplete] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    const rhythm = parseLearningRhythm(window.localStorage.getItem('wordfold.learningRhythm'));
+    // Restore device settings after web hydration.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setLearningConfirmations(rhythm.confirmations);
+    setRhythmIntroduced(rhythm.introduced);
     const storedCourseId = window.localStorage.getItem('wordfold.activeCourseId');
     const courseId = isCourseId(storedCourseId) ? storedCourseId : defaultCourseId;
     // Restore course-scoped settings after hydration.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setActiveCourseId(courseId);
     setLearningPreferences(readWebLearningPreferences(courseId));
     setPronunciationVoicePreference(readWebVoicePreference(courseId));
     setLearningFilter(readWebLearningFilter(courseId));
+    setOnboardingComplete(false);
   }, []);
 
   const activeWords = useMemo(() => words.filter((word) => wordBelongsToCourse(word, activeCourseId)), [activeCourseId, words]);
@@ -166,7 +178,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
   const value = useMemo<AppDataValue>(() => ({
     dataSource: 'guest', words, collections, stats, reminderSettings, activeCourseId,
     activeCourse: getCourseDefinition(activeCourseId), learningPreferences,
-    pronunciationVoicePreference, learningFilter, onboardingComplete,
+    pronunciationVoicePreference, learningFilter, onboardingComplete, learningConfirmations, rhythmIntroduced,
     wordCapacity: getWordCapacity(words.length, false),
     refresh: async () => undefined,
     findSenses: async (term, courseId = activeCourseId) => {
@@ -201,9 +213,18 @@ export function AppDataProvider({ children }: PropsWithChildren) {
       throw new Error('On-device translation needs a Wordfold development build.');
     },
     removeWord: async (id) => setWords((current) => current.filter((word) => word.id !== id)),
-    resetWord: async (id) => setWords((current) => current.map((word) => word.id === id ? { ...word, state: 'cannot_remember', understoodStreak: 0, nextReviewAt: new Date().toISOString(), updatedAt: new Date().toISOString() } : word)),
+    resetWord: async (id) => {
+      ratedProgress.current.delete(id);
+      setWords((current) => current.map((word) => word.id === id ? { ...word, state: 'cannot_remember', knownStreak: 0, understoodStreak: 0, nextReviewAt: new Date().toISOString(), updatedAt: new Date().toISOString() } : word));
+    },
     createCollection: async (name, color) => { const now = new Date().toISOString(); const id = createId('web-collection'); setCollections((current) => [...current, { id, name, color, createdAt: now, updatedAt: now }]); return id; },
-    rateWord: async (word, rating) => setWords((current) => current.map((item) => item.id === word.id ? { ...item, ...applyRating(item, rating) } : item)),
+    rateWord: async (word, rating) => {
+      const currentWord = words.find((item) => item.id === word.id);
+      if (!currentWord) throw new Error('This word is no longer available.');
+      const update = applyRating({ ...currentWord, ...ratedProgress.current.get(word.id) }, rating, new Date(), Math.random, learningConfirmations);
+      ratedProgress.current.set(word.id, update);
+      setWords((current) => current.map((item) => item.id === word.id ? { ...item, ...update, updatedAt: update.lastRatedAt } : item));
+    },
     markViewed: async (id) => setWords((current) => current.map((word) => word.id === id ? { ...word, viewCount: word.viewCount + 1, lastViewedAt: new Date().toISOString() } : word)),
     updateReminderSettings: async (settings) => { setReminderSettings(settings); return settings.enabled ? settings.countPerDay * 14 : 0; },
     switchActiveCourse: async (courseId) => {
@@ -216,6 +237,10 @@ export function AppDataProvider({ children }: PropsWithChildren) {
     updateLearningFilter: async (filter) => {
       if (typeof window !== 'undefined') window.localStorage.setItem(webCourseKey('learningFilter', activeCourseId), filter);
       setLearningFilter(filter);
+    },
+    saveLearningRhythm: async (confirmations) => {
+      window.localStorage.setItem('wordfold.learningRhythm', serializeLearningRhythm(confirmations));
+      setLearningConfirmations(confirmations); setRhythmIntroduced(true);
     },
     saveLearningPreferences: async (preferences) => {
       const normalized = normalizeLearningPreferences(preferences);
@@ -233,7 +258,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
       }
       setPronunciationVoicePreference(preference);
     },
-    completePersonalizedOnboarding: async (preferences, preference, preview) => {
+    completePersonalizedOnboarding: async (preferences, preference, preview, confirmations = 3) => {
       if (!voiceSupportsCourse(preference, activeCourseId)) throw new Error('Choose a pronunciation voice supported by this course.');
       const normalized = normalizeLearningPreferences(preferences);
       const recommendations = getCourseDefinition(activeCourseId).capabilities.recommendations
@@ -245,6 +270,8 @@ export function AppDataProvider({ children }: PropsWithChildren) {
         window.localStorage.setItem(webCourseKey('learningPreferences', activeCourseId), JSON.stringify(normalized));
         window.localStorage.setItem(webCourseKey('pronunciationVoice', activeCourseId), preference);
       }
+      window.localStorage.setItem('wordfold.learningRhythm', serializeLearningRhythm(confirmations));
+      setLearningConfirmations(confirmations); setRhythmIntroduced(true);
       setWords((current) => [...recommendationsToWords(recommendations, preference), ...current]);
       setOnboardingComplete(true);
       return recommendations.length;
@@ -273,7 +300,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
     resolveSyncCutoverConflict: async () => undefined,
     keepAccountRename: async () => undefined,
     prepareForSignOut: async () => undefined,
-  }), [activeCourseId, activeWords, collections, learningFilter, learningPreferences, onboardingComplete, pronunciationVoicePreference, reminderSettings, stats, words]);
+  }), [activeCourseId, activeWords, collections, learningFilter, learningPreferences, learningConfirmations, rhythmIntroduced, onboardingComplete, pronunciationVoicePreference, reminderSettings, stats, words]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 

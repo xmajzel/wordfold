@@ -1,4 +1,4 @@
-import type { Collection, LearningFilter, LearningRating, Word } from '@/domain/types';
+import type { Collection, LearningConfirmationCount, LearningFilter, LearningRating, Word } from '@/domain/types';
 import { cefrLevels } from '@/data/cefr-levels';
 
 const REVIEW_INTERVAL_RANGES = [
@@ -11,6 +11,7 @@ export const DAILY_NEW_WORD_LIMIT = 12;
 
 export interface RatingUpdate {
   state: Word['state'];
+  knownStreak: number;
   understoodStreak: number;
   lapseCount: number;
   lastRatedAt: string;
@@ -31,24 +32,32 @@ export function getNextReviewIntervalDays(
 }
 
 export function applyRating(
-  word: Pick<Word, 'understoodStreak' | 'lapseCount'>,
+  word: Pick<Word, 'understoodStreak' | 'lapseCount'> & Partial<Pick<Word, 'knownStreak' | 'lastRatedAt' | 'nextReviewAt' | 'state'>>,
   rating: LearningRating,
   now = new Date(),
   random = Math.random,
+  confirmations: LearningConfirmationCount = 3,
 ): RatingUpdate {
   if (rating === 'learned') {
+    if (word.state === 'learned' || (word.nextReviewAt && new Date(word.nextReviewAt) > now)) {
+      throw new Error('This word is not due for another confirmation yet.');
+    }
+    const knownStreak = (word.knownStreak ?? 0) + 1;
+    const learned = knownStreak >= confirmations;
     return {
-      state: 'learned',
+      state: learned ? 'learned' : 'understood',
+      knownStreak,
       understoodStreak: word.understoodStreak,
       lapseCount: word.lapseCount,
       lastRatedAt: now.toISOString(),
-      nextReviewAt: null,
+      nextReviewAt: learned ? null : new Date(now.getTime() + getNextReviewIntervalDays({ understoodStreak: knownStreak - 1 }, random) * DAY_MS).toISOString(),
     };
   }
 
   if (rating === 'again') {
     return {
       state: 'cannot_remember',
+      knownStreak: 0,
       understoodStreak: 0,
       lapseCount: word.lapseCount + 1,
       lastRatedAt: now.toISOString(),
@@ -60,6 +69,7 @@ export function applyRating(
   const intervalDays = getNextReviewIntervalDays(word, random);
   return {
     state: 'understood',
+    knownStreak: 0,
     understoodStreak,
     lapseCount: word.lapseCount,
     lastRatedAt: now.toISOString(),

@@ -173,7 +173,7 @@ describe('web app data provider', () => {
     await fireEvent.press(view.getByText('Create starter'));
     await waitFor(() => view.getByText('es-sk:10'));
     await fireEvent.press(view.getByText('Learn first word'));
-    await waitFor(() => expect(mockSavedWords.mock.calls.at(-1)![0][0].state).toBe('learned'));
+    await waitFor(() => expect(mockSavedWords.mock.calls.at(-1)![0][0]).toMatchObject({ state: 'understood', knownStreak: 1 }));
     const previous = mockSavedWords.mock.calls.at(-1)![0];
     await fireEvent.press(view.getByText('Create C2 starter'));
     await waitFor(() => view.getByText('es-sk:20'));
@@ -187,12 +187,26 @@ describe('web app data provider', () => {
       });
     }
     await fireEvent.press(view.getByText('Learn first word'));
-    await waitFor(() => expect(mockSavedWords.mock.calls.at(-1)![0][0].state).toBe('learned'));
+    await waitFor(() => expect(mockSavedWords.mock.calls.at(-1)![0][0]).toMatchObject({ state: 'understood', knownStreak: 1 }));
     const studied = mockSavedWords.mock.calls.at(-1)![0];
-    expect(calculateCefrProgress(c2, studied).known).toBe(1);
+    expect(calculateCefrProgress(c2, studied).known).toBe(0);
     await fireEvent.press(view.getByText('Next batch'));
     await waitFor(() => view.getByText('es-sk:30'));
     expect(new Set(mockSavedWords.mock.calls.at(-1)![0].map((word: { catalogSenseId: string }) => word.catalogSenseId)).size).toBe(30);
   });
 
+});
+
+function RestoredRhythmProbe() {
+  const { onboardingComplete, learningConfirmations, rhythmIntroduced } = useAppData();
+  return <Text>{onboardingComplete === null ? 'Loading preferences' : `Ready: ${learningConfirmations}:${rhythmIntroduced}`}</Text>;
+}
+
+it('restores the device rhythm before releasing the app readiness gate', async () => {
+  Object.defineProperty(window, 'localStorage', {
+    configurable: true,
+    value: { getItem: jest.fn((key: string) => key === 'wordfold.learningRhythm' ? '{"confirmations":2,"introVersion":1}' : null), setItem: jest.fn() },
+  });
+  const view = await render(<AppDataProvider><RestoredRhythmProbe/></AppDataProvider>);
+  await waitFor(() => expect(view.getByText('Ready: 2:true')).toBeTruthy());
 });

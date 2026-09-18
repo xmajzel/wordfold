@@ -1,0 +1,40 @@
+begin;
+create extension if not exists pgtap with schema extensions;
+set search_path = public, extensions;
+select no_plan();
+insert into auth.users(id) values ('12345678-1111-4111-8111-123456789012');
+insert into public.collections(id, user_id, name, color) values
+('12345678-2222-4222-8222-123456789012','12345678-1111-4111-8111-123456789012','Test','#6657D9');
+insert into public.words(id, user_id, collection_id, term, normalized_term, definition) values
+('12345678-3333-4333-8333-123456789012','12345678-1111-4111-8111-123456789012','12345678-2222-4222-8222-123456789012','hello','hello','A greeting');
+select set_config('request.jwt.claim.sub', '12345678-1111-4111-8111-123456789012', true);
+set local role authenticated;
+select is((select known_streak from words limit 1), 0, 'legacy/new words default to zero confirmations');
+select public.apply_word_rating_v2('12345678-3333-4333-8333-123456789012','12345678-4444-4444-8444-123456789011','learned','understood',0,0,'2026-09-17','2026-09-18',1);
+select is((select known_streak from words limit 1), 1, 'first confirmation is saved');
+select is((select state from words limit 1), 'understood', 'first confirmation remains in learning');
+select public.apply_word_rating_v2('12345678-3333-4333-8333-123456789012','12345678-4444-4444-8444-123456789011','learned','understood',0,0,'2026-09-17','2026-09-18',1);
+select is((select count(*)::integer from learning_events), 1, 'retry does not duplicate the event');
+select public.apply_word_rating_v2('12345678-3333-4333-8333-123456789012','12345678-4444-4444-8444-123456789012','learned','understood',0,0,'2026-09-17 12:00','2026-09-19',2);
+select is((select known_streak from words limit 1), 1, 'a second device cannot confirm before the next due review');
+select is((select count(*)::integer from learning_events), 1, 'rejected early review records no success');
+select public.apply_word_rating_v2('12345678-3333-4333-8333-123456789012','12345678-4444-4444-8444-123456789013','learned','understood',0,0,'2026-09-20','2026-09-23',2);
+select is((select known_streak from words limit 1), 2, 'missed days preserve the consecutive count');
+select public.apply_word_rating_v2('12345678-3333-4333-8333-123456789012','12345678-4444-4444-8444-123456789014','understood','understood',1,0,'2026-09-23','2026-09-24',0);
+select is((select known_streak from words limit 1), 0, 'Keep learning resets confirmations');
+select public.apply_word_rating_v2('12345678-3333-4333-8333-123456789012','12345678-4444-4444-8444-123456789015','learned','understood',1,0,'2026-09-24','2026-09-25',1);
+select public.apply_word_rating_v2('12345678-3333-4333-8333-123456789012','12345678-4444-4444-8444-123456789016','learned','understood',1,0,'2026-09-25','2026-09-28',2);
+select public.apply_word_rating_v2('12345678-3333-4333-8333-123456789012','12345678-4444-4444-8444-123456789017','learned','learned',1,0,'2026-09-28',null,3);
+select is((select known_streak from words limit 1), 3, 'third separate confirmation is saved');
+select is((select state from words limit 1), 'learned', 'third confirmation marks learned');
+select is((select next_review_at from words limit 1), null::timestamptz, 'learned word has no scheduled review');
+select public.apply_word_rating_v2('12345678-3333-4333-8333-123456789012','12345678-4444-4444-8444-123456789018','learned','understood',1,0,'2026-09-26','2026-09-29',2);
+select is((select state from words limit 1), 'learned', 'stale offline write cannot reopen a learned word');
+-- Simulate an old client resuming learning without the new column.
+update words set state = 'cannot_remember', understood_streak = 0, next_review_at = '2026-09-29' where id = '12345678-3333-4333-8333-123456789012';
+select is((select known_streak from words limit 1), 0, 'legacy resume starts a new streak');
+select public.apply_word_rating('12345678-3333-4333-8333-123456789012','12345678-4444-4444-8444-123456789019','learned','learned',0,0,'2026-09-29',null);
+select is((select state from words limit 1), 'learned', 'queued legacy RPC retains immediate-stop behavior');
+select ok(not has_function_privilege('anon', 'public.apply_word_rating_v2(uuid,uuid,text,text,integer,integer,timestamptz,timestamptz,integer)', 'EXECUTE'), 'anonymous clients cannot rate words');
+select * from finish();
+rollback;

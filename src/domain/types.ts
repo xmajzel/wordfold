@@ -1,5 +1,7 @@
 export type LearningState = 'new' | 'cannot_remember' | 'understood' | 'learned';
 
+export type LearningConfirmationCount = 1 | 2 | 3;
+
 export type LearningRating = 'again' | 'understood' | 'learned';
 
 export type ContentPackId = 'spoken' | 'business' | 'academic';
@@ -60,6 +62,8 @@ export interface Word {
   source: ContentSource;
   state: LearningState;
   understoodStreak: number;
+  /** Absent on legacy snapshots; treated as zero. */
+  knownStreak?: number;
   lapseCount: number;
   viewCount: number;
   lastViewedAt: string | null;

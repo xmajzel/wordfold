@@ -234,6 +234,7 @@ describe('continued learning session', () => {
     }
   });
 
+
   it('shows populated course collections and saves a selection with its readable name', async () => {
     mockCollections = [{ id: 'lessons', name: 'NC1 Custom Collection' }, { id: 'empty', name: 'Empty collection' }, { id: 'spanish', name: 'Spanish lessons' }];
     mockWords = [baseWord({ id: 'lesson', collectionId: 'lessons' }), baseWord({ id: 'spanish', collectionId: 'spanish', sourceLanguageCode: 'es' })];
@@ -334,7 +335,7 @@ describe('continued learning session', () => {
     await fireEvent.press(view.getAllByRole('button', { name: /I know this/ })[0]);
 
     await fireEvent.press(view.getByRole('button', { name: 'Previous word' }));
-    await waitFor(() => view.getByLabelText('Rated this session. Reviews stopped.'));
+    await waitFor(() => view.getByLabelText('Rated this session. Saving progress….'));
     expect(view.getByTestId('swipe-wrapper-first').props.accessibilityState).toEqual({ disabled: true });
     expect(view.getByTestId('swipe-wrapper-next', { includeHiddenElements: true }).props.accessibilityState).toEqual({ disabled: false });
     expect(view.queryByRole('button', { name: /I know this/ })).toBeNull();

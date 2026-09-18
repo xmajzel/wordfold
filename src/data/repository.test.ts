@@ -1,6 +1,6 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
-import { addWord, addWords, completeOnboardingSetup, getActiveCourseId, getLearningFilter, getLearningPreferences, getPronunciationVoicePreference, getStats, resetWord, saveActiveCourseId, saveLearningFilter, saveLearningPreferences, savePronunciationVoicePreference, updateMissingWordTranslations, type NewWordInput } from './repository';
+import { getLearningRhythm, saveLearningRhythm, addWord, addWords, completeOnboardingSetup, getActiveCourseId, getLearningFilter, getLearningPreferences, getPronunciationVoicePreference, getStats, resetWord, saveActiveCourseId, saveLearningFilter, saveLearningPreferences, savePronunciationVoicePreference, updateMissingWordTranslations, type NewWordInput } from './repository';
 
 function createDatabase() {
   const database = {
@@ -275,3 +275,22 @@ describe('word repository', () => {
     await expect(savePronunciationVoicePreference(database, 'neural-es-MX', 'en-sk')).rejects.toThrow('supported');
     await expect(getPronunciationVoicePreference(database, 'en-sk')).resolves.toBe('device');
   });
+
+
+it('stores the shared learning rhythm and introduction marker together and restores them', async () => {
+  const database = createDatabase();
+  let stored: string | undefined;
+  database.getFirstAsync = jest.fn(async () => stored ? { value: stored } : null) as unknown as typeof database.getFirstAsync;
+  database.runAsync = jest.fn(async (_sql, _key, value) => {
+    stored = String(value);
+    return { changes: 1, lastInsertRowId: 1 };
+  }) as unknown as typeof database.runAsync;
+  expect(await getLearningRhythm(database)).toEqual({ confirmations: 3, introduced: false });
+  await saveLearningRhythm(database, 2);
+  expect(await getLearningRhythm(database)).toEqual({ confirmations: 2, introduced: true });
+  expect(database.runAsync).toHaveBeenCalledTimes(1);
+  expect(database.runAsync).toHaveBeenCalledWith(expect.any(String), 'learning_rhythm', expect.any(String));
+  database.runAsync = jest.fn(async () => { throw new Error('Disk full'); });
+  await expect(saveLearningRhythm(database, 1)).rejects.toThrow('Disk full');
+  expect(await getLearningRhythm(database)).toEqual({ confirmations: 2, introduced: true });
+});

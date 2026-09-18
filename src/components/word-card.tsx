@@ -11,13 +11,13 @@ import { WordCardContent } from '@/components/word-card-content';
 import { StateBadge } from '@/components/state-badge';
 import { wordSupportsPronunciation } from '@/domain/courses';
 import { languageLabel } from '@/domain/languages';
-import type { LearningRating, Word } from '@/domain/types';
+import type { LearningConfirmationCount, LearningRating, Word } from '@/domain/types';
 import { getNextReviewIntervalRange } from '@/features/learning/algorithm';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { radii, spacing } from '@/theme/tokens';
 
-export const WordCard = memo(function WordCard({ onReport, word, collectionName, onRate, onRetryTranslation, sessionRating, translationStatus, compact = false, dense = false, showPronunciation = false, pronunciationActive = true, animateEntrance = true }:
-  { onReport?(): void; word: Word; collectionName?: string; onRate?(rating: LearningRating): void; onRetryTranslation?(): void; sessionRating?: LearningRating; translationStatus?: 'loading' | 'error'; compact?: boolean; dense?: boolean; showPronunciation?: boolean; pronunciationActive?: boolean; animateEntrance?: boolean }) {
+export const WordCard = memo(function WordCard({ onReport, word, confirmations = 3, collectionName, onRate, onRetryTranslation, sessionRating, sessionSaving = false, translationStatus, compact = false, dense = false, showPronunciation = false, pronunciationActive = true, animateEntrance = true }:
+  { confirmations?: LearningConfirmationCount; onReport?(): void; word: Word; collectionName?: string; onRate?(rating: LearningRating): void; onRetryTranslation?(): void; sessionRating?: LearningRating; sessionSaving?: boolean; translationStatus?: 'loading' | 'error'; compact?: boolean; dense?: boolean; showPronunciation?: boolean; pronunciationActive?: boolean; animateEntrance?: boolean }) {
   const theme = useAppTheme();
   const [showTranslation, setShowTranslation] = useState(false);
   const nextReviewRange = getNextReviewIntervalRange(word);
@@ -29,7 +29,7 @@ export const WordCard = memo(function WordCard({ onReport, word, collectionName,
 
   const rate = (rating: LearningRating) => {
     void Haptics.selectionAsync();
-    if (rating === 'learned') void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    if (rating === 'learned' && (word.knownStreak ?? 0) + 1 >= confirmations) void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     onRate?.(rating);
   };
 
@@ -45,22 +45,22 @@ export const WordCard = memo(function WordCard({ onReport, word, collectionName,
         {!word.translation && translationStatus === 'loading' ? <View accessibilityRole="progressbar" accessibilityLabel={`Preparing ${hintLanguage} hint`} style={[styles.hint, dense && styles.denseHint, { borderColor: theme.border, backgroundColor: theme.glass }]}><ActivityIndicator color={theme.primary} size="small"/><AppText variant="label" style={{ color: theme.muted }}>Preparing {hintLanguage} hint…</AppText></View> : null}
         {!word.translation && translationStatus === 'error' ? <Pressable accessibilityRole="button" accessibilityLabel={`Retry ${hintLanguage} hint`} onPress={onRetryTranslation} style={({ pressed }) => [styles.hint, dense && styles.denseHint, { borderColor: theme.border, backgroundColor: theme.glass, opacity: pressed ? 0.75 : 1 }]}><Ionicons name="refresh-outline" color={theme.primary} size={18}/><View style={styles.hintText}><AppText variant="label" style={{ color: theme.primary }}>Retry {hintLanguage} hint</AppText><AppText variant="caption" style={{ color: theme.muted }}>Translation was not available</AppText></View></Pressable> : null}
       </WordCardContent>
-      {sessionRating ? <SessionRatingStatus rating={sessionRating} dense={dense}/> : onRate ? <View style={[styles.ratingBlock, dense && styles.denseRatingBlock]}>
-        <AppText variant="label" style={styles.ratingPrompt}>Swipe or tap</AppText>
+      {sessionRating ? <SessionRatingStatus rating={sessionRating} saving={sessionSaving} word={word} confirmations={confirmations} dense={dense}/> : onRate ? <View style={[styles.ratingBlock, dense && styles.denseRatingBlock]}>
+        <AppText variant="label" style={styles.ratingPrompt}>{word.state === 'learned' ? 'Learned' : `${word.knownStreak ?? 0} of ${confirmations} confirmations`}</AppText>
         <View style={styles.actions}>
           <RecallButton dense={dense} icon="calendar-outline" label="Keep learning" detail={`Review in ${nextReviewRange.minDays}–${nextReviewRange.maxDays} days`} color={theme.primary} onPress={() => rate('understood')}/>
-          <RecallButton dense={dense} icon="checkmark-circle-outline" label="I know this" detail="Stop reviews" color={theme.success} onPress={() => rate('learned')}/>
+          <RecallButton dense={dense} icon="checkmark-circle-outline" label="I know this" detail={(word.knownStreak ?? 0) + 1 >= confirmations ? "Stop reviews" : `Confirmation ${(word.knownStreak ?? 0) + 1} of ${confirmations}`} color={theme.success} onPress={() => rate('learned')}/>
         </View>
       </View> : null}
     </Animated.View>
   );
 });
 
-function SessionRatingStatus({ rating, dense }: { rating: LearningRating; dense: boolean }) {
+function SessionRatingStatus({ rating, saving, word, confirmations, dense }: { saving: boolean; rating: LearningRating; word: Word; confirmations: LearningConfirmationCount; dense: boolean }) {
   const theme = useAppTheme();
-  const learned = rating === 'learned';
+  const learned = word.state === 'learned';
   const color = learned ? theme.success : theme.primary;
-  const detail = learned ? 'Reviews stopped' : 'Kept in learning';
+  const detail = saving ? 'Saving progress…' : learned ? 'Learned · reviews stopped' : rating === 'learned' ? `${word.knownStreak ?? 0} of ${confirmations} confirmations${word.nextReviewAt ? ` · Next review ${new Date(word.nextReviewAt).toLocaleDateString()}` : ''}` : 'Kept in learning · confirmations reset';
   return <View
     accessible
     accessibilityRole="text"

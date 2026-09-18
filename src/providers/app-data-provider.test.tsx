@@ -60,6 +60,8 @@ jest.mock('@/data/repository', () => ({
     windowEndMinutes: 1200,
     timeZoneId: Intl.DateTimeFormat().resolvedOptions().timeZone || 'local',
   })),
+  getLearningRhythm: jest.fn(async () => ({ confirmations: 3, introduced: true })),
+  saveLearningRhythm: jest.fn(async () => undefined),
   getLearningPreferences: jest.fn(async () => ({ levels: [], topics: [] })),
   getActiveCourseId: jest.fn(async () => 'en-sk'),
   saveActiveCourseId: jest.fn(async () => undefined),
@@ -168,6 +170,8 @@ function RecommendationProbe({ onComplete, preview }: { onComplete(count: number
 
 describe('AppDataProvider', () => {
   beforeEach(() => jest.clearAllMocks());
+
+
 
   it.each(['startup', 'after adding'] as const)('adds a Spanish batch while reminders stall %s', async (stage) => {
     let releaseSchedule!: (count: number) => void;
@@ -278,9 +282,9 @@ describe('AppDataProvider', () => {
     (repository.getStats as jest.Mock).mockResolvedValue(healthyStats);
   });
 
-  it('rebuilds pending reminders after reviews are stopped', async () => {
+  it('rebuilds pending reminders after the final confirmation', async () => {
     (repository.listWords as jest.Mock).mockResolvedValue([word]);
-    (repository.getWord as jest.Mock).mockResolvedValue(word);
+    (repository.getWord as jest.Mock).mockResolvedValue({ ...word, knownStreak: 2 });
     const view = await render(<AppDataProvider><StopReviewProbe/></AppDataProvider>);
     const stopButton = await waitFor(() => view.getByRole('button', { name: 'Stop reviews' }));
     await waitFor(() => expect(mockRebuildReminderSchedule).toHaveBeenCalled());

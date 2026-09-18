@@ -503,6 +503,7 @@ function mutableWordPayload(collectionId: string, row: GuestWordRow): RemoteImpo
     source: row.source,
     state: row.state,
     understood_streak: row.understood_streak,
+    known_streak: row.known_streak ?? 0,
     lapse_count: row.lapse_count,
     view_count: row.view_count,
     last_viewed_at: row.last_viewed_at,

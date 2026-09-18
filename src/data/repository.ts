@@ -1,8 +1,9 @@
+import { parseLearningRhythm, serializeLearningRhythm, RHYTHM_STORAGE_KEY } from '@/features/learning/rhythm';
 import { voiceSupportsCourse } from '@/domain/pronunciation-voices';
 import type { SQLiteDatabase } from 'expo-sqlite';
 
 import { defaultCourseId, getCourseDefinition, isCourseId, type CourseId } from '@/domain/courses';
-import type { CefrLevel, Collection, ContentPackId, ContentSource, DashboardStats, LearningFilter, LearningPreferences, PronunciationVoicePreference, ReminderSettings, Word } from '@/domain/types';
+import type { LearningConfirmationCount, CefrLevel, Collection, ContentPackId, ContentSource, DashboardStats, LearningFilter, LearningPreferences, PronunciationVoicePreference, ReminderSettings, Word } from '@/domain/types';
 import { isSupportedLanguageCode, isSupportedPronunciationLocale } from '@/domain/languages';
 import { getCefrLevelForCatalogSense } from '@/data/cefr-level-lookup';
 import { isCefrLevel, isLearningFilter } from '@/data/cefr-levels';
@@ -15,7 +16,7 @@ interface WordRow {
   source_pronunciation_locale: string; target_pronunciation_locale: string;
   definition: string; example: string | null; translation: string | null;
   catalog_sense_id: string | null; cefr_level: CefrLevel | null; source: ContentSource; state: Word['state'];
-  understood_streak: number; lapse_count: number; view_count: number;
+  understood_streak: number; known_streak?: number; lapse_count: number; view_count: number;
   last_viewed_at: string | null; last_rated_at: string | null; next_review_at: string | null;
   created_at: string; updated_at: string;
 }
@@ -28,7 +29,7 @@ function toWord(row: WordRow): Word {
     targetPronunciationLocale: row.target_pronunciation_locale,
     partOfSpeech: row.part_of_speech, definition: row.definition, example: row.example,
     translation: row.translation, catalogSenseId: row.catalog_sense_id, cefrLevel: row.cefr_level, source: row.source,
-    state: row.state, understoodStreak: row.understood_streak, lapseCount: row.lapse_count,
+    state: row.state, understoodStreak: row.understood_streak, knownStreak: row.known_streak ?? 0, lapseCount: row.lapse_count,
     viewCount: row.view_count, lastViewedAt: row.last_viewed_at, lastRatedAt: row.last_rated_at,
     nextReviewAt: row.next_review_at, createdAt: row.created_at, updatedAt: row.updated_at,
   };
@@ -166,7 +167,7 @@ export async function deleteWord(database: SQLiteDatabase, id: string) {
 export async function resetWord(database: SQLiteDatabase, id: string) {
   const now = new Date().toISOString();
   await database.runAsync(
-    `UPDATE words SET state = 'cannot_remember', understood_streak = 0, next_review_at = ?,
+    `UPDATE words SET state = 'cannot_remember', understood_streak = 0, known_streak = 0, next_review_at = ?,
       updated_at = ? WHERE id = ?`, now, now, id,
   );
 }
@@ -174,9 +175,9 @@ export async function resetWord(database: SQLiteDatabase, id: string) {
 export async function saveRating(database: SQLiteDatabase, id: string, rating: string, update: RatingUpdate) {
   await database.withExclusiveTransactionAsync(async (transaction) => {
     await transaction.runAsync(
-      `UPDATE words SET state = ?, understood_streak = ?, lapse_count = ?, last_rated_at = ?,
+      `UPDATE words SET state = ?, known_streak = ?, understood_streak = ?, lapse_count = ?, last_rated_at = ?,
        next_review_at = ?, updated_at = ? WHERE id = ?`,
-      update.state, update.understoodStreak, update.lapseCount, update.lastRatedAt,
+      update.state, update.knownStreak, update.understoodStreak, update.lapseCount, update.lastRatedAt,
       update.nextReviewAt, update.lastRatedAt, id,
     );
     await transaction.runAsync(
@@ -452,12 +453,14 @@ export async function completeOnboardingSetup(
   pronunciationVoicePreference: PronunciationVoicePreference,
   starterWords: NewWordInput[],
   courseId: CourseId = defaultCourseId,
+  confirmations: LearningConfirmationCount = 3,
 ) {
   const ids: string[] = [];
   await database.withExclusiveTransactionAsync(async (transaction) => {
     await writeLearningPreferences(transaction, preferences, courseId);
     await savePronunciationVoicePreference(transaction, pronunciationVoicePreference, courseId);
     for (const input of starterWords) ids.push(await addWord(transaction, input));
+    await saveLearningRhythm(transaction, confirmations);
     await completeOnboarding(transaction);
   });
   return ids;
@@ -490,4 +493,14 @@ export async function saveLearningFilter(
     courseMetadataKey('learning_filter', courseId),
     filter,
   );
+}
+
+export async function getLearningRhythm(database: SQLiteDatabase) {
+  const row = await database.getFirstAsync<{ value: string }>('SELECT value FROM app_metadata WHERE key = ?', RHYTHM_STORAGE_KEY);
+  return parseLearningRhythm(row?.value);
+}
+
+export async function saveLearningRhythm(database: SQLiteDatabase, confirmations: LearningConfirmationCount) {
+  await database.runAsync('INSERT INTO app_metadata (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value',
+    RHYTHM_STORAGE_KEY, serializeLearningRhythm(confirmations));
 }

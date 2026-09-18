@@ -21,7 +21,7 @@ interface WordRow {
   source_pronunciation_locale: string; target_pronunciation_locale: string;
   definition: string; example: string | null; translation: string | null;
   catalog_sense_id: string | null; cefr_level: CefrLevel | null; source: Word['source']; state: Word['state'];
-  understood_streak: number; lapse_count: number; view_count: number;
+  understood_streak: number; known_streak?: number; lapse_count: number; view_count: number;
   last_viewed_at: string | null; last_rated_at: string | null; next_review_at: string | null;
   created_at: string; updated_at: string;
 }
@@ -34,7 +34,7 @@ function toWord(row: WordRow): Word {
     targetPronunciationLocale: row.target_pronunciation_locale,
     partOfSpeech: row.part_of_speech, definition: row.definition, example: row.example,
     translation: row.translation, catalogSenseId: row.catalog_sense_id, cefrLevel: row.cefr_level,
-    source: row.source, state: row.state, understoodStreak: row.understood_streak,
+    source: row.source, state: row.state, understoodStreak: row.understood_streak, knownStreak: row.known_streak ?? 0,
     lapseCount: row.lapse_count, viewCount: row.view_count, lastViewedAt: row.last_viewed_at,
     lastRatedAt: row.last_rated_at, nextReviewAt: row.next_review_at,
     createdAt: row.created_at, updatedAt: row.updated_at,
@@ -83,7 +83,7 @@ function wordValues(userId: string, id: string, input: NewWordInput, now: string
     input.sourceLanguageCode, input.targetLanguageCode,
     input.sourcePronunciationLocale, input.targetPronunciationLocale,
     input.partOfSpeech ?? null, input.definition.trim(), input.example ?? null, input.translation ?? null,
-    input.catalogSenseId ?? null, cefrLevel, input.source ?? 'manual', 'new', 0, 0, 0,
+    input.catalogSenseId ?? null, cefrLevel, input.source ?? 'manual', 'new', 0, 0, 0, 0,
     null, null, null, now, now,
   ];
 }
@@ -92,9 +92,9 @@ const INSERT_WORD_SQL = `INSERT INTO words
   (id, user_id, collection_id, term, normalized_term, source_language_code, target_language_code,
    source_pronunciation_locale, target_pronunciation_locale,
    part_of_speech, definition, example, translation, catalog_sense_id, cefr_level, source, state,
-   understood_streak, lapse_count, view_count, last_viewed_at, last_rated_at, next_review_at,
+   known_streak, understood_streak, lapse_count, view_count, last_viewed_at, last_rated_at, next_review_at,
    created_at, updated_at, deleted_at)
- VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)`;
+ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)`;
 
 export async function addSyncWord(database: QueryableDatabase, userId: string, input: NewWordInput) {
   const id = Crypto.randomUUID();
@@ -170,7 +170,7 @@ export async function deleteSyncWord(database: QueryableDatabase, id: string) {
 export async function resetSyncWord(database: QueryableDatabase, id: string) {
   const now = new Date().toISOString();
   await database.execute(
-    `UPDATE words SET state = 'cannot_remember', understood_streak = 0, next_review_at = ?,
+    `UPDATE words SET state = 'cannot_remember', understood_streak = 0, known_streak = 0, next_review_at = ?,
       updated_at = ? WHERE id = ? AND deleted_at IS NULL`,
     [now, now, id],
   );
@@ -186,9 +186,9 @@ export async function saveSyncRating(
   const eventId = Crypto.randomUUID();
   await database.writeTransaction(async (transaction) => {
     await transaction.execute(
-      `UPDATE words SET state = ?, understood_streak = ?, lapse_count = ?, last_rated_at = ?,
+      `UPDATE words SET state = ?, known_streak = ?, understood_streak = ?, lapse_count = ?, last_rated_at = ?,
        next_review_at = ?, updated_at = ? WHERE id = ? AND deleted_at IS NULL`,
-      [update.state, update.understoodStreak, update.lapseCount, update.lastRatedAt,
+      [update.state, update.knownStreak, update.understoodStreak, update.lapseCount, update.lastRatedAt,
         update.nextReviewAt, update.lastRatedAt, id],
     );
     await transaction.execute(

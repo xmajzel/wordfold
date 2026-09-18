@@ -74,6 +74,7 @@ function LearningSession({ filter, notificationWordId, onSelectFilter }: {
   onSelectFilter(filter: LearningFilter): Promise<void>;
 }) {
   const theme = useAppTheme();
+  const { learningConfirmations } = useAppData();
   const { height } = useWindowDimensions();
   const {
     words,
@@ -106,6 +107,7 @@ function LearningSession({ filter, notificationWordId, onSelectFilter }: {
   const [translationStates, setTranslationStates] = useState<Record<string, 'loading' | 'error'>>({});
   const [recommendationsBusy, setRecommendationsBusy] = useState(false);
   const viewedIds = useRef(new Set<string>());
+  const [pendingRatings, setPendingRatings] = useState<Set<string>>(() => new Set());
   const submittedRatings = useRef(new Map<string, LearningRating>());
   const sessionFeedLengthRef = useRef(sessionFeed.length);
   const previousWords = useRef(activeWords);
@@ -224,6 +226,7 @@ function LearningSession({ filter, notificationWordId, onSelectFilter }: {
   const handleRating = (word: Word, rating: LearningRating) => {
     if (sessionFeed[currentIndexRef.current]?.id !== word.id || submittedRatings.current.has(word.id)) return;
     submittedRatings.current.set(word.id, rating);
+    setPendingRatings((current) => new Set(current).add(word.id));
     navigateTo(currentIndexRef.current, currentIndexRef.current + 1);
 
     // Keep successful words submitted for this session so an outgoing card cannot be rated twice.
@@ -233,7 +236,7 @@ function LearningSession({ filter, notificationWordId, onSelectFilter }: {
       setSessionFeed((current) => [...current, word]);
       // At the end card, the appended retry occupies the same index automatically.
       Alert.alert('Progress was not saved', `${word.term} was returned to this session. Please try again.`);
-    });
+    }).finally(() => setPendingRatings((current) => { const next = new Set(current); next.delete(word.id); return next; }));
   };
 
   const continueLearning = () => {
@@ -290,7 +293,7 @@ function LearningSession({ filter, notificationWordId, onSelectFilter }: {
           </AppText>
         </View>
         <View style={styles.notificationReviewCard}>
-          <WordCard
+          <WordCard confirmations={learningConfirmations}
             word={currentNotificationReviewWord}
             collectionName={collectionNames[currentNotificationReviewWord.collectionId]}
             dense={denseCards}
@@ -329,9 +332,9 @@ function LearningSession({ filter, notificationWordId, onSelectFilter }: {
                 && isOnDeviceTranslationPairSupported(word.sourceLanguageCode, word.targetLanguageCode)
                 ? translationStates[word.id] ?? 'loading'
                 : undefined;
-              return <WordCard onReport={() => { router.push({ pathname: '/feedback', params: { origin: rememberFeedbackOrigin('today', word) } } as never); }} animateEntrance={false} word={word}
+              return <WordCard confirmations={learningConfirmations} onReport={() => { router.push({ pathname: '/feedback', params: { origin: rememberFeedbackOrigin('today', word) } } as never); }} animateEntrance={false} word={word}
                 collectionName={collectionNames[word.collectionId]} dense={denseCards}
-                sessionRating={sessionRating} showPronunciation pronunciationActive={active}
+                sessionRating={sessionRating} sessionSaving={pendingRatings.has(word.id)} showPronunciation pronunciationActive={active}
                 translationStatus={translationStatus} onRetryTranslation={() => retryTranslation(word)}
                 onRate={sessionRating === undefined ? rate : undefined}/>;
             }}

@@ -69,23 +69,23 @@ describe('WordCard learning actions', () => {
     libraryCard.getByText('My words · seen 2×');
   });
 
-  it('offers only keep-learning and stop-review outcomes', async () => {
+  it('offers keep-learning and the next confirmation', async () => {
     const onRate = jest.fn();
     const screen = await render(<WordCard word={word} onRate={onRate}/>);
 
-    screen.getByText('Swipe or tap');
+    screen.getByText('0 of 3 confirmations');
     expect(screen.queryByText('Again soon')).toBeNull();
     await fireEvent.press(screen.getByRole('button', { name: 'Keep learning. Review in 3–5 days.' }));
-    await fireEvent.press(screen.getByRole('button', { name: 'I know this. Stop reviews.' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'I know this. Confirmation 1 of 3.' }));
 
     expect(onRate.mock.calls.map(([rating]) => rating)).toEqual(['understood', 'learned']);
   });
 
   it.each([
-    ['learned' as const, 'Reviews stopped'],
-    ['understood' as const, 'Kept in learning'],
+    ['learned' as const, 'Learned · reviews stopped'],
+    ['understood' as const, 'Kept in learning · confirmations reset'],
   ])('replaces actions with the completed %s result', async (sessionRating, detail) => {
-    const screen = await render(<WordCard word={word} sessionRating={sessionRating} onRate={jest.fn()}/>);
+    const screen = await render(<WordCard word={{ ...word, state: sessionRating }} sessionRating={sessionRating} onRate={jest.fn()}/>);
 
     screen.getByLabelText(`Rated this session. ${detail}.`);
     screen.getByText('Rated this session');
@@ -170,4 +170,17 @@ describe('WordCard content overflow', () => {
     await fireEvent(content, 'layout', { nativeEvent: { layout: { height: 700 } } });
     expect(content.props.scrollEnabled).toBe(false);
   });
+});
+
+
+
+it('shows confirmation progress without claiming reviews stopped before the final pass', async () => {
+  const screen = await render(<WordCard word={{ ...word, knownStreak: 1 }} sessionRating="learned"/>);
+  expect(screen.getByText(/1 of 3 confirmations · Next review/)).toBeTruthy();
+  expect(screen.queryByText(/reviews stopped/i)).toBeNull();
+});
+
+it('offers immediate completion for the one-confirmation setting', async () => {
+  const screen = await render(<WordCard word={word} confirmations={1} onRate={jest.fn()}/>);
+  expect(screen.getByRole('button', { name: 'I know this. Stop reviews.' })).toBeTruthy();
 });

@@ -2,6 +2,8 @@ import { act, render } from '@testing-library/react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import RootLayout from '@/app/_layout';
 
+jest.mock('@/components/learning-rhythm', () => ({ LearningRhythmIntroduction: () => null }));
+
 const mockLoadFonts = jest.fn<Promise<void>, []>();
 jest.mock('expo-font', () => ({
   useFonts: () => {
