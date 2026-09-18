@@ -5,7 +5,7 @@ import * as Crypto from 'expo-crypto';
 import { router } from 'expo-router';
 import { AppText } from '@/components/app-text';
 import { FormField } from '@/components/form-field';
-import { PrimaryButton } from '@/components/primary-button';
+import { AiButton, AiHeading, AiSurface } from './ai-presentation';
 import { useAuth } from '@/providers/auth-provider';
 import { spacing } from '@/theme/tokens';
 import { AiError, fetchAiBalance, generateSuggestion, type SuggestionInput, type WordSuggestion } from './client';
@@ -15,7 +15,7 @@ type Props = { term: string; sourceLanguageCode: string; targetLanguageCode: str
 type SavedRequest = { requestId: string; input: SuggestionInput; suggestion?: WordSuggestion };
 export function SuggestionPanel(props: Props) {
   const { user } = useAuth();
-  if (!user) return <PrimaryButton label="Sign in for AI suggestions" variant="secondary" onPress={() => router.push('/account')}/>;
+  if (!user) return <AiButton label="Sign in for AI suggestions" onPress={() => router.push('/account')}/>;
   const scope = JSON.stringify([user.id, props.sourceLanguageCode, props.targetLanguageCode, props.term.trim()]);
   return <SignedInSuggestion key={scope} {...props} scope={scope}/>;
 }
@@ -78,28 +78,34 @@ function SignedInSuggestion({ scope, disabled, onUse, ...inputProps }: Props & {
     } finally { inFlight.current = false; if (mounted.current) setBusy(false); }
   };
   const dismiss = async (use: boolean) => {
-    if (busy) return;
+    if (inFlight.current) return;
+    inFlight.current = true; setBusy(true);
     try {
       await AsyncStorage.removeItem(storageKey);
       if (!mounted.current) return;
       if (use && draft) onUse(draft);
       setSaved(null); setDraft(null);
-    } catch { setMessage('Could not clear the saved draft. Please try again.'); }
+    } catch { if (mounted.current) setMessage('Could not clear the saved draft. Please try again.'); }
+    finally { inFlight.current = false; if (mounted.current) setBusy(false); }
   };
   return <View style={{ gap: spacing.sm }}>
-    <AppText variant="label">AI suggestions{balance === null ? '' : ` · ${balance} credits remaining`}</AppText>
+    <AiHeading>AI suggestions{balance === null ? '' : ` · ${balance} credits remaining`}</AiHeading>
     <AppText variant="caption">The word and context are sent to OpenAI. Review suggestions before saving. Each new suggestion costs 1 credit.</AppText>
-    {draft ? <>
-      <AppText variant="heading">Review AI suggestion</AppText>
-      {(['definition', 'translation', 'example', 'partOfSpeech'] as const).map((field) => <FormField key={field}
-        label={`AI ${field === 'partOfSpeech' ? 'part of speech' : field}`} value={draft[field]}
-        onChangeText={(value) => setDraft({ ...draft, [field]: value })} multiline={field === 'definition' || field === 'example'}/>)}
-      <PrimaryButton label="Use this suggestion" disabled={disabled || !isWordSuggestion(draft)} onPress={() => void dismiss(true)}/>
-      <PrimaryButton label="Discard suggestion" variant="secondary" onPress={() => void dismiss(false)}/>
-    </> : <>
+    {draft ? <AiSurface>
+      <AiHeading>AI suggestion</AiHeading>
+      <AppText variant="caption">Review below. Accept to fill the form, then edit anything before saving.</AppText>
+      {(['definition', 'translation', 'example', 'partOfSpeech'] as const).map((field) => <View key={field} style={{ gap: spacing.xs }}>
+        <AppText variant="label">{field === 'partOfSpeech' ? 'Part of speech' : field.charAt(0).toUpperCase() + field.slice(1)}</AppText>
+        <AppText selectable>{draft[field]}</AppText>
+      </View>)}
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }}>
+        <View style={{ flexGrow: 1, flexBasis: 120 }}><AiButton label="Accept" action="accept" disabled={disabled || busy || !isWordSuggestion(draft)} onPress={() => void dismiss(true)}/></View>
+        <View style={{ flexGrow: 1, flexBasis: 120 }}><AiButton label="Discard" action="discard" disabled={busy} onPress={() => void dismiss(false)}/></View>
+      </View>
+    </AiSurface> : <>
       <FormField label="Context for AI (optional)" hint="Paste the sentence from your lesson to choose the right meaning."
         value={context} onChangeText={setContext} editable={!saved && !busy} maxLength={1000} multiline/>
-      <PrimaryButton label={saved ? 'Retry AI request · no extra credit' : 'Suggest with AI · 1 credit'} variant="secondary"
+      <AiButton label={saved ? 'Retry AI request · no extra credit' : 'Suggest with AI · 1 credit'}
         loading={busy} disabled={disabled || !ready || !inputProps.term.trim() || (!saved && balance === 0)} onPress={() => void generate()}/>
     </>}
     {balance === 0 && !saved ? <AppText>No AI credits remaining. Dictionary lookup and manual entry are still available.</AppText> : null}
