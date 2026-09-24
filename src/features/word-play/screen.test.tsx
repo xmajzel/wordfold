@@ -1,14 +1,18 @@
 import PlayTab from '@/app/(tabs)/play';
 import { act, fireEvent, render, waitFor, within } from '@testing-library/react-native';
-import { Alert } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 import type { Word } from '@/domain/types';
 import type { WordPlayEvent, WordPlayStats } from './model';
 import { emptyWordPlayStats } from './model';
+import { withTiming } from 'react-native-reanimated';
+import { RecallFlashcard } from './recall-flashcard';
 import WordPlayScreen from './screen';
 
 const mockRecord = jest.fn<Promise<void>, [WordPlayEvent]>(async () => undefined);
 const mockDismiss = jest.fn(async () => undefined);
+let mockTransitions: ((finished: boolean) => void)[] = [];
+let mockReducedMotion = false;
 let mockIntroductions: string[] = [];
 let mockStats: Record<string, WordPlayStats> = {};
 let mockCourse: 'en-sk' | 'es-sk' = 'en-sk';
@@ -35,10 +39,25 @@ jest.mock('@/components/primary-button', () => ({ PrimaryButton: ({ label, onPre
 jest.mock('react-native-reanimated', () => {
   const { View } = jest.requireActual('react-native');
   const animation = { duration: () => ({ reduceMotion: () => undefined }) };
-  return { __esModule: true, default: { View }, FadeInDown: animation, FadeOut: animation, ReduceMotion: { System: 'system' } };
+  return { __esModule: true, default: { View }, FadeInDown: animation, FadeOut: animation, ReduceMotion: { System: 'system' },
+    useReducedMotion: () => mockReducedMotion,
+    useSharedValue: (initial: number) => jest.requireActual('react').useState(() => ({ value: initial, set(value: number) { this.value = value; } }))[0],
+    useAnimatedStyle: (callback: () => unknown) => callback(),
+    withTiming: jest.fn((value: number, _config: unknown, callback?: (finished: boolean) => void) => { if (callback) mockTransitions.push(callback); return value; }), cancelAnimation: jest.fn(),
+    withDelay: (_delay: number, value: number) => value,
+    withSequence: (...values: number[]) => values[values.length - 1],
+    runOnJS: (callback: () => void) => callback,
+    interpolateColor: (_value: number, _range: number[], colors: string[]) => colors[0],
+  };
 });
 
-beforeEach(() => { jest.clearAllMocks(); mockRecord.mockResolvedValue(undefined); mockStats = {}; mockCourse = 'en-sk'; mockIntroductions = []; });
+beforeEach(() => { mockTransitions = []; mockReducedMotion = false; jest.clearAllMocks(); mockRecord.mockResolvedValue(undefined); mockStats = {}; mockCourse = 'en-sk'; mockIntroductions = []; });
+
+async function finishTransition() {
+  const complete = mockTransitions.shift();
+  expect(complete).toBeDefined();
+  await act(() => { complete!(true); complete!(true); });
+}
 
 it('plays two boards, retains first-attempt mistakes, and only relearns selected words', async () => {
   const view = await render(<WordPlayScreen/>);
@@ -83,17 +102,17 @@ it('hides recall answers, saves an encounter before answering, and leaves learni
   const view = await render(<WordPlayScreen/>);
   await fireEvent.press(view.getByRole('button', { name: 'Let’s play' }));
   await waitFor(() => expect(view.getByRole('button', { name: 'Reveal answer' }).props.accessibilityState.disabled).toBe(false));
-  expect(view.queryByRole('button', { name: 'Got it' })).toBeNull();
+  expect(view.queryByRole('button', { name: 'I know this' })).toBeNull();
   expect(view.queryByText(/^Meaning/)).toBeNull();
   const footer = view.getByTestId('word-play-actions');
   expect(within(footer).getByRole('button', { name: 'Reveal answer' })).toBeTruthy();
   expect(mockRecord.mock.calls.map(([event]) => event.type)).toEqual(['game_seen']);
   await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
-  expect(within(footer).getByRole('button', { name: 'Got it' })).toBeTruthy();
-  expect(within(footer).getByRole('button', { name: 'Needs practice' })).toBeTruthy();
-  await fireEvent.press(view.getByRole('button', { name: 'Needs practice' }));
-  await waitFor(() => expect(view.getByRole('button', { name: 'Continue' })).toBeTruthy());
-  expect(within(footer).getByRole('button', { name: 'Continue' })).toBeTruthy();
+  expect(within(footer).getByRole('button', { name: 'I know this' })).toBeTruthy();
+  expect(within(footer).getByRole('button', { name: 'Keep learning' })).toBeTruthy();
+  await fireEvent.press(view.getByRole('button', { name: 'Keep learning' }));
+  expect(view.queryByRole('button', { name: 'Continue' })).toBeNull();
+  expect(within(footer).getByRole('button', { name: 'I know this' })).toBeDisabled();
   await fireEvent.press(view.getByRole('button', { name: 'Close Word play' }));
   expect(router.dismissTo).toHaveBeenCalledWith('/(tabs)/play');
   expect(mockRecord.mock.calls.map(([event]) => event.type)).toEqual(['game_seen', 'game_missed', 'game_answered']);
@@ -132,18 +151,17 @@ it('keeps optimistic answers and queued events across rounds and retries after f
   mockRecord.mockImplementationOnce(() => new Promise<void>((_, reject) => { fail = reject; }));
   const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
   await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
-  const needsPractice = view.getByRole('button', { name: 'Needs practice' });
+  const needsPractice = view.getByRole('button', { name: 'Keep learning' });
   await act(async () => { await fireEvent.press(needsPractice); await fireEvent.press(needsPractice); });
-  const next = view.getByRole('button', { name: 'Continue' });
-  await act(async () => { await fireEvent.press(next); await fireEvent.press(next); });
+  await finishTransition();
   expect(view.getByText('1 of 2 words revisited')).toBeTruthy();
   expect(view.getByRole('button', { name: 'Reveal answer' })).toBeEnabled();
   await act(async () => { fail(new Error('Storage busy')); });
   expect(view.getByRole('button', { name: 'Retry saving' })).toBeTruthy();
   expect(view.getByText('1 of 2 words revisited')).toBeTruthy();
   await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
-  await fireEvent.press(view.getByRole('button', { name: 'Got it' }));
-  await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
+  await fireEvent.press(view.getByRole('button', { name: 'I know this' }));
+  await finishTransition();
   expect(view.getByText('2 words revisited · 1 needed another look')).toBeTruthy();
   await fireEvent.press(view.getByRole('button', { name: 'Retry saving' }));
   await waitFor(() => expect(view.queryByRole('button', { name: 'Retry saving' })).toBeNull());
@@ -156,7 +174,7 @@ it('finishes queued writes after leaving the screen', async () => {
   mockRecord.mockImplementationOnce(() => new Promise<void>((resolve) => { finish = resolve; }));
   const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
   await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
-  await fireEvent.press(view.getByRole('button', { name: 'Got it' }));
+  await fireEvent.press(view.getByRole('button', { name: 'I know this' }));
   await view.unmount();
   await act(async () => { finish(); });
   expect(mockRecord.mock.calls.map(([event]) => event.type)).toEqual(['game_seen', 'game_answered']);
@@ -214,9 +232,8 @@ it('plays a short collection session and reports its actual progress', async () 
     await waitFor(() => expect(view.getByRole('button', { name: 'Reveal answer' })).toBeEnabled());
     expect(view.getByText(`${index} of 2 words revisited`)).toBeTruthy();
     await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
-    await fireEvent.press(view.getByRole('button', { name: 'Got it' }));
-    await waitFor(() => expect(view.getByRole('button', { name: 'Continue' })).toBeTruthy());
-    await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
+    await fireEvent.press(view.getByRole('button', { name: 'I know this' }));
+    await finishTransition();
   }
   expect(view.getByText('2 words revisited · 0 needed another look')).toBeTruthy();
   expect(mockRecord.mock.calls.every(([event]) => ['word-0', 'word-1'].includes(event.wordId))).toBe(true);
@@ -238,7 +255,7 @@ it('offers retry if a queued write fails after closing the game', async () => {
   mockRecord.mockImplementationOnce(() => new Promise<void>((_, reject) => { fail = reject; }));
   const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
   await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
-  await fireEvent.press(view.getByRole('button', { name: 'Got it' }));
+  await fireEvent.press(view.getByRole('button', { name: 'I know this' }));
   await view.unmount();
   await act(async () => { fail(new Error('Storage busy')); });
   expect(alert).toHaveBeenCalledWith('Game progress not saved', expect.any(String), expect.any(Array));
@@ -253,8 +270,8 @@ it('waits for queued game history before returning selected words to learning', 
   const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
   for (let index = 0; index < 2; index += 1) {
     await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
-    await fireEvent.press(view.getByRole('button', { name: index ? 'Got it' : 'Needs practice' }));
-    await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
+    await fireEvent.press(view.getByRole('button', { name: index ? 'I know this' : 'Keep learning' }));
+    await finishTransition();
   }
   await fireEvent.press(view.getByRole('button', { name: 'Add 1 word to learning' }));
   expect(mockRecord).toHaveBeenCalledTimes(1);
@@ -262,4 +279,59 @@ it('waits for queued game history before returning selected words to learning', 
   await act(async () => { finish(); });
   await waitFor(() => expect(view.getByText('1 word is ready in today’s practice.')).toBeTruthy());
   expect(mockRecord.mock.calls.map(([event]) => event.type)).toEqual(['game_seen', 'game_missed', 'game_answered', 'game_seen', 'game_answered', 'game_relearned']);
+});
+
+it('reveals the back by tapping the card and resets the next word to its front', async () => {
+  const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
+  const frame = view.getByTestId('recall-flashcard');
+  const before = frame.props.style;
+  expect(view.queryByText(/^Meaning/)).toBeNull();
+  await fireEvent.press(view.getByRole('button', { name: /hint.*Reveal answer/ }));
+  expect(view.getByText(/^Meaning/)).toBeTruthy();
+  expect(view.getByTestId('recall-flashcard').props.style).toEqual(before);
+  expect(view.queryByTestId('recall-front')).toBeNull();
+  expect(withTiming).toHaveBeenCalledWith(1, { duration: 360, reduceMotion: 'system' });
+  await fireEvent.press(view.getByRole('button', { name: 'I know this' }));
+  await finishTransition();
+  expect(view.getByTestId('recall-front')).toBeTruthy();
+  expect(view.queryByTestId('recall-back')).toBeNull();
+  expect(view.queryByText(/^Meaning/)).toBeNull();
+});
+
+it('shows a complete long answer inside the same card with reduced motion', async () => {
+  mockReducedMotion = true;
+  const definition = 'A long definition. '.repeat(100);
+  const word = { ...mockWords[0], definition, translation: null, partOfSpeech: 'noun' };
+  const view = await render(<RecallFlashcard word={word} revealed={false} onReveal={() => undefined}/>);
+  const height = StyleSheet.flatten(view.getByTestId('recall-flashcard').props.style).height;
+  expect(view.getByText(word.term)).toBeTruthy();
+  expect(view.queryByText(definition)).toBeNull();
+  await view.rerender(<RecallFlashcard word={word} revealed onReveal={() => undefined}/>);
+  expect(view.getByText(definition)).toBeTruthy();
+  expect(StyleSheet.flatten(view.getByTestId('recall-flashcard').props.style).height).toBe(height);
+  expect(view.queryByTestId('recall-front')).toBeNull();
+  expect(withTiming).not.toHaveBeenCalled();
+});
+
+it.each([false, true])('animates a rated card then advances once (reduced motion: %s)', async (reducedMotion) => {
+  mockReducedMotion = reducedMotion;
+  const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
+  await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
+  await fireEvent.press(view.getByRole('button', { name: 'I know this' }));
+  expect(view.queryByText('Nicely done!')).toBeNull();
+  expect(view.queryByRole('button', { name: 'Continue' })).toBeNull();
+  expect(view.getByRole('button', { name: 'I know this' })).toBeDisabled();
+  expect(view.getByRole('button', { name: 'Keep learning' })).toBeDisabled();
+  await fireEvent.press(view.getByRole('button', { name: 'Keep learning' }));
+  expect(mockRecord.mock.calls.filter(([event]) => event.type === 'game_missed')).toHaveLength(0);
+  expect(withTiming).toHaveBeenCalledWith(reducedMotion ? 0 : 2, expect.objectContaining({ duration: reducedMotion ? 120 : 360 }), expect.any(Function));
+  await finishTransition();
+  expect(view.getByRole('button', { name: 'Reveal answer' })).toBeEnabled();
+  expect(view.getByText('1 of 2 words revisited')).toBeTruthy();
+  expect(mockRecord.mock.calls.filter(([event]) => event.type === 'game_answered')).toHaveLength(1);
+  await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
+  await fireEvent.press(view.getByRole('button', { name: 'Keep learning' }));
+  await finishTransition();
+  expect(view.getByText('2 words revisited · 1 needed another look')).toBeTruthy();
+  expect(mockRecord.mock.calls.filter(([event]) => event.type === 'game_relearned')).toHaveLength(0);
 });

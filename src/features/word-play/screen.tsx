@@ -17,6 +17,7 @@ import type { LearningFilter, Word } from '@/domain/types';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
+import { RecallFlashcard } from './recall-flashcard';
 import { WordPlaySaveQueue } from './save-queue';
 import { buildWordPlaySession, isWordPlayUnlocked, WORD_PLAY_SIZE, type WordPlayEvent, type WordPlayEventType, type WordPlayMode, type WordPlayRound } from './model';
 
@@ -171,7 +172,7 @@ function PlaySession({ id, courseId, rounds, haptics, canPlayAgain, onAgain }: {
       <View style={[styles.fill, { backgroundColor: theme.primary, width: `${revisited / allWords.length * 100}%` }]}/>
     </View>
     <AppText variant="caption" style={{ color: theme.muted }}>{revisited} of {allWords.length} words revisited</AppText>
-    {!finished ? <Round key={index} round={rounds[index]} onRecord={record} haptics={haptics} onContinue={() => setIndex((current) => current + 1)}/>
+    {!finished ? <Round key={index} round={rounds[index]} nextWord={rounds[index + 1]?.mode === 'recall' ? rounds[index + 1].words[0] : undefined} onRecord={record} haptics={haptics} onContinue={() => setIndex((current) => current + 1)}/>
       : <ScrollView contentContainerStyle={styles.scrollContent}><Animated.View entering={FadeInDown.duration(240).reduceMotion(ReduceMotion.System)} style={[styles.card, { backgroundColor: theme.surface, borderColor: theme.border }]}>
         <Ionicons name="ribbon-outline" size={52} color={theme.success}/>
         <AppText variant="heading">A little stronger</AppText>
@@ -206,8 +207,8 @@ function PlaySession({ id, courseId, rounds, haptics, canPlayAgain, onAgain }: {
   </>;
 }
 
-function Round({ round, onRecord, onContinue, haptics }: {
-  round: WordPlayRound; onRecord(word: Word, mode: WordPlayMode, type: WordPlayEventType): Promise<void>;
+function Round({ round, nextWord, onRecord, onContinue, haptics }: {
+  round: WordPlayRound; nextWord?: Word; onRecord(word: Word, mode: WordPlayMode, type: WordPlayEventType): Promise<void>;
   onContinue(): void; haptics: boolean;
 }) {
   const theme = useAppTheme();
@@ -215,6 +216,7 @@ function Round({ round, onRecord, onContinue, haptics }: {
   const [matched, setMatched] = useState<Set<string>>(new Set());
   const [revealed, setRevealed] = useState(false);
   const [feedback, setFeedback] = useState('');
+  const [outcome, setOutcome] = useState<'known' | 'practice' | null>(null);
   const answered = useRef(new Set<string>());
   const continued = useRef(false);
   const recordRef = useRef(onRecord);
@@ -232,7 +234,8 @@ function Round({ round, onRecord, onContinue, haptics }: {
     if (needsPractice) void onRecord(word, round.mode, 'game_missed');
     void onRecord(word, round.mode, 'game_answered');
     setMatched(new Set(answered.current));
-    setFeedback(needsPractice ? (round.mode === 'matching' ? `${word.term} → ${word.translation}. You can practise it again at the end.` : 'Good catch. You can practise this one again at the end.') : 'Nicely done!');
+    if (round.mode === 'recall') setOutcome(needsPractice ? 'practice' : 'known');
+    else setFeedback(needsPractice ? (round.mode === 'matching' ? `${word.term} → ${word.translation}. You can practise it again at the end.` : 'Good catch. You can practise this one again at the end.') : 'Nicely done!');
     if (haptics) void Haptics.selectionAsync().catch(() => undefined);
   };
   const pair = (answerWord: Word) => {
@@ -251,7 +254,7 @@ function Round({ round, onRecord, onContinue, haptics }: {
 
   return <View style={styles.round}>
     <ScrollView style={styles.roundContent} contentContainerStyle={styles.roundScroll}>
-      <Animated.View entering={FadeInDown.duration(220).reduceMotion(ReduceMotion.System)} style={[styles.card, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+      <Animated.View entering={round.mode === 'matching' ? FadeInDown.duration(220).reduceMotion(ReduceMotion.System) : undefined} style={round.mode === 'matching' ? [styles.card, { backgroundColor: theme.surface, borderColor: theme.border }] : styles.recallContent}>
         <AppText variant="heading">{round.mode === 'matching' ? 'Find the pairs' : 'Bring it to mind'}</AppText>
         <AppText style={{ color: theme.muted }}>{round.mode === 'matching' ? 'Tap a word on the left, then its meaning on the right.' : reverseRecall ? 'Which word means this? Think of it before revealing.' : 'Can you remember what this word means?'}</AppText>
         {round.mode === 'matching' ? <>
@@ -259,37 +262,37 @@ function Round({ round, onRecord, onContinue, haptics }: {
             <View style={styles.column}>{round.words.map((word) => <Tile key={word.id} label={word.term} side="Word" selected={selected === word.id} matched={matched.has(word.id)} disabled={false} onPress={() => setSelected(word.id)}/>)}</View>
             <View style={styles.column}>{round.answers.map((word) => <Tile key={word.id} label={word.translation!} side="Meaning" matched={matched.has(word.id)} disabled={!selected} onPress={() => pair(word)}/>)}</View>
           </View>
-        </> : <>
-          <View style={[styles.prompt, { backgroundColor: theme.primarySoft }]}>
-            <AppText variant="heading">{reverseRecall ? translation : recallWord.term}</AppText>
-            {recallWord.partOfSpeech ? <AppText variant="caption">{recallWord.partOfSpeech}</AppText> : null}
-          </View>
-          {revealed ? <>
-            {reverseRecall ? <AppText variant="heading">{recallWord.term}</AppText> : null}
-            <AppText>{recallWord.definition}</AppText>
-            {translation ? <AppText style={{ color: theme.muted }}>{translation}</AppText> : null}
-          </> : null}
-        </>}
+        </> : <RecallFlashcard word={recallWord} revealed={revealed} onReveal={() => setRevealed(true)} outcome={outcome} nextWord={nextWord} onAdvance={() => { if (!continued.current) { continued.current = true; onContinue(); } }}/>}
         {feedback ? <AppText accessibilityLiveRegion="polite" style={{ color: theme.primary }}>{feedback}</AppText> : null}
       </Animated.View>
     </ScrollView>
     <SafeAreaView edges={['bottom']} style={styles.footer}>
       <View testID="word-play-actions" style={styles.actions}>
         <View style={styles.actionSlot}>
-          {round.mode === 'recall' && revealed && !completed ? <PrimaryButton label="Needs practice" variant="secondary" onPress={() => answer(recallWord, true)}/> : null}
+          {round.mode === 'recall' && revealed ? <RecallAction label="Keep learning" icon="calendar-outline" color={theme.primary} disabled={completed} onPress={() => answer(recallWord, true)}/> : null}
         </View>
         <View style={styles.actionSlot}>
-          {completed ? <PrimaryButton label="Continue" onPress={() => { if (!continued.current) { continued.current = true; onContinue(); } }}/>
+          {completed && round.mode === 'matching' ? <PrimaryButton label="Continue" onPress={() => { if (!continued.current) { continued.current = true; onContinue(); } }}/>
             : round.mode === 'matching' ? <PrimaryButton label={selected ? 'Need another look' : 'Select a word to match'} variant="secondary" disabled={!selected} onPress={() => {
               const word = round.words.find((item) => item.id === selected)!;
               answer(word, true); setSelected(null);
             }}/>
-            : revealed ? <PrimaryButton label="Got it" onPress={() => answer(recallWord, false)}/>
+            : revealed ? <RecallAction label="I know this" icon="checkmark-circle-outline" color={theme.success} disabled={completed} onPress={() => answer(recallWord, false)}/>
             : <PrimaryButton label="Reveal answer" onPress={() => setRevealed(true)}/>}
         </View>
       </View>
     </SafeAreaView>
   </View>;
+}
+
+function RecallAction({ label, icon, color, disabled, onPress }: {
+  label: string; icon: 'calendar-outline' | 'checkmark-circle-outline'; color: string; disabled: boolean; onPress(): void;
+}) {
+  return <Pressable accessibilityRole="button" accessibilityLabel={label} disabled={disabled} accessibilityState={{ disabled }} onPress={onPress}
+    style={({ pressed }) => [styles.recallAction, { borderColor: `${color}52`, backgroundColor: `${color}0D`, opacity: disabled ? 0.55 : pressed ? 0.82 : 1 }]}>
+    <Ionicons name={icon} size={22} color={color} aria-hidden/>
+    <AppText variant="label" style={{ color }}>{label}</AppText>
+  </Pressable>;
 }
 
 function Tile({ label, side, selected = false, matched, disabled, onPress }: {
@@ -321,7 +324,8 @@ const styles = StyleSheet.create({
   tileSlot: { minHeight: 66 }, tileContent: { flex: 1 },
   tile: { flex: 1, minHeight: 66, padding: spacing.sm, borderWidth: 2, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
   tileLabel: { textAlign: 'center' }, matched: { minHeight: 66, borderWidth: 1, borderStyle: 'dashed', borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
-  prompt: { padding: spacing.xl, borderRadius: radii.card, gap: spacing.sm }, actions: { gap: spacing.sm },
+  recallAction: { minHeight: 50, borderWidth: 1, borderRadius: radii.control, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: spacing.sm, gap: spacing.sm },
+  recallContent: { gap: spacing.lg }, actions: { gap: spacing.sm },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
   chip: { flexDirection: 'row', alignItems: 'center', flexShrink: 1, gap: spacing.sm, borderWidth: 1, borderRadius: radii.control, padding: spacing.md, minHeight: 48 },
 });
