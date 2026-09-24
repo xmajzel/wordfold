@@ -2,7 +2,6 @@ import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import { Alert, Linking } from 'react-native';
 
 import SettingsScreen from '@/app/settings';
-import { ACCOUNT_DELETION_URL, PRIVACY_POLICY_URL } from '@/features/legal/urls';
 
 const mockPush = jest.fn();
 const mockSwitchCourse = jest.fn(async (_courseId: string) => undefined);
@@ -95,8 +94,8 @@ describe('Settings account entry', () => {
     await fireEvent.press(view.getByTestId('privacy-policy-link'));
     await fireEvent.press(view.getByTestId('account-deletion-link'));
 
-    expect(openUrl).toHaveBeenNthCalledWith(1, PRIVACY_POLICY_URL);
-    expect(openUrl).toHaveBeenNthCalledWith(2, ACCOUNT_DELETION_URL);
+    expect(openUrl).toHaveBeenNthCalledWith(1, 'https://wordfold.app/privacy/');
+    expect(openUrl).toHaveBeenNthCalledWith(2, 'https://wordfold.app/account-deletion/');
   });
 
   it('moves course attributions to the combined Sources screen', async () => {
