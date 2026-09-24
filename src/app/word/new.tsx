@@ -27,10 +27,12 @@ import { radii, spacing } from '@/theme/tokens';
 
 export default function NewWordScreen() {
   const theme = useAppTheme();
-  const { words, collections, wordCapacity, findSenses, createWord, createCollection, pronunciationVoicePreference, activeCourse } = useAppData();
+  const { words, collections, dataSource, wordCapacity, findSenses, createWord, createCollection, pronunciationVoicePreference, activeCourse } = useAppData();
   const preferredLocale = preferenceLocale(pronunciationVoicePreference);
   const { collectionId: requestedCollectionId } = useLocalSearchParams<{ collectionId?: string }>();
-  const [collectionId, setCollectionId] = useState(() => collections.find((item) => item.id === requestedCollectionId)?.id ?? collections[0]?.id ?? 'my-words');
+  const [collectionId, setCollectionId] = useState(() => collections.find((item) => item.id === requestedCollectionId)?.id ?? collections[0]?.id ?? '');
+  const selectedCollectionId = collections.some((item) => item.id === collectionId)
+    ? collectionId : collections[0]?.id ?? (dataSource === 'synced' || dataSource === 'reconciling' || dataSource === 'loading' ? '' : 'my-words');
   const [showCollectionForm, setShowCollectionForm] = useState(false);
   const [collectionName, setCollectionName] = useState('');
   const [creatingCollection, setCreatingCollection] = useState(false);
@@ -128,12 +130,12 @@ export default function NewWordScreen() {
   };
 
   const persistWord = async () => {
-    if (!term.trim() || !definition.trim() || collectionCreationPending.current || wordSavePending.current || showCollectionForm) return;
+    if (!term.trim() || !definition.trim() || !selectedCollectionId || collectionCreationPending.current || wordSavePending.current || showCollectionForm) return;
     wordSavePending.current = true;
     setSaving(true);
     try {
       await createWord({
-        collectionId, term, normalizedTerm: normalizeTerm(term, sourceLanguageCode), definition,
+        collectionId: selectedCollectionId, term, normalizedTerm: normalizeTerm(term, sourceLanguageCode), definition,
         sourceLanguageCode, targetLanguageCode, sourcePronunciationLocale, targetPronunciationLocale,
         example: example || null, translation: translation || null,
         partOfSpeech: partOfSpeech || null, catalogSenseId: selectedSenseId,
@@ -152,7 +154,7 @@ export default function NewWordScreen() {
   };
 
   const save = () => {
-    if (!term.trim() || !definition.trim() || collectionCreationPending.current || wordSavePending.current || showCollectionForm) return;
+    if (!term.trim() || !definition.trim() || !selectedCollectionId || collectionCreationPending.current || wordSavePending.current || showCollectionForm) return;
     const normalizedTerm = normalizeTerm(term, sourceLanguageCode);
     const duplicates = potentialWordDuplicates(words, sourceLanguageCode, normalizedTerm);
     if (duplicates.length === 0) {
@@ -198,7 +200,7 @@ export default function NewWordScreen() {
         <AppText variant="label">Collection</AppText>
         <View>
           <View style={styles.chips}>
-            {collections.map((collection) => <Pressable key={collection.id} accessibilityRole="button" accessibilityLabel={`Collection: ${collection.name}`} accessibilityState={{ selected: collectionId === collection.id }} disabled={saving || creatingCollection} onPress={() => setCollectionId(collection.id)} style={[styles.chip, { backgroundColor: collectionId === collection.id ? theme.primary : theme.surface, borderColor: collectionId === collection.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: collectionId === collection.id ? '#FFFFFF' : theme.text }}>{collection.name}</AppText></Pressable>)}
+            {collections.map((collection) => <Pressable key={collection.id} accessibilityRole="button" accessibilityLabel={`Collection: ${collection.name}`} accessibilityState={{ selected: selectedCollectionId === collection.id }} disabled={saving || creatingCollection} onPress={() => setCollectionId(collection.id)} style={[styles.chip, { backgroundColor: selectedCollectionId === collection.id ? theme.primary : theme.surface, borderColor: selectedCollectionId === collection.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: selectedCollectionId === collection.id ? '#FFFFFF' : theme.text }}>{collection.name}</AppText></Pressable>)}
             <Pressable accessibilityRole="button" accessibilityLabel={showCollectionForm ? 'Cancel new collection' : 'New collection'} disabled={saving || creatingCollection} onPress={() => { setShowCollectionForm((value) => !value); setCollectionName(''); }} style={[styles.chip, { backgroundColor: theme.surface, borderColor: theme.border }]}><AppText variant="label" style={{ color: theme.primary }}>{showCollectionForm ? 'Cancel' : '+ New collection'}</AppText></Pressable>
           </View>
           <CollectionFormDisclosure open={showCollectionForm}><View style={[styles.collectionForm, { backgroundColor: theme.surface, borderColor: theme.border }]}>
@@ -225,7 +227,7 @@ export default function NewWordScreen() {
         ? <PrimaryButton label={`Generate ${languageLabel(targetLanguageCode)} hint on device`} variant="secondary" loading={translating} disabled={!term.trim()} onPress={() => void generateTranslation()} icon={<Ionicons name="language-outline" size={18} color={theme.primary}/>}/>
         : <AppText variant="caption" style={{ color: theme.muted }}>Automatic on-device translation supports English → Slovak and Spanish → Slovak.</AppText>}
       <FormField label="Part of speech" value={partOfSpeech} onChangeText={setPartOfSpeech} placeholder="noun"/>
-      <PrimaryButton label="Add to my words" loading={saving} disabled={!term.trim() || !definition.trim() || creatingCollection || showCollectionForm} onPress={save}/>
+      <PrimaryButton label="Add to my words" loading={saving} disabled={!term.trim() || !definition.trim() || !selectedCollectionId || creatingCollection || showCollectionForm} onPress={save}/>
     </Screen>
   );
 }

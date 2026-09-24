@@ -17,6 +17,7 @@ const mockTranslateOnDevice = jest.fn(async (..._args: unknown[]) => 'srdce');
 let mockWords: unknown[] = [];
 let mockCollectionId: string | undefined;
 let mockCollections = [{ id: 'my-words', name: 'My words' }, { id: 'c1', name: 'English C1 lessons' }];
+let mockDataSource: 'guest' | 'synced' = 'guest';
 const mockCreateCollection = jest.fn(async (name: string, _color: string) => {
   mockCollections = [...mockCollections, { id: 'new-collection', name }];
   return 'new-collection';
@@ -48,6 +49,7 @@ jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     words: mockWords,
     collections: mockCollections,
+    dataSource: mockDataSource,
     createCollection: mockCreateCollection,
     wordCapacity: { remaining: null },
     findSenses: mockFindSenses,
@@ -96,6 +98,7 @@ describe('catalog Slovak lookup flows', () => {
     mockWords = [];
     mockCollectionId = undefined;
     mockCollections = [{ id: 'my-words', name: 'My words' }, { id: 'c1', name: 'English C1 lessons' }];
+    mockDataSource = 'guest';
     mockActiveCourse = {
       id: 'en-sk', sourceLanguageCode: 'en', targetLanguageCode: 'sk',
       defaultSourcePronunciationLocale: 'en-US', defaultTargetPronunciationLocale: 'sk-SK',
@@ -118,6 +121,23 @@ describe('catalog Slovak lookup flows', () => {
     })));
   });
 
+  it('waits for a synchronized collection to load before saving a new word', async () => {
+    mockCollections = [];
+    mockDataSource = 'synced';
+    const view = await render(<NewWordScreen/>);
+    await fireEvent.changeText(view.getByLabelText('English word or phrase'), 'bank');
+    await fireEvent.changeText(view.getByLabelText('Definition'), 'A financial institution');
+
+    expect(view.getByRole('button', { name: 'Add to my words' }).props.accessibilityState.disabled).toBe(true);
+
+    const remoteId = '11111111-1111-4111-8111-111111111111';
+    mockCollections = [{ id: remoteId, name: 'My words' }];
+    await view.rerender(<NewWordScreen/>);
+    await fireEvent.press(view.getByRole('button', { name: 'Add to my words' }));
+
+    await waitFor(() => expect(mockCreateWord).toHaveBeenCalledWith(expect.objectContaining({ collectionId: remoteId })));
+  });
+
   it('constrains new words to the active course language pair', async () => {
     const view = await render(<NewWordScreen/>);
 
@@ -137,6 +157,24 @@ describe('catalog Slovak lookup flows', () => {
 
     await waitFor(() => expect(mockCreateWords).toHaveBeenCalledWith([
       expect.objectContaining({ translation: 'banka' }),
+    ]));
+  });
+
+  it('waits for a synchronized collection before importing reviewed words', async () => {
+    mockCollections = [];
+    mockDataSource = 'synced';
+    const view = await render(<ImportScreen/>);
+    await fireEvent.changeText(view.getByPlaceholderText(/stakeholder -/), 'bank');
+    await fireEvent.press(view.getByRole('button', { name: 'Review paste' }));
+    await waitFor(() => expect(view.getByRole('button', { name: 'Import first 1 word' }).props.accessibilityState.disabled).toBe(true));
+
+    const remoteId = '11111111-1111-4111-8111-111111111111';
+    mockCollections = [{ id: remoteId, name: 'My words' }];
+    await view.rerender(<ImportScreen/>);
+    await fireEvent.press(view.getByRole('button', { name: 'Import first 1 word' }));
+
+    await waitFor(() => expect(mockCreateWords).toHaveBeenCalledWith([
+      expect.objectContaining({ collectionId: remoteId }),
     ]));
   });
 

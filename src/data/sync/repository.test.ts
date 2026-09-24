@@ -2,12 +2,14 @@ import type { RatingUpdate } from '@/features/learning/algorithm';
 
 import {
   addSyncWord,
+  addSyncWords,
   deleteSyncWord,
   getSyncStats,
   listSyncWords,
   recordSyncView,
   resetSyncWord,
   saveSyncRating,
+  updateSyncWord,
   type SyncRepositoryDatabase,
 } from './repository';
 
@@ -27,7 +29,7 @@ function database(rows: unknown[] = []) {
 }
 
 const newWord = {
-  collectionId: 'collection-1', term: ' Able ', normalizedTerm: 'able', definition: ' capable ',
+  collectionId: '11111111-1111-4111-8111-111111111111', term: ' Able ', normalizedTerm: 'able', definition: ' capable ',
   sourceLanguageCode: 'en', targetLanguageCode: 'sk',
   sourcePronunciationLocale: 'en-US', targetPronunciationLocale: 'sk-SK',
 };
@@ -65,9 +67,21 @@ describe('PowerSync vocabulary repository', () => {
     const context = database();
     await expect(addSyncWord(context.database, 'user-1', newWord)).resolves.toBe('generated-id');
     expect(context.database.execute).toHaveBeenCalledWith(expect.stringContaining('INSERT INTO words'), expect.arrayContaining([
-      'generated-id', 'user-1', 'collection-1', 'Able', 'able', 'en', 'sk',
+      'generated-id', 'user-1', newWord.collectionId, 'Able', 'able', 'en', 'sk',
       'en-US', 'sk-SK',
     ]));
+  });
+
+  it('rejects legacy collection IDs before queuing synchronized word writes', async () => {
+    const context = database();
+    const invalid = { ...newWord, collectionId: 'my-words' };
+
+    await expect(addSyncWord(context.database, 'user-1', invalid)).rejects.toThrow('Choose a synchronized collection');
+    await expect(addSyncWords(context.database, 'user-1', [invalid])).rejects.toThrow('Choose a synchronized collection');
+    await expect(updateSyncWord(context.database, 'word-1', invalid)).rejects.toThrow('Choose a synchronized collection');
+
+    expect(context.database.execute).not.toHaveBeenCalled();
+    expect(context.transaction.execute).not.toHaveBeenCalled();
   });
 
   it('stores a rating state and event in one transaction', async () => {

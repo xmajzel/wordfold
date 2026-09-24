@@ -5,6 +5,7 @@ import type { CefrLevel, Collection, DashboardStats, Word } from '@/domain/types
 import { validateWordLanguages, type NewWordInput } from '@/data/repository';
 import { getCefrLevelForCatalogSense } from '@/data/cefr-level-lookup';
 import type { RatingUpdate } from '@/features/learning/algorithm';
+import { requireSyncCollectionId } from './collection-id';
 
 interface SyncTransaction {
   getAll<T>(sql: string, parameters?: unknown[]): Promise<T[]>;
@@ -78,6 +79,7 @@ export async function addSyncCollection(database: QueryableDatabase, userId: str
 
 function wordValues(userId: string, id: string, input: NewWordInput, now: string) {
   validateWordLanguages(input);
+  requireSyncCollectionId(input.collectionId);
   const cefrLevel = input.cefrLevel ?? getCefrLevelForCatalogSense(input.catalogSenseId ?? null);
   return [
     id, userId, input.collectionId, input.term.trim(), input.normalizedTerm,
@@ -116,6 +118,7 @@ export async function addSyncWords(database: QueryableDatabase, userId: string, 
 
 export async function updateSyncWord(database: QueryableDatabase, id: string, input: NewWordInput) {
   validateWordLanguages(input);
+  requireSyncCollectionId(input.collectionId);
   const cefrLevel = input.cefrLevel ?? getCefrLevelForCatalogSense(input.catalogSenseId ?? null);
   await database.execute(
     `UPDATE words SET collection_id = ?, term = ?, normalized_term = ?,

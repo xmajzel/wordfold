@@ -27,6 +27,7 @@ export default function ImportScreen() {
   const {
     words,
     collections,
+    dataSource,
     findSenses,
     createWords,
     wordCapacity,
@@ -35,7 +36,9 @@ export default function ImportScreen() {
   } = useAppData();
   const sourcePronunciationLocale = preferenceLocale(pronunciationVoicePreference) ?? activeCourse.defaultSourcePronunciationLocale;
   const [input, setInput] = useState('');
-  const [collectionId, setCollectionId] = useState(collections[0]?.id ?? 'my-words');
+  const [collectionId, setCollectionId] = useState(collections[0]?.id ?? '');
+  const selectedCollectionId = collections.some((item) => item.id === collectionId)
+    ? collectionId : collections[0]?.id ?? (dataSource === 'synced' || dataSource === 'reconciling' || dataSource === 'loading' ? '' : 'my-words');
   const [reviewed, setReviewed] = useState<ReviewedLine[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [replaceReview, setReplaceReview] = useState(false);
@@ -54,11 +57,12 @@ export default function ImportScreen() {
   const exceedsCapacity = allowedCount < importable.length;
 
   const guidedReview = async (replace = false) => {
+    if (!selectedCollectionId) return;
     setBusy(true); setReviewError(null);
     try {
       const previous = parseReviewQueue(await AsyncStorage.getItem(reviewQueueKey(user?.id, activeCourse.id)));
       if (!replace && previous && previous.index < previous.rows.length) { setReplaceReview(true); return; }
-      await saveReviewQueue(reviewQueueKey(user?.id, activeCourse.id), makeReviewQueue(input, activeCourse.sourceLanguageCode, collectionId));
+      await saveReviewQueue(reviewQueueKey(user?.id, activeCourse.id), makeReviewQueue(input, activeCourse.sourceLanguageCode, selectedCollectionId));
       router.push('/import-review');
     } catch { setReviewError('Could not save this review on your device. Please try again.'); }
     finally { setBusy(false); }
@@ -86,6 +90,7 @@ export default function ImportScreen() {
   };
 
   const importWords = async () => {
+    if (!selectedCollectionId) return;
     if (!selectedImportable.length) {
       router.push('/upgrade' as never);
       return;
@@ -93,7 +98,7 @@ export default function ImportScreen() {
     setBusy(true);
     try {
       await createWords(selectedImportable.map((line) => ({
-        collectionId, term: line.term, normalizedTerm: line.normalizedTerm,
+        collectionId: selectedCollectionId, term: line.term, normalizedTerm: line.normalizedTerm,
         definition: line.definition ?? line.sense!.definition,
         example: line.example ?? line.sense?.example ?? null,
         partOfSpeech: line.sense?.partOfSpeech ?? null,
@@ -118,16 +123,16 @@ export default function ImportScreen() {
         ? <>Use either <AppText variant="label">word</AppText> or <AppText variant="label">word - {languageLabel(activeCourse.targetLanguageCode)} translation</AppText>. You may also supply <AppText variant="label">word | definition | hint | example</AppText>.</>
         : <>Because no reviewed catalog is bundled, provide your own <AppText variant="label">word | {languageLabel(activeCourse.sourceLanguageCode)} definition | {languageLabel(activeCourse.targetLanguageCode)} hint | optional example</AppText>.</>}</AppText></View>
       <TextInput value={input} onChangeText={(value) => { setInput(value); setReviewed(null); }} multiline autoCapitalize="none" textAlignVertical="top" placeholder={activeCourse.sourceLanguageCode === 'es' ? 'corazón | Órgano que impulsa la sangre. | srdce | El corazón late con fuerza.\nsolicitar | Pedir algo de manera formal. | požiadať' : 'stakeholder - zainteresovana strana\nscope\nproject charter - projektova charta'} placeholderTextColor={theme.muted} style={[styles.input, { backgroundColor: theme.surface, borderColor: theme.border, color: theme.text }]}/>
-      <View><AppText variant="label">Collection</AppText><View style={styles.chips}>{collections.map((collection) => <Pressable key={collection.id} onPress={() => setCollectionId(collection.id)} style={[styles.chip, { backgroundColor: collectionId === collection.id ? theme.primary : theme.surface, borderColor: collectionId === collection.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: collectionId === collection.id ? '#FFFFFF' : theme.text }}>{collection.name}</AppText></Pressable>)}</View></View>
-      <PrimaryButton label="Review words one by one" disabled={!input.trim()} loading={busy} onPress={() => void guidedReview()}/>
+      <View><AppText variant="label">Collection</AppText><View style={styles.chips}>{collections.map((collection) => <Pressable key={collection.id} onPress={() => setCollectionId(collection.id)} style={[styles.chip, { backgroundColor: selectedCollectionId === collection.id ? theme.primary : theme.surface, borderColor: selectedCollectionId === collection.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: selectedCollectionId === collection.id ? '#FFFFFF' : theme.text }}>{collection.name}</AppText></Pressable>)}</View></View>
+      <PrimaryButton label="Review words one by one" disabled={!input.trim() || !selectedCollectionId} loading={busy} onPress={() => void guidedReview()}/>
       {replaceReview ? <View style={styles.review}><AppText>You have an unfinished review. Replace it with these words?</AppText>
-        <PrimaryButton label="Replace saved review" variant="secondary" loading={busy} onPress={() => void guidedReview(true)}/>
+        <PrimaryButton label="Replace saved review" variant="secondary" loading={busy} disabled={!selectedCollectionId} onPress={() => void guidedReview(true)}/>
         <PrimaryButton label="Keep saved review" variant="secondary" disabled={busy} onPress={() => setReplaceReview(false)}/>
       </View> : null}
       {reviewError ? <AppText accessibilityRole="alert">{reviewError}</AppText> : null}
       <PrimaryButton label="Resume saved review" variant="secondary" disabled={busy} onPress={() => router.push('/import-review')}/>
       <PrimaryButton label="Review paste" variant="secondary" loading={busy && !reviewed} disabled={!input.trim()} onPress={() => void review()} icon={<Ionicons name="checkmark-done-outline" color={theme.primary} size={18}/>}/>
-      {reviewed ? <View style={styles.review}><View style={styles.summary}><AppText variant="heading">Review</AppText><AppText variant="label" style={{ color: theme.primary }}>{importable.length} ready</AppText></View>{reviewed.map((line) => { const issue = line.error ?? (line.duplicate ? 'Already in your library' : line.catalogAmbiguous ? 'Multiple meanings found; add this word manually to choose the right one' : !line.sense && !line.definition ? 'No offline definition found' : null); const translation = line.translation ?? line.sense?.translation; return <View key={`${line.lineNumber}-${line.term}`} style={[styles.line, { backgroundColor: theme.surface, borderColor: issue ? theme.danger : theme.border }]}><View style={styles.lineText}><AppText variant="label">{line.term}</AppText><AppText variant="caption" style={{ color: issue ? theme.danger : theme.muted }}>{issue ?? line.definition ?? line.sense?.definition}</AppText>{translation ? <AppText variant="caption" style={{ color: theme.primary }}>Hint: {translation}</AppText> : null}</View><Ionicons name={issue ? 'alert-circle-outline' : 'checkmark-circle-outline'} color={issue ? theme.danger : theme.success} size={22}/></View>; })}{exceedsCapacity ? <View testID="word-capacity-notice" style={[styles.capacityNotice, { backgroundColor: theme.primarySoft }]}><Ionicons name="infinite-outline" color={theme.primary} size={20}/><View style={styles.lineText}><AppText variant="label">{wordCapacity.remaining === 0 ? 'Your free library is full' : `${wordCapacity.remaining} free ${wordCapacity.remaining === 1 ? 'slot remains' : 'slots remain'}`}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Import the words that fit, or unlock the whole batch.</AppText></View></View> : null}<PrimaryButton label={selectedImportable.length > 0 ? `Import first ${selectedImportable.length} ${selectedImportable.length === 1 ? 'word' : 'words'}` : 'Unlock to import more words'} loading={busy} disabled={!importable.length} onPress={() => void importWords()}/>{exceedsCapacity ? <PrimaryButton label="Unlock unlimited words" variant="secondary" onPress={() => router.push('/upgrade' as never)}/> : null}<AppText variant="caption" style={{ color: theme.muted }}>Unresolved, ambiguous, or duplicate lines are left out. Add unresolved phrases manually so their meaning is not guessed.</AppText></View> : null}
+      {reviewed ? <View style={styles.review}><View style={styles.summary}><AppText variant="heading">Review</AppText><AppText variant="label" style={{ color: theme.primary }}>{importable.length} ready</AppText></View>{reviewed.map((line) => { const issue = line.error ?? (line.duplicate ? 'Already in your library' : line.catalogAmbiguous ? 'Multiple meanings found; add this word manually to choose the right one' : !line.sense && !line.definition ? 'No offline definition found' : null); const translation = line.translation ?? line.sense?.translation; return <View key={`${line.lineNumber}-${line.term}`} style={[styles.line, { backgroundColor: theme.surface, borderColor: issue ? theme.danger : theme.border }]}><View style={styles.lineText}><AppText variant="label">{line.term}</AppText><AppText variant="caption" style={{ color: issue ? theme.danger : theme.muted }}>{issue ?? line.definition ?? line.sense?.definition}</AppText>{translation ? <AppText variant="caption" style={{ color: theme.primary }}>Hint: {translation}</AppText> : null}</View><Ionicons name={issue ? 'alert-circle-outline' : 'checkmark-circle-outline'} color={issue ? theme.danger : theme.success} size={22}/></View>; })}{exceedsCapacity ? <View testID="word-capacity-notice" style={[styles.capacityNotice, { backgroundColor: theme.primarySoft }]}><Ionicons name="infinite-outline" color={theme.primary} size={20}/><View style={styles.lineText}><AppText variant="label">{wordCapacity.remaining === 0 ? 'Your free library is full' : `${wordCapacity.remaining} free ${wordCapacity.remaining === 1 ? 'slot remains' : 'slots remain'}`}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Import the words that fit, or unlock the whole batch.</AppText></View></View> : null}<PrimaryButton label={selectedImportable.length > 0 ? `Import first ${selectedImportable.length} ${selectedImportable.length === 1 ? 'word' : 'words'}` : 'Unlock to import more words'} loading={busy} disabled={!importable.length || !selectedCollectionId} onPress={() => void importWords()}/>{exceedsCapacity ? <PrimaryButton label="Unlock unlimited words" variant="secondary" onPress={() => router.push('/upgrade' as never)}/> : null}<AppText variant="caption" style={{ color: theme.muted }}>Unresolved, ambiguous, or duplicate lines are left out. Add unresolved phrases manually so their meaning is not guessed.</AppText></View> : null}
     </Screen>
   );
 }

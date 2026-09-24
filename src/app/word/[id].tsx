@@ -43,7 +43,8 @@ export default function WordDetailScreen() {
   const [example, setExample] = useState('');
   const [translation, setTranslation] = useState('');
   const [partOfSpeech, setPartOfSpeech] = useState('');
-  const [collectionId, setCollectionId] = useState('my-words');
+  const [collectionId, setCollectionId] = useState('');
+  const selectedCollectionId = collections.some((item) => item.id === collectionId) ? collectionId : '';
   const [showCollectionForm, setShowCollectionForm] = useState(false);
   const [collectionName, setCollectionName] = useState('');
   const [creatingCollection, setCreatingCollection] = useState(false);
@@ -130,12 +131,12 @@ export default function WordDetailScreen() {
   };
 
   const persistWord = async () => {
-    if (!term.trim() || !definition.trim() || showCollectionForm || collectionCreationPending.current || wordSavePending.current) return;
+    if (!term.trim() || !definition.trim() || !selectedCollectionId || showCollectionForm || collectionCreationPending.current || wordSavePending.current) return;
     wordSavePending.current = true;
     setSaving(true);
     try {
       await editWord(word.id, {
-        collectionId, term, normalizedTerm: normalizeTerm(term, sourceLanguageCode), definition,
+        collectionId: selectedCollectionId, term, normalizedTerm: normalizeTerm(term, sourceLanguageCode), definition,
         sourceLanguageCode, targetLanguageCode, sourcePronunciationLocale, targetPronunciationLocale,
         example: example || null, translation: translation || null, partOfSpeech: partOfSpeech || null,
         catalogSenseId: catalogAssociationRemoved ? null : word.catalogSenseId,
@@ -148,7 +149,7 @@ export default function WordDetailScreen() {
   };
 
   const save = () => {
-    if (!term.trim() || !definition.trim() || showCollectionForm || collectionCreationPending.current || wordSavePending.current) return;
+    if (!term.trim() || !definition.trim() || !selectedCollectionId || showCollectionForm || collectionCreationPending.current || wordSavePending.current) return;
     if (!getCourseForLanguagePair(sourceLanguageCode, targetLanguageCode)) {
       Alert.alert(
         'Choose a supported course pair',
@@ -314,7 +315,7 @@ export default function WordDetailScreen() {
         ? <PrimaryButton label={`Generate ${languageLabel(targetLanguageCode)} hint on device`} variant="secondary" loading={translating} disabled={!term.trim()} onPress={() => void generateTranslation()} icon={<Ionicons name="language-outline" color={theme.primary} size={18}/>}/>
         : <AppText variant="caption" style={{ color: theme.muted }}>Automatic on-device translation supports English → Slovak and Spanish → Slovak.</AppText>}
       <FormField label="Part of speech" value={partOfSpeech} onChangeText={setPartOfSpeech}/>
-      <PrimaryButton label="Save changes" loading={saving} disabled={!term.trim() || !definition.trim() || showCollectionForm || creatingCollection || restarting} onPress={save}/>
+      <PrimaryButton label="Save changes" loading={saving} disabled={!term.trim() || !definition.trim() || !selectedCollectionId || showCollectionForm || creatingCollection || restarting} onPress={save}/>
       <PrimaryButton label="Delete word" variant="danger" disabled={creatingCollection || saving || restarting} onPress={confirmDelete}/>
       <AppText variant="caption" style={{ color: theme.muted }}>Source: {word.cefrLevel ? `${word.cefrLevel} ${languageLabel(word.sourceLanguageCode)} catalog` : word.source === 'manual' ? 'Your library' : `${word.source} discovery pack`} · Created {new Date(word.createdAt).toLocaleDateString()}</AppText>
     </Screen>
