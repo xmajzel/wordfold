@@ -504,3 +504,17 @@ export async function saveLearningRhythm(database: SQLiteDatabase, confirmations
   await database.runAsync('INSERT INTO app_metadata (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value',
     RHYTHM_STORAGE_KEY, serializeLearningRhythm(confirmations));
 }
+
+export async function getWordPlayIntroductions(database: SQLiteDatabase): Promise<string[]> {
+  const rows = await database.getAllAsync<{ key: string }>(
+    "SELECT key FROM app_metadata WHERE key LIKE 'word_play_introduced:%' AND value = 'true'",
+  );
+  return rows.map((row) => row.key.slice('word_play_introduced:'.length));
+}
+
+export async function saveWordPlayIntroduction(database: SQLiteDatabase, courseId: CourseId) {
+  await database.runAsync(
+    "INSERT INTO app_metadata (key, value) VALUES (?, 'true') ON CONFLICT(key) DO UPDATE SET value = 'true'",
+    courseMetadataKey('word_play_introduced', courseId),
+  );
+}

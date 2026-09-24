@@ -5,8 +5,12 @@ import type { Collection, DashboardStats, LearningRating, Word } from '@/domain/
 import * as guestRepository from '@/data/repository';
 import * as syncRepository from '@/data/sync/repository';
 import type { RatingUpdate } from '@/features/learning/algorithm';
+import { getGuestWordPlayStats, getSyncWordPlayStats, recordGuestWordPlayEvent, recordSyncWordPlayEvent } from '@/data/word-play-repository';
+import type { WordPlayEvent, WordPlayStats } from '@/features/word-play/model';
 
 export interface VocabularyStore {
+  getWordPlayStats(): Promise<Record<string, WordPlayStats>>;
+  recordWordPlayEvent(event: WordPlayEvent): Promise<void>;
   listWords(): Promise<Word[]>;
   getWord(id: string): Promise<Word | null>;
   listCollections(): Promise<Collection[]>;
@@ -30,6 +34,8 @@ export interface VocabularyStore {
 
 export function createGuestVocabularyStore(database: SQLiteDatabase): VocabularyStore {
   return {
+    getWordPlayStats: () => getGuestWordPlayStats(database),
+    recordWordPlayEvent: (event) => recordGuestWordPlayEvent(database, event),
     listWords: () => guestRepository.listWords(database),
     getWord: (id) => guestRepository.getWord(database, id),
     listCollections: () => guestRepository.listCollections(database),
@@ -58,6 +64,8 @@ interface PowerSyncStoreDatabase extends syncRepository.SyncRepositoryDatabase {
 
 export function createSyncVocabularyStore(database: PowerSyncStoreDatabase, userId: string): VocabularyStore {
   return {
+    getWordPlayStats: () => getSyncWordPlayStats(database),
+    recordWordPlayEvent: (event) => recordSyncWordPlayEvent(database, userId, event),
     listWords: () => syncRepository.listSyncWords(database),
     getWord: (id) => syncRepository.getSyncWord(database, id),
     listCollections: () => syncRepository.listSyncCollections(database),

@@ -36,6 +36,26 @@ function setup(entries: CrudEntry[], remoteOverrides: Partial<UploadRemote> = {}
 }
 
 describe('PowerSyncUploader', () => {
+  it('uploads game relearning atomically and leaves a transient failure queued', async () => {
+    const context = setup([
+      entry(1, 'PATCH', 'words', 'word-1', { state: 'cannot_remember', known_streak: 0 }),
+      entry(2, 'PUT', 'learning_events', 'game-event', {
+        user_id: 'user-1', word_id: 'word-1', type: 'game_relearned', value: '{"sessionId":"session","mode":"matching"}',
+        occurred_at: '2026-09-18T10:00:00.000Z',
+      }),
+    ]);
+    jest.mocked(context.remote.rpc).mockResolvedValueOnce({ error: { code: '503', message: 'Unavailable' } });
+    await expect(context.uploader.uploadNext(context.database)).rejects.toThrow('Synchronization upload failed');
+    expect(context.complete).not.toHaveBeenCalled();
+    await context.uploader.uploadNext(context.database);
+    expect(context.remote.rpc).toHaveBeenLastCalledWith('relearn_game_word', {
+      p_word_id: 'word-1', p_event_id: 'game-event', p_value: '{"sessionId":"session","mode":"matching"}',
+      p_occurred_at: '2026-09-18T10:00:00.000Z',
+    });
+    expect(context.remote.patch).not.toHaveBeenCalled();
+    expect(context.remote.insertEvent).not.toHaveBeenCalled();
+    expect(context.complete).toHaveBeenCalledTimes(1);
+  });
   it('upserts a full local word and completes its transaction', async () => {
     const put = entry(1, 'PUT', 'words', 'word-1', {
       user_id: 'user-1', term: 'Able', normalized_term: 'able',

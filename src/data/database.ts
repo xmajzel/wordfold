@@ -4,7 +4,7 @@ import { normalizeTermForLanguage } from '@/domain/normalize-term';
 
 import { getCefrLevelForCatalogSense } from './cefr-level-lookup';
 
-const DATABASE_VERSION = 8;
+const DATABASE_VERSION = 9;
 
 export async function migrateDatabase(database: SQLiteDatabase) {
   await database.execAsync('PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;');
@@ -55,7 +55,7 @@ export async function migrateDatabase(database: SQLiteDatabase) {
       CREATE TABLE learning_events (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         word_id TEXT REFERENCES words(id) ON DELETE SET NULL,
-        type TEXT NOT NULL CHECK(type IN ('view', 'rating', 'notification_open')),
+        type TEXT NOT NULL CHECK(type IN ('view', 'rating', 'notification_open', 'game_seen', 'game_missed', 'game_answered', 'game_relearned')),
         value TEXT,
         occurred_at TEXT NOT NULL
       );
@@ -294,6 +294,25 @@ export async function migrateDatabase(database: SQLiteDatabase) {
   if (currentVersion < 8) {
     await database.execAsync('ALTER TABLE words ADD COLUMN known_streak INTEGER NOT NULL DEFAULT 0 CHECK (known_streak >= 0);');
   }
+
+  if (currentVersion > 0 && currentVersion < 9) {
+    await database.withExclusiveTransactionAsync(async (transaction) => {
+      await transaction.execAsync(`
+        CREATE TABLE learning_events_v9 (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          word_id TEXT REFERENCES words(id) ON DELETE SET NULL,
+          type TEXT NOT NULL CHECK(type IN ('view', 'rating', 'notification_open', 'game_seen', 'game_missed', 'game_answered', 'game_relearned')),
+          value TEXT,
+          occurred_at TEXT NOT NULL
+        );
+        INSERT INTO learning_events_v9 SELECT id, word_id, type, value, occurred_at FROM learning_events;
+        DROP TABLE learning_events;
+        ALTER TABLE learning_events_v9 RENAME TO learning_events;
+        CREATE INDEX learning_events_time_idx ON learning_events(occurred_at);
+      `);
+    });
+  }
+  await database.execAsync('CREATE INDEX IF NOT EXISTS learning_events_word_type_idx ON learning_events(word_id, type, value);');
 
   await database.execAsync(`PRAGMA user_version = ${DATABASE_VERSION}`);
 }

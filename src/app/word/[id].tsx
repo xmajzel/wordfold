@@ -1,3 +1,4 @@
+import { WordPlayHistory } from '@/features/word-play/word-history';
 import { FeedbackLink } from '@/features/feedback/feedback-link';
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Pressable, StyleSheet, View } from 'react-native';
@@ -34,7 +35,7 @@ import { radii, spacing } from '@/theme/tokens';
 export default function WordDetailScreen() {
   const theme = useAppTheme();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { words, collections, editWord, removeWord, resetWord, createCollection } = useAppData();
+  const { words, collections, editWord, removeWord, resetWord, createCollection, wordPlayStats } = useAppData();
   const word = words.find((item) => item.id === id);
   const [term, setTerm] = useState('');
   const [definition, setDefinition] = useState('');
@@ -294,7 +295,9 @@ export default function WordDetailScreen() {
         locale={term ? sourcePronunciationLocale : word.sourcePronunciationLocale}
         catalogSenseId={catalogAssociationRemoved ? null : word.catalogSenseId}
       /> : null}
+      <AppText variant="label">Regular practice</AppText>
       <View style={[styles.trail, { backgroundColor: theme.surface, borderColor: theme.border }]}><Trail value={word.viewCount} label="times seen"/><Trail value={word.lapseCount} label="misses"/><Trail value={word.understoodStreak} label="recall steps"/></View>
+      <WordPlayHistory stats={wordPlayStats?.[word.id]}/>
       <LanguageSelector label="Learning language" languageCode={sourceLanguageCode} pronunciationLocale={sourcePronunciationLocale} onChange={changeSourceLanguage}/>
       <LanguageSelector label="Hint language" languageCode={targetLanguageCode} pronunciationLocale={targetPronunciationLocale} onChange={changeTargetLanguage}/>
       <FormField label={`${languageLabel(sourceLanguageCode)} word or phrase`} value={term} onChangeText={(value) => { translationController.current?.abort(); setTerm(value); }}/>

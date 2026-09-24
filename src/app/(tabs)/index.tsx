@@ -1,3 +1,5 @@
+import { WordPlayEntry } from '@/features/word-play/entry';
+import { WORD_PLAY_SIZE } from '@/features/word-play/model';
 import { rememberFeedbackOrigin } from '@/features/feedback/context';
 import { FeedbackLink } from '@/features/feedback/feedback-link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -27,7 +29,7 @@ import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
 
 export default function LearnScreen() {
-  const { words, collections, activeCourse, activeCourseId, learningFilter, updateLearningFilter } = useAppData();
+  const { words, collections, activeCourse, activeCourseId, learningFilter, updateLearningFilter, wordPlayIntroductions, wordPlayStats } = useAppData();
   const activeWords = useMemo(() => words.filter((word) => wordBelongsToCourse(word, activeCourseId)), [activeCourseId, words]);
   const { notificationWordId: notificationWordIdParam } = useLocalSearchParams<{
     notificationWordId?: string | string[];
@@ -59,6 +61,9 @@ export default function LearnScreen() {
 
   return <Screen style={styles.screen}>
     <Header filter={sessionFilter} availableFilters={availableFilters} learnedLanguage={languageLabel(activeCourse.sourceLanguageCode)} onSelectFilter={selectFilter}/>
+    {activeWords.filter((word) => word.state === 'learned').length >= WORD_PLAY_SIZE
+      && !wordPlayIntroductions?.includes(activeCourseId)
+      && !activeWords.some((word) => (wordPlayStats?.[word.id]?.gamesPlayed ?? 0) > 0) ? <WordPlayEntry/> : null}
     <LearningSession
       key={sessionKey}
       filter={sessionFilter}

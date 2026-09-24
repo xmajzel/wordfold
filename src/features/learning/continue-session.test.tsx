@@ -55,6 +55,10 @@ const mockRecommendationBatch = Array.from({ length: 10 }, (_, index): Recommend
   topic: 'business',
 }));
 let mockWords = [mockFirstWord, mockNextWord];
+let mockIntroductions: string[] = [];
+let mockGameStats: Record<string, { gamesPlayed: number }> = {};
+const mockDismissIntroduction = jest.fn(async (courseId: string) => { mockIntroductions = [...mockIntroductions, courseId]; });
+
 jest.mock('expo-router', () => ({
   router: {
     push: (...args: unknown[]) => mockRouterPush(...args),
@@ -163,6 +167,9 @@ jest.mock('@/components/swipeable-word-card', () => {
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     words: mockWords,
+    wordPlayIntroductions: mockIntroductions,
+    wordPlayStats: mockGameStats,
+    dismissWordPlayIntroduction: mockDismissIntroduction,
     activeCourseId: mockActiveCourseId,
     activeCourse: mockActiveCourseId === 'es-sk'
       ? { sourceLanguageCode: 'es', capabilities: { recommendations: true } }
@@ -183,6 +190,8 @@ describe('continued learning session', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockSearchParams = {};
+    mockIntroductions = [];
+    mockGameStats = {};
     mockActiveCourseId = 'en-sk';
     mockWords = [mockFirstWord, mockNextWord];
     mockLearningFilter = 'all';
@@ -195,6 +204,23 @@ describe('continued learning session', () => {
     mockBuildRecommendations.mockReturnValue([]);
     mockBuildLearningFeed.mockReturnValue([mockFirstWord]);
     mockBuildContinuedLearningFeed.mockReturnValue([mockNextWord]);
+  });
+
+  it('shows the unlock introduction once per language and hides it for existing players', async () => {
+    mockWords = Array.from({ length: 10 }, (_, index) => baseWord({ id: `learned-${index}`, state: 'learned' }));
+    const view = await render(<LearnScreen/>);
+    view.getByText('Word play is ready');
+    await fireEvent.press(view.getByRole('button', { name: 'Dismiss Word play introduction' }));
+    expect(mockDismissIntroduction).toHaveBeenCalledWith('en-sk');
+    await view.rerender(<LearnScreen/>);
+    expect(view.queryByText('Word play is ready')).toBeNull();
+    mockActiveCourseId = 'es-sk';
+    mockWords = mockWords.map((word) => ({ ...word, sourceLanguageCode: 'es' }));
+    await view.rerender(<LearnScreen/>);
+    view.getByText('Word play is ready');
+    mockGameStats = { 'learned-0': { gamesPlayed: 1 } };
+    await view.rerender(<LearnScreen/>);
+    expect(view.queryByText('Word play is ready')).toBeNull();
   });
 
   it.each([false, true])('adds a resumed word to an open session (completed: %s)', async (completed) => {

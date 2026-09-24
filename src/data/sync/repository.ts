@@ -7,6 +7,7 @@ import { getCefrLevelForCatalogSense } from '@/data/cefr-level-lookup';
 import type { RatingUpdate } from '@/features/learning/algorithm';
 
 interface SyncTransaction {
+  getAll<T>(sql: string, parameters?: unknown[]): Promise<T[]>;
   execute(sql: string, parameters?: unknown[]): Promise<unknown>;
 }
 

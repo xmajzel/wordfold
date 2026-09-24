@@ -10,7 +10,7 @@ type SyncReader = {
 
 type LearningEventSnapshot = {
   wordId: string | null;
-  type: 'view' | 'rating' | 'notification_open';
+  type: 'view' | 'rating' | 'notification_open' | import('@/features/word-play/model').WordPlayEventType;
   value: string | null;
   occurredAt: string;
 };

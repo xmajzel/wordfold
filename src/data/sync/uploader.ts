@@ -126,7 +126,7 @@ export class PowerSyncUploader {
 }
 
 interface CompoundMutation {
-  name: 'apply_word_rating' | 'apply_word_rating_v2' | 'record_word_view';
+  name: 'apply_word_rating' | 'apply_word_rating_v2' | 'record_word_view' | 'relearn_game_word';
   parameters: MutableRow;
   event: CrudEntry;
 }
@@ -136,6 +136,16 @@ function compoundMutation(transaction: CrudTransaction): CompoundMutation | null
   const word = transaction.crud.find((entry) => entry.table === 'words' && entry.op === 'PATCH');
   const event = transaction.crud.find((entry) => entry.table === 'learning_events' && entry.op === 'PUT');
   if (!word || !event || event.opData?.word_id !== word.id) return null;
+
+  if (event.opData?.type === 'game_relearned') {
+    return {
+      name: 'relearn_game_word', event,
+      parameters: {
+        p_word_id: word.id, p_event_id: event.id,
+        p_value: event.opData.value, p_occurred_at: event.opData.occurred_at,
+      },
+    };
+  }
 
   if (event.opData?.type === 'rating' && hasFields(word.opData, [
     'state', 'understood_streak', 'lapse_count', 'last_rated_at', 'next_review_at',

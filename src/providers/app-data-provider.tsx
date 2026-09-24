@@ -23,6 +23,7 @@ import { emptyGuestImportCounts, type GuestImportConflictResolution, type GuestI
 import { supabase } from '@/data/supabase/client';
 import { createGuestVocabularyStore, createSyncVocabularyStore } from '@/data/vocabulary-store';
 import { applyRating } from '@/features/learning/algorithm';
+import type { WordPlayEvent, WordPlayStats } from '@/features/word-play/model';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
 import { requestCloudAccountDeletion } from '@/features/auth/account-deletion';
 import { assertWordCapacity, getWordCapacity } from '@/features/purchases/capacity';
@@ -39,6 +40,10 @@ import { usePurchase } from '@/providers/purchase-provider';
 import { normalizeTermForLanguage } from '@/domain/normalize-term';
 
 interface AppDataValue {
+  wordPlayStats: Record<string, WordPlayStats>;
+  wordPlayIntroductions: string[];
+  dismissWordPlayIntroduction(courseId: CourseId): Promise<void>;
+  recordWordPlayEvent(event: WordPlayEvent): Promise<void>;
   dataSource: 'loading' | 'guest' | 'reconciling' | 'synced';
   words: Word[];
   collections: Collection[];
@@ -164,6 +169,8 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const syncPhase = sync.phase;
   const syncHasSynced = sync.hasSynced;
   const [words, setWords] = useState<Word[]>([]);
+  const [wordPlayIntroductions, setWordPlayIntroductions] = useState<string[]>([]);
+  const [wordPlayStats, setWordPlayStats] = useState<Record<string, WordPlayStats>>({});
   const [collections, setCollections] = useState<Collection[]>([]);
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [reminderSettings, setReminderSettings] = useState<ReminderSettings | null>(null);
@@ -365,12 +372,15 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
 
   const refresh = useCallback(async () => {
     const nextActiveCourseId = await repository.getActiveCourseId(appDatabase);
-    const [loadedWords, nextCollections, nextStats, nextSettings, nextPreferences, nextVoicePreference, nextOnboarding, nextLearningFilter, nextRhythm] = await Promise.all([
+    const [loadedWords, nextCollections, nextStats, nextSettings, nextPreferences, nextVoicePreference, nextOnboarding, nextLearningFilter, nextRhythm, nextWordPlayStats, nextIntroductions] = await Promise.all([
       vocabularyStore.listWords(), vocabularyStore.listCollections(), vocabularyStore.getStats(nextActiveCourseId),
       repository.getReminderSettings(appDatabase), repository.getLearningPreferences(appDatabase, nextActiveCourseId),
       repository.getPronunciationVoicePreference(appDatabase, nextActiveCourseId), repository.isOnboardingComplete(appDatabase),
       repository.getLearningFilter(appDatabase, nextActiveCourseId), repository.getLearningRhythm(appDatabase),
+      vocabularyStore.getWordPlayStats(), repository.getWordPlayIntroductions(appDatabase),
     ]);
+    setWordPlayIntroductions((current) => [...new Set([...current, ...nextIntroductions])]);
+    setWordPlayStats(nextWordPlayStats);
     setLearningConfirmations(nextRhythm.confirmations);
     setRhythmIntroduced(nextRhythm.introduced);
     setWords(loadedWords);
@@ -383,6 +393,11 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     setOnboardingComplete(nextOnboarding);
     setLearningFilter(selectedFilters.current.get(nextActiveCourseId) ?? nextLearningFilter);
   }, [appDatabase, vocabularyStore]);
+
+  const dismissWordPlayIntroduction = useCallback(async (courseId: CourseId) => {
+    await runDatabaseMutation(() => repository.saveWordPlayIntroduction(appDatabase, courseId));
+    setWordPlayIntroductions((current) => current.includes(courseId) ? current : [...current, courseId]);
+  }, [appDatabase, runDatabaseMutation]);
 
   const prepareWordTranslation = useCallback((word: Word) => {
     if (word.translation) return Promise.resolve();
@@ -491,6 +506,12 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   }, [currentLearnedWordIds, dataSource, onboardingComplete, reschedule]);
 
   const value = useMemo<AppDataValue>(() => ({
+    wordPlayStats, wordPlayIntroductions, dismissWordPlayIntroduction,
+    recordWordPlayEvent: async (event) => {
+      await runDatabaseMutation(() => vocabularyStore.recordWordPlayEvent(event));
+      if (event.type === 'game_relearned') await refresh();
+      else setWordPlayStats(await vocabularyStore.getWordPlayStats());
+    },
     dataSource, words, collections, stats, reminderSettings, activeCourseId,
     activeCourse: getCourseDefinition(activeCourseId), learningPreferences,
     pronunciationVoicePreference, learningFilter, onboardingComplete, learningConfirmations, rhythmIntroduced,
@@ -689,7 +710,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
         setStats((current) => current ? { ...current, notificationOpens: current.notificationOpens + 1 } : current);
       }
     },
-  }), [activeCourseId, appDatabase, catalogDatabase, collections, cutover, dataSource, deleteCloudAccount, guestImport, keepAccountRename, learningFilter, learningPreferences, learningConfirmations, rhythmIntroduced, onboardingComplete, pauseGuestImport, prepareForSignOut, prepareGuestImport, prepareWordTranslation, pronunciationVoicePreference, purchase.unlimited, refresh, refreshGuestImport, reminderSettings, reschedule, resolveGuestImportConflict, resolveSyncCutoverConflict, runDatabaseMutation, runGuestImport, runSyncCutover, stats, vocabularyStore, words]);
+  }), [activeCourseId, appDatabase, catalogDatabase, collections, cutover, dataSource, deleteCloudAccount, guestImport, keepAccountRename, learningFilter, learningPreferences, learningConfirmations, rhythmIntroduced, onboardingComplete, pauseGuestImport, prepareForSignOut, prepareGuestImport, prepareWordTranslation, pronunciationVoicePreference, purchase.unlimited, refresh, refreshGuestImport, reminderSettings, reschedule, resolveGuestImportConflict, resolveSyncCutoverConflict, runDatabaseMutation, runGuestImport, runSyncCutover, stats, vocabularyStore, wordPlayStats, wordPlayIntroductions, dismissWordPlayIntroduction, words]);
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>;
 }

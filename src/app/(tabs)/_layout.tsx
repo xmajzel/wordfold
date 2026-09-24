@@ -13,6 +13,7 @@ export default function TabsLayout() {
   return (
     <Tabs screenOptions={{ headerShown: false, tabBarActiveTintColor: theme.primary, tabBarInactiveTintColor: theme.muted, tabBarLabelStyle: styles.label, tabBarItemStyle: styles.item, tabBarStyle: [styles.tabBar, { backgroundColor: theme.surface, borderColor: theme.border, shadowColor: theme.shadow }], sceneStyle: { backgroundColor: theme.canvas } }}>
       <Tabs.Screen name="index" options={{ title: 'Learn', tabBarIcon: ({ color, size }) => <Ionicons name="sparkles-outline" color={color} size={size}/> }} />
+      <Tabs.Screen name="play" options={{ title: 'Play', tabBarIcon: ({ color, size }) => <Ionicons name="extension-puzzle-outline" color={color} size={size}/> }} />
       <Tabs.Screen name="library" options={{ title: 'Library', tabBarIcon: ({ color, size }) => <Ionicons name="layers-outline" color={color} size={size}/> }} />
       <Tabs.Screen name="progress" options={{ title: 'Progress', tabBarIcon: ({ color, size }) => <Ionicons name="stats-chart-outline" color={color} size={size}/> }} />
     </Tabs>

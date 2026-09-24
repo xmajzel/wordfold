@@ -24,6 +24,10 @@ jest.mock('@/providers/purchase-provider', () => ({
 }));
 jest.mock('@/data/sync/database', () => ({ powerSyncDatabase: {} }));
 jest.mock('@/data/supabase/client', () => ({ supabase: null }));
+jest.mock('@/data/word-play-repository', () => ({
+  getGuestWordPlayStats: jest.fn(async () => ({})),
+  recordGuestWordPlayEvent: jest.fn(async () => undefined),
+}));
 jest.mock('@/data/sync/guest-import-remote', () => ({ SupabaseGuestImportRemote: jest.fn() }));
 jest.mock('@/data/sync/guest-import', () => ({
   GuestImportCancelledError: class GuestImportCancelledError extends Error {},
@@ -60,6 +64,8 @@ jest.mock('@/data/repository', () => ({
     windowEndMinutes: 1200,
     timeZoneId: Intl.DateTimeFormat().resolvedOptions().timeZone || 'local',
   })),
+  getWordPlayIntroductions: jest.fn(async () => []),
+  saveWordPlayIntroduction: jest.fn(async () => undefined),
   getLearningRhythm: jest.fn(async () => ({ confirmations: 3, introduced: true })),
   saveLearningRhythm: jest.fn(async () => undefined),
   getLearningPreferences: jest.fn(async () => ({ levels: [], topics: [] })),

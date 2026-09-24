@@ -43,7 +43,7 @@ describe('migrateDatabase', () => {
     expect((database.execAsync as jest.Mock).mock.calls.some(([sql]) => String(sql).includes('CREATE TABLE sync_imports'))).toBe(true);
     expect((database.execAsync as jest.Mock).mock.calls.some(([sql]) => String(sql).includes('CREATE TABLE sync_id_mappings'))).toBe(true);
     expect((database.execAsync as jest.Mock).mock.calls.some(([sql]) => String(sql).includes('CREATE TABLE sync_cutovers'))).toBe(true);
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 8');
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 9');
   });
 
   it('preserves an existing version-one database without adding personal seed data', async () => {
@@ -51,8 +51,8 @@ describe('migrateDatabase', () => {
 
     await migrateDatabase(database);
 
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 8');
-    expect(database.withExclusiveTransactionAsync).toHaveBeenCalledTimes(1);
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 9');
+    expect(database.withExclusiveTransactionAsync).toHaveBeenCalledTimes(2);
     expect(database.runAsync).not.toHaveBeenCalledWith(expect.stringContaining('INSERT OR IGNORE INTO words'));
   });
 
@@ -69,11 +69,11 @@ describe('migrateDatabase', () => {
     expect(database.getAllAsync).toHaveBeenCalledWith('SELECT id, catalog_sense_id FROM words WHERE catalog_sense_id IS NOT NULL');
     expect(database.runAsync).toHaveBeenCalledWith(expect.stringContaining("'learning_filter', 'all'"));
     expect(database.runAsync).toHaveBeenCalledWith('UPDATE words SET cefr_level = ? WHERE id = ?', 'A1', 'word-1');
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 8');
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 9');
   });
 
   it('does not reapply an up-to-date migration', async () => {
-    const database = createDatabase(8);
+    const database = createDatabase(9);
 
     await migrateDatabase(database);
 
@@ -93,7 +93,7 @@ describe('migrateDatabase', () => {
     expect(migration).toContain('CREATE TABLE sync_id_mappings');
     expect(migration).toContain('has_conflict INTEGER NOT NULL DEFAULT 0');
     expect(migration).toContain('UNIQUE (account_id, entity_type, remote_id)');
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 8');
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 9');
   });
 
   it('adds cutover state and rebuilds reminder bookkeeping without a guest-word foreign key', async () => {
@@ -108,7 +108,7 @@ describe('migrateDatabase', () => {
     expect(migration).toContain('CREATE TABLE scheduled_reminders_v6');
     expect(migration).toContain('SELECT notification_id, word_id, scheduled_at FROM scheduled_reminders');
     expect(migration).not.toContain('word_id TEXT NOT NULL REFERENCES words');
-    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 8');
+    expect(database.execAsync).toHaveBeenLastCalledWith('PRAGMA user_version = 9');
   });
 
   it('rebuilds version-six words with pronunciation locales and a non-unique identity index', async () => {
