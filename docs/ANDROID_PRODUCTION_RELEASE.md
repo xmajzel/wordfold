@@ -17,7 +17,7 @@ Free services may pause after inactivity. Check both services before Play review
   is available offline, while private cloud pronunciation remains account-bound and explicit opt-in.
 - Database and PowerSync-role passwords are stored in macOS Keychain items named `wordfold-production-supabase-db` and `wordfold-production-powersync-role`; they are not stored in the repository.
 - The production EAS environment contains the Supabase, PowerSync, RevenueCat, and pronunciation
-  client variables. Google Play product setup, custom SMTP, and GitHub Pages remain governed by
+  client variables. Google Play product setup, custom SMTP, and Cloudflare Pages remain governed by
   the external release checklist below.
 
 ## Required production configuration
@@ -64,12 +64,14 @@ All `EXPO_PUBLIC_` values are embedded in the app. Never put database passwords,
 
 ## Legal pages and Play Console
 
-GitHub Pages publishes only `site/`, never the internal `docs/` directory. Expected URLs:
+Cloudflare Pages must publish only `site/`, never the internal `docs/` directory. Expected URLs:
 
-- `https://xmajzel.github.io/wordfold/privacy/`
-- `https://xmajzel.github.io/wordfold/account-deletion/`
+- `https://wordfold.app/privacy/`
+- `https://wordfold.app/account-deletion/`
 
-Enable GitHub Pages with GitHub Actions, publish the workflow from `main`, verify both URLs, and use them in the Play Console privacy and account-deletion fields. Complete Data Safety consistently with the published policy and installed SDK behavior.
+Create a Cloudflare Pages project connected to the `xmajzel/wordfold` GitHub repository. Select `main` as the production branch, no framework preset, `exit 0` as the build command, and `site` as the build output directory relative to the repository root. Keep automatic deployments enabled. Add `wordfold.app` as the custom domain. An apex domain requires the domain's nameservers to point to Cloudflare; preserve the existing MX, SPF, DKIM, DMARC, and other DNS records used by `support@wordfold.app` and `feedback.wordfold.app` when moving DNS.
+
+After the site is on `main`, verify the production deployment, both HTTPS URLs, and automatic deployment from a subsequent `main` change. Then update the in-app legal URLs, remove the GitHub Pages workflow, and use the live Cloudflare URLs in the Play Console privacy and account-deletion fields. Complete Data Safety consistently with the published policy and installed SDK behavior. Submitted feedback and its notification email are separate from cloud account deletion; handle identifiable feedback deletion requests sent to support before claiming that associated data has been removed.
 
 ## Android pronunciation acceptance
 
