@@ -2,6 +2,7 @@ import type { AbstractPowerSyncDatabase, PowerSyncBackendConnector, PowerSyncCre
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 import { PowerSyncUploader } from './uploader';
+import { resolveImportedCollectionId } from './legacy-collection-id';
 
 export class SupabasePowerSyncConnector implements PowerSyncBackendConnector {
   private readonly uploader: PowerSyncUploader;
@@ -15,7 +16,7 @@ export class SupabasePowerSyncConnector implements PowerSyncBackendConnector {
       if (error) throw error;
       if (!data.session) throw new Error('The synchronization session has expired.');
       return data.session.user.id;
-    });
+    }, resolveImportedCollectionId);
   }
 
   async fetchCredentials(): Promise<PowerSyncCredentials | null> {

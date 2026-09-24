@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import type { SyncStatus } from '@powersync/react-native';
 
 import { SupabasePowerSyncConnector } from '@/data/sync/connector';
+import { MISSING_COLLECTION_MAPPING_MESSAGE } from '@/data/sync/collection-id';
 import { powerSyncConfiguration, powerSyncConfigurationError } from '@/data/sync/config';
 import { powerSyncDatabase } from '@/data/sync/database';
 import { createSyncLifecycle } from '@/data/sync/lifecycle';
@@ -16,7 +17,7 @@ interface DatabaseSyncState {
   lastSyncedAt: Date | null;
   downloadError: boolean;
   uploading: boolean;
-  uploadError: boolean;
+  uploadError: string | null;
 }
 
 const connector = supabase && powerSyncConfiguration
@@ -33,7 +34,7 @@ function snapshot(status: SyncStatus): DatabaseSyncState {
     lastSyncedAt: status.lastSyncedAt ?? null,
     downloadError: Boolean(status.dataFlowStatus.downloadError),
     uploading: status.dataFlowStatus.uploading === true,
-    uploadError: Boolean(status.dataFlowStatus.uploadError),
+    uploadError: status.dataFlowStatus.uploadError?.message ?? null,
   };
 }
 
@@ -105,7 +106,9 @@ export function SyncProvider({ children }: PropsWithChildren) {
   const uploadFields = useMemo(() => ({
     uploading: databaseState.uploading,
     pendingUploads,
-    uploadErrorMessage: databaseState.uploadError ? 'Some changes could not be uploaded yet. Wordfold will retry.' : null,
+    uploadErrorMessage: databaseState.uploadError === MISSING_COLLECTION_MAPPING_MESSAGE
+      ? databaseState.uploadError
+      : databaseState.uploadError ? 'Some changes could not be uploaded yet. Wordfold will retry.' : null,
     rejectedWrite,
     refreshUploadState,
     acknowledgeRejectedWrite,

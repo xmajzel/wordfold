@@ -5,6 +5,9 @@ import { PowerSyncUploader, type UploadRemote } from './uploader';
 
 jest.mock('expo-crypto', () => ({ randomUUID: jest.fn(() => 'error-id') }));
 
+const collectionId = '11111111-1111-4111-8111-111111111111';
+const importedCollectionId = '22222222-2222-4222-8222-222222222222';
+
 function entry(
   clientId: number,
   op: `${UpdateType}`,
@@ -15,7 +18,7 @@ function entry(
   return { clientId, op, table, id, transactionId: 1, opData: data } as CrudEntry;
 }
 
-function setup(entries: CrudEntry[], remoteOverrides: Partial<UploadRemote> = {}) {
+function setup(entries: CrudEntry[], remoteOverrides: Partial<UploadRemote> = {}, mappedId: string | null = null) {
   const complete = jest.fn(async () => undefined);
   const transaction = { crud: entries, complete, transactionId: 1 } as unknown as CrudTransaction;
   const execute = jest.fn(async () => undefined);
@@ -31,8 +34,9 @@ function setup(entries: CrudEntry[], remoteOverrides: Partial<UploadRemote> = {}
     rpc: jest.fn(accepted),
     ...remoteOverrides,
   };
-  const uploader = new PowerSyncUploader({} as SupabaseClient, async () => 'user-1', remote);
-  return { uploader, database, remote, complete, execute };
+  const resolveCollectionId = jest.fn(async () => mappedId);
+  const uploader = new PowerSyncUploader({} as SupabaseClient, async () => 'user-1', resolveCollectionId, remote);
+  return { uploader, database, remote, complete, execute, resolveCollectionId };
 }
 
 describe('PowerSyncUploader', () => {
@@ -58,16 +62,57 @@ describe('PowerSyncUploader', () => {
   });
   it('upserts a full local word and completes its transaction', async () => {
     const put = entry(1, 'PUT', 'words', 'word-1', {
-      user_id: 'user-1', term: 'Able', normalized_term: 'able',
+      user_id: 'user-1', collection_id: collectionId, term: 'Able', normalized_term: 'able',
     });
     const context = setup([put]);
 
     await context.uploader.uploadNext(context.database);
 
     expect(context.remote.upsert).toHaveBeenCalledWith('words', {
-      id: 'word-1', user_id: 'user-1', term: 'Able', normalized_term: 'able',
+      id: 'word-1', user_id: 'user-1', collection_id: collectionId, term: 'Able', normalized_term: 'able',
+    });
+    expect(context.resolveCollectionId).not.toHaveBeenCalled();
+    expect(context.complete).toHaveBeenCalledTimes(1);
+  });
+
+  it('replays a legacy collection through the completed import mapping without changing the queued word', async () => {
+    const put = entry(1, 'PUT', 'words', 'word-1', {
+      user_id: 'user-1', collection_id: 'my-words', term: 'Able', normalized_term: 'able',
+    });
+    const context = setup([put], {}, importedCollectionId);
+
+    await context.uploader.uploadNext(context.database);
+
+    expect(context.resolveCollectionId).toHaveBeenCalledWith('user-1', 'my-words');
+    expect(context.remote.upsert).toHaveBeenCalledWith('words', expect.objectContaining({
+      id: 'word-1', collection_id: importedCollectionId,
+    }));
+    expect(put.opData?.collection_id).toBe('my-words');
+    expect(context.complete).toHaveBeenCalledTimes(1);
+  });
+
+  it('maps a queued collection change before patching', async () => {
+    const context = setup([entry(2, 'PATCH', 'words', 'word-1', {
+      collection_id: 'my-words', term: 'Able', ignored: 'private',
+    })], {}, importedCollectionId);
+
+    await context.uploader.uploadNext(context.database);
+
+    expect(context.remote.patch).toHaveBeenCalledWith('words', 'word-1', 'user-1', {
+      collection_id: importedCollectionId, term: 'Able',
     });
     expect(context.complete).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps a legacy word queued when its account has no completed import mapping', async () => {
+    const context = setup([entry(1, 'PUT', 'words', 'word-1', {
+      user_id: 'user-1', collection_id: 'my-words', term: 'Able',
+    })]);
+
+    await expect(context.uploader.uploadNext(context.database)).rejects.toThrow('needs a collection mapping');
+
+    expect(context.remote.upsert).not.toHaveBeenCalled();
+    expect(context.complete).not.toHaveBeenCalled();
   });
 
   it('applies a rating transaction through one idempotent RPC', async () => {
@@ -117,7 +162,7 @@ describe('PowerSyncUploader', () => {
       upsert: jest.fn(async () => ({ error: { code: '23505', message: 'private database details' } })),
     };
     const context = setup([entry(8, 'PUT', 'words', 'word-1', {
-      user_id: 'user-1', term: 'Able', normalized_term: 'able',
+      user_id: 'user-1', collection_id: collectionId, term: 'Able', normalized_term: 'able',
     })], remote);
 
     await expect(context.uploader.uploadNext(context.database)).rejects.toThrow('Synchronization upload failed');

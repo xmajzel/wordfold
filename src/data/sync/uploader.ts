@@ -2,6 +2,8 @@ import type { AbstractPowerSyncDatabase, CrudEntry, CrudTransaction } from '@pow
 import type { SupabaseClient } from '@supabase/supabase-js';
 import * as Crypto from 'expo-crypto';
 
+import { isSyncCollectionId, MISSING_COLLECTION_MAPPING_MESSAGE } from './collection-id';
+
 type MutableRow = Record<string, unknown>;
 
 interface SupabaseError {
@@ -19,6 +21,8 @@ interface UploadRemote {
   patch(table: 'collections' | 'words', id: string, userId: string, values: MutableRow): Promise<UploadResult>;
   rpc(name: string, parameters: MutableRow): Promise<UploadResult>;
 }
+
+type CollectionIdResolver = (accountId: string, localId: string) => Promise<string | null>;
 
 const MUTABLE_FIELDS = {
   collections: new Set(['name', 'color', 'updated_at']),
@@ -62,6 +66,7 @@ export class PowerSyncUploader {
   constructor(
     client: SupabaseClient,
     private readonly getUserId: () => Promise<string>,
+    private readonly resolveLegacyCollectionId: CollectionIdResolver,
     remote?: UploadRemote,
   ) {
     this.remote = remote ?? new SupabaseUploadRemote(client);
@@ -94,11 +99,12 @@ export class PowerSyncUploader {
     await transaction.complete();
   }
 
-  private applyEntry(entry: CrudEntry, userId: string): Promise<UploadResult> {
+  private async applyEntry(entry: CrudEntry, userId: string): Promise<UploadResult> {
     if (entry.op === 'PUT') {
       const row: MutableRow = { ...(entry.opData ?? {}), id: entry.id };
       if (entry.table === 'collections' || entry.table === 'words') {
         if (row.user_id !== userId) throw new Error('Queued synchronization row belongs to another account.');
+        if (entry.table === 'words') row.collection_id = await this.collectionIdForUpload(row.collection_id, userId);
         return this.remote.upsert(entry.table, row);
       }
       if (entry.table === 'learning_events') {
@@ -112,6 +118,9 @@ export class PowerSyncUploader {
       if (entry.table !== 'collections' && entry.table !== 'words') throw unexpected(entry);
       const values = mutableValues(entry.table, entry.opData ?? {});
       if (Object.keys(values).length === 0) throw unexpected(entry);
+      if (entry.table === 'words' && 'collection_id' in values) {
+        values.collection_id = await this.collectionIdForUpload(values.collection_id, userId);
+      }
       return this.remote.patch(entry.table, entry.id, userId, values);
     }
 
@@ -122,6 +131,15 @@ export class PowerSyncUploader {
     }
 
     throw unexpected(entry);
+  }
+
+  private async collectionIdForUpload(value: unknown, userId: string): Promise<string> {
+    if (isSyncCollectionId(value)) return value;
+    const mapped = typeof value === 'string'
+      ? await this.resolveLegacyCollectionId(userId, value)
+      : null;
+    if (mapped && isSyncCollectionId(mapped)) return mapped;
+    throw new Error(MISSING_COLLECTION_MAPPING_MESSAGE);
   }
 }
 
