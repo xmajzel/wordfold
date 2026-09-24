@@ -233,14 +233,17 @@ Single-word entry and guided bulk review can request a read-only suggestion from
 lookup and manual entry remain available without AI or an account. Accept copies the
 suggestion into the editable word form; Discard leaves the form unchanged.
 
-Apply `20260918120000_ai_word_credits.sql`, then deploy `ai-word` to the intended
-Supabase project. Configure server-only secrets `OPENAI_API_KEY` and
+Apply `20260918120000_ai_word_credits.sql` and
+`20260924120000_increase_ai_word_credits.sql`, then deploy `ai-word` to the
+intended Supabase project. Configure server-only secrets `OPENAI_API_KEY` and
 `REVENUECAT_SECRET_API_KEY` (RevenueCat REST API v1 access); `AI_WORD_MODEL` is an
 optional server override. Never prefix these secrets with `EXPO_PUBLIC_`, bundle them,
 or deploy a whole local `.env` file. The function validates authenticated users.
 
-Each account gets 10 one-time credits. A verified production Google Play
-`wordfold_lifetime` purchase with the `unlimited_words` entitlement adds 40 once.
+Each account gets 15 one-time credits. A verified production Google Play
+`wordfold_lifetime` purchase with the `unlimited_words` entitlement adds 60 once,
+for 75 total. The increase migration adds 5 credits to existing accounts and
+another 20 to accounts that already received the paid grant.
 The app links RevenueCat to a server-generated opaque account identifier; existing
 anonymous purchases are merged according to RevenueCat's identity rules. Existing
 customers may need Restore purchase if their account already has an anonymous alias.
