@@ -15,8 +15,11 @@ describe('public legal site', () => {
   it('describes both in-app and external account deletion', () => {
     expect(deletion).toContain('Delete inside the app');
     expect(deletion).toContain('Request deletion without the app');
+    expect(deletion.indexOf('Request deletion without the app')).toBeLessThan(deletion.indexOf('Delete inside the app'));
     expect(deletion).toContain('local vocabulary copy');
     expect(deletion).toContain('Google Play lifetime purchase is not deleted');
+    expect(deletion).toContain('Feedback reports and notification emails are separate');
+    expect(deletion).toContain('../privacy/#retention');
   });
 
   it('discloses optional Azure pronunciation processing and retention', () => {
