@@ -65,3 +65,19 @@ it('keeps a matching session in the rotation when its last exercise falls back t
   const words = Array.from({ length: 10 }, (_, index) => gameWord(index));
   expect(buildWordPlaySession(words, 'en-sk', stats).every((round) => round.mode === 'recall')).toBe(true);
 });
+
+it('selects only the requested scope and uses recall for fewer than five words', () => {
+  const words = Array.from({ length: 10 }, (_, index) => gameWord(index, { collectionId: index === 0 ? 'travel' : 'other', cefrLevel: index < 3 ? 'A1' : 'B1' }));
+  const single = buildWordPlaySession(words, 'en-sk', {}, Math.random, 'collection:travel');
+  expect(single).toEqual([{ mode: 'recall', words: [words[0]] }]);
+  expect(buildWordPlaySession(words, 'en-sk', {}, Math.random, 'A1').flatMap((round) => round.words).map((word) => word.id).sort()).toEqual(['word-0', 'word-1', 'word-2']);
+  expect(buildWordPlaySession(words, 'en-sk', {}, Math.random, 'C2')).toEqual([]);
+  expect(buildWordPlaySession(words, 'en-sk', {}, Math.random, 'collection:deleted')).toEqual([]);
+});
+
+it('allows short sessions after previously playing, even after words return to learning', () => {
+  const words = [gameWord(0), gameWord(1, { state: 'understood' })];
+  const stats = { 'word-1': { ...emptyWordPlayStats, gamesPlayed: 1 } };
+  expect(buildWordPlaySession(words, 'en-sk', stats).flatMap((round) => round.words)).toEqual([words[0]]);
+  expect(buildWordPlaySession(words, 'es-sk', stats)).toEqual([]);
+});

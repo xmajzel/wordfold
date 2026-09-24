@@ -1,5 +1,6 @@
 import { wordBelongsToCourse, type CourseId } from '@/domain/courses';
-import type { Word } from '@/domain/types';
+import { filterWordsByLearningCategory } from '@/features/learning/algorithm';
+import type { LearningFilter, Word } from '@/domain/types';
 
 export const WORD_PLAY_SIZE = 10;
 export type WordPlayMode = 'matching' | 'recall';
@@ -88,11 +89,17 @@ function canMatch(word: Word, board: Word[]) {
     || labelKey(other.translation!) === hint);
 }
 
+export function isWordPlayUnlocked(words: Word[], courseId: CourseId, stats: Record<string, WordPlayStats>) {
+  const courseWords = words.filter((word) => wordBelongsToCourse(word, courseId));
+  return courseWords.filter((word) => word.state === 'learned').length >= WORD_PLAY_SIZE
+    || courseWords.some((word) => stats[word.id]?.gamesPlayed > 0);
+}
+
 export function buildWordPlaySession(
-  words: Word[], courseId: CourseId, stats: Record<string, WordPlayStats>, random = Math.random,
+  words: Word[], courseId: CourseId, stats: Record<string, WordPlayStats>, random = Math.random, filter: LearningFilter = 'all',
 ): WordPlayRound[] {
-  const eligible = words.filter((word) => word.state === 'learned' && wordBelongsToCourse(word, courseId));
-  if (eligible.length < WORD_PLAY_SIZE) return [];
+  if (!isWordPlayUnlocked(words, courseId, stats)) return [];
+  const eligible = filterWordsByLearningCategory(words, filter).filter((word) => word.state === 'learned' && wordBelongsToCourse(word, courseId));
   const latest = eligible.map((word) => stats[word.id]).filter((item) => item?.lastPlayedAt)
     .sort((left, right) => right.lastPlayedAt!.localeCompare(left.lastPlayedAt!))[0];
   const mode = latest?.lastMode === 'matching' ? 'recall' : 'matching';

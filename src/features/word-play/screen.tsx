@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Switch, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import * as Crypto from 'expo-crypto';
 import * as Haptics from 'expo-haptics';
@@ -9,56 +9,80 @@ import Animated, { FadeInDown, FadeOut, ReduceMotion } from 'react-native-reanim
 import { AppText } from '@/components/app-text';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
+import { cefrLevels } from '@/data/cefr-levels';
+import { filterWordsByLearningCategory } from '@/features/learning/algorithm';
 import { wordBelongsToCourse, type CourseId } from '@/domain/courses';
-import type { Word } from '@/domain/types';
+import type { LearningFilter, Word } from '@/domain/types';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
-import { buildWordPlaySession, WORD_PLAY_SIZE, type WordPlayEvent, type WordPlayEventType, type WordPlayMode, type WordPlayRound } from './model';
+import { buildWordPlaySession, isWordPlayUnlocked, WORD_PLAY_SIZE, type WordPlayEvent, type WordPlayEventType, type WordPlayMode, type WordPlayRound } from './model';
 
-export default function WordPlayScreen({ inTab = false, autoStart = false, initialHaptics = false }: {
-  inTab?: boolean; autoStart?: boolean; initialHaptics?: boolean;
+export default function WordPlayScreen({ inTab = false, autoStart = false, initialHaptics = false, initialFilter = 'all' }: {
+  inTab?: boolean; autoStart?: boolean; initialHaptics?: boolean; initialFilter?: LearningFilter;
 }) {
-  const { words, activeCourseId, activeCourse, wordPlayStats, dataSource } = useAppData();
+  const { words, activeCourseId, activeCourse, wordPlayStats, dataSource, collections } = useAppData();
+  const [filter, setFilter] = useState<LearningFilter>(initialFilter);
+  const learned = words.filter((word) => word.state === 'learned' && wordBelongsToCourse(word, activeCourseId));
+  const scopedCount = filterWordsByLearningCategory(learned, filter).length;
+  const unlocked = isWordPlayUnlocked(words, activeCourseId, wordPlayStats);
   const [session, setSession] = useState<{ id: string; courseId: CourseId; dataSource: string; rounds: WordPlayRound[] } | null>(() => {
     if (!autoStart || (dataSource !== 'guest' && dataSource !== 'synced')) return null;
-    const rounds = buildWordPlaySession(words, activeCourseId, wordPlayStats);
+    const rounds = buildWordPlaySession(words, activeCourseId, wordPlayStats, Math.random, filter);
     return rounds.length ? { id: Crypto.randomUUID(), courseId: activeCourseId, dataSource, rounds } : null;
   });
   const [haptics, setHaptics] = useState(initialHaptics);
   const theme = useAppTheme();
-  const count = words.filter((word) => word.state === 'learned' && wordBelongsToCourse(word, activeCourseId)).length;
+  const count = learned.length;
   const start = () => {
+    if (!unlocked || !scopedCount || (dataSource !== 'guest' && dataSource !== 'synced')) return;
     if (inTab) {
-      router.push({ pathname: '/word-play', params: { haptics: haptics ? '1' : '0' } } as never);
+      router.push({ pathname: '/word-play', params: { haptics: haptics ? '1' : '0', filter } } as never);
       return;
     }
-    const rounds = buildWordPlaySession(words, activeCourseId, wordPlayStats);
+    const rounds = buildWordPlaySession(words, activeCourseId, wordPlayStats, Math.random, filter);
     if (rounds.length) setSession({ id: Crypto.randomUUID(), courseId: activeCourseId, dataSource, rounds });
   };
 
-  return <Screen scroll>
+  return <Screen style={styles.screen}>
     <View style={styles.header}>
       {!inTab ? <Pressable accessibilityRole="button" accessibilityLabel="Close Word play" onPress={() => router.dismissTo('/(tabs)/play' as never)} style={styles.close}>
         <Ionicons name="close" size={24} color={theme.primary}/>
       </Pressable> : null}
-      <AppText variant="heading">{inTab ? 'Play' : 'Word play'}</AppText>
-      <Ionicons name="sparkles-outline" size={24} color={theme.primary}/>
+      <AppText style={styles.title} variant="heading">{inTab ? 'Play' : 'Word play'}</AppText>
+      <Pressable accessibilityRole="switch" accessibilityLabel="Haptic feedback" accessibilityState={{ checked: haptics }}
+        onPress={() => setHaptics((value) => !value)} style={[styles.close, { backgroundColor: haptics ? theme.primarySoft : 'transparent', borderRadius: radii.control }]}>
+        <Ionicons name="phone-portrait-outline" size={22} color={haptics ? theme.primary : theme.muted}/>
+        <AppText variant="caption" style={{ color: theme.muted }}>Haptics</AppText>
+      </Pressable>
     </View>
     {session && session.courseId === activeCourseId && session.dataSource === dataSource && (dataSource === 'guest' || dataSource === 'synced')
-      ? <PlaySession key={session.id} {...session} haptics={haptics} onAgain={start}/>
-      : <>
+      ? <PlaySession key={session.id} {...session} haptics={haptics} canPlayAgain={unlocked && scopedCount > 0} onAgain={start}/>
+      : <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={[styles.card, { backgroundColor: theme.surface, borderColor: theme.border }]}>
           <Ionicons name="extension-puzzle-outline" size={52} color={theme.primary}/>
           <AppText variant="heading">Keep your words close</AppText>
-          <AppText>Revisit 10 learned words in {activeCourse.displayName}. Match pairs or try a recall challenge—each visit brings a different round.</AppText>
+          <AppText>Revisit up to 10 learned words in {activeCourse.displayName}. Match pairs or try a recall challenge—each visit brings a different round.</AppText>
           <AppText style={{ color: theme.muted }}>No timer. Take your time, and choose what to practise again at the end.</AppText>
-          <View style={styles.header}>
-            <AppText>Haptic feedback</AppText>
-            <Switch accessibilityLabel="Haptic feedback" value={haptics} onValueChange={setHaptics}/>
-          </View>
-          <PrimaryButton label="Let’s play" disabled={count < WORD_PLAY_SIZE || (dataSource !== 'guest' && dataSource !== 'synced')} onPress={start}/>
-          {count < WORD_PLAY_SIZE ? <>
+          <AppText variant="label">Choose your words</AppText>
+          {[
+            { title: 'Review', options: [{ value: 'all' as LearningFilter, label: 'All learned words' }] },
+            { title: 'Collections', options: collections.map((collection) => ({ value: `collection:${collection.id}` as LearningFilter, label: collection.name })) },
+            { title: 'Level', options: [...cefrLevels.map((level) => ({ value: level as LearningFilter, label: level })), { value: 'personal' as LearningFilter, label: 'No level' }] },
+          ].map((group) => <View key={group.title} style={styles.filterGroup}>
+            <AppText variant="caption" style={{ color: theme.muted }}>{group.title}</AppText>
+            <View style={styles.chips}>{group.options.map((option) => {
+              const available = filterWordsByLearningCategory(learned, option.value).length;
+              return <Pressable key={option.value} accessibilityRole="radio" accessibilityLabel={`${option.label}, ${available} learned words`}
+                accessibilityState={{ checked: filter === option.value }} onPress={() => setFilter(option.value)}
+                style={[styles.chip, { borderColor: filter === option.value ? theme.primary : theme.border, backgroundColor: filter === option.value ? theme.primarySoft : theme.surface }]}>
+                <AppText>{option.label} · {available}</AppText>
+              </Pressable>;
+            })}</View>
+          </View>)}
+          <AppText accessibilityLiveRegion="polite">{scopedCount ? `${Math.min(scopedCount, WORD_PLAY_SIZE)} ${Math.min(scopedCount, WORD_PLAY_SIZE) === 1 ? 'word' : 'words'} this round` : 'No learned words in this selection yet. Choose another collection or level.'}</AppText>
+          <PrimaryButton label="Let’s play" disabled={!unlocked || scopedCount === 0 || (dataSource !== 'guest' && dataSource !== 'synced')} onPress={start}/>
+          {!unlocked ? <>
             <AppText style={{ color: theme.muted }}>Learn {WORD_PLAY_SIZE - count} more words to unlock Word play.</AppText>
             <AppText variant="label">{count} of {WORD_PLAY_SIZE} words learned</AppText>
             <View accessibilityRole="progressbar" accessibilityLabel="Word play unlock progress" accessibilityValue={{ min: 0, max: WORD_PLAY_SIZE, now: count }} style={[styles.track, { backgroundColor: theme.primarySoft }]}>
@@ -66,12 +90,12 @@ export default function WordPlayScreen({ inTab = false, autoStart = false, initi
             </View>
           </> : null}
         </View>
-      </>}
+      </ScrollView>}
   </Screen>;
 }
 
-function PlaySession({ id, courseId, rounds, haptics, onAgain }: {
-  id: string; courseId: CourseId; rounds: WordPlayRound[]; haptics: boolean; onAgain(): void;
+function PlaySession({ id, courseId, rounds, haptics, canPlayAgain, onAgain }: {
+  id: string; courseId: CourseId; rounds: WordPlayRound[]; haptics: boolean; canPlayAgain: boolean; onAgain(): void;
 }) {
   const { recordWordPlayEvent, words, updateLearningFilter } = useAppData();
   const theme = useAppTheme();
@@ -126,11 +150,11 @@ function PlaySession({ id, courseId, rounds, haptics, onAgain }: {
   };
 
   return <>
-    <View accessible accessibilityRole="progressbar" accessibilityValue={{ min: 0, max: WORD_PLAY_SIZE, now: revisited }}
+    <View accessible accessibilityRole="progressbar" accessibilityValue={{ min: 0, max: allWords.length, now: revisited }}
       accessibilityLabel="Words revisited" style={[styles.track, { backgroundColor: theme.primarySoft }]}>
-      <View style={[styles.fill, { backgroundColor: theme.primary, width: `${revisited / WORD_PLAY_SIZE * 100}%` }]}/>
+      <View style={[styles.fill, { backgroundColor: theme.primary, width: `${revisited / allWords.length * 100}%` }]}/>
     </View>
-    <AppText variant="caption" style={{ color: theme.muted }}>{revisited} of {WORD_PLAY_SIZE} words revisited</AppText>
+    <AppText variant="caption" style={{ color: theme.muted }}>{revisited} of {allWords.length} words revisited</AppText>
     {!finished ? <Round key={index} round={rounds[index]} onRecord={record} haptics={haptics} onContinue={() => setIndex((current) => current + 1)}/>
       : <Animated.View entering={FadeInDown.duration(240).reduceMotion(ReduceMotion.System)} style={[styles.card, { backgroundColor: theme.surface, borderColor: theme.border }]}>
         <Ionicons name="ribbon-outline" size={52} color={theme.success}/>
@@ -160,7 +184,7 @@ function PlaySession({ id, courseId, rounds, haptics, onAgain }: {
           }}/>
         </> : null}
         <PrimaryButton label="Done" variant="secondary" disabled={busy} onPress={() => router.dismissTo('/(tabs)/play' as never)}/>
-        {words.filter((word) => word.state === 'learned' && wordBelongsToCourse(word, courseId)).length >= WORD_PLAY_SIZE
+        {canPlayAgain
           ? <PrimaryButton label="Play another round" variant="secondary" disabled={busy} onPress={onAgain}/> : null}
       </Animated.View>}
   </>;
@@ -280,6 +304,9 @@ function Tile({ label, side, selected = false, matched, disabled, onPress }: {
 }
 
 const styles = StyleSheet.create({
+  screen: { gap: spacing.sm }, title: { flex: 1 },
+  scrollContent: { paddingBottom: spacing.xxxl, gap: spacing.lg },
+  filterGroup: { gap: spacing.sm },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.md, minHeight: 60 },
   close: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   card: { borderWidth: 1, borderRadius: radii.sheet, padding: spacing.lg, gap: spacing.lg },

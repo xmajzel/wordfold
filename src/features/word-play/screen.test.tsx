@@ -13,10 +13,11 @@ let mockStats: Record<string, WordPlayStats> = {};
 let mockCourse: 'en-sk' | 'es-sk' = 'en-sk';
 const mockWords = Array.from({ length: 10 }, (_, index) => ({
   id: `word-${index}`, term: `word ${index}`, translation: `hint ${index}`, definition: `Meaning ${index}`,
-  sourceLanguageCode: 'en', targetLanguageCode: 'sk', state: 'learned',
+  sourceLanguageCode: 'en', targetLanguageCode: 'sk', state: 'learned', collectionId: index < 2 ? 'travel' : 'other', cefrLevel: index < 3 ? 'A1' : 'B1',
 } as Word));
 jest.mock('@/providers/app-data-provider', () => ({ useAppData: () => ({
   dismissWordPlayIntroduction: mockDismiss, wordPlayIntroductions: mockIntroductions,
+  collections: [{ id: 'travel', name: 'Travel' }, { id: 'other', name: 'Other' }],
   words: mockWords, wordPlayStats: mockStats, activeCourseId: mockCourse,
   activeCourse: { displayName: 'English → Slovak' }, dataSource: 'guest', recordWordPlayEvent: mockRecord,
   updateLearningFilter: jest.fn(async () => undefined),
@@ -120,7 +121,7 @@ it('opens a full-screen game from the Play lobby and keeps the lobby out of the 
   const lobby = await render(<WordPlayScreen inTab/>);
   expect(lobby.queryByRole('button', { name: 'Close Word play' })).toBeNull();
   await fireEvent.press(lobby.getByRole('button', { name: 'Let’s play' }));
-  expect(router.push).toHaveBeenCalledWith({ pathname: '/word-play', params: { haptics: '0' } });
+  expect(router.push).toHaveBeenCalledWith({ pathname: '/word-play', params: { haptics: '0', filter: 'all' } });
   expect(mockRecord).not.toHaveBeenCalled();
   await lobby.unmount();
   const game = await render(<WordPlayScreen autoStart/>);
@@ -142,4 +143,37 @@ it('visiting Play dismisses only the current language introduction without start
   await view.rerender(<PlayTab/>);
   await waitFor(() => expect(mockDismiss).toHaveBeenLastCalledWith('es-sk'));
   view.getByText('0 of 10 words learned');
+});
+
+it('carries a selected scope and header haptics into the full-screen game', async () => {
+  const view = await render(<WordPlayScreen inTab/>);
+  await fireEvent.press(view.getByRole('radio', { name: 'Travel, 2 learned words' }));
+  expect(view.getByText('2 words this round')).toBeTruthy();
+  await fireEvent.press(view.getByRole('switch', { name: 'Haptic feedback' }));
+  await fireEvent.press(view.getByRole('button', { name: 'Let’s play' }));
+  expect(router.push).toHaveBeenCalledWith({ pathname: '/word-play', params: { haptics: '1', filter: 'collection:travel' } });
+});
+
+it('plays a short collection session and reports its actual progress', async () => {
+  const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
+  for (let index = 0; index < 2; index += 1) {
+    await waitFor(() => expect(view.getByRole('button', { name: 'Reveal answer' })).toBeEnabled());
+    expect(view.getByText(`${index} of 2 words revisited`)).toBeTruthy();
+    await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Got it' }));
+    await waitFor(() => expect(view.getByRole('button', { name: 'Continue' })).toBeTruthy());
+    await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
+  }
+  expect(view.getByText('2 words revisited · 0 needed another look')).toBeTruthy();
+  expect(mockRecord.mock.calls.every(([event]) => ['word-0', 'word-1'].includes(event.wordId))).toBe(true);
+});
+
+it('filters by level and disables empty selections without starting a game', async () => {
+  const view = await render(<WordPlayScreen/>);
+  await fireEvent.press(view.getByRole('radio', { name: 'A1, 3 learned words' }));
+  expect(view.getByText('3 words this round')).toBeTruthy();
+  await fireEvent.press(view.getByRole('radio', { name: 'C2, 0 learned words' }));
+  expect(view.getByRole('button', { name: 'Let’s play' })).toBeDisabled();
+  expect(view.getByText('No learned words in this selection yet. Choose another collection or level.')).toBeTruthy();
+  expect(mockRecord).not.toHaveBeenCalled();
 });
