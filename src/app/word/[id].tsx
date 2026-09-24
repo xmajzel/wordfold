@@ -90,7 +90,11 @@ export default function WordDetailScreen() {
     if (!deleting || deletionNavigated.current) return;
     if (!word) {
       deletionNavigated.current = true;
-      router.replace('/(tabs)/library');
+      if (router.canGoBack()) {
+        router.back();
+      } else {
+        router.replace({ pathname: '/(tabs)/library', params: { view: 'my-words' } });
+      }
       if (deleteError) showReminderDeleteError();
     } else if (deleteError) {
       // Handle failure after React has applied any word-list refresh from deletion.

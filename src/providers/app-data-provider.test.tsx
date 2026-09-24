@@ -44,6 +44,8 @@ jest.mock('expo-sqlite', () => ({
 jest.mock('@/data/repository', () => ({
   listWords: jest.fn(async () => []),
   addWords: jest.fn(async () => []),
+  addWord: jest.fn(async () => 'created'),
+  deleteWord: jest.fn(async () => undefined),
   completeOnboardingSetup: jest.fn(async () => undefined),
   listCollections: jest.fn(async () => []),
   getStats: jest.fn(async () => ({
@@ -508,5 +510,106 @@ describe('AppDataProvider', () => {
     expect(mockRebuildReminderSchedule.mock.calls[0][1]).toEqual([
       expect.objectContaining({ id: word.id, state: 'new' }),
     ]);
+  });
+});
+
+
+function WordMutationProbe({ action, onComplete, onError }: {
+  action: 'create' | 'delete'; onComplete(): void; onError(error: unknown): void;
+}) {
+  const data = useAppData();
+  return <>
+    <Text>{data.onboardingComplete === null ? 'Loading mutations' : 'Ready mutations'}</Text>
+    <Text>{`Word IDs: ${data.words.map((item) => item.id).join(',')}`}</Text>
+    <Pressable onPress={() => void (action === 'create' ? data.createWord(word) : data.removeWord(word.id)).then(onComplete, onError)}>
+      <Text>Mutate word</Text>
+    </Pressable>
+    <Pressable onPress={() => void data.refresh()}><Text>Refresh mutation words</Text></Pressable>
+  </>;
+}
+
+function deferred<T>() {
+  let resolve!: (value: T) => void;
+  const promise = new Promise<T>((done) => { resolve = done; });
+  return { promise, resolve };
+}
+
+describe('word mutation responsiveness', () => {
+  const createdWord = { ...word, id: 'created' };
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.mocked(repository.listWords).mockResolvedValue([word]);
+    jest.mocked(repository.getWord).mockResolvedValue(createdWord);
+    jest.mocked(repository.addWord).mockResolvedValue(createdWord.id);
+    jest.mocked(repository.deleteWord).mockResolvedValue(undefined);
+    jest.mocked(repository.getActiveCourseId).mockResolvedValue('en-sk');
+    jest.mocked(repository.isOnboardingComplete).mockResolvedValue(false);
+    mockRebuildReminderSchedule.mockResolvedValue(0);
+  });
+
+  it.each(['create', 'delete'] as const)('finishes %s while refresh and reminders are pending, ignoring older snapshots', async (action) => {
+    const complete = jest.fn();
+    const error = jest.fn();
+    const view = await render(<AppDataProvider><WordMutationProbe action={action} onComplete={complete} onError={error}/></AppDataProvider>);
+    await waitFor(() => view.getByText('Ready mutations'));
+    const stats = await repository.getStats({} as never);
+    const oldRefresh = deferred<typeof stats>();
+    const backgroundRefresh = deferred<typeof stats>();
+    const schedule = deferred<number>();
+    jest.mocked(repository.getStats).mockReturnValueOnce(oldRefresh.promise);
+    await fireEvent.press(view.getByText('Refresh mutation words'));
+    // Let that refresh capture the pre-mutation list before blocking on stats.
+    await waitFor(() => expect(repository.getStats).toHaveBeenCalled());
+    jest.mocked(repository.getStats).mockReturnValueOnce(backgroundRefresh.promise);
+    mockRebuildReminderSchedule.mockReturnValueOnce(schedule.promise);
+    const nextWords = action === 'create' ? [createdWord, word] : [];
+    if (action === 'create') jest.mocked(repository.addWord).mockImplementationOnce(async () => {
+      jest.mocked(repository.listWords).mockResolvedValue(nextWords);
+      return createdWord.id;
+    });
+    else jest.mocked(repository.deleteWord).mockImplementationOnce(async () => {
+      jest.mocked(repository.listWords).mockResolvedValue(nextWords);
+    });
+    await fireEvent.press(view.getByText('Mutate word'));
+    await waitFor(() => expect(complete).toHaveBeenCalledTimes(1));
+    const expected = `Word IDs: ${nextWords.map((item) => item.id).join(',')}`;
+    view.getByText(expected);
+    await act(async () => oldRefresh.resolve(stats));
+    view.getByText(expected);
+    expect(error).not.toHaveBeenCalled();
+    await act(async () => { backgroundRefresh.resolve(stats); schedule.resolve(0); });
+    view.getByText(expected);
+    await view.unmount();
+  });
+
+  it.each(['create', 'delete'] as const)('preserves words when %s fails locally', async (action) => {
+    const complete = jest.fn();
+    const error = jest.fn();
+    const failure = new Error('Storage unavailable');
+    if (action === 'create') jest.mocked(repository.addWord).mockRejectedValueOnce(failure);
+    else jest.mocked(repository.deleteWord).mockRejectedValueOnce(failure);
+    const view = await render(<AppDataProvider><WordMutationProbe action={action} onComplete={complete} onError={error}/></AppDataProvider>);
+    await waitFor(() => view.getByText('Ready mutations'));
+    await fireEvent.press(view.getByText('Mutate word'));
+    await waitFor(() => expect(error).toHaveBeenCalledWith(failure));
+    expect(complete).not.toHaveBeenCalled();
+    view.getByText('Word IDs: word');
+    await view.unmount();
+  });
+
+  it.each(['create', 'delete'] as const)('does not report successful %s as failed when background work rejects', async (action) => {
+    const warning = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const complete = jest.fn();
+    const error = jest.fn();
+    const view = await render(<AppDataProvider><WordMutationProbe action={action} onComplete={complete} onError={error}/></AppDataProvider>);
+    await waitFor(() => view.getByText('Ready mutations'));
+    jest.mocked(repository.getStats).mockRejectedValueOnce(new Error('Refresh unavailable'));
+    mockRebuildReminderSchedule.mockRejectedValueOnce(new Error('Notifications unavailable'));
+    await fireEvent.press(view.getByText('Mutate word'));
+    await waitFor(() => expect(complete).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(warning).toHaveBeenCalledWith('Could not update reminders after saving vocabulary changes.', expect.any(Error)));
+    expect(error).not.toHaveBeenCalled();
+    await view.unmount();
+    warning.mockRestore();
   });
 });

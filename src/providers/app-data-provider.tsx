@@ -209,6 +209,12 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const vocabularyStore = useMemo(() => dataSource === 'synced' && authUserId
     ? createSyncVocabularyStore(powerSyncDatabase, authUserId)
     : createGuestVocabularyStore(appDatabase), [appDatabase, authUserId, dataSource]);
+  const refreshState = useRef<{ version: number; store: typeof vocabularyStore | null }>({ version: 0, store: null });
+  useEffect(() => {
+    const state = refreshState.current;
+    state.store = vocabularyStore;
+    return () => { state.store = null; state.version += 1; };
+  }, [vocabularyStore]);
   const currentLearnedWordIds = useMemo(() => learnedWordIdsKey(words), [words]);
 
   const runDatabaseMutation = useCallback(<T,>(mutation: () => Promise<T>) => (
@@ -371,6 +377,8 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   }, [appDatabase, auth, authStatus, authUserId, cutoverService, dataSource, guestImportService, prepareForSignOut, sync]);
 
   const refresh = useCallback(async () => {
+    if (refreshState.current.store !== vocabularyStore) return;
+    const version = ++refreshState.current.version;
     const nextActiveCourseId = await repository.getActiveCourseId(appDatabase);
     const [loadedWords, nextCollections, nextStats, nextSettings, nextPreferences, nextVoicePreference, nextOnboarding, nextLearningFilter, nextRhythm, nextWordPlayStats, nextIntroductions] = await Promise.all([
       vocabularyStore.listWords(), vocabularyStore.listCollections(), vocabularyStore.getStats(nextActiveCourseId),
@@ -379,6 +387,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       repository.getLearningFilter(appDatabase, nextActiveCourseId), repository.getLearningRhythm(appDatabase),
       vocabularyStore.getWordPlayStats(), repository.getWordPlayIntroductions(appDatabase),
     ]);
+    if (refreshState.current.store !== vocabularyStore || version !== refreshState.current.version) return;
     setWordPlayIntroductions((current) => [...new Set([...current, ...nextIntroductions])]);
     setWordPlayStats(nextWordPlayStats);
     setLearningConfirmations(nextRhythm.confirmations);
@@ -392,7 +401,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     setPronunciationVoicePreference(nextVoicePreference);
     setOnboardingComplete(nextOnboarding);
     setLearningFilter(selectedFilters.current.get(nextActiveCourseId) ?? nextLearningFilter);
-  }, [appDatabase, vocabularyStore]);
+  }, [appDatabase, vocabularyStore, refreshState]);
 
   const dismissWordPlayIntroduction = useCallback(async (courseId: CourseId) => {
     await runDatabaseMutation(() => repository.saveWordPlayIntroduction(appDatabase, courseId));
@@ -430,7 +439,6 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
 
   useEffect(() => {
     // The async refresh resolves after the effect body, so this does not cascade a synchronous render.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     void refresh().catch((error) => console.warn('Could not refresh app data.', error));
   }, [refresh]);
 
@@ -467,6 +475,12 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
       return rebuildReminderSchedule(appDatabase, scheduleWords, scheduleSettings, activeCourseId, runDatabaseMutation);
     });
   }, [activeCourseId, appDatabase, reminderQueue, runDatabaseMutation, vocabularyStore]);
+
+  const refreshAfterWordMutation = useCallback(() => {
+    if (refreshState.current.store !== vocabularyStore) return;
+    void refresh().catch((error) => console.warn('Could not refresh vocabulary after saving changes.', error));
+    void reschedule().catch((error) => console.warn('Could not update reminders after saving vocabulary changes.', error));
+  }, [refresh, vocabularyStore, reschedule]);
 
   const refreshReminderSchedule = useCallback(async (force = false) => {
     const settings = await repository.getReminderSettings(appDatabase);
@@ -534,9 +548,24 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     createWord: async (input) => {
       const id = await runDatabaseMutation(async () => {
         assertWordCapacity((await vocabularyStore.listWords()).length, 1, purchase.unlimited);
-        return vocabularyStore.createWord(input);
+        const createdId = await vocabularyStore.createWord(input);
+        if (refreshState.current.store !== vocabularyStore) return createdId;
+        // Invalidate reads started before the write, including subscription refreshes.
+        refreshState.current.version += 1;
+        try {
+          const createdWord = await vocabularyStore.getWord(createdId);
+          if (refreshState.current.store !== vocabularyStore) return createdId;
+          refreshState.current.version += 1;
+          if (createdWord) {
+            setWords((current) => [createdWord, ...current.filter((word) => word.id !== createdId)]);
+          }
+        } catch (error) {
+          // The write succeeded: a read failure must not invite a duplicate save.
+          console.warn('Could not read the newly saved word.', error);
+        }
+        return createdId;
       });
-      await refresh(); await reschedule(); return id;
+      refreshAfterWordMutation(); return id;
     },
     createWords: async (inputs) => {
       const ids = await runDatabaseMutation(async () => {
@@ -558,7 +587,13 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     },
     prepareWordTranslation,
     removeWord: async (id) => {
-      await runDatabaseMutation(() => vocabularyStore.removeWord(id)); await refresh(); await reschedule();
+      await runDatabaseMutation(async () => {
+        await vocabularyStore.removeWord(id);
+        if (refreshState.current.store !== vocabularyStore) return;
+        refreshState.current.version += 1;
+        setWords((current) => current.filter((word) => word.id !== id));
+      });
+      refreshAfterWordMutation();
     },
     resetWord: async (id) => {
       await runDatabaseMutation(() => vocabularyStore.resetWord(id)); await refresh();
@@ -710,7 +745,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
         setStats((current) => current ? { ...current, notificationOpens: current.notificationOpens + 1 } : current);
       }
     },
-  }), [activeCourseId, appDatabase, catalogDatabase, collections, cutover, dataSource, deleteCloudAccount, guestImport, keepAccountRename, learningFilter, learningPreferences, learningConfirmations, rhythmIntroduced, onboardingComplete, pauseGuestImport, prepareForSignOut, prepareGuestImport, prepareWordTranslation, pronunciationVoicePreference, purchase.unlimited, refresh, refreshGuestImport, reminderSettings, reschedule, resolveGuestImportConflict, resolveSyncCutoverConflict, runDatabaseMutation, runGuestImport, runSyncCutover, stats, vocabularyStore, wordPlayStats, wordPlayIntroductions, dismissWordPlayIntroduction, words]);
+  }), [activeCourseId, appDatabase, catalogDatabase, collections, cutover, dataSource, deleteCloudAccount, guestImport, keepAccountRename, learningFilter, learningPreferences, learningConfirmations, rhythmIntroduced, onboardingComplete, pauseGuestImport, prepareForSignOut, prepareGuestImport, prepareWordTranslation, pronunciationVoicePreference, purchase.unlimited, refresh, refreshAfterWordMutation, refreshState, refreshGuestImport, reminderSettings, reschedule, resolveGuestImportConflict, resolveSyncCutoverConflict, runDatabaseMutation, runGuestImport, runSyncCutover, stats, vocabularyStore, wordPlayStats, wordPlayIntroductions, dismissWordPlayIntroduction, words]);
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>;
 }

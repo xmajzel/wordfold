@@ -15,7 +15,7 @@ const mockEditWord = jest.fn(async () => undefined);
 const mockCreateCollection = jest.fn(async (_name: string, _color: string) => 'new-collection');
 const mockRemoveWord = jest.fn();
 const mockResetWord = jest.fn();
-jest.mock('expo-router', () => ({ router: { replace: jest.fn(), back: jest.fn() }, useLocalSearchParams: () => ({ id: mockRouteId }) }));
+jest.mock('expo-router', () => ({ router: { replace: jest.fn(), back: jest.fn(), canGoBack: jest.fn() }, useLocalSearchParams: () => ({ id: mockRouteId }) }));
 jest.mock('@/providers/app-data-provider', () => ({ useAppData: () => ({ words: mockWords, collections: mockCollections, removeWord: mockRemoveWord, resetWord: mockResetWord, editWord: mockEditWord, createCollection: mockCreateCollection }) }));
 jest.mock('@/features/feedback/feedback-link', () => ({ FeedbackLink: () => null }));
 jest.mock('@/components/pronunciation-controls', () => ({ PronunciationControls: () => null }));
@@ -34,6 +34,7 @@ jest.mock('react-native-reanimated', () => {
 beforeEach(() => {
   jest.restoreAllMocks();
   jest.clearAllMocks();
+  jest.mocked(router.canGoBack).mockReturnValue(true);
   mockWords = [word];
   mockRouteId = 'word';
   mockCollections = [{ id: 'my-words', name: 'My words' }, { id: 'c1', name: 'English C1 lessons' }];
@@ -59,10 +60,26 @@ it('returns to My words when deletion refreshes the list while reminders are sti
   await confirmDeletion(view);
   expect(mockRemoveWord).toHaveBeenCalledWith('word');
   expect(router.replace).not.toHaveBeenCalled();
+  expect(router.back).not.toHaveBeenCalled();
   mockWords = [];
   await view.rerender(<WordDetailScreen/>);
-  expect(router.replace).toHaveBeenCalledWith('/(tabs)/library');
+  expect(router.back).toHaveBeenCalledTimes(1);
+  expect(router.replace).not.toHaveBeenCalled();
   expect(view.queryByText('Word not available')).toBeNull();
+});
+
+it('opens My words after deletion when there is no previous screen', async () => {
+  jest.mocked(router.canGoBack).mockReturnValue(false);
+  mockRemoveWord.mockResolvedValue(undefined);
+  const view = await render(<WordDetailScreen/>);
+  await confirmDeletion(view);
+  mockWords = [];
+  await view.rerender(<WordDetailScreen/>);
+  expect(router.back).not.toHaveBeenCalled();
+  expect(router.replace).toHaveBeenCalledTimes(1);
+  expect(router.replace).toHaveBeenCalledWith({ pathname: '/(tabs)/library', params: { view: 'my-words' } });
+  await view.rerender(<WordDetailScreen/>);
+  expect(router.replace).toHaveBeenCalledTimes(1);
 });
 
 it('keeps the word and shows an error when deletion fails', async () => {
@@ -72,6 +89,7 @@ it('keeps the word and shows an error when deletion fails', async () => {
   expect(Alert.alert).toHaveBeenLastCalledWith('Could not delete', 'Storage unavailable');
   expect(view.getByRole('button', { name: 'Delete word' })).toBeTruthy();
   expect(router.replace).not.toHaveBeenCalled();
+  expect(router.back).not.toHaveBeenCalled();
 });
 
 it('does not delete or navigate when confirmation is cancelled', async () => {
@@ -81,6 +99,7 @@ it('does not delete or navigate when confirmation is cancelled', async () => {
   await act(() => cancel.onPress?.());
   expect(mockRemoveWord).not.toHaveBeenCalled();
   expect(router.replace).not.toHaveBeenCalled();
+  expect(router.back).not.toHaveBeenCalled();
 });
 
 it('provides a feed action for a stale word link', async () => {
@@ -100,7 +119,8 @@ it('handles a reminder failure after deletion without reporting the deletion as 
   mockWords = [];
   await view.rerender(<WordDetailScreen/>);
   await act(() => reject(new Error('Notifications unavailable')));
-  expect(router.replace).toHaveBeenCalledTimes(1);
+  expect(router.back).toHaveBeenCalledTimes(1);
+  expect(router.replace).not.toHaveBeenCalled();
   expect(Alert.alert).toHaveBeenLastCalledWith('Word deleted', expect.stringContaining('reminders could not be updated'));
 });
 
@@ -112,7 +132,8 @@ it('still navigates if deletion refresh and a scheduling failure arrive together
     throw new Error('Notifications unavailable');
   });
   await confirmDeletion(view);
-  expect(router.replace).toHaveBeenCalledWith('/(tabs)/library');
+  expect(router.back).toHaveBeenCalledTimes(1);
+  expect(router.replace).not.toHaveBeenCalled();
   expect(view.queryByText('Word not available')).toBeNull();
   expect(Alert.alert).toHaveBeenLastCalledWith('Word deleted', expect.stringContaining('reminders could not be updated'));
 });
