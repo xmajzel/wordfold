@@ -1,5 +1,6 @@
 export type CardStackMotion = {
   index: number;
+  revision: number;
   x: number;
   y: number;
   opacity: number;
@@ -7,9 +8,9 @@ export type CardStackMotion = {
   height: number;
 };
 
-export function restingCardMotion(index: number, width = 0, height = 0): CardStackMotion {
+export function restingCardMotion(index: number, width = 0, height = 0, revision = 0): CardStackMotion {
   'worklet';
-  return { index, x: 0, y: 0, opacity: 1, width, height };
+  return { index, revision, x: 0, y: 0, opacity: 1, width, height };
 }
 
 export function getCardLayerStyle(index: number, motion: CardStackMotion, reduceMotion = false) {

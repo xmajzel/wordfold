@@ -9,6 +9,7 @@ import Animated, {
   ReduceMotion,
   runOnJS,
   runOnUI,
+  useAnimatedReaction,
   useAnimatedStyle,
   useReducedMotion,
   useSharedValue,
@@ -78,9 +79,12 @@ export function SwipeableWordCard({
   const motion = stackMotion ?? localMotion;
   const axis = useSharedValue<'x' | 'y' | null>(null);
   const committed = useSharedValue(false);
+  const ratingSubmitted = useSharedValue(false);
   const thresholdHapticSent = useSharedValue(false);
   const nextReviewRange = word ? getNextReviewIntervalRange(word) : null;
-  const gestureEnabled = active && !screenReaderEnabled;
+  // Pre-mounted stack cards must be ready as soon as the UI thread reveals them.
+  // The shared index below prevents gestures on any other card.
+  const gestureEnabled = (active || !!stackMotion) && !screenReaderEnabled;
 
   const triggerThresholdHaptic = useCallback(() => {
     void Haptics.selectionAsync();
@@ -90,24 +94,37 @@ export function SwipeableWordCard({
     onSwipe(rating);
   }, [onSwipe]);
 
-  useEffect(() => {
-    if (active) return;
-    // Per-card gesture bookkeeping must not reset the shared visible layers.
-    committed.set(false);
-    axis.set(null);
-    thresholdHapticSent.set(false);
-  }, [active, axis, committed, thresholdHapticSent]);
+  useAnimatedReaction(
+    () => disabled,
+    (ratingDisabled) => {
+      // Once React acknowledges the rating, its disabled prop owns the lock.
+      // A later resumed attempt can then reuse this mounted card.
+      if (ratingDisabled) ratingSubmitted.set(false);
+    },
+  );
+
+  useAnimatedReaction(
+    () => stackMotion ? motion.value.index === cardIndex : active,
+    (visible) => {
+      if (visible) return;
+      // Reset on the same thread as promotion, including rapid back navigation.
+      committed.set(false);
+      axis.set(null);
+      thresholdHapticSent.set(false);
+    },
+  );
 
   const promote = (targetIndex: number) => {
     'worklet';
     const current = motion.get();
-    motion.set(restingCardMotion(targetIndex, current.width, current.height));
+    motion.set(restingCardMotion(targetIndex, current.width, current.height, current.revision + 1));
   };
 
   const animateRating = (rating: LearningRating, fade = false) => {
     'worklet';
     const current = motion.get();
-    if (!active || disabled || !word || committed.get() || current.index !== cardIndex) return;
+    if ((!stackMotion && !active) || disabled || !word || ratingSubmitted.get()
+      || committed.get() || current.index !== cardIndex) return;
     committed.set(true);
     const direction = rating === 'understood' ? -1 : 1;
     motion.set(withTiming({ ...current,
@@ -118,6 +135,7 @@ export function SwipeableWordCard({
       reduceMotion: ReduceMotion.System,
     }, (finished) => {
       if (!finished) return;
+      ratingSubmitted.set(true);
       promote(cardIndex + 1);
       runOnJS(finishSwipe)(rating);
     }));
@@ -130,7 +148,7 @@ export function SwipeableWordCard({
   const springBack = () => {
     'worklet';
     const current = motion.get();
-    motion.set(withSpring(restingCardMotion(cardIndex, current.width, current.height), {
+    motion.set(withSpring(restingCardMotion(cardIndex, current.width, current.height, current.revision), {
       damping: 18, stiffness: 240, reduceMotion: ReduceMotion.System,
     }));
   };
@@ -161,9 +179,10 @@ export function SwipeableWordCard({
         // Positive Y pulls the previous layer down; the current layer stays still.
         motion.set({ ...current, x: 0, y: allowed ? event.translationY : 0 });
       } else {
-        motion.set({ ...current, x: disabled ? event.translationX * 0.15 : event.translationX, y: 0 });
+        const ratingDisabled = disabled || ratingSubmitted.get();
+        motion.set({ ...current, x: ratingDisabled ? event.translationX * 0.15 : event.translationX, y: 0 });
         const threshold = current.width * SWIPE_DISTANCE_RATIO;
-        if (!disabled && !thresholdHapticSent.get() && threshold > 0 && Math.abs(event.translationX) >= threshold) {
+        if (!ratingDisabled && !thresholdHapticSent.get() && threshold > 0 && Math.abs(event.translationX) >= threshold) {
           thresholdHapticSent.set(true);
           runOnJS(triggerThresholdHaptic)();
         }
@@ -194,7 +213,7 @@ export function SwipeableWordCard({
         return;
       }
       const rating = getSwipeRating(event.translationX, event.velocityX, current.width);
-      if (disabled || !rating) { springBack(); return; }
+      if (disabled || ratingSubmitted.get() || !rating) { springBack(); return; }
       if (!thresholdHapticSent.get()) {
         thresholdHapticSent.set(true);
         runOnJS(triggerThresholdHaptic)();

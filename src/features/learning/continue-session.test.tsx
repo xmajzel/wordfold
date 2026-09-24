@@ -55,7 +55,6 @@ const mockRecommendationBatch = Array.from({ length: 10 }, (_, index): Recommend
   topic: 'business',
 }));
 let mockWords = [mockFirstWord, mockNextWord];
-
 jest.mock('expo-router', () => ({
   router: {
     push: (...args: unknown[]) => mockRouterPush(...args),
@@ -72,6 +71,7 @@ jest.mock('expo-haptics', () => ({
 
 jest.mock('react-native-reanimated', () => {
   const React = jest.requireActual('react');
+  const listeners = new Set<() => void>();
   const { View, Text } = jest.requireActual('react-native');
   const AnimatedView = (props: { testID?: string; onLayout?: () => void }) => {
     const mountedProps = React.useRef(props);
@@ -99,8 +99,19 @@ jest.mock('react-native-reanimated', () => {
     cancelAnimation: jest.fn(),
     interpolate: (_value: number, _input: number[], output: number[]) => output[0],
     interpolateColor: (value: number, _input: number[], output: string[]) => output[value >= 0.5 ? 1 : 0],
-    useAnimatedStyle: (factory: () => object) => factory(),
-    useSharedValue: (value: unknown) => React.useRef({ value, get() { return this.value; }, set(next: unknown) { this.value = next; } }).current,
+    useAnimatedStyle: (factory: () => object) => {
+      const [, update] = React.useReducer((value: number) => value + 1, 0);
+      React.useLayoutEffect(() => {
+        listeners.add(update);
+        return () => listeners.delete(update);
+      }, []);
+      return factory();
+    },
+    useSharedValue: (value: unknown) => React.useRef({
+      value,
+      get() { return this.value; },
+      set(next: unknown) { this.value = next; listeners.forEach((update) => update()); },
+    }).current,
     withRepeat: (value: unknown) => value,
     withSpring: (value: unknown) => value,
     withTiming: (value: unknown, _config: unknown, callback?: (finished: boolean) => void) => {

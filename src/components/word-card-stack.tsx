@@ -1,4 +1,4 @@
-import { useLayoutEffect, type ReactNode } from 'react';
+import { useLayoutEffect, useRef, type ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, useReducedMotion, runOnUI, type SharedValue } from 'react-native-reanimated';
 
@@ -17,15 +17,24 @@ export function WordCardStack({ words, index, isRated, onRate, onNavigate, rende
   renderEnd(): ReactNode;
 }) {
   const motion = useSharedValue(restingCardMotion(index));
+  const synchronizedRevision = useSharedValue(0);
+  const previousIndex = useRef(index);
   useLayoutEffect(() => {
     // Button navigation and a new batch may change the index without a gesture.
     // Animated transitions have already promoted the visible card on the UI thread.
+    const fromIndex = previousIndex.current;
+    previousIndex.current = index;
     runOnUI(() => {
       'worklet';
       const current = motion.get();
-      if (current.index !== index) motion.set(restingCardMotion(index, current.width, current.height));
+      // React may still be acknowledging an earlier swipe. Only synchronize
+      // navigation that has not already advanced on the UI thread.
+      if (current.revision === synchronizedRevision.get() && current.index === fromIndex && current.index !== index) {
+        motion.set(restingCardMotion(index, current.width, current.height, current.revision));
+      }
+      synchronizedRevision.set(current.revision);
     })();
-  }, [index, motion]);
+  }, [index, motion, synchronizedRevision]);
   const indices = [index - 1, index, index + 1].filter((item) => item >= 0 && item <= words.length);
 
   return <View style={styles.stack} testID="word-card-stack">
@@ -54,9 +63,11 @@ function CardLayer({ index, currentIndex, motion, children }: {
 }) {
   const active = index === currentIndex;
   const reduceMotion = useReducedMotion();
-  const style = useAnimatedStyle(() => getCardLayerStyle(index, motion.value, reduceMotion));
+  const style = useAnimatedStyle(() => ({
+    ...getCardLayerStyle(index, motion.value, reduceMotion),
+    pointerEvents: index === motion.value.index ? 'auto' : 'none',
+  } as const));
   return <Animated.View needsOffscreenAlphaCompositing style={[StyleSheet.absoluteFill, style]}
-    pointerEvents={active ? 'auto' : 'none'}
     aria-hidden={!active} accessibilityElementsHidden={!active}
     importantForAccessibility={active ? 'auto' : 'no-hide-descendants'}
     testID={`word-stack-layer-${index}`}>
