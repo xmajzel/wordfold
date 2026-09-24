@@ -360,11 +360,11 @@ export class SyncCutoverService {
     const deadline = Date.now() + this.verifyTimeoutMs;
     do {
       throwIfAborted(signal);
-      const verified = await Promise.all([
+      const verified = await withVerificationDeadline(Promise.all([
         hasEveryId(this.powerSync, 'collections', expected.collections),
         hasEveryId(this.powerSync, 'words', expected.words),
         hasEveryId(this.powerSync, 'learning_events', expected.learning_events),
-      ]);
+      ]), deadline, signal);
       if (verified.every(Boolean)) return;
       await abortableDelay(this.verifyPollMs, signal);
     } while (Date.now() < deadline);
@@ -544,6 +544,26 @@ async function hasEveryId(database: PowerSyncCutoverDatabase, table: string, ids
     if (new Set(rows.map((row) => row.id)).size !== batch.length) return false;
   }
   return true;
+}
+
+function withVerificationDeadline<T>(task: Promise<T>, deadline: number, signal: AbortSignal): Promise<T> {
+  return new Promise((resolve, reject) => {
+    if (signal.aborted) { reject(new SyncCutoverCancelledError()); return; }
+    const cleanup = () => {
+      clearTimeout(timer);
+      signal.removeEventListener('abort', onAbort);
+    };
+    const onAbort = () => {
+      cleanup();
+      reject(new SyncCutoverCancelledError());
+    };
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(new Error('PowerSync cutover verification timed out. Retry when synchronization is connected.'));
+    }, Math.max(0, deadline - Date.now()));
+    signal.addEventListener('abort', onAbort, { once: true });
+    task.then((value) => { cleanup(); resolve(value); }, (error) => { cleanup(); reject(error); });
+  });
 }
 
 function safeFailure(error: unknown) {

@@ -14,6 +14,8 @@ let mockDataSource: 'guest' | 'reconciling' | 'synced';
 const mockRunCutover = jest.fn(async () => undefined);
 const mockResolveCutover = jest.fn(async () => undefined);
 const mockKeepAccountRename = jest.fn(async () => undefined);
+let mockUploadErrorMessage: string | null = null;
+let mockPendingUploads = 0;
 
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
@@ -30,7 +32,7 @@ jest.mock('@/providers/app-data-provider', () => ({
   }),
 }));
 jest.mock('@/providers/sync-provider', () => ({
-  useSync: () => ({ phase: 'connected' }),
+  useSync: () => ({ phase: 'connected', uploadErrorMessage: mockUploadErrorMessage, pendingUploads: mockPendingUploads }),
 }));
 jest.mock('expo-router', () => ({ router: { back: jest.fn() } }));
 jest.mock('react-native-reanimated', () => {
@@ -64,6 +66,8 @@ describe('AccountImportScreen', () => {
       uploaded: { collections: 0, words: 0, events: 0 }, conflicts: [], message: null,
     };
     mockDataSource = 'guest';
+    mockUploadErrorMessage = null;
+    mockPendingUploads = 0;
   });
 
   it('shows counts and requires explicit confirmation before preparation', async () => {
@@ -130,5 +134,26 @@ describe('AccountImportScreen', () => {
     await fireEvent.press(view.getByRole('button', { name: 'Retry verification' }));
 
     await waitFor(() => expect(mockRun).toHaveBeenCalledTimes(1));
+  });
+
+  it('offers a retry when cutover verification pauses', async () => {
+    mockGuestImport = { ...mockGuestImport, phase: 'completed' };
+    mockCutover = { ...mockCutover, phase: 'verifying', message: 'PowerSync cutover verification timed out.' };
+    const view = await render(<AccountImportScreen/>);
+
+    expect(view.getByText('Synchronization setup paused')).toBeTruthy();
+    await fireEvent.press(view.getByRole('button', { name: 'Retry synchronization setup' }));
+    await waitFor(() => expect(mockRunCutover).toHaveBeenCalledTimes(1));
+  });
+
+  it('shows a pending upload failure instead of endless setup progress', async () => {
+    mockGuestImport = { ...mockGuestImport, phase: 'completed' };
+    mockCutover = { ...mockCutover, phase: 'verifying' };
+    mockPendingUploads = 1;
+    mockUploadErrorMessage = 'A queued word needs a collection mapping from this account’s completed device import.';
+    const view = await render(<AccountImportScreen/>);
+
+    expect(view.getByText(mockUploadErrorMessage)).toBeTruthy();
+    expect(view.queryByText(/changed words processed/)).toBeNull();
   });
 });

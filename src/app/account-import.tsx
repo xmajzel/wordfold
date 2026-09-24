@@ -25,6 +25,7 @@ export default function AccountImportScreen() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const totalItems = guestImport.totals.collections + guestImport.totals.words + guestImport.totals.events;
+  const cutoverPaused = cutover.message ?? (sync.pendingUploads > 0 ? sync.uploadErrorMessage : null);
 
   const perform = async (operation: () => Promise<void>) => {
     setBusy(true);
@@ -170,7 +171,16 @@ export default function AccountImportScreen() {
         </View>
       ) : null}
 
-      {guestImport.phase === 'completed' && ['checking', 'uploading', 'verifying'].includes(cutover.phase) ? (
+      {guestImport.phase === 'completed' && ['checking', 'uploading', 'verifying'].includes(cutover.phase) && cutoverPaused ? (
+        <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+          <Ionicons name="time-outline" color={theme.primary} size={30}/>
+          <AppText variant="heading">Synchronization setup paused</AppText>
+          <AppText style={{ color: theme.muted }}>{cutoverPaused}</AppText>
+          <PrimaryButton label="Retry synchronization setup" loading={busy} disabled={busy || sync.phase !== 'connected'} onPress={() => void perform(runSyncCutover)}/>
+        </View>
+      ) : null}
+
+      {guestImport.phase === 'completed' && ['checking', 'uploading', 'verifying'].includes(cutover.phase) && !cutoverPaused ? (
         <StatusPanel icon="sync-outline" loading text={`Preparing continuous synchronization: ${cutover.uploaded.words}/${cutover.totals.words} changed words processed…`}/>
       ) : null}
 

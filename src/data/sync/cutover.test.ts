@@ -155,6 +155,18 @@ describe('SyncCutoverService', () => {
     expect(view.phase).toBe('ready');
   });
 
+  it('pauses verification when a PowerSync read never settles', async () => {
+    const service = new SyncCutoverService({} as SQLiteDatabase, remote(), {
+      getAll: jest.fn(() => new Promise(() => undefined)),
+    }, { verifyTimeoutMs: 10 });
+
+    const view = await service.run('user-1');
+
+    expect(view.phase).toBe('verifying');
+    expect(view.message).toMatch(/timed out/);
+    expect(mockCutover?.errorCode).toBe('verification_timeout');
+  });
+
   it('uploads a new word separately when the same normalized term exists in the account', async () => {
     mockSnapshot.words = [{ ...word, id: 'new-local-word' }];
     mockMappings = [mapping('collection', collection.id, 'remote-collection', collection.updated_at)];
