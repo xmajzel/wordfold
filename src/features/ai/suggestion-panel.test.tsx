@@ -2,9 +2,18 @@ import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SuggestionPanel } from './suggestion-panel';
 import { AiError } from './client';
+const mockActions: Record<string, () => void> = {};
+jest.mock('./ai-presentation', () => {
+  const actual = jest.requireActual('./ai-presentation');
+  return { ...actual, AiButton: (props: { label: string; onPress(): void }) => {
+    mockActions[props.label] = props.onPress;
+    return jest.requireActual('react').createElement(actual.AiButton, props);
+  } };
+});
 const mockGenerate = jest.fn();
 let mockUser: { id: string } | null = { id: 'user-a' };
 const card = { definition: 'Keep trying despite difficulty.', translation: 'húževnatosť', example: 'Her tenacity helped her finish the very difficult project.', partOfSpeech: 'noun' };
+jest.mock('@/features/ai/suggestion-transition', () => ({ SuggestionTransition: ({ children }: { children: React.ReactNode }) => <>{children}</> }));
 jest.mock('@react-native-async-storage/async-storage', () => jest.requireActual('@react-native-async-storage/async-storage/jest/async-storage-mock'));
 jest.mock('@/providers/auth-provider', () => ({ useAuth: () => ({ user: mockUser }) }));
 jest.mock('expo-crypto', () => ({ randomUUID: () => '11111111-1111-4111-8111-111111111111' }));
@@ -76,4 +85,19 @@ it('keeps a disabled suggestion available without applying it', async () => {
   expect(view.getByText(card.translation)).toBeTruthy();
   await fireEvent.press(view.getByRole('button', { name: 'Discard' }));
   await waitFor(() => expect(view.queryByText(card.translation)).toBeNull());
+});
+
+it('ignores presses from outgoing controls during appearance and dismissal', async () => {
+  const view = await render(<SuggestionPanel {...props}/>);
+  await waitFor(() => expect(view.getByText('AI suggestions · 10 credits remaining')).toBeTruthy());
+  const generatePress = mockActions['Suggest with AI · 1 credit'];
+  await act(async () => generatePress());
+  await waitFor(() => expect(view.getByText(card.translation)).toBeTruthy());
+  await act(async () => generatePress());
+  expect(mockGenerate).toHaveBeenCalledTimes(1);
+  const acceptPress = mockActions.Accept;
+  await act(async () => acceptPress());
+  await waitFor(() => expect(props.onUse).toHaveBeenCalledTimes(1));
+  await act(async () => acceptPress());
+  expect(props.onUse).toHaveBeenCalledTimes(1);
 });

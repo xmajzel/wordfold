@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImportScreen from '@/app/import';
 import NewWordScreen from '@/app/word/new';
 import type { CatalogSense } from '@/domain/types';
+jest.mock('@/features/ai/suggestion-transition', () => ({ SuggestionTransition: ({ children }: { children: React.ReactNode }) => <>{children}</> }));
 jest.mock('@react-native-async-storage/async-storage', () => jest.requireActual('@react-native-async-storage/async-storage/jest/async-storage-mock'));
 jest.mock('@/providers/auth-provider', () => ({ useAuth: () => ({ user: null, status: 'signedOut' }) }));
 
