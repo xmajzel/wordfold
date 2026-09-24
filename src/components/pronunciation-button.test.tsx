@@ -45,6 +45,19 @@ describe('PronunciationButton', () => {
     await waitFor(() => expect(mockStopPronunciation).toHaveBeenCalledTimes(1));
   });
 
+  it.each([
+    ['en-US', 'English · US', 'English · United States'],
+    ['en-GB', 'English · UK', 'English · United Kingdom'],
+    ['es-ES', 'Spanish · Spain', 'Spanish · Spain'],
+  ])('keeps the paired %s label concise and its accessibility description complete', async (locale, label, description) => {
+    const screen = await render(<PronunciationButton text="hello" locale={locale} idleLabel="Phone voice" compact paired/>);
+    expect(screen.getByText('Phone voice')).toBeTruthy();
+    expect(screen.getByText(label)).toBeTruthy();
+    expect(screen.getByRole('button', { name: `Play ${description} device pronunciation for hello` })).toHaveStyle({ minHeight: 44 });
+    await screen.rerender(<PronunciationButton text="hello" locale={locale} idleLabel="Phone voice"/>);
+    expect(screen.getByText(description)).toBeTruthy();
+  });
+
   it('shows an honest missing exact-voice message instead of speaking a fallback', async () => {
     const alert = jest.spyOn(Alert, 'alert').mockImplementation(jest.fn());
     mockStartPronunciation.mockResolvedValue({ status: 'missing_voice' });

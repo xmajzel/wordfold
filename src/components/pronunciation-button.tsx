@@ -19,6 +19,7 @@ interface PronunciationButtonProps {
   text: string;
   locale: string;
   compact?: boolean;
+  paired?: boolean;
   idleLabel?: string;
   active?: boolean;
   disabled?: boolean;
@@ -26,7 +27,7 @@ interface PronunciationButtonProps {
   onStatusChange?(status: PronunciationStatus): void;
 }
 
-export function PronunciationButton({ text, locale, compact = false, idleLabel, active = true, disabled = false, align = 'center', onStatusChange }: PronunciationButtonProps) {
+export function PronunciationButton({ text, locale, compact = false, paired = false, idleLabel, active = true, disabled = false, align = 'center', onStatusChange }: PronunciationButtonProps) {
   const theme = useAppTheme();
   const cacheScope = usePronunciationCacheScope();
   const [status, setStatus] = useState<PronunciationStatus>('idle');
@@ -40,6 +41,8 @@ export function PronunciationButton({ text, locale, compact = false, idleLabel, 
   }, [onStatusChange]);
   const languageCode = locale.split(/[-_]/)[0]?.toLocaleLowerCase('en') ?? locale;
   const localeDescription = `${languageLabel(languageCode)} · ${pronunciationLocaleLabel(languageCode, locale)}`;
+  const visibleLocaleDescription = paired && locale === 'en-US' ? 'English · US'
+    : paired && locale === 'en-GB' ? 'English · UK' : localeDescription;
 
   if (!active && status !== 'idle') setStatus('idle');
 
@@ -143,7 +146,7 @@ export function PronunciationButton({ text, locale, compact = false, idleLabel, 
     accessibilityState={{ busy: preparing || stopping, disabled: disabled || !active || preparing || stopping }}
     disabled={disabled || !active || preparing || stopping}
     onPress={() => void play()}
-    style={({ pressed }) => [styles.button, compact && styles.compactButton, {
+    style={({ pressed }) => [styles.button, compact && styles.compactButton, paired && styles.pairedButton, {
       alignSelf: align,
       backgroundColor: theme.primarySoft,
       borderColor: theme.primary,
@@ -159,9 +162,11 @@ export function PronunciationButton({ text, locale, compact = false, idleLabel, 
     </View>
     <View style={styles.text}>
       <AppText variant="label" style={{ color: theme.primary }}>
-        {stopping ? 'Stopping…' : preparing ? 'Preparing voice…' : speaking ? 'Playing device voice…' : idleLabel ?? '≈ Device voice'}
+        {paired
+          ? stopping ? 'Stopping…' : preparing ? 'Preparing…' : speaking ? 'Stop phone' : idleLabel ?? 'Phone voice'
+          : stopping ? 'Stopping…' : preparing ? 'Preparing voice…' : speaking ? 'Playing device voice…' : idleLabel ?? '≈ Device voice'}
       </AppText>
-      {!compact ? <AppText variant="caption" style={{ color: theme.muted }}>{localeDescription}</AppText> : null}
+      {!compact || paired ? <AppText variant="caption" style={{ color: theme.muted }}>{visibleLocaleDescription}</AppText> : null}
     </View>
   </Pressable>;
 }
@@ -193,6 +198,7 @@ const styles = StyleSheet.create({
     minHeight: 52, flexDirection: 'row', alignItems: 'center', alignSelf: 'center', gap: spacing.sm,
     borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.md, paddingVertical: spacing.sm,
   },
+  pairedButton: { flexBasis: 140, flexGrow: 1, maxWidth: '100%' },
   compactButton: { minHeight: 44, paddingHorizontal: spacing.sm, paddingVertical: spacing.xs },
   icon: { width: 32, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
   compactIcon: { width: 26, height: 26, borderRadius: 13 },

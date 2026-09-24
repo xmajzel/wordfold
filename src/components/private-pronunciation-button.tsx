@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+import { neuralVoices } from '@/domain/pronunciation-voices';
+
 import { AppText } from '@/components/app-text';
 import { languageLabel, pronunciationLocaleLabel } from '@/domain/languages';
 import type { PronunciationCacheScope } from '@/features/pronunciation/cache';
@@ -25,6 +27,7 @@ type PrivatePronunciationButtonProps = {
   consentEnabled: boolean;
   deletionPending?: boolean;
   compact?: boolean;
+  paired?: boolean;
   active?: boolean;
   onReviewConsent(): void;
 };
@@ -36,6 +39,7 @@ export function PrivatePronunciationButton({
   consentEnabled,
   deletionPending = false,
   compact = false,
+  paired = false,
   active = true,
   onReviewConsent,
 }: PrivatePronunciationButtonProps) {
@@ -44,7 +48,8 @@ export function PrivatePronunciationButton({
   const statusRef = useRef<PrivateNeuralStatus>('idle');
   const requestId = useRef(0);
   const mounted = useRef(true);
-  const languageCode = locale === 'sk-SK' ? 'sk' : 'en';
+  const languageCode = locale.split('-')[0];
+  const voiceLabel = locale === 'sk-SK' ? 'Viktoria · Slovak' : neuralVoices[locale].label;
   const localeDescription = `${languageLabel(languageCode)} · `
     + pronunciationLocaleLabel(languageCode, locale);
 
@@ -136,7 +141,7 @@ export function PrivatePronunciationButton({
     accessibilityState={{ busy: preparing, disabled: !active || preparing }}
     disabled={!active || preparing}
     onPress={() => void play()}
-    style={({ pressed }) => [styles.button, compact && styles.compactButton, {
+    style={({ pressed }) => [styles.button, compact && styles.compactButton, paired && styles.pairedButton, {
       backgroundColor: theme.raised,
       borderColor: theme.accent,
       opacity: preparing ? 0.65 : pressed ? 0.78 : 1,
@@ -153,14 +158,20 @@ export function PrivatePronunciationButton({
     </View>
     <View style={styles.text}>
       <AppText variant="label" style={{ color: theme.accent }}>
-        {!consentEnabled
+        {paired
+          ? voiceLabel
+          : !consentEnabled
           ? deletionPending ? 'Cloud deletion needs attention' : 'Enable cloud neural voice'
           : preparing || pending
             ? 'Preparing cloud neural voice…'
             : speaking ? 'Playing cloud neural voice…' : 'Private neural voice'}
       </AppText>
-      {!compact ? <AppText variant="caption" style={{ color: theme.muted }}>
-        {!consentEnabled
+      {!compact || paired ? <AppText variant="caption" style={{ color: theme.muted }}>
+        {paired
+          ? !consentEnabled
+            ? deletionPending ? 'Tap to retry deletion' : 'Enable cloud voice'
+            : preparing ? 'Preparing cloud voice…' : pending ? 'Tap to check again' : speaking ? 'Playing · Tap to stop' : 'Private cloud voice'
+          : !consentEnabled
           ? deletionPending ? 'Tap to retry deletion' : 'Off until you review and opt in'
           : pending ? 'Tap to check again' : localeDescription}
       </AppText> : null}
@@ -173,6 +184,7 @@ const styles = StyleSheet.create({
     minHeight: 52, flexDirection: 'row', alignItems: 'center', alignSelf: 'center', gap: spacing.sm,
     borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.md, paddingVertical: spacing.sm,
   },
+  pairedButton: { flexBasis: 140, flexGrow: 1, maxWidth: '100%' },
   compactButton: { minHeight: 44, paddingHorizontal: spacing.sm, paddingVertical: spacing.xs },
   icon: { width: 32, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
   compactIcon: { width: 26, height: 26, borderRadius: 13 },

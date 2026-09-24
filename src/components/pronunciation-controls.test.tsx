@@ -176,6 +176,32 @@ describe('PronunciationControls', () => {
     expect(screen.getByLabelText('Use phone voice instead')).toBeTruthy();
   });
 
+  it('uses a wrapping row for paired card controls, including loading and fallback', async () => {
+    const manual = { ...props, text: 'custom phrase', catalogSenseId: null };
+    mockConsentStatus = 'loading';
+    const screen = await render(<PronunciationControls {...manual} inlineWhenPaired/>);
+    expect(screen.getByTestId('pronunciation-controls')).toHaveStyle({ flexDirection: 'row', flexWrap: 'wrap' });
+    expect(screen.getByTestId('private-pronunciation-loading')).toHaveStyle({ minHeight: 44 });
+    expect(screen.getByText('Checking…')).toBeTruthy();
+
+    mockConsentStatus = 'disabled';
+    await screen.rerender(<PronunciationControls {...manual} inlineWhenPaired/>);
+    expect(screen.getByLabelText('Phone voice')).toBeTruthy();
+    expect(screen.getByLabelText('private-disabled')).toBeTruthy();
+
+    Object.assign(mockCacheScope, { type: 'guest', userId: undefined });
+    await screen.rerender(<PronunciationControls {...manual} inlineWhenPaired/>);
+    expect(screen.getByTestId('pronunciation-controls')).not.toHaveStyle({ flexDirection: 'row' });
+
+    Object.assign(mockCacheScope, { type: 'account', userId: 'reader' });
+    mockVoicePreference = 'neural-en-US';
+    await screen.rerender(<PronunciationControls {...props} inlineWhenPaired/>);
+    expect(screen.getByTestId('pronunciation-controls')).not.toHaveStyle({ flexDirection: 'row' });
+    await fireEvent.press(screen.getByLabelText('neural'));
+    expect(screen.getByTestId('pronunciation-controls')).toHaveStyle({ flexDirection: 'row' });
+    expect(screen.getByLabelText('Phone voice')).toBeTruthy();
+  });
+
   it('offers private cloud review for a signed-in manual word and honors consent', async () => {
     const manual = { ...props, text: 'custom phrase', catalogSenseId: null };
     const disabled = await render(<PronunciationControls {...manual}/>);

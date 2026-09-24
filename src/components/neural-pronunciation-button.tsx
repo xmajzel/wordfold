@@ -22,6 +22,7 @@ type NeuralPronunciationButtonProps = {
   catalogSenseId: string;
   locale: NeuralPronunciationLocale;
   compact?: boolean;
+  paired?: boolean;
   active?: boolean;
   offlineOnly?: boolean;
   availableOffline?: boolean;
@@ -32,6 +33,7 @@ export function NeuralPronunciationButton({
   catalogSenseId,
   locale,
   compact = false,
+  paired = false,
   active = true,
   offlineOnly = false,
   availableOffline = false,
@@ -129,7 +131,7 @@ export function NeuralPronunciationButton({
     accessibilityState={{ busy: preparing, disabled: !active || preparing }}
     disabled={!active || preparing}
     onPress={() => void play()}
-    style={({ pressed }) => [styles.button, compact && styles.compactButton, {
+    style={({ pressed }) => [styles.button, compact && styles.compactButton, paired && styles.pairedButton, {
       backgroundColor: theme.raised,
       borderColor: theme.accent,
       opacity: preparing ? 0.65 : pressed ? 0.78 : 1,
@@ -144,12 +146,14 @@ export function NeuralPronunciationButton({
     </View>
     <View style={styles.text}>
       <AppText variant="label" style={{ color: theme.accent }}>
-        {preparing || pending
+        {paired
+          ? voiceLabel
+          : preparing || pending
           ? `Preparing ${voiceLabel.split(' · ')[0]}…`
           : speaking ? `Playing ${voiceLabel.split(' · ')[0]}…` : voiceLabel}
       </AppText>
-      {!compact ? <AppText variant="caption" style={{ color: theme.muted }}>
-        {pending ? 'Tap to check again' : availableOffline ? 'Ready offline' : localeDescription}
+      {!compact || paired ? <AppText variant="caption" style={{ color: theme.muted }}>
+        {paired && preparing ? 'Preparing voice…' : paired && speaking ? 'Playing · Tap to stop' : pending ? 'Tap to check again' : availableOffline ? 'Ready offline' : localeDescription}
       </AppText> : null}
     </View>
   </Pressable>;
@@ -160,6 +164,7 @@ const styles = StyleSheet.create({
     minHeight: 52, flexDirection: 'row', alignItems: 'center', alignSelf: 'center', gap: spacing.sm,
     borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.md, paddingVertical: spacing.sm,
   },
+  pairedButton: { flexBasis: 140, flexGrow: 1, maxWidth: '100%' },
   compactButton: { minHeight: 44, paddingHorizontal: spacing.sm, paddingVertical: spacing.xs },
   icon: { width: 32, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
   compactIcon: { width: 26, height: 26, borderRadius: 13 },

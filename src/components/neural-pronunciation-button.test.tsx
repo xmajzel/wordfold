@@ -57,6 +57,24 @@ describe('NeuralPronunciationButton', () => {
     await waitFor(() => expect(mockStopPronunciation).toHaveBeenCalledTimes(1));
   });
 
+  it('retains the selected voice and region in paired playback states', async () => {
+    mockStartNeuralPronunciation.mockResolvedValue({ status: 'pending', retryAfterSeconds: 3 });
+    const screen = await render(<NeuralPronunciationButton catalogSenseId="sense-id" locale="en-GB" compact paired availableOffline/>);
+    expect(screen.getByText('Ryan · UK English')).toBeTruthy();
+    expect(screen.getByText('Ready offline')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Play Ryan · UK English pronunciation' })).toHaveStyle({ minHeight: 44 });
+    await fireEvent.press(screen.getByRole('button', { name: 'Play Ryan · UK English pronunciation' }));
+    await waitFor(() => expect(screen.getByText('Tap to check again')).toBeTruthy());
+    expect(screen.getByText('Ryan · UK English')).toBeTruthy();
+    mockStartNeuralPronunciation.mockImplementation(async (_sense, _locale, callbacks) => {
+      callbacks.onStart();
+      return { status: 'started' };
+    });
+    await fireEvent.press(screen.getByRole('button', { name: 'Check Ryan · UK English pronunciation' }));
+    await waitFor(() => expect(screen.getByText('Playing · Tap to stop')).toBeTruthy());
+    expect(screen.getByText('Ryan · UK English')).toBeTruthy();
+  });
+
   it('uses safe natural-voice error copy and reveals the phone fallback', async () => {
     const alert = jest.spyOn(Alert, 'alert').mockImplementation(jest.fn());
     const onUnavailable = jest.fn();
