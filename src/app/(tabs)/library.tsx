@@ -33,7 +33,7 @@ export default function LibraryScreen() {
   const { width, fontScale } = useWindowDimensions();
   const {
     words, collections, activeCourse, activeCourseId, learningPreferences,
-    createCollection, addRecommendedWords, wordCapacity,
+    createCollection, addRecommendedWords, wordCapacity, learningConfirmations,
   } = useAppData();
   const [libraryView, setLibraryView] = useState<LibraryView>('discover');
   const [selectedCollection, setSelectedCollection] = useState('all');
@@ -185,7 +185,7 @@ export default function LibraryScreen() {
         </View> : null}
         renderItem={({ item }) => <Pressable onPress={() => router.push(`/word/${item.id}`)}>
           {selectedCollection === 'other-vocabulary' ? <AppText variant="caption" style={{ color: theme.muted }}>{languageLabel(item.targetLanguageCode)} → {languageLabel(item.sourceLanguageCode)}</AppText> : null}
-          <WordCard word={item} collectionName={collectionNames[item.collectionId]} compact/>
+          <WordCard word={item} confirmations={learningConfirmations} collectionName={collectionNames[item.collectionId]} compact/>
         </Pressable>}
         ListFooterComponent={libraryView === 'discover' ? <View style={styles.footer}>
           <View style={styles.sectionHeader}><View style={styles.sectionCopy}><AppText variant="heading">{activeCourse.capabilities.recommendations ? 'Recommended for you' : 'Spanish catalog status'}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{activeCourse.capabilities.recommendations ? 'Small batches shaped by your level and interests.' : 'Manual and imported Spanish words are fully available now.'}</AppText></View></View>

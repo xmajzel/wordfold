@@ -5,6 +5,7 @@ import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeIn, FadeInDown, FadeOut, ReduceMotion } from 'react-native-reanimated';
 
+import { ConfirmationProgress } from '@/components/confirmation-progress';
 import { AppText } from '@/components/app-text';
 import { PronunciationControls } from '@/components/pronunciation-controls';
 import { WordCardContent } from '@/components/word-card-content';
@@ -24,7 +25,7 @@ export const WordCard = memo(function WordCard({ onReport, word, confirmations =
   const hintLanguage = languageLabel(word.targetLanguageCode);
 
   if (compact) {
-    return <Animated.View entering={FadeInDown.duration(320).reduceMotion(ReduceMotion.System)} style={[styles.compactCard, { backgroundColor: theme.surface, shadowColor: theme.shadow }]}><LinearGradient colors={[`${theme.primary}D9`, `${theme.accent}B8`]} style={styles.compactAccent}/><View style={styles.compactTitle}><AppText variant="heading" style={styles.compactWord}>{word.term}</AppText><StateBadge state={word.state} /></View><AppText numberOfLines={2} style={{ color: theme.muted }}>{word.definition}</AppText><View style={styles.compactMeta}>{collectionName ? <CollectionBadge name={collectionName}/> : null}{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}</View><AppText variant="caption" style={{ color: theme.muted }}>Seen {word.viewCount}×</AppText></Animated.View>;
+    return <Animated.View entering={FadeInDown.duration(320).reduceMotion(ReduceMotion.System)} style={[styles.compactCard, { backgroundColor: theme.surface, shadowColor: theme.shadow }]}><LinearGradient colors={[`${theme.primary}D9`, `${theme.accent}B8`]} style={styles.compactAccent}/><View style={styles.compactTitle}><AppText variant="heading" style={styles.compactWord}>{word.term}</AppText><StateBadge state={word.state} /></View><AppText numberOfLines={2} style={{ color: theme.muted }}>{word.definition}</AppText><View style={styles.compactMeta}>{collectionName ? <CollectionBadge name={collectionName}/> : null}{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}</View><ConfirmationProgress word={word} confirmations={confirmations}/><AppText variant="caption" style={{ color: theme.muted }}>Seen {word.viewCount}×</AppText></Animated.View>;
   }
 
   const rate = (rating: LearningRating) => {

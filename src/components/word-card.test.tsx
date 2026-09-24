@@ -192,3 +192,10 @@ it('offers immediate completion for the one-confirmation setting', async () => {
   const screen = await render(<WordCard word={word} confirmations={1} onRate={jest.fn()}/>);
   expect(screen.getByRole('button', { name: 'I know this. Stop reviews.' })).toBeTruthy();
 });
+
+it('shows compact progress using the selected rhythm', async () => {
+  const screen = await render(<WordCard word={{ ...word, knownStreak: 1 }} confirmations={2} compact/>);
+  expect(screen.getByText('1 of 2 confirmations')).toBeTruthy();
+  await screen.rerender(<WordCard word={word} confirmations={1} compact/>);
+  expect(screen.queryByRole('progressbar')).toBeNull();
+});

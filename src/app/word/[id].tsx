@@ -13,6 +13,7 @@ import { LanguageSelector } from '@/components/language-selector';
 import { PrimaryButton } from '@/components/primary-button';
 import { PronunciationControls } from '@/components/pronunciation-controls';
 import { Screen } from '@/components/screen';
+import { ConfirmationProgress } from '@/components/confirmation-progress';
 import { StateBadge } from '@/components/state-badge';
 import { getCourseForLanguagePair, languagePairSupportsPronunciation } from '@/domain/courses';
 import {
@@ -35,7 +36,7 @@ import { radii, spacing } from '@/theme/tokens';
 export default function WordDetailScreen() {
   const theme = useAppTheme();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { words, collections, editWord, removeWord, resetWord, createCollection, wordPlayStats } = useAppData();
+  const { words, collections, editWord, removeWord, resetWord, createCollection, wordPlayStats, learningConfirmations } = useAppData();
   const word = words.find((item) => item.id === id);
   const [term, setTerm] = useState('');
   const [definition, setDefinition] = useState('');
@@ -274,6 +275,7 @@ export default function WordDetailScreen() {
         sourceLanguageCode, targetLanguageCode, catalogSenseId: catalogAssociationRemoved ? null : word.catalogSenseId,
       }} label="Report an issue with this word"/>
       <View style={styles.titleRow}><View style={styles.titleText}><AppText variant="display">{word.term}</AppText><AppText style={{ color: theme.muted }}>{collections.find((item) => item.id === collectionId)?.name}</AppText></View><StateBadge state={word.state}/></View>
+      <ConfirmationProgress word={word} confirmations={learningConfirmations} detailed/>
       {word.state === 'learned' || restarting ? <View style={styles.group}>
         <PrimaryButton label="Learn again" variant="secondary" loading={restarting} disabled={saving || creatingCollection} onPress={() => void learnAgain()} icon={<Ionicons name="refresh-outline" color={theme.primary} size={18}/>}/>
         <AppText variant="caption" style={{ color: theme.muted }}>Forgot this word? Add it back to today’s practice.</AppText>

@@ -10,13 +10,14 @@ const word = {
 };
 let mockWords = [word];
 let mockRouteId = 'word';
+let mockConfirmations = 3;
 let mockCollections = [{ id: 'my-words', name: 'My words' }, { id: 'c1', name: 'English C1 lessons' }];
 const mockEditWord = jest.fn(async () => undefined);
 const mockCreateCollection = jest.fn(async (_name: string, _color: string) => 'new-collection');
 const mockRemoveWord = jest.fn();
 const mockResetWord = jest.fn();
 jest.mock('expo-router', () => ({ router: { replace: jest.fn(), back: jest.fn(), canGoBack: jest.fn() }, useLocalSearchParams: () => ({ id: mockRouteId }) }));
-jest.mock('@/providers/app-data-provider', () => ({ useAppData: () => ({ words: mockWords, collections: mockCollections, removeWord: mockRemoveWord, resetWord: mockResetWord, editWord: mockEditWord, createCollection: mockCreateCollection }) }));
+jest.mock('@/providers/app-data-provider', () => ({ useAppData: () => ({ learningConfirmations: mockConfirmations, words: mockWords, collections: mockCollections, removeWord: mockRemoveWord, resetWord: mockResetWord, editWord: mockEditWord, createCollection: mockCreateCollection }) }));
 jest.mock('@/features/feedback/feedback-link', () => ({ FeedbackLink: () => null }));
 jest.mock('@/components/pronunciation-controls', () => ({ PronunciationControls: () => null }));
 jest.mock('@/components/language-selector', () => ({ LanguageSelector: () => null }));
@@ -36,6 +37,7 @@ beforeEach(() => {
   jest.clearAllMocks();
   jest.mocked(router.canGoBack).mockReturnValue(true);
   mockWords = [word];
+  mockConfirmations = 3;
   mockRouteId = 'word';
   mockCollections = [{ id: 'my-words', name: 'My words' }, { id: 'c1', name: 'English C1 lessons' }];
   mockCreateCollection.mockReset();
@@ -294,4 +296,14 @@ it('keeps restart available after a failure', async () => {
 it('does not offer to restart an active word', async () => {
   const view = await render(<WordDetailScreen/>);
   expect(view.queryByRole('button', { name: 'Learn again' })).toBeNull();
+});
+
+it('shows remaining confirmations using the selected rhythm', async () => {
+  mockConfirmations = 2;
+  const view = await render(<WordDetailScreen/>);
+  expect(view.getByText('0 of 2 confirmations')).toBeTruthy();
+  expect(view.getByText('2 more “I know this” confirmations to mark as learned.')).toBeTruthy();
+  mockConfirmations = 1;
+  await view.rerender(<WordDetailScreen/>);
+  expect(view.queryByRole('progressbar')).toBeNull();
 });
