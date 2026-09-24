@@ -69,9 +69,9 @@ Cloudflare Pages must publish only `site/`, never the internal `docs/` directory
 - `https://wordfold.app/privacy/`
 - `https://wordfold.app/account-deletion/`
 
-Create a Cloudflare Pages project connected to the `xmajzel/wordfold` GitHub repository. Select `main` as the production branch, no framework preset, `exit 0` as the build command, and `site` as the build output directory relative to the repository root. Keep automatic deployments enabled. Add `wordfold.app` as the custom domain. An apex domain requires the domain's nameservers to point to Cloudflare; preserve the existing MX, SPF, DKIM, DMARC, and other DNS records used by `support@wordfold.app` and `feedback.wordfold.app` when moving DNS.
+The `wordfold` Cloudflare Pages project is connected to `xmajzel/wordfold`. It deploys `main` automatically with no framework preset, `exit 0` as the build command, and `site` as the output directory relative to the repository root. `wordfold.app` is its custom domain. Preserve the MX, SPF, DKIM, DMARC, and other DNS records used by `support@wordfold.app` and `feedback.wordfold.app` when changing website records.
 
-After the site is on `main`, verify the production deployment, both HTTPS URLs, and automatic deployment from a subsequent `main` change. Then update the in-app legal URLs, remove the GitHub Pages workflow, and use the live Cloudflare URLs in the Play Console privacy and account-deletion fields. Complete Data Safety consistently with the published policy and installed SDK behavior. Submitted feedback and its notification email are separate from cloud account deletion; handle identifiable feedback deletion requests sent to support before claiming that associated data has been removed.
+Before submitting the Play listing, verify the production deployment and both HTTPS URLs. Use those URLs in the Play Console privacy and account-deletion fields. Complete Data Safety consistently with the published policy and installed SDK behavior. Submitted feedback and its notification email are separate from cloud account deletion; handle identifiable feedback deletion requests sent to support before claiming that associated data has been removed.
 
 ## Android pronunciation acceptance
 
