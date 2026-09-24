@@ -6,7 +6,7 @@ const authenticated = withSupabase({ auth: 'user' }, async (request, ctx) => han
     userId: ctx.userClaims?.id,
     openaiKey: Deno.env.get('OPENAI_API_KEY'),
     revenuecatKey: Deno.env.get('REVENUECAT_SECRET_API_KEY'),
-    model: Deno.env.get('AI_WORD_MODEL') || 'gpt-5.6-sol',
+    model: Deno.env.get('AI_WORD_MODEL') || 'gpt-6-sol',
     fetch,
     rpc: async (name, args) => {
       const { data, error } = await ctx.supabaseAdmin.rpc(name, args);

@@ -229,7 +229,7 @@ production. The notification worker tests use a fake provider and do not send em
 ### AI vocabulary suggestions
 
 Single-word entry and guided bulk review can request a read-only suggestion from the
-`ai-word` Supabase Edge Function. The server uses `gpt-5.6-sol` by default. Dictionary
+`ai-word` Supabase Edge Function. The server uses `gpt-6-sol` by default. Dictionary
 lookup and manual entry remain available without AI or an account. Accept copies the
 suggestion into the editable word form; Discard leaves the form unchanged.
 

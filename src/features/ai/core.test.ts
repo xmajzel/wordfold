@@ -5,7 +5,7 @@ const requestId = '11111111-1111-4111-8111-111111111111';
 const suggestion = { definition: 'Determination despite difficulties.', translation: 'húževnatosť', example: 'Her tenacity helped her finish a very difficult project.', partOfSpeech: 'noun' };
 const request = (body: unknown) => new Request('https://example.test', { method: 'POST', body: JSON.stringify(body) });
 function deps() {
-  return { userId: 'user', openaiKey: 'test-key', fetch: jest.fn(async (_url: RequestInfo | URL, _init?: RequestInit) => Response.json({ status: 'completed', model: 'gpt-5.6-sol', usage: { input_tokens: 200, output_tokens: 80 },
+  return { userId: 'user', openaiKey: 'test-key', fetch: jest.fn(async (_url: RequestInfo | URL, _init?: RequestInit) => Response.json({ status: 'completed', model: 'gpt-6-sol', usage: { input_tokens: 200, output_tokens: 80 },
     output: [{ content: [{ type: 'output_text', text: JSON.stringify(suggestion) }] }] })),
   rpc: jest.fn(async (name: string, args: Record<string, unknown>): Promise<Record<string, unknown>> => name === 'ai_reserve' ? { status: 'reserved', balance: 9 }
     : { status: args.p_result ? 'completed' : 'failed', suggestion: args.p_result, balance: args.p_result ? 9 : 10 }) };
@@ -15,7 +15,7 @@ it('reserves before generating, validates the output, and commits the complete c
   expect(await response.json()).toMatchObject({ status: 'completed', suggestion, balance: 9 });
   expect(d.rpc.mock.calls[0]).toEqual(['ai_reserve', { p_user_id: 'user', p_request_id: requestId, p_input: input }]);
   const body = JSON.parse(d.fetch.mock.calls[0]?.[1]?.body as string);
-  expect(body.model).toBe('gpt-5.6-sol'); expect(body.store).toBe(false);
+  expect(body.model).toBe('gpt-6-sol'); expect(body.store).toBe(false);
 });
 it.each(['pending', 'completed', 'failed'])('does not call OpenAI again for an existing %s request', async (status) => {
   const d = deps(); d.rpc.mockResolvedValueOnce({ status, balance: 9, suggestion });
