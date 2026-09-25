@@ -327,6 +327,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
 
   useEffect(() => {
     let active = true;
+    if (authStatus === 'loading') return () => { active = false; };
     if (authStatus !== 'signedIn' || !authUserId || !cutoverService) {
       automaticCutover.current = null;
       void Promise.resolve().then(() => { if (active) setDataSource('guest'); });
@@ -438,9 +439,10 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   }, [translationQueue, vocabularyStore]);
 
   useEffect(() => {
+    if (authStatus === 'loading' || dataSource === 'loading') return;
     // The async refresh resolves after the effect body, so this does not cascade a synchronous render.
     void refresh().catch((error) => console.warn('Could not refresh app data.', error));
-  }, [refresh]);
+  }, [authStatus, dataSource, refresh]);
 
   useEffect(() => vocabularyStore.subscribe(() => {
     void refresh().catch((error) => console.warn('Could not refresh synchronized app data.', error));

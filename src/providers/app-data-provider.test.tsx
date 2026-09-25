@@ -12,9 +12,10 @@ const mockSQLiteProvider = jest.fn(({ children }: { children: ReactNode }) => ch
 const mockRebuildReminderSchedule = jest.fn(async (..._args: unknown[]) => 0);
 const mockTranslateEnglishToSlovak = jest.fn(async (_text: string) => 'osobný preklad');
 const mockPrepareTranslationError = jest.fn();
+let mockAuthStatus: 'loading' | 'signedOut' = 'signedOut';
 
 jest.mock('@/providers/auth-provider', () => ({
-  useAuth: () => ({ status: 'signedOut', user: null }),
+  useAuth: () => ({ status: mockAuthStatus, user: null }),
 }));
 jest.mock('@/providers/sync-provider', () => ({
   useSync: () => ({ phase: 'signedOut', hasSynced: false }),
@@ -188,7 +189,25 @@ function RecommendationProbe({ onComplete, preview }: { onComplete(count: number
 }
 
 describe('AppDataProvider', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => {
+    mockAuthStatus = 'signedOut';
+    jest.clearAllMocks();
+  });
+
+  it('waits for the local auth decision before exposing device vocabulary', async () => {
+    mockAuthStatus = 'loading';
+    jest.mocked(repository.listWords).mockResolvedValue([word]);
+    jest.mocked(repository.isOnboardingComplete).mockResolvedValue(true);
+    const view = await render(<AppDataProvider><FilterProbe/></AppDataProvider>);
+
+    view.getByText('Loading filters');
+    expect(repository.listWords).not.toHaveBeenCalled();
+
+    mockAuthStatus = 'signedOut';
+    await view.rerender(<AppDataProvider><FilterProbe/></AppDataProvider>);
+    await waitFor(() => view.getByText('Selected: all'));
+    expect(repository.listWords).toHaveBeenCalled();
+  });
 
   it('selects immediately during a stalled save and keeps the latest tap through refresh and save completion', async () => {
     let finishSave!: () => void;
