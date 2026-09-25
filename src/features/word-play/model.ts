@@ -2,8 +2,10 @@ import { wordBelongsToCourse, type CourseId } from '@/domain/courses';
 import { filterWordsByLearningCategory } from '@/features/learning/algorithm';
 import type { LearningFilter, Word } from '@/domain/types';
 
+import { buildSentenceGap, type SentenceGap } from './sentence';
+
 export const WORD_PLAY_SIZE = 10;
-export type WordPlayMode = 'matching' | 'recall';
+export type WordPlayMode = 'matching' | 'recall' | 'sentence';
 export type WordPlayEventType = 'game_seen' | 'game_missed' | 'game_answered' | 'game_relearned';
 
 export interface WordPlayEvent {
@@ -49,7 +51,7 @@ export function summarizeWordPlay(rows: WordPlayEventRow[]): Record<string, Word
     if (!row.word_id || !row.value) continue;
     let value: { sessionId?: unknown; mode?: unknown; sessionMode?: unknown };
     try { value = JSON.parse(row.value); } catch { continue; }
-    if (!value || typeof value.sessionId !== 'string' || !['matching', 'recall'].includes(String(value.mode))) continue;
+    if (!value || typeof value.sessionId !== 'string' || !['matching', 'recall', 'sentence'].includes(String(value.mode))) continue;
     const stats = result[row.word_id] ??= { ...emptyWordPlayStats };
     const key = JSON.stringify([row.word_id, row.type, value.sessionId]);
     if (!counted.has(key)) {
@@ -60,14 +62,15 @@ export function summarizeWordPlay(rows: WordPlayEventRow[]): Record<string, Word
     }
     if (row.type === 'game_seen' && (!stats.lastPlayedAt || row.occurred_at > stats.lastPlayedAt)) {
       stats.lastPlayedAt = row.occurred_at;
-      stats.lastMode = (value.sessionMode === 'matching' || value.sessionMode === 'recall' ? value.sessionMode : value.mode) as WordPlayMode;
+      stats.lastMode = (value.sessionMode === 'matching' || value.sessionMode === 'recall' || value.sessionMode === 'sentence' ? value.sessionMode : value.mode) as WordPlayMode;
     }
   }
   return result;
 }
 
 export type WordPlayRound = { mode: 'matching'; words: Word[]; answers: Word[] }
-  | { mode: 'recall'; words: [Word] };
+  | { mode: 'recall'; words: [Word] }
+  | { mode: 'sentence'; words: [Word]; gap: SentenceGap };
 
 export function shuffle<T>(items: readonly T[], random = Math.random): T[] {
   const result = [...items];
@@ -102,9 +105,14 @@ export function buildWordPlaySession(
   const eligible = filterWordsByLearningCategory(words, filter).filter((word) => word.state === 'learned' && wordBelongsToCourse(word, courseId));
   const latest = eligible.map((word) => stats[word.id]).filter((item) => item?.lastPlayedAt)
     .sort((left, right) => right.lastPlayedAt!.localeCompare(left.lastPlayedAt!))[0];
-  const mode = latest?.lastMode === 'matching' ? 'recall' : 'matching';
   const selected = shuffle(eligible, random).sort((left, right) =>
     (stats[left.id]?.lastPlayedAt ?? '').localeCompare(stats[right.id]?.lastPlayedAt ?? '')).slice(0, WORD_PLAY_SIZE);
+  const mode = latest?.lastMode === 'matching' ? 'recall'
+    : latest?.lastMode === 'recall' && selected.some((word) => buildSentenceGap(word)) ? 'sentence' : 'matching';
+  if (mode === 'sentence') return selected.map((word): WordPlayRound => {
+    const gap = buildSentenceGap(word);
+    return gap ? { mode: 'sentence', words: [word], gap } : { mode: 'recall', words: [word] };
+  });
   if (mode === 'recall') return selected.map((word) => ({ mode: 'recall', words: [word] }));
 
   const rounds: WordPlayRound[] = [];

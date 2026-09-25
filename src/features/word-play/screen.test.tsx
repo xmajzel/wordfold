@@ -6,6 +6,7 @@ import type { Word } from '@/domain/types';
 import type { WordPlayEvent, WordPlayStats } from './model';
 import { emptyWordPlayStats } from './model';
 import { withTiming } from 'react-native-reanimated';
+import { SentenceRound } from './sentence-round';
 import { RecallFlashcard } from './recall-flashcard';
 import WordPlayScreen from './screen';
 
@@ -334,4 +335,57 @@ it.each([false, true])('animates a rated card then advances once (reduced motion
   await finishTransition();
   expect(view.getByText('2 words revisited · 1 needed another look')).toBeTruthy();
   expect(mockRecord.mock.calls.filter(([event]) => event.type === 'game_relearned')).toHaveLength(0);
+});
+
+it('checks a sentence, retains mistakes after success, and waits for Next', async () => {
+  const onRecord = jest.fn(async () => undefined);
+  const onNext = jest.fn();
+  const word = { ...mockWords[0], term: 'quiet', definition: 'Making little noise.', partOfSpeech: 'adjective', translation: 'tichý' };
+  const view = await render(<SentenceRound word={word} gap={{ before: 'The room is ', answer: 'quiet', after: '.' }} haptics={false} onRecord={onRecord} onNext={onNext}/>);
+  expect(view.getByRole('button', { name: 'Check answer' })).toBeDisabled();
+  expect(view.queryByText(word.definition)).toBeNull();
+  await fireEvent.changeText(view.getByLabelText('Missing word'), 'loud');
+  await fireEvent.press(view.getByRole('button', { name: 'Check answer' }));
+  expect(view.getByRole('alert')).toBeTruthy();
+  await fireEvent.press(view.getByRole('button', { name: 'Check answer' }));
+  expect(onRecord.mock.calls).toEqual([['game_missed']]);
+  await fireEvent.changeText(view.getByLabelText('Missing word'), '  QUIET  ');
+  await fireEvent(view.getByLabelText('Missing word'), 'submitEditing');
+  expect(view.getByText(word.definition)).toBeTruthy();
+  expect(view.getByText('adjective')).toBeTruthy();
+  expect(view.getByText('That’s the word!')).toBeTruthy();
+  expect(view.queryByLabelText('Missing word')).toBeNull();
+  expect(onRecord.mock.calls).toEqual([['game_missed'], ['game_answered']]);
+  expect(onNext).not.toHaveBeenCalled();
+  await fireEvent.press(view.getByRole('button', { name: 'Next word' }));
+  await fireEvent.press(view.getByRole('button', { name: 'Next word' }));
+  expect(onNext).toHaveBeenCalledTimes(1);
+});
+
+it('offers Show answer without typing and records practice only once', async () => {
+  const onRecord = jest.fn(async () => undefined);
+  const view = await render(<SentenceRound word={mockWords[0]} gap={{ before: 'Use ', answer: 'word 0', after: ' here.' }} haptics={false} onRecord={onRecord} onNext={() => undefined}/>);
+  await fireEvent.press(view.getByRole('button', { name: 'Show answer' }));
+  expect(view.getByText('A word to revisit')).toBeTruthy();
+  expect(view.getByText(mockWords[0].definition)).toBeTruthy();
+  expect(onRecord.mock.calls).toEqual([['game_missed'], ['game_answered']]);
+});
+
+it('integrates sentence rounds with filtered sessions, saves, and recap', async () => {
+  mockStats = { 'word-0': { ...emptyWordPlayStats, gamesPlayed: 1, lastPlayedAt: '2026-09-25', lastMode: 'recall' } };
+  const original = mockWords[0].example;
+  mockWords[0].example = 'Use word 0 here.';
+  try {
+    const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
+    // The unplayed word is selected first and has no example: a recall fallback.
+    await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
+    await fireEvent.press(view.getByRole('button', { name: 'I know this' }));
+    await finishTransition();
+    expect(view.getByText('Fill the gap')).toBeTruthy();
+    await fireEvent.press(view.getByRole('button', { name: 'Show answer' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Next word' }));
+    expect(view.getByText('2 words revisited · 1 needed another look')).toBeTruthy();
+    expect(mockRecord.mock.calls.every(([event]) => event.sessionMode === 'sentence')).toBe(true);
+    expect(mockRecord.mock.calls.filter(([event]) => event.mode === 'sentence').map(([event]) => event.type)).toEqual(['game_seen', 'game_missed', 'game_answered']);
+  } finally { mockWords[0].example = original; }
 });

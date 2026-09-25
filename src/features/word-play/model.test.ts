@@ -81,3 +81,21 @@ it('allows short sessions after previously playing, even after words return to l
   expect(buildWordPlaySession(words, 'en-sk', stats).flatMap((round) => round.words)).toEqual([words[0]]);
   expect(buildWordPlaySession(words, 'es-sk', stats)).toEqual([]);
 });
+
+it('rotates recall into sentences, falls back per word, then returns to matching', () => {
+  const words = Array.from({ length: 10 }, (_, index) => gameWord(index, { example: index === 0 ? null : `I remember word ${index} today.` }));
+  const stats = { 'word-0': { ...emptyWordPlayStats, gamesPlayed: 1, lastPlayedAt: '2026-09-25', lastMode: 'recall' as const } };
+  const rounds = buildWordPlaySession(words, 'en-sk', stats);
+  expect(rounds.filter((round) => round.mode === 'sentence')).toHaveLength(9);
+  expect(rounds.find((round) => round.words[0].id === 'word-0')?.mode).toBe('recall');
+  const history = summarizeWordPlay([{
+    word_id: 'word-0', type: 'game_seen', occurred_at: '2026-09-25',
+    value: wordPlayEventValue({ sessionId: 'sentence-session', mode: 'recall', sessionMode: 'sentence' }),
+  }, {
+    word_id: 'word-1', type: 'game_missed', occurred_at: '2026-09-25',
+    value: wordPlayEventValue({ sessionId: 'sentence-session', mode: 'sentence' }),
+  }]);
+  expect(history['word-0'].lastMode).toBe('sentence');
+  expect(history['word-1'].needsPractice).toBe(1);
+  expect(buildWordPlaySession(words, 'en-sk', history).map((round) => round.mode)).toEqual(['matching', 'matching']);
+});

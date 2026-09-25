@@ -17,6 +17,7 @@ import type { LearningFilter, Word } from '@/domain/types';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
+import { SentenceRound } from './sentence-round';
 import { RecallFlashcard } from './recall-flashcard';
 import { WordPlaySaveQueue } from './save-queue';
 import { buildWordPlaySession, isWordPlayUnlocked, WORD_PLAY_SIZE, type WordPlayEvent, type WordPlayEventType, type WordPlayMode, type WordPlayRound } from './model';
@@ -65,7 +66,7 @@ export default function WordPlayScreen({ inTab = false, autoStart = false, initi
         <View style={[styles.card, { backgroundColor: theme.surface, borderColor: theme.border }]}>
           <Ionicons name="extension-puzzle-outline" size={52} color={theme.primary}/>
           <AppText variant="heading">Keep your words close</AppText>
-          <AppText>Revisit up to 10 learned words in {activeCourse.displayName}. Match pairs or try a recall challenge—each visit brings a different round.</AppText>
+          <AppText>Revisit up to 10 learned words in {activeCourse.displayName}. Match pairs, recall a word, or fill a gap in a sentence—each visit brings a different round.</AppText>
           <AppText style={{ color: theme.muted }}>No timer. Take your time, and choose what to practise again at the end.</AppText>
           <AppText variant="label">Choose your words</AppText>
           {[
@@ -131,7 +132,7 @@ function PlaySession({ id, courseId, rounds, haptics, canPlayAgain, onAgain }: {
     let event = events.current.get(key);
     if (!event) {
       event = { id: Crypto.randomUUID(), sessionId: id, courseId, wordId: word.id, mode,
-        sessionMode: rounds.some((round) => round.mode === 'matching') ? 'matching' : 'recall', type, occurredAt: new Date().toISOString() };
+        sessionMode: rounds.some((round) => round.mode === 'sentence') ? 'sentence' : rounds.some((round) => round.mode === 'matching') ? 'matching' : 'recall', type, occurredAt: new Date().toISOString() };
       events.current.set(key, event);
     }
     if (type === 'game_relearned') {
@@ -248,6 +249,8 @@ function Round({ round, nextWord, onRecord, onContinue, haptics }: {
       setFeedback('Not that pair. Try another meaning, or choose “Need another look”.');
     }
   };
+  if (round.mode === 'sentence') return <SentenceRound word={round.words[0]} gap={round.gap} haptics={haptics}
+    onRecord={(type) => onRecord(round.words[0], 'sentence', type)} onNext={onContinue}/>;
   const recallWord = round.words[0];
   const translation = recallWord.translation?.trim();
   const reverseRecall = Boolean(translation && translation.toLocaleLowerCase() !== recallWord.term.trim().toLocaleLowerCase());
