@@ -19,7 +19,7 @@ import { WordCard } from '@/components/word-card';
 import { wordBelongsToCourse } from '@/domain/courses';
 import { languageLabel } from '@/domain/languages';
 import type { Collection, LearningFilter, LearningPreferences, LearningRating, Word } from '@/domain/types';
-import { buildContinuedLearningFeed, buildLearningFeed, buildNotificationLearningSession, filterWordsByLearningCategory, getAvailableLearningFilters } from '@/features/learning/algorithm';
+import { DAILY_NEW_WORD_LIMIT, buildContinuedLearningFeed, buildLearningFeed, buildNotificationLearningSession, filterWordsByLearningCategory, getAvailableLearningFilters } from '@/features/learning/algorithm';
 import { createSerialMutationQueue } from '@/features/learning/mutation-queue';
 import { WordCapacityExceededError } from '@/features/purchases/capacity';
 import { buildRecommendations, normalizeLearningPreferences, topicOptions, type Recommendation } from '@/features/recommendations/selector';
@@ -44,10 +44,7 @@ export default function LearnScreen() {
   const availableFilters = useMemo(() => getAvailableLearningFilters(activeWords, collections), [activeWords, collections]);
   const activeFilter = availableFilters.includes(learningFilter) ? learningFilter : 'all';
   const sessionFilter = notificationWordId ? 'all' : activeFilter;
-  const collectionMembership = sessionFilter.startsWith('collection:')
-    ? filterWordsByLearningCategory(activeWords, sessionFilter).map((word) => word.id).sort().join(':')
-    : '';
-  const sessionKey = `${activeCourseId}:${sessionFilter}:${notificationWordId ?? 'regular'}:${collectionMembership}:${activeWords.map((word) => word.id).sort().join(':')}`;
+  const sessionKey = `${activeCourseId}:${sessionFilter}:${notificationWordId ?? 'regular'}`;
 
   const selectFilter = useCallback(async (filter: LearningFilter) => {
     if (requestedNotificationWordId) router.setParams({ notificationWordId: '' });
@@ -117,28 +114,44 @@ function LearningSession({ filter, notificationWordId, onSelectFilter }: {
   const sessionFeedLengthRef = useRef(sessionFeed.length);
   const previousWords = useRef(activeWords);
   useEffect(() => {
+    const previousCategoryWords = filterWordsByLearningCategory(previousWords.current, filter);
+    const currentCategoryWords = filterWordsByLearningCategory(activeWords, filter);
+    const previousCategoryIds = new Set(previousCategoryWords.map((word) => word.id));
+    const currentCategoryIds = new Set(currentCategoryWords.map((word) => word.id));
+    const membershipChanged = previousCategoryIds.size !== currentCategoryIds.size
+      || [...currentCategoryIds].some((id) => !previousCategoryIds.has(id));
     const previousStates = new Map(previousWords.current.map((word) => [word.id, word.state]));
     previousWords.current = activeWords;
-    const resumed = filterWordsByLearningCategory(activeWords, filter).filter((word) =>
+    const resumed = currentCategoryWords.filter((word) =>
       previousStates.get(word.id) === 'learned' && word.state === 'cannot_remember'
       && word.nextReviewAt !== null && new Date(word.nextReviewAt) <= new Date());
-    if (resumed.length === 0) return;
+    if (!membershipChanged && resumed.length === 0) return;
     const resumedIds = new Set(resumed.map((word) => word.id));
-    // Keep the current card, removing old occurrences before adding a fresh attempt.
+    const retained = sessionFeed.filter((word) => currentCategoryIds.has(word.id) && !resumedIds.has(word.id));
+    let newWordSlots = Math.max(0, DAILY_NEW_WORD_LIMIT - retained.filter((word) => word.state === 'new').length);
+    const additions = membershipChanged
+      ? buildLearningFeed(activeWords, new Date(), filter).filter((word) =>
+        !previousCategoryIds.has(word.id) && !sessionWordIds.has(word.id)
+        && (word.state !== 'new' || newWordSlots-- > 0))
+      : [];
+    // Preserve the visible card as the session gains words or loses unavailable ones.
     const removedBeforeCurrent = sessionFeed.slice(0, currentIndexRef.current)
-      .filter((word) => resumedIds.has(word.id)).length;
-    const nextFeed = [...sessionFeed.filter((word) => !resumedIds.has(word.id)), ...resumed];
+      .filter((word) => !currentCategoryIds.has(word.id) || resumedIds.has(word.id)).length;
+    const nextFeed = [...retained, ...resumed, ...additions];
     for (const id of resumedIds) {
       submittedRatings.current.delete(id);
       viewedIds.current.delete(id);
     }
     sessionFeedLengthRef.current = nextFeed.length;
     currentIndexRef.current -= removedBeforeCurrent;
-    // A library action can reactivate words while this mounted session is open.
     setSessionFeed(nextFeed);
     setCurrentIndex(currentIndexRef.current);
-    setSessionWordIds((current) => new Set([...current, ...resumedIds]));
-  }, [activeWords, filter, sessionFeed]);
+    setSessionWordIds((current) => new Set([
+      ...[...current].filter((id) => currentCategoryIds.has(id)),
+      ...resumedIds,
+      ...additions.map((word) => word.id),
+    ]));
+  }, [activeWords, filter, sessionFeed, sessionWordIds]);
   const [mutationQueue] = useState(createSerialMutationQueue);
   const translatingIds = useRef(new Set<string>());
   const viewportHeight = stackHeight || Math.max(390, height - 241);

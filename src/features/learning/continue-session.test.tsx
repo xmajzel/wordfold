@@ -342,6 +342,39 @@ describe('continued learning session', () => {
     expect(mockAddRecommendedWords).toHaveBeenCalledWith(10, mockRecommendationBatch);
   });
 
+  it('keeps the visible word when background data adds another word', async () => {
+    mockBuildLearningFeed.mockReturnValue([mockFirstWord, mockNextWord]);
+    const view = await render(<LearnScreen/>);
+    const firstCard = view.getByTestId('swipe-wrapper-first');
+    expect(view.getByText('1 of 2 · Skip to move on')).toBeTruthy();
+
+    mockWords = [mockThirdWord, mockFirstWord, mockNextWord];
+    mockBuildLearningFeed.mockReturnValue([mockThirdWord, mockFirstWord, mockNextWord]);
+    await view.rerender(<LearnScreen/>);
+
+    expect(view.getByTestId('swipe-wrapper-first')).toBe(firstCard);
+    expect(view.getByText('1 of 3 · Skip to move on')).toBeTruthy();
+    await fireEvent.press(view.getByRole('button', { name: 'Skip word' }));
+    expect(view.getByText('2 of 3 · Skip to move on')).toBeTruthy();
+    expect(view.getByTestId('swipe-wrapper-next')).toBeTruthy();
+  });
+
+  it('keeps the visible word when background data removes an earlier word', async () => {
+    mockWords = [mockFirstWord, mockNextWord, mockThirdWord];
+    mockBuildLearningFeed.mockReturnValue(mockWords);
+    const view = await render(<LearnScreen/>);
+    await fireEvent.press(view.getByRole('button', { name: 'Skip word' }));
+    expect(view.getByText('2 of 3 · Skip to move on')).toBeTruthy();
+
+    mockWords = [mockNextWord, mockThirdWord];
+    mockBuildLearningFeed.mockReturnValue(mockWords);
+    await view.rerender(<LearnScreen/>);
+
+    expect(view.getByTestId('swipe-wrapper-next')).toBeTruthy();
+    expect(view.getByText('focus')).toBeTruthy();
+    expect(view.getByText('1 of 2 · Skip to move on')).toBeTruthy();
+  });
+
   it('keeps the revealed end card and its words when the final rating finishes saving', async () => {
     let finishRating!: () => void;
     mockBuildRecommendations.mockReturnValue(mockRecommendationBatch);
