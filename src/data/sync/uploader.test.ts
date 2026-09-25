@@ -171,6 +171,34 @@ describe('PowerSyncUploader', () => {
     expect(context.complete).not.toHaveBeenCalled();
   });
 
+  it('describes a tombstoned write as an already removed item', async () => {
+    const context = setup([entry(1, 'PATCH', 'words', 'word-1', { term: 'Updated' })], {
+      patch: jest.fn(async () => ({ error: { code: '22000', message: 'tombstoned rows cannot be changed' } })),
+    });
+
+    await context.uploader.uploadNext(context.database);
+
+    expect(context.execute).toHaveBeenCalledWith(
+      expect.stringContaining('INSERT INTO sync_write_errors'),
+      expect.arrayContaining(['This change targeted an item that was already removed.']),
+    );
+    expect(context.complete).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not call a different database rejection an already removed item', async () => {
+    const context = setup([entry(1, 'PATCH', 'words', 'word-1', { term: 'Updated' })], {
+      patch: jest.fn(async () => ({ error: { code: '22000', message: 'id is immutable' } })),
+    });
+
+    await context.uploader.uploadNext(context.database);
+
+    expect(context.execute).toHaveBeenCalledWith(
+      expect.stringContaining('INSERT INTO sync_write_errors'),
+      expect.arrayContaining(['This change could not be synchronized.']),
+    );
+    expect(context.complete).toHaveBeenCalledTimes(1);
+  });
+
   it('keeps transient and unexpected failures queued', async () => {
     const context = setup([entry(1, 'PATCH', 'words', 'word-1', { translation: 'moc' })], {
       patch: jest.fn(async () => ({ error: { code: '503', message: 'backend unavailable' } })),

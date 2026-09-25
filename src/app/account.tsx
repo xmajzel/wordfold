@@ -33,6 +33,22 @@ export default function AccountScreen() {
   const [submitting, setSubmitting] = useState(false);
   const [formMessage, setFormMessage] = useState<string | null>(null);
   const [confirmationPending, setConfirmationPending] = useState(false);
+  const [dismissingRejectedWrite, setDismissingRejectedWrite] = useState(false);
+  const [dismissError, setDismissError] = useState<{ id: string; message: string } | null>(null);
+
+  const dismissRejectedWrite = async () => {
+    setDismissingRejectedWrite(true);
+    setDismissError(null);
+    try {
+      await sync.acknowledgeRejectedWrite();
+    } catch {
+      if (sync.rejectedWrite) {
+        setDismissError({ id: sync.rejectedWrite.id, message: 'The notice could not be dismissed. Please try again.' });
+      }
+    } finally {
+      setDismissingRejectedWrite(false);
+    }
+  };
 
   const changeMode = (nextMode: FormMode) => {
     setMode(nextMode);
@@ -189,7 +205,22 @@ export default function AccountScreen() {
               <Ionicons name="alert-circle-outline" color={theme.danger} size={20}/>
               <View style={styles.flex}>
                 <AppText>{sync.rejectedWrite.safeMessage}</AppText>
-                <PrimaryButton label="Dismiss" variant="secondary" onPress={() => void sync.acknowledgeRejectedWrite()}/>
+                {sync.rejectedWrite.similarCount > 1 ? (
+                  <AppText variant="caption" style={{ color: theme.muted }}>
+                    {sync.rejectedWrite.similarCount} changes produced this notice.
+                  </AppText>
+                ) : null}
+                <PrimaryButton
+                  label={sync.rejectedWrite.similarCount > 1
+                    ? `Dismiss ${sync.rejectedWrite.similarCount} notices`
+                    : 'Dismiss'}
+                  variant="secondary"
+                  loading={dismissingRejectedWrite}
+                  onPress={() => void dismissRejectedWrite()}
+                />
+                {dismissError?.id === sync.rejectedWrite.id
+                  ? <Message text={dismissError.message} color={theme.danger}/>
+                  : null}
               </View>
             </View>
           ) : null}

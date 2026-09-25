@@ -2,6 +2,7 @@ import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import { Alert } from 'react-native';
 
 import AccountScreen from '@/app/account';
+import type { RejectedSyncWrite } from '@/providers/sync-types';
 
 const mockResetPassword = jest.fn();
 const mockUpdatePassword = jest.fn();
@@ -12,6 +13,8 @@ const mockClearMessage = jest.fn();
 const mockClearBeforeSignOut = jest.fn();
 const mockPrepareForSignOut = jest.fn();
 const mockDeleteCloudAccount = jest.fn();
+const mockAcknowledgeRejectedWrite = jest.fn();
+let mockRejectedWrite: RejectedSyncWrite | null = null;
 
 const mockAuth = {
   status: 'signedOut' as const,
@@ -44,6 +47,8 @@ jest.mock('@/providers/sync-provider', () => ({
     phase: 'connected', hasSynced: true, lastSyncedAt: null,
     message: 'PowerSync is connected. Local vocabulary import is the next step.',
     clearBeforeSignOut: mockClearBeforeSignOut,
+    rejectedWrite: mockRejectedWrite,
+    acknowledgeRejectedWrite: mockAcknowledgeRejectedWrite,
   }),
 }));
 jest.mock('expo-router', () => ({ router: { back: jest.fn() } }));
@@ -75,6 +80,8 @@ describe('AccountScreen', () => {
     mockClearBeforeSignOut.mockResolvedValue(undefined);
     mockPrepareForSignOut.mockResolvedValue(undefined);
     mockDeleteCloudAccount.mockResolvedValue(undefined);
+    mockAcknowledgeRejectedWrite.mockResolvedValue(undefined);
+    mockRejectedWrite = null;
     Object.assign(mockAuth, { status: 'signedOut', session: null, user: null });
   });
 
@@ -173,6 +180,24 @@ describe('AccountScreen', () => {
 
     await waitFor(() => expect(view.getByText('Sign out could not safely clear synchronized data. Please try again.')).toBeTruthy());
     expect(mockSignOut).not.toHaveBeenCalled();
+  });
+
+  it('shows the number of similar notices and reports a failed dismissal', async () => {
+    Object.assign(mockAuth, { status: 'signedIn', user: { id: 'user-1', email: 'reader@example.com' } });
+    mockRejectedWrite = {
+      id: 'notice-3', tableName: 'words', operation: 'PATCH',
+      safeMessage: 'This change targeted an item that was already removed.',
+      createdAt: '2026-09-25T10:00:00.000Z', similarCount: 3,
+      matchingIds: ['notice-3', 'notice-2', 'notice-1'],
+    };
+    mockAcknowledgeRejectedWrite.mockRejectedValueOnce(new Error('database unavailable'));
+    const view = await render(<AccountScreen/>);
+
+    expect(view.getByText('3 changes produced this notice.')).toBeTruthy();
+    await fireEvent.press(view.getByRole('button', { name: 'Dismiss 3 notices' }));
+
+    await waitFor(() => expect(view.getByText('The notice could not be dismissed. Please try again.')).toBeTruthy());
+    expect(mockAcknowledgeRejectedWrite).toHaveBeenCalledTimes(1);
   });
 
   it('requires destructive confirmation before deleting the cloud account', async () => {

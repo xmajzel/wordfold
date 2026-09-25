@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type PropsWithChildren } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type PropsWithChildren } from 'react';
 import type { SyncStatus } from '@powersync/react-native';
 
 import { SupabasePowerSyncConnector } from '@/data/sync/connector';
@@ -6,6 +6,7 @@ import { MISSING_COLLECTION_MAPPING_MESSAGE } from '@/data/sync/collection-id';
 import { powerSyncConfiguration, powerSyncConfigurationError } from '@/data/sync/config';
 import { powerSyncDatabase } from '@/data/sync/database';
 import { createSyncLifecycle } from '@/data/sync/lifecycle';
+import { acknowledgeRejectedWriteGroup, loadRejectedWriteGroup } from '@/data/sync/rejected-writes';
 import { supabase } from '@/data/supabase/client';
 import { useAuth } from '@/providers/auth-provider';
 import type { SyncContextValue } from '@/providers/sync-types';
@@ -44,27 +45,24 @@ export function SyncProvider({ children }: PropsWithChildren) {
   const [lifecycleError, setLifecycleError] = useState(false);
   const [pendingUploads, setPendingUploads] = useState(0);
   const [rejectedWrite, setRejectedWrite] = useState<SyncContextValue['rejectedWrite']>(null);
+  const refreshRequest = useRef(0);
 
   const refreshUploadState = useCallback(async () => {
-    if (auth.status !== 'signedIn') {
+    const request = ++refreshRequest.current;
+    const userId = auth.status === 'signedIn' ? auth.user?.id : null;
+    if (!userId) {
       setPendingUploads(0);
       setRejectedWrite(null);
       return;
     }
     const [queue, rejected] = await Promise.all([
       powerSyncDatabase.getUploadQueueStats(),
-      powerSyncDatabase.getAll<{
-        id: string; table_name: string; operation: string; safe_message: string; created_at: string;
-      }>(`SELECT id, table_name, operation, safe_message, created_at
-          FROM sync_write_errors WHERE acknowledged_at IS NULL ORDER BY created_at DESC LIMIT 1`),
+      loadRejectedWriteGroup(powerSyncDatabase, userId),
     ]);
+    if (request !== refreshRequest.current) return;
     setPendingUploads(queue.count);
-    const row = rejected[0];
-    setRejectedWrite(row ? {
-      id: row.id, tableName: row.table_name, operation: row.operation,
-      safeMessage: row.safe_message, createdAt: row.created_at,
-    } : null);
-  }, [auth.status]);
+    setRejectedWrite(rejected);
+  }, [auth.status, auth.user?.id]);
 
   useEffect(() => {
     const disposeStatus = powerSyncDatabase.registerListener({
@@ -95,13 +93,14 @@ export function SyncProvider({ children }: PropsWithChildren) {
 
   const clearBeforeSignOut = useCallback(() => lifecycle.clearBeforeSignOut(), []);
   const acknowledgeRejectedWrite = useCallback(async () => {
-    if (!rejectedWrite) return;
-    await powerSyncDatabase.execute(
-      'UPDATE sync_write_errors SET acknowledged_at = ? WHERE id = ?',
-      [new Date().toISOString(), rejectedWrite.id],
-    );
-    await refreshUploadState();
-  }, [refreshUploadState, rejectedWrite]);
+    const userId = auth.status === 'signedIn' ? auth.user?.id : null;
+    if (!rejectedWrite || !userId) return;
+    try {
+      await acknowledgeRejectedWriteGroup(powerSyncDatabase, userId, rejectedWrite);
+    } finally {
+      await refreshUploadState();
+    }
+  }, [auth.status, auth.user?.id, refreshUploadState, rejectedWrite]);
 
   const uploadFields = useMemo(() => ({
     uploading: databaseState.uploading,

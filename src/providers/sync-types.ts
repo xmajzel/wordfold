@@ -1,12 +1,8 @@
+import type { RejectedWriteGroup } from '@/data/sync/rejected-writes';
+
 export type SyncPhase = 'unavailable' | 'signedOut' | 'connecting' | 'connected' | 'offline' | 'error';
 
-export interface RejectedSyncWrite {
-  id: string;
-  tableName: string;
-  operation: string;
-  safeMessage: string;
-  createdAt: string;
-}
+export type RejectedSyncWrite = RejectedWriteGroup;
 
 export interface SyncContextValue {
   phase: SyncPhase;

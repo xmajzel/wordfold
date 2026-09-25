@@ -206,7 +206,11 @@ function mutableValues(table: 'collections' | 'words', data: MutableRow) {
 }
 
 function knownRejection(error: SupabaseError, entry: CrudEntry) {
-  if (error.code === '22000') return 'This change targeted an item that was already removed.';
+  if (error.code === '22000') {
+    return /tombstoned rows cannot be changed/i.test(error.message)
+      ? 'This change targeted an item that was already removed.'
+      : 'This change could not be synchronized.';
+  }
   if (error.code === '42501' && /not found/i.test(error.message)) {
     return 'This change targeted an item that is no longer available.';
   }
