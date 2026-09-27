@@ -25,7 +25,7 @@ export const WordCard = memo(function WordCard({ onReport, word, confirmations =
   const hintLanguage = languageLabel(word.targetLanguageCode);
 
   if (compact) {
-    return <Animated.View entering={FadeInDown.duration(320).reduceMotion(ReduceMotion.System)} style={[styles.compactCard, { backgroundColor: theme.surface, shadowColor: theme.shadow }]}><LinearGradient colors={[`${theme.primary}D9`, `${theme.accent}B8`]} style={styles.compactAccent}/><View style={styles.compactTitle}><AppText variant="heading" style={styles.compactWord}>{word.term}</AppText><StateBadge state={word.state} /></View><AppText numberOfLines={2} style={{ color: theme.muted }}>{word.definition}</AppText><View style={styles.compactMeta}>{collectionName ? <CollectionBadge name={collectionName}/> : null}{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}</View><ConfirmationProgress word={word} confirmations={confirmations}/><AppText variant="caption" style={{ color: theme.muted }}>Seen {word.viewCount}×</AppText></Animated.View>;
+    return <Animated.View testID="word-card" entering={FadeInDown.duration(320).reduceMotion(ReduceMotion.System)} style={[styles.compactCard, { backgroundColor: theme.cardSurface, shadowColor: theme.shadow }]}><LinearGradient colors={[`${theme.primary}D9`, `${theme.accent}B8`]} style={styles.compactAccent}/><View style={styles.compactTitle}><AppText variant="heading" style={styles.compactWord}>{word.term}</AppText><StateBadge state={word.state} /></View><AppText numberOfLines={2} style={{ color: theme.muted }}>{word.definition}</AppText><View style={styles.compactMeta}>{collectionName ? <CollectionBadge name={collectionName}/> : null}{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}</View><ConfirmationProgress word={word} confirmations={confirmations}/><AppText variant="caption" style={{ color: theme.muted }}>Seen {word.viewCount}×</AppText></Animated.View>;
   }
 
   const rate = (rating: LearningRating) => {
@@ -35,7 +35,7 @@ export const WordCard = memo(function WordCard({ onReport, word, confirmations =
   };
 
   return (
-    <Animated.View entering={animateEntrance ? FadeInDown.springify().damping(18).reduceMotion(ReduceMotion.System) : undefined} style={[styles.card, dense && styles.denseCard, { backgroundColor: theme.surface, shadowColor: theme.shadow }]}>
+    <Animated.View testID="word-card" entering={animateEntrance ? FadeInDown.springify().damping(18).reduceMotion(ReduceMotion.System) : undefined} style={[styles.card, dense && styles.denseCard, { backgroundColor: theme.cardSurface, shadowColor: theme.shadow }]}>
       <LinearGradient colors={theme.primaryGradient} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.accentLine}/>
       <View style={styles.topRow}><StateBadge state={word.state}/><View style={styles.cardMeta}>{collectionName ? <CollectionBadge name={collectionName}/> : null}{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}{onReport ? <Pressable accessibilityRole="button" accessibilityLabel="Report an issue with this word" onPress={onReport} style={{ minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }}><Ionicons name="flag-outline" size={18} color={theme.muted}/></Pressable> : null}</View></View>
       <WordCardContent dense={dense}>

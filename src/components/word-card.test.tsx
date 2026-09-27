@@ -1,8 +1,14 @@
 import { fireEvent, render, within } from '@testing-library/react-native';
 
 import type { Word } from '@/domain/types';
+import { useAppTheme } from '@/hooks/use-app-theme';
+import { palette } from '@/theme/tokens';
 
 import { WordCard } from './word-card';
+
+jest.mock('@/hooks/use-app-theme', () => ({
+  useAppTheme: jest.fn(() => jest.requireActual('@/theme/tokens').palette.light),
+}));
 
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({ pronunciationVoicePreference: 'device' }),
@@ -48,6 +54,19 @@ const word: Word = {
 };
 
 describe('WordCard learning actions', () => {
+  beforeEach(() => jest.mocked(useAppTheme).mockReturnValue(palette.light));
+
+  it.each([
+    ['light', palette.light, '#FFFFFF'],
+    ['dark', palette.dark, '#25213B'],
+  ] as const)('keeps %s word cards opaque in both layouts', async (_scheme, theme, backgroundColor) => {
+    jest.mocked(useAppTheme).mockReturnValue(theme);
+    const full = await render(<WordCard word={word}/>);
+    expect(full.getByTestId('word-card')).toHaveStyle({ backgroundColor });
+    const compact = await render(<WordCard word={word} compact/>);
+    expect(compact.getByTestId('word-card')).toHaveStyle({ backgroundColor });
+  });
+
   it('opens reporting without rating or changing the displayed word', async () => {
     const onRate = jest.fn();
     const onReport = jest.fn();

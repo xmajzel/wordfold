@@ -2,6 +2,7 @@ export const palette = {
   light: {
     canvas: '#F6F5FF',
     surface: '#FFFFFF',
+    cardSurface: '#FFFFFF',
     raised: '#F8F7FFDB',
     glass: '#FFFFFF9E',
     primary: '#6657D9',
@@ -23,6 +24,7 @@ export const palette = {
   dark: {
     canvas: '#121020',
     surface: '#25213BC7',
+    cardSurface: '#25213B',
     raised: '#302A47D6',
     glass: '#302B478F',
     primary: '#B9B1FF',
