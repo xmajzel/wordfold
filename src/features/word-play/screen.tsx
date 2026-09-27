@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 import * as Crypto from 'expo-crypto';
 import * as Haptics from 'expo-haptics';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import Animated, { FadeInDown, FadeOut, ReduceMotion } from 'react-native-reanimated';
+import Animated, { FadeInDown, ReduceMotion } from 'react-native-reanimated';
 
 import { AppText } from '@/components/app-text';
 import { PrimaryButton } from '@/components/primary-button';
@@ -17,6 +17,7 @@ import type { LearningFilter, Word } from '@/domain/types';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { radii, spacing } from '@/theme/tokens';
+import { MatchingRound } from './matching-round';
 import { SentenceRound } from './sentence-round';
 import { RecallFlashcard } from './recall-flashcard';
 import { WordPlaySaveQueue } from './save-queue';
@@ -213,10 +214,8 @@ function Round({ round, nextWord, onRecord, onContinue, haptics }: {
   onContinue(): void; haptics: boolean;
 }) {
   const theme = useAppTheme();
-  const [selected, setSelected] = useState<string | null>(null);
   const [matched, setMatched] = useState<Set<string>>(new Set());
   const [revealed, setRevealed] = useState(false);
-  const [feedback, setFeedback] = useState('');
   const [outcome, setOutcome] = useState<'known' | 'practice' | null>(null);
   const answered = useRef(new Set<string>());
   const continued = useRef(false);
@@ -235,20 +234,10 @@ function Round({ round, nextWord, onRecord, onContinue, haptics }: {
     if (needsPractice) void onRecord(word, round.mode, 'game_missed');
     void onRecord(word, round.mode, 'game_answered');
     setMatched(new Set(answered.current));
-    if (round.mode === 'recall') setOutcome(needsPractice ? 'practice' : 'known');
-    else setFeedback(needsPractice ? (round.mode === 'matching' ? `${word.term} → ${word.translation}. You can practise it again at the end.` : 'Good catch. You can practise this one again at the end.') : 'Nicely done!');
+    setOutcome(needsPractice ? 'practice' : 'known');
     if (haptics) void Haptics.selectionAsync().catch(() => undefined);
   };
-  const pair = (answerWord: Word) => {
-    const word = round.words.find((item) => item.id === selected);
-    if (!word || answered.current.has(word.id) || answered.current.has(answerWord.id)) return;
-    if (word.id === answerWord.id) { answer(word, false); setSelected(null); }
-    else {
-      // Attribute the mistake to the chosen prompt, not the unrelated answer tile.
-      void onRecord(word, round.mode, 'game_missed');
-      setFeedback('Not that pair. Try another meaning, or choose “Need another look”.');
-    }
-  };
+  if (round.mode === 'matching') return <MatchingRound round={round} haptics={haptics} onRecord={onRecord} onNext={onContinue}/>;
   if (round.mode === 'sentence') return <SentenceRound word={round.words[0]} gap={round.gap} haptics={haptics}
     onRecord={(type) => onRecord(round.words[0], 'sentence', type)} onNext={onContinue}/>;
   const recallWord = round.words[0];
@@ -257,30 +246,19 @@ function Round({ round, nextWord, onRecord, onContinue, haptics }: {
 
   return <View style={styles.round}>
     <ScrollView style={styles.roundContent} contentContainerStyle={styles.roundScroll}>
-      <Animated.View entering={round.mode === 'matching' ? FadeInDown.duration(220).reduceMotion(ReduceMotion.System) : undefined} style={round.mode === 'matching' ? [styles.card, { backgroundColor: theme.surface, borderColor: theme.border }] : styles.recallContent}>
-        <AppText variant="heading">{round.mode === 'matching' ? 'Find the pairs' : 'Bring it to mind'}</AppText>
-        <AppText style={{ color: theme.muted }}>{round.mode === 'matching' ? 'Tap a word on the left, then its meaning on the right.' : reverseRecall ? 'Which word means this? Think of it before revealing.' : 'Can you remember what this word means?'}</AppText>
-        {round.mode === 'matching' ? <>
-          <View style={styles.columns}>
-            <View style={styles.column}>{round.words.map((word) => <Tile key={word.id} label={word.term} side="Word" selected={selected === word.id} matched={matched.has(word.id)} disabled={false} onPress={() => setSelected(word.id)}/>)}</View>
-            <View style={styles.column}>{round.answers.map((word) => <Tile key={word.id} label={word.translation!} side="Meaning" matched={matched.has(word.id)} disabled={!selected} onPress={() => pair(word)}/>)}</View>
-          </View>
-        </> : <RecallFlashcard word={recallWord} revealed={revealed} onReveal={() => setRevealed(true)} outcome={outcome} nextWord={nextWord} onAdvance={() => { if (!continued.current) { continued.current = true; onContinue(); } }}/>}
-        {feedback ? <AppText accessibilityLiveRegion="polite" style={{ color: theme.primary }}>{feedback}</AppText> : null}
-      </Animated.View>
+      <View style={styles.recallContent}>
+        <AppText variant="heading">Bring it to mind</AppText>
+        <AppText style={{ color: theme.muted }}>{reverseRecall ? 'Which word means this? Think of it before revealing.' : 'Can you remember what this word means?'}</AppText>
+        <RecallFlashcard word={recallWord} revealed={revealed} onReveal={() => setRevealed(true)} outcome={outcome} nextWord={nextWord} onAdvance={() => { if (!continued.current) { continued.current = true; onContinue(); } }}/>
+      </View>
     </ScrollView>
     <SafeAreaView edges={['bottom']} style={styles.footer}>
       <View testID="word-play-actions" style={styles.actions}>
         <View style={styles.actionSlot}>
-          {round.mode === 'recall' && revealed ? <RecallAction label="Keep learning" icon="calendar-outline" color={theme.primary} disabled={completed} onPress={() => answer(recallWord, true)}/> : null}
+          {revealed ? <RecallAction label="Keep learning" icon="calendar-outline" color={theme.primary} disabled={completed} onPress={() => answer(recallWord, true)}/> : null}
         </View>
         <View style={styles.actionSlot}>
-          {completed && round.mode === 'matching' ? <PrimaryButton label="Continue" onPress={() => { if (!continued.current) { continued.current = true; onContinue(); } }}/>
-            : round.mode === 'matching' ? <PrimaryButton label={selected ? 'Need another look' : 'Select a word to match'} variant="secondary" disabled={!selected} onPress={() => {
-              const word = round.words.find((item) => item.id === selected)!;
-              answer(word, true); setSelected(null);
-            }}/>
-            : revealed ? <RecallAction label="I know this" icon="checkmark-circle-outline" color={theme.success} disabled={completed} onPress={() => answer(recallWord, false)}/>
+          {revealed ? <RecallAction label="I know this" icon="checkmark-circle-outline" color={theme.success} disabled={completed} onPress={() => answer(recallWord, false)}/>
             : <PrimaryButton label="Reveal answer" onPress={() => setRevealed(true)}/>}
         </View>
       </View>
@@ -298,21 +276,6 @@ function RecallAction({ label, icon, color, disabled, onPress }: {
   </Pressable>;
 }
 
-function Tile({ label, side, selected = false, matched, disabled, onPress }: {
-  label: string; side: string; selected?: boolean; matched: boolean; disabled: boolean; onPress(): void;
-}) {
-  const theme = useAppTheme();
-  return <View style={styles.tileSlot}>
-    {matched ? <View style={[styles.matched, { borderColor: theme.border }]}><Ionicons name="checkmark" color={theme.success} size={20}/></View>
-      : <Animated.View exiting={FadeOut.duration(180).reduceMotion(ReduceMotion.System)} style={styles.tileContent}>
-        <Pressable accessibilityRole="button" accessibilityLabel={`${side}: ${label}`} accessibilityState={{ selected, disabled }} disabled={disabled} onPress={onPress}
-          style={({ pressed }) => [styles.tile, { backgroundColor: selected ? theme.primarySoft : theme.raised, borderColor: selected ? theme.primary : theme.border, opacity: pressed ? 0.7 : 1 }]}>
-          <AppText variant="label" style={styles.tileLabel}>{label}</AppText>
-        </Pressable>
-      </Animated.View>}
-  </View>;
-}
-
 const styles = StyleSheet.create({
   screen: { gap: spacing.sm }, title: { flex: 1 },
   scrollContent: { paddingBottom: spacing.xxxl, gap: spacing.lg },
@@ -323,10 +286,6 @@ const styles = StyleSheet.create({
   close: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   card: { borderWidth: 1, borderRadius: radii.sheet, padding: spacing.lg, gap: spacing.lg },
   track: { height: 8, borderRadius: radii.pill, overflow: 'hidden' }, fill: { height: '100%' },
-  columns: { flexDirection: 'row', gap: spacing.sm }, column: { flex: 1, gap: spacing.sm },
-  tileSlot: { minHeight: 66 }, tileContent: { flex: 1 },
-  tile: { flex: 1, minHeight: 66, padding: spacing.sm, borderWidth: 2, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
-  tileLabel: { textAlign: 'center' }, matched: { minHeight: 66, borderWidth: 1, borderStyle: 'dashed', borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
   recallAction: { minHeight: 50, borderWidth: 1, borderRadius: radii.control, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: spacing.sm, gap: spacing.sm },
   recallContent: { gap: spacing.lg }, actions: { gap: spacing.sm },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },

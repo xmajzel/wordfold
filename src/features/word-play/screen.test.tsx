@@ -82,7 +82,8 @@ it('plays two boards, retains first-attempt mistakes, and only relearns selected
       await fireEvent.press(view.getByRole('button', { name: `Meaning: ${hint}` }));
       await waitFor(() => expect(view.queryByRole('button', { name: `Word: ${term}` })).toBeNull());
     }
-    await fireEvent.press(view.getByRole('button', { name: 'Continue' }));
+    expect(view.getAllByText('Board complete').length).toBeGreaterThan(0);
+    await finishTransition();
   }
   expect(view.getByText('10 words revisited · 2 needed another look')).toBeTruthy();
   expect(mockRecord.mock.calls.filter(([event]) => event.type === 'game_seen')).toHaveLength(10);
@@ -388,4 +389,38 @@ it('integrates sentence rounds with filtered sessions, saves, and recap', async 
     expect(mockRecord.mock.calls.every(([event]) => event.sessionMode === 'sentence')).toBe(true);
     expect(mockRecord.mock.calls.filter(([event]) => event.mode === 'sentence').map(([event]) => event.type)).toEqual(['game_seen', 'game_missed', 'game_answered']);
   } finally { mockWords[0].example = original; }
+});
+
+it.each([false, true])('reveals skipped pairs, keeps their labels, and advances once (reduced motion: %s)', async (reducedMotion) => {
+  mockReducedMotion = reducedMotion;
+  const view = await render(<WordPlayScreen autoStart/>);
+  const terms = view.getAllByRole('button', { name: /^Word:/ }).map((tile) => tile.props.accessibilityLabel.replace('Word: ', ''));
+  for (const term of terms) {
+    await fireEvent.press(view.getByRole('button', { name: `Word: ${term}` }));
+    const skip = view.getByRole('button', { name: 'Need another look' });
+    await act(async () => { await fireEvent.press(skip); await fireEvent.press(skip); });
+    expect(view.getByLabelText(`Word: ${term}, review again`)).toBeTruthy();
+    expect(view.getByLabelText(`Meaning: ${term.replace('word', 'hint')}, review again`)).toBeTruthy();
+    expect(view.queryByRole('button', { name: `Word: ${term}` })).toBeNull();
+  }
+  expect(view.getByRole('progressbar', { name: 'Pairs reviewed' }).props.accessibilityValue.now).toBe(5);
+  expect(view.queryByRole('button', { name: 'Continue' })).toBeNull();
+  expect(mockRecord.mock.calls.filter(([event]) => event.type === 'game_missed')).toHaveLength(5);
+  expect(mockRecord.mock.calls.filter(([event]) => event.type === 'game_answered')).toHaveLength(5);
+  await finishTransition();
+  expect(view.getAllByRole('button', { name: /^Word:/ })).toHaveLength(5);
+  expect(view.getByRole('progressbar', { name: 'Pairs reviewed' }).props.accessibilityValue.now).toBe(0);
+});
+
+it('retains the selected word after a mistake and leaves matched text readable', async () => {
+  const view = await render(<WordPlayScreen autoStart/>);
+  const [first, second] = view.getAllByRole('button', { name: /^Word:/ }).map((tile) => tile.props.accessibilityLabel.replace('Word: ', ''));
+  await fireEvent.press(view.getByRole('button', { name: `Word: ${first}` }));
+  await fireEvent.press(view.getByRole('button', { name: `Meaning: ${second.replace('word', 'hint')}` }));
+  expect(view.getByRole('button', { name: `Word: ${first}` }).props.accessibilityState.selected).toBe(true);
+  expect(view.getByRole('button', { name: `Meaning: ${second.replace('word', 'hint')}` })).toBeEnabled();
+  await fireEvent.press(view.getByRole('button', { name: `Meaning: ${first.replace('word', 'hint')}` }));
+  expect(view.getByLabelText(`Word: ${first}, matched`)).toBeTruthy();
+  expect(view.getByLabelText(`Meaning: ${first.replace('word', 'hint')}, matched`)).toBeTruthy();
+  expect(view.queryByText('Nicely done!')).toBeNull();
 });
