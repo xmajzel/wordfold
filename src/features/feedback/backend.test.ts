@@ -52,13 +52,56 @@ it('distinguishes requested learning languages from hint languages', () => {
   expect(isFeedbackReport({ ...report, languageRole: 'hints' })).toBe(true);
 });
 
-it('sends only to the configured owner with optional reply-to and plain-text context', () => {
-  const email = feedbackEmail(feedbackFixture({ contactEmail: 'learner@example.com', message: '<script>test</script>' }), 'Wordfold <notifications@feedback.wordfold.app>');
+it('formats a readable email with a standalone prompt and no empty fields', () => {
+  const email = feedbackEmail(feedbackFixture({
+    id: '036696c1-9593-423e-bfee-6ae1ad72e89d', category: 'idea',
+    message: 'Kartičky mi pridu trochu moc priesvitne, text už dosť splýva so slovom na ďalšej kartičke',
+    context: { ...feedbackFixture().context, screen: 'settings', appVersion: '1.0.8', build: 'unknown' },
+  }), 'Wordfold <notifications@feedback.wordfold.app>');
   expect(email.to).toEqual(['jozefmajzel1@gmail.com']);
+  expect(email.subject).toBe('[Wordfold feedback] I have an improvement idea');
+  expect(email).not.toHaveProperty('reply_to');
+  expect(email.text).toContain('USER REPORT\nKartičky mi pridu trochu moc priesvitne');
+  expect(email.text).toContain('COPY INTO CODEX\n----------------\nInvestigate and fix this Wordfold feedback');
+  expect(email.text).toContain('User report\n> Kartičky mi pridu trochu moc priesvitne');
+  expect(email.text).toContain('Screen: Settings\nApp version: 1.0.8\nBuild: unknown\nPlatform: Android');
+  expect(email.text).not.toContain('Suggested correction: —');
+  expect(email.text).not.toContain('"word": null');
+  expect(email.html).toContain('Copy into Codex</h2><pre');
+  expect(email.html).toContain('Kartičky mi pridu trochu moc priesvitne');
+  expect(email.html).not.toContain('Report details</h2>');
+});
+
+it('includes relevant word details and escapes user text in HTML', () => {
+  const report = feedbackFixture({
+    category: 'content', reason: 'Translation', message: 'Wrong <script> & word',
+    correction: 'First line\nSecond <line>', contactEmail: 'learner@example.com',
+    context: { ...feedbackFixture().context, word: {
+      id: 'local-word', term: '<hello>', definition: 'A greeting', translation: 'ahoj',
+      example: null, catalogSenseId: 'hello-sense', source: 'manual', sourceLanguageCode: 'en', targetLanguageCode: 'sk',
+    } },
+  });
+  const email = feedbackEmail(report, 'sender');
   expect(email.reply_to).toBe('learner@example.com');
-  expect(email.text).toContain('<script>test</script>');
-  expect(email).not.toHaveProperty('html');
-  expect(feedbackEmail(feedbackFixture(), 'sender')).not.toHaveProperty('reply_to');
+  expect(email.text).toContain('Suggested correction: First line\nSecond <line>');
+  expect(email.text).toContain('Word: <hello>\nDefinition: A greeting\nTranslation: ahoj');
+  expect(email.text).toContain('Word source: manual\nWord ID: local-word\nCatalog sense ID: hello-sense');
+  expect(email.text).toContain('Suggested correction\n> First line\n> Second <line>');
+  expect(email.html).toContain('Wrong &lt;script&gt; &amp; word');
+  expect(email.html).toContain('First line<br>Second &lt;line&gt;');
+  expect(email.html).toContain('&lt;hello&gt;');
+  expect(email.html).not.toContain('<script>');
+  expect(email.html).not.toContain('Example</th>');
+});
+
+it('labels a missing-language request in the email and prompt', () => {
+  const email = feedbackEmail(feedbackFixture({
+    category: 'missing', reason: 'Language', message: '', requestedItem: 'French', languageRole: 'hints',
+  }), 'sender');
+  expect(email.text).toContain('USER REPORT\n(No written description)');
+  expect(email.text).toContain('Requested item: French\nLanguage request: Use this language for hints');
+  expect(email.text).toContain('Requested item\n> French\n\nLanguage request\n> Use this language for hints');
+  expect(email.html).toContain('Requested item</th>');
 });
 
 it('retains failed email jobs and continues sending the remaining claimed reports', async () => {
