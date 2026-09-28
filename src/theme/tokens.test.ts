@@ -29,6 +29,13 @@ describe('dark theme legibility', () => {
     expect(palette.dark.cardSurface).toMatch(/^#[0-9A-F]{6}$/i);
   });
 
+  it('keeps the enabled secondary button outline visible on its dark fill', () => {
+    const border = palette.dark.secondaryBorder;
+    const blendedBorder = blend(border, palette.dark.surface, Number.parseInt(border.slice(7), 16) / 255);
+    const values = [luminance(blendedBorder), luminance(channels(palette.dark.surface))].sort((a, b) => b - a);
+    expect((values[0] + 0.05) / (values[1] + 0.05)).toBeGreaterThanOrEqual(3);
+  });
+
   it('keeps filled control text above 4.5:1 across gradients', () => {
     const filledColors = [palette.dark.primary, palette.dark.success, ...palette.dark.dangerGradient];
     for (const color of filledColors) {

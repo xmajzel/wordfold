@@ -18,7 +18,8 @@ export function PrimaryButton({ label, onPress, variant = 'primary', disabled, l
   const press = (value: number) => {
     scale.set(withSpring(value, { damping: 16, stiffness: 260, reduceMotion: ReduceMotion.System }));
   };
-  const colors = variant === 'primary' ? theme.primaryGradient : variant === 'danger' ? theme.dangerGradient : [theme.surface, theme.surface] as const;
+  const colors = variant === 'danger' ? theme.dangerGradient : theme.primaryGradient;
+  const content = loading ? <ActivityIndicator color={color} /> : <View style={styles.content}>{icon}<AppText variant="label" style={[styles.label, { color }]}>{label}</AppText></View>;
   return (
     <AnimatedPressable
       testID={testID}
@@ -28,10 +29,10 @@ export function PrimaryButton({ label, onPress, variant = 'primary', disabled, l
       onPress={onPress}
       onPressIn={() => press(0.97)}
       onPressOut={() => press(1)}
-      style={[styles.button, variant === 'secondary' ? styles.outlined : styles.elevated, { opacity: disabled ? 0.45 : 1, borderColor: variant === 'secondary' ? theme.border : 'transparent', shadowColor: theme.shadow }, animatedStyle]}>
-      <LinearGradient colors={colors} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.fill}>
-        {loading ? <ActivityIndicator color={color} /> : <View style={styles.content}>{icon}<AppText variant="label" style={[styles.label, { color }]}>{label}</AppText></View>}
-      </LinearGradient>
+      style={[styles.button, variant === 'secondary' ? styles.outlined : styles.elevated, { opacity: disabled ? 0.45 : 1, borderColor: variant === 'secondary' ? theme.secondaryBorder : 'transparent', shadowColor: theme.shadow }, animatedStyle]}>
+      {variant === 'secondary'
+        ? <View style={[styles.fill, { backgroundColor: theme.surface }]}>{content}</View>
+        : <LinearGradient colors={colors} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.fill}>{content}</LinearGradient>}
     </AnimatedPressable>
   );
 }
