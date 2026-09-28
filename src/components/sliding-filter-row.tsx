@@ -80,9 +80,9 @@ function FilterTab<T extends string>({ option, selected, onSelect, onLayout, ite
     progress.set(withTiming(selected ? 1 : 0, transition));
     return () => cancelAnimation(progress);
   }, [selected, progress]);
-  const labelStyle = useAnimatedStyle(() => ({ color: interpolateColor(progress.value, [0, 1], [theme.text, '#FFFFFF']) }));
+  const labelStyle = useAnimatedStyle(() => ({ color: interpolateColor(progress.value, [0, 1], [theme.text, theme.onPrimary]) }));
   return <Pressable accessibilityRole={itemRole} accessibilityLabel={option.accessibilityLabel ?? `Show ${option.label} words`} accessibilityState={{ selected }} aria-selected={selected} onPress={() => void onSelect(option.id)} onLayout={(event) => onLayout(event.nativeEvent.layout)} style={styles.tab}>
-    {option.folder ? <Ionicons name="folder-outline" size={16} color={selected ? '#FFFFFF' : theme.text} aria-hidden/> : null}
+    {option.folder ? <Ionicons name="folder-outline" size={16} color={selected ? theme.onPrimary : theme.text} aria-hidden/> : null}
     <Animated.Text numberOfLines={1} ellipsizeMode="tail" style={[styles.label, labelStyle]}>{option.label}</Animated.Text>
   </Pressable>;
 }

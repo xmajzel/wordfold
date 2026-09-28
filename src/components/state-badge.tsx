@@ -3,7 +3,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { AppText } from '@/components/app-text';
 import type { LearningState } from '@/domain/types';
-import { radii, spacing, stateColors } from '@/theme/tokens';
+import { useAppTheme } from '@/hooks/use-app-theme';
+import { darkStateColors, palette, radii, spacing, stateColors } from '@/theme/tokens';
 
 const labels: Record<LearningState, string> = {
   new: 'New',
@@ -20,7 +21,8 @@ const icons: Record<LearningState, keyof typeof Ionicons.glyphMap> = {
 };
 
 export function StateBadge({ state }: { state: LearningState }) {
-  const color = stateColors[state];
+  const theme = useAppTheme();
+  const color = theme === palette.dark ? darkStateColors[state] : stateColors[state];
   return <View style={[styles.badge, { backgroundColor: `${color}18`, borderColor: `${color}2E` }]}><Ionicons name={icons[state]} color={color} size={14} /><AppText variant="caption" style={{ color }}>{labels[state]}</AppText></View>;
 }
 

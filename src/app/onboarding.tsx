@@ -120,7 +120,7 @@ export default function OnboardingScreen() {
   return (
     <Screen style={styles.screen}>
       <View style={styles.topBar}>
-        <LinearGradient colors={theme.primaryGradient} style={styles.logoMark}><AppText variant="label" style={styles.logoLetter}>W</AppText></LinearGradient>
+        <LinearGradient colors={theme.primaryGradient} style={styles.logoMark}><AppText variant="label" style={{ color: theme.onPrimary }}>W</AppText></LinearGradient>
         <View pointerEvents="none" style={styles.stepCounter}><AppText variant="caption" style={{ color: theme.muted }}>Step {step + 1} of {stepCount}</AppText></View>
       </View>
       <View style={styles.progress} accessibilityLabel={`Onboarding progress, step ${step + 1} of ${stepCount}`}>
@@ -217,7 +217,7 @@ export default function OnboardingScreen() {
           disabled={!canContinue}
           loading={busy}
           onPress={() => void continueFlow()}
-          icon={step === stepCount - 1 ? <Ionicons name="sparkles" color="#FFFFFF" size={18}/> : undefined}
+          icon={step === stepCount - 1 ? <Ionicons name="sparkles" color={theme.onPrimary} size={18}/> : undefined}
         /></View>
       </View>
     </Screen>
@@ -227,7 +227,7 @@ export default function OnboardingScreen() {
 function LanguageStep({ value, onChange, disabled }: { value: CourseId; onChange(courseId: CourseId): void; disabled: boolean }) {
   const theme = useAppTheme();
   return <View style={styles.section}>
-    <View style={styles.heroMark}><LinearGradient colors={theme.primaryGradient} style={styles.heroGradient}><AppText variant="title" style={styles.heroLetter}>W</AppText></LinearGradient></View>
+    <View style={styles.heroMark}><LinearGradient colors={theme.primaryGradient} style={styles.heroGradient}><AppText variant="title" style={{ color: theme.onPrimary }}>W</AppText></LinearGradient></View>
     <StepHeading eyebrow="WELCOME" title="Keep useful words close." body="Build a small vocabulary practice around your level, work, studies, and everyday life." centered/>
     <CourseSelector value={value} onChange={onChange} disabled={disabled}/>
     <View style={[styles.privacyRow, { backgroundColor: theme.primarySoft }]}><Ionicons name="library-outline" color={theme.primary} size={19}/><AppText variant="caption" style={styles.flex}>Switch courses any time. Neither library nor its progress is removed.</AppText></View>
@@ -309,7 +309,6 @@ const styles = StyleSheet.create({
   screen: { width: '100%', maxWidth: 640, alignSelf: 'center', paddingHorizontal: 0 },
   topBar: { minHeight: 44, paddingHorizontal: spacing.lg, justifyContent: 'center' },
   logoMark: { width: 30, height: 30, borderRadius: 10, alignItems: 'center', justifyContent: 'center', transform: [{ rotate: '-3deg' }] },
-  logoLetter: { color: '#FFFFFF' },
   stepCounter: { position: 'absolute', left: 0, right: 0, alignItems: 'center' },
   progress: { height: 20, flexDirection: 'row', gap: spacing.sm, paddingHorizontal: spacing.lg },
   progressTarget: { flex: 1, height: 44, marginVertical: -12, justifyContent: 'center' },
@@ -323,7 +322,6 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   heroMark: { alignItems: 'center', marginTop: spacing.lg },
   heroGradient: { width: 76, height: 76, borderRadius: 25, alignItems: 'center', justifyContent: 'center', transform: [{ rotate: '-4deg' }] },
-  heroLetter: { color: '#FFFFFF' },
   languageCard: { minHeight: 112, borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   languageIcon: { width: 50, height: 50, borderRadius: 17, alignItems: 'center', justifyContent: 'center' },
   privacyRow: { minHeight: 48, borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },

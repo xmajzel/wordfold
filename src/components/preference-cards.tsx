@@ -81,14 +81,14 @@ function PreferenceCard({ title, description, icon, selected, onPress, testID, c
       ]}>
       <View style={styles.cardHeader}>
         {icon ? <View style={[styles.icon, { backgroundColor: selected ? theme.primary : theme.primarySoft }]}>
-          <Ionicons name={icon} color={selected ? '#FFFFFF' : theme.primary} size={21}/>
+          <Ionicons name={icon} color={selected ? theme.onPrimary : theme.primary} size={21}/>
         </View> : null}
         <View style={styles.cardText}>
           <AppText variant={compact ? 'heading' : 'label'} style={{ color: disabled ? theme.muted : selected ? theme.primary : theme.text }}>{title}</AppText>
           <AppText variant="caption" style={{ color: theme.muted }}>{disabled && status ? status : description}</AppText>
         </View>
         {!disabled ? <View testID={`${testID}-check`} style={[styles.check, { backgroundColor: selected ? theme.primary : 'transparent', borderColor: selected ? theme.primary : theme.border }]}>
-          {selected ? <Ionicons name="checkmark" color="#FFFFFF" size={15}/> : null}
+          {selected ? <Ionicons name="checkmark" color={theme.onPrimary} size={15}/> : null}
         </View> : null}
       </View>
     </Pressable>

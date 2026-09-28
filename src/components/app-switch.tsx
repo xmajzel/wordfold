@@ -43,6 +43,7 @@ export function AppSwitch({ value, onValueChange, accessibilityLabel, disabled =
   }));
   const thumbStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: progress.value * 20 }],
+    backgroundColor: interpolateColor(progress.value, [0, 1], ['#FFFFFF', theme.onPrimary]),
   }));
 
   const toggle = () => {
@@ -91,7 +92,6 @@ const styles = StyleSheet.create({
     width: 27,
     height: 27,
     borderRadius: 14,
-    backgroundColor: '#FFFFFF',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.24,
     shadowRadius: 3,

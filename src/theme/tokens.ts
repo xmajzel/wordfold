@@ -6,6 +6,7 @@ export const palette = {
     raised: '#F8F7FFDB',
     glass: '#FFFFFF9E',
     primary: '#6657D9',
+    onPrimary: '#FFFFFF',
     aiAccent: '#326CB5',
     aiSurface: '#FFFFFF',
     aiGradient: ['#3779DD', '#D86275', '#C78620'] as const,
@@ -19,15 +20,17 @@ export const palette = {
     shadow: '#443C7A',
     aurora: ['#F7F5FF', '#F1EEFF', '#FDF2F7'] as const,
     primaryGradient: ['#7868EE', '#9C62DE', '#E06FA6'] as const,
+    dangerGradient: ['#D34F68', '#B63C61'] as const,
     accentGradient: ['#F4A67A', '#E16F9E'] as const,
   },
   dark: {
     canvas: '#121020',
-    surface: '#25213BC7',
+    surface: '#25213B',
     cardSurface: '#25213B',
     raised: '#302A47D6',
     glass: '#302B478F',
     primary: '#B9B1FF',
+    onPrimary: '#121020',
     aiAccent: '#82B3FF',
     aiSurface: '#211F30',
     aiGradient: ['#82B3FF', '#F28B9C', '#EBC074'] as const,
@@ -41,6 +44,7 @@ export const palette = {
     shadow: '#05030F',
     aurora: ['#121020', '#1D1733', '#281629'] as const,
     primaryGradient: ['#7D6EF0', '#AA69E2', '#E276AA'] as const,
+    dangerGradient: ['#FF879C', '#FF879C'] as const,
     accentGradient: ['#E69A72', '#D7679B'] as const,
   },
 } as const;
@@ -50,6 +54,13 @@ export const stateColors = {
   cannot_remember: '#D34F68',
   understood: '#C96A24',
   learned: '#168A78',
+} as const;
+
+export const darkStateColors = {
+  new: '#B9B1FF',
+  cannot_remember: '#FF879C',
+  understood: '#F2B16C',
+  learned: '#62D6C2',
 } as const;
 
 export const spacing = { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, xxl: 32, xxxl: 48 } as const;

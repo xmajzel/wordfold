@@ -302,6 +302,7 @@ function SwipeOverlay({ align, color, detail, icon, label, style, testID }: {
   style: object;
   testID: string;
 }) {
+  const theme = useAppTheme();
   return (
     <Animated.View
       aria-hidden
@@ -316,10 +317,10 @@ function SwipeOverlay({ align, color, detail, icon, label, style, testID }: {
       ]}
       testID={testID}>
       <View style={styles.overlayTitle}>
-        <Ionicons name={icon} color="#FFFFFF" size={22}/>
-        <AppText variant="label" style={styles.overlayLabel}>{label.toLocaleUpperCase('en')}</AppText>
+        <Ionicons name={icon} color={theme.onPrimary} size={22}/>
+        <AppText variant="label" style={[styles.overlayLabel, { color: theme.onPrimary }]}>{label.toLocaleUpperCase('en')}</AppText>
       </View>
-      <AppText variant="caption" style={styles.overlayDetail}>{detail}</AppText>
+      <AppText variant="caption" style={[styles.overlayDetail, { color: theme.onPrimary }]}>{detail}</AppText>
     </Animated.View>
   );
 }
@@ -356,6 +357,6 @@ const styles = StyleSheet.create({
   overlayLeft: { left: spacing.lg },
   overlayRight: { right: spacing.lg },
   overlayTitle: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
-  overlayLabel: { color: '#FFFFFF', fontFamily: 'Inter_600SemiBold' },
-  overlayDetail: { color: '#FFFFFF', textAlign: 'center' },
+  overlayLabel: { fontFamily: 'Inter_600SemiBold' },
+  overlayDetail: { textAlign: 'center' },
 });

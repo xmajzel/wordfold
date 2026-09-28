@@ -25,7 +25,7 @@ import { calculateCefrProgress, type CefrProgress } from '@/features/learning/ce
 import { WordCapacityExceededError } from '@/features/purchases/capacity';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
-import { radii, spacing, stateColors } from '@/theme/tokens';
+import { darkStateColors, palette, radii, spacing, stateColors } from '@/theme/tokens';
 
 export default function CefrLevelScreen() {
   const theme = useAppTheme();
@@ -187,7 +187,7 @@ function CatalogWordCard({ entry, word, loading, disabled, onAdd }: {
       {entry.gender ? <AppText variant="caption" style={{ color: theme.muted }}>Gender: {entry.gender}</AppText> : null}
       {entry.alternativeForms?.length ? <AppText variant="caption" style={{ color: theme.muted }}>Forms: {entry.alternativeForms.map((form) => `${form.form} (${[form.type, form.note].filter(Boolean).join('; ')})`).join('; ')}</AppText> : null}
     </> : null}
-    <PrimaryButton label={added ? 'Added to My words' : 'Add to My words'} variant={added ? 'secondary' : 'primary'} disabled={added || disabled} loading={loading} onPress={onAdd} icon={added ? <Ionicons name="checkmark" color={theme.primary} size={18}/> : <Ionicons name="add" color="#FFFFFF" size={18}/>}/>
+    <PrimaryButton label={added ? 'Added to My words' : 'Add to My words'} variant={added ? 'secondary' : 'primary'} disabled={added || disabled} loading={loading} onPress={onAdd} icon={added ? <Ionicons name="checkmark" color={theme.primary} size={18}/> : <Ionicons name="add" color={theme.onPrimary} size={18}/>}/>
   </View>;
 }
 
@@ -216,10 +216,12 @@ function ProgressStat({ label, value, color, testID }: { label: string; value: n
 }
 
 function CatalogProgressBadge({ state }: { state: Word['state'] }) {
+  const theme = useAppTheme();
   const known = state === 'learned';
   const notStarted = state === 'new';
   const label = known ? 'Known' : notStarted ? 'Added, not started' : 'Learning';
-  const color = known ? stateColors.learned : notStarted ? stateColors.new : stateColors.understood;
+  const colors = theme === palette.dark ? darkStateColors : stateColors;
+  const color = known ? colors.learned : notStarted ? colors.new : colors.understood;
   return <View style={[styles.catalogProgressBadge, { backgroundColor: `${color}18`, borderColor: `${color}2E` }]}><AppText variant="caption" style={{ color }}>{label}</AppText></View>;
 }
 

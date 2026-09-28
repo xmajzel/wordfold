@@ -12,13 +12,13 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 export function PrimaryButton({ label, onPress, variant = 'primary', disabled, loading, icon, testID }:
   { label: string; onPress(): void; variant?: 'primary' | 'secondary' | 'danger'; disabled?: boolean; loading?: boolean; icon?: ReactNode; testID?: string }) {
   const theme = useAppTheme();
-  const color = variant === 'secondary' ? theme.primary : '#FFFFFF';
+  const color = variant === 'secondary' ? theme.primary : theme.onPrimary;
   const scale = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
   const press = (value: number) => {
     scale.set(withSpring(value, { damping: 16, stiffness: 260, reduceMotion: ReduceMotion.System }));
   };
-  const colors = variant === 'primary' ? theme.primaryGradient : variant === 'danger' ? [theme.danger, '#B63C61'] as const : [theme.surface, theme.surface] as const;
+  const colors = variant === 'primary' ? theme.primaryGradient : variant === 'danger' ? theme.dangerGradient : [theme.surface, theme.surface] as const;
   return (
     <AnimatedPressable
       testID={testID}

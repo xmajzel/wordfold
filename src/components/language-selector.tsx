@@ -41,7 +41,7 @@ export function LanguageSelector({
             borderColor: selected ? theme.primary : theme.border,
           }]}
         >
-          <AppText variant="label" style={{ color: selected ? '#FFFFFF' : theme.text }}>
+          <AppText variant="label" style={{ color: selected ? theme.onPrimary : theme.text }}>
             {language.label}
           </AppText>
         </Pressable>;

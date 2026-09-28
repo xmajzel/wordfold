@@ -147,7 +147,7 @@ export default function OnboardingReadyScreen() {
           </View>)}
           <Animated.View entering={ZoomIn.springify().damping(12).reduceMotion(ReduceMotion.System)}>
             <LinearGradient colors={theme.primaryGradient} style={styles.successMark}>
-              <Ionicons name="checkmark" color="#FFFFFF" size={42}/>
+              <Ionicons name="checkmark" color={theme.onPrimary} size={42}/>
             </LinearGradient>
           </Animated.View>
         </View>
@@ -188,28 +188,28 @@ export default function OnboardingReadyScreen() {
           <AppText style={[styles.center, { color: theme.muted }]}>{reminderPresentation.body}</AppText>
 
           {reminderState.status === 'idle' ? <>
-            <View style={styles.fullWidth}><PrimaryButton label="Set reminders" loading={busy} onPress={() => void enableReminders()} icon={<Ionicons name="notifications" color="#FFFFFF" size={18}/>}/></View>
+            <View style={styles.fullWidth}><PrimaryButton label="Set reminders" loading={busy} onPress={() => void enableReminders()} icon={<Ionicons name="notifications" color={theme.onPrimary} size={18}/>}/></View>
             <TextAction label="Continue to my words" onPress={finish}/>
           </> : null}
 
-          {reminderState.status === 'enabled' ? <View style={styles.fullWidth}><PrimaryButton label="Start learning" onPress={finish} icon={<Ionicons name="arrow-forward" color="#FFFFFF" size={18}/>}/></View> : null}
+          {reminderState.status === 'enabled' ? <View style={styles.fullWidth}><PrimaryButton label="Start learning" onPress={finish} icon={<Ionicons name="arrow-forward" color={theme.onPrimary} size={18}/>}/></View> : null}
 
           {reminderState.status === 'denied' ? <>
             <View style={styles.fullWidth}><PrimaryButton
               label={reminderState.canAskAgain ? 'Try again' : 'Open system settings'}
               loading={busy}
               onPress={() => reminderState.canAskAgain ? void enableReminders() : void Linking.openSettings()}
-              icon={<Ionicons name={reminderState.canAskAgain ? 'refresh' : 'settings-outline'} color="#FFFFFF" size={18}/>}
+              icon={<Ionicons name={reminderState.canAskAgain ? 'refresh' : 'settings-outline'} color={theme.onPrimary} size={18}/>}
             /></View>
             <TextAction label="Continue to my words" onPress={finish}/>
           </> : null}
 
           {reminderState.status === 'error' ? <>
-            <View style={styles.fullWidth}><PrimaryButton label="Try again" loading={busy} onPress={() => void enableReminders()} icon={<Ionicons name="refresh" color="#FFFFFF" size={18}/>}/></View>
+            <View style={styles.fullWidth}><PrimaryButton label="Try again" loading={busy} onPress={() => void enableReminders()} icon={<Ionicons name="refresh" color={theme.onPrimary} size={18}/>}/></View>
             <TextAction label="Continue to my words" onPress={finish}/>
           </> : null}
 
-          {reminderState.status === 'unsupported' ? <View style={styles.fullWidth}><PrimaryButton label="Continue to my words" onPress={finish} icon={<Ionicons name="arrow-forward" color="#FFFFFF" size={18}/>}/></View> : null}
+          {reminderState.status === 'unsupported' ? <View style={styles.fullWidth}><PrimaryButton label="Continue to my words" onPress={finish} icon={<Ionicons name="arrow-forward" color={theme.onPrimary} size={18}/>}/></View> : null}
         </Animated.View>
       </View>
     </Screen>

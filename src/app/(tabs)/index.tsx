@@ -430,7 +430,7 @@ function LearningEmptyState({ title, message, recommendations, learningPreferenc
           <View style={styles.nextBatchBody}>
             <AppText variant="heading">Start your {learnedLanguage} library</AppText>
             <View style={styles.courseEmptyActions}>
-              <PrimaryButton label={`Add a ${learnedLanguage} word`} onPress={() => router.push('/word/new')} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/>
+              <PrimaryButton label={`Add a ${learnedLanguage} word`} onPress={() => router.push('/word/new')} icon={<Ionicons name="add" color={theme.onPrimary} size={18}/>}/>
               <PrimaryButton label="Bulk paste" variant="secondary" onPress={() => router.push('/import')} icon={<Ionicons name="clipboard-outline" color={theme.primary} size={18}/>}/>
             </View>
           </View>
@@ -487,7 +487,7 @@ function LearningEmptyState({ title, message, recommendations, learningPreferenc
           </View>
           <RecommendationFallbackNote recommendations={recommendations}/>
           <View style={styles.recommendationWords}>{recommendations.map(({ entry }) => <View key={entry.id} style={[styles.recommendationWord, { backgroundColor: theme.primarySoft }]}><AppText variant="label">{entry.term}</AppText><AppText variant="caption">{entry.level}</AppText></View>)}</View>
-          <PrimaryButton testID="add-today-recommendations" label={`Add ${recommendations.length} ${wordLabel} & start learning`} loading={busy} onPress={onAdd} icon={<Ionicons name="add" color="#FFFFFF" size={18}/>}/>
+          <PrimaryButton testID="add-today-recommendations" label={`Add ${recommendations.length} ${wordLabel} & start learning`} loading={busy} onPress={onAdd} icon={<Ionicons name="add" color={theme.onPrimary} size={18}/>}/>
         </View>
       </View>
     </Animated.View>
