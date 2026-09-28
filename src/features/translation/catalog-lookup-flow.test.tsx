@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ImportScreen from '@/app/import';
 import NewWordScreen from '@/app/word/new';
+import { parseReviewQueue, reviewQueueKey } from '@/features/import/review-queue';
 import type { CatalogSense } from '@/domain/types';
 jest.mock('@/features/ai/suggestion-transition', () => ({ SuggestionTransition: ({ children }: { children: React.ReactNode }) => <>{children}</> }));
 jest.mock('@react-native-async-storage/async-storage', () => jest.requireActual('@react-native-async-storage/async-storage/jest/async-storage-mock'));
@@ -338,5 +339,94 @@ describe('new word collections', () => {
     await act(async () => finish('c1'));
     await fireEvent.press(view.getByRole('button', { name: 'Add to my words' }));
     expect(router.back).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('bulk paste collections', () => {
+  beforeEach(async () => {
+    await AsyncStorage.clear();
+    jest.clearAllMocks();
+    mockWords = [];
+    mockCollections = [{ id: 'my-words', name: 'My words' }, { id: 'c1', name: 'English C1 lessons' }];
+    mockDataSource = 'guest';
+    mockActiveCourse = {
+      id: 'en-sk', sourceLanguageCode: 'en', targetLanguageCode: 'sk',
+      defaultSourcePronunciationLocale: 'en-US', defaultTargetPronunciationLocale: 'sk-SK',
+      capabilities: { bundledCatalog: true },
+    };
+  });
+  afterEach(() => jest.restoreAllMocks());
+
+  it('creates and selects a collection for a reviewed batch without losing the paste', async () => {
+    const view = await render(<ImportScreen/>);
+    await fireEvent.changeText(view.getByPlaceholderText(/stakeholder -/), 'bank');
+    await fireEvent.press(view.getByRole('button', { name: 'Review paste' }));
+    await waitFor(() => view.getByText('Hint: banka'));
+    await fireEvent.press(view.getByRole('button', { name: 'New collection' }));
+    await fireEvent.changeText(view.getByLabelText('Collection name'), '  New lesson  ');
+    await fireEvent.press(view.getByRole('button', { name: 'Create collection' }));
+
+    expect(mockCreateCollection).toHaveBeenCalledWith('New lesson', '#D8902F');
+    expect(view.getByRole('button', { name: 'Collection: New lesson' }).props.accessibilityState.selected).toBe(true);
+    expect(view.getByPlaceholderText(/stakeholder -/).props.value).toBe('bank');
+    await fireEvent.press(view.getByRole('button', { name: 'Import first 1 word' }));
+    await waitFor(() => expect(mockCreateWords).toHaveBeenCalledWith([
+      expect.objectContaining({ collectionId: 'new-collection', term: 'bank' }),
+    ]));
+  });
+
+  it('uses a newly created collection in the saved one by one review', async () => {
+    const view = await render(<ImportScreen/>);
+    await fireEvent.changeText(view.getByPlaceholderText(/stakeholder -/), 'tenacity');
+    await fireEvent.press(view.getByRole('button', { name: 'New collection' }));
+    await fireEvent.changeText(view.getByLabelText('Collection name'), 'New lesson');
+    await fireEvent.press(view.getByRole('button', { name: 'Create collection' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Review words one by one' }));
+
+    await waitFor(async () => expect(parseReviewQueue(await AsyncStorage.getItem(reviewQueueKey(undefined, 'en-sk')))?.collectionId).toBe('new-collection'));
+    expect(router.push).toHaveBeenCalledWith('/import-review');
+    expect(view.getByPlaceholderText(/stakeholder -/).props.value).toBe('tenacity');
+  });
+
+  it('keeps the paste and previous selection after canceling or retrying a failed creation', async () => {
+    const alert = jest.spyOn(Alert, 'alert');
+    mockCreateCollection.mockRejectedValueOnce(new Error('Try again'));
+    const view = await render(<ImportScreen/>);
+    await fireEvent.changeText(view.getByPlaceholderText(/stakeholder -/), 'bank');
+    await fireEvent.press(view.getByRole('button', { name: 'Collection: English C1 lessons' }));
+    await fireEvent.press(view.getByRole('button', { name: 'New collection' }));
+    await fireEvent.changeText(view.getByLabelText('Collection name'), '   ');
+    await fireEvent(view.getByLabelText('Collection name'), 'submitEditing');
+    expect(mockCreateCollection).not.toHaveBeenCalled();
+    await fireEvent.press(view.getByRole('button', { name: 'Cancel new collection' }));
+    expect(view.getByRole('button', { name: 'Collection: English C1 lessons' }).props.accessibilityState.selected).toBe(true);
+    await fireEvent.press(view.getByRole('button', { name: 'New collection' }));
+    await fireEvent.changeText(view.getByLabelText('Collection name'), 'New lesson');
+    await fireEvent.press(view.getByRole('button', { name: 'Create collection' }));
+    expect(alert).toHaveBeenCalledWith('Could not create collection', 'Try again');
+    expect(view.getByLabelText('Collection name').props.value).toBe('New lesson');
+    expect(view.getByPlaceholderText(/stakeholder -/).props.value).toBe('bank');
+    expect(view.getByRole('button', { name: 'Collection: English C1 lessons' }).props.accessibilityState.selected).toBe(true);
+    await fireEvent.press(view.getByRole('button', { name: 'Create collection' }));
+    expect(view.getByRole('button', { name: 'Collection: New lesson' }).props.accessibilityState.selected).toBe(true);
+  });
+
+  it('creates only once and blocks starting a review while collection creation is pending', async () => {
+    let finish!: (id: string) => void;
+    mockCreateCollection.mockImplementationOnce(() => new Promise<string>((resolve) => { finish = resolve; }));
+    const view = await render(<ImportScreen/>);
+    await fireEvent.changeText(view.getByPlaceholderText(/stakeholder -/), 'tenacity');
+    await fireEvent.press(view.getByRole('button', { name: 'New collection' }));
+    await fireEvent.changeText(view.getByLabelText('Collection name'), 'New lesson');
+    await fireEvent(view.getByLabelText('Collection name'), 'submitEditing');
+    await fireEvent(view.getByLabelText('Collection name'), 'submitEditing');
+    await fireEvent.press(view.getByRole('button', { name: 'Review words one by one' }));
+    expect(mockCreateCollection).toHaveBeenCalledTimes(1);
+    expect(router.push).not.toHaveBeenCalled();
+
+    mockCollections = [...mockCollections, { id: 'new-collection', name: 'New lesson' }];
+    await act(async () => finish('new-collection'));
+    await fireEvent.press(view.getByRole('button', { name: 'Review words one by one' }));
+    await waitFor(async () => expect(parseReviewQueue(await AsyncStorage.getItem(reviewQueueKey(undefined, 'en-sk')))?.collectionId).toBe('new-collection'));
   });
 });

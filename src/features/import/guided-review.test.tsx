@@ -1,5 +1,6 @@
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import { router } from 'expo-router';
+import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImportReviewScreen from '@/app/import-review';
 import { makeReviewQueue, reviewQueueKey, saveReviewQueue, parseReviewQueue } from './review-queue';
@@ -10,22 +11,28 @@ jest.mock('@/features/translation/translator', () => ({
   TranslationCancelledError: class extends Error {},
 }));
 const mockCreateWord = jest.fn(async () => 'new-word');
+let mockCollections = [{ id: 'class', name: 'Class' }];
+const mockCreateCollection = jest.fn(async (name: string, _color: string) => {
+  mockCollections = [...mockCollections, { id: 'new-class', name }];
+  return 'new-class';
+});
 const mockFindSenses = jest.fn(async () => [{ id: 'sense', definition: 'Determination despite difficulty.', partOfSpeech: 'noun', example: 'She never gave up.', translation: 'vytrvalosť' }]);
 let mockUser = 'user-a'; let mockWords: { normalizedTerm: string; sourceLanguageCode: string; targetLanguageCode: string }[] = [];
 jest.mock('@react-native-async-storage/async-storage', () => jest.requireActual('@react-native-async-storage/async-storage/jest/async-storage-mock'));
 jest.mock('@/providers/auth-provider', () => ({ useAuth: () => ({ user: { id: mockUser } }) }));
 jest.mock('expo-router', () => ({ router: { back: jest.fn(), dismissAll: jest.fn(), navigate: jest.fn() } }));
 jest.mock('@/components/screen', () => ({ Screen: ({ children }: { children: React.ReactNode }) => <>{children}</> }));
+jest.mock('@/components/collection-form-disclosure', () => ({ CollectionFormDisclosure: ({ open, children }: { open: boolean; children: React.ReactNode }) => open ? <>{children}</> : null }));
 jest.mock('@/app/word/new', () => ({ ModalHeader: () => null }));
 jest.mock('@/features/ai/suggestion-panel', () => ({ SuggestionPanel: () => null }));
 jest.mock('@/providers/app-data-provider', () => ({ useAppData: () => ({
   activeCourse: { id: 'en-sk', sourceLanguageCode: 'en', targetLanguageCode: 'sk', defaultSourcePronunciationLocale: 'en-US', defaultTargetPronunciationLocale: 'sk-SK', capabilities: { bundledCatalog: true } },
-  collections: [{ id: 'class', name: 'Class' }], words: mockWords, createWord: mockCreateWord, findSenses: mockFindSenses, pronunciationVoicePreference: 'device', wordCapacity: { remaining: 100 },
+  collections: mockCollections, words: mockWords, createWord: mockCreateWord, createCollection: mockCreateCollection, findSenses: mockFindSenses, pronunciationVoicePreference: 'device', wordCapacity: { remaining: 100 },
 }) }));
 jest.mock('@/components/primary-button', () => ({ PrimaryButton: ({ label, onPress, disabled, loading }: any) => {
   const { Pressable, Text } = jest.requireActual('react-native'); return <Pressable accessibilityRole="button" disabled={disabled || loading} onPress={onPress}><Text>{label}</Text></Pressable>;
 } }));
-beforeEach(async () => { await AsyncStorage.clear(); jest.clearAllMocks(); mockTranslate.mockReset(); mockUser = 'user-a'; mockWords = []; });
+beforeEach(async () => { await AsyncStorage.clear(); jest.clearAllMocks(); mockTranslate.mockReset(); mockUser = 'user-a'; mockWords = []; mockCollections = [{ id: 'class', name: 'Class' }]; });
 it('finds dictionary meanings, saves edited words individually, and resumes the next word', async () => {
   const key = reviewQueueKey(mockUser,'en-sk');
   await saveReviewQueue(key,makeReviewQueue('tenacity\ntolerance','en','class'));
@@ -39,6 +46,87 @@ it('finds dictionary meanings, saves edited words individually, and resumes the 
   await waitFor(async () => expect(parseReviewQueue(await AsyncStorage.getItem(key))?.index).toBe(1));
   await view.unmount(); const resumed = await render(<ImportReviewScreen/>);
   await waitFor(() => expect(resumed.getByText('Word 2 of 2 · 1 added')).toBeTruthy());
+});
+it('creates a collection during review and keeps it selected after resuming', async () => {
+  const key = reviewQueueKey(mockUser, 'en-sk');
+  await saveReviewQueue(key, makeReviewQueue('tenacity\ntolerance', 'en', 'class'));
+  const view = await render(<ImportReviewScreen/>);
+  await waitFor(() => expect(view.getByDisplayValue('Determination despite difficulty.')).toBeTruthy());
+  await fireEvent.press(view.getByRole('button', { name: 'New collection' }));
+  await fireEvent.changeText(view.getByLabelText('Collection name'), '  New class  ');
+  await fireEvent.press(view.getByRole('button', { name: 'Create collection' }));
+
+  expect(mockCreateCollection).toHaveBeenCalledWith('New class', '#D8902F');
+  await waitFor(async () => expect(parseReviewQueue(await AsyncStorage.getItem(key))?.collectionId).toBe('new-class'));
+  expect(view.getByDisplayValue('Determination despite difficulty.')).toBeTruthy();
+  await fireEvent.press(view.getByRole('button', { name: 'Add & next' }));
+  await waitFor(() => expect(mockCreateWord).toHaveBeenCalledWith(expect.objectContaining({ collectionId: 'new-class', term: 'tenacity' })));
+  await view.unmount();
+
+  const resumed = await render(<ImportReviewScreen/>);
+  await waitFor(() => expect(resumed.getByText('Word 2 of 2 · 1 added')).toBeTruthy());
+  expect(resumed.getByRole('button', { name: 'Collection: New class' }).props.accessibilityState.selected).toBe(true);
+  expect(parseReviewQueue(await AsyncStorage.getItem(key))?.collectionId).toBe('new-class');
+});
+it('switches between existing collection chips during review', async () => {
+  mockCollections = [...mockCollections, { id: 'other', name: 'Other class' }];
+  const key = reviewQueueKey(mockUser, 'en-sk');
+  await saveReviewQueue(key, makeReviewQueue('tenacity', 'en', 'class'));
+  const view = await render(<ImportReviewScreen/>);
+  await waitFor(() => expect(view.getByDisplayValue('Determination despite difficulty.')).toBeTruthy());
+  expect(view.getByRole('button', { name: 'Collection: Class' }).props.accessibilityState.selected).toBe(true);
+
+  await fireEvent.press(view.getByRole('button', { name: 'Collection: Other class' }));
+  await waitFor(async () => expect(parseReviewQueue(await AsyncStorage.getItem(key))?.collectionId).toBe('other'));
+  expect(view.getByRole('button', { name: 'Collection: Other class' }).props.accessibilityState.selected).toBe(true);
+  await fireEvent.press(view.getByRole('button', { name: 'Add & next' }));
+  await waitFor(() => expect(mockCreateWord).toHaveBeenCalledWith(expect.objectContaining({ collectionId: 'other' })));
+});
+it('preserves the current review when collection creation is canceled or fails', async () => {
+  const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
+  mockCreateCollection.mockRejectedValueOnce(new Error('Try again'));
+  const key = reviewQueueKey(mockUser, 'en-sk');
+  await saveReviewQueue(key, makeReviewQueue('tenacity', 'en', 'class'));
+  const view = await render(<ImportReviewScreen/>);
+  await waitFor(() => expect(view.getByDisplayValue('Determination despite difficulty.')).toBeTruthy());
+  await fireEvent.press(view.getByRole('button', { name: 'New collection' }));
+  await fireEvent.changeText(view.getByLabelText('Collection name'), '   ');
+  await fireEvent(view.getByLabelText('Collection name'), 'submitEditing');
+  expect(mockCreateCollection).not.toHaveBeenCalled();
+  await fireEvent.press(view.getByRole('button', { name: 'Cancel new collection' }));
+  expect(parseReviewQueue(await AsyncStorage.getItem(key))?.collectionId).toBe('class');
+  await fireEvent.press(view.getByRole('button', { name: 'New collection' }));
+  await fireEvent.changeText(view.getByLabelText('Collection name'), 'New class');
+  await fireEvent.press(view.getByRole('button', { name: 'Create collection' }));
+  expect(alert).toHaveBeenCalledWith('Could not create collection', 'Try again');
+  expect(view.getByLabelText('Collection name').props.value).toBe('New class');
+  expect(view.getByDisplayValue('Determination despite difficulty.')).toBeTruthy();
+  expect(parseReviewQueue(await AsyncStorage.getItem(key))?.collectionId).toBe('class');
+  await fireEvent.press(view.getByRole('button', { name: 'Create collection' }));
+  await waitFor(async () => expect(parseReviewQueue(await AsyncStorage.getItem(key))?.collectionId).toBe('new-class'));
+  alert.mockRestore();
+});
+it('prevents adding a word or creating twice while a collection is being created', async () => {
+  let finish!: (id: string) => void;
+  mockCreateCollection.mockImplementationOnce(() => new Promise<string>((resolve) => { finish = resolve; }));
+  const key = reviewQueueKey(mockUser, 'en-sk');
+  await saveReviewQueue(key, makeReviewQueue('tenacity', 'en', 'class'));
+  const view = await render(<ImportReviewScreen/>);
+  await waitFor(() => expect(view.getByDisplayValue('Determination despite difficulty.')).toBeTruthy());
+  await fireEvent.press(view.getByRole('button', { name: 'New collection' }));
+  await fireEvent.changeText(view.getByLabelText('Collection name'), 'New class');
+  await fireEvent(view.getByLabelText('Collection name'), 'submitEditing');
+  await fireEvent(view.getByLabelText('Collection name'), 'submitEditing');
+  await fireEvent.press(view.getByRole('button', { name: 'Add & next' }));
+  expect(mockCreateCollection).toHaveBeenCalledTimes(1);
+  expect(mockCreateWord).not.toHaveBeenCalled();
+  expect(parseReviewQueue(await AsyncStorage.getItem(key))?.collectionId).toBe('class');
+
+  mockCollections = [...mockCollections, { id: 'new-class', name: 'New class' }];
+  await act(async () => finish('new-class'));
+  await waitFor(async () => expect(parseReviewQueue(await AsyncStorage.getItem(key))?.collectionId).toBe('new-class'));
+  await fireEvent.press(view.getByRole('button', { name: 'Add & next' }));
+  await waitFor(() => expect(mockCreateWord).toHaveBeenCalledWith(expect.objectContaining({ collectionId: 'new-class' })));
 });
 it('lets users skip duplicates without saving them and isolates account queues', async () => {
   mockWords = [{ normalizedTerm: 'tenacity', sourceLanguageCode: 'en', targetLanguageCode: 'sk' }];

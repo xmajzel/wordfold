@@ -2,12 +2,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '@/providers/auth-provider';
 import { makeReviewQueue, parseReviewQueue, reviewQueueKey, saveReviewQueue } from '@/features/import/review-queue';
 import { preferenceLocale } from '@/domain/pronunciation-voices';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Alert, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 
 import { AppText } from '@/components/app-text';
+import { CollectionFormDisclosure } from '@/components/collection-form-disclosure';
+import { FormField } from '@/components/form-field';
 import { ModalHeader } from '@/app/word/new';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
@@ -29,6 +31,7 @@ export default function ImportScreen() {
     collections,
     dataSource,
     findSenses,
+    createCollection,
     createWords,
     wordCapacity,
     pronunciationVoicePreference,
@@ -39,6 +42,11 @@ export default function ImportScreen() {
   const [collectionId, setCollectionId] = useState(collections[0]?.id ?? '');
   const selectedCollectionId = collections.some((item) => item.id === collectionId)
     ? collectionId : collections[0]?.id ?? (dataSource === 'synced' || dataSource === 'reconciling' || dataSource === 'loading' ? '' : 'my-words');
+  const [showCollectionForm, setShowCollectionForm] = useState(false);
+  const [collectionName, setCollectionName] = useState('');
+  const [creatingCollection, setCreatingCollection] = useState(false);
+  const collectionCreationPending = useRef(false);
+  const actionPending = useRef(false);
   const [reviewed, setReviewed] = useState<ReviewedLine[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [replaceReview, setReplaceReview] = useState(false);
@@ -56,8 +64,27 @@ export default function ImportScreen() {
   const selectedImportable = importable.slice(0, allowedCount);
   const exceedsCapacity = allowedCount < importable.length;
 
+  const addCollection = async () => {
+    const name = collectionName.trim();
+    if (!name || collectionCreationPending.current || actionPending.current) return;
+    collectionCreationPending.current = true;
+    setCreatingCollection(true);
+    try {
+      const id = await createCollection(name, '#D8902F');
+      setCollectionId(id);
+      setCollectionName('');
+      setShowCollectionForm(false);
+    } catch (error) {
+      Alert.alert('Could not create collection', error instanceof Error ? error.message : 'Please try again.');
+    } finally {
+      collectionCreationPending.current = false;
+      setCreatingCollection(false);
+    }
+  };
+
   const guidedReview = async (replace = false) => {
-    if (!selectedCollectionId) return;
+    if (!selectedCollectionId || showCollectionForm || collectionCreationPending.current || actionPending.current) return;
+    actionPending.current = true;
     setBusy(true); setReviewError(null);
     try {
       const previous = parseReviewQueue(await AsyncStorage.getItem(reviewQueueKey(user?.id, activeCourse.id)));
@@ -65,10 +92,12 @@ export default function ImportScreen() {
       await saveReviewQueue(reviewQueueKey(user?.id, activeCourse.id), makeReviewQueue(input, activeCourse.sourceLanguageCode, selectedCollectionId));
       router.push('/import-review');
     } catch { setReviewError('Could not save this review on your device. Please try again.'); }
-    finally { setBusy(false); }
+    finally { actionPending.current = false; setBusy(false); }
   };
 
   const review = async () => {
+    if (showCollectionForm || collectionCreationPending.current || actionPending.current) return;
+    actionPending.current = true;
     setBusy(true);
     try {
       const parsed = parseBulkInput(input, activeCourse.sourceLanguageCode);
@@ -86,15 +115,16 @@ export default function ImportScreen() {
         });
       }
       setReviewed(results);
-    } finally { setBusy(false); }
+    } finally { actionPending.current = false; setBusy(false); }
   };
 
   const importWords = async () => {
-    if (!selectedCollectionId) return;
+    if (!selectedCollectionId || showCollectionForm || collectionCreationPending.current || actionPending.current) return;
     if (!selectedImportable.length) {
       router.push('/upgrade' as never);
       return;
     }
+    actionPending.current = true;
     setBusy(true);
     try {
       await createWords(selectedImportable.map((line) => ({
@@ -113,7 +143,7 @@ export default function ImportScreen() {
     } catch (error) {
       if (error instanceof WordCapacityExceededError) router.push('/upgrade' as never);
       else Alert.alert('Import unavailable', error instanceof Error ? error.message : 'Please try again.');
-    } finally { setBusy(false); }
+    } finally { actionPending.current = false; setBusy(false); }
   };
 
   return (
@@ -123,16 +153,23 @@ export default function ImportScreen() {
         ? <>Use either <AppText variant="label">word</AppText> or <AppText variant="label">word - {languageLabel(activeCourse.targetLanguageCode)} translation</AppText>. You may also supply <AppText variant="label">word | definition | hint | example</AppText>.</>
         : <>Because no reviewed catalog is bundled, provide your own <AppText variant="label">word | {languageLabel(activeCourse.sourceLanguageCode)} definition | {languageLabel(activeCourse.targetLanguageCode)} hint | optional example</AppText>.</>}</AppText></View>
       <TextInput value={input} onChangeText={(value) => { setInput(value); setReviewed(null); }} multiline autoCapitalize="none" textAlignVertical="top" placeholder={activeCourse.sourceLanguageCode === 'es' ? 'corazón | Órgano que impulsa la sangre. | srdce | El corazón late con fuerza.\nsolicitar | Pedir algo de manera formal. | požiadať' : 'stakeholder - zainteresovana strana\nscope\nproject charter - projektova charta'} placeholderTextColor={theme.muted} style={[styles.input, { backgroundColor: theme.surface, borderColor: theme.border, color: theme.text }]}/>
-      <View><AppText variant="label">Collection</AppText><View style={styles.chips}>{collections.map((collection) => <Pressable key={collection.id} onPress={() => setCollectionId(collection.id)} style={[styles.chip, { backgroundColor: selectedCollectionId === collection.id ? theme.primary : theme.surface, borderColor: selectedCollectionId === collection.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: selectedCollectionId === collection.id ? theme.onPrimary : theme.text }}>{collection.name}</AppText></Pressable>)}</View></View>
-      <PrimaryButton label="Review words one by one" disabled={!input.trim() || !selectedCollectionId} loading={busy} onPress={() => void guidedReview()}/>
+      <View><AppText variant="label">Collection</AppText><View style={styles.chips}>
+        {collections.map((collection) => <Pressable key={collection.id} accessibilityRole="button" accessibilityLabel={`Collection: ${collection.name}`} accessibilityState={{ selected: selectedCollectionId === collection.id }} disabled={busy || creatingCollection} onPress={() => setCollectionId(collection.id)} style={[styles.chip, { backgroundColor: selectedCollectionId === collection.id ? theme.primary : theme.surface, borderColor: selectedCollectionId === collection.id ? theme.primary : theme.border }]}><AppText variant="label" style={{ color: selectedCollectionId === collection.id ? theme.onPrimary : theme.text }}>{collection.name}</AppText></Pressable>)}
+        <Pressable accessibilityRole="button" accessibilityLabel={showCollectionForm ? 'Cancel new collection' : 'New collection'} disabled={busy || creatingCollection} onPress={() => { setShowCollectionForm((value) => !value); setCollectionName(''); }} style={[styles.chip, { backgroundColor: theme.surface, borderColor: theme.border }]}><AppText variant="label" style={{ color: theme.primary }}>{showCollectionForm ? 'Cancel' : '+ New collection'}</AppText></Pressable>
+      </View><CollectionFormDisclosure open={showCollectionForm}><View style={[styles.collectionForm, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+        <FormField label="Collection name" value={collectionName} onChangeText={setCollectionName} editable={!creatingCollection} placeholder="English C1 lessons" returnKeyType="done" onSubmitEditing={() => void addCollection()}/>
+        <PrimaryButton label="Create collection" variant="secondary" loading={creatingCollection} disabled={!collectionName.trim()} onPress={() => void addCollection()}/>
+        <AppText variant="caption" style={{ color: theme.muted }}>Create this collection or cancel to continue importing your words.</AppText>
+      </View></CollectionFormDisclosure></View>
+      <PrimaryButton label="Review words one by one" disabled={!input.trim() || !selectedCollectionId || showCollectionForm || creatingCollection} loading={busy} onPress={() => void guidedReview()}/>
       {replaceReview ? <View style={styles.review}><AppText>You have an unfinished review. Replace it with these words?</AppText>
-        <PrimaryButton label="Replace saved review" variant="secondary" loading={busy} disabled={!selectedCollectionId} onPress={() => void guidedReview(true)}/>
+        <PrimaryButton label="Replace saved review" variant="secondary" loading={busy} disabled={!selectedCollectionId || showCollectionForm || creatingCollection} onPress={() => void guidedReview(true)}/>
         <PrimaryButton label="Keep saved review" variant="secondary" disabled={busy} onPress={() => setReplaceReview(false)}/>
       </View> : null}
       {reviewError ? <AppText accessibilityRole="alert">{reviewError}</AppText> : null}
-      <PrimaryButton label="Resume saved review" variant="secondary" disabled={busy} onPress={() => router.push('/import-review')}/>
-      <PrimaryButton label="Review paste" variant="secondary" loading={busy && !reviewed} disabled={!input.trim()} onPress={() => void review()} icon={<Ionicons name="checkmark-done-outline" color={theme.primary} size={18}/>}/>
-      {reviewed ? <View style={styles.review}><View style={styles.summary}><AppText variant="heading">Review</AppText><AppText variant="label" style={{ color: theme.primary }}>{importable.length} ready</AppText></View>{reviewed.map((line) => { const issue = line.error ?? (line.duplicate ? 'Already in your library' : line.catalogAmbiguous ? 'Multiple meanings found; add this word manually to choose the right one' : !line.sense && !line.definition ? 'No offline definition found' : null); const translation = line.translation ?? line.sense?.translation; return <View key={`${line.lineNumber}-${line.term}`} style={[styles.line, { backgroundColor: theme.surface, borderColor: issue ? theme.danger : theme.border }]}><View style={styles.lineText}><AppText variant="label">{line.term}</AppText><AppText variant="caption" style={{ color: issue ? theme.danger : theme.muted }}>{issue ?? line.definition ?? line.sense?.definition}</AppText>{translation ? <AppText variant="caption" style={{ color: theme.primary }}>Hint: {translation}</AppText> : null}</View><Ionicons name={issue ? 'alert-circle-outline' : 'checkmark-circle-outline'} color={issue ? theme.danger : theme.success} size={22}/></View>; })}{exceedsCapacity ? <View testID="word-capacity-notice" style={[styles.capacityNotice, { backgroundColor: theme.primarySoft }]}><Ionicons name="infinite-outline" color={theme.primary} size={20}/><View style={styles.lineText}><AppText variant="label">{wordCapacity.remaining === 0 ? 'Your free library is full' : `${wordCapacity.remaining} free ${wordCapacity.remaining === 1 ? 'slot remains' : 'slots remain'}`}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Import the words that fit, or unlock the whole batch.</AppText></View></View> : null}<PrimaryButton label={selectedImportable.length > 0 ? `Import first ${selectedImportable.length} ${selectedImportable.length === 1 ? 'word' : 'words'}` : 'Unlock to import more words'} loading={busy} disabled={!importable.length || !selectedCollectionId} onPress={() => void importWords()}/>{exceedsCapacity ? <PrimaryButton label="Unlock unlimited words" variant="secondary" onPress={() => router.push('/upgrade' as never)}/> : null}<AppText variant="caption" style={{ color: theme.muted }}>Unresolved, ambiguous, or duplicate lines are left out. Add unresolved phrases manually so their meaning is not guessed.</AppText></View> : null}
+      <PrimaryButton label="Resume saved review" variant="secondary" disabled={busy || creatingCollection} onPress={() => router.push('/import-review')}/>
+      <PrimaryButton label="Review paste" variant="secondary" loading={busy && !reviewed} disabled={!input.trim() || showCollectionForm || creatingCollection} onPress={() => void review()} icon={<Ionicons name="checkmark-done-outline" color={theme.primary} size={18}/>}/>
+      {reviewed ? <View style={styles.review}><View style={styles.summary}><AppText variant="heading">Review</AppText><AppText variant="label" style={{ color: theme.primary }}>{importable.length} ready</AppText></View>{reviewed.map((line) => { const issue = line.error ?? (line.duplicate ? 'Already in your library' : line.catalogAmbiguous ? 'Multiple meanings found; add this word manually to choose the right one' : !line.sense && !line.definition ? 'No offline definition found' : null); const translation = line.translation ?? line.sense?.translation; return <View key={`${line.lineNumber}-${line.term}`} style={[styles.line, { backgroundColor: theme.surface, borderColor: issue ? theme.danger : theme.border }]}><View style={styles.lineText}><AppText variant="label">{line.term}</AppText><AppText variant="caption" style={{ color: issue ? theme.danger : theme.muted }}>{issue ?? line.definition ?? line.sense?.definition}</AppText>{translation ? <AppText variant="caption" style={{ color: theme.primary }}>Hint: {translation}</AppText> : null}</View><Ionicons name={issue ? 'alert-circle-outline' : 'checkmark-circle-outline'} color={issue ? theme.danger : theme.success} size={22}/></View>; })}{exceedsCapacity ? <View testID="word-capacity-notice" style={[styles.capacityNotice, { backgroundColor: theme.primarySoft }]}><Ionicons name="infinite-outline" color={theme.primary} size={20}/><View style={styles.lineText}><AppText variant="label">{wordCapacity.remaining === 0 ? 'Your free library is full' : `${wordCapacity.remaining} free ${wordCapacity.remaining === 1 ? 'slot remains' : 'slots remain'}`}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Import the words that fit, or unlock the whole batch.</AppText></View></View> : null}<PrimaryButton label={selectedImportable.length > 0 ? `Import first ${selectedImportable.length} ${selectedImportable.length === 1 ? 'word' : 'words'}` : 'Unlock to import more words'} loading={busy} disabled={!importable.length || !selectedCollectionId || showCollectionForm || creatingCollection} onPress={() => void importWords()}/>{exceedsCapacity ? <PrimaryButton label="Unlock unlimited words" variant="secondary" onPress={() => router.push('/upgrade' as never)}/> : null}<AppText variant="caption" style={{ color: theme.muted }}>Unresolved, ambiguous, or duplicate lines are left out. Add unresolved phrases manually so their meaning is not guessed.</AppText></View> : null}
     </Screen>
   );
 }
@@ -140,6 +177,7 @@ export default function ImportScreen() {
 const styles = StyleSheet.create({
   input: { minHeight: 190, borderWidth: 1, borderRadius: radii.card, padding: spacing.md, fontFamily: 'Inter_400Regular', fontSize: typeScale.body, lineHeight: 24 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, marginTop: spacing.sm }, chip: { minHeight: 40, paddingHorizontal: spacing.md, borderWidth: 1, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center' },
+  collectionForm: { borderWidth: 1, borderRadius: radii.control, padding: spacing.md, gap: spacing.sm },
   review: { gap: spacing.sm }, summary: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }, line: { borderWidth: 1, borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', alignItems: 'center', gap: spacing.sm }, lineText: { flex: 1, gap: 2 },
   capacityNotice: { borderRadius: radii.control, padding: spacing.md, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
 });

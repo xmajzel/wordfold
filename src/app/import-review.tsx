@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { Pressable, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { Screen } from '@/components/screen';
 import { AppText } from '@/components/app-text';
+import { CollectionFormDisclosure } from '@/components/collection-form-disclosure';
 import { FormField } from '@/components/form-field';
 import { PrimaryButton } from '@/components/primary-button';
 import { ModalHeader } from '@/app/word/new';
@@ -17,7 +18,7 @@ import { useAppTheme } from '@/hooks/use-app-theme';
 import { normalizeTerm } from '@/features/import/parser';
 import { preferenceLocale } from '@/domain/pronunciation-voices';
 import type { CatalogSense } from '@/domain/types';
-import { spacing } from '@/theme/tokens';
+import { radii, spacing } from '@/theme/tokens';
 
 export default function ImportReviewScreen() {
   const { user } = useAuth();
@@ -36,6 +37,10 @@ function GuidedReview({ scope }: { scope: string }) {
   const [message, setMessage] = useState<string | null>(null);
   const [translating, setTranslating] = useState(false);
   const [translationError, setTranslationError] = useState<string | null>(null);
+  const [showCollectionForm, setShowCollectionForm] = useState(false);
+  const [collectionName, setCollectionName] = useState('');
+  const [creatingCollection, setCreatingCollection] = useState(false);
+  const collectionCreationPending = useRef(false);
   const translationController = useRef<AbortController | null>(null);
   const cancelTranslation = () => {
     translationController.current?.abort();
@@ -50,6 +55,29 @@ function GuidedReview({ scope }: { scope: string }) {
     current.current = value; setQueue(value);
     try { await saveReviewQueue(scope, value); }
     catch { if (mounted.current) setMessage('Your review could not be saved on this device. Please try again before leaving.'); throw new Error('Review storage unavailable'); }
+  };
+  const addCollection = async () => {
+    const name = collectionName.trim();
+    if (!name || !current.current?.rows[current.current.index] || saving.current || collectionCreationPending.current) return;
+    collectionCreationPending.current = true;
+    setCreatingCollection(true);
+    try {
+      let id: string;
+      try { id = await data.createCollection(name, '#D8902F'); }
+      catch (error) {
+        Alert.alert('Could not create collection', error instanceof Error ? error.message : 'Please try again.');
+        return;
+      }
+      setCollectionName('');
+      setShowCollectionForm(false);
+      const q = current.current;
+      if (q) await commit({ ...q, collectionId: id }).catch(() => {
+        if (mounted.current) setMessage('Collection created, but its selection could not be saved. Tap the collection again before leaving.');
+      });
+    } finally {
+      collectionCreationPending.current = false;
+      if (mounted.current) setCreatingCollection(false);
+    }
   };
   useEffect(() => {
     mounted.current = true;
@@ -112,7 +140,7 @@ function GuidedReview({ scope }: { scope: string }) {
     && word.targetLanguageCode === data.activeCourse.targetLanguageCode && word.normalizedTerm === normalizeTerm(row.term, data.activeCourse.sourceLanguageCode));
   const next = async (add: boolean) => {
     const q = current.current; const r = q?.rows[q.index];
-    if (!q || !r || saving.current) return;
+    if (!q || !r || saving.current || showCollectionForm || collectionCreationPending.current) return;
     cancelTranslation();
     saving.current = true; setBusy(true); setMessage(null);
     try {
@@ -148,9 +176,28 @@ function GuidedReview({ scope }: { scope: string }) {
     </> : <>
       <AppText variant="heading">{row.term}</AppText><AppText>Word {queue.index + 1} of {queue.rows.length} · {queue.added} added</AppText>
       <AppText variant="caption">Your progress is saved on this device. Close and resume from Bulk paste.</AppText>
-      <View style={{ gap: spacing.sm }}><AppText variant="label">Collection</AppText>{data.collections.map((collection) => <PrimaryButton key={collection.id}
-        label={`${queue.collectionId === collection.id ? '✓ ' : ''}${collection.name}`} variant="secondary" disabled={busy}
-        onPress={() => { void commit({ ...queue, collectionId: collection.id }).catch(() => undefined); }}/>)}</View>
+      <View>
+        <AppText variant="label">Collection</AppText>
+        <View style={styles.chips}>
+        {data.collections.map((collection) => {
+          const selected = queue.collectionId === collection.id;
+          return <Pressable key={collection.id} accessibilityRole="button" accessibilityLabel={`Collection: ${collection.name}`} accessibilityState={{ selected }} disabled={busy || creatingCollection}
+            onPress={() => { void commit({ ...queue, collectionId: collection.id }).catch(() => undefined); }}
+            style={[styles.chip, { backgroundColor: selected ? theme.primary : theme.surface, borderColor: selected ? theme.primary : theme.border }]}>
+            <AppText variant="label" style={{ color: selected ? theme.onPrimary : theme.text }}>{collection.name}</AppText>
+          </Pressable>;
+        })}
+        <Pressable accessibilityRole="button" accessibilityLabel={showCollectionForm ? 'Cancel new collection' : 'New collection'} disabled={busy || creatingCollection}
+          onPress={() => { setShowCollectionForm((value) => !value); setCollectionName(''); }} style={[styles.chip, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+          <AppText variant="label" style={{ color: theme.primary }}>{showCollectionForm ? 'Cancel' : '+ New collection'}</AppText>
+        </Pressable>
+        </View>
+        <CollectionFormDisclosure open={showCollectionForm}><View style={[styles.collectionForm, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+          <FormField label="Collection name" value={collectionName} onChangeText={setCollectionName} editable={!creatingCollection} placeholder="English C1 lessons" returnKeyType="done" onSubmitEditing={() => void addCollection()}/>
+          <PrimaryButton label="Create collection" variant="secondary" loading={creatingCollection} disabled={!collectionName.trim()} onPress={() => void addCollection()}/>
+          <AppText variant="caption" style={{ color: theme.muted }}>Create this collection or cancel to continue reviewing your words.</AppText>
+        </View></CollectionFormDisclosure>
+      </View>
       {row.error || duplicate ? <AppText>{row.error ?? 'Already in your library. Skip this word to avoid a duplicate.'}</AppText> : <>
         {lookingUp ? <AppText>Finding offline definitions…</AppText> : senses.length ? <View style={{ gap: spacing.sm }}><AppText variant="label">Choose the intended meaning · free</AppText>
           {senses.map((sense) => <Pressable key={sense.id} accessibilityRole="button" accessibilityState={{ selected: row.catalogSenseId === sense.id }} disabled={busy}
@@ -172,10 +219,16 @@ function GuidedReview({ scope }: { scope: string }) {
         <FormField label="Part of speech" value={row.partOfSpeech} editable={!busy} onChangeText={(partOfSpeech) => update({ partOfSpeech })}/>
       </>}
       {data.wordCapacity.remaining === 0 ? <AppText>Your library is full. You can resume this review after making room.</AppText> : null}
-      <PrimaryButton label="Add & next" loading={busy} disabled={Boolean(row.error || duplicate) || !row.definition.trim() || lookingUp || translating || data.wordCapacity.remaining === 0
+      <PrimaryButton label="Add & next" loading={busy} disabled={Boolean(row.error || duplicate) || !row.definition.trim() || lookingUp || translating || showCollectionForm || creatingCollection || data.wordCapacity.remaining === 0
         || !data.collections.some((c) => c.id === queue.collectionId)} onPress={() => void next(true)}/>
-      <PrimaryButton label="Skip" variant="secondary" disabled={busy} onPress={() => void next(false)}/>
+      <PrimaryButton label="Skip" variant="secondary" disabled={busy || showCollectionForm || creatingCollection} onPress={() => void next(false)}/>
     </>}
     {message ? <AppText accessibilityRole="alert">{message}</AppText> : null}
   </Screen>;
 }
+
+const styles = StyleSheet.create({
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, marginTop: spacing.sm },
+  chip: { minHeight: 40, paddingHorizontal: spacing.md, borderWidth: 1, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center' },
+  collectionForm: { borderWidth: 1, borderRadius: radii.control, padding: spacing.md, gap: spacing.sm },
+});
