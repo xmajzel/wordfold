@@ -84,6 +84,7 @@ function Navigation() {
         <Stack.Screen name="import" options={{ presentation: 'modal' }} />
         <Stack.Screen name="word/new" options={{ presentation: 'modal' }} />
         <Stack.Screen name="word/[id]" />
+        <Stack.Screen name="collection/[id]" />
         <Stack.Screen name="level/[level]" />
       </Stack>
       <LearningRhythmIntroduction/>

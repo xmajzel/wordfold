@@ -38,6 +38,13 @@ it('opens My words after import and still allows switching to Discover', async (
   await fireEvent.press(view.getByRole('tab', { name: 'Show Discover' }));
   expect(view.getByRole('tab', { name: 'Show Discover' }).props.accessibilityState.selected).toBe(true);
 });
+it('opens an empty collection to explain why it has no cards', async () => {
+  const view = await render(<LibraryScreen/>);
+  await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+  await fireEvent.press(view.getByRole('button', { name: 'Collection: My words' }));
+  await fireEvent.press(view.getByRole('button', { name: 'Open empty collection' }));
+  expect(router.push).toHaveBeenLastCalledWith({ pathname: '/collection/[id]', params: { id: 'my-words' } });
+});
 jest.mock('expo-haptics', () => ({ selectionAsync: jest.fn(async () => undefined) }));
 jest.mock('react-native-reanimated', () => {
   const { View, Text } = jest.requireActual('react-native');
@@ -291,4 +298,12 @@ describe('combined Library filters', () => {
     jest.restoreAllMocks();
   });
 
+  it('starts every card in a collection even when the difficulty list is narrowed', async () => {
+    const view = await render(<LibraryScreen/>);
+    await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Collection: Work' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Difficulty: C2' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Study all 3 cards' }));
+    expect(router.push).toHaveBeenLastCalledWith({ pathname: '/collection/[id]', params: { id: 'work' } });
+  });
 });

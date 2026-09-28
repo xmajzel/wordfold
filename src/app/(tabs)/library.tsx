@@ -65,6 +65,8 @@ export default function LibraryScreen() {
     return collectionWords.filter((word) => selectedDifficulty === 'no-level'
       ? word.cefrLevel === null : word.cefrLevel === selectedDifficulty);
   }, [activeWords, otherWords, selectedCollection, selectedDifficulty]);
+  const collectionWordCount = activeWords.filter((word) => word.collectionId === selectedCollection).length;
+  const canStudyCollection = collections.some((collection) => collection.id === selectedCollection);
   const visibleSelectedWordIds = useMemo(() => new Set(filteredWords.filter((word) => selectedWordIds.has(word.id)).map((word) => word.id)), [filteredWords, selectedWordIds]);
   const collectionNames = useMemo(() => Object.fromEntries(collections.map((item) => [item.id, item.name])), [collections]);
   const learnedLanguage = languageLabel(activeCourse.sourceLanguageCode);
@@ -201,7 +203,7 @@ export default function LibraryScreen() {
               <AppText variant="label">Move to collection</AppText>
               <SlidingFilterRow testID="move-destination" accessibilityLabel="Destination collection" itemRole="button" options={collections.map((collection) => ({ id: collection.id, label: collection.name, folder: true, accessibilityLabel: `Move to ${collection.name}` }))} selected={destinationCollectionId} onSelect={(id) => { if (!movingWords) setDestinationCollectionId(id); }}/>
               <PrimaryButton label={`Move ${visibleSelectedWordIds.size} ${visibleSelectedWordIds.size === 1 ? 'word' : 'words'}`} onPress={() => void moveSelectedWords()} disabled={visibleSelectedWordIds.size === 0 || !destinationCollectionId} loading={movingWords}/>
-            </View> : null}
+            </View> : canStudyCollection ? <PrimaryButton label={collectionWordCount === 0 ? 'Open empty collection' : `Study all ${collectionWordCount} ${collectionWordCount === 1 ? 'card' : 'cards'}`} variant="secondary" onPress={() => router.push({ pathname: '/collection/[id]', params: { id: selectedCollection } } as never)}/> : null}
           </> : <>
             <View style={styles.sectionHeader}><View style={styles.sectionCopy}><AppText variant="heading">{learnedLanguage} levels</AppText><AppText variant="caption" style={{ color: theme.muted }}>{catalogAvailability.total > 0
               ? 'Browse the built-in CEFR-aligned catalog and see how far you have come.'
