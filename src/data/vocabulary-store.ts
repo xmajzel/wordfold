@@ -18,6 +18,7 @@ export interface VocabularyStore {
   createWord(input: guestRepository.NewWordInput): Promise<string>;
   createWords(inputs: guestRepository.NewWordInput[]): Promise<string[]>;
   editWord(id: string, input: guestRepository.NewWordInput): Promise<void>;
+  moveWordsToCollection(ids: string[], collectionId: string): Promise<void>;
   saveWordTranslation(id: string, translation: string): Promise<string>;
   updateMissingWordTranslations(updates: { id: string; translation: string }[]): Promise<{
     updatedAt: string | null;
@@ -43,6 +44,7 @@ export function createGuestVocabularyStore(database: SQLiteDatabase): Vocabulary
     createWord: (input) => guestRepository.addWord(database, input),
     createWords: (inputs) => guestRepository.addWords(database, inputs),
     editWord: (id, input) => guestRepository.updateWord(database, id, input),
+    moveWordsToCollection: (ids, collectionId) => guestRepository.moveWordsToCollection(database, ids, collectionId),
     saveWordTranslation: (id, translation) => guestRepository.updateWordTranslation(database, id, translation),
     updateMissingWordTranslations: (updates) => guestRepository.updateMissingWordTranslations(database, updates),
     removeWord: (id) => guestRepository.deleteWord(database, id),
@@ -73,6 +75,7 @@ export function createSyncVocabularyStore(database: PowerSyncStoreDatabase, user
     createWord: (input) => syncRepository.addSyncWord(database, userId, input),
     createWords: (inputs) => syncRepository.addSyncWords(database, userId, inputs),
     editWord: (id, input) => syncRepository.updateSyncWord(database, id, input),
+    moveWordsToCollection: (ids, collectionId) => syncRepository.moveSyncWordsToCollection(database, ids, collectionId),
     saveWordTranslation: (id, translation) => syncRepository.updateSyncWordTranslation(database, id, translation),
     updateMissingWordTranslations: (updates) => syncRepository.updateMissingSyncWordTranslations(database, updates),
     removeWord: (id) => syncRepository.deleteSyncWord(database, id),

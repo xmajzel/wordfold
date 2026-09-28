@@ -20,6 +20,7 @@ let mockWords = [mockOtherWord];
 let mockCollections = [{ id: 'my-words', name: 'My words' }];
 let mockPreferences: LearningPreferences = { levels: [], topics: [] };
 const mockAddRecommendedWords = jest.fn(async (..._args: unknown[]) => 10);
+const mockMoveWordsToCollection = jest.fn(async (_ids: string[], _collectionId: string) => undefined);
 let mockActiveCourseId: 'en-sk' | 'es-sk' = 'en-sk';
 
 let mockRouteParams: { view?: string } = {};
@@ -79,6 +80,7 @@ jest.mock('@/providers/app-data-provider', () => ({
     learningPreferences: mockPreferences,
     wordCapacity: { remaining: 99, shouldShowNotice: false },
     createCollection: jest.fn(async () => 'collection'),
+    moveWordsToCollection: mockMoveWordsToCollection,
     addRecommendedWords: mockAddRecommendedWords,
   }),
 }));
@@ -88,6 +90,8 @@ describe('library course visibility', () => {
     mockActiveCourseId = 'en-sk';
     mockPreferences = { levels: [], topics: [] };
     mockAddRecommendedWords.mockClear();
+    mockMoveWordsToCollection.mockReset();
+    mockMoveWordsToCollection.mockResolvedValue(undefined);
     jest.spyOn(Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 1, fontScale: 1 });
   });
   afterEach(() => jest.restoreAllMocks());
@@ -258,4 +262,33 @@ describe('combined Library filters', () => {
     view.getByText('Baum');
     expect(view.queryByText('perspicacia')).toBeNull();
   });
+
+  it('selects the filtered words and moves them to a chosen collection', async () => {
+    const view = await render(<LibraryScreen/>);
+    await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Collection: Work' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Select words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Select all shown words' }));
+    expect(view.getByRole('checkbox', { name: 'Select tenacity' }).props.accessibilityState.checked).toBe(true);
+    expect(view.queryByRole('checkbox', { name: 'Select perspicacia' })).toBeNull();
+    await fireEvent.press(view.getByRole('button', { name: 'Move to Everyday' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Move 3 words' }));
+    await waitFor(() => expect(mockMoveWordsToCollection).toHaveBeenCalledWith(['work-c2', 'work-a1', 'work-none'], 'everyday'));
+    expect(view.queryByRole('checkbox', { name: 'Select tenacity' })).toBeNull();
+  });
+
+  it('keeps selected words after a failed move so the user can retry', async () => {
+    mockMoveWordsToCollection.mockRejectedValueOnce(new Error('Offline write failed'));
+    jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
+    const view = await render(<LibraryScreen/>);
+    await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Select words' }));
+    await fireEvent.press(view.getByRole('checkbox', { name: 'Select tenacity' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Move to Everyday' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Move 1 word' }));
+    await waitFor(() => expect(Alert.alert).toHaveBeenCalledWith('Words could not be moved', 'Offline write failed'));
+    expect(view.getByRole('checkbox', { name: 'Select tenacity' }).props.accessibilityState.checked).toBe(true);
+    jest.restoreAllMocks();
+  });
+
 });

@@ -1,6 +1,6 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
-import { getLearningRhythm, saveLearningRhythm, addWord, addWords, completeOnboardingSetup, getActiveCourseId, getLearningFilter, getLearningPreferences, getPronunciationVoicePreference, getStats, resetWord, saveActiveCourseId, saveLearningFilter, saveLearningPreferences, savePronunciationVoicePreference, updateMissingWordTranslations, type NewWordInput } from './repository';
+import { getLearningRhythm, saveLearningRhythm, addWord, addWords, completeOnboardingSetup, getActiveCourseId, getLearningFilter, getLearningPreferences, getPronunciationVoicePreference, getStats, moveWordsToCollection, resetWord, saveActiveCourseId, saveLearningFilter, saveLearningPreferences, savePronunciationVoicePreference, updateMissingWordTranslations, type NewWordInput } from './repository';
 
 function createDatabase() {
   const database = {
@@ -37,6 +37,26 @@ describe('word repository', () => {
     await addWords(database, words);
 
     expect(transaction.runAsync).toHaveBeenCalledTimes(2);
+    expect(database.runAsync).not.toHaveBeenCalled();
+  });
+
+  it('moves selected words together without changing their learning fields', async () => {
+    const database = createDatabase();
+    const transaction = { runAsync: jest.fn(async () => ({ changes: 1, lastInsertRowId: 0 })) };
+    (database.withExclusiveTransactionAsync as jest.Mock).mockImplementationOnce(
+      async (callback: (value: typeof transaction) => Promise<void>) => callback(transaction),
+    );
+
+    await moveWordsToCollection(database, ['first', 'second'], 'medical-care');
+
+    expect(database.withExclusiveTransactionAsync).toHaveBeenCalledTimes(1);
+    expect(transaction.runAsync).toHaveBeenCalledTimes(2);
+    expect(transaction.runAsync).toHaveBeenNthCalledWith(1,
+      'UPDATE words SET collection_id = ?, updated_at = ? WHERE id = ?',
+      'medical-care', expect.any(String), 'first');
+    expect(transaction.runAsync).toHaveBeenNthCalledWith(2,
+      'UPDATE words SET collection_id = ?, updated_at = ? WHERE id = ?',
+      'medical-care', expect.any(String), 'second');
     expect(database.runAsync).not.toHaveBeenCalled();
   });
 

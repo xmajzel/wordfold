@@ -134,6 +134,20 @@ export async function updateSyncWord(database: QueryableDatabase, id: string, in
   );
 }
 
+export async function moveSyncWordsToCollection(database: QueryableDatabase, ids: string[], collectionId: string) {
+  if (ids.length === 0) return;
+  requireSyncCollectionId(collectionId);
+  const updatedAt = new Date().toISOString();
+  await database.writeTransaction(async (transaction) => {
+    for (const id of ids) {
+      await transaction.execute(
+        'UPDATE words SET collection_id = ?, updated_at = ? WHERE id = ? AND deleted_at IS NULL',
+        [collectionId, updatedAt, id],
+      );
+    }
+  });
+}
+
 export async function updateSyncWordTranslation(database: QueryableDatabase, id: string, translation: string) {
   const updatedAt = new Date().toISOString();
   await database.execute(

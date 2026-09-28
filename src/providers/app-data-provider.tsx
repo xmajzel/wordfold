@@ -64,6 +64,7 @@ interface AppDataValue {
   createWord(input: repository.NewWordInput): Promise<string>;
   createWords(inputs: repository.NewWordInput[]): Promise<string[]>;
   editWord(id: string, input: repository.NewWordInput): Promise<void>;
+  moveWordsToCollection(ids: string[], collectionId: string): Promise<void>;
   saveWordTranslation(id: string, translation: string): Promise<void>;
   prepareWordTranslation(word: Word): Promise<void>;
   removeWord(id: string): Promise<void>;
@@ -578,6 +579,23 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     },
     editWord: async (id, input) => {
       await runDatabaseMutation(() => vocabularyStore.editWord(id, input)); await refresh(); await reschedule();
+    },
+    moveWordsToCollection: async (ids, collectionId) => {
+      if (ids.length === 0) return;
+      await runDatabaseMutation(async () => {
+        const [availableCollections, availableWords] = await Promise.all([
+          vocabularyStore.listCollections(), vocabularyStore.listWords(),
+        ]);
+        if (!availableCollections.some((collection) => collection.id === collectionId)) {
+          throw new Error('This collection is no longer available.');
+        }
+        const availableIds = new Set(availableWords.map((word) => word.id));
+        if (ids.some((id) => !availableIds.has(id))) {
+          throw new Error('Some selected words are no longer available.');
+        }
+        await vocabularyStore.moveWordsToCollection([...new Set(ids)], collectionId);
+      });
+      await refresh();
     },
     saveWordTranslation: async (id, translation) => {
       const nextTranslation = translation.trim();

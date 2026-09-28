@@ -6,6 +6,7 @@ import {
   deleteSyncWord,
   getSyncStats,
   listSyncWords,
+  moveSyncWordsToCollection,
   recordSyncView,
   resetSyncWord,
   saveSyncRating,
@@ -79,9 +80,25 @@ describe('PowerSync vocabulary repository', () => {
     await expect(addSyncWord(context.database, 'user-1', invalid)).rejects.toThrow('Choose a synchronized collection');
     await expect(addSyncWords(context.database, 'user-1', [invalid])).rejects.toThrow('Choose a synchronized collection');
     await expect(updateSyncWord(context.database, 'word-1', invalid)).rejects.toThrow('Choose a synchronized collection');
+    await expect(moveSyncWordsToCollection(context.database, ['word-1'], 'my-words')).rejects.toThrow('Choose a synchronized collection');
 
     expect(context.database.execute).not.toHaveBeenCalled();
     expect(context.transaction.execute).not.toHaveBeenCalled();
+  });
+
+  it('queues collection moves in one transaction without rewriting word content or progress', async () => {
+    const context = database();
+
+    await moveSyncWordsToCollection(context.database, ['word-1', 'word-2'], newWord.collectionId);
+
+    expect(context.database.writeTransaction).toHaveBeenCalledTimes(1);
+    expect(context.transaction.execute).toHaveBeenCalledTimes(2);
+    expect(context.transaction.execute).toHaveBeenNthCalledWith(1,
+      'UPDATE words SET collection_id = ?, updated_at = ? WHERE id = ? AND deleted_at IS NULL',
+      [newWord.collectionId, expect.any(String), 'word-1']);
+    expect(context.transaction.execute).toHaveBeenNthCalledWith(2,
+      'UPDATE words SET collection_id = ?, updated_at = ? WHERE id = ? AND deleted_at IS NULL',
+      [newWord.collectionId, expect.any(String), 'word-2']);
   });
 
   it('stores a rating state and event in one transaction', async () => {

@@ -33,6 +33,7 @@ interface AppDataValue {
   refresh(): Promise<void>; findSenses(term: string, courseId?: CourseId): Promise<CatalogSense[]>;
   createWord(input: NewWordInput): Promise<string>; createWords(inputs: NewWordInput[]): Promise<string[]>;
   editWord(id: string, input: NewWordInput): Promise<void>; removeWord(id: string): Promise<void>;
+  moveWordsToCollection(ids: string[], collectionId: string): Promise<void>;
   saveWordTranslation(id: string, translation: string): Promise<void>;
   prepareWordTranslation(word: Word): Promise<void>;
   resetWord(id: string): Promise<void>; createCollection(name: string, color: string): Promise<string>;
@@ -201,6 +202,16 @@ export function AppDataProvider({ children }: PropsWithChildren) {
     createWord: async (input) => { const word = toWord(input); setWords((current) => [word, ...current]); return word.id; },
     createWords: async (inputs) => { const next = inputs.map((input) => toWord(input)); setWords((current) => [...next, ...current]); return next.map((word) => word.id); },
     editWord: async (id, input) => setWords((current) => current.map((word) => word.id === id ? { ...word, ...input, normalizedTerm: input.normalizedTerm, updatedAt: new Date().toISOString() } : word)),
+    moveWordsToCollection: async (ids, collectionId) => {
+      if (!collections.some((collection) => collection.id === collectionId)) throw new Error('This collection is no longer available.');
+      const selectedIds = new Set(ids);
+      if (selectedIds.size === 0) return;
+      if (words.filter((word) => selectedIds.has(word.id)).length !== selectedIds.size) {
+        throw new Error('Some selected words are no longer available.');
+      }
+      const updatedAt = new Date().toISOString();
+      setWords((current) => current.map((word) => selectedIds.has(word.id) ? { ...word, collectionId, updatedAt } : word));
+    },
     saveWordTranslation: async (id, translation) => setWords((current) => current.map((word) => word.id === id ? { ...word, translation: translation.trim(), updatedAt: new Date().toISOString() } : word)),
     prepareWordTranslation: async (word) => {
       if (word.translation) return;

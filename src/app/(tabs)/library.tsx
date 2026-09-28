@@ -33,11 +33,16 @@ export default function LibraryScreen() {
   const { width, fontScale } = useWindowDimensions();
   const {
     words, collections, activeCourse, activeCourseId, learningPreferences,
-    createCollection, addRecommendedWords, wordCapacity, learningConfirmations,
+    createCollection, moveWordsToCollection, addRecommendedWords, wordCapacity, learningConfirmations,
   } = useAppData();
   const [libraryView, setLibraryView] = useState<LibraryView>('discover');
   const [selectedCollection, setSelectedCollection] = useState('all');
   const [selectedDifficulty, setSelectedDifficulty] = useState<DifficultyFilter>('all');
+  const [selectingWords, setSelectingWords] = useState(false);
+  const [selectedWordIds, setSelectedWordIds] = useState<Set<string>>(() => new Set());
+  const [destinationCollectionId, setDestinationCollectionId] = useState('');
+  const [movingWords, setMovingWords] = useState(false);
+  const [creatingCollection, setCreatingCollection] = useState(false);
   const { view } = useLocalSearchParams<{ view?: string }>();
   useFocusEffect(useCallback(() => {
     if (view !== 'my-words') return;
@@ -60,6 +65,7 @@ export default function LibraryScreen() {
     return collectionWords.filter((word) => selectedDifficulty === 'no-level'
       ? word.cefrLevel === null : word.cefrLevel === selectedDifficulty);
   }, [activeWords, otherWords, selectedCollection, selectedDifficulty]);
+  const visibleSelectedWordIds = useMemo(() => new Set(filteredWords.filter((word) => selectedWordIds.has(word.id)).map((word) => word.id)), [filteredWords, selectedWordIds]);
   const collectionNames = useMemo(() => Object.fromEntries(collections.map((item) => [item.id, item.name])), [collections]);
   const learnedLanguage = languageLabel(activeCourse.sourceLanguageCode);
   const catalogAvailability = getCourseCatalogAvailability(activeCourseId);
@@ -85,9 +91,44 @@ export default function LibraryScreen() {
     : Math.min(10, recommendationPreview.length, wordCapacity.remaining);
 
   const addCollection = async () => {
-    if (!collectionName.trim()) return;
-    await createCollection(collectionName, '#D8902F');
-    setCollectionName(''); setShowCollectionForm(false);
+    if (!collectionName.trim() || creatingCollection) return;
+    setCreatingCollection(true);
+    try {
+      const id = await createCollection(collectionName, '#D8902F');
+      if (selectingWords) setDestinationCollectionId(id);
+      setCollectionName(''); setShowCollectionForm(false);
+    } catch (error) {
+      Alert.alert('Collection could not be created', error instanceof Error ? error.message : 'Please try again.');
+    } finally { setCreatingCollection(false); }
+  };
+
+  const stopSelecting = () => {
+    setSelectingWords(false);
+    setSelectedWordIds(new Set());
+    setDestinationCollectionId('');
+  };
+
+  const toggleWord = (id: string) => setSelectedWordIds((current) => {
+    const visibleIds = new Set(filteredWords.map((word) => word.id));
+    const next = new Set([...current].filter((wordId) => visibleIds.has(wordId)));
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    return next;
+  });
+
+  const moveSelectedWords = async () => {
+    if (!destinationCollectionId || visibleSelectedWordIds.size === 0 || movingWords) return;
+    setMovingWords(true);
+    try {
+      await moveWordsToCollection([...visibleSelectedWordIds], destinationCollectionId);
+      if (selectedCollection !== 'other-vocabulary') {
+        setSelectedCollection(destinationCollectionId);
+        setSelectedDifficulty('all');
+      }
+      stopSelecting();
+    } catch (error) {
+      Alert.alert('Words could not be moved', error instanceof Error ? error.message : 'Please try again.');
+    } finally { setMovingWords(false); }
   };
 
   const addRecommendations = async () => {
@@ -122,15 +163,17 @@ export default function LibraryScreen() {
         ListHeaderComponent={<View style={styles.headerContent}>
           <View style={styles.header}><View style={styles.headerCopy}><AppText variant="title">Your {learnedLanguage.toLowerCase()} library</AppText><AppText style={{ color: theme.muted }}>{activeWords.length} {activeWords.length === 1 ? 'word' : 'words'} across {collections.length} {collections.length === 1 ? 'collection' : 'collections'}</AppText></View><Pressable accessibilityRole="button" accessibilityLabel="Open settings" onPress={() => router.push('/settings')} style={[styles.iconButton, { backgroundColor: theme.surface }]}><Ionicons name="settings-outline" color={theme.primary} size={21}/></Pressable></View>
           <View accessibilityRole="tablist" style={[styles.viewTabs, { backgroundColor: theme.raised }]}>
-            <LibraryViewTab label="Discover" selected={libraryView === 'discover'} onPress={() => setLibraryView('discover')}/>
+            <LibraryViewTab label="Discover" selected={libraryView === 'discover'} onPress={() => { setLibraryView('discover'); stopSelecting(); }}/>
             <LibraryViewTab label="My words" selected={libraryView === 'my-words'} onPress={() => setLibraryView('my-words')}/>
           </View>
           {wordCapacity.shouldShowNotice ? <Pressable testID="word-capacity-notice" accessibilityRole="button" accessibilityLabel="Open unlimited words" onPress={() => router.push('/upgrade' as never)} style={[styles.capacityNotice, { backgroundColor: theme.primarySoft }]}><Ionicons name="infinite-outline" color={theme.primary} size={21}/><View style={styles.packText}><AppText variant="label">{wordCapacity.remaining === 0 ? 'Free library full' : `${wordCapacity.remaining} free ${wordCapacity.remaining === 1 ? 'word remains' : 'words remain'}`}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Unlock unlimited words forever with one Google Play purchase.</AppText></View><Ionicons name="chevron-forward" color={theme.primary} size={20}/></Pressable> : null}
           {libraryView === 'my-words' ? <>
-            <View style={styles.actionRow}><View style={styles.action}><PrimaryButton label="Add a word" onPress={() => router.push({ pathname: '/word/new', params: collections.some((collection) => collection.id === selectedCollection) ? { collectionId: selectedCollection } : {} })} icon={<Ionicons name="add" color={theme.onPrimary} size={18}/>}/></View><View style={styles.action}><PrimaryButton label="Bulk paste" variant="secondary" onPress={() => router.push('/import')} icon={<Ionicons name="clipboard-outline" color={theme.primary} size={18}/>}/></View></View>
+            {selectingWords
+              ? <View style={styles.selectionHeader}><AppText variant="heading">{visibleSelectedWordIds.size} selected</AppText><Pressable accessibilityRole="button" accessibilityLabel="Cancel selection" disabled={movingWords} onPress={stopSelecting} style={styles.textAction}><AppText variant="label" style={{ color: theme.primary }}>Cancel</AppText></Pressable></View>
+              : <><View style={styles.actionRow}><View style={styles.action}><PrimaryButton label="Add a word" onPress={() => router.push({ pathname: '/word/new', params: collections.some((collection) => collection.id === selectedCollection) ? { collectionId: selectedCollection } : {} })} icon={<Ionicons name="add" color={theme.onPrimary} size={18}/>}/></View><View style={styles.action}><PrimaryButton label="Bulk paste" variant="secondary" onPress={() => router.push('/import')} icon={<Ionicons name="clipboard-outline" color={theme.primary} size={18}/>}/></View></View><PrimaryButton label="Select words" variant="secondary" onPress={() => setSelectingWords(true)} disabled={filteredWords.length === 0}/></>}
             <View>
-              <View style={styles.sectionHeader}><AppText variant="heading">Collections</AppText><Pressable onPress={() => setShowCollectionForm((value) => !value)}><AppText variant="label" style={{ color: theme.primary }}>{showCollectionForm ? 'Cancel' : 'New collection'}</AppText></Pressable></View>
-              <CollectionFormDisclosure open={showCollectionForm} gap={spacing.lg}><View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><FormField label="Collection name" value={collectionName} onChangeText={setCollectionName} placeholder="Project management" returnKeyType="done" onSubmitEditing={() => void addCollection()}/><PrimaryButton label="Create collection" onPress={() => void addCollection()} disabled={!collectionName.trim()}/></View></CollectionFormDisclosure>
+              <View style={styles.sectionHeader}><AppText variant="heading">Collections</AppText><Pressable disabled={movingWords || creatingCollection} onPress={() => setShowCollectionForm((value) => !value)}><AppText variant="label" style={{ color: theme.primary }}>{showCollectionForm ? 'Cancel' : 'New collection'}</AppText></Pressable></View>
+              <CollectionFormDisclosure open={showCollectionForm} gap={spacing.lg}><View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><FormField label="Collection name" value={collectionName} onChangeText={setCollectionName} placeholder="Project management" returnKeyType="done" onSubmitEditing={() => void addCollection()}/><PrimaryButton label="Create collection" onPress={() => void addCollection()} disabled={!collectionName.trim()} loading={creatingCollection}/></View></CollectionFormDisclosure>
             </View>
             <SlidingFilterRow
               testID="library-collections" style={styles.filterScroll} accessibilityLabel="Collection filters" itemRole="button"
@@ -139,7 +182,7 @@ export default function LibraryScreen() {
                 ...collections.map((collection) => ({ id: collection.id, label: collection.name, folder: true, accessibilityLabel: `Collection: ${collection.name}` })),
                 ...(otherWords.length > 0 ? [{ id: 'other-vocabulary', label: `Other vocabulary (${otherWords.length})`, accessibilityLabel: `Collection: Other vocabulary (${otherWords.length})` }] : []),
               ]}
-              selected={selectedCollection} onSelect={setSelectedCollection}
+              selected={selectedCollection} onSelect={(id) => { if (movingWords) return; setSelectedCollection(id); setSelectedWordIds(new Set()); }}
             />
             <View style={styles.difficultyFilters}>
               <AppText variant="heading">Difficulty</AppText>
@@ -150,9 +193,15 @@ export default function LibraryScreen() {
                   { id: 'no-level', label: 'No level', accessibilityLabel: 'Difficulty: No level' },
                   ...cefrLevels.map((level) => ({ id: level, label: level, accessibilityLabel: `Difficulty: ${level}` })),
                 ]}
-                selected={selectedDifficulty} onSelect={setSelectedDifficulty}
+                selected={selectedDifficulty} onSelect={(id) => { if (movingWords) return; setSelectedDifficulty(id); setSelectedWordIds(new Set()); }}
               />
             </View>
+            {selectingWords ? <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+              <View style={styles.selectionHeader}><AppText variant="label">Select words from this list</AppText><Pressable accessibilityRole="button" accessibilityLabel={visibleSelectedWordIds.size === filteredWords.length ? 'Clear selection' : 'Select all shown words'} disabled={movingWords || filteredWords.length === 0} onPress={() => setSelectedWordIds(visibleSelectedWordIds.size === filteredWords.length ? new Set() : new Set(filteredWords.map((word) => word.id)))} style={styles.textAction}><AppText variant="label" style={{ color: theme.primary }}>{visibleSelectedWordIds.size === filteredWords.length ? 'Clear all' : 'Select all'}</AppText></Pressable></View>
+              <AppText variant="label">Move to collection</AppText>
+              <SlidingFilterRow testID="move-destination" accessibilityLabel="Destination collection" itemRole="button" options={collections.map((collection) => ({ id: collection.id, label: collection.name, folder: true, accessibilityLabel: `Move to ${collection.name}` }))} selected={destinationCollectionId} onSelect={(id) => { if (!movingWords) setDestinationCollectionId(id); }}/>
+              <PrimaryButton label={`Move ${visibleSelectedWordIds.size} ${visibleSelectedWordIds.size === 1 ? 'word' : 'words'}`} onPress={() => void moveSelectedWords()} disabled={visibleSelectedWordIds.size === 0 || !destinationCollectionId} loading={movingWords}/>
+            </View> : null}
           </> : <>
             <View style={styles.sectionHeader}><View style={styles.sectionCopy}><AppText variant="heading">{learnedLanguage} levels</AppText><AppText variant="caption" style={{ color: theme.muted }}>{catalogAvailability.total > 0
               ? 'Browse the built-in CEFR-aligned catalog and see how far you have come.'
@@ -183,7 +232,8 @@ export default function LibraryScreen() {
               ? 'Add a word here, or switch to Discover for recommendations.'
               : 'Add a Spanish word manually or bulk paste your own reviewed vocabulary.'}/>}
         </View> : null}
-        renderItem={({ item }) => <Pressable onPress={() => router.push(`/word/${item.id}`)}>
+        renderItem={({ item }) => <Pressable testID={`library-word-${item.id}`} accessibilityRole={selectingWords ? 'checkbox' : 'button'} accessibilityLabel={selectingWords ? `Select ${item.term}` : `Open ${item.term}`} accessibilityState={selectingWords ? { checked: visibleSelectedWordIds.has(item.id) } : undefined} disabled={selectingWords && movingWords} onPress={() => selectingWords ? toggleWord(item.id) : router.push(`/word/${item.id}`)} style={selectingWords && visibleSelectedWordIds.has(item.id) ? [styles.selectedWord, { borderColor: theme.primary }] : undefined}>
+          {selectingWords ? <View style={styles.selectionMark}><Ionicons name={visibleSelectedWordIds.has(item.id) ? 'checkbox' : 'square-outline'} color={theme.primary} size={25}/><AppText variant="caption" style={{ color: theme.muted }}>{visibleSelectedWordIds.has(item.id) ? 'Selected' : 'Tap to select'}</AppText></View> : null}
           {selectedCollection === 'other-vocabulary' ? <AppText variant="caption" style={{ color: theme.muted }}>{languageLabel(item.targetLanguageCode)} → {languageLabel(item.sourceLanguageCode)}</AppText> : null}
           <WordCard word={item} confirmations={learningConfirmations} collectionName={collectionNames[item.collectionId]} compact/>
         </Pressable>}
@@ -225,6 +275,7 @@ const styles = StyleSheet.create({
   header: { minHeight: 76, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: spacing.sm }, headerCopy: { flex: 1 }, iconButton: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
   viewTabs: { minHeight: 52, flexDirection: 'row', borderRadius: radii.control, padding: spacing.xs, gap: spacing.xs }, viewTab: { flex: 1, minHeight: 44, borderWidth: 1, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
   actionRow: { flexDirection: 'row', gap: spacing.sm }, action: { flex: 1 }, sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: spacing.sm }, sectionCopy: { flex: 1 },
+  selectionHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.sm }, textAction: { minHeight: 44, justifyContent: 'center', paddingHorizontal: spacing.sm }, selectionMark: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs, paddingVertical: spacing.xs }, selectedWord: { borderWidth: 2, borderRadius: radii.card },
   filterScroll: { flexGrow: 0 },
   difficultyFilters: { gap: spacing.sm },
   panel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.lg }, empty: { minHeight: 220 },

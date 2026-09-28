@@ -132,6 +132,19 @@ export async function updateWord(database: SQLiteDatabase, id: string, input: Ne
   );
 }
 
+export async function moveWordsToCollection(database: SQLiteDatabase, ids: string[], collectionId: string) {
+  if (ids.length === 0) return;
+  const updatedAt = new Date().toISOString();
+  await database.withExclusiveTransactionAsync(async (transaction) => {
+    for (const id of ids) {
+      await transaction.runAsync(
+        'UPDATE words SET collection_id = ?, updated_at = ? WHERE id = ?',
+        collectionId, updatedAt, id,
+      );
+    }
+  });
+}
+
 export async function updateWordTranslation(database: SQLiteDatabase, id: string, translation: string) {
   const updatedAt = new Date().toISOString();
   await database.runAsync(
