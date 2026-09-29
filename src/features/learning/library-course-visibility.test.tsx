@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { fireEvent, render, waitFor, within } from '@testing-library/react-native';
 import { Alert, Dimensions, StyleSheet } from 'react-native';
 
 import { router } from 'expo-router';
@@ -25,7 +25,7 @@ let mockActiveCourseId: 'en-sk' | 'es-sk' = 'en-sk';
 
 let mockRouteParams: { view?: string } = {};
 jest.mock('expo-router', () => ({
-  router: { push: jest.fn(), setParams: jest.fn((params) => { mockRouteParams = params; }) },
+  router: { navigate: jest.fn(), push: jest.fn(), setParams: jest.fn((params) => { mockRouteParams = params; }) },
   useLocalSearchParams: () => mockRouteParams,
   useFocusEffect: (callback: () => void) => jest.requireActual('react').useEffect(callback, [callback]),
 }));
@@ -201,6 +201,8 @@ describe('combined Library filters', () => {
   beforeEach(() => {
     mockActiveCourseId = 'en-sk';
     mockPreferences = { levels: [], topics: [] };
+    mockMoveWordsToCollection.mockReset();
+    mockMoveWordsToCollection.mockResolvedValue(undefined);
     mockCollections = [{ id: 'work', name: 'Work' }, { id: 'everyday', name: 'Everyday' }];
     mockWords = [
       { ...mockOtherWord, id: 'work-c2', term: 'tenacity', collectionId: 'work', sourceLanguageCode: 'en', cefrLevel: 'C2' },
@@ -278,8 +280,11 @@ describe('combined Library filters', () => {
     await fireEvent.press(view.getByRole('button', { name: 'Select all shown words' }));
     expect(view.getByRole('checkbox', { name: 'Select tenacity' }).props.accessibilityState.checked).toBe(true);
     expect(view.queryByRole('checkbox', { name: 'Select perspicacia' })).toBeNull();
+    await fireEvent.press(view.getByTestId('open-move-picker'));
+    await fireEvent.press(view.getByTestId('confirm-move-words'));
+    expect(mockMoveWordsToCollection).not.toHaveBeenCalled();
     await fireEvent.press(view.getByRole('button', { name: 'Move to Everyday' }));
-    await fireEvent.press(view.getByRole('button', { name: 'Move 3 words' }));
+    await fireEvent.press(view.getByTestId('confirm-move-words'));
     await waitFor(() => expect(mockMoveWordsToCollection).toHaveBeenCalledWith(['work-c2', 'work-a1', 'work-none'], 'everyday'));
     expect(view.queryByRole('checkbox', { name: 'Select tenacity' })).toBeNull();
   });
@@ -291,11 +296,41 @@ describe('combined Library filters', () => {
     await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
     await fireEvent.press(view.getByRole('button', { name: 'Select words' }));
     await fireEvent.press(view.getByRole('checkbox', { name: 'Select tenacity' }));
+    await fireEvent.press(view.getByTestId('open-move-picker'));
     await fireEvent.press(view.getByRole('button', { name: 'Move to Everyday' }));
-    await fireEvent.press(view.getByRole('button', { name: 'Move 1 word' }));
+    await fireEvent.press(view.getByTestId('confirm-move-words'));
     await waitFor(() => expect(Alert.alert).toHaveBeenCalledWith('Words could not be moved', 'Offline write failed'));
     expect(view.getByRole('checkbox', { name: 'Select tenacity' }).props.accessibilityState.checked).toBe(true);
     jest.restoreAllMocks();
+  });
+
+  it('keeps the word actions and card dimensions stable while selecting and cancelling', async () => {
+    const view = await render(<LibraryScreen/>);
+    await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+    const card = () => within(view.getByTestId('library-word-work-c2')).getByTestId('word-card');
+    const initialBorderWidth = StyleSheet.flatten(card().props.style).borderWidth;
+    await fireEvent.press(view.getByRole('button', { name: 'Select words' }));
+    view.getByRole('button', { name: 'Add a word' });
+    view.getByRole('button', { name: 'Bulk paste' });
+    expect(StyleSheet.flatten(card().props.style).borderWidth).toBe(initialBorderWidth);
+    within(card()).getByTestId('word-selection-check');
+    expect(view.queryByText('Tap to select')).toBeNull();
+    await fireEvent.press(view.getByRole('checkbox', { name: 'Select tenacity' }));
+    expect(StyleSheet.flatten(card().props.style).borderWidth).toBe(initialBorderWidth);
+    await fireEvent.press(view.getByRole('button', { name: 'Cancel selection' }));
+    expect(view.getByRole('button', { name: 'Open tenacity' })).toBeTruthy();
+    expect(StyleSheet.flatten(card().props.style).borderWidth).toBe(initialBorderWidth);
+  });
+
+  it('keeps selected words when the destination picker is dismissed', async () => {
+    const view = await render(<LibraryScreen/>);
+    await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Select words' }));
+    await fireEvent.press(view.getByRole('checkbox', { name: 'Select tenacity' }));
+    await fireEvent.press(view.getByTestId('open-move-picker'));
+    await fireEvent.press(within(view.getByTestId('move-picker')).getByRole('button', { name: 'Close collection picker' }));
+    expect(view.getByRole('checkbox', { name: 'Select tenacity' }).props.accessibilityState.checked).toBe(true);
+    expect(mockMoveWordsToCollection).not.toHaveBeenCalled();
   });
 
   it('starts every card in a collection even when the difficulty list is narrowed', async () => {

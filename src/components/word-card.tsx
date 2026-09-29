@@ -17,15 +17,48 @@ import { getNextReviewIntervalRange } from '@/features/learning/algorithm';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { radii, spacing } from '@/theme/tokens';
 
-export const WordCard = memo(function WordCard({ onReport, word, confirmations = 3, collectionName, onRate, onRetryTranslation, sessionRating, sessionSaving = false, translationStatus, compact = false, dense = false, showPronunciation = false, pronunciationActive = true, animateEntrance = true }:
-  { confirmations?: LearningConfirmationCount; onReport?(): void; word: Word; collectionName?: string; onRate?(rating: LearningRating): void; onRetryTranslation?(): void; sessionRating?: LearningRating; sessionSaving?: boolean; translationStatus?: 'loading' | 'error'; compact?: boolean; dense?: boolean; showPronunciation?: boolean; pronunciationActive?: boolean; animateEntrance?: boolean }) {
+export const WordCard = memo(function WordCard({ onReport, word, confirmations = 3, collectionName, onRate, onRetryTranslation, sessionRating, sessionSaving = false, translationStatus, compact = false, selectionMode = false, selected = false, dense = false, showPronunciation = false, pronunciationActive = true, animateEntrance = true }:
+  { confirmations?: LearningConfirmationCount; onReport?(): void; word: Word; collectionName?: string; onRate?(rating: LearningRating): void; onRetryTranslation?(): void; sessionRating?: LearningRating; sessionSaving?: boolean; translationStatus?: 'loading' | 'error'; compact?: boolean; selectionMode?: boolean; selected?: boolean; dense?: boolean; showPronunciation?: boolean; pronunciationActive?: boolean; animateEntrance?: boolean }) {
   const theme = useAppTheme();
   const [showTranslation, setShowTranslation] = useState(false);
   const nextReviewRange = getNextReviewIntervalRange(word);
   const hintLanguage = languageLabel(word.targetLanguageCode);
 
   if (compact) {
-    return <Animated.View testID="word-card" entering={FadeInDown.duration(320).reduceMotion(ReduceMotion.System)} style={[styles.compactCard, { backgroundColor: theme.cardSurface, shadowColor: theme.shadow }]}><LinearGradient colors={[`${theme.primary}D9`, `${theme.accent}B8`]} style={styles.compactAccent}/><View style={styles.compactTitle}><AppText variant="heading" style={styles.compactWord}>{word.term}</AppText><StateBadge state={word.state} /></View><AppText numberOfLines={2} style={{ color: theme.muted }}>{word.definition}</AppText><View style={styles.compactMeta}>{collectionName ? <CollectionBadge name={collectionName}/> : null}{word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}</View><ConfirmationProgress word={word} confirmations={confirmations}/><AppText variant="caption" style={{ color: theme.muted }}>Seen {word.viewCount}×</AppText></Animated.View>;
+    return <Animated.View
+      testID="word-card"
+      entering={FadeInDown.duration(320).reduceMotion(ReduceMotion.System)}
+      style={[styles.compactCard, {
+        backgroundColor: selectionMode && selected ? theme.primarySoft : theme.cardSurface,
+        borderColor: selectionMode && selected ? theme.primary : 'transparent',
+        shadowColor: theme.shadow,
+      }]}>
+      <LinearGradient colors={[`${theme.primary}D9`, `${theme.accent}B8`]} style={styles.compactAccent}/>
+      <View style={styles.compactTitle}>
+        <AppText variant="heading" style={styles.compactWord}>{word.term}</AppText>
+        <View style={styles.compactStatus}>
+          <View
+            accessibilityElementsHidden={selectionMode}
+            importantForAccessibility={selectionMode ? 'no-hide-descendants' : 'auto'}
+            style={selectionMode ? styles.hiddenStatus : undefined}>
+            <StateBadge state={word.state}/>
+          </View>
+          {selectionMode ? <View style={styles.selectionOverlay}>
+            <View testID="word-selection-check" style={[styles.selectionCheck, {
+              backgroundColor: selected ? theme.primary : theme.cardSurface,
+              borderColor: selected ? theme.primary : theme.border,
+            }]}>{selected ? <Ionicons name="checkmark" color={theme.onPrimary} size={15}/> : null}</View>
+          </View> : null}
+        </View>
+      </View>
+      <AppText numberOfLines={2} style={{ color: theme.muted }}>{word.definition}</AppText>
+      <View style={styles.compactMeta}>
+        {collectionName ? <CollectionBadge name={collectionName}/> : null}
+        {word.cefrLevel ? <CefrBadge level={word.cefrLevel}/> : null}
+      </View>
+      <ConfirmationProgress word={word} confirmations={confirmations}/>
+      <AppText variant="caption" style={{ color: theme.muted }}>Seen {word.viewCount}×</AppText>
+    </Animated.View>;
   }
 
   const rate = (rating: LearningRating) => {
@@ -133,7 +166,10 @@ const styles = StyleSheet.create({
   denseActionIcon: { width: 24, height: 24, borderRadius: 12 },
   actionLabel: { fontFamily: 'Inter_600SemiBold', textAlign: 'center' },
   actionDetail: { textAlign: 'center' },
-  compactCard: { borderRadius: radii.card, padding: spacing.lg, gap: spacing.sm, overflow: 'hidden', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.06, shadowRadius: 10, elevation: 1 },
+  compactCard: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.sm, overflow: 'hidden', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.06, shadowRadius: 10, elevation: 1 },
   compactAccent: { position: 'absolute', left: 0, top: 12, bottom: 12, width: 4, borderTopRightRadius: 4, borderBottomRightRadius: 4 },
   compactTitle: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm }, compactWord: { flex: 1 },
+  compactStatus: { justifyContent: 'center' }, hiddenStatus: { opacity: 0 },
+  selectionOverlay: { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, alignItems: 'flex-end', justifyContent: 'center' },
+  selectionCheck: { width: 24, height: 24, borderWidth: 1.5, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
 });

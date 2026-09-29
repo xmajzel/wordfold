@@ -1,7 +1,8 @@
 import { useCallback, useMemo, useState } from 'react';
-import { Alert, FlatList, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Alert, FlatList, Modal, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CollectionFormDisclosure } from '@/components/collection-form-disclosure';
 import { AppText } from '@/components/app-text';
@@ -31,6 +32,7 @@ type DifficultyFilter = 'all' | 'no-level' | CefrLevel;
 export default function LibraryScreen() {
   const theme = useAppTheme();
   const { width, fontScale } = useWindowDimensions();
+  const stackedSelectionToolbar = width < 360 || fontScale > 1.5;
   const {
     words, collections, activeCourse, activeCourseId, learningPreferences,
     createCollection, moveWordsToCollection, addRecommendedWords, wordCapacity, learningConfirmations,
@@ -41,6 +43,7 @@ export default function LibraryScreen() {
   const [selectingWords, setSelectingWords] = useState(false);
   const [selectedWordIds, setSelectedWordIds] = useState<Set<string>>(() => new Set());
   const [destinationCollectionId, setDestinationCollectionId] = useState('');
+  const [destinationPickerOpen, setDestinationPickerOpen] = useState(false);
   const [movingWords, setMovingWords] = useState(false);
   const [creatingCollection, setCreatingCollection] = useState(false);
   const { view } = useLocalSearchParams<{ view?: string }>();
@@ -108,6 +111,7 @@ export default function LibraryScreen() {
     setSelectingWords(false);
     setSelectedWordIds(new Set());
     setDestinationCollectionId('');
+    setDestinationPickerOpen(false);
   };
 
   const toggleWord = (id: string) => setSelectedWordIds((current) => {
@@ -157,7 +161,7 @@ export default function LibraryScreen() {
         keyExtractor={(word) => word.id}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.list}
+        contentContainerStyle={[styles.list, libraryView === 'my-words' && styles.myWordsList, libraryView === 'my-words' && stackedSelectionToolbar && styles.myWordsListStacked]}
         initialNumToRender={8}
         maxToRenderPerBatch={8}
         windowSize={7}
@@ -170,9 +174,7 @@ export default function LibraryScreen() {
           </View>
           {wordCapacity.shouldShowNotice ? <Pressable testID="word-capacity-notice" accessibilityRole="button" accessibilityLabel="Open unlimited words" onPress={() => router.push('/upgrade' as never)} style={[styles.capacityNotice, { backgroundColor: theme.primarySoft }]}><Ionicons name="infinite-outline" color={theme.primary} size={21}/><View style={styles.packText}><AppText variant="label">{wordCapacity.remaining === 0 ? 'Free library full' : `${wordCapacity.remaining} free ${wordCapacity.remaining === 1 ? 'word remains' : 'words remain'}`}</AppText><AppText variant="caption" style={{ color: theme.muted }}>Unlock unlimited words forever with one Google Play purchase.</AppText></View><Ionicons name="chevron-forward" color={theme.primary} size={20}/></Pressable> : null}
           {libraryView === 'my-words' ? <>
-            {selectingWords
-              ? <View style={styles.selectionHeader}><AppText variant="heading">{visibleSelectedWordIds.size} selected</AppText><Pressable accessibilityRole="button" accessibilityLabel="Cancel selection" disabled={movingWords} onPress={stopSelecting} style={styles.textAction}><AppText variant="label" style={{ color: theme.primary }}>Cancel</AppText></Pressable></View>
-              : <><View style={styles.actionRow}><View style={styles.action}><PrimaryButton label="Add a word" onPress={() => router.push({ pathname: '/word/new', params: collections.some((collection) => collection.id === selectedCollection) ? { collectionId: selectedCollection } : {} })} icon={<Ionicons name="add" color={theme.onPrimary} size={18}/>}/></View><View style={styles.action}><PrimaryButton label="Bulk paste" variant="secondary" onPress={() => router.push('/import')} icon={<Ionicons name="clipboard-outline" color={theme.primary} size={18}/>}/></View></View><PrimaryButton label="Select words" variant="secondary" onPress={() => setSelectingWords(true)} disabled={filteredWords.length === 0}/></>}
+            <View style={styles.actionRow}><View style={styles.action}><PrimaryButton label="Add a word" onPress={() => { stopSelecting(); router.push({ pathname: '/word/new', params: collections.some((collection) => collection.id === selectedCollection) ? { collectionId: selectedCollection } : {} }); }} icon={<Ionicons name="add" color={theme.onPrimary} size={18}/>}/></View><View style={styles.action}><PrimaryButton label="Bulk paste" variant="secondary" onPress={() => { stopSelecting(); router.push('/import'); }} icon={<Ionicons name="clipboard-outline" color={theme.primary} size={18}/>}/></View></View>
             <View>
               <View style={styles.sectionHeader}><AppText variant="heading">Collections</AppText><Pressable disabled={movingWords || creatingCollection} onPress={() => setShowCollectionForm((value) => !value)}><AppText variant="label" style={{ color: theme.primary }}>{showCollectionForm ? 'Cancel' : 'New collection'}</AppText></Pressable></View>
               <CollectionFormDisclosure open={showCollectionForm} gap={spacing.lg}><View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><FormField label="Collection name" value={collectionName} onChangeText={setCollectionName} placeholder="Project management" returnKeyType="done" onSubmitEditing={() => void addCollection()}/><PrimaryButton label="Create collection" onPress={() => void addCollection()} disabled={!collectionName.trim()} loading={creatingCollection}/></View></CollectionFormDisclosure>
@@ -198,12 +200,11 @@ export default function LibraryScreen() {
                 selected={selectedDifficulty} onSelect={(id) => { if (movingWords) return; setSelectedDifficulty(id); setSelectedWordIds(new Set()); }}
               />
             </View>
-            {selectingWords ? <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-              <View style={styles.selectionHeader}><AppText variant="label">Select words from this list</AppText><Pressable accessibilityRole="button" accessibilityLabel={visibleSelectedWordIds.size === filteredWords.length ? 'Clear selection' : 'Select all shown words'} disabled={movingWords || filteredWords.length === 0} onPress={() => setSelectedWordIds(visibleSelectedWordIds.size === filteredWords.length ? new Set() : new Set(filteredWords.map((word) => word.id)))} style={styles.textAction}><AppText variant="label" style={{ color: theme.primary }}>{visibleSelectedWordIds.size === filteredWords.length ? 'Clear all' : 'Select all'}</AppText></Pressable></View>
-              <AppText variant="label">Move to collection</AppText>
-              <SlidingFilterRow testID="move-destination" accessibilityLabel="Destination collection" itemRole="button" options={collections.map((collection) => ({ id: collection.id, label: collection.name, folder: true, accessibilityLabel: `Move to ${collection.name}` }))} selected={destinationCollectionId} onSelect={(id) => { if (!movingWords) setDestinationCollectionId(id); }}/>
-              <PrimaryButton label={`Move ${visibleSelectedWordIds.size} ${visibleSelectedWordIds.size === 1 ? 'word' : 'words'}`} onPress={() => void moveSelectedWords()} disabled={visibleSelectedWordIds.size === 0 || !destinationCollectionId} loading={movingWords}/>
-            </View> : canStudyCollection ? <PrimaryButton label={collectionWordCount === 0 ? 'Open empty collection' : `Study all ${collectionWordCount} ${collectionWordCount === 1 ? 'card' : 'cards'}`} variant="secondary" onPress={() => router.push({ pathname: '/collection/[id]', params: { id: selectedCollection } } as never)}/> : null}
+            {canStudyCollection ? <PrimaryButton label={collectionWordCount === 0 ? 'Open empty collection' : `Study all ${collectionWordCount} ${collectionWordCount === 1 ? 'card' : 'cards'}`} variant="secondary" disabled={selectingWords} onPress={() => router.push({ pathname: '/collection/[id]', params: { id: selectedCollection } } as never)}/> : null}
+            <View style={styles.wordsHeader}>
+              <AppText variant="heading">{selectingWords ? `${visibleSelectedWordIds.size} selected` : 'Words'}</AppText>
+              <Pressable accessibilityRole="button" accessibilityLabel={selectingWords ? 'Cancel selection' : 'Select words'} disabled={movingWords || (!selectingWords && filteredWords.length === 0)} onPress={selectingWords ? stopSelecting : () => setSelectingWords(true)} style={[styles.selectAction, { backgroundColor: theme.primarySoft, opacity: !selectingWords && filteredWords.length === 0 ? 0.45 : 1 }]}><Ionicons name={selectingWords ? 'close' : 'checkmark-circle-outline'} color={theme.primary} size={18}/><AppText variant="label" style={{ color: theme.primary }}>{selectingWords ? 'Cancel' : 'Select'}</AppText></Pressable>
+            </View>
           </> : <>
             <View style={styles.sectionHeader}><View style={styles.sectionCopy}><AppText variant="heading">{learnedLanguage} levels</AppText><AppText variant="caption" style={{ color: theme.muted }}>{catalogAvailability.total > 0
               ? 'Browse the built-in CEFR-aligned catalog and see how far you have come.'
@@ -234,10 +235,9 @@ export default function LibraryScreen() {
               ? 'Add a word here, or switch to Discover for recommendations.'
               : 'Add a Spanish word manually or bulk paste your own reviewed vocabulary.'}/>}
         </View> : null}
-        renderItem={({ item }) => <Pressable testID={`library-word-${item.id}`} accessibilityRole={selectingWords ? 'checkbox' : 'button'} accessibilityLabel={selectingWords ? `Select ${item.term}` : `Open ${item.term}`} accessibilityState={selectingWords ? { checked: visibleSelectedWordIds.has(item.id) } : undefined} disabled={selectingWords && movingWords} onPress={() => selectingWords ? toggleWord(item.id) : router.push(`/word/${item.id}`)} style={selectingWords && visibleSelectedWordIds.has(item.id) ? [styles.selectedWord, { borderColor: theme.primary }] : undefined}>
-          {selectingWords ? <View style={styles.selectionMark}><Ionicons name={visibleSelectedWordIds.has(item.id) ? 'checkbox' : 'square-outline'} color={theme.primary} size={25}/><AppText variant="caption" style={{ color: theme.muted }}>{visibleSelectedWordIds.has(item.id) ? 'Selected' : 'Tap to select'}</AppText></View> : null}
+        renderItem={({ item }) => <Pressable testID={`library-word-${item.id}`} accessibilityRole={selectingWords ? 'checkbox' : 'button'} accessibilityLabel={selectingWords ? `Select ${item.term}` : `Open ${item.term}`} accessibilityState={selectingWords ? { checked: visibleSelectedWordIds.has(item.id) } : undefined} disabled={selectingWords && movingWords} onPress={() => selectingWords ? toggleWord(item.id) : router.push(`/word/${item.id}`)}>
           {selectedCollection === 'other-vocabulary' ? <AppText variant="caption" style={{ color: theme.muted }}>{languageLabel(item.targetLanguageCode)} → {languageLabel(item.sourceLanguageCode)}</AppText> : null}
-          <WordCard word={item} confirmations={learningConfirmations} collectionName={collectionNames[item.collectionId]} compact/>
+          <WordCard word={item} confirmations={learningConfirmations} collectionName={collectionNames[item.collectionId]} compact selectionMode={selectingWords} selected={visibleSelectedWordIds.has(item.id)}/>
         </Pressable>}
         ListFooterComponent={libraryView === 'discover' ? <View style={styles.footer}>
           <View style={styles.sectionHeader}><View style={styles.sectionCopy}><AppText variant="heading">{activeCourse.capabilities.recommendations ? 'Recommended for you' : 'Spanish catalog status'}</AppText><AppText variant="caption" style={{ color: theme.muted }}>{activeCourse.capabilities.recommendations ? 'Small batches shaped by your level and interests.' : 'Manual and imported Spanish words are fully available now.'}</AppText></View></View>
@@ -252,6 +252,22 @@ export default function LibraryScreen() {
           </View> : <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><View style={styles.recommendationHeading}><View style={[styles.recommendationIcon, { backgroundColor: theme.primarySoft }]}><Ionicons name="options-outline" color={theme.primary} size={22}/></View><View style={styles.packText}><AppText variant="label">Make recommendations personal</AppText><AppText variant="caption" style={{ color: theme.muted }}>Choose at least one level and interest.</AppText></View></View><PrimaryButton label="Choose learning preferences" variant="secondary" onPress={() => router.push('/preferences' as never)}/></View>}
         </View> : null}
       />
+      {libraryView === 'my-words' && selectingWords ? <View style={[styles.selectionToolbar, stackedSelectionToolbar && styles.selectionToolbarStacked, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+        <Pressable accessibilityRole="button" accessibilityLabel={visibleSelectedWordIds.size === filteredWords.length ? 'Clear selection' : 'Select all shown words'} disabled={movingWords || filteredWords.length === 0} onPress={() => setSelectedWordIds(visibleSelectedWordIds.size === filteredWords.length ? new Set() : new Set(filteredWords.map((word) => word.id)))} style={styles.textAction}><AppText variant="label" style={{ color: theme.primary }}>{visibleSelectedWordIds.size === filteredWords.length ? 'Clear all' : 'Select all'}</AppText></Pressable>
+        <View style={[styles.moveAction, stackedSelectionToolbar && styles.moveActionStacked]}><PrimaryButton testID="open-move-picker" label={`Move ${visibleSelectedWordIds.size} ${visibleSelectedWordIds.size === 1 ? 'word' : 'words'}`} onPress={() => setDestinationPickerOpen(true)} disabled={visibleSelectedWordIds.size === 0 || collections.length === 0 || movingWords}/></View>
+      </View> : null}
+      <Modal visible={destinationPickerOpen} transparent animationType="slide" onRequestClose={() => { if (!movingWords) setDestinationPickerOpen(false); }}>
+        <View style={styles.pickerOverlay}>
+          <Pressable accessible={false} disabled={movingWords} onPress={() => setDestinationPickerOpen(false)} style={StyleSheet.absoluteFill}/>
+          <SafeAreaView edges={['bottom']} testID="move-picker" style={[styles.pickerSheet, { backgroundColor: theme.surface }]}>
+            <View style={styles.pickerHeader}><AppText variant="heading">Move to collection</AppText><Pressable accessibilityRole="button" accessibilityLabel="Close collection picker" disabled={movingWords} onPress={() => setDestinationPickerOpen(false)} style={styles.textAction}><Ionicons name="close" color={theme.primary} size={24}/></Pressable></View>
+            <ScrollView testID="move-destination" style={styles.pickerList} contentContainerStyle={styles.pickerOptions}>
+              {collections.map((collection) => <Pressable key={collection.id} accessibilityRole="button" accessibilityLabel={`Move to ${collection.name}`} accessibilityState={{ selected: destinationCollectionId === collection.id }} disabled={movingWords} onPress={() => setDestinationCollectionId(collection.id)} style={[styles.pickerOption, { borderColor: destinationCollectionId === collection.id ? theme.primary : theme.border, backgroundColor: destinationCollectionId === collection.id ? theme.primarySoft : theme.surface }]}><Ionicons name="folder-outline" color={theme.primary} size={20}/><AppText variant="label" style={styles.pickerOptionLabel}>{collection.name}</AppText>{destinationCollectionId === collection.id ? <Ionicons name="checkmark-circle" color={theme.primary} size={22}/> : null}</Pressable>)}
+            </ScrollView>
+            <PrimaryButton testID="confirm-move-words" label={`Move ${visibleSelectedWordIds.size} ${visibleSelectedWordIds.size === 1 ? 'word' : 'words'}`} onPress={() => void moveSelectedWords()} disabled={!destinationCollectionId} loading={movingWords}/>
+          </SafeAreaView>
+        </View>
+      </Modal>
     </Screen>
   );
 }
@@ -273,11 +289,13 @@ function LevelProgressBar({ progress }: { progress: ReturnType<typeof calculateC
 }
 
 const styles = StyleSheet.create({
-  screen: { paddingHorizontal: 0 }, list: { paddingHorizontal: spacing.lg, paddingBottom: spacing.xxxl }, headerContent: { gap: spacing.lg, marginBottom: spacing.sm }, separator: { height: spacing.sm }, footer: { gap: spacing.lg, marginTop: spacing.lg },
+  screen: { paddingHorizontal: 0 }, list: { paddingHorizontal: spacing.lg, paddingBottom: spacing.xxxl }, myWordsList: { paddingBottom: 96 }, myWordsListStacked: { paddingBottom: 160 }, headerContent: { gap: spacing.lg, marginBottom: spacing.sm }, separator: { height: spacing.sm }, footer: { gap: spacing.lg, marginTop: spacing.lg },
   header: { minHeight: 76, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: spacing.sm }, headerCopy: { flex: 1 }, iconButton: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
   viewTabs: { minHeight: 52, flexDirection: 'row', borderRadius: radii.control, padding: spacing.xs, gap: spacing.xs }, viewTab: { flex: 1, minHeight: 44, borderWidth: 1, borderRadius: radii.control, alignItems: 'center', justifyContent: 'center' },
   actionRow: { flexDirection: 'row', gap: spacing.sm }, action: { flex: 1 }, sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: spacing.sm }, sectionCopy: { flex: 1 },
-  selectionHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.sm }, textAction: { minHeight: 44, justifyContent: 'center', paddingHorizontal: spacing.sm }, selectionMark: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs, paddingVertical: spacing.xs }, selectedWord: { borderWidth: 2, borderRadius: radii.card },
+  wordsHeader: { minHeight: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.sm }, selectAction: { minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: spacing.xs, borderRadius: radii.pill, paddingHorizontal: spacing.md }, textAction: { minHeight: 44, justifyContent: 'center', paddingHorizontal: spacing.sm },
+  selectionToolbar: { position: 'absolute', left: 0, right: 0, bottom: 0, minHeight: 72, flexDirection: 'row', alignItems: 'center', gap: spacing.sm, paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, borderTopWidth: 1 }, selectionToolbarStacked: { flexDirection: 'column', alignItems: 'stretch' }, moveAction: { flex: 1 }, moveActionStacked: { flex: 0 },
+  pickerOverlay: { flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0, 0, 0, 0.5)' }, pickerSheet: { maxHeight: '75%', borderTopLeftRadius: radii.sheet, borderTopRightRadius: radii.sheet, padding: spacing.lg, gap: spacing.md }, pickerHeader: { minHeight: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }, pickerList: { flexGrow: 0 }, pickerOptions: { gap: spacing.sm, paddingBottom: spacing.sm }, pickerOption: { minHeight: 52, flexDirection: 'row', alignItems: 'center', gap: spacing.sm, borderWidth: 1, borderRadius: radii.control, paddingHorizontal: spacing.md }, pickerOptionLabel: { flex: 1 },
   filterScroll: { flexGrow: 0 },
   difficultyFilters: { gap: spacing.sm },
   panel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.lg }, empty: { minHeight: 220 },
