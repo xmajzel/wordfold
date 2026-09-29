@@ -5,7 +5,7 @@ const requestId = '11111111-1111-4111-8111-111111111111';
 const suggestion = { definition: 'Determination despite difficulties.', translation: 'húževnatosť', example: 'Her tenacity helped her finish a very difficult project.', partOfSpeech: 'noun' };
 const request = (body: unknown) => new Request('https://example.test', { method: 'POST', body: JSON.stringify(body) });
 function deps() {
-  return { userId: 'user', openaiKey: 'test-key', fetch: jest.fn(async (_url: RequestInfo | URL, _init?: RequestInit) => Response.json({ status: 'completed', model: 'gpt-6-sol', usage: { input_tokens: 200, output_tokens: 80 },
+  return { userId: 'user', openaiKey: 'test-key', fetch: jest.fn(async (_url: RequestInfo | URL, _init?: RequestInit) => Response.json({ status: 'completed', model: 'gpt-6.1-sol', usage: { input_tokens: 200, output_tokens: 80 },
     output: [{ content: [{ type: 'output_text', text: JSON.stringify(suggestion) }] }] })),
   rpc: jest.fn(async (name: string, args: Record<string, unknown>): Promise<Record<string, unknown>> => name === 'ai_reserve' ? { status: 'reserved', balance: 9 }
     : { status: args.p_result ? 'completed' : 'failed', suggestion: args.p_result, balance: args.p_result ? 9 : 10 }) };
@@ -15,7 +15,12 @@ it('reserves before generating, validates the output, and commits the complete c
   expect(await response.json()).toMatchObject({ status: 'completed', suggestion, balance: 9 });
   expect(d.rpc.mock.calls[0]).toEqual(['ai_reserve', { p_user_id: 'user', p_request_id: requestId, p_input: input }]);
   const body = JSON.parse(d.fetch.mock.calls[0]?.[1]?.body as string);
-  expect(body.model).toBe('gpt-6-sol'); expect(body.store).toBe(false);
+  expect(body.model).toBe('gpt-6.1-sol'); expect(body.store).toBe(false);
+  expect(body.reasoning).toEqual({ effort: 'low' });
+  expect(body.max_output_tokens).toBe(4096);
+  expect(d.rpc).toHaveBeenLastCalledWith('ai_finish', expect.objectContaining({
+    p_usage: { model: 'gpt-6.1-sol', inputTokens: 200, outputTokens: 80 },
+  }));
 });
 it.each(['pending', 'completed', 'failed'])('does not call OpenAI again for an existing %s request', async (status) => {
   const d = deps(); d.rpc.mockResolvedValueOnce({ status, balance: 9, suggestion });
@@ -36,6 +41,14 @@ it('refunds an upstream failure', async () => {
 it('refunds malformed model output', async () => {
   const d = deps(); d.fetch.mockResolvedValueOnce(Response.json({ status: 'completed', output: [] }));
   expect(await (await handleAiWord(request({ action: 'generate', requestId, input }), d)).json()).toMatchObject({ status: 'failed' });
+});
+it('refunds a response that exhausts its reasoning and output budget', async () => {
+  const d = deps(); d.fetch.mockResolvedValueOnce(Response.json({ status: 'incomplete',
+    incomplete_details: { reason: 'max_output_tokens' },
+    output: [{ content: [{ type: 'output_text', text: JSON.stringify(suggestion) }] }] }));
+  expect(await (await handleAiWord(request({ action: 'generate', requestId, input }), d)).json())
+    .toMatchObject({ status: 'failed', balance: 10 });
+  expect(d.rpc).toHaveBeenLastCalledWith('ai_finish', expect.objectContaining({ p_result: null, p_usage: null }));
 });
 it('does not refund an uncertain successful commit', async () => {
   const d = deps(); d.rpc.mockResolvedValueOnce({ status: 'reserved' }).mockRejectedValueOnce(new Error('connection lost'));
