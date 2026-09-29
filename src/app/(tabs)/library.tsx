@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useState } from 'react';
-import { Alert, FlatList, Modal, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { Alert, FlatList, Keyboard, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -44,8 +44,11 @@ export default function LibraryScreen() {
   const [selectedWordIds, setSelectedWordIds] = useState<Set<string>>(() => new Set());
   const [destinationCollectionId, setDestinationCollectionId] = useState('');
   const [destinationPickerOpen, setDestinationPickerOpen] = useState(false);
+  const [showDestinationCollectionForm, setShowDestinationCollectionForm] = useState(false);
+  const [destinationCollectionName, setDestinationCollectionName] = useState('');
   const [movingWords, setMovingWords] = useState(false);
   const [creatingCollection, setCreatingCollection] = useState(false);
+  const collectionCreationPending = useRef(false);
   const { view } = useLocalSearchParams<{ view?: string }>();
   useFocusEffect(useCallback(() => {
     if (view !== 'my-words') return;
@@ -95,16 +98,34 @@ export default function LibraryScreen() {
     ? Math.min(10, recommendationPreview.length)
     : Math.min(10, recommendationPreview.length, wordCapacity.remaining);
 
-  const addCollection = async () => {
-    if (!collectionName.trim() || creatingCollection) return;
+  const addCollection = async (fromPicker = false) => {
+    const name = (fromPicker ? destinationCollectionName : collectionName).trim();
+    if (!name || collectionCreationPending.current || movingWords) return;
+    collectionCreationPending.current = true;
     setCreatingCollection(true);
     try {
-      const id = await createCollection(collectionName, '#D8902F');
+      const id = await createCollection(name, '#D8902F');
       if (selectingWords) setDestinationCollectionId(id);
-      setCollectionName(''); setShowCollectionForm(false);
+      if (fromPicker) {
+        setDestinationCollectionName('');
+        setShowDestinationCollectionForm(false);
+      } else {
+        setCollectionName(''); setShowCollectionForm(false);
+      }
     } catch (error) {
       Alert.alert('Collection could not be created', error instanceof Error ? error.message : 'Please try again.');
-    } finally { setCreatingCollection(false); }
+    } finally {
+      collectionCreationPending.current = false;
+      setCreatingCollection(false);
+    }
+  };
+
+  const closeDestinationPicker = () => {
+    if (movingWords || collectionCreationPending.current) return;
+    Keyboard.dismiss();
+    setDestinationPickerOpen(false);
+    setShowDestinationCollectionForm(false);
+    setDestinationCollectionName('');
   };
 
   const stopSelecting = () => {
@@ -112,6 +133,8 @@ export default function LibraryScreen() {
     setSelectedWordIds(new Set());
     setDestinationCollectionId('');
     setDestinationPickerOpen(false);
+    setShowDestinationCollectionForm(false);
+    setDestinationCollectionName('');
   };
 
   const toggleWord = (id: string) => setSelectedWordIds((current) => {
@@ -123,7 +146,7 @@ export default function LibraryScreen() {
   });
 
   const moveSelectedWords = async () => {
-    if (!destinationCollectionId || visibleSelectedWordIds.size === 0 || movingWords) return;
+    if (!destinationCollectionId || visibleSelectedWordIds.size === 0 || movingWords || collectionCreationPending.current || showDestinationCollectionForm) return;
     setMovingWords(true);
     try {
       await moveWordsToCollection([...visibleSelectedWordIds], destinationCollectionId);
@@ -254,19 +277,27 @@ export default function LibraryScreen() {
       />
       {libraryView === 'my-words' && selectingWords ? <View style={[styles.selectionToolbar, stackedSelectionToolbar && styles.selectionToolbarStacked, { backgroundColor: theme.surface, borderColor: theme.border }]}>
         <Pressable accessibilityRole="button" accessibilityLabel={visibleSelectedWordIds.size === filteredWords.length ? 'Clear selection' : 'Select all shown words'} disabled={movingWords || filteredWords.length === 0} onPress={() => setSelectedWordIds(visibleSelectedWordIds.size === filteredWords.length ? new Set() : new Set(filteredWords.map((word) => word.id)))} style={styles.textAction}><AppText variant="label" style={{ color: theme.primary }}>{visibleSelectedWordIds.size === filteredWords.length ? 'Clear all' : 'Select all'}</AppText></Pressable>
-        <View style={[styles.moveAction, stackedSelectionToolbar && styles.moveActionStacked]}><PrimaryButton testID="open-move-picker" label={`Move ${visibleSelectedWordIds.size} ${visibleSelectedWordIds.size === 1 ? 'word' : 'words'}`} onPress={() => setDestinationPickerOpen(true)} disabled={visibleSelectedWordIds.size === 0 || collections.length === 0 || movingWords}/></View>
+        <View style={[styles.moveAction, stackedSelectionToolbar && styles.moveActionStacked]}><PrimaryButton testID="open-move-picker" label={`Move ${visibleSelectedWordIds.size} ${visibleSelectedWordIds.size === 1 ? 'word' : 'words'}`} onPress={() => setDestinationPickerOpen(true)} disabled={visibleSelectedWordIds.size === 0 || movingWords || creatingCollection}/></View>
       </View> : null}
-      <Modal visible={destinationPickerOpen} transparent animationType="slide" onRequestClose={() => { if (!movingWords) setDestinationPickerOpen(false); }}>
-        <View style={styles.pickerOverlay}>
-          <Pressable accessible={false} disabled={movingWords} onPress={() => setDestinationPickerOpen(false)} style={StyleSheet.absoluteFill}/>
+      <Modal visible={destinationPickerOpen} transparent animationType="slide" onRequestClose={closeDestinationPicker}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.pickerOverlay}>
+          <Pressable accessible={false} disabled={movingWords || creatingCollection} onPress={closeDestinationPicker} style={StyleSheet.absoluteFill}/>
           <SafeAreaView edges={['bottom']} testID="move-picker" style={[styles.pickerSheet, { backgroundColor: theme.surface }]}>
-            <View style={styles.pickerHeader}><AppText variant="heading">Move to collection</AppText><Pressable accessibilityRole="button" accessibilityLabel="Close collection picker" disabled={movingWords} onPress={() => setDestinationPickerOpen(false)} style={styles.textAction}><Ionicons name="close" color={theme.primary} size={24}/></Pressable></View>
-            <ScrollView testID="move-destination" style={styles.pickerList} contentContainerStyle={styles.pickerOptions}>
-              {collections.map((collection) => <Pressable key={collection.id} accessibilityRole="button" accessibilityLabel={`Move to ${collection.name}`} accessibilityState={{ selected: destinationCollectionId === collection.id }} disabled={movingWords} onPress={() => setDestinationCollectionId(collection.id)} style={[styles.pickerOption, { borderColor: destinationCollectionId === collection.id ? theme.primary : theme.border, backgroundColor: destinationCollectionId === collection.id ? theme.primarySoft : theme.surface }]}><Ionicons name="folder-outline" color={theme.primary} size={20}/><AppText variant="label" style={styles.pickerOptionLabel}>{collection.name}</AppText>{destinationCollectionId === collection.id ? <Ionicons name="checkmark-circle" color={theme.primary} size={22}/> : null}</Pressable>)}
+            <View style={styles.pickerHeader}><AppText variant="heading" style={styles.pickerOptionLabel}>Move to collection</AppText><Pressable accessibilityRole="button" accessibilityLabel="Close collection picker" disabled={movingWords || creatingCollection} onPress={closeDestinationPicker} style={styles.textAction}><Ionicons name="close" color={theme.primary} size={24}/></Pressable></View>
+            <ScrollView testID="move-destination" keyboardShouldPersistTaps="handled" style={styles.pickerList} contentContainerStyle={styles.pickerOptions}>
+              <View>
+                <PrimaryButton label={showDestinationCollectionForm ? 'Cancel new collection' : 'New collection'} variant="secondary" disabled={movingWords || creatingCollection} icon={<Ionicons name={showDestinationCollectionForm ? 'close' : 'add'} color={theme.primary} size={20}/>} onPress={() => { setShowDestinationCollectionForm((value) => !value); setDestinationCollectionName(''); }}/>
+                <CollectionFormDisclosure open={showDestinationCollectionForm}><View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+                  <FormField label="Collection name" value={destinationCollectionName} onChangeText={setDestinationCollectionName} editable={!creatingCollection} placeholder="Project management" returnKeyType="done" onSubmitEditing={() => void addCollection(true)}/>
+                  <PrimaryButton label="Create collection" variant="secondary" disabled={!destinationCollectionName.trim() || movingWords} loading={creatingCollection} onPress={() => void addCollection(true)}/>
+                  <AppText variant="caption" style={{ color: theme.muted }}>Create this collection or cancel to continue moving your words.</AppText>
+                </View></CollectionFormDisclosure>
+              </View>
+              {collections.map((collection) => <Pressable key={collection.id} accessibilityRole="button" accessibilityLabel={`Move to ${collection.name}`} accessibilityState={{ selected: destinationCollectionId === collection.id }} disabled={movingWords || creatingCollection} onPress={() => setDestinationCollectionId(collection.id)} style={[styles.pickerOption, { borderColor: destinationCollectionId === collection.id ? theme.primary : theme.border, backgroundColor: destinationCollectionId === collection.id ? theme.primarySoft : theme.surface }]}><Ionicons name="folder-outline" color={theme.primary} size={20}/><AppText variant="label" style={styles.pickerOptionLabel}>{collection.name}</AppText>{destinationCollectionId === collection.id ? <Ionicons name="checkmark-circle" color={theme.primary} size={22}/> : null}</Pressable>)}
             </ScrollView>
-            <PrimaryButton testID="confirm-move-words" label={`Move ${visibleSelectedWordIds.size} ${visibleSelectedWordIds.size === 1 ? 'word' : 'words'}`} onPress={() => void moveSelectedWords()} disabled={!destinationCollectionId} loading={movingWords}/>
+            <PrimaryButton testID="confirm-move-words" label={`Move ${visibleSelectedWordIds.size} ${visibleSelectedWordIds.size === 1 ? 'word' : 'words'}`} onPress={() => void moveSelectedWords()} disabled={!destinationCollectionId || creatingCollection || showDestinationCollectionForm} loading={movingWords}/>
           </SafeAreaView>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </Screen>
   );

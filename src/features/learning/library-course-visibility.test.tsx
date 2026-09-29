@@ -21,6 +21,7 @@ let mockCollections = [{ id: 'my-words', name: 'My words' }];
 let mockPreferences: LearningPreferences = { levels: [], topics: [] };
 const mockAddRecommendedWords = jest.fn(async (..._args: unknown[]) => 10);
 const mockMoveWordsToCollection = jest.fn(async (_ids: string[], _collectionId: string) => undefined);
+const mockCreateCollection = jest.fn(async (_name: string, _color: string) => 'collection');
 let mockActiveCourseId: 'en-sk' | 'es-sk' = 'en-sk';
 
 let mockRouteParams: { view?: string } = {};
@@ -29,7 +30,11 @@ jest.mock('expo-router', () => ({
   useLocalSearchParams: () => mockRouteParams,
   useFocusEffect: (callback: () => void) => jest.requireActual('react').useEffect(callback, [callback]),
 }));
-beforeEach(() => { mockRouteParams = {}; });
+beforeEach(() => {
+  mockRouteParams = {};
+  mockCreateCollection.mockReset();
+  mockCreateCollection.mockResolvedValue('collection');
+});
 it('opens My words after import and still allows switching to Discover', async () => {
   mockRouteParams = { view: 'my-words' };
   const view = await render(<LibraryScreen/>);
@@ -86,7 +91,7 @@ jest.mock('@/providers/app-data-provider', () => ({
     },
     learningPreferences: mockPreferences,
     wordCapacity: { remaining: 99, shouldShowNotice: false },
-    createCollection: jest.fn(async () => 'collection'),
+    createCollection: mockCreateCollection,
     moveWordsToCollection: mockMoveWordsToCollection,
     addRecommendedWords: mockAddRecommendedWords,
   }),
@@ -302,6 +307,120 @@ describe('combined Library filters', () => {
     await waitFor(() => expect(Alert.alert).toHaveBeenCalledWith('Words could not be moved', 'Offline write failed'));
     expect(view.getByRole('checkbox', { name: 'Select tenacity' }).props.accessibilityState.checked).toBe(true);
     jest.restoreAllMocks();
+  });
+
+  it('creates and selects a new destination before moving only the selected words', async () => {
+    mockCreateCollection.mockImplementationOnce(async (name) => {
+      mockCollections = [...mockCollections, { id: 'new-collection', name }];
+      return 'new-collection';
+    });
+    const view = await render(<LibraryScreen/>);
+    await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Select words' }));
+    await fireEvent.press(view.getByRole('checkbox', { name: 'Select tenacity' }));
+    await fireEvent.press(view.getByRole('checkbox', { name: 'Select desk' }));
+    await fireEvent.press(view.getByTestId('open-move-picker'));
+    const picker = within(view.getByTestId('move-picker'));
+    await fireEvent.press(picker.getByRole('button', { name: 'New collection' }));
+    await fireEvent.changeText(picker.getByLabelText('Collection name'), '  C1 lessons  ');
+    await fireEvent.press(picker.getByRole('button', { name: 'Create collection' }));
+    await waitFor(() => expect(mockCreateCollection).toHaveBeenCalledWith('C1 lessons', '#D8902F'));
+    expect(picker.getByRole('button', { name: 'Move to C1 lessons' }).props.accessibilityState.selected).toBe(true);
+    expect(picker.queryByLabelText('Collection name')).toBeNull();
+    expect(mockMoveWordsToCollection).not.toHaveBeenCalled();
+    await fireEvent.press(picker.getByRole('button', { name: 'Move 2 words' }));
+    await waitFor(() => expect(mockMoveWordsToCollection).toHaveBeenCalledWith(['work-c2', 'work-a1'], 'new-collection'));
+    expect(view.queryByTestId('move-picker')).toBeNull();
+  });
+
+  it('rejects blank names and cancels creation without losing the words or existing destination', async () => {
+    const view = await render(<LibraryScreen/>);
+    await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Select words' }));
+    await fireEvent.press(view.getByRole('checkbox', { name: 'Select tenacity' }));
+    await fireEvent.press(view.getByTestId('open-move-picker'));
+    const picker = within(view.getByTestId('move-picker'));
+    await fireEvent.press(picker.getByRole('button', { name: 'Move to Everyday' }));
+    await fireEvent.press(picker.getByRole('button', { name: 'New collection' }));
+    await fireEvent.changeText(picker.getByLabelText('Collection name'), '   ');
+    await fireEvent.press(picker.getByRole('button', { name: 'Create collection' }));
+    await fireEvent(picker.getByLabelText('Collection name'), 'submitEditing');
+    await fireEvent.press(view.getByTestId('confirm-move-words'));
+    expect(mockCreateCollection).not.toHaveBeenCalled();
+    expect(mockMoveWordsToCollection).not.toHaveBeenCalled();
+    await fireEvent.press(picker.getByRole('button', { name: 'Cancel new collection' }));
+    expect(picker.queryByLabelText('Collection name')).toBeNull();
+    expect(view.getByRole('checkbox', { name: 'Select tenacity' }).props.accessibilityState.checked).toBe(true);
+    await fireEvent.press(view.getByTestId('confirm-move-words'));
+    await waitFor(() => expect(mockMoveWordsToCollection).toHaveBeenCalledWith(['work-c2'], 'everyday'));
+  });
+
+  it('retains the collection name and words after failed creation so the user can retry', async () => {
+    mockCreateCollection.mockRejectedValueOnce(new Error('Offline write failed'));
+    jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
+    const view = await render(<LibraryScreen/>);
+    await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Select words' }));
+    await fireEvent.press(view.getByRole('checkbox', { name: 'Select tenacity' }));
+    await fireEvent.press(view.getByTestId('open-move-picker'));
+    const picker = within(view.getByTestId('move-picker'));
+    await fireEvent.press(picker.getByRole('button', { name: 'New collection' }));
+    await fireEvent.changeText(picker.getByLabelText('Collection name'), 'Lessons');
+    await fireEvent.press(picker.getByRole('button', { name: 'Create collection' }));
+    await waitFor(() => expect(Alert.alert).toHaveBeenCalledWith('Collection could not be created', 'Offline write failed'));
+    expect(picker.getByLabelText('Collection name').props.value).toBe('Lessons');
+    expect(view.getByRole('checkbox', { name: 'Select tenacity' }).props.accessibilityState.checked).toBe(true);
+    expect(mockMoveWordsToCollection).not.toHaveBeenCalled();
+    await fireEvent.press(picker.getByRole('button', { name: 'Create collection' }));
+    await waitFor(() => expect(mockCreateCollection).toHaveBeenCalledTimes(2));
+    expect(picker.queryByLabelText('Collection name')).toBeNull();
+    await fireEvent.press(view.getByTestId('confirm-move-words'));
+    await waitFor(() => expect(mockMoveWordsToCollection).toHaveBeenCalledWith(['work-c2'], 'collection'));
+    jest.restoreAllMocks();
+  });
+
+  it('blocks duplicate creation and picker dismissal while creation is pending', async () => {
+    let finishCreation!: (id: string) => void;
+    mockCreateCollection.mockImplementationOnce(() => new Promise((resolve) => { finishCreation = resolve; }));
+    const view = await render(<LibraryScreen/>);
+    await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Select words' }));
+    await fireEvent.press(view.getByRole('checkbox', { name: 'Select tenacity' }));
+    await fireEvent.press(view.getByTestId('open-move-picker'));
+    const picker = within(view.getByTestId('move-picker'));
+    await fireEvent.press(picker.getByRole('button', { name: 'New collection' }));
+    await fireEvent.changeText(picker.getByLabelText('Collection name'), 'Lessons');
+    await fireEvent(picker.getByLabelText('Collection name'), 'submitEditing');
+    await fireEvent(picker.getByLabelText('Collection name'), 'submitEditing');
+    await fireEvent.press(picker.getByRole('button', { name: 'Create collection' }));
+    await fireEvent.press(picker.getByRole('button', { name: 'Close collection picker' }));
+    await fireEvent.press(picker.getByRole('button', { name: 'Cancel new collection' }));
+    expect(mockCreateCollection).toHaveBeenCalledTimes(1);
+    expect(picker.getByLabelText('Collection name').props.editable).toBe(false);
+    expect(mockMoveWordsToCollection).not.toHaveBeenCalled();
+    finishCreation('collection');
+    await waitFor(() => expect(picker.queryByLabelText('Collection name')).toBeNull());
+  });
+
+  it('allows creating a destination with no existing collections and clears its draft on dismissal', async () => {
+    mockCollections = [];
+    const view = await render(<LibraryScreen/>);
+    await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Select words' }));
+    await fireEvent.press(view.getByRole('checkbox', { name: 'Select tenacity' }));
+    await fireEvent.press(view.getByTestId('open-move-picker'));
+    const picker = within(view.getByTestId('move-picker'));
+    await fireEvent.press(picker.getByRole('button', { name: 'New collection' }));
+    await fireEvent.changeText(picker.getByLabelText('Collection name'), 'Draft');
+    await fireEvent.press(picker.getByRole('button', { name: 'Close collection picker' }));
+    expect(view.queryByTestId('move-picker')).toBeNull();
+    expect(view.getByRole('checkbox', { name: 'Select tenacity' }).props.accessibilityState.checked).toBe(true);
+    await fireEvent.press(view.getByTestId('open-move-picker'));
+    const reopenedPicker = within(view.getByTestId('move-picker'));
+    expect(reopenedPicker.queryByLabelText('Collection name')).toBeNull();
+    await fireEvent.press(reopenedPicker.getByRole('button', { name: 'New collection' }));
+    expect(reopenedPicker.getByLabelText('Collection name').props.value).toBe('');
+    expect(mockCreateCollection).not.toHaveBeenCalled();
   });
 
   it('keeps the word actions and card dimensions stable while selecting and cancelling', async () => {
