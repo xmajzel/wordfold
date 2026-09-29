@@ -105,6 +105,13 @@ describe('Word play storage', () => {
     await record(restart);
     expect(sql.prepare('SELECT known_streak FROM words').get()?.known_streak).toBe(1);
     expect((await stats())['word-1'].returnedToLearning).toBe(1);
+    const learningBefore = sql.prepare('SELECT * FROM words').get();
+    await record({ ...event, id: 'learning-seen', sessionId: 'learning-session' });
+    await record({ ...event, id: 'learning-missed', sessionId: 'learning-session', type: 'game_missed' });
+    await record({ ...event, id: 'learning-answered', sessionId: 'learning-session', type: 'game_answered' });
+    expect(sql.prepare('SELECT * FROM words').get()).toEqual(learningBefore);
+    expect((await stats())['word-1']).toMatchObject({ gamesPlayed: 2, needsPractice: 2, returnedToLearning: 1 });
+    await expect(record({ ...event, id: 'learning-relearned', sessionId: 'learning-session', type: 'game_relearned' })).rejects.toThrow('already in regular practice');
     await expect(record({ ...event, id: 'other', sessionId: 'other', courseId: 'es-sk' })).rejects.toThrow('no longer available');
     sql.close();
   });

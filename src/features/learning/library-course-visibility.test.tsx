@@ -42,8 +42,8 @@ it('opens an empty collection to explain why it has no cards', async () => {
   const view = await render(<LibraryScreen/>);
   await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
   await fireEvent.press(view.getByRole('button', { name: 'Collection: My words' }));
-  await fireEvent.press(view.getByRole('button', { name: 'Open empty collection' }));
-  expect(router.push).toHaveBeenLastCalledWith({ pathname: '/collection/[id]', params: { id: 'my-words' } });
+  await fireEvent.press(view.getByRole('button', { name: 'Practise in Play · 0 words' }));
+  expect(router.navigate).toHaveBeenLastCalledWith({ pathname: '/(tabs)/play', params: { filter: 'collection:my-words', activity: 'cards', status: 'all', length: 'all', setup: expect.any(String) } });
 });
 jest.mock('expo-haptics', () => ({ selectionAsync: jest.fn(async () => undefined) }));
 jest.mock('react-native-reanimated', () => {
@@ -338,7 +338,7 @@ describe('combined Library filters', () => {
     await fireEvent.press(view.getByRole('tab', { name: 'Show My words' }));
     await fireEvent.press(view.getByRole('button', { name: 'Collection: Work' }));
     await fireEvent.press(view.getByRole('button', { name: 'Difficulty: C2' }));
-    await fireEvent.press(view.getByRole('button', { name: 'Study all 3 cards' }));
-    expect(router.push).toHaveBeenLastCalledWith({ pathname: '/collection/[id]', params: { id: 'work' } });
+    await fireEvent.press(view.getByRole('button', { name: 'Practise in Play · 3 words' }));
+    expect(router.navigate).toHaveBeenLastCalledWith({ pathname: '/(tabs)/play', params: { filter: 'collection:work', activity: 'cards', status: 'all', length: 'all', setup: expect.any(String) } });
   });
 });

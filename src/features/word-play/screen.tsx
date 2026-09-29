@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -10,8 +10,6 @@ import Animated, { FadeInDown, ReduceMotion } from 'react-native-reanimated';
 import { AppText } from '@/components/app-text';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
-import { cefrLevels } from '@/data/cefr-levels';
-import { filterWordsByLearningCategory } from '@/features/learning/algorithm';
 import { wordBelongsToCourse, type CourseId } from '@/domain/courses';
 import type { LearningFilter, Word } from '@/domain/types';
 import { useAppTheme } from '@/hooks/use-app-theme';
@@ -21,32 +19,34 @@ import { MatchingRound } from './matching-round';
 import { SentenceRound } from './sentence-round';
 import { RecallFlashcard } from './recall-flashcard';
 import { WordPlaySaveQueue } from './save-queue';
-import { buildWordPlaySession, isWordPlayUnlocked, WORD_PLAY_SIZE, type WordPlayEvent, type WordPlayEventType, type WordPlayMode, type WordPlayRound } from './model';
+import { buildWordPlaySession, defaultPlayConfig, playSelection, type PlayConfig, type WordPlayEvent, type WordPlayEventType, type WordPlayMode, type WordPlayRound } from './model';
 
-export default function WordPlayScreen({ inTab = false, autoStart = false, initialHaptics = false, initialFilter = 'all' }: {
-  inTab?: boolean; autoStart?: boolean; initialHaptics?: boolean; initialFilter?: LearningFilter;
+import { PlaySetup } from './setup';
+import { WordCardsSession } from './word-cards-session';
+
+export default function WordPlayScreen({ inTab = false, autoStart = false, initialHaptics = false, initialFilter = 'all', initialConfig }: {
+  inTab?: boolean; autoStart?: boolean; initialHaptics?: boolean; initialFilter?: LearningFilter; initialConfig?: PlayConfig;
 }) {
   const { words, activeCourseId, activeCourse, wordPlayStats, dataSource, collections } = useAppData();
-  const [filter, setFilter] = useState<LearningFilter>(initialFilter);
-  const learned = words.filter((word) => word.state === 'learned' && wordBelongsToCourse(word, activeCourseId));
-  const scopedCount = filterWordsByLearningCategory(learned, filter).length;
-  const unlocked = isWordPlayUnlocked(words, activeCourseId, wordPlayStats);
-  const [session, setSession] = useState<{ id: string; courseId: CourseId; dataSource: string; rounds: WordPlayRound[] } | null>(() => {
-    if (!autoStart || (dataSource !== 'guest' && dataSource !== 'synced')) return null;
-    const rounds = buildWordPlaySession(words, activeCourseId, wordPlayStats, Math.random, filter);
-    return rounds.length ? { id: Crypto.randomUUID(), courseId: activeCourseId, dataSource, rounds } : null;
-  });
+  const [config, setConfig] = useState<PlayConfig>(initialConfig ?? { ...defaultPlayConfig, filter: initialFilter });
+  const selection = useMemo(() => playSelection(words, activeCourseId, config), [words, activeCourseId, config]);
+  const ready = dataSource === 'guest' || dataSource === 'synced';
+  const createSession = () => {
+    if (!ready || !selection.count) return null;
+    const rounds = buildWordPlaySession(words, activeCourseId, wordPlayStats, Math.random, config);
+    const cards = config.activity === 'cards' ? selection.supported.slice(0, selection.count) : [];
+    return { id: Crypto.randomUUID(), courseId: activeCourseId, dataSource, rounds, cards };
+  };
+  const [session, setSession] = useState(() => autoStart ? createSession() : null);
   const [haptics, setHaptics] = useState(initialHaptics);
   const theme = useAppTheme();
-  const count = learned.length;
   const start = () => {
-    if (!unlocked || !scopedCount || (dataSource !== 'guest' && dataSource !== 'synced')) return;
+    if (!ready || !selection.count) return;
     if (inTab) {
-      router.push({ pathname: '/word-play', params: { haptics: haptics ? '1' : '0', filter } } as never);
+      router.push({ pathname: '/word-play', params: { haptics: haptics ? '1' : '0', ...config } } as never);
       return;
     }
-    const rounds = buildWordPlaySession(words, activeCourseId, wordPlayStats, Math.random, filter);
-    if (rounds.length) setSession({ id: Crypto.randomUUID(), courseId: activeCourseId, dataSource, rounds });
+    setSession(createSession());
   };
 
   return <Screen style={styles.screen}>
@@ -62,40 +62,10 @@ export default function WordPlayScreen({ inTab = false, autoStart = false, initi
       </Pressable>
     </View>
     {session && session.courseId === activeCourseId && session.dataSource === dataSource && (dataSource === 'guest' || dataSource === 'synced')
-      ? <PlaySession key={session.id} {...session} haptics={haptics} canPlayAgain={unlocked && scopedCount > 0} onAgain={start}/>
-      : <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={[styles.card, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-          <Ionicons name="extension-puzzle-outline" size={52} color={theme.primary}/>
-          <AppText variant="heading">Keep your words close</AppText>
-          <AppText>Revisit up to 10 learned words in {activeCourse.displayName}. Match pairs, recall a word, or fill a gap in a sentence—each visit brings a different round.</AppText>
-          <AppText style={{ color: theme.muted }}>No timer. Take your time, and choose what to practise again at the end.</AppText>
-          <AppText variant="label">Choose your words</AppText>
-          {[
-            { title: 'Review', options: [{ value: 'all' as LearningFilter, label: 'All learned words' }] },
-            { title: 'Collections', options: collections.map((collection) => ({ value: `collection:${collection.id}` as LearningFilter, label: collection.name })) },
-            { title: 'Level', options: [...cefrLevels.map((level) => ({ value: level as LearningFilter, label: level })), { value: 'personal' as LearningFilter, label: 'No level' }] },
-          ].map((group) => <View key={group.title} style={styles.filterGroup}>
-            <AppText variant="caption" style={{ color: theme.muted }}>{group.title}</AppText>
-            <View style={styles.chips}>{group.options.map((option) => {
-              const available = filterWordsByLearningCategory(learned, option.value).length;
-              return <Pressable key={option.value} accessibilityRole="radio" accessibilityLabel={`${option.label}, ${available} learned words`}
-                accessibilityState={{ checked: filter === option.value }} onPress={() => setFilter(option.value)}
-                style={[styles.chip, { borderColor: filter === option.value ? theme.primary : theme.border, backgroundColor: filter === option.value ? theme.primarySoft : theme.surface }]}>
-                <AppText>{option.label} · {available}</AppText>
-              </Pressable>;
-            })}</View>
-          </View>)}
-          <AppText accessibilityLiveRegion="polite">{scopedCount ? `${Math.min(scopedCount, WORD_PLAY_SIZE)} ${Math.min(scopedCount, WORD_PLAY_SIZE) === 1 ? 'word' : 'words'} this round` : 'No learned words in this selection yet. Choose another collection or level.'}</AppText>
-          <PrimaryButton label="Let’s play" disabled={!unlocked || scopedCount === 0 || (dataSource !== 'guest' && dataSource !== 'synced')} onPress={start}/>
-          {!unlocked ? <>
-            <AppText style={{ color: theme.muted }}>Learn {WORD_PLAY_SIZE - count} more words to unlock Word play.</AppText>
-            <AppText variant="label">{count} of {WORD_PLAY_SIZE} words learned</AppText>
-            <View accessibilityRole="progressbar" accessibilityLabel="Word play unlock progress" accessibilityValue={{ min: 0, max: WORD_PLAY_SIZE, now: count }} style={[styles.track, { backgroundColor: theme.primarySoft }]}>
-              <View style={[styles.fill, { backgroundColor: theme.primary, width: `${count / WORD_PLAY_SIZE * 100}%` }]}/>
-            </View>
-          </> : null}
-        </View>
-      </ScrollView>}
+      ? session.cards.length ? <WordCardsSession words={session.cards}/>
+        : <PlaySession key={session.id} {...session} haptics={haptics} canPlayAgain={selection.count > 0} onAgain={start}/>
+      : <PlaySetup config={config} onChange={setConfig} words={words} courseId={activeCourseId} courseName={activeCourse.displayName}
+        collections={collections} ready={ready} onStart={start} inTab={inTab}/>}
   </Screen>;
 }
 
@@ -126,6 +96,8 @@ function PlaySession({ id, courseId, rounds, haptics, canPlayAgain, onAgain }: {
   const allWords = rounds.flatMap((round) => round.words);
   const finished = index === rounds.length;
   const revisited = answered.size;
+  const eligibleForRelearning = new Set(words.filter((word) => word.state === 'learned' && wordBelongsToCourse(word, courseId)).map((word) => word.id));
+  const selectedCount = [...selected].filter((id) => eligibleForRelearning.has(id)).length;
 
   const record = async (word: Word, mode: WordPlayMode, type: WordPlayEventType) => {
     const key = `${word.id}:${type}`;
@@ -144,7 +116,9 @@ function PlaySession({ id, courseId, rounds, haptics, canPlayAgain, onAgain }: {
     if (type === 'game_answered') setAnswered((current) => new Set([...current, word.id]));
     if (type === 'game_missed') {
       setMissed((current) => new Set([...current, word.id]));
-      setSelected((current) => new Set([...current, word.id]));
+      if (words.some((item) => item.id === word.id && item.state === 'learned' && wordBelongsToCourse(item, courseId))) {
+        setSelected((current) => new Set([...current, word.id]));
+      }
     }
   };
 
@@ -153,7 +127,7 @@ function PlaySession({ id, courseId, rounds, haptics, canPlayAgain, onAgain }: {
     pending.current = true;
     setBusy(true); setError(null);
     try {
-      for (const word of allWords.filter((item) => selected.has(item.id) && !returned.has(item.id))) {
+      for (const word of allWords.filter((item) => selected.has(item.id) && !returned.has(item.id) && words.some((current) => current.id === item.id && current.state === 'learned' && wordBelongsToCourse(current, courseId)))) {
         const mode = rounds.find((round) => round.words.some((item) => item.id === word.id))!.mode;
         await record(word, mode, 'game_relearned');
         setReturned((current) => new Set([...current, word.id]));
@@ -179,23 +153,23 @@ function PlaySession({ id, courseId, rounds, haptics, canPlayAgain, onAgain }: {
         <Ionicons name="ribbon-outline" size={52} color={theme.success}/>
         <AppText variant="heading">A little stronger</AppText>
         <AppText>{allWords.length} words revisited · {missed.size} needed another look</AppText>
-        <AppText style={{ color: theme.muted }}>{missed.size ? 'Choose which words to return to regular practice. Your other words stay learned.' : 'You made it through! Come back for a different challenge.'}</AppText>
+        <AppText style={{ color: theme.muted }}>{missed.size ? 'Choose which words to return to regular practice. Your learning schedule only changes for the words you choose.' : 'You made it through! Come back for a different challenge.'}</AppText>
         <View style={styles.chips}>
           {allWords.filter((word) => missed.has(word.id)).map((word) => {
             const current = words.find((item) => item.id === word.id);
             const available = current?.state === 'learned' && wordBelongsToCourse(current, courseId);
             const added = returned.has(word.id);
             return <Pressable key={word.id} accessibilityRole="checkbox" accessibilityLabel={`Practise ${word.term} again`}
-              accessibilityState={{ checked: selected.has(word.id), disabled: busy || added }} disabled={busy || added}
+              accessibilityState={{ checked: available && selected.has(word.id), disabled: busy || added || !available }} disabled={busy || added || !available}
               onPress={() => setSelected((value) => { const next = new Set(value); if (next.has(word.id)) next.delete(word.id); else if (available) next.add(word.id); return next; })}
               style={[styles.chip, { backgroundColor: selected.has(word.id) ? theme.primarySoft : theme.surface, borderColor: theme.border }]}>
               <Ionicons name={added ? 'checkmark-circle' : selected.has(word.id) ? 'checkbox-outline' : 'square-outline'} size={20} color={theme.primary}/>
-              <AppText>{word.term}{added ? ' · added' : !available ? ' · unavailable' : ''}</AppText>
+              <AppText>{word.term}{added ? ' · added' : !available ? current && wordBelongsToCourse(current, courseId) ? ' · already learning' : ' · unavailable' : ''}</AppText>
             </Pressable>;
           })}
         </View>
         {error ? <AppText accessibilityRole="alert" style={{ color: theme.danger }}>{error}</AppText> : null}
-        {selected.size > 0 ? <PrimaryButton label={`Add ${selected.size} ${selected.size === 1 ? 'word' : 'words'} to learning`} loading={busy} onPress={() => void relearn()}/> : null}
+        {selectedCount > 0 ? <PrimaryButton label={`Add ${selectedCount} ${selectedCount === 1 ? 'word' : 'words'} to learning`} loading={busy} onPress={() => void relearn()}/> : null}
         {returned.size > 0 ? <>
           <AppText accessibilityLiveRegion="polite">{returned.size} {returned.size === 1 ? 'word is' : 'words are'} ready in today’s practice.</AppText>
           <PrimaryButton label="Practise now" disabled={busy} onPress={() => {

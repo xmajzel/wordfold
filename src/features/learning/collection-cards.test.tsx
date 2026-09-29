@@ -2,10 +2,13 @@ import { fireEvent, render } from '@testing-library/react-native';
 import type { ReactNode } from 'react';
 import { Text } from 'react-native';
 
+import { WordCardsSession } from '@/features/word-play/word-cards-session';
+import { defaultPlayConfig, playSelection } from '@/features/word-play/model';
 import CollectionCardsScreen from '@/app/collection/[id]';
 import type { Word } from '@/domain/types';
 
 const mockBack = jest.fn();
+const mockRedirect = jest.fn();
 const mockWordCard = jest.fn(({ word }: { word: Word }) => <Text>{word.term}</Text>);
 let mockCollectionId = 'medical';
 let mockWords: Word[] = [];
@@ -20,9 +23,11 @@ const baseWord: Word = {
 };
 
 jest.mock('expo-router', () => ({
-  router: { back: () => mockBack() },
+  router: { dismissTo: () => mockBack() },
+  Redirect: ({ href }: { href: unknown }) => { mockRedirect(href); return null; },
   useLocalSearchParams: () => ({ id: mockCollectionId }),
 }));
+jest.mock('react-native-reanimated', () => ({ __esModule: true, default: { View: jest.requireActual('react-native').View }, FadeInDown: { duration: () => ({ reduceMotion: () => undefined }) }, ReduceMotion: { System: 'system' } }));
 jest.mock('@/providers/app-data-provider', () => ({
   useAppData: () => ({
     words: mockWords,
@@ -64,7 +69,8 @@ beforeEach(() => {
 });
 
 it('shows every collection card regardless of due state without rating or recording a view', async () => {
-  const view = await render(<CollectionCardsScreen/>);
+  const selection = playSelection(mockWords, 'en-sk', { ...defaultPlayConfig, activity: 'cards', status: 'all', length: 'all', filter: 'collection:medical' });
+  const view = await render(<WordCardsSession words={selection.supported}/>);
   view.getByText('care');
   view.getByText('1 of 3');
   await fireEvent.press(view.getByRole('button', { name: 'Next' }));
@@ -78,9 +84,7 @@ it('shows every collection card regardless of due state without rating or record
   expect(mockBack).toHaveBeenCalledTimes(1);
 });
 
-it('explains an empty collection', async () => {
-  mockWords = [];
-  const view = await render(<CollectionCardsScreen/>);
-  view.getByText('No cards in this collection');
-  expect(mockWordCard).not.toHaveBeenCalled();
+it('redirects old collection links to the preselected Play setup', async () => {
+  await render(<CollectionCardsScreen/>);
+  expect(mockRedirect).toHaveBeenCalledWith({ pathname: '/(tabs)/play', params: { filter: 'collection:medical', activity: 'cards', status: 'all', length: 'all' } });
 });

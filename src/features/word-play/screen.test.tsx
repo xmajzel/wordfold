@@ -1,3 +1,4 @@
+import { Profiler, type ComponentProps } from 'react';
 import PlayTab from '@/app/(tabs)/play';
 import { act, fireEvent, render, waitFor, within } from '@testing-library/react-native';
 import { Alert, StyleSheet } from 'react-native';
@@ -9,6 +10,10 @@ import { withTiming } from 'react-native-reanimated';
 import { SentenceRound } from './sentence-round';
 import { RecallFlashcard } from './recall-flashcard';
 import WordPlayScreen from './screen';
+
+function GameScreen(props: ComponentProps<typeof WordPlayScreen>) {
+  return <WordPlayScreen initialConfig={{ activity: 'surprise', status: 'learned', filter: props.initialFilter ?? 'all', length: 'quick' }} {...props}/>;
+}
 
 const mockRecord = jest.fn<Promise<void>, [WordPlayEvent]>(async () => undefined);
 const mockDismiss = jest.fn(async () => undefined);
@@ -28,8 +33,9 @@ jest.mock('@/providers/app-data-provider', () => ({ useAppData: () => ({
   activeCourse: { displayName: 'English → Slovak' }, dataSource: 'guest', recordWordPlayEvent: mockRecord,
   updateLearningFilter: jest.fn(async () => undefined),
 }) }));
-jest.mock('expo-router', () => ({ useFocusEffect: (callback: () => void) => { jest.requireActual('react').useEffect(callback, [callback]); }, router: { back: jest.fn(), replace: jest.fn(), push: jest.fn(), dismissTo: jest.fn() } }));
+jest.mock('expo-router', () => ({ useLocalSearchParams: () => ({}), useFocusEffect: (callback: () => void) => { jest.requireActual('react').useEffect(callback, [callback]); }, router: { navigate: jest.fn(), back: jest.fn(), replace: jest.fn(), push: jest.fn(), dismissTo: jest.fn() } }));
 jest.mock('expo-crypto', () => ({ randomUUID: () => `id-${Math.random()}` }));
+jest.mock('@/components/word-card', () => ({ WordCard: ({ word }: { word: Word }) => { const { Text } = jest.requireActual('react-native'); return <Text>{word.term}</Text>; } }));
 jest.mock('@/components/screen', () => ({ Screen: jest.requireActual('react-native').View }));
 jest.mock('@/components/primary-button', () => ({ PrimaryButton: ({ label, onPress, disabled, loading }: {
   label: string; onPress(): void; disabled?: boolean; loading?: boolean;
@@ -61,8 +67,8 @@ async function finishTransition() {
 }
 
 it('plays two boards, retains first-attempt mistakes, and only relearns selected words', async () => {
-  const view = await render(<WordPlayScreen/>);
-  await fireEvent.press(view.getByRole('button', { name: 'Let’s play' }));
+  const view = await render(<GameScreen/>);
+  await fireEvent.press(view.getByRole('button', { name: /^Start / }));
   for (let board = 0; board < 2; board += 1) {
     await waitFor(() => {
       const tiles = view.getAllByRole('button', { name: /^Word:/ });
@@ -101,8 +107,8 @@ it('plays two boards, retains first-attempt mistakes, and only relearns selected
 
 it('hides recall answers, saves an encounter before answering, and leaves learning unchanged on exit', async () => {
   mockStats = { 'word-0': { ...emptyWordPlayStats, lastPlayedAt: '2026-09-18', lastMode: 'matching' } };
-  const view = await render(<WordPlayScreen/>);
-  await fireEvent.press(view.getByRole('button', { name: 'Let’s play' }));
+  const view = await render(<GameScreen/>);
+  await fireEvent.press(view.getByRole('button', { name: /^Start / }));
   await waitFor(() => expect(view.getByRole('button', { name: 'Reveal answer' }).props.accessibilityState.disabled).toBe(false));
   expect(view.queryByRole('button', { name: 'I know this' })).toBeNull();
   expect(view.queryByText(/^Meaning/)).toBeNull();
@@ -122,7 +128,7 @@ it('hides recall answers, saves an encounter before answering, and leaves learni
 
 it('keeps cards interactive after a failed save and retries the same event', async () => {
   mockRecord.mockRejectedValueOnce(new Error('Storage busy'));
-  const view = await render(<WordPlayScreen autoStart/>);
+  const view = await render(<GameScreen autoStart/>);
   await waitFor(() => expect(view.getByRole('button', { name: 'Retry saving' })).toBeTruthy());
   expect(view.getAllByRole('button', { name: /^Word:/ }).every((button) => !button.props.accessibilityState.disabled)).toBe(true);
   const firstEvent = mockRecord.mock.calls[0][0];
@@ -134,7 +140,7 @@ it('keeps cards interactive after a failed save and retries the same event', asy
 it('matches immediately while saving is pending, without a loader or duplicate answers', async () => {
   let finish!: () => void;
   mockRecord.mockImplementationOnce(() => new Promise<void>((resolve) => { finish = resolve; }));
-  const view = await render(<WordPlayScreen autoStart/>);
+  const view = await render(<GameScreen autoStart/>);
   const term = view.getAllByRole('button', { name: /^Word:/ })[0].props.accessibilityLabel.replace('Word: ', '');
   await fireEvent.press(view.getByRole('button', { name: `Word: ${term}` }));
   const pair = view.getByRole('button', { name: `Meaning: ${term.replace('word', 'hint')}` });
@@ -151,7 +157,7 @@ it('matches immediately while saving is pending, without a loader or duplicate a
 it('keeps optimistic answers and queued events across rounds and retries after failure', async () => {
   let fail!: (error: Error) => void;
   mockRecord.mockImplementationOnce(() => new Promise<void>((_, reject) => { fail = reject; }));
-  const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
+  const view = await render(<GameScreen autoStart initialFilter="collection:travel"/>);
   await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
   const needsPractice = view.getByRole('button', { name: 'Keep learning' });
   await act(async () => { await fireEvent.press(needsPractice); await fireEvent.press(needsPractice); });
@@ -174,7 +180,7 @@ it('keeps optimistic answers and queued events across rounds and retries after f
 it('finishes queued writes after leaving the screen', async () => {
   let finish!: () => void;
   mockRecord.mockImplementationOnce(() => new Promise<void>((resolve) => { finish = resolve; }));
-  const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
+  const view = await render(<GameScreen autoStart initialFilter="collection:travel"/>);
   await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
   await fireEvent.press(view.getByRole('button', { name: 'I know this' }));
   await view.unmount();
@@ -184,23 +190,23 @@ it('finishes queued writes after leaving the screen', async () => {
 
 it('does not unlock using learned words from another language', async () => {
   mockCourse = 'es-sk';
-  const view = await render(<WordPlayScreen/>);
-  await fireEvent.press(view.getByRole('button', { name: 'Let’s play' }));
-  expect(view.getByText('Learn 10 more words to unlock Word play.')).toBeTruthy();
+  const view = await render(<GameScreen/>);
+  await fireEvent.press(view.getByRole('button', { name: /^Start / }));
+  expect(view.getByText('No learned words in All vocabulary.')).toBeTruthy();
   expect(mockRecord).not.toHaveBeenCalled();
 });
 
 
 it('opens a full-screen game from the Play lobby and keeps the lobby out of the session', async () => {
-  const lobby = await render(<WordPlayScreen inTab/>);
+  const lobby = await render(<GameScreen inTab/>);
   expect(lobby.queryByRole('button', { name: 'Close Word play' })).toBeNull();
-  await fireEvent.press(lobby.getByRole('button', { name: 'Let’s play' }));
-  expect(router.push).toHaveBeenCalledWith({ pathname: '/word-play', params: { haptics: '0', filter: 'all' } });
+  await fireEvent.press(lobby.getByRole('button', { name: /^Start / }));
+  expect(router.push).toHaveBeenCalledWith({ pathname: '/word-play', params: { haptics: '0', filter: 'all', activity: 'surprise', status: 'learned', length: 'quick' } });
   expect(mockRecord).not.toHaveBeenCalled();
   await lobby.unmount();
-  const game = await render(<WordPlayScreen autoStart/>);
+  const game = await render(<GameScreen autoStart/>);
   await waitFor(() => expect(game.getByText('Find the pairs')).toBeTruthy());
-  expect(game.queryByRole('button', { name: 'Let’s play' })).toBeNull();
+  expect(game.queryByRole('button', { name: /^Start / })).toBeNull();
   await fireEvent.press(game.getByRole('button', { name: 'Close Word play' }));
   expect(router.dismissTo).toHaveBeenCalledWith('/(tabs)/play');
 });
@@ -216,20 +222,21 @@ it('visiting Play dismisses only the current language introduction without start
   mockCourse = 'es-sk';
   await view.rerender(<PlayTab/>);
   await waitFor(() => expect(mockDismiss).toHaveBeenLastCalledWith('es-sk'));
-  view.getByText('0 of 10 words learned');
+  view.getByText('No words in All vocabulary.');
 });
 
 it('carries a selected scope and header haptics into the full-screen game', async () => {
-  const view = await render(<WordPlayScreen inTab/>);
-  await fireEvent.press(view.getByRole('radio', { name: 'Travel, 2 learned words' }));
-  expect(view.getByText('2 words this round')).toBeTruthy();
+  const view = await render(<GameScreen inTab/>);
+  await fireEvent.press(view.getByRole('radio', { name: 'A collection' }));
+  await fireEvent.press(view.getByRole('radio', { name: 'Travel, 2 words' }));
+  expect(view.getByRole('button', { name: 'Start practice' })).toBeEnabled();
   await fireEvent.press(view.getByRole('switch', { name: 'Haptic feedback' }));
-  await fireEvent.press(view.getByRole('button', { name: 'Let’s play' }));
-  expect(router.push).toHaveBeenCalledWith({ pathname: '/word-play', params: { haptics: '1', filter: 'collection:travel' } });
+  await fireEvent.press(view.getByRole('button', { name: /^Start / }));
+  expect(router.push).toHaveBeenCalledWith({ pathname: '/word-play', params: { haptics: '1', filter: 'collection:travel', activity: 'surprise', status: 'learned', length: 'quick' } });
 });
 
 it('plays a short collection session and reports its actual progress', async () => {
-  const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
+  const view = await render(<GameScreen autoStart initialFilter="collection:travel"/>);
   for (let index = 0; index < 2; index += 1) {
     await waitFor(() => expect(view.getByRole('button', { name: 'Reveal answer' })).toBeEnabled());
     expect(view.getByText(`${index} of 2 words revisited`)).toBeTruthy();
@@ -241,13 +248,15 @@ it('plays a short collection session and reports its actual progress', async () 
   expect(mockRecord.mock.calls.every(([event]) => ['word-0', 'word-1'].includes(event.wordId))).toBe(true);
 });
 
-it('filters by level and disables empty selections without starting a game', async () => {
-  const view = await render(<WordPlayScreen/>);
-  await fireEvent.press(view.getByRole('radio', { name: 'A1, 3 learned words' }));
-  expect(view.getByText('3 words this round')).toBeTruthy();
-  await fireEvent.press(view.getByRole('radio', { name: 'C2, 0 learned words' }));
-  expect(view.getByRole('button', { name: 'Let’s play' })).toBeDisabled();
-  expect(view.getByText('No learned words in this selection yet. Choose another collection or level.')).toBeTruthy();
+it('filters by level and prevents selecting empty levels', async () => {
+  const view = await render(<GameScreen/>);
+  await fireEvent.press(view.getByRole('radio', { name: 'A level' }));
+  expect(view.getByRole('button', { name: /^Start / })).toBeDisabled();
+  await fireEvent.press(view.getByRole('radio', { name: 'A1, 3 words' }));
+  expect(view.getByRole('button', { name: 'Start practice' })).toBeEnabled();
+  expect(view.getByRole('radio', { name: 'C2, 0 words' })).toBeDisabled();
+  await fireEvent.press(view.getByRole('radio', { name: 'C2, 0 words' }));
+  expect(view.getByRole('radio', { name: 'A1, 3 words' })).toBeChecked();
   expect(mockRecord).not.toHaveBeenCalled();
 });
 
@@ -255,7 +264,7 @@ it('offers retry if a queued write fails after closing the game', async () => {
   const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
   let fail!: (error: Error) => void;
   mockRecord.mockImplementationOnce(() => new Promise<void>((_, reject) => { fail = reject; }));
-  const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
+  const view = await render(<GameScreen autoStart initialFilter="collection:travel"/>);
   await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
   await fireEvent.press(view.getByRole('button', { name: 'I know this' }));
   await view.unmount();
@@ -269,7 +278,7 @@ it('offers retry if a queued write fails after closing the game', async () => {
 it('waits for queued game history before returning selected words to learning', async () => {
   let finish!: () => void;
   mockRecord.mockImplementationOnce(() => new Promise<void>((resolve) => { finish = resolve; }));
-  const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
+  const view = await render(<GameScreen autoStart initialFilter="collection:travel"/>);
   for (let index = 0; index < 2; index += 1) {
     await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
     await fireEvent.press(view.getByRole('button', { name: index ? 'I know this' : 'Keep learning' }));
@@ -284,7 +293,7 @@ it('waits for queued game history before returning selected words to learning', 
 });
 
 it('reveals the back by tapping the card and resets the next word to its front', async () => {
-  const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
+  const view = await render(<GameScreen autoStart initialFilter="collection:travel"/>);
   const frame = view.getByTestId('recall-flashcard');
   const before = frame.props.style;
   expect(view.queryByText(/^Meaning/)).toBeNull();
@@ -317,7 +326,7 @@ it('shows a complete long answer inside the same card with reduced motion', asyn
 
 it.each([false, true])('animates a rated card then advances once (reduced motion: %s)', async (reducedMotion) => {
   mockReducedMotion = reducedMotion;
-  const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
+  const view = await render(<GameScreen autoStart initialFilter="collection:travel"/>);
   await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
   await fireEvent.press(view.getByRole('button', { name: 'I know this' }));
   expect(view.queryByText('Nicely done!')).toBeNull();
@@ -377,7 +386,7 @@ it('integrates sentence rounds with filtered sessions, saves, and recap', async 
   const original = mockWords[0].example;
   mockWords[0].example = 'Use word 0 here.';
   try {
-    const view = await render(<WordPlayScreen autoStart initialFilter="collection:travel"/>);
+    const view = await render(<GameScreen autoStart initialFilter="collection:travel"/>);
     // The unplayed word is selected first and has no example: a recall fallback.
     await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
     await fireEvent.press(view.getByRole('button', { name: 'I know this' }));
@@ -393,7 +402,7 @@ it('integrates sentence rounds with filtered sessions, saves, and recap', async 
 
 it.each([false, true])('reveals skipped pairs, keeps their labels, and advances once (reduced motion: %s)', async (reducedMotion) => {
   mockReducedMotion = reducedMotion;
-  const view = await render(<WordPlayScreen autoStart/>);
+  const view = await render(<GameScreen autoStart/>);
   const terms = view.getAllByRole('button', { name: /^Word:/ }).map((tile) => tile.props.accessibilityLabel.replace('Word: ', ''));
   for (const term of terms) {
     await fireEvent.press(view.getByRole('button', { name: `Word: ${term}` }));
@@ -413,7 +422,7 @@ it.each([false, true])('reveals skipped pairs, keeps their labels, and advances 
 });
 
 it('retains the selected word after a mistake and leaves matched text readable', async () => {
-  const view = await render(<WordPlayScreen autoStart/>);
+  const view = await render(<GameScreen autoStart/>);
   const [first, second] = view.getAllByRole('button', { name: /^Word:/ }).map((tile) => tile.props.accessibilityLabel.replace('Word: ', ''));
   await fireEvent.press(view.getByRole('button', { name: `Word: ${first}` }));
   await fireEvent.press(view.getByRole('button', { name: `Meaning: ${second.replace('word', 'hint')}` }));
@@ -423,4 +432,196 @@ it('retains the selected word after a mistake and leaves matched text readable',
   expect(view.getByLabelText(`Word: ${first}, matched`)).toBeTruthy();
   expect(view.getByLabelText(`Meaning: ${first.replace('word', 'hint')}, matched`)).toBeTruthy();
   expect(view.queryByText('Nicely done!')).toBeNull();
+});
+
+it('shows illustrated choices, defaults to Word cards, and passes collection and length to the session', async () => {
+  const view = await render(<WordPlayScreen inTab/>);
+  expect(view.getByRole('radio', { name: 'Word cards' })).toBeChecked();
+  expect(view.getByRole('radio', { name: 'Quick 10' })).toBeChecked();
+  expect(view.getByRole('radio', { name: 'All, 10 words' })).toBeChecked();
+  expect(view.getByRole('radio', { name: 'Flashcards' })).toBeTruthy();
+  expect(within(view.getByTestId('play-setup-scroll')).queryByRole('button', { name: /^Start / })).toBeNull();
+  expect(within(view.getByTestId('play-setup-footer')).getByText('Word cards · 10 words')).toBeTruthy();
+  expect(within(view.getByTestId('play-setup-footer')).getByText('All vocabulary · All stages')).toBeTruthy();
+  expect(within(view.getByTestId('play-setup-footer')).getByRole('button', { name: /^Start / })).toBeEnabled();
+  await fireEvent.press(view.getByRole('radio', { name: 'A collection' }));
+  await fireEvent.changeText(view.getByLabelText('Search collections'), 'trav');
+  expect(view.queryByRole('radio', { name: 'Other, 8 words' })).toBeNull();
+  await fireEvent.press(view.getByRole('radio', { name: 'Travel, 2 words' }));
+  expect(view.getByRole('radio', { name: 'All, 2 words' })).toBeChecked();
+  expect(within(view.getByTestId('play-setup-footer')).getByText('Word cards · 2 words')).toBeTruthy();
+  await fireEvent.press(view.getByRole('radio', { name: 'All words' }));
+  await fireEvent.press(view.getByRole('button', { name: 'Start practice' }));
+  expect(router.push).toHaveBeenCalledWith({ pathname: '/word-play', params: { activity: 'cards', filter: 'collection:travel', status: 'all', length: 'all', haptics: '0' } });
+  expect(mockRecord).not.toHaveBeenCalled();
+});
+
+it('explains unsupported activities and offers a working alternative', async () => {
+  const view = await render(<WordPlayScreen/>);
+  await fireEvent.press(view.getByRole('radio', { name: 'Fill the gap' }));
+  expect(view.getByText('0 of 10 words have a suitable example sentence.')).toBeTruthy();
+  expect(view.getByRole('button', { name: /^Start / })).toBeDisabled();
+  await fireEvent.press(view.getByRole('button', { name: 'Try Word cards' }));
+  expect(view.getByRole('radio', { name: 'Word cards' })).toBeChecked();
+  expect(view.getByRole('button', { name: 'Start practice' })).toBeEnabled();
+  expect(mockRecord).not.toHaveBeenCalled();
+});
+
+it('does not offer to return already-learning words to learning after a game', async () => {
+  const original = mockWords[0].state;
+  mockWords[0].state = 'understood';
+  try {
+    const view = await render(<WordPlayScreen autoStart initialConfig={{ activity: 'recall', filter: 'collection:travel', status: 'learning', length: 'all' }}/>);
+    await fireEvent.press(view.getByRole('button', { name: 'Reveal answer' }));
+    await fireEvent.press(view.getByRole('button', { name: 'Keep learning' }));
+    await finishTransition();
+    expect(view.getByText('word 0 · already learning')).toBeTruthy();
+    expect(view.getByRole('checkbox', { name: 'Practise word 0 again' })).toBeDisabled();
+    expect(view.queryByRole('button', { name: /Add .* to learning/ })).toBeNull();
+    expect(mockRecord.mock.calls.map(([event]) => event.type)).toEqual(['game_seen', 'game_missed', 'game_answered']);
+  } finally { mockWords[0].state = original; }
+});
+
+it('starts collection word cards with all states and records no game events', async () => {
+  const original = mockWords[0].state;
+  mockWords[0].state = 'new';
+  try {
+    const view = await render(<WordPlayScreen autoStart initialConfig={{ activity: 'cards', filter: 'collection:travel', status: 'all', length: 'all' }}/>);
+    expect(view.getByText('word 0')).toBeTruthy();
+    expect(view.getByRole('button', { name: 'Previous' })).toBeDisabled();
+    await fireEvent.press(view.getByRole('button', { name: 'Next' }));
+    expect(view.getByText('word 1')).toBeTruthy();
+    expect(view.getByText('2 of 2')).toBeTruthy();
+    await fireEvent.press(view.getByRole('button', { name: 'Previous' }));
+    expect(view.getByText('word 0')).toBeTruthy();
+    expect(mockRecord).not.toHaveBeenCalled();
+  } finally { mockWords[0].state = original; }
+});
+
+it('narrows status counts to the chosen collection and recovers from an empty status', async () => {
+  const view = await render(<WordPlayScreen/>);
+  await fireEvent.press(view.getByRole('radio', { name: 'A collection' }));
+  await fireEvent.press(view.getByRole('radio', { name: 'Travel, 2 words' }));
+  expect(view.getByRole('radio', { name: 'Learned, 2 words' })).toBeTruthy();
+  await fireEvent.press(view.getByRole('radio', { name: 'Still learning, 0 words' }));
+  expect(view.getByRole('button', { name: /^Start / })).toBeDisabled();
+  await fireEvent.press(view.getByRole('button', { name: 'Show all words' }));
+  expect(view.getByRole('radio', { name: 'All, 2 words' })).toBeChecked();
+  expect(within(view.getByTestId('play-setup-footer')).getByText('Word cards · 2 words')).toBeTruthy();
+  expect(view.getByRole('button', { name: 'Start practice' })).toBeEnabled();
+});
+
+it('keeps the source when dismissing collection search and explains a missing match', async () => {
+  const view = await render(<WordPlayScreen initialConfig={{ activity: 'cards', filter: 'A1', status: 'all', length: 'quick' }}/>);
+  await fireEvent.press(view.getByRole('radio', { name: 'A collection' }));
+  await fireEvent.changeText(view.getByLabelText('Search collections'), 'not-here');
+  expect(view.getByText('No collections match “not-here”. Try another name.')).toBeTruthy();
+  await fireEvent.press(view.getByRole('button', { name: 'Close collection picker' }));
+  expect(view.getByRole('radio', { name: 'A1, 3 words' })).toBeChecked();
+  expect(view.getByRole('button', { name: 'Start practice' })).toBeEnabled();
+});
+
+it('uses illustrated rows and stacked length cards for large text', async () => {
+  const dimensions = jest.spyOn(jest.requireActual<typeof import('react-native')>('react-native'), 'useWindowDimensions').mockReturnValue({ width: 390, height: 844, scale: 1, fontScale: 1.6 });
+  try {
+    const view = await render(<WordPlayScreen/>);
+    const card = view.getByRole('radio', { name: 'Word cards' });
+    expect(StyleSheet.flatten(card.props.style)).toMatchObject({ width: '100%', flexDirection: 'row' });
+    expect(StyleSheet.flatten(view.getByRole('radio', { name: 'Quick 10' }).props.style)).toMatchObject({ flexBasis: 'auto' });
+    expect(view.getByRole('button', { name: 'Start practice' })).toBeEnabled();
+  } finally { dimensions.mockRestore(); }
+});
+
+it('keeps activity previews still with reduced motion enabled', async () => {
+  mockReducedMotion = true;
+  const view = await render(<WordPlayScreen/>);
+  await fireEvent.press(view.getByRole('radio', { name: 'Flashcards' }));
+  expect(view.getByRole('radio', { name: 'Flashcards' })).toBeChecked();
+  expect(withTiming).not.toHaveBeenCalled();
+});
+
+it('guides explicit choices through measured sections without scrolling on entry', async () => {
+  const { ScrollView } = jest.requireActual<typeof import('react-native')>('react-native');
+  const scroll = jest.spyOn(ScrollView.prototype, 'scrollTo');
+  try {
+    const view = await render(<WordPlayScreen/>);
+    const layout = async (id: string, y: number) => fireEvent(view.getByTestId(id), 'layout', { nativeEvent: { layout: { x: 0, y, width: 320, height: 200 } } });
+    await fireEvent(view.getByTestId('play-setup-scroll'), 'layout', { nativeEvent: { layout: { height: 500 } } });
+    await fireEvent(view.getByTestId('play-setup-scroll'), 'contentSizeChange', 320, 1600);
+    await layout('play-words-section', 600);
+    await layout('play-include-section', 240);
+    await layout('play-length-section', 960);
+    expect(scroll).not.toHaveBeenCalled();
+    await fireEvent.press(view.getByRole('radio', { name: 'Word cards' }));
+    await waitFor(() => expect(scroll).toHaveBeenLastCalledWith({ y: 592, animated: true }));
+    await fireEvent.press(view.getByRole('radio', { name: 'All vocabulary' }));
+    await waitFor(() => expect(scroll).toHaveBeenLastCalledWith({ y: 832, animated: true }));
+    await fireEvent.press(view.getByRole('radio', { name: 'All, 10 words' }));
+    await waitFor(() => expect(scroll).toHaveBeenLastCalledWith({ y: 952, animated: true }));
+    await fireEvent.press(view.getByRole('radio', { name: 'A level' }));
+    await fireEvent.press(view.getByRole('radio', { name: 'A1, 3 words' }));
+    await layout('play-include-section', 350);
+    await waitFor(() => expect(scroll).toHaveBeenLastCalledWith({ y: 942, animated: true }));
+    await fireEvent.press(view.getByRole('radio', { name: 'A collection' }));
+    await fireEvent.press(view.getByRole('radio', { name: 'Travel, 2 words' }));
+    await layout('play-include-section', 240);
+    await waitFor(() => expect(scroll).toHaveBeenLastCalledWith({ y: 832, animated: true }));
+  } finally { scroll.mockRestore(); }
+});
+
+it('shows the scroll cue only with options below and respects reduced motion', async () => {
+  mockReducedMotion = true;
+  const { ScrollView } = jest.requireActual<typeof import('react-native')>('react-native');
+  const scroll = jest.spyOn(ScrollView.prototype, 'scrollTo');
+  try {
+    const view = await render(<WordPlayScreen/>);
+    const list = view.getByTestId('play-setup-scroll');
+    await fireEvent(list, 'layout', { nativeEvent: { layout: { height: 500 } } });
+    await fireEvent(list, 'contentSizeChange', 320, 1200);
+    await fireEvent(view.getByTestId('play-words-section'), 'layout', { nativeEvent: { layout: { y: 600 } } });
+    await fireEvent.press(view.getByRole('button', { name: 'More options below' }));
+    await waitFor(() => expect(scroll).toHaveBeenLastCalledWith({ y: 592, animated: false }));
+    const cue = view.getByTestId('play-scroll-cue');
+    const cueHeight = StyleSheet.flatten(view.getByRole('button', { name: 'More options below' }).props.style).minHeight;
+    await fireEvent.scroll(list, { nativeEvent: { contentOffset: { y: 700 } } });
+    expect(view.getByTestId('play-scroll-cue', { includeHiddenElements: true })).toBe(cue);
+    expect(StyleSheet.flatten(view.getByRole('button', { name: 'More options below', includeHiddenElements: true }).props.style).minHeight).toBe(cueHeight);
+    expect(view.queryByRole('button', { name: 'More options below' })).toBeNull();
+    await fireEvent.scroll(list, { nativeEvent: { contentOffset: { y: 100 } } });
+    expect(view.getByRole('button', { name: 'More options below' })).toBeTruthy();
+    await fireEvent(list, 'contentSizeChange', 320, 400);
+    expect(view.queryByRole('button', { name: 'More options below' })).toBeNull();
+  } finally { scroll.mockRestore(); }
+});
+
+
+it('clamps guided scrolling at the bottom and when all options fit', async () => {
+  const { ScrollView } = jest.requireActual<typeof import('react-native')>('react-native');
+  const scroll = jest.spyOn(ScrollView.prototype, 'scrollTo');
+  try {
+    const view = await render(<WordPlayScreen/>);
+    const list = view.getByTestId('play-setup-scroll');
+    await fireEvent(list, 'layout', { nativeEvent: { layout: { height: 500 } } });
+    await fireEvent(list, 'contentSizeChange', 320, 1200);
+    await fireEvent(view.getByTestId('play-length-section'), 'layout', { nativeEvent: { layout: { y: 960 } } });
+    await fireEvent.press(view.getByRole('radio', { name: 'All, 10 words' }));
+    await waitFor(() => expect(scroll).toHaveBeenLastCalledWith({ y: 700, animated: true }));
+    await fireEvent(list, 'layout', { nativeEvent: { layout: { height: 1400 } } });
+    await fireEvent.press(view.getByRole('radio', { name: 'All, 10 words' }));
+    await waitFor(() => expect(scroll).toHaveBeenLastCalledWith({ y: 0, animated: true }));
+  } finally { scroll.mockRestore(); }
+});
+
+
+it('does not rerender the setup on each scroll frame', async () => {
+  const onRender = jest.fn();
+  const view = await render(<Profiler id="play" onRender={onRender}><WordPlayScreen/></Profiler>);
+  const list = view.getByTestId('play-setup-scroll');
+  await fireEvent(list, 'layout', { nativeEvent: { layout: { height: 500 } } });
+  await fireEvent(list, 'contentSizeChange', 320, 1200);
+  onRender.mockClear();
+  for (const y of [20, 80, 160, 320, 600]) {
+    await fireEvent.scroll(list, { nativeEvent: { contentOffset: { y } } });
+  }
+  expect(onRender).not.toHaveBeenCalled();
 });

@@ -1,5 +1,9 @@
 import type { Word } from '@/domain/types';
-import { buildWordPlaySession, emptyWordPlayStats, summarizeWordPlay, wordPlayEventValue, type WordPlayEventRow } from './model';
+import { buildWordPlaySession, defaultPlayConfig, playSelection, parsePlayConfig, emptyWordPlayStats, summarizeWordPlay, wordPlayEventValue, type WordPlayEventRow } from './model';
+
+// Rotation tests explicitly request Surprise me; the lobby now defaults to Word cards.
+const surpriseSession: typeof buildWordPlaySession = (words, course, stats, random, filter = 'all') =>
+  buildWordPlaySession(words, course, stats, random, { ...defaultPlayConfig, activity: 'surprise', status: 'learned', filter: typeof filter === 'string' ? filter : filter.filter });
 
 export const gameWord = (index: number, overrides: Partial<Word> = {}): Word => ({
   id: `word-${index}`, collectionId: 'my-words', term: `word ${index}`, normalizedTerm: `word ${index}`,
@@ -12,14 +16,14 @@ export const gameWord = (index: number, overrides: Partial<Word> = {}): Word => 
 
 describe('Word play selection', () => {
   const words = Array.from({ length: 12 }, (_, index) => gameWord(index));
-  it('requires ten learned words in the active course', () => {
-    expect(buildWordPlaySession(words.slice(0, 9), 'en-sk', {})).toEqual([]);
-    expect(buildWordPlaySession(words, 'es-sk', {})).toEqual([]);
-    expect(buildWordPlaySession(words.map((word) => ({ ...word, state: 'understood' })), 'en-sk', {})).toEqual([]);
+  it('allows a single learned word and isolates the active course', () => {
+    expect(surpriseSession(words.slice(0, 1), 'en-sk', {})).toEqual([{ mode: 'recall', words: [words[0]] }]);
+    expect(surpriseSession(words, 'es-sk', {})).toEqual([]);
+    expect(surpriseSession(words.map((word) => ({ ...word, state: 'understood' })), 'en-sk', {})).toEqual([]);
   });
   it('makes two matching boards, excludes recently played words and preserves input', () => {
     const stats = { 'word-0': { ...emptyWordPlayStats, lastPlayedAt: '2026-09-18', lastMode: 'recall' as const } };
-    const rounds = buildWordPlaySession(words, 'en-sk', stats, () => 0.5);
+    const rounds = surpriseSession(words, 'en-sk', stats, () => 0.5);
     expect(rounds.map((round) => round.mode)).toEqual(['matching', 'matching']);
     expect(rounds.flatMap((round) => round.words)).toHaveLength(10);
     expect(rounds.flatMap((round) => round.words).some((word) => word.id === 'word-0')).toBe(false);
@@ -28,18 +32,18 @@ describe('Word play selection', () => {
   });
   it('follows matching with recall, without showing the answer first', () => {
     const stats = { 'word-0': { ...emptyWordPlayStats, lastPlayedAt: '2026-09-18', lastMode: 'matching' as const } };
-    expect(buildWordPlaySession(words, 'en-sk', stats).map((round) => round.mode)).toEqual(Array(10).fill('recall'));
+    expect(surpriseSession(words, 'en-sk', stats).map((round) => round.mode)).toEqual(Array(10).fill('recall'));
   });
   it('falls back to recall for missing, long, multi-answer and duplicate hints', () => {
     const ambiguous = words.slice(0, 10).map((word) => ({ ...word, translation: 'rovnaký' }));
     ambiguous[0].translation = '';
     ambiguous[1].translation = 'a'.repeat(80);
     ambiguous[2].translation = 'one; two';
-    expect(buildWordPlaySession(ambiguous, 'en-sk', {}).every((round) => round.mode === 'recall')).toBe(true);
+    expect(surpriseSession(ambiguous, 'en-sk', {}).every((round) => round.mode === 'recall')).toBe(true);
   });
   it('does not put homographs on the same board', () => {
     const homographs = words.slice(0, 10).map((word) => ({ ...word, term: 'bank' }));
-    expect(buildWordPlaySession(homographs, 'en-sk', {}).every((round) => round.mode === 'recall')).toBe(true);
+    expect(surpriseSession(homographs, 'en-sk', {}).every((round) => round.mode === 'recall')).toBe(true);
   });
 });
 
@@ -63,29 +67,29 @@ it('keeps a matching session in the rotation when its last exercise falls back t
     value: wordPlayEventValue({ sessionId: 'mixed', mode: 'recall', sessionMode: 'matching' }),
   }]);
   const words = Array.from({ length: 10 }, (_, index) => gameWord(index));
-  expect(buildWordPlaySession(words, 'en-sk', stats).every((round) => round.mode === 'recall')).toBe(true);
+  expect(surpriseSession(words, 'en-sk', stats).every((round) => round.mode === 'recall')).toBe(true);
 });
 
 it('selects only the requested scope and uses recall for fewer than five words', () => {
   const words = Array.from({ length: 10 }, (_, index) => gameWord(index, { collectionId: index === 0 ? 'travel' : 'other', cefrLevel: index < 3 ? 'A1' : 'B1' }));
-  const single = buildWordPlaySession(words, 'en-sk', {}, Math.random, 'collection:travel');
+  const single = surpriseSession(words, 'en-sk', {}, Math.random, 'collection:travel');
   expect(single).toEqual([{ mode: 'recall', words: [words[0]] }]);
-  expect(buildWordPlaySession(words, 'en-sk', {}, Math.random, 'A1').flatMap((round) => round.words).map((word) => word.id).sort()).toEqual(['word-0', 'word-1', 'word-2']);
-  expect(buildWordPlaySession(words, 'en-sk', {}, Math.random, 'C2')).toEqual([]);
-  expect(buildWordPlaySession(words, 'en-sk', {}, Math.random, 'collection:deleted')).toEqual([]);
+  expect(surpriseSession(words, 'en-sk', {}, Math.random, 'A1').flatMap((round) => round.words).map((word) => word.id).sort()).toEqual(['word-0', 'word-1', 'word-2']);
+  expect(surpriseSession(words, 'en-sk', {}, Math.random, 'C2')).toEqual([]);
+  expect(surpriseSession(words, 'en-sk', {}, Math.random, 'collection:deleted')).toEqual([]);
 });
 
 it('allows short sessions after previously playing, even after words return to learning', () => {
   const words = [gameWord(0), gameWord(1, { state: 'understood' })];
   const stats = { 'word-1': { ...emptyWordPlayStats, gamesPlayed: 1 } };
-  expect(buildWordPlaySession(words, 'en-sk', stats).flatMap((round) => round.words)).toEqual([words[0]]);
-  expect(buildWordPlaySession(words, 'es-sk', stats)).toEqual([]);
+  expect(surpriseSession(words, 'en-sk', stats).flatMap((round) => round.words)).toEqual([words[0]]);
+  expect(surpriseSession(words, 'es-sk', stats)).toEqual([]);
 });
 
 it('rotates recall into sentences, falls back per word, then returns to matching', () => {
   const words = Array.from({ length: 10 }, (_, index) => gameWord(index, { example: index === 0 ? null : `I remember word ${index} today.` }));
   const stats = { 'word-0': { ...emptyWordPlayStats, gamesPlayed: 1, lastPlayedAt: '2026-09-25', lastMode: 'recall' as const } };
-  const rounds = buildWordPlaySession(words, 'en-sk', stats);
+  const rounds = surpriseSession(words, 'en-sk', stats);
   expect(rounds.filter((round) => round.mode === 'sentence')).toHaveLength(9);
   expect(rounds.find((round) => round.words[0].id === 'word-0')?.mode).toBe('recall');
   const history = summarizeWordPlay([{
@@ -97,5 +101,58 @@ it('rotates recall into sentences, falls back per word, then returns to matching
   }]);
   expect(history['word-0'].lastMode).toBe('sentence');
   expect(history['word-1'].needsPractice).toBe(1);
-  expect(buildWordPlaySession(words, 'en-sk', history).map((round) => round.mode)).toEqual(['matching', 'matching']);
+  expect(surpriseSession(words, 'en-sk', history).map((round) => round.mode)).toEqual(['matching', 'matching']);
+});
+
+it('covers the entire mixed-state collection without a cap or changing input', () => {
+  const words = Array.from({ length: 23 }, (_, index) => gameWord(index, {
+    state: index % 3 === 0 ? 'new' : index % 3 === 1 ? 'understood' : 'learned', nextReviewAt: '2099-01-01',
+  }));
+  const before = JSON.stringify(words);
+  const config = { ...defaultPlayConfig, activity: 'recall' as const, status: 'all' as const, length: 'all' as const, filter: 'collection:my-words' as const };
+  const rounds = buildWordPlaySession([...words, gameWord(100, { collectionId: 'other' }), gameWord(101, { sourceLanguageCode: 'es' })], 'en-sk', {}, Math.random, config);
+  expect(rounds).toHaveLength(23);
+  expect(new Set(rounds.flatMap((round) => round.words.map((word) => word.id)))).toEqual(new Set(words.map((word) => word.id)));
+  expect(JSON.stringify(words)).toBe(before);
+  expect(playSelection(words, 'en-sk', { ...config, status: 'learning' }).count).toBe(16);
+  expect(playSelection(words, 'en-sk', { ...config, status: 'learned' }).count).toBe(7);
+  expect(playSelection(words, 'en-sk', { ...config, length: 'quick' }).count).toBe(10);
+});
+
+it('explicit sentence games only use supported examples and preview the exact count', () => {
+  const words = [gameWord(0, { example: 'Use word 0 here.' }), gameWord(1), gameWord(2, { example: 'Something else.' })];
+  const config = { ...defaultPlayConfig, activity: 'sentence' as const };
+  expect(playSelection(words, 'en-sk', config).count).toBe(1);
+  const rounds = buildWordPlaySession(words, 'en-sk', {}, Math.random, config);
+  expect(rounds.map((round) => round.mode)).toEqual(['sentence']);
+  expect(rounds[0].words).toEqual([words[0]]);
+});
+
+it.each([2, 6, 11, 16, 23])('explicit matching supports %s words with accurate preview and no recall fallback', (size) => {
+  const words = Array.from({ length: size }, (_, index) => gameWord(index));
+  for (const length of ['quick', 'all'] as const) {
+    const config = { ...defaultPlayConfig, activity: 'matching' as const, length };
+    const selection = playSelection(words, 'en-sk', config);
+    const rounds = buildWordPlaySession(words, 'en-sk', {}, Math.random, config);
+    expect(rounds.flatMap((round) => round.words)).toHaveLength(selection.count);
+    expect(rounds.every((round) => round.mode === 'matching' && round.words.length >= 2 && round.words.length <= 5)).toBe(true);
+    if (length === 'all') expect(selection.count).toBe(size);
+  }
+});
+
+it('excludes ambiguous matching words and requires at least two compatible pairs', () => {
+  const config = { ...defaultPlayConfig, activity: 'matching' as const, length: 'all' as const };
+  const words = [gameWord(0), gameWord(1, { translation: 'one; two' }), gameWord(2, { translation: 'preklad 0' })];
+  expect(playSelection(words, 'en-sk', config).count).toBe(0);
+  expect(buildWordPlaySession(words, 'en-sk', {}, Math.random, config)).toEqual([]);
+});
+
+it('validates route inputs and preserves supported selections', () => {
+  expect(parsePlayConfig({ activity: 'unknown', filter: ['A1'], status: 'due', length: '1000' })).toEqual(defaultPlayConfig);
+  expect(parsePlayConfig({ activity: 'cards', filter: 'A1', status: 'all', length: 'all' })).toEqual({ activity: 'cards', filter: 'A1', status: 'all', length: 'all' });
+});
+
+it('defaults new Play setups to Word cards, all learning stages, and Quick 10', () => {
+  expect(parsePlayConfig({})).toEqual({ activity: 'cards', filter: 'all', status: 'all', length: 'quick' });
+  expect(parsePlayConfig({ status: 'learned' }).status).toBe('learned');
 });

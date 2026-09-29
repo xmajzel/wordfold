@@ -1,4 +1,5 @@
 import { wordBelongsToCourse, type CourseId } from '@/domain/courses';
+import { isLearningFilter } from '@/data/cefr-levels';
 import { filterWordsByLearningCategory } from '@/features/learning/algorithm';
 import type { LearningFilter, Word } from '@/domain/types';
 
@@ -92,22 +93,88 @@ function canMatch(word: Word, board: Word[]) {
     || labelKey(other.translation!) === hint);
 }
 
-export function isWordPlayUnlocked(words: Word[], courseId: CourseId, stats: Record<string, WordPlayStats>) {
-  const courseWords = words.filter((word) => wordBelongsToCourse(word, courseId));
-  return courseWords.filter((word) => word.state === 'learned').length >= WORD_PLAY_SIZE
-    || courseWords.some((word) => stats[word.id]?.gamesPlayed > 0);
+export type PlayActivity = 'surprise' | 'recall' | 'cards' | 'matching' | 'sentence';
+export interface PlayConfig {
+  activity: PlayActivity;
+  filter: LearningFilter;
+  status: 'all' | 'learning' | 'learned';
+  length: 'quick' | 'all';
+}
+export const defaultPlayConfig: PlayConfig = { activity: 'cards', filter: 'all', status: 'all', length: 'quick' };
+
+export function parsePlayConfig(params: Record<string, unknown>): PlayConfig {
+  return {
+    activity: typeof params.activity === 'string' && ['surprise', 'recall', 'cards', 'matching', 'sentence'].includes(String(params.activity)) ? params.activity as PlayActivity : defaultPlayConfig.activity,
+    filter: typeof params.filter === 'string' && isLearningFilter(params.filter) ? params.filter : 'all',
+    status: params.status === 'learned' || params.status === 'learning' ? params.status : defaultPlayConfig.status,
+    length: params.length === 'all' ? 'all' : 'quick',
+  };
+}
+
+export function scopedPlayWords(words: Word[], courseId: CourseId, config: PlayConfig) {
+  return filterWordsByLearningCategory(words, config.filter).filter((word) => wordBelongsToCourse(word, courseId)
+    && (config.status === 'all' || (config.status === 'learned' ? word.state === 'learned' : word.state !== 'learned')));
+}
+
+// Stable grouping makes the setup's supported count agree with the actual game.
+function matchingBoards(words: Word[]): Word[][] {
+  const boards: Word[][] = [];
+  let remaining = words.filter((word) => canMatch(word, []));
+  while (remaining.length >= 2) {
+    const board: Word[] = [];
+    const size = remaining.length === 6 ? 4 : 5;
+    for (const word of remaining) {
+      if (canMatch(word, board)) board.push(word);
+      if (board.length === size) break;
+    }
+    if (board.length < 2) break;
+    boards.push(board);
+    const ids = new Set(board.map((word) => word.id));
+    remaining = remaining.filter((word) => !ids.has(word.id));
+  }
+  return boards;
+}
+
+export function playSelection(words: Word[], courseId: CourseId, config: PlayConfig) {
+  const scoped = scopedPlayWords(words, courseId, config);
+  const boards = config.activity === 'matching' ? matchingBoards(scoped) : [];
+  const supported = config.activity === 'matching' ? boards.flat()
+    : config.activity === 'sentence' ? scoped.filter((word) => buildSentenceGap(word)) : scoped;
+  let count = config.length === 'all' ? supported.length : Math.min(WORD_PLAY_SIZE, supported.length);
+  if (config.activity === 'matching' && config.length === 'quick') {
+    let used = 0;
+    for (const board of boards) {
+      const size = Math.min(board.length, WORD_PLAY_SIZE - used);
+      if (size < 2) break;
+      used += size;
+    }
+    count = used;
+  }
+  return { scoped, supported, boards, count };
 }
 
 export function buildWordPlaySession(
-  words: Word[], courseId: CourseId, stats: Record<string, WordPlayStats>, random = Math.random, filter: LearningFilter = 'all',
+  words: Word[], courseId: CourseId, stats: Record<string, WordPlayStats>, random = Math.random,
+  options: LearningFilter | PlayConfig = defaultPlayConfig,
 ): WordPlayRound[] {
-  if (!isWordPlayUnlocked(words, courseId, stats)) return [];
-  const eligible = filterWordsByLearningCategory(words, filter).filter((word) => word.state === 'learned' && wordBelongsToCourse(word, courseId));
+  const config = typeof options === 'string' ? { ...defaultPlayConfig, filter: options } : options;
+  if (config.activity === 'cards') return [];
+  const selection = playSelection(words, courseId, config);
+  if (config.activity === 'matching') {
+    // Quick rounds may trim the final board, but never leave a one-pair board.
+    let room = selection.count;
+    return selection.boards.flatMap((board): WordPlayRound[] => {
+      const selected = board.slice(0, room);
+      room -= selected.length;
+      return selected.length >= 2 ? [{ mode: 'matching', words: shuffle(selected, random), answers: shuffle(selected, random) }] : [];
+    });
+  }
+  const eligible = selection.supported;
   const latest = eligible.map((word) => stats[word.id]).filter((item) => item?.lastPlayedAt)
     .sort((left, right) => right.lastPlayedAt!.localeCompare(left.lastPlayedAt!))[0];
   const selected = shuffle(eligible, random).sort((left, right) =>
-    (stats[left.id]?.lastPlayedAt ?? '').localeCompare(stats[right.id]?.lastPlayedAt ?? '')).slice(0, WORD_PLAY_SIZE);
-  const mode = latest?.lastMode === 'matching' ? 'recall'
+    (stats[left.id]?.lastPlayedAt ?? '').localeCompare(stats[right.id]?.lastPlayedAt ?? '')).slice(0, selection.count);
+  const mode = config.activity !== 'surprise' ? config.activity : latest?.lastMode === 'matching' ? 'recall'
     : latest?.lastMode === 'recall' && selected.some((word) => buildSentenceGap(word)) ? 'sentence' : 'matching';
   if (mode === 'sentence') return selected.map((word): WordPlayRound => {
     const gap = buildSentenceGap(word);

@@ -1,9 +1,12 @@
 import { useCallback } from 'react';
-import { useFocusEffect } from 'expo-router';
+import { useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useAppData } from '@/providers/app-data-provider';
+import { parsePlayConfig } from '@/features/word-play/model';
 import WordPlayScreen from '@/features/word-play/screen';
 
 export default function PlayTab() {
+  const params = useLocalSearchParams();
+  const config = parsePlayConfig(params);
   const { activeCourseId, dismissWordPlayIntroduction, wordPlayIntroductions } = useAppData();
   const introduced = wordPlayIntroductions.includes(activeCourseId);
   useFocusEffect(useCallback(() => {
@@ -13,5 +16,5 @@ export default function PlayTab() {
       });
     }
   }, [activeCourseId, dismissWordPlayIntroduction, introduced]));
-  return <WordPlayScreen inTab/>;
+  return <WordPlayScreen key={`${activeCourseId}:${params.setup ?? ''}:${JSON.stringify(config)}`} inTab initialConfig={config}/>;
 }
