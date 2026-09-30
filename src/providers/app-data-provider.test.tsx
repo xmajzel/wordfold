@@ -14,6 +14,13 @@ const mockTranslateEnglishToSlovak = jest.fn(async (_text: string) => 'osobný p
 const mockPrepareTranslationError = jest.fn();
 let mockAuthStatus: 'loading' | 'signedOut' = 'signedOut';
 
+jest.mock('@/data/garden-repository', () => ({
+  getGuestGardenProgress: jest.fn(async () => jest.requireActual('@/features/progress/model').summarizeGarden([])),
+  getSyncGardenProgress: jest.fn(async () => jest.requireActual('@/features/progress/model').summarizeGarden([])),
+  plantGuestGardenTree: jest.fn(async () => null),
+  plantSyncGardenTree: jest.fn(async () => null),
+}));
+
 jest.mock('@/providers/auth-provider', () => ({
   useAuth: () => ({ status: mockAuthStatus, user: null }),
 }));

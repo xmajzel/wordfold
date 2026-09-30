@@ -1,3 +1,5 @@
+import { getGuestGardenProgress, getSyncGardenProgress, plantGuestGardenTree, plantSyncGardenTree } from '@/data/garden-repository';
+import type { GardenProgress, GardenTree } from '@/features/progress/model';
 import type { SQLiteDatabase } from 'expo-sqlite';
 
 import type { CourseId } from '@/domain/courses';
@@ -9,6 +11,8 @@ import { getGuestWordPlayStats, getSyncWordPlayStats, recordGuestWordPlayEvent, 
 import type { WordPlayEvent, WordPlayStats } from '@/features/word-play/model';
 
 export interface VocabularyStore {
+  getGardenProgress(): Promise<GardenProgress>;
+  plantGardenTree(): Promise<GardenTree | null>;
   getWordPlayStats(): Promise<Record<string, WordPlayStats>>;
   recordWordPlayEvent(event: WordPlayEvent): Promise<void>;
   listWords(): Promise<Word[]>;
@@ -35,6 +39,8 @@ export interface VocabularyStore {
 
 export function createGuestVocabularyStore(database: SQLiteDatabase): VocabularyStore {
   return {
+    getGardenProgress: () => getGuestGardenProgress(database),
+    plantGardenTree: () => plantGuestGardenTree(database),
     getWordPlayStats: () => getGuestWordPlayStats(database),
     recordWordPlayEvent: (event) => recordGuestWordPlayEvent(database, event),
     listWords: () => guestRepository.listWords(database),
@@ -66,6 +72,8 @@ interface PowerSyncStoreDatabase extends syncRepository.SyncRepositoryDatabase {
 
 export function createSyncVocabularyStore(database: PowerSyncStoreDatabase, userId: string): VocabularyStore {
   return {
+    getGardenProgress: () => getSyncGardenProgress(database),
+    plantGardenTree: () => plantSyncGardenTree(database, userId),
     getWordPlayStats: () => getSyncWordPlayStats(database),
     recordWordPlayEvent: (event) => recordSyncWordPlayEvent(database, userId, event),
     listWords: () => syncRepository.listSyncWords(database),

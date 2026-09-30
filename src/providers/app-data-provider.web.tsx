@@ -1,6 +1,7 @@
+import { localPracticeDate, nextGardenTree, summarizeGarden, type GardenProgress, type GardenTree, type ProgressEvent } from '@/features/progress/model';
 import { parseLearningRhythm, serializeLearningRhythm } from '@/features/learning/rhythm';
 import { preferenceLocale, voiceSupportsCourse } from '@/domain/pronunciation-voices';
-import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { defaultCourseId, getCourseDefinition, isCourseId, wordBelongsToCourse, type CourseDefinition, type CourseId } from '@/domain/courses';
 import type { LearningConfirmationCount, CatalogSense, Collection, DashboardStats, LearningFilter, LearningPreferences, LearningRating, PronunciationVoicePreference, ReminderSettings, Word } from '@/domain/types';
@@ -17,6 +18,8 @@ import type { SyncCutoverViewModel } from '@/data/sync/cutover-types';
 import { isOnDeviceTranslationPairSupported } from '@/features/translation/translator';
 
 interface AppDataValue {
+  garden: GardenProgress | null;
+  plantGardenTree(): Promise<GardenTree | null>;
   dataSource: 'guest';
   words: Word[]; collections: Collection[]; stats: DashboardStats | null;
   reminderSettings: ReminderSettings | null;
@@ -127,7 +130,31 @@ function recommendationsToWords(
   }));
 }
 
+const GARDEN_STORAGE_KEY = 'wordfold.garden.v1';
+function readWebGarden(): ProgressEvent[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const value: unknown = JSON.parse(window.localStorage.getItem(GARDEN_STORAGE_KEY) ?? '[]');
+    if (!Array.isArray(value)) return [];
+    return value.filter((event): event is ProgressEvent => !!event && typeof event === 'object'
+      && typeof event.type === 'string' && typeof event.occurred_at === 'string'
+      && (event.value === null || typeof event.value === 'string')
+      && (event.practice_date === null || typeof event.practice_date === 'string'));
+  } catch { return []; }
+}
+
 export function AppDataProvider({ children }: PropsWithChildren) {
+  const gardenEvents = useRef<ProgressEvent[]>([]);
+  const [garden, setGarden] = useState<GardenProgress | null>(null);
+  const saveGardenEvents = useCallback((events: ProgressEvent[]) => {
+    window.localStorage.setItem(GARDEN_STORAGE_KEY, JSON.stringify(events));
+    gardenEvents.current = events;
+    setGarden(summarizeGarden(events));
+  }, []);
+  const refresh = useCallback(async () => {
+    gardenEvents.current = readWebGarden();
+    setGarden(summarizeGarden(gardenEvents.current));
+  }, []);
   const ratedProgress = useRef(new Map<string, RatingUpdate>());
   const [words, setWords] = useState<Word[]>(initialWords);
   const [collections, setCollections] = useState(initialCollections);
@@ -142,9 +169,10 @@ export function AppDataProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    gardenEvents.current = readWebGarden();
+    setGarden(summarizeGarden(gardenEvents.current));
     const rhythm = parseLearningRhythm(window.localStorage.getItem('wordfold.learningRhythm'));
     // Restore device settings after web hydration.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLearningConfirmations(rhythm.confirmations);
     setRhythmIntroduced(rhythm.introduced);
     const storedCourseId = window.localStorage.getItem('wordfold.activeCourseId');
@@ -181,7 +209,14 @@ export function AppDataProvider({ children }: PropsWithChildren) {
     activeCourse: getCourseDefinition(activeCourseId), learningPreferences,
     pronunciationVoicePreference, learningFilter, onboardingComplete, learningConfirmations, rhythmIntroduced,
     wordCapacity: getWordCapacity(words.length, false),
-    refresh: async () => undefined,
+    garden,
+    plantGardenTree: async () => {
+      const tree = nextGardenTree(gardenEvents.current);
+      if (!tree) return null;
+      saveGardenEvents([...gardenEvents.current, { type: 'garden_tree', value: String(tree.ordinal), occurred_at: tree.plantedAt, practice_date: tree.earnedOn }]);
+      return tree;
+    },
+    refresh,
     findSenses: async (term, courseId = activeCourseId) => {
       const course = getCourseDefinition(courseId);
       const normalizedTerm = normalizeTerm(term, course.sourceLanguageCode);
@@ -233,6 +268,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
       const currentWord = words.find((item) => item.id === word.id);
       if (!currentWord) throw new Error('This word is no longer available.');
       const update = applyRating({ ...currentWord, ...ratedProgress.current.get(word.id) }, rating, new Date(), Math.random, learningConfirmations);
+      saveGardenEvents([...gardenEvents.current, { type: 'rating', value: rating, occurred_at: update.lastRatedAt, practice_date: localPracticeDate(new Date(update.lastRatedAt)) }]);
       ratedProgress.current.set(word.id, update);
       setWords((current) => current.map((item) => item.id === word.id ? { ...item, ...update, updatedAt: update.lastRatedAt } : item));
     },
@@ -311,7 +347,7 @@ export function AppDataProvider({ children }: PropsWithChildren) {
     resolveSyncCutoverConflict: async () => undefined,
     keepAccountRename: async () => undefined,
     prepareForSignOut: async () => undefined,
-  }), [activeCourseId, activeWords, collections, learningFilter, learningPreferences, learningConfirmations, rhythmIntroduced, onboardingComplete, pronunciationVoicePreference, reminderSettings, stats, words]);
+  }), [refresh, saveGardenEvents, garden, activeCourseId, activeWords, collections, learningFilter, learningPreferences, learningConfirmations, rhythmIntroduced, onboardingComplete, pronunciationVoicePreference, reminderSettings, stats, words]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 

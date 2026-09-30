@@ -1,70 +1,56 @@
-import { StyleSheet, View } from 'react-native';
+import { useCallback, useEffect } from 'react';
+import { AppState, StyleSheet, useColorScheme, View } from 'react-native';
+import { useFocusEffect } from 'expo-router';
 
 import { AppText } from '@/components/app-text';
 import { Screen } from '@/components/screen';
+import { ActivityCalendar, MomentumCard, WordGarden } from '@/features/progress/garden-view';
+import { localPracticeDate } from '@/features/progress/model';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
 import { languageLabel } from '@/domain/languages';
-import { radii, spacing, stateColors } from '@/theme/tokens';
+import { darkStateColors, radii, spacing, stateColors } from '@/theme/tokens';
 
 export default function ProgressScreen() {
   const theme = useAppTheme();
-  const { stats, activeCourse } = useAppData();
+  const colors = useColorScheme() === 'dark' ? darkStateColors : stateColors;
+  const { stats, activeCourse, garden, plantGardenTree, refresh } = useAppData();
   const learnedLanguage = languageLabel(activeCourse.sourceLanguageCode);
-  const stateTotal = stats ? Math.max(stats.totalWords, 1) : 1;
-  return (
-    <Screen scroll>
-      <View style={styles.header}><AppText variant="title">Your {learnedLanguage.toLowerCase()} progress</AppText><AppText style={{ color: theme.muted }}>A quiet record of {learnedLanguage.toLowerCase()} words becoming familiar.</AppText></View>
-      <ActivityChart activity={stats?.recentActivity ?? []} viewedToday={stats?.viewedToday ?? 0} viewedLifetime={stats?.viewedLifetime ?? 0}/>
-      <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-        <View style={styles.panelTitle}><AppText variant="heading">Memory mix</AppText><AppText variant="caption" style={{ color: theme.muted }}>{stats?.totalWords ?? 0} total {(stats?.totalWords ?? 0) === 1 ? 'word' : 'words'}</AppText></View>
-        <View style={[styles.bar, { backgroundColor: theme.raised }]}>
-          <BarSegment value={stats?.newWords ?? 0} total={stateTotal} color={stateColors.new}/>
-          <BarSegment value={stats?.difficultWords ?? 0} total={stateTotal} color={stateColors.cannot_remember}/>
-          <BarSegment value={stats?.understoodWords ?? 0} total={stateTotal} color={stateColors.understood}/>
-          <BarSegment value={stats?.learnedWords ?? 0} total={stateTotal} color={stateColors.learned}/>
-        </View>
-        <Legend color={stateColors.new} label="New" value={stats?.newWords ?? 0}/>
-        <Legend color={stateColors.cannot_remember} label="Needs practice" value={stats?.difficultWords ?? 0}/>
-        <Legend color={stateColors.understood} label="Getting there" value={stats?.understoodWords ?? 0}/>
-        <Legend color={stateColors.learned} label="Review stopped" value={stats?.learnedWords ?? 0}/>
+  const total = Math.max(stats?.totalWords ?? 0, 1);
+  useFocusEffect(useCallback(() => {
+    void refresh().catch((error) => console.warn('Could not refresh progress.', error));
+  }, [refresh]));
+  useEffect(() => {
+    let date = localPracticeDate();
+    const refreshDate = () => {
+      const next = localPracticeDate();
+      if (next === date) return;
+      date = next;
+      void refresh().catch((error) => console.warn('Could not refresh progress.', error));
+    };
+    const timer = setInterval(refreshDate, 60_000);
+    const subscription = AppState.addEventListener('change', (state) => { if (state === 'active') refreshDate(); });
+    return () => { clearInterval(timer); subscription.remove(); };
+  }, [refresh]);
+  return <Screen scroll>
+    <View style={styles.header}><AppText variant="title">Look what you’re growing.</AppText><AppText style={{ color: theme.muted }}>A little each day becomes something lasting.</AppText></View>
+    {garden ? <><MomentumCard progress={garden}/><WordGarden progress={garden} plantTree={plantGardenTree}/></> : <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}><AppText style={{ color: theme.muted }}>Gathering your garden…</AppText></View>}
+    <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+      <View style={styles.familiarity}><AppText variant="display" style={{ color: theme.primary }}>{(stats?.understoodWords ?? 0) + (stats?.learnedWords ?? 0)}</AppText><View style={styles.flex}><AppText variant="heading">Words growing familiar</AppText><AppText variant="caption" style={{ color: theme.muted }}>{learnedLanguage} · currently familiar or learned</AppText></View></View>
+      <AppText variant="caption" style={{ color: theme.muted }}>Memory changes. Every honest answer helps you find what needs another look.</AppText>
+      <View style={[styles.bar, { backgroundColor: theme.raised }]} accessibilityRole="summary" accessibilityLabel={`Memory mix: ${stats?.newWords ?? 0} new, ${stats?.difficultWords ?? 0} need practice, ${stats?.understoodWords ?? 0} getting familiar, ${stats?.learnedWords ?? 0} learned`}>
+        <BarSegment value={stats?.newWords ?? 0} total={total} color={colors.new}/><BarSegment value={stats?.difficultWords ?? 0} total={total} color={colors.cannot_remember}/><BarSegment value={stats?.understoodWords ?? 0} total={total} color={colors.understood}/><BarSegment value={stats?.learnedWords ?? 0} total={total} color={colors.learned}/>
       </View>
-      <View style={[styles.panel, { backgroundColor: theme.primarySoft, borderColor: theme.primarySoft }]}><AppText variant="heading" style={{ color: theme.primary }}>Reminders that worked</AppText><AppText variant="display" style={{ color: theme.primary }}>{stats?.notificationOpens ?? 0}</AppText><AppText style={{ color: theme.muted }}>notification opens recorded on this device</AppText></View>
-      <AppText variant="caption" style={[styles.note, { color: theme.muted }]}>Wordfold avoids streak pressure. Progress comes from encounters, honest recall, and returning when a word needs another look.</AppText>
-    </Screen>
-  );
-}
-
-function ActivityChart({ activity, viewedToday, viewedLifetime }: {
-  activity: { date: string; count: number }[];
-  viewedToday: number;
-  viewedLifetime: number;
-}) {
-  const theme = useAppTheme();
-  const maximum = Math.max(1, ...activity.map((day) => day.count));
-  return <View style={[styles.panel, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-    <View style={styles.panelTitle}><View><AppText variant="heading">Last 7 days</AppText><AppText variant="caption" style={{ color: theme.muted }}>Cards that reached your attention</AppText></View><AppText variant="label" style={{ color: theme.primary }}>{viewedToday} today</AppText></View>
-    <View style={styles.chart} accessibilityRole="summary" accessibilityLabel={`${viewedToday} cards today, ${viewedLifetime} cards all time`}>
-      {activity.map((day) => {
-        const date = new Date(`${day.date}T12:00:00`);
-        const label = new Intl.DateTimeFormat('en', { weekday: 'narrow' }).format(date);
-        const height = day.count === 0 ? 4 : Math.max(12, Math.round((day.count / maximum) * 88));
-        return <View key={day.date} style={styles.chartDay} accessibilityLabel={`${label}, ${day.count} cards`}>
-          <AppText variant="caption" style={{ color: theme.muted }}>{day.count || ''}</AppText>
-          <View style={[styles.chartTrack, { backgroundColor: theme.raised }]}><View style={[styles.chartBar, { height, backgroundColor: theme.primary }]}/></View>
-          <AppText variant="caption" style={{ color: theme.muted }}>{label}</AppText>
-        </View>;
-      })}
+      <Legend color={colors.new} label="New" value={stats?.newWords ?? 0}/><Legend color={colors.cannot_remember} label="Needs practice" value={stats?.difficultWords ?? 0}/><Legend color={colors.understood} label="Getting familiar" value={stats?.understoodWords ?? 0}/><Legend color={colors.learned} label="Learned · review stopped" value={stats?.learnedWords ?? 0}/>
     </View>
-    <View style={styles.activityFooter}><AppText variant="caption" style={{ color: theme.muted }}>All-time encounters</AppText><AppText variant="label" style={{ color: theme.text }}>{viewedLifetime}</AppText></View>
-  </View>;
+    {garden && <ActivityCalendar progress={garden}/>}
+    <AppText variant="caption" style={[styles.note, { color: theme.muted }]}>The flame celebrates your rhythm. Your garden keeps your growth, even when you take a break.</AppText>
+  </Screen>;
 }
 function BarSegment({ value, total, color }: { value: number; total: number; color: string }) { return value ? <View style={{ flex: value / total, backgroundColor: color }}/> : null; }
-function Legend({ color, label, value }: { color: string; label: string; value: number }) { const theme = useAppTheme(); return <View style={styles.legend}><View style={[styles.dot, { backgroundColor: color }]}/><AppText style={styles.legendLabel}>{label}</AppText><AppText variant="label" style={{ color: theme.muted }}>{value}</AppText></View>; }
-
+function Legend({ color, label, value }: { color: string; label: string; value: number }) { const theme = useAppTheme(); return <View style={styles.legend}><View style={[styles.dot, { backgroundColor: color }]}/><AppText style={styles.flex}>{label}</AppText><AppText variant="label" style={{ color: theme.muted }}>{value}</AppText></View>; }
 const styles = StyleSheet.create({
-  header: { minHeight: 84, justifyContent: 'center', gap: spacing.xs },
-  panel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md }, panelTitle: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
-  chart: { height: 136, flexDirection: 'row', alignItems: 'flex-end', gap: spacing.sm }, chartDay: { flex: 1, height: '100%', alignItems: 'center', justifyContent: 'flex-end', gap: spacing.xs }, chartTrack: { width: '100%', height: 88, borderRadius: radii.pill, justifyContent: 'flex-end', overflow: 'hidden' }, chartBar: { width: '100%', borderRadius: radii.pill }, activityFooter: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  bar: { height: 14, flexDirection: 'row', borderRadius: 7, overflow: 'hidden' }, legend: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm }, dot: { width: 10, height: 10, borderRadius: 5 }, legendLabel: { flex: 1 }, note: { textAlign: 'center', paddingHorizontal: spacing.xl },
+  header: { paddingVertical: spacing.sm, gap: spacing.xs }, flex: { flex: 1 }, panel: { borderWidth: 1, borderRadius: radii.card, padding: spacing.lg, gap: spacing.md },
+  familiarity: { flexDirection: 'row', alignItems: 'center', gap: spacing.md }, bar: { height: 12, flexDirection: 'row', borderRadius: 6, overflow: 'hidden' },
+  legend: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm }, dot: { width: 8, height: 8, borderRadius: 4 }, note: { textAlign: 'center', paddingHorizontal: spacing.md },
 });

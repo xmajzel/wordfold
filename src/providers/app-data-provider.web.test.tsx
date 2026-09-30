@@ -210,3 +210,28 @@ it('restores the device rhythm before releasing the app readiness gate', async (
   const view = await render(<AppDataProvider><RestoredRhythmProbe/></AppDataProvider>);
   await waitFor(() => expect(view.getByText('Ready: 2:true')).toBeTruthy());
 });
+
+function GardenProbe() {
+  const { garden, plantGardenTree, switchActiveCourse, activeCourseId } = useAppData();
+  return <><Text>{garden ? `${activeCourseId}:${garden.practiceDays}:${garden.trees.length}:${garden.readyToPlant}` : 'Garden loading'}</Text>
+    <Pressable accessibilityRole="button" onPress={() => void plantGardenTree()}><Text>Plant saved tree</Text></Pressable>
+    <Pressable accessibilityRole="button" onPress={() => void switchActiveCourse('es-sk')}><Text>Switch garden language</Text></Pressable></>;
+}
+
+it('persists the web garden across remounts, language changes and duplicate claims', async () => {
+  const events = Array.from({ length: 10 }, (_, index) => ({ type: 'rating', value: 'understood', occurred_at: `2026-08-${String(index + 1).padStart(2, '0')}T10:00:00Z`, practice_date: `2026-08-${String(index + 1).padStart(2, '0')}` }));
+  const storage = new Map([['wordfold.garden.v1', JSON.stringify(events)]]);
+  Object.defineProperty(window, 'localStorage', { configurable: true, value: {
+    getItem: jest.fn((key: string) => storage.get(key) ?? null), setItem: jest.fn((key: string, value: string) => { storage.set(key, value); }),
+  } });
+  const view = await render(<AppDataProvider><GardenProbe/></AppDataProvider>);
+  await waitFor(() => view.getByText('en-sk:10:0:1'));
+  await fireEvent.press(view.getByText('Plant saved tree'));
+  await fireEvent.press(view.getByText('Plant saved tree'));
+  await waitFor(() => view.getByText('en-sk:10:1:0'));
+  await fireEvent.press(view.getByText('Switch garden language'));
+  await waitFor(() => view.getByText('es-sk:10:1:0'));
+  await view.unmount();
+  const restarted = await render(<AppDataProvider><GardenProbe/></AppDataProvider>);
+  await waitFor(() => restarted.getByText('es-sk:10:1:0'));
+});

@@ -1,3 +1,4 @@
+import type { GardenProgress, GardenTree } from '@/features/progress/model';
 import { preferenceLocale, voiceSupportsCourse } from '@/domain/pronunciation-voices';
 import { createContext, PropsWithChildren, Suspense, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, AppState, StyleSheet, View } from 'react-native';
@@ -48,6 +49,8 @@ interface AppDataValue {
   words: Word[];
   collections: Collection[];
   stats: DashboardStats | null;
+  garden: GardenProgress | null;
+  plantGardenTree(): Promise<GardenTree | null>;
   reminderSettings: ReminderSettings | null;
   activeCourseId: CourseId;
   activeCourse: CourseDefinition;
@@ -174,6 +177,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
   const [wordPlayStats, setWordPlayStats] = useState<Record<string, WordPlayStats>>({});
   const [collections, setCollections] = useState<Collection[]>([]);
   const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [gardenState, setGardenState] = useState<{ store: ReturnType<typeof createGuestVocabularyStore>; progress: GardenProgress } | null>(null);
   const [reminderSettings, setReminderSettings] = useState<ReminderSettings | null>(null);
   const [activeCourseId, setActiveCourseId] = useState<CourseId>(defaultCourseId);
   const [learningConfirmations, setLearningConfirmations] = useState<LearningConfirmationCount>(3);
@@ -382,12 +386,12 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     if (refreshState.current.store !== vocabularyStore) return;
     const version = ++refreshState.current.version;
     const nextActiveCourseId = await repository.getActiveCourseId(appDatabase);
-    const [loadedWords, nextCollections, nextStats, nextSettings, nextPreferences, nextVoicePreference, nextOnboarding, nextLearningFilter, nextRhythm, nextWordPlayStats, nextIntroductions] = await Promise.all([
+    const [loadedWords, nextCollections, nextStats, nextSettings, nextPreferences, nextVoicePreference, nextOnboarding, nextLearningFilter, nextRhythm, nextWordPlayStats, nextIntroductions, nextGarden] = await Promise.all([
       vocabularyStore.listWords(), vocabularyStore.listCollections(), vocabularyStore.getStats(nextActiveCourseId),
       repository.getReminderSettings(appDatabase), repository.getLearningPreferences(appDatabase, nextActiveCourseId),
       repository.getPronunciationVoicePreference(appDatabase, nextActiveCourseId), repository.isOnboardingComplete(appDatabase),
       repository.getLearningFilter(appDatabase, nextActiveCourseId), repository.getLearningRhythm(appDatabase),
-      vocabularyStore.getWordPlayStats(), repository.getWordPlayIntroductions(appDatabase),
+      vocabularyStore.getWordPlayStats(), repository.getWordPlayIntroductions(appDatabase), vocabularyStore.getGardenProgress(),
     ]);
     if (refreshState.current.store !== vocabularyStore || version !== refreshState.current.version) return;
     setWordPlayIntroductions((current) => [...new Set([...current, ...nextIntroductions])]);
@@ -397,6 +401,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     setWords(loadedWords);
     setCollections(nextCollections);
     setStats(nextStats);
+    setGardenState({ store: vocabularyStore, progress: nextGarden });
     setReminderSettings(nextSettings);
     setActiveCourseId(nextActiveCourseId);
     setLearningPreferences(nextPreferences);
@@ -522,12 +527,40 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
     void reschedule().catch((error) => console.warn('Could not refresh reminders after learning progress changed.', error));
   }, [currentLearnedWordIds, dataSource, onboardingComplete, reschedule]);
 
+  const refreshGarden = useCallback(async () => {
+    const version = refreshState.current.version;
+    try {
+      const progress = await vocabularyStore.getGardenProgress();
+      if (refreshState.current.store === vocabularyStore && version === refreshState.current.version) {
+        setGardenState({ store: vocabularyStore, progress });
+      }
+    } catch (error) {
+      console.warn('Could not refresh the word garden.', error);
+    }
+  }, [refreshState, vocabularyStore]);
+
   const value = useMemo<AppDataValue>(() => ({
     wordPlayStats, wordPlayIntroductions, dismissWordPlayIntroduction,
     recordWordPlayEvent: async (event) => {
-      await runDatabaseMutation(() => vocabularyStore.recordWordPlayEvent(event));
+      await runDatabaseMutation(async () => {
+        await vocabularyStore.recordWordPlayEvent(event);
+        if (refreshState.current.store === vocabularyStore) refreshState.current.version += 1;
+      });
       if (event.type === 'game_relearned') await refresh();
-      else setWordPlayStats(await vocabularyStore.getWordPlayStats());
+      else {
+        setWordPlayStats(await vocabularyStore.getWordPlayStats());
+        void refreshGarden();
+      }
+    },
+    garden: gardenState?.store === vocabularyStore ? gardenState.progress : null,
+    plantGardenTree: async () => {
+      const tree = await runDatabaseMutation(async () => {
+        const planted = await vocabularyStore.plantGardenTree();
+        if (refreshState.current.store === vocabularyStore) refreshState.current.version += 1;
+        return planted;
+      });
+      await refreshGarden();
+      return tree;
     },
     dataSource, words, collections, stats, reminderSettings, activeCourseId,
     activeCourse: getCourseDefinition(activeCourseId), learningPreferences,
@@ -627,11 +660,13 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
         if (!currentWord) throw new Error('This word is no longer available.');
         const update = applyRating(currentWord, rating, new Date(), Math.random, learningConfirmations);
         await vocabularyStore.saveRating(word.id, rating, update);
+        if (refreshState.current.store === vocabularyStore) refreshState.current.version += 1;
         return { currentWord, update };
       });
       setWords((current) => current.map((item) => item.id === word.id
         ? { ...item, ...update, updatedAt: update.lastRatedAt }
         : item));
+      void refreshGarden();
       if (wordBelongsToCourse(currentWord, activeCourseId)) {
         setStats((current) => updateRatingStats(current, currentWord.state, update.state));
       }
@@ -765,7 +800,7 @@ function AppDataStateProvider({ appDatabase, catalogDatabase, children }: PropsW
         setStats((current) => current ? { ...current, notificationOpens: current.notificationOpens + 1 } : current);
       }
     },
-  }), [activeCourseId, appDatabase, catalogDatabase, collections, cutover, dataSource, deleteCloudAccount, guestImport, keepAccountRename, learningFilter, learningPreferences, learningConfirmations, rhythmIntroduced, onboardingComplete, pauseGuestImport, prepareForSignOut, prepareGuestImport, prepareWordTranslation, pronunciationVoicePreference, purchase.unlimited, refresh, refreshAfterWordMutation, refreshState, refreshGuestImport, reminderSettings, reschedule, resolveGuestImportConflict, resolveSyncCutoverConflict, runDatabaseMutation, runGuestImport, runSyncCutover, stats, vocabularyStore, wordPlayStats, wordPlayIntroductions, dismissWordPlayIntroduction, words]);
+  }), [refreshGarden, gardenState, activeCourseId, appDatabase, catalogDatabase, collections, cutover, dataSource, deleteCloudAccount, guestImport, keepAccountRename, learningFilter, learningPreferences, learningConfirmations, rhythmIntroduced, onboardingComplete, pauseGuestImport, prepareForSignOut, prepareGuestImport, prepareWordTranslation, pronunciationVoicePreference, purchase.unlimited, refresh, refreshAfterWordMutation, refreshState, refreshGuestImport, reminderSettings, reschedule, resolveGuestImportConflict, resolveSyncCutoverConflict, runDatabaseMutation, runGuestImport, runSyncCutover, stats, vocabularyStore, wordPlayStats, wordPlayIntroductions, dismissWordPlayIntroduction, words]);
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>;
 }
