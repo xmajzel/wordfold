@@ -10,9 +10,10 @@ type SyncReader = {
 
 type LearningEventSnapshot = {
   wordId: string | null;
-  type: 'view' | 'rating' | 'notification_open' | import('@/features/word-play/model').WordPlayEventType;
+  type: 'view' | 'rating' | 'notification_open' | import('@/features/word-play/model').WordPlayEventType | 'garden_tree';
   value: string | null;
   occurredAt: string;
+  practiceDate?: string | null;
 };
 
 export type AccountVocabularySnapshot = {
@@ -65,8 +66,8 @@ export async function readAccountVocabularySnapshot(
         [accountId],
       ),
       transaction.getAll<{
-        word_id: string | null; type: LearningEventSnapshot['type']; value: string | null; occurred_at: string;
-      }>(`SELECT word_id, type, value, occurred_at FROM learning_events
+        word_id: string | null; type: LearningEventSnapshot['type']; value: string | null; occurred_at: string; practice_date?: string | null;
+      }>(`SELECT word_id, type, value, occurred_at, practice_date FROM learning_events
           WHERE user_id = ? ORDER BY occurred_at`, [accountId]),
     ]);
     return {
@@ -76,7 +77,7 @@ export async function readAccountVocabularySnapshot(
       })),
       words: wordRows.map(toWord),
       learningEvents: eventRows.map((row) => ({
-        wordId: row.word_id, type: row.type, value: row.value, occurredAt: row.occurred_at,
+        wordId: row.word_id, type: row.type, value: row.value, occurredAt: row.occurred_at, practiceDate: row.practice_date ?? null,
       })),
       createdAt: new Date().toISOString(),
     };
@@ -128,9 +129,9 @@ export async function replaceGuestVocabularyWithSnapshot(
     const wordIds = new Set(snapshot.words.map((word) => word.id));
     for (const event of snapshot.learningEvents) {
       await transaction.runAsync(
-        'INSERT INTO learning_events (word_id, type, value, occurred_at) VALUES (?, ?, ?, ?)',
+        'INSERT INTO learning_events (word_id, type, value, occurred_at, practice_date) VALUES (?, ?, ?, ?, ?)',
         event.wordId && wordIds.has(event.wordId) ? event.wordId : null,
-        event.type, event.value, event.occurredAt,
+        event.type, event.value, event.occurredAt, event.practiceDate ?? null,
       );
     }
     await transaction.runAsync(

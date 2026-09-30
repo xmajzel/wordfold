@@ -1,3 +1,4 @@
+import { localPracticeDate } from '@/features/progress/model';
 import * as Crypto from 'expo-crypto';
 
 import { defaultCourseId, getCourseDefinition, type CourseId } from '@/domain/courses';
@@ -210,9 +211,9 @@ export async function saveSyncRating(
         update.nextReviewAt, update.lastRatedAt, id],
     );
     await transaction.execute(
-      `INSERT INTO learning_events (id, user_id, word_id, type, value, occurred_at)
-       VALUES (?, ?, ?, 'rating', ?, ?)`,
-      [eventId, userId, id, rating, update.lastRatedAt],
+      `INSERT INTO learning_events (id, user_id, word_id, type, value, occurred_at, practice_date)
+       VALUES (?, ?, ?, 'rating', ?, ?, ?)`,
+      [eventId, userId, id, rating, update.lastRatedAt, localPracticeDate(new Date(update.lastRatedAt))],
     );
   });
 }

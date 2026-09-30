@@ -1,3 +1,4 @@
+import { isPracticeEvent, localPracticeDate } from '@/features/progress/model';
 import type { SQLiteDatabase } from 'expo-sqlite';
 import { getCourseDefinition } from '@/domain/courses';
 import { summarizeWordPlay, wordPlayEventValue, type WordPlayEvent, type WordPlayEventRow } from '@/features/word-play/model';
@@ -33,8 +34,8 @@ export async function recordGuestWordPlayEvent(database: SQLiteDatabase, event: 
       await transaction.runAsync(RESET_SQL, event.occurredAt, event.occurredAt, event.wordId);
     }
     await transaction.runAsync(
-      'INSERT INTO learning_events (word_id, type, value, occurred_at) VALUES (?, ?, ?, ?)',
-      event.wordId, event.type, value, event.occurredAt,
+      'INSERT INTO learning_events (word_id, type, value, occurred_at, practice_date) VALUES (?, ?, ?, ?, ?)',
+      event.wordId, event.type, value, event.occurredAt, isPracticeEvent(event.type) ? localPracticeDate(new Date(event.occurredAt)) : null,
     );
   });
 }
@@ -61,8 +62,8 @@ export async function recordSyncWordPlayEvent(database: GameSyncDatabase, userId
       await transaction.execute(RESET_SQL, [event.occurredAt, event.occurredAt, event.wordId]);
     }
     await transaction.execute(
-      'INSERT INTO learning_events (id, user_id, word_id, type, value, occurred_at) VALUES (?, ?, ?, ?, ?, ?)',
-      [event.id, userId, event.wordId, event.type, value, event.occurredAt],
+      'INSERT INTO learning_events (id, user_id, word_id, type, value, occurred_at, practice_date) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [event.id, userId, event.wordId, event.type, value, event.occurredAt, isPracticeEvent(event.type) ? localPracticeDate(new Date(event.occurredAt)) : null],
     );
   });
 }

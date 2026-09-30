@@ -144,7 +144,7 @@ export class PowerSyncUploader {
 }
 
 interface CompoundMutation {
-  name: 'apply_word_rating' | 'apply_word_rating_v2' | 'record_word_view' | 'relearn_game_word';
+  name: 'apply_word_rating' | 'apply_word_rating_v2' | 'apply_word_rating_v3' | 'record_word_view' | 'relearn_game_word';
   parameters: MutableRow;
   event: CrudEntry;
 }
@@ -169,8 +169,9 @@ function compoundMutation(transaction: CrudTransaction): CompoundMutation | null
     'state', 'understood_streak', 'lapse_count', 'last_rated_at', 'next_review_at',
   ])) {
     return {
-      name: Object.prototype.hasOwnProperty.call(word.opData, 'known_streak') ? 'apply_word_rating_v2' : 'apply_word_rating', event,
+      name: event.opData.practice_date ? 'apply_word_rating_v3' : Object.prototype.hasOwnProperty.call(word.opData, 'known_streak') ? 'apply_word_rating_v2' : 'apply_word_rating', event,
       parameters: {
+        ...(event.opData.practice_date ? { p_practice_date: event.opData.practice_date } : {}),
         ...(Object.prototype.hasOwnProperty.call(word.opData, 'known_streak') ? { p_known_streak: word.opData?.known_streak } : {}),
         p_word_id: word.id,
         p_event_id: event.id,

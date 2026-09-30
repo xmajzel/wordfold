@@ -64,11 +64,11 @@ describe('Word play storage', () => {
       INSERT INTO learning_events VALUES (42, 'word-1', 'rating', 'learned', '2026-09-01');
       CREATE INDEX learning_events_time_idx ON learning_events(occurred_at); PRAGMA user_version = 8;`);
     await migrateDatabase(database);
-    expect(sql.prepare('SELECT * FROM learning_events').get()).toEqual({ id: 42, word_id: 'word-1', type: 'rating', value: 'learned', occurred_at: '2026-09-01' });
+    expect(sql.prepare('SELECT * FROM learning_events').get()).toEqual({ id: 42, word_id: 'word-1', type: 'rating', value: 'learned', occurred_at: '2026-09-01', practice_date: '2026-09-01' });
     sql.prepare('INSERT INTO learning_events (word_id, type, value, occurred_at) VALUES (?, ?, ?, ?)').run('word-1', 'game_seen', '{}', 'today');
     expect(sql.prepare('SELECT MAX(id) AS id FROM learning_events').get()?.id).toBe(43);
     await migrateDatabase(database);
-    expect(sql.prepare('PRAGMA user_version').get()?.user_version).toBe(9);
+    expect(sql.prepare('PRAGMA user_version').get()?.user_version).toBe(10);
     sql.close();
   });
 
@@ -78,7 +78,7 @@ describe('Word play storage', () => {
     sql.exec(`INSERT INTO words (id, collection_id, term, normalized_term, definition, state, known_streak, understood_streak,
       lapse_count, view_count, created_at, updated_at) VALUES ('word-1','my-words','hello','hello','A greeting','learned',3,2,4,9,'yesterday','yesterday');`);
     if (source === 'synced') {
-      sql.exec('ALTER TABLE words ADD COLUMN deleted_at TEXT; DROP TABLE learning_events; CREATE TABLE learning_events (id TEXT PRIMARY KEY, user_id TEXT, word_id TEXT, type TEXT, value TEXT, occurred_at TEXT);');
+      sql.exec('ALTER TABLE words ADD COLUMN deleted_at TEXT; DROP TABLE learning_events; CREATE TABLE learning_events (id TEXT PRIMARY KEY, user_id TEXT, word_id TEXT, type TEXT, value TEXT, occurred_at TEXT, practice_date TEXT);');
     }
     const sync: TestSync = {
       getAll: async <T,>(query: string, params: unknown[] = []) => sql.prepare(query).all(...params as SQLInputValue[]) as T[],

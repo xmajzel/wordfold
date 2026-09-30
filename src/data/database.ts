@@ -4,7 +4,7 @@ import { normalizeTermForLanguage } from '@/domain/normalize-term';
 
 import { getCefrLevelForCatalogSense } from './cefr-level-lookup';
 
-const DATABASE_VERSION = 9;
+const DATABASE_VERSION = 10;
 
 export async function migrateDatabase(database: SQLiteDatabase) {
   await database.execAsync('PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;');
@@ -55,9 +55,10 @@ export async function migrateDatabase(database: SQLiteDatabase) {
       CREATE TABLE learning_events (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         word_id TEXT REFERENCES words(id) ON DELETE SET NULL,
-        type TEXT NOT NULL CHECK(type IN ('view', 'rating', 'notification_open', 'game_seen', 'game_missed', 'game_answered', 'game_relearned')),
+        type TEXT NOT NULL CHECK(type IN ('view', 'rating', 'notification_open', 'game_seen', 'game_missed', 'game_answered', 'game_relearned', 'garden_tree')),
         value TEXT,
-        occurred_at TEXT NOT NULL
+        occurred_at TEXT NOT NULL,
+        practice_date TEXT
       );
       CREATE INDEX learning_events_time_idx ON learning_events(occurred_at);
 
@@ -312,7 +313,31 @@ export async function migrateDatabase(database: SQLiteDatabase) {
       `);
     });
   }
+  if (currentVersion > 0 && currentVersion < 10) {
+    await database.withExclusiveTransactionAsync(async (transaction) => {
+      await transaction.execAsync(`
+        CREATE TABLE learning_events_v10 (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          word_id TEXT REFERENCES words(id) ON DELETE SET NULL,
+          type TEXT NOT NULL CHECK(type IN ('view', 'rating', 'notification_open', 'game_seen', 'game_missed', 'game_answered', 'game_relearned', 'garden_tree')),
+          value TEXT,
+          occurred_at TEXT NOT NULL,
+          practice_date TEXT
+        );
+        INSERT INTO learning_events_v10 (id, word_id, type, value, occurred_at, practice_date)
+          SELECT id, word_id, type, value, occurred_at,
+            CASE WHEN type IN ('rating', 'game_answered', 'game_missed') THEN date(occurred_at) END
+          FROM learning_events;
+        DROP TABLE learning_events;
+        ALTER TABLE learning_events_v10 RENAME TO learning_events;
+        CREATE INDEX learning_events_time_idx ON learning_events(occurred_at);
+      `);
+    });
+  }
+  await database.execAsync("CREATE UNIQUE INDEX IF NOT EXISTS garden_tree_milestone_idx ON learning_events(value) WHERE type = 'garden_tree';");
   await database.execAsync('CREATE INDEX IF NOT EXISTS learning_events_word_type_idx ON learning_events(word_id, type, value);');
+
+  await database.execAsync("CREATE INDEX IF NOT EXISTS learning_events_practice_date_idx ON learning_events(type, practice_date) WHERE type IN ('rating', 'game_answered', 'game_missed');");
 
   await database.execAsync(`PRAGMA user_version = ${DATABASE_VERSION}`);
 }

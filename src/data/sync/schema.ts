@@ -44,7 +44,8 @@ const learningEvents = new Table({
   type: column.text,
   value: column.text,
   occurred_at: column.text,
-}, { indexes: { occurred: ['occurred_at'], word: ['word_id'] } });
+  practice_date: column.text,
+}, { indexes: { occurred: ['occurred_at'], word: ['word_id'], practice: ['type', 'practice_date'] } });
 
 const syncWriteErrors = new Table({
   user_id: column.text,

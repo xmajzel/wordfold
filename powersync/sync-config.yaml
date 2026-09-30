@@ -22,6 +22,6 @@ streams:
         FROM words
         WHERE user_id = auth.user_id()
       - |
-        SELECT id, user_id, word_id, type, value, occurred_at
+        SELECT id, user_id, word_id, type, value, occurred_at, practice_date
         FROM learning_events
         WHERE user_id = auth.user_id()

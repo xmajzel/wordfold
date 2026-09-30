@@ -232,3 +232,14 @@ it('uploads new confirmations through v2 while retaining the legacy queued-ratin
   }));
   expect(context.complete).toHaveBeenCalledTimes(1);
 });
+
+it('uploads the recorded local practice date atomically through v3', async () => {
+  const context = setup([
+    entry(1, 'PATCH', 'words', 'word-1', { state: 'understood', known_streak: 0, understood_streak: 1, lapse_count: 0, last_rated_at: '2026-09-17T23:30:00Z', next_review_at: '2026-09-20T12:00:00Z' }),
+    entry(2, 'PUT', 'learning_events', 'rating-1', { user_id: 'user-1', word_id: 'word-1', type: 'rating', value: 'understood', occurred_at: '2026-09-17T23:30:00Z', practice_date: '2026-09-18' }),
+  ]);
+  await context.uploader.uploadNext(context.database);
+  expect(context.remote.rpc).toHaveBeenCalledWith('apply_word_rating_v3', expect.objectContaining({ p_practice_date: '2026-09-18', p_known_streak: 0, p_event_id: 'rating-1' }));
+  expect(context.remote.insertEvent).not.toHaveBeenCalled();
+  expect(context.complete).toHaveBeenCalledTimes(1);
+});

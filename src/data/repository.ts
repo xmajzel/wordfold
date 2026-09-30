@@ -1,3 +1,4 @@
+import { localPracticeDate } from '@/features/progress/model';
 import { parseLearningRhythm, serializeLearningRhythm, RHYTHM_STORAGE_KEY } from '@/features/learning/rhythm';
 import { voiceSupportsCourse } from '@/domain/pronunciation-voices';
 import type { SQLiteDatabase } from 'expo-sqlite';
@@ -194,8 +195,8 @@ export async function saveRating(database: SQLiteDatabase, id: string, rating: s
       update.nextReviewAt, update.lastRatedAt, id,
     );
     await transaction.runAsync(
-      "INSERT INTO learning_events (word_id, type, value, occurred_at) VALUES (?, 'rating', ?, ?)",
-      id, rating, update.lastRatedAt,
+      "INSERT INTO learning_events (word_id, type, value, occurred_at, practice_date) VALUES (?, 'rating', ?, ?, ?)",
+      id, rating, update.lastRatedAt, localPracticeDate(new Date(update.lastRatedAt)),
     );
   });
 }
