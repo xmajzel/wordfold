@@ -50,6 +50,7 @@ export interface GuestLearningEventRow {
   type: string;
   value: string | null;
   occurred_at: string;
+  practice_date?: string | null;
 }
 
 export interface GuestImportSnapshot {

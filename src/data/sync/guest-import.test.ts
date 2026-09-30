@@ -5,7 +5,7 @@ import type { GuestImportMapping, GuestImportRecord } from './guest-import-types
 import type { GuestImportSnapshot } from './guest-import-repository';
 import { GuestImportService } from './guest-import';
 
-jest.mock('expo-crypto', () => ({ randomUUID: jest.fn(() => 'crypto-uuid') }));
+jest.mock('expo-crypto', () => ({ randomUUID: jest.fn(() => 'crypto-uuid'), CryptoDigestAlgorithm: { MD5: 'md5' }, digestStringAsync: async (algorithm: string, value: string) => jest.requireActual('node:crypto').createHash(algorithm).update(value).digest('hex') }));
 
 let mockRecord: GuestImportRecord | null;
 let mockMappings: GuestImportMapping[];
@@ -126,6 +126,24 @@ describe('GuestImportService', () => {
     expect(backend.value.listActiveWords).not.toHaveBeenCalled();
   });
 
+  it('imports saved practice dates and uses a stable milestone identity for planted trees', async () => {
+    mockSnapshot.events = [{ ...event, practice_date: '2026-07-01' }, {
+      id: 2, word_id: null, type: 'garden_tree', value: '1', occurred_at: '2026-07-20T12:00:00Z', practice_date: '2026-07-10',
+    }];
+    const backend = remote();
+    const powerSync = { getAll: jest.fn(async (_sql: string, ids?: unknown[]) => (ids ?? []).map((id) => ({ id }))) };
+    const service = new GuestImportService({} as SQLiteDatabase, backend.value, powerSync as never);
+    await service.prepare('user-1');
+    const treeMapping = mockMappings.find((item) => item.entityType === 'learning_event' && item.localId === '2')!;
+    expect(treeMapping.remoteId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+    await service.run('user-1');
+    expect(backend.value.insertEvents).toHaveBeenCalledWith([
+      expect.objectContaining({ type: 'rating', practice_date: '2026-07-01' }),
+      expect.objectContaining({ id: treeMapping.remoteId, type: 'garden_tree', word_id: null, value: '1', practice_date: '2026-07-10' }),
+    ], expect.any(AbortSignal));
+    expect(treeMapping.remoteId).not.toBe('crypto-uuid');
+  });
+
   it('uploads collections, words, and events in dependency order before completing', async () => {
     mockRecord = record();
     mockMappings = [
@@ -151,7 +169,7 @@ describe('GuestImportService', () => {
     expect(view.phase).toBe('completed');
   });
 
-  it('keeps an account conflict without importing that device word or its history', async () => {
+  it('keeps the account word while preserving device practice history', async () => {
     mockRecord = record();
     mockMappings = [
       mapping('collection', 'my-words', 'collection-uuid'),
@@ -166,8 +184,8 @@ describe('GuestImportService', () => {
 
     expect(backend.value.updateWord).not.toHaveBeenCalled();
     expect(backend.value.upsertWords).toHaveBeenCalledWith([], expect.any(AbortSignal));
-    expect(backend.value.insertEvents).toHaveBeenCalledWith([], expect.any(AbortSignal));
-    expect(powerSync.getAll.mock.calls.some(([sql]) => String(sql).includes('learning_events'))).toBe(false);
+    expect(backend.value.insertEvents).toHaveBeenCalledWith([expect.objectContaining({ type: 'rating', word_id: null, id: 'event-uuid' })], expect.any(AbortSignal));
+    expect(powerSync.getAll.mock.calls.some(([sql]) => String(sql).includes('learning_events'))).toBe(true);
   });
 
   it('keeps verification timeout resumable instead of reporting completion', async () => {

@@ -1,3 +1,5 @@
+import { gardenTreeId } from '@/data/garden-repository';
+import { isPracticeEvent } from '@/features/progress/model';
 import * as Crypto from 'expo-crypto';
 import type { SQLiteDatabase } from 'expo-sqlite';
 
@@ -221,8 +223,9 @@ export class SyncCutoverService {
       ...snapshot.words.filter((row) => !existingKeys.has(`word:${row.id}`)).map((row) => (
         mappingFor(accountId, 'word', row.id, this.createUuid(), createdAt, false)
       )),
-      ...snapshot.events.filter((row) => !existingKeys.has(`learning_event:${row.id}`))
-        .map((row) => mappingFor(accountId, 'learning_event', String(row.id), this.createUuid(), createdAt, false)),
+      ...await Promise.all(snapshot.events.filter((row) => !existingKeys.has(`learning_event:${row.id}`))
+        .map(async (row) => mappingFor(accountId, 'learning_event', String(row.id),
+          row.type === 'garden_tree' ? await gardenTreeId(accountId, Number(row.value)) : this.createUuid(), createdAt, false))),
     ];
     await appendSyncIdMappings(this.database, newMappings);
     let mappings = await listGuestImportMappings(this.database, accountId);
@@ -318,7 +321,7 @@ export class SyncCutoverService {
   ) {
     const rows = new Map(plan.snapshot.events.map((row) => [String(row.id), row]));
     const wordIds = new Map(plan.mappings.filter((mapping) => mapping.entityType === 'word')
-      .map((mapping) => [mapping.localId, mapping.remoteId]));
+      .map((mapping) => [mapping.localId, mapping.conflictResolution === 'keep_account' ? null : mapping.remoteId]));
     let next = record;
     for (let offset = 0; offset < plan.events.length; offset += BATCH_SIZE) {
       throwIfAborted(signal);
@@ -354,7 +357,7 @@ export class SyncCutoverService {
         if (mapping.entityType !== 'learning_event') return false;
         const event = rows.events.get(mapping.localId);
         const word = event?.word_id ? wordMappings.get(event.word_id) : null;
-        return Boolean(event) && word?.conflictResolution !== 'keep_account';
+        return Boolean(event) && (word?.conflictResolution !== 'keep_account' || !!event && isPracticeEvent(event.type));
       }).map((mapping) => mapping.remoteId),
     };
     const deadline = Date.now() + this.verifyTimeoutMs;
@@ -456,7 +459,7 @@ function planFor(
       const row = events.get(mapping.localId);
       if (!row || mapping.sourceUpdatedAt === row.occurred_at) return false;
       const word = row.word_id ? wordMappings.get(row.word_id) : null;
-      return word?.conflictResolution !== 'keep_account';
+      return word?.conflictResolution !== 'keep_account' || isPracticeEvent(row.type);
     }),
     conflicts,
   };

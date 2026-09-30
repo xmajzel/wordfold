@@ -1,3 +1,5 @@
+import { gardenTreeId } from '@/data/garden-repository';
+import { isPracticeEvent } from '@/features/progress/model';
 import * as Crypto from 'expo-crypto';
 import type { SQLiteDatabase } from 'expo-sqlite';
 
@@ -120,7 +122,8 @@ export class GuestImportService {
       ...snapshot.words.map((word) => (
         mappingFor(accountId, 'word', word.id, this.createUuid(), createdAt, false)
       )),
-      ...snapshot.events.map((event) => mappingFor(accountId, 'learning_event', String(event.id), this.createUuid(), createdAt, false)),
+      ...await Promise.all(snapshot.events.map(async (event) => mappingFor(accountId, 'learning_event', String(event.id),
+        event.type === 'garden_tree' ? await gardenTreeId(accountId, Number(event.value)) : this.createUuid(), createdAt, false))),
     ];
     const record: GuestImportRecord = {
       accountId,
@@ -324,8 +327,8 @@ export class GuestImportService {
         const row = requiredRow(rows, mapping.localId, 'learning event');
         const wordMapping = row.word_id ? wordMappings.get(row.word_id) : null;
         if (row.word_id && !wordMapping) throw new Error('An imported learning event has no word mapping.');
-        if (wordMapping?.conflictResolution === 'keep_account') continue;
-        payloads.push(eventPayload(accountId, mapping, wordMapping?.remoteId ?? null, row));
+        if (wordMapping?.conflictResolution === 'keep_account' && !isPracticeEvent(row.type)) continue;
+        payloads.push(eventPayload(accountId, mapping, wordMapping?.conflictResolution === 'keep_account' ? null : wordMapping?.remoteId ?? null, row));
         accepted.push({ localId: mapping.localId, sourceUpdatedAt: row.occurred_at });
       }
       await this.remote.insertEvents(payloads, signal);
@@ -349,7 +352,7 @@ export class GuestImportService {
       learning_events: mappings.learning_event.filter((mapping) => {
         const event = eventRows.get(mapping.localId);
         const word = event?.word_id ? wordMappings.get(event.word_id) : null;
-        return word?.conflictResolution !== 'keep_account';
+        return word?.conflictResolution !== 'keep_account' || !!event && isPracticeEvent(event.type);
       }).map((mapping) => mapping.remoteId),
     };
     const deadline = Date.now() + this.verifyTimeoutMs;
@@ -545,6 +548,7 @@ export function eventPayload(
     type: row.type,
     value: row.value,
     occurred_at: row.occurred_at,
+    ...(row.practice_date ? { practice_date: row.practice_date } : {}),
   };
 }
 
