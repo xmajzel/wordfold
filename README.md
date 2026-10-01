@@ -243,8 +243,9 @@ fields supplied in the paste, Discard leaves it unchanged, and the separate Add 
 action saves it. Credit, rate-limit, and network failures leave completed suggestions
 available and allow continuing the ordinary review.
 
-Apply `20260918120000_ai_word_credits.sql` and
-`20260924120000_increase_ai_word_credits.sql`, then deploy `ai-word` to the
+Apply `20260918120000_ai_word_credits.sql`,
+`20260924120000_increase_ai_word_credits.sql`, and
+`20261001130000_increase_ai_request_limits.sql`, then deploy `ai-word` to the
 intended Supabase project. Configure server-only secrets `OPENAI_API_KEY` and
 `REVENUECAT_SECRET_API_KEY` (RevenueCat REST API v1 access); `AI_WORD_MODEL` is an
 optional server override. Never prefix these secrets with `EXPO_PUBLIC_`, bundle them,
@@ -283,8 +284,9 @@ Only an unlinked purchase fingerprint remains after account deletion.
 
 A valid generated suggestion costs one credit even if discarded. Reservations expire
 after two minutes; failures refund once, and retries recover the saved result. The
-function limits new attempts to 30 per account/hour and 2,000 globally/day, including
-failed attempts. Credits and request results are private and are not PowerSync tables.
+function limits new attempts to 300 per account in a rolling hour and 5,000 globally in
+a rolling 24 hours, including failed attempts. Credits and request results are private
+and are not PowerSync tables.
 Guided-review queues and recoverable suggestion drafts are stored locally by account
 and language pair. The updated privacy page must be published before enabling this
 processing in a released app. Recurring credit grants are not implemented.
