@@ -67,6 +67,16 @@ it('never trusts client paid flags or a supplied RevenueCat identity', async () 
   await handleAiWord(request({ action: 'balance', paid: true, revenuecatId: 'someone-else' }), d);
   expect(d.rpc).toHaveBeenCalledTimes(1); expect(d.rpc).toHaveBeenCalledWith('ai_account', { p_user_id: 'user' });
 });
+it('checks credit purchase status for the authenticated wallet without granting or trusting client ownership', async () => {
+  Object.defineProperty(globalThis, 'crypto', { value: jest.requireActual('node:crypto').webcrypto, configurable: true });
+  const d = deps(); d.rpc.mockResolvedValueOnce({ balance: 115, creditPurchaseStatus: 'credited' });
+  const response = await handleAiWord(request({ action: 'credit_purchase_status', transactionId: 'GPA.order', userId: 'someone-else', amount: 10000 }), d);
+  expect(await response.json()).toMatchObject({ balance: 115, creditPurchaseStatus: 'credited' });
+  expect(d.rpc).toHaveBeenCalledTimes(1);
+  expect(d.rpc).toHaveBeenCalledWith('ai_credit_purchase_status', { p_user_id: 'user', p_purchase_hash: expect.stringMatching(/^[a-f0-9]{64}$/) });
+  expect(d.fetch).not.toHaveBeenCalled();
+  expect((await handleAiWord(request({ action: 'credit_purchase_status', transactionId: '' }), d)).status).toBe(400);
+});
 it('requires a real, active, non-sandbox lifetime purchase for the bonus', () => {
   const record = { subscriber: { entitlements: { unlimited_words: { product_identifier: 'wordfold_lifetime', expires_date: null } },
     non_subscriptions: { wordfold_lifetime: [{ id: 'transaction-1', store: 'play_store', is_sandbox: false }] } } };

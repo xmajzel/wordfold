@@ -428,3 +428,7 @@ enabled = true
 
 [functions.ai-word]
 verify_jwt = true
+
+# RevenueCat authenticates with a dedicated server-only Authorization secret.
+[functions.revenuecat-credits]
+verify_jwt = false

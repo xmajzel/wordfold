@@ -1,4 +1,5 @@
 import { AI_LANGUAGES, UUID, isWordSuggestion, object, parseSuggestionInput, type SuggestionInput } from '../_shared/ai-word.ts';
+import { creditPurchaseHash } from '../_shared/ai-credit-purchases.ts';
 
 type Dependencies = {
   userId?: string;
@@ -63,6 +64,10 @@ export async function handleAiWord(request: Request, deps: Dependencies): Promis
     let body: unknown;
     try { body = JSON.parse(raw); } catch { return failure('invalid_input', 400); }
     if (!object(body)) return failure('invalid_input', 400);
+    if (body.action === 'credit_purchase_status') {
+      if (typeof body.transactionId !== 'string' || !body.transactionId.trim() || body.transactionId.length > 1000) return failure('invalid_input', 400);
+      return reply(await deps.rpc('ai_credit_purchase_status', { ...userArgs, p_purchase_hash: await creditPurchaseHash(body.transactionId) }));
+    }
     if (body.action === 'balance' || body.action === 'verify_purchase') {
       let account = await deps.rpc('ai_account', userArgs);
       if (body.action === 'verify_purchase' && !account.paidGrant) {
