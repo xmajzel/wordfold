@@ -62,7 +62,50 @@ All `EXPO_PUBLIC_` values are embedded in the app. Never put database passwords,
 4. Configure anonymous purchase transfer/restore behavior deliberately and test restoration with the same Google Play account.
 5. Confirm the generated Android manifest contains `com.android.vending.BILLING` and MainActivity uses `singleTop`, allowing payment verification apps to return to the purchase flow.
 
+### AI credit packs
+
+1. Create and activate the Google Play one-time product `wordfold_ai_credits_100`,
+   granting 100 credits per purchase. Start with EUR 1.99 as the base price and
+   review Google's local prices. Check that the Slovak checkout price is EUR 1.99
+   including VAT; Google's automatic conversion can add VAT and require a local
+   override. Keep multi-quantity purchases disabled.
+2. Import it into the same RevenueCat Android app as a **consumable**. Do not
+   attach it to `unlimited_words` or another permanent entitlement. The app fetches
+   this product directly, so the existing lifetime offering remains independent.
+3. Apply only `20261001120000_ai_credit_purchases.sql` through the intended
+   project's authorized migration workflow. Deploy the updated `ai-word` and
+   `revenuecat-credits` functions. The latter uses its checked-in `verify_jwt = false`
+   and authenticates every request with its own secret.
+4. Set server-only `REVENUECAT_CREDITS_WEBHOOK_SECRET` to a new random secret and
+   `REVENUECAT_ANDROID_APP_ID` to the RevenueCat app ID (not the Android package or
+   public SDK key). Keep `REVENUECAT_CREDIT_ENVIRONMENT=PRODUCTION` for production.
+   Add a RevenueCat webhook to
+   `https://<intended-project-ref>.supabase.co/functions/v1/revenuecat-credits`
+   with Authorization `Bearer <webhook-secret>`. Deliver `NON_RENEWING_PURCHASE`
+   and `CANCELLATION` events for this app. Never put the secret in app configuration,
+   screenshots, logs, or source control.
+5. Configure Google Play server notifications in RevenueCat so refunds arrive.
+   Use the same Wordfold account for purchasing and spending; a signed-in wallet
+   must be linked before checkout. Preserve the original wallet when purchases are
+   transferred; the same receipt never grants another wallet.
+6. Test on the production package through a Play test track with a license tester.
+   Point that test build at an isolated test Supabase project with its own webhook
+   secret and `REVENUECAT_CREDIT_ENVIRONMENT=SANDBOX`. Never allow sandbox credits
+   in the production project. Expo Go cannot verify real Google Play payments.
+7. Verify two purchases add 200 credits, cancellation adds none, duplicate webhook
+   delivery adds nothing, a refund debits once and stops at zero, a closed-app
+   purchase still arrives, and an account switch never moves credits. Verify
+   Settings and the empty-credit action both open the store-priced pack and refresh
+   the correct wallet after returning. Publish the updated privacy page before
+   activating purchases. Live payment testing and production activation are
+   separate from local tests and export verification.
+
 ## Legal pages and Play Console
+
+The app's current legal URLs are `https://wordfold.app/privacy/` and
+`https://wordfold.app/account-deletion/`. Verify publication at these URLs before
+activating credit purchases. The published `main` branch may have a newer page
+design than the release checkout; preserve that design when updating disclosures.
 
 GitHub Pages publishes only `site/`, never the internal `docs/` directory. Expected URLs:
 

@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Platform, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Crypto from 'expo-crypto';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { AppText } from '@/components/app-text';
 import { FormField } from '@/components/form-field';
 import { SuggestionTransition } from './suggestion-transition';
@@ -35,7 +35,6 @@ function SignedInSuggestion({ scope, disabled, onUse, ...inputProps }: Props & {
   const dismissedRequest = useRef<string | null>(null);
   useEffect(() => {
     mounted.current = true;
-    void fetchAiBalance().then((value) => { if (mounted.current) setBalance(value.balance); }).catch(() => undefined);
     void AsyncStorage.getItem(storageKey).then((raw) => {
       if (!mounted.current || !raw) return;
       const value = JSON.parse(raw) as SavedRequest;
@@ -51,6 +50,11 @@ function SignedInSuggestion({ scope, disabled, onUse, ...inputProps }: Props & {
     // The wrapper remounts this component whenever the input/account scope changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storageKey]);
+  useFocusEffect(useCallback(() => {
+    let active = true;
+    void fetchAiBalance().then((value) => { if (active && mounted.current && !inFlight.current) setBalance(value.balance); }).catch(() => undefined);
+    return () => { active = false; };
+  }, []));
   const generate = async () => {
     if (inFlight.current || hasSuggestion.current) return;
     inFlight.current = true; setBusy(true); setMessage(null);
@@ -115,6 +119,7 @@ function SignedInSuggestion({ scope, disabled, onUse, ...inputProps }: Props & {
     </>}
     </SuggestionTransition>
     {balance === 0 && !saved ? <AppText>No AI credits remaining. Dictionary lookup and manual entry are still available.</AppText> : null}
+    {balance === 0 && !saved && Platform.OS === 'android' ? <AiButton label="Buy AI credits" disabled={busy} onPress={() => router.push('/ai-credits')}/> : null}
     {message ? <AppText accessibilityRole="alert">{message}</AppText> : null}
   </View>;
 }

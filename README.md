@@ -252,13 +252,32 @@ real existing purchase and an account switch. Sandbox purchases do not grant the
 production bonus. A purchase fingerprint prevents a transferred or restored purchase
 from granting the bonus again on another account, including after account deletion.
 
+Signed-in Android users can also buy repeatable 100-credit packs from Settings or
+the empty-credit state. The app uses Google Play's localized price, never a hardcoded
+amount. The initial recommended store price is EUR 1.99. One measurement with the
+unchanged `gpt-6.1-sol` request used 251 input and 59 output tokens: USD 0.001092
+per suggestion at USD 2/10 per million input/output tokens (1 October 2026).
+That extrapolates to USD 0.1092 per 100 suggestions, before failed requests,
+longer responses, hosting, tax, and store/RevenueCat fees. This single measurement
+is not an average or a cost guarantee; review actual usage after launch.
+
+Apply `20261001120000_ai_credit_purchases.sql`, deploy the updated `ai-word` and
+`revenuecat-credits` functions, and follow the credit-pack setup in
+`docs/ANDROID_PRODUCTION_RELEASE.md`. Credits are fulfilled only by an authenticated
+RevenueCat webhook. The app's purchase-status request can confirm a receipt but
+cannot grant credits. Delayed callbacks and closed apps do not lose fulfillment;
+Refresh balance recovers the latest server balance. Each store transaction grants
+100 exactly once, including across account transfers and deletion. Refunds remove
+up to 100 credits from the original wallet, stop at zero, and never repeat.
+Only an unlinked purchase fingerprint remains after account deletion.
+
 A valid generated suggestion costs one credit even if discarded. Reservations expire
 after two minutes; failures refund once, and retries recover the saved result. The
 function limits new attempts to 30 per account/hour and 2,000 globally/day, including
 failed attempts. Credits and request results are private and are not PowerSync tables.
 Guided-review queues and recoverable suggestion drafts are stored locally by account
 and language pair. The updated privacy page must be published before enabling this
-processing in a released app. No credit packs or recurring grants are implemented.
+processing in a released app. Recurring credit grants are not implemented.
 
 ### Password recovery
 

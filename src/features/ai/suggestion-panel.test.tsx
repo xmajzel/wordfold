@@ -1,5 +1,7 @@
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
+import { router } from 'expo-router';
 import { SuggestionPanel } from './suggestion-panel';
 import { AiError } from './client';
 const mockActions: Record<string, () => void> = {};
@@ -11,16 +13,29 @@ jest.mock('./ai-presentation', () => {
   } };
 });
 const mockGenerate = jest.fn();
+const mockBalance = jest.fn();
 let mockUser: { id: string } | null = { id: 'user-a' };
 const card = { definition: 'Keep trying despite difficulty.', translation: 'húževnatosť', example: 'Her tenacity helped her finish the very difficult project.', partOfSpeech: 'noun' };
 jest.mock('@/features/ai/suggestion-transition', () => ({ SuggestionTransition: ({ children }: { children: React.ReactNode }) => <>{children}</> }));
 jest.mock('@react-native-async-storage/async-storage', () => jest.requireActual('@react-native-async-storage/async-storage/jest/async-storage-mock'));
 jest.mock('@/providers/auth-provider', () => ({ useAuth: () => ({ user: mockUser }) }));
 jest.mock('expo-crypto', () => ({ randomUUID: () => '11111111-1111-4111-8111-111111111111' }));
-jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
-jest.mock('./client', () => ({ ...jest.requireActual('./client'), fetchAiBalance: async () => ({ balance: 10 }), generateSuggestion: (...args: unknown[]) => mockGenerate(...args) }));
+jest.mock('expo-router', () => ({ router: { push: jest.fn() }, useFocusEffect: (callback: () => void) => jest.requireActual('react').useEffect(callback, [callback]) }));
+jest.mock('./client', () => ({ ...jest.requireActual('./client'), fetchAiBalance: (...args: unknown[]) => mockBalance(...args), generateSuggestion: (...args: unknown[]) => mockGenerate(...args) }));
 const props = { term: 'tenacity', sourceLanguageCode: 'en', targetLanguageCode: 'sk', onUse: jest.fn() };
-beforeEach(async () => { await AsyncStorage.clear(); jest.clearAllMocks(); mockUser = { id: 'user-a' }; mockGenerate.mockResolvedValue({ status: 'completed', balance: 9, suggestion: card }); });
+beforeEach(async () => { await AsyncStorage.clear(); jest.clearAllMocks(); mockUser = { id: 'user-a' }; mockBalance.mockResolvedValue({ balance: 10 }); mockGenerate.mockResolvedValue({ status: 'completed', balance: 9, suggestion: card }); });
+it('opens the credit shop from an empty Android balance without attempting generation', async () => {
+  const previousPlatform = Platform.OS;
+  Object.defineProperty(Platform, 'OS', { value: 'android', configurable: true });
+  try {
+    mockBalance.mockResolvedValue({ balance: 0 });
+    const view = await render(<SuggestionPanel {...props}/>);
+    await waitFor(() => expect(view.getByText('Buy AI credits')).toBeTruthy());
+    await fireEvent.press(view.getByRole('button', { name: 'Buy AI credits' }));
+    expect(router.push).toHaveBeenCalledWith('/ai-credits');
+    expect(mockGenerate).not.toHaveBeenCalled();
+  } finally { Object.defineProperty(Platform, 'OS', { value: previousPlatform, configurable: true }); }
+});
 it('shows a read-only suggestion and applies it only after acceptance', async () => {
   const view = await render(<SuggestionPanel {...props}/>);
   await waitFor(() => expect(view.getByText('AI suggestions · 10 credits remaining')).toBeTruthy());

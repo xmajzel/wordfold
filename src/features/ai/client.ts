@@ -1,7 +1,8 @@
 import { FunctionsHttpError } from '@supabase/supabase-js';
 import { isWordSuggestion, object, UUID, type SuggestionInput, type WordSuggestion } from '../../../supabase/functions/_shared/ai-word';
 export type { SuggestionInput, WordSuggestion };
-export type AiBalance = { balance: number; revenuecatId: string; paidGrant: boolean; purchaseVerificationUnavailable?: boolean; purchaseClaimedElsewhere?: boolean };
+export type AiBalance = { balance: number; revenuecatId: string; paidGrant: boolean; creditPackCount?: number; purchaseVerificationUnavailable?: boolean; purchaseClaimedElsewhere?: boolean };
+export type CreditPurchaseBalance = AiBalance & { creditPurchaseStatus: 'pending' | 'credited' | 'refunded' };
 export type AiResult = { status: 'pending' | 'failed'; balance: number } | { status: 'completed'; balance: number; suggestion: WordSuggestion };
 export class AiError extends Error {
   constructor(public readonly code: string) {
@@ -26,9 +27,19 @@ async function invoke(body: Record<string, unknown>): Promise<unknown> {
 }
 export async function fetchAiBalance(verifyPurchase = false): Promise<AiBalance> {
   const data = await invoke({ action: verifyPurchase ? 'verify_purchase' : 'balance' });
+  return parseBalance(data);
+}
+function parseBalance(data: unknown): AiBalance {
   if (!object(data) || !Number.isInteger(data.balance) || (data.balance as number) < 0
-    || typeof data.revenuecatId !== 'string' || !UUID.test(data.revenuecatId) || typeof data.paidGrant !== 'boolean') throw new AiError('invalid_response');
+    || typeof data.revenuecatId !== 'string' || !UUID.test(data.revenuecatId) || typeof data.paidGrant !== 'boolean'
+    || (data.creditPackCount !== undefined && (!Number.isInteger(data.creditPackCount) || (data.creditPackCount as number) < 0))) throw new AiError('invalid_response');
   return data as AiBalance;
+}
+export async function fetchCreditPurchaseStatus(transactionId: string): Promise<CreditPurchaseBalance> {
+  const data = await invoke({ action: 'credit_purchase_status', transactionId });
+  const account = parseBalance(data);
+  if (!object(data) || !['pending', 'credited', 'refunded'].includes(String(data.creditPurchaseStatus))) throw new AiError('invalid_response');
+  return { ...account, creditPurchaseStatus: data.creditPurchaseStatus as CreditPurchaseBalance['creditPurchaseStatus'] };
 }
 export async function generateSuggestion(requestId: string, input: SuggestionInput): Promise<AiResult> {
   const data = await invoke({ action: 'generate', requestId, input });
