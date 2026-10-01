@@ -233,6 +233,16 @@ Single-word entry and guided bulk review can request a read-only suggestion from
 lookup and manual entry remain available without AI or an account. Accept copies the
 suggestion into the editable word form; Discard leaves the form unchanged.
 
+Bulk paste also offers **Prepare with AI & review**. Before spending credits, it shows
+the eligible word count and maximum new-credit cost, excluding invalid lines, library
+duplicates, and suggestions already reviewed. Preparation runs one request at a time
+while the screen is open, pausing when closed or backgrounded. Completed suggestions
+and recovery IDs survive interruptions; retries reuse existing requests. Each word
+opens with a read-only suggestion: Accept fills the editable form while preserving
+fields supplied in the paste, Discard leaves it unchanged, and the separate Add & next
+action saves it. Credit, rate-limit, and network failures leave completed suggestions
+available and allow continuing the ordinary review.
+
 Apply `20260918120000_ai_word_credits.sql` and
 `20260924120000_increase_ai_word_credits.sql`, then deploy `ai-word` to the
 intended Supabase project. Configure server-only secrets `OPENAI_API_KEY` and

@@ -11,6 +11,7 @@ import { ModalHeader } from '@/app/word/new';
 import { languageLabel } from '@/domain/languages';
 import { isOnDeviceTranslationPairSupported, translateOnDevice, TranslationCancelledError } from '@/features/translation/translator';
 import { SuggestionPanel } from '@/features/ai/suggestion-panel';
+import { AiPreparationPanel } from '@/features/import/ai-preparation-panel';
 import { parseReviewQueue, reviewQueueKey, saveReviewQueue, type ReviewQueue, type ReviewDraft } from '@/features/import/review-queue';
 import { useAuth } from '@/providers/auth-provider';
 import { useAppData } from '@/providers/app-data-provider';
@@ -27,10 +28,12 @@ export default function ImportReviewScreen() {
   return <GuidedReview key={scope} scope={scope}/>;
 }
 function GuidedReview({ scope }: { scope: string }) {
+  const { user } = useAuth();
   const data = useAppData();
   const theme = useAppTheme();
   const [queue, setQueue] = useState<ReviewQueue | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [reviewStarted, setReviewStarted] = useState(false);
   const [senses, setSenses] = useState<CatalogSense[]>([]);
   const [busy, setBusy] = useState(false);
   const [lookingUp, setLookingUp] = useState(true);
@@ -96,7 +99,7 @@ function GuidedReview({ scope }: { scope: string }) {
     void commit({ ...q, rows: q.rows.map((r, i) => i === q.index ? { ...r, ...patch } : r) }).catch(() => undefined);
   };
   useEffect(() => {
-    if (!row) return;
+    if (!row || (queue.aiPreparation && !reviewStarted)) return;
     let active = true;
     const lookup = data.activeCourse.capabilities.bundledCatalog ? data.findSenses(row.term, data.activeCourse.id) : Promise.resolve([]);
     void lookup.then((found) => {
@@ -112,7 +115,7 @@ function GuidedReview({ scope }: { scope: string }) {
     return () => { active = false; };
     // Lookup only when advancing; edits must not retrigger it or replace the draft.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queue?.index, Boolean(queue)]);
+  }, [queue?.index, Boolean(queue), reviewStarted]);
   const canTranslate = isOnDeviceTranslationPairSupported(data.activeCourse.sourceLanguageCode, data.activeCourse.targetLanguageCode);
   const generateTranslation = async () => {
     const q = current.current; const draft = q?.rows[q.index];
@@ -173,9 +176,11 @@ function GuidedReview({ scope }: { scope: string }) {
     {!loaded ? <AppText>Loading saved review…</AppText> : !queue ? <AppText>No saved review for this account and course. Start from Bulk paste.</AppText> : !row ? <>
       <AppText variant="heading">Review complete</AppText><AppText>{queue.added} words added · {queue.skipped} skipped</AppText>
       <PrimaryButton label="Done" loading={busy} onPress={() => void finish()}/>
-    </> : <>
+    </> : queue.aiPreparation && !reviewStarted ? <AiPreparationPanel queue={queue} userId={user?.id} onReview={() => setReviewStarted(true)}/> : <>
       <AppText variant="heading">{row.term}</AppText><AppText>Word {queue.index + 1} of {queue.rows.length} · {queue.added} added</AppText>
       <AppText variant="caption">Your progress is saved on this device. Close and resume from Bulk paste.</AppText>
+      {queue.aiPreparation ? <PrimaryButton label="Prepare remaining AI suggestions" variant="secondary" disabled={busy || translating || showCollectionForm || creatingCollection}
+        onPress={() => { setLookingUp(true); setReviewStarted(false); }}/>: null}
       <View>
         <AppText variant="label">Collection</AppText>
         <View style={styles.chips}>
@@ -206,7 +211,14 @@ function GuidedReview({ scope }: { scope: string }) {
               partOfSpeech: sense.partOfSpeech, catalogSenseId: sense.id })}><AppText>{sense.partOfSpeech} · {sense.definition}</AppText></Pressable>)}
         </View> : <AppText>No offline definition found. Write your own or ask AI.</AppText>}
         <SuggestionPanel term={row.term} sourceLanguageCode={data.activeCourse.sourceLanguageCode} targetLanguageCode={data.activeCourse.targetLanguageCode}
-          disabled={busy || lookingUp || data.wordCapacity.remaining === 0} onUse={(suggestion) => update({ ...suggestion, catalogSenseId: null, prepared: true })}/>
+          disabled={busy || lookingUp || data.wordCapacity.remaining === 0} onUse={(suggestion) => {
+            const accepted = { ...suggestion };
+            for (const field of ['definition', 'translation', 'example', 'partOfSpeech'] as const) {
+              if (row.pastedFields?.[field] !== undefined) accepted[field] = row[field];
+            }
+            update({ ...accepted, catalogSenseId: null, prepared: true, ...(queue.aiPreparation ? { aiReviewed: true } : {}) });
+          }} onDiscard={queue.aiPreparation ? () => update({ aiReviewed: true }) : undefined}/>
+        {row.pastedFields && Object.keys(row.pastedFields).length ? <AppText variant="caption">Accept keeps the fields you supplied in the paste. You can edit them below.</AppText> : null}
         <FormField label="Definition" value={row.definition} editable={!busy && !lookingUp} onChangeText={(definition) => update({ definition })} multiline/>
         <FormField label="Translation" value={row.translation} editable={!busy} onChangeText={(translation) => update({ translation })}/>
         {canTranslate ? <>

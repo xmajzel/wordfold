@@ -16,6 +16,7 @@ import { Screen } from '@/components/screen';
 import type { CatalogSense } from '@/domain/types';
 import { languageLabel } from '@/domain/languages';
 import { parseBulkInput, type ParsedImportLine } from '@/features/import/parser';
+import { AiButton } from '@/features/ai/ai-presentation';
 import { WordCapacityExceededError } from '@/features/purchases/capacity';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { useAppData } from '@/providers/app-data-provider';
@@ -50,6 +51,7 @@ export default function ImportScreen() {
   const [reviewed, setReviewed] = useState<ReviewedLine[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [replaceReview, setReplaceReview] = useState(false);
+  const [prepareWithAi, setPrepareWithAi] = useState(false);
   const [reviewError, setReviewError] = useState<string | null>(null);
   const existing = useMemo(() => new Set(words
     .filter((word) => (
@@ -82,14 +84,14 @@ export default function ImportScreen() {
     }
   };
 
-  const guidedReview = async (replace = false) => {
+  const guidedReview = async (replace = false, aiPreparation = false) => {
     if (!selectedCollectionId || showCollectionForm || collectionCreationPending.current || actionPending.current) return;
     actionPending.current = true;
     setBusy(true); setReviewError(null);
     try {
       const previous = parseReviewQueue(await AsyncStorage.getItem(reviewQueueKey(user?.id, activeCourse.id)));
-      if (!replace && previous && previous.index < previous.rows.length) { setReplaceReview(true); return; }
-      await saveReviewQueue(reviewQueueKey(user?.id, activeCourse.id), makeReviewQueue(input, activeCourse.sourceLanguageCode, selectedCollectionId));
+      if (!replace && previous && previous.index < previous.rows.length) { setPrepareWithAi(aiPreparation); setReplaceReview(true); return; }
+      await saveReviewQueue(reviewQueueKey(user?.id, activeCourse.id), makeReviewQueue(input, activeCourse.sourceLanguageCode, selectedCollectionId, aiPreparation));
       router.push('/import-review');
     } catch { setReviewError('Could not save this review on your device. Please try again.'); }
     finally { actionPending.current = false; setBusy(false); }
@@ -162,8 +164,12 @@ export default function ImportScreen() {
         <AppText variant="caption" style={{ color: theme.muted }}>Create this collection or cancel to continue importing your words.</AppText>
       </View></CollectionFormDisclosure></View>
       <PrimaryButton label="Review words one by one" disabled={!input.trim() || !selectedCollectionId || showCollectionForm || creatingCollection} loading={busy} onPress={() => void guidedReview()}/>
+      <AiButton label={user ? 'Prepare with AI & review' : 'Sign in to prepare with AI'}
+        disabled={busy || !input.trim() || !selectedCollectionId || showCollectionForm || creatingCollection}
+        onPress={() => user ? void guidedReview(false, true) : router.push('/account')}/>
+      <AppText variant="caption">Prepare suggestions for the whole review. You’ll see the credit cost before starting, then accept or discard each suggestion yourself.</AppText>
       {replaceReview ? <View style={styles.review}><AppText>You have an unfinished review. Replace it with these words?</AppText>
-        <PrimaryButton label="Replace saved review" variant="secondary" loading={busy} disabled={!selectedCollectionId || showCollectionForm || creatingCollection} onPress={() => void guidedReview(true)}/>
+        <PrimaryButton label="Replace saved review" variant="secondary" loading={busy} disabled={!selectedCollectionId || showCollectionForm || creatingCollection} onPress={() => void guidedReview(true, prepareWithAi)}/>
         <PrimaryButton label="Keep saved review" variant="secondary" disabled={busy} onPress={() => setReplaceReview(false)}/>
       </View> : null}
       {reviewError ? <AppText accessibilityRole="alert">{reviewError}</AppText> : null}

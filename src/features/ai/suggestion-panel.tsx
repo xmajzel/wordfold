@@ -9,18 +9,18 @@ import { SuggestionTransition } from './suggestion-transition';
 import { AiButton, AiHeading, AiSurface } from './ai-presentation';
 import { useAuth } from '@/providers/auth-provider';
 import { spacing } from '@/theme/tokens';
-import { AiError, fetchAiBalance, generateSuggestion, type SuggestionInput, type WordSuggestion } from './client';
-import { isWordSuggestion, UUID, parseSuggestionInput } from '../../../supabase/functions/_shared/ai-word';
+import { AiError, fetchAiBalance, generateSuggestion, type WordSuggestion } from './client';
+import { loadSavedSuggestion, type SavedRequest } from './saved-suggestion';
+import { isWordSuggestion } from '../../../supabase/functions/_shared/ai-word';
 
-type Props = { term: string; sourceLanguageCode: string; targetLanguageCode: string; disabled?: boolean; onUse(suggestion: WordSuggestion): void };
-type SavedRequest = { requestId: string; input: SuggestionInput; suggestion?: WordSuggestion };
+type Props = { term: string; sourceLanguageCode: string; targetLanguageCode: string; disabled?: boolean; onUse(suggestion: WordSuggestion): void; onDiscard?(): void };
 export function SuggestionPanel(props: Props) {
   const { user } = useAuth();
   if (!user) return <AiButton label="Sign in for AI suggestions" onPress={() => router.push('/account')}/>;
   const scope = JSON.stringify([user.id, props.sourceLanguageCode, props.targetLanguageCode, props.term.trim()]);
   return <SignedInSuggestion key={scope} {...props} scope={scope}/>;
 }
-function SignedInSuggestion({ scope, disabled, onUse, ...inputProps }: Props & { scope: string }) {
+function SignedInSuggestion({ scope, disabled, onUse, onDiscard, ...inputProps }: Props & { scope: string }) {
   const storageKey = `ai-suggestion-v1:${scope}`;
   const [context, setContext] = useState('');
   const [balance, setBalance] = useState<number | null>(null);
@@ -35,13 +35,8 @@ function SignedInSuggestion({ scope, disabled, onUse, ...inputProps }: Props & {
   const dismissedRequest = useRef<string | null>(null);
   useEffect(() => {
     mounted.current = true;
-    void AsyncStorage.getItem(storageKey).then((raw) => {
-      if (!mounted.current || !raw) return;
-      const value = JSON.parse(raw) as SavedRequest;
-      if (!UUID.test(value.requestId) || !parseSuggestionInput(value.input)
-        || value.input.term !== inputProps.term.trim()
-        || value.input.sourceLanguageCode !== inputProps.sourceLanguageCode
-        || value.input.targetLanguageCode !== inputProps.targetLanguageCode) return;
+    void loadSavedSuggestion(storageKey, inputProps).then((value) => {
+      if (!mounted.current || !value) return;
       setSaved(value); setContext(value.input.context);
       if (isWordSuggestion(value.suggestion)) { hasSuggestion.current = true; setDraft(value.suggestion); }
     }).catch(() => { if (mounted.current) setMessage('The previous suggestion could not be restored.'); })
@@ -92,6 +87,7 @@ function SignedInSuggestion({ scope, disabled, onUse, ...inputProps }: Props & {
       if (!mounted.current) return;
       dismissedRequest.current = saved.requestId;
       if (use) onUse(draft);
+      else onDiscard?.();
       hasSuggestion.current = false; setSaved(null); setDraft(null);
     } catch { if (mounted.current) setMessage('Could not clear the saved draft. Please try again.'); }
     finally { inFlight.current = false; if (mounted.current) setBusy(false); }
