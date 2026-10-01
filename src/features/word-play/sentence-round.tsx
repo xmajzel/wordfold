@@ -72,7 +72,9 @@ export function SentenceRound({ word, gap, haptics, onRecord, onNext }: {
       <Animated.View entering={FadeInDown.duration(220).reduceMotion(ReduceMotion.System)} style={[styles.card, { borderColor: result ? accent : theme.border }, cardStyle]}>
         <AppText variant="caption" style={{ color: theme.muted }}>IN CONTEXT</AppText>
         <AppText style={styles.sentence} accessibilityLabel={`${gap.before}${result ? gap.answer : ' blank '}${gap.after}`}>
-          {gap.before}<AppText style={[styles.blank, { color: result ? accent : theme.primary }]}>{result ? gap.answer : ' ______ '}</AppText>{gap.after}
+          {gap.before}<AppText style={[styles.blank, { color: result ? accent : theme.primary }]}
+            accessibilityRole={result ? undefined : 'button'} accessibilityLabel={result ? undefined : 'Enter missing word'}
+            onPress={result ? undefined : () => inputRef.current?.focus()}>{result ? gap.answer : ' ______ '}</AppText>{gap.after}
         </AppText>
         {showClue && !result ? <View style={[styles.clue, { backgroundColor: theme.primarySoft }]}>
           <Ionicons name="bulb-outline" size={18} color={theme.primary}/>

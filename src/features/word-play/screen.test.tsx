@@ -1,7 +1,7 @@
 import { Profiler, type ComponentProps } from 'react';
 import PlayTab from '@/app/(tabs)/play';
 import { act, fireEvent, render, waitFor, within } from '@testing-library/react-native';
-import { Alert, StyleSheet } from 'react-native';
+import { Alert, StyleSheet, TextInput } from 'react-native';
 import { router } from 'expo-router';
 import type { Word } from '@/domain/types';
 import type { WordPlayEvent, WordPlayStats } from './model';
@@ -370,6 +370,27 @@ it('checks a sentence, retains mistakes after success, and waits for Next', asyn
   await fireEvent.press(view.getByRole('button', { name: 'Next word' }));
   await fireEvent.press(view.getByRole('button', { name: 'Next word' }));
   expect(onNext).toHaveBeenCalledTimes(1);
+});
+
+it.each(['correct', 'shown'] as const)('focuses the answer from the gap until the round is %s', async (result) => {
+  const focus = jest.spyOn(TextInput.prototype, 'focus');
+  try {
+    const onRecord = jest.fn(async () => undefined);
+    const onNext = jest.fn();
+    const view = await render(<SentenceRound word={mockWords[0]} gap={{ before: 'Use ', answer: 'word 0', after: ' here.' }} haptics={false} onRecord={onRecord} onNext={onNext}/>);
+    await fireEvent.press(view.getByLabelText('Enter missing word'));
+    expect(focus).toHaveBeenCalledTimes(1);
+    await fireEvent.changeText(view.getByLabelText('Missing word'), 'word 0');
+    await fireEvent.press(view.getByLabelText('Enter missing word'));
+    expect(focus).toHaveBeenCalledTimes(2);
+    expect(view.getByLabelText('Missing word')).toHaveDisplayValue('word 0');
+    expect(onRecord).not.toHaveBeenCalled();
+    await fireEvent.press(view.getByRole('button', { name: result === 'correct' ? 'Check answer' : 'Show answer' }));
+    expect(view.queryByLabelText('Enter missing word')).toBeNull();
+    await fireEvent.press(view.getByLabelText('Use word 0 here.'));
+    expect(focus).toHaveBeenCalledTimes(2);
+    expect(onNext).not.toHaveBeenCalled();
+  } finally { focus.mockRestore(); }
 });
 
 it('offers Show answer without typing and records practice only once', async () => {
