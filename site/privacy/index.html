@@ -17,7 +17,7 @@
         <p class="eyebrow">Privacy</p>
         <h1>Wordfold Privacy Policy</h1>
         <p class="lead">What Wordfold handles, why, and how you can control it.</p>
-        <p class="muted">Effective 1 October 2026</p>
+        <p class="muted">Effective 8 October 2026</p>
       </header>
 
       <section aria-labelledby="contact">
@@ -40,18 +40,21 @@
         <p>If you buy the lifetime unlock or an AI credit pack, Google Play processes the payment. RevenueCat processes product, transaction, entitlement, store-account and technical identifiers needed to validate and restore it. Wordfold does not receive your payment-card details. An opaque RevenueCat identifier is linked to your signed-in Wordfold account to verify the one-time paid AI credit allowance and fulfill purchased credit packs. Wordfold stores one-way transaction fingerprints to prevent duplicate credit grants and process refunds.</p>
         <p>If you submit feedback, Wordfold sends your message, category, optional contact email, language pair, basic app and device details, and any word content shown in the report preview to Supabase. A random installation identifier and hashed network address help limit abuse. Reports are stored privately and forwarded through Resend to the developer’s Gmail inbox. Feedback does not attach your vocabulary library. Reports waiting for connectivity are stored on your device and retried while the app is open. Sent reports remain in <em>My feedback</em> as local history until you remove them or clear the app’s data. This history does not synchronize between devices; removing a local entry does not delete its server or email copies.</p>
 
+        <h3>Automatic app updates</h3>
+        <p>Wordfold automatically checks for app updates through Expo’s EAS Update service when the app starts, including when you use it without an account. Requests include a randomly generated installation identifier, platform and app runtime information, and update identifiers. Expo may also receive request metadata such as your IP address and, following certain failed launches, failed-update identifiers and limited error details. This information supports compatible update delivery, troubleshooting and recovery from failed updates. Signing out or disabling optional cloud features does not disable these checks.</p>
+
         <h3>Technical data</h3>
         <p>Cloud providers may process limited request and security metadata, such as timestamps, IP addresses and error logs, to operate and protect their services. Cloudflare serves these public pages and may handle technical request data to deliver and protect them. The pages have no account form or analytics script.</p>
       </section>
 
       <section aria-labelledby="use">
         <h2 id="use">How information is used</h2>
-        <p>Wordfold uses this information to provide authentication, synchronization, cloud pronunciation, AI suggestions and credit accounting, purchase validation and restoration, security, support, feedback review, product and content improvements, and account deletion. Wordfold has no advertising, does not sell personal data, and does not include a separate behavioral analytics SDK.</p>
+        <p>Wordfold uses this information to provide authentication, synchronization, cloud pronunciation, AI suggestions and credit accounting, purchase validation and restoration, automatic app update delivery and recovery, security, support, feedback review, product and content improvements, and account deletion. Wordfold has no advertising, does not sell personal data, and does not include a separate behavioral analytics SDK.</p>
       </section>
 
       <section aria-labelledby="providers">
         <h2 id="providers">Service providers</h2>
-        <p>Wordfold uses Supabase for authentication, database, storage and server functions; PowerSync for synchronization; Microsoft Azure Speech for optional real-time speech synthesis; OpenAI for optional vocabulary suggestions; RevenueCat for purchase entitlements; Google Play for app distribution and payments; Resend and Gmail for feedback email delivery and review; and Cloudflare to host these pages. According to Microsoft, its real-time text-to-speech service does not retain input text or generated audio. See <a href="https://learn.microsoft.com/en-us/azure/ai-foundry/responsible-ai/speech-service/text-to-speech/data-privacy-security">Azure Speech data privacy and security</a>. Each provider processes information under its own security and retention obligations.</p>
+        <p>Wordfold uses Supabase for authentication, database, storage and server functions; PowerSync for synchronization; Microsoft Azure Speech for optional real-time speech synthesis; OpenAI for optional vocabulary suggestions; RevenueCat for purchase entitlements; Google Play for app distribution and payments; Expo (650 Industries, Inc.) for automatic app update checks, delivery and error recovery through EAS Update; Resend and Gmail for feedback email delivery and review; and Cloudflare to host these pages. According to Microsoft, its real-time text-to-speech service does not retain input text or generated audio. See <a href="https://learn.microsoft.com/en-us/azure/ai-foundry/responsible-ai/speech-service/text-to-speech/data-privacy-security">Azure Speech data privacy and security</a>. Each provider processes information under its own security and retention obligations. See <a href="https://expo.dev/privacy">Expo’s privacy policy</a> for its handling of update-service information.</p>
       </section>
 
       <section id="retention" aria-labelledby="retention-heading">
@@ -60,6 +63,7 @@
         <p>Turning off cloud neural pronunciation stops new cloud pronunciation requests and asks Wordfold to delete that account’s saved private audio, pronunciation metadata, audit records and local private pronunciation cache. If deletion cannot finish while offline, Wordfold keeps the feature off and offers a retry. In-app account deletion removes the Supabase account and associated synchronized and private pronunciation data while preserving a local vocabulary copy on that device.</p>
         <p>Cloud AI requests, generated suggestions, credit history and the account linkage are removed when you delete your cloud account. An unlinked, one-way purchase fingerprint remains to prevent repeated claims of bonus credits or purchased credit packs. Local AI drafts are removed on in-app account deletion. Google Play and RevenueCat may retain purchase records for transaction, fraud-prevention, tax or legal reasons.</p>
         <p>Feedback is independent of your cloud account and is not automatically removed when you delete that account. Reports and notification emails remain available for support and improvement review until removed by the developer. You can remove an unsent local report in the feedback screen. To request deletion of a submitted report and its email copy, contact <a href="mailto:support@wordfold.app?subject=Wordfold%20feedback%20deletion">support@wordfold.app</a> with its report ID or enough details to locate it.</p>
+        <p>Expo retains update-service information for as long as reasonably necessary for the purposes described in its privacy policy and applicable legal obligations. The random installation identifier is stored on your device and normally remains the same across app launches and updates. Clearing app data or reinstalling normally resets it, although a device backup may restore it. This identifier is not derived from your hardware identifier or Wordfold account. Deleting your Wordfold cloud account or resetting the local identifier does not automatically erase update-service records held by Expo. For privacy requests about this processing, contact <a href="mailto:support@wordfold.app">support@wordfold.app</a>.</p>
         <p>See <a href="../account-deletion/">how to request account deletion</a> with or without the app.</p>
       </section>
 
